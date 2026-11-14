@@ -62,7 +62,7 @@ def test_clean_generic_database_and_known_legacy_revision():
     assert validate([], [], [], ("20261015_0012",)) == {}
 
 
-@pytest.mark.parametrize("version", ["20261110_0018", "20261111_0019", "20261111_0020"])
+@pytest.mark.parametrize("version", ["20261110_0018", "20261111_0019", "20261111_0020", "20261115_0021"])
 def test_later_revisions_require_all_five_guard_groups(version):
     assert len(validate(*catalog(5), (version,))) == 10
     with pytest.raises(BackupError):

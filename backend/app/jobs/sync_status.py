@@ -72,7 +72,7 @@ class MacroStatusReader:
             failures = session.scalars(select(JobFailure).join(JobRun, JobRun.id == JobFailure.job_run_id).where(
                 JobRun.job_name == "sync-macro", JobFailure.resolved_at.is_(None),
             ).order_by(JobFailure.created_at, JobFailure.id)).all()
-            snapshots = session.scalars(select(PublishedSnapshot).where(
+            snapshots = session.execute(select(PublishedSnapshot.version, PublishedSnapshot.stale).where(
                 PublishedSnapshot.product.in_(("macro-transmission", "macro-insights")),
             )).all()
             validity_rows = session.scalars(select(MacroObservation).where(

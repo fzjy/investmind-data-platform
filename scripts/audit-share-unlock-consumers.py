@@ -8,6 +8,7 @@ from types import SimpleNamespace
 from sqlalchemy import select, text
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "backend"))
+from app.shared.snapshot_sql import PUBLISHED_SNAPSHOTS_SQL
 from app.config import settings
 from app.db.models import ShareUnlock, SourcePayload
 from app.shared.readonly_database import open_readonly_factory
@@ -40,8 +41,8 @@ def audit(factory, session):
         dates=[r.ann_date.isoformat() for r in populated if r.ann_date]
         core_counts[k]={"withKey":len(matched),"withValue":len(populated),"earliestAnnounced":min(dates,default=None),
                         "latestAnnounced":max(dates,default=None),"sampleId":populated[0].id if populated else None}
-    symbols, cutoff = session.execute(text("""
-        select payload->'stocks', (as_of at time zone 'UTC')::date from mart.published_snapshot where product='screener'
+    symbols, cutoff = session.execute(text(f"""
+        select payload->'stocks', (as_of at time zone 'UTC')::date from {PUBLISHED_SNAPSHOTS_SQL} published where product='screener'
     """)).one()
     current = {s["symbol"] for s in symbols}
     active = [r for r in rows if r.ts_code in current and r.ann_date and r.ann_date<=cutoff and r.float_date and r.float_date<=cutoff]

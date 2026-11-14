@@ -5,7 +5,7 @@ from dataclasses import dataclass, replace
 from datetime import date, datetime, timezone
 from typing import Any
 
-from sqlalchemy import select
+from sqlalchemy import select, text
 from sqlalchemy.orm import Session, sessionmaker
 
 from app.db.models import (
@@ -63,6 +63,29 @@ class PublicationOutcome(Sequence[PublishedSnapshot]):
 
     def __iter__(self) -> Iterator[PublishedSnapshot]:
         return iter(self.snapshots)
+
+
+SHARED_HISTORY_PRODUCTS = frozenset(("screener", "portfolio", "market-overview", "macro-insights", "macro-transmission"))
+
+
+def shared_history_digest(session: Session, candidate: MartCandidate, version: str) -> str | None:
+    if candidate.product not in SHARED_HISTORY_PRODUCTS or "marketNews" in candidate.payload or "dailyChart" in candidate.payload:
+        return None
+    if session.get_bind().dialect.name != "postgresql":
+        return None
+    # 兼容尚未执行 0021 的底座。迁移用生成列及外键同时保护产品与版本。
+    key = "has_referenced_snapshot_history"
+    if key not in session.info:
+        session.info[key] = session.scalar(text("""
+            SELECT EXISTS (SELECT 1 FROM pg_attribute
+              WHERE attrelid='mart.published_snapshot'::regclass AND attname='history_version' AND NOT attisdropped)
+        """))
+    if not session.info[key]:
+        return None
+    return session.execute(text("""
+        SELECT history_generation FROM mart.page_snapshot
+        WHERE product=:product AND snapshot_version=:version
+    """), {"product": candidate.product, "version": version}).scalar_one()
 
 
 class SnapshotPublisher:
@@ -325,6 +348,8 @@ class SnapshotPublisher:
                 freshness_checked_at=published_at,
                 published_at=published_at,
             )
+            if digest := shared_history_digest(session, candidate, version):
+                current.use_history(digest, dict(candidate.payload))
             session.add(current)
             return current, True
         else:
@@ -357,10 +382,14 @@ class SnapshotPublisher:
                 from app.market.commodities.coverage import commodity_coverage_regressed
                 if commodity_coverage_regressed(current.payload,candidate.payload):
                     raise QualityCheckFailed(('market.commodity_coverage',))
+            digest = shared_history_digest(session, candidate, version)
             was_promoted = current.version != version
             current.version = version
             current.as_of = candidate.as_of
-            current.payload = dict(candidate.payload)
+            if digest:
+                current.use_history(digest, dict(candidate.payload))
+            else:
+                current.payload = dict(candidate.payload)
             current.stale = candidate.stale
             current.stale_reason = candidate.stale_reason
             current.freshness_checked_at = published_at

@@ -4,24 +4,13 @@ from datetime import date, datetime
 from decimal import Decimal
 from typing import Any
 
-from sqlalchemy import Date, DateTime, JSON, Numeric, String, Text, UniqueConstraint, func
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import select, case, null, Date, DateTime, JSON, Numeric, String, Text, UniqueConstraint, func
+from sqlalchemy.orm import Mapped, mapped_column, column_property, attributes
+from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.ext.compiler import compiles
+from sqlalchemy.sql.functions import FunctionElement
 
 from app.db.base import MartBase
-
-
-class PublishedSnapshot(MartBase):
-    __tablename__ = "published_snapshot"
-    __table_args__ = {"schema": "mart"}
-
-    product: Mapped[str] = mapped_column(String(128), primary_key=True)
-    version: Mapped[str] = mapped_column(String(64), nullable=False)
-    as_of: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
-    payload: Mapped[dict[str, Any]] = mapped_column(JSON, nullable=False)
-    stale: Mapped[bool] = mapped_column(nullable=False, default=False)
-    stale_reason: Mapped[str | None] = mapped_column(Text)
-    freshness_checked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    published_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
 class PageSnapshot(MartBase):
@@ -35,6 +24,61 @@ class PageSnapshot(MartBase):
     snapshot_version: Mapped[str] = mapped_column(String(64), nullable=False)
     as_of: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     payload: Mapped[dict[str, Any]] = mapped_column(JSON, nullable=False)
+
+
+# SQLite 的局部测试库可以只建当前表；只有 PostgreSQL 0021 会出现历史引用。
+class ReferencedHistory(FunctionElement):
+    type = JSON()
+    inherit_cache = True
+
+
+@compiles(ReferencedHistory)
+def _inline_database(element, compiler, **kwargs):
+    return "NULL"
+
+
+@compiles(ReferencedHistory, "postgresql")
+def _postgres_history(element, compiler, **kwargs):
+    return compiler.process(next(iter(element.clauses)), **kwargs)
+
+
+class PublishedSnapshot(MartBase):
+    __tablename__ = "published_snapshot"
+    __table_args__ = {"schema": "mart"}
+
+    product: Mapped[str] = mapped_column(String(128), primary_key=True)
+    version: Mapped[str] = mapped_column(String(64), nullable=False)
+    as_of: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    _inline_payload: Mapped[dict[str, Any] | str] = mapped_column("payload", JSON, nullable=False)
+    _history_payload = column_property(ReferencedHistory(case((
+        func.json_typeof(_inline_payload) == "string",
+        select(PageSnapshot.payload).where(PageSnapshot.product == product,
+            PageSnapshot.snapshot_version == version).correlate_except(PageSnapshot).scalar_subquery()
+    ), else_=null())), expire_on_flush=False)
+
+    @hybrid_property
+    def payload(self) -> dict[str, Any]:
+        if isinstance(self._inline_payload, str):
+            return self._history_payload
+        return self._inline_payload
+
+    @payload.inplace.expression
+    @classmethod
+    def _resolved_payload(cls):
+        return func.coalesce(cls._history_payload, cls._inline_payload, type_=JSON)
+
+    @payload.inplace.setter
+    def _set_payload(self, value):
+        self._inline_payload = value
+
+    def use_history(self, digest: str, value: dict[str, Any]) -> None:
+        self._inline_payload = "@investmind-history:" + digest
+        attributes.set_committed_value(self, "_history_payload", value)
+
+    stale: Mapped[bool] = mapped_column(nullable=False, default=False)
+    stale_reason: Mapped[str | None] = mapped_column(Text)
+    freshness_checked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    published_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
 class StockScreenerDaily(MartBase):

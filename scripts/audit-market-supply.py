@@ -13,6 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "backend"))
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from sqlalchemy import select, text
+from app.shared.snapshot_sql import PUBLISHED_SNAPSHOTS_SQL
 from app.config import settings
 from app.db.models import ContentDocument, PublishedSnapshot, SourcePayload
 from app.ingestion.repositories import content_hash
@@ -236,9 +237,9 @@ def inspect(factory, session):
             history = session.execute(text("""
                 select as_of::date as day, count(*) from mart.page_snapshot where product=:product group by 1 order by 1
             """), {"product": name}).all()
-            same = session.scalar(text("""
+            same = session.scalar(text(f"""
                 select count(*) from mart.page_snapshot where product=:product and snapshot_version=:version
-                and payload::jsonb=(select payload::jsonb from mart.published_snapshot where product=:product)
+                and payload::jsonb=(select payload::jsonb from {PUBLISHED_SNAPSHOTS_SQL} published where product=:product)
             """), {"product": name, "version": pointer.version})
             assert same == 1
             summaries[name] = {"meta": data["meta"], "rootKeys": sorted(data["data"]),

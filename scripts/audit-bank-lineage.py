@@ -13,6 +13,7 @@ sys.path.insert(0, str(ROOT / 'backend'))
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from sqlalchemy import text
+from app.shared.snapshot_sql import PUBLISHED_SNAPSHOTS_SQL
 from app.config import settings
 from app.shared.readonly_database import open_readonly_factory
 from app.shared.repository import SnapshotRepository
@@ -67,8 +68,8 @@ def independently_price_dividends(source):
 
 def audit(session, client):
     assert session.scalar(text('show transaction_read_only')) == 'on'
-    version, as_of, rows = session.execute(text("""
-        select version, as_of, payload->'stocks' from mart.published_snapshot where product='screener'
+    version, as_of, rows = session.execute(text(f"""
+        select version, as_of, payload->'stocks' from {PUBLISHED_SNAPSHOTS_SQL} published where product='screener'
     """)).one()
     banks = {r['symbol']: r for r in rows if r['majorIndustry'] == '银行'}
     codes = sorted(banks)

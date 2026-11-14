@@ -77,6 +77,50 @@
   "workbenchOverrides": 50,
   "otherOverrides": [],
   "unmatchedHistory": [],
+  "historyMutationSurface": [
+    {
+      "product": "macro-insights",
+      "versions": 58,
+      "news_field_versions": 0,
+      "nonempty_news_versions": 0,
+      "announcement_versions": 0
+    },
+    {
+      "product": "macro-transmission",
+      "versions": 58,
+      "news_field_versions": 0,
+      "nonempty_news_versions": 0,
+      "announcement_versions": 0
+    },
+    {
+      "product": "market-explorer",
+      "versions": 118,
+      "news_field_versions": 118,
+      "nonempty_news_versions": 103,
+      "announcement_versions": 0
+    },
+    {
+      "product": "market-overview",
+      "versions": 15,
+      "news_field_versions": 0,
+      "nonempty_news_versions": 0,
+      "announcement_versions": 0
+    },
+    {
+      "product": "portfolio",
+      "versions": 17,
+      "news_field_versions": 0,
+      "nonempty_news_versions": 0,
+      "announcement_versions": 0
+    },
+    {
+      "product": "screener",
+      "versions": 21,
+      "news_field_versions": 0,
+      "nonempty_news_versions": 0,
+      "announcement_versions": 0
+    }
+  ],
   "isolated": {
     "historyOnlyEditChangesAliasedCurrent": true,
     "sameEditLeavesIndependentCurrentUnchanged": true,

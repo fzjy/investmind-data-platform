@@ -48,9 +48,9 @@ def test_plan_is_local_read_only_and_explains_backup_restore(tmp_path, monkeypat
     report = module.release_plan(package=path)
     assert report.status == "planned"
     assert report.source_versions == ("20260920_0009",)
-    assert report.target_versions == ("20261111_0020",)
+    assert report.target_versions == ("20261115_0021",)
     assert report.migrations == ("20260929_0010", "20261014_0011", "20261015_0012", "20261018_0013", "20261020_0014", "20261021_0015", "20261022_0016", "20261022_0017",
-                                 "20261110_0018", "20261111_0019", "20261111_0020")
+                                 "20261110_0018", "20261111_0019", "20261111_0020", "20261115_0021")
     assert report.recovery_strategy == "backup_restore"
     assert report.steps.index("stop_jobs") < report.steps.index("backup") < report.steps.index("verify_copy") < report.steps.index("upgrade") < report.steps.index("read_acceptance")
     assert report.recovery_steps == ("stop_jobs", "restore_backup_to_new_database", "verify_original_fingerprints", "switch_database_and_previous_code", "read_acceptance", "resume_jobs")

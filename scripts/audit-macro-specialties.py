@@ -8,6 +8,7 @@ import sys
 from sqlalchemy import text
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "backend"))
+from app.shared.snapshot_sql import PUBLISHED_SNAPSHOTS_SQL
 from app.config import settings
 from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
 from app.macro.enterprise_contract import enterprise_loader, valid_enterprise_analysis
@@ -77,11 +78,11 @@ def summarize_extension(ext):
 
 def inspect(factory, session):
     assert session.scalar(text("show transaction_read_only")) == "on"
-    version, at, extension, enterprise = session.execute(text("""
+    version, at, extension, enterprise = session.execute(text(f"""
         select version,as_of,payload->'extensionInsights',payload->'enterpriseAnalysis'
-        from mart.published_snapshot where product='macro-transmission'
+        from {PUBLISHED_SNAPSHOTS_SQL} published where product='macro-transmission'
     """)).one()
-    insights = session.execute(text("select version, payload->'extensionInsights' from mart.published_snapshot where product='macro-insights'")).one()
+    insights = session.execute(text(f"select version, payload->'extensionInsights' from {PUBLISHED_SNAPSHOTS_SQL} published where product='macro-insights'")).one()
     assert insights == (version, extension)
     catalog=MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE)
     builder=MacroMartBuilder(MacroRepository(factory),catalog=catalog,extension_loader=lambda day:load_extension_inputs(factory,day))

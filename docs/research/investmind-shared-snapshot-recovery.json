@@ -1,0 +1,30 @@
+{
+  "oldArchiveSha256": "0f012b943e8771d5aeb8e2d7b8e9caa94bc1acd5c9d251f3812abeb3ee4f2b23",
+  "oldArchiveBytes": 424481381,
+  "oldRevision": "20261111_0020",
+  "newRevision": "20261115_0021",
+  "logical": {
+    "currentCount": 56,
+    "currentSha256": "4f1b87fee8057d6bf975320dd54dc3828341aa57c411957bfe148910edb9b24a",
+    "historyCount": 1864,
+    "historyHash": "9e9bb33ed58f3d59288a23a805f4e540"
+  },
+  "sharedVersions": {
+    "screener": "20261021-1c01ff6eb0b7d78a",
+    "macro-transmission": "20261108-366f83bfc727036c",
+    "market-overview": "20261021-6319db232c0a22d0",
+    "portfolio": "20261021-690705b397d4b878",
+    "macro-insights": "20261108-366f83bfc727036c"
+  },
+  "compactBeforeBytes": {
+    "page_snapshot": 314204160,
+    "published_snapshot": 16146432
+  },
+  "compactAfterBytes": {
+    "page_snapshot": 314499072,
+    "published_snapshot": 10469376
+  },
+  "netBytesSaved": 5382144,
+  "newPgDumpBytes": 421287785,
+  "restoredAndDowngraded": true
+}

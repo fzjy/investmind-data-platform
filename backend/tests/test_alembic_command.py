@@ -24,7 +24,7 @@ def test_alembic_config_resolves_paths_from_project_root() -> None:
     )
 
     assert result.returncode == 0, result.stderr
-    assert result.stdout.strip() == "20261111_0020 (head)"
+    assert result.stdout.strip() == "20261115_0021 (head)"
 
 
 def test_documented_python_migration_commands_use_the_packaged_configuration() -> None:

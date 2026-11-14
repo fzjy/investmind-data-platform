@@ -9,6 +9,7 @@ from zoneinfo import ZoneInfo
 from sqlalchemy import select, text
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "backend"))
+from app.shared.snapshot_sql import PUBLISHED_SNAPSHOTS_SQL
 from app.config import settings
 from app.content.announcement_history import JOB
 from app.content.content_policy import DISPLAY_STATUSES
@@ -50,8 +51,8 @@ def source_indexes(session, codes):
 def audit(factory, session):
     assert session.scalar(text("show transaction_read_only")) == "on"
     now = session.scalar(text("select current_timestamp"))
-    pool = sorted(session.scalars(text("""
-        select row->>'symbol' from mart.published_snapshot
+    pool = sorted(session.scalars(text(f"""
+        select row->>'symbol' from {PUBLISHED_SNAPSHOTS_SQL} published
         cross join lateral json_array_elements(payload->'stocks') row where product='screener'
     """)))
     service = WorkbenchService(StocksDatabaseProvider(SnapshotRepository(factory), factory))

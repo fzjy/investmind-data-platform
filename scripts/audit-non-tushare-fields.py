@@ -6,6 +6,7 @@ from sqlalchemy import text, select
 p = Path(__file__).resolve().parents[1]
 
 sys.path[:0] = [str(p / "backend"), str(p / "packages/news-collector/src")]
+from app.shared.snapshot_sql import PUBLISHED_SNAPSHOTS_SQL
 from app.db.models import MacroObservation
 from app.macro.import_lineage import verify_import_lineage, is_verified_import
 from app.config import Settings
@@ -39,7 +40,7 @@ with open_readonly_factory(
         k: (v, d)
         for k, v, d in session.execute(
             text(
-                "SELECT product, version, payload FROM mart.published_snapshot WHERE product IN ('macro-transmission','macro-insights')"
+                f"SELECT product, version, payload FROM {PUBLISHED_SNAPSHOTS_SQL} AS resolved WHERE product IN ('macro-transmission','macro-insights')"
             )
         )
     }

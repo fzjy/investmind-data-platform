@@ -12,6 +12,7 @@ from typing import Iterator
 from sqlalchemy import Connection, Engine, text
 from sqlalchemy.exc import SQLAlchemyError
 
+from app.shared.snapshot_sql import PUBLISHED_SNAPSHOTS_SQL
 from app.ops.backup.contracts import BackupError, DatabaseInventory, PublicationInventory, SequenceInventory, TableInventory
 from app.ops.backup.budget import remaining_timeout
 from app.ops.backup.project_guards import USER_NAMESPACE, ProjectGuardDefinition, inspect_project_guards
@@ -238,10 +239,16 @@ def read_inventory(connection: Connection, *, timeout: float) -> DatabaseInvento
         versions = tuple(budget.execute(connection, "SELECT version_num FROM public.alembic_version ORDER BY version_num").scalars()) if ("public", "alembic_version") in names else ()
         publications: tuple[PublicationInventory, ...] = ()
         if ("mart", "published_snapshot") in names:
-            values = budget.execute(connection, """
+            body = "mart.published_snapshot"
+            if ("mart", "page_snapshot") in names and budget.execute(connection, """
+                SELECT EXISTS (SELECT 1 FROM pg_attribute
+                WHERE attrelid='mart.published_snapshot'::regclass AND attname='history_version' AND NOT attisdropped)
+            """).scalar_one():
+                body = PUBLISHED_SNAPSHOTS_SQL + " AS resolved"
+            values = budget.execute(connection, f"""
                 SELECT product, version, stale,
                     CASE WHEN jsonb_typeof(payload::jsonb->'stocks')='array' THEN jsonb_array_length(payload::jsonb->'stocks') ELSE NULL END AS row_count
-                FROM mart.published_snapshot ORDER BY product COLLATE "C"
+                FROM {body} ORDER BY product COLLATE "C"
             """).mappings()
             publications = tuple(PublicationInventory(**dict(value)) for value in values)
         sequences = _sequences(connection, relations, budget)

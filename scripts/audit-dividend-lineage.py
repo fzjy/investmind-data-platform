@@ -8,6 +8,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "backend"))
 
 from sqlalchemy import text
+from app.shared.snapshot_sql import PUBLISHED_SNAPSHOTS_SQL
 from app.config import settings
 from app.shared.readonly_database import open_readonly_factory
 from app.stocks.derived.workbench_cards import CARD_VERSION
@@ -19,8 +20,8 @@ def query(session, sql, **params):
 
 
 def read_publication(session):
-    version, as_of, published_at, stocks = session.execute(text("""
-        select version, as_of, published_at, payload->'stocks' from mart.published_snapshot where product='screener'
+    version, as_of, published_at, stocks = session.execute(text(f"""
+        select version, as_of, published_at, payload->'stocks' from {PUBLISHED_SNAPSHOTS_SQL} published where product='screener'
     """)).one()
     if not stocks:
         raise ValueError("选股快照为空")

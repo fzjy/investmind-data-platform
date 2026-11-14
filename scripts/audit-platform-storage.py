@@ -7,6 +7,7 @@ from sqlalchemy import text
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "backend"))
+from app.shared.snapshot_sql import PUBLISHED_SNAPSHOTS_SQL
 from app.config import settings
 from app.shared.readonly_database import open_readonly_factory
 from app.shared.errors import DataServiceError
@@ -45,11 +46,11 @@ def main():
                        count(*) filter(where bodies>1) as revised_request_keys
                 from by_request group by source, api_name order by source, api_name
             """),
-            "currentAndHistory": rows("""
+            "currentAndHistory": rows(f"""
                 select split_part(p.product, ':', 1) as family, count(*) as current,
                        count(h.id) as also_in_history,
                        count(*) filter(where p.payload::jsonb=h.payload::jsonb) as identical
-                from mart.published_snapshot p left join mart.page_snapshot h
+                from {PUBLISHED_SNAPSHOTS_SQL} p left join mart.page_snapshot h
                 on h.product=p.product and h.snapshot_version=p.version group by 1 order by 1
             """),
             "screenerVersions": rows("""

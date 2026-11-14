@@ -10,15 +10,16 @@ from testcontainers.community.postgres import PostgresContainer
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "backend"))
 
+from app.shared.snapshot_sql import PUBLISHED_SNAPSHOTS_SQL
 from app.config import settings
 from app.shared.readonly_database import open_readonly_factory
 
-MATCH = """SELECT p.product,p.version,p.as_of,p.payload,
+MATCH = f"""SELECT p.product,p.version,p.as_of,p.payload,
     h.id AS historical_id, (h.payload::jsonb = p.payload::jsonb) AS equal_json,
     (h.payload::text = p.payload::text) AS equal_text, h.as_of=p.as_of AS equal_as_of,
     pg_column_size(p.payload) AS current_column_bytes, pg_column_size(h.payload) AS history_column_bytes,
     octet_length(p.payload::text) AS text_bytes
-    FROM mart.published_snapshot p LEFT JOIN mart.page_snapshot h
+    FROM {PUBLISHED_SNAPSHOTS_SQL} p LEFT JOIN mart.page_snapshot h
     ON h.product=p.product AND h.snapshot_version=p.version"""
 
 
@@ -42,19 +43,19 @@ def measure_pointer(source, target):
             for name, query in [
                 (
                     "pointer_baseline",
-                    "SELECT product,version,as_of,payload,stale,stale_reason,freshness_checked_at,published_at FROM mart.published_snapshot ORDER BY product",
+                    f"SELECT product,version,as_of,payload,stale,stale_reason,freshness_checked_at,published_at FROM {PUBLISHED_SNAPSHOTS_SQL} published ORDER BY product",
                 ),
                 (
                     "current_history",
-                    "SELECT h.id,h.payload FROM mart.page_snapshot h JOIN mart.published_snapshot p ON h.product=p.product AND h.snapshot_version=p.version ORDER BY h.id",
+                    f"SELECT h.id,h.payload FROM mart.page_snapshot h JOIN {PUBLISHED_SNAPSHOTS_SQL} p ON h.product=p.product AND h.snapshot_version=p.version ORDER BY h.id",
                 ),
                 (
                     "pointer_reference",
-                    """SELECT p.product,p.version,p.as_of,
+                    f"""SELECT p.product,p.version,p.as_of,
                     CASE WHEN p.payload::text=h.payload::text THEN NULL ELSE p.payload END,
                     p.stale,p.stale_reason,p.freshness_checked_at,p.published_at,
                     CASE WHEN p.payload::text=h.payload::text THEN h.id ELSE NULL END
-                    FROM mart.published_snapshot p LEFT JOIN mart.page_snapshot h
+                    FROM {PUBLISHED_SNAPSHOTS_SQL} p LEFT JOIN mart.page_snapshot h
                     ON h.product=p.product AND h.snapshot_version=p.version ORDER BY p.product""",
                 ),
             ]:
@@ -150,6 +151,38 @@ def main():
                 r["product"] for r in rows if r["historical_id"] is None
             ],
         }
+        report["historyMutationSurface"] = []
+        inspect = text(
+            """
+            WITH bodies AS MATERIALIZED (
+                SELECT payload::jsonb AS body FROM mart.page_snapshot WHERE id=ANY(:ids)
+            )
+            SELECT count(*) AS versions,
+              count(*) FILTER (WHERE jsonb_exists(body,'marketNews')) AS news_field_versions,
+              count(*) FILTER (WHERE jsonb_typeof(body->'marketNews')='array'
+                AND jsonb_array_length(body->'marketNews')>0) AS nonempty_news_versions,
+              count(*) FILTER (WHERE jsonb_typeof(body->'dailyChart'->'announcements')='array') AS announcement_versions
+            FROM bodies
+        """
+        )
+        for item in equivalent:
+            product = item["product"]
+            identifiers = source.scalars(
+                text(
+                    "SELECT id FROM mart.page_snapshot WHERE product=:product ORDER BY id"
+                ),
+                {"product": product},
+            ).all()
+            counts = {}
+            for offset in range(0, len(identifiers), 8):
+                group = (
+                    source.execute(inspect, {"ids": identifiers[offset : offset + 8]})
+                    .mappings()
+                    .one()
+                )
+                for key, value in group.items():
+                    counts[key] = counts.get(key, 0) + value
+            report["historyMutationSurface"].append({"product": product, **counts})
         with PostgresContainer("postgres:17-alpine", driver="psycopg") as pg:
             target = create_engine(pg.get_connection_url(driver="psycopg"))
             try:
