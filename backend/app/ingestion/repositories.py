@@ -10,7 +10,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.connectors.tushare.contracts import TushareResponse, request_hash
-from app.db.models import CashflowStatement, DailyBasic, FinancialForecast, FinancialIndicator, IncomeStatement, Security, IngestionBatch, RejectedRecord, SourcePayload
+from app.db.models import CashflowStatement, DailyBasic, FinancialForecast, FinancialIndicator, IncomeStatement, Security, IngestionBatch, RejectedRecord, ShareUnlock, SourcePayload
 
 
 ModelT = TypeVar("ModelT")
@@ -74,7 +74,7 @@ class IngestionRepository:
 
     def upsert(self, model: type[ModelT], keys: Mapping[str, object], values: Mapping[str, object]) -> ModelT:
         statement = select(model).filter_by(**dict(keys))
-        if model in (DailyBasic, Security, FinancialForecast, FinancialIndicator, IncomeStatement, CashflowStatement):
+        if model in (DailyBasic, Security, FinancialForecast, FinancialIndicator, IncomeStatement, CashflowStatement, ShareUnlock):
             statement = statement.with_for_update().execution_options(populate_existing=True)
         instance = self.session.scalar(statement)
         if instance is None:
@@ -87,6 +87,8 @@ class IngestionRepository:
                 and instance.f_ann_date == values.get("f_ann_date")
                 and instance.comp_type == values.get("comp_type"))
             for key, value in values.items():
+                if model is ShareUnlock and key == "data" and "unlock_date" not in value and "unlock_date" in (instance.data or {}):
+                    value = {**value, "unlock_date": instance.data["unlock_date"]}
                 if key == "data" and (model in (IncomeStatement, FinancialIndicator) or same_cashflow_revision):
                     # 同一版本允许窄字段合同重放；只覆盖本次接口实际返回的键。
                     value = (instance.data or {}) | value

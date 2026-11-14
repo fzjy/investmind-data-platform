@@ -255,7 +255,7 @@ FIELD_REGISTRY: dict[Dataset, tuple[str, ...]] = {
     Dataset.FINANCIAL_FORECAST: ("ts_code", "ann_date", "end_date", "type", "p_change_min", "p_change_max", "net_profit_min", "net_profit_max"),
     Dataset.FINANCIAL_EXPRESS: ("ts_code", "ann_date", "end_date", "revenue", "n_income", "total_assets", "total_hldr_eqy_exc_min_int"),
     Dataset.REPURCHASE: ("ts_code", "ann_date", "proc", "exp_date", "vol", "amount"),
-    Dataset.SHARE_UNLOCK: ("ts_code", "ann_date", "float_date", "float_share", "unlock_date"),
+    Dataset.SHARE_UNLOCK: ("ts_code", "ann_date", "float_date", "float_share"),
     Dataset.SHAREHOLDER_COUNT: ("ts_code", "ann_date", "end_date", "holder_num"),
     Dataset.TOP_HOLDER: ("ts_code", "ann_date", "end_date", "holder_name", "hold_amount", "holder_type"),
     Dataset.BUSINESS_SEGMENT: ("ts_code", "end_date", "revenue", "segment_name", "segment_type"),

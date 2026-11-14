@@ -74,6 +74,9 @@ class IngestionPipeline:
         for row_number, row in enumerate(response.rows(), start=1):
             try:
                 with session.begin_nested():
+                    if plan.dataset is Dataset.SHARE_UNLOCK and "unlock_date" not in plan.fields:
+                        # 原件已完整保留；供应商意外返回的退役字段不能覆盖旧值。
+                        row = {key: value for key, value in row.items() if key != "unlock_date"}
                     self._upsert_row(repository, plan.dataset, row, classification_source=plan.params.get("src"))
             except (KeyError, TypeError, ValueError, DataError, IntegrityError) as exc:
                 rejected += 1
