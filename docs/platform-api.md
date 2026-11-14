@@ -60,3 +60,5 @@
 [完整选股条件与排序](screener-api-fields.md) · [银行字段与评分](research/investmind-bank-lineage.md) · [股票工作台与同业研究](workbench-api.md) · [市场总览与浏览](market-supply.md)
 
 [从原字段反查项目、页面、指标](field-consumers.md) · [InvestMind 选股器逐字段用途](screener-field-usage.md) · [证券公告与披露](workbench-announcements.md)
+
+[逐指标留存策略、公式版本和可回溯区间](derived-history.md)
