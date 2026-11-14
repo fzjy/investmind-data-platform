@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "smartparse-news-collector"
+version = "0.1.0"
+requires-python = ">=3.12"
+description = "Independent bounded financial news collector"
+
+[project.scripts]
+smartparse-news = "smartparse_news.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

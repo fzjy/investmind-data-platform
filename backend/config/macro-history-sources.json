@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0",
+  "sources": {
+    "cn.fx.usdcny": {
+      "provider": "chinamoney",
+      "priority": 1,
+      "series": "USD/CNY",
+      "api": "CcprHisNew",
+      "field": "values",
+      "transform": "identity",
+      "sourceUrl": "https://www.chinamoney.com.cn/ags/ms/cm-u-bk-ccpr/CcprHisNew",
+      "termsUrl": "https://www.chinamoney.com.cn/chinese/mtsjfu/",
+      "accessMode": "public_page",
+      "displayAllowed": true,
+      "params": {"maxPages": "4"},
+      "responseFields": ["date", "values"]
+    },
+    "cn.rate.dr007": {
+      "provider": "tushare",
+      "priority": 1,
+      "series": "DR007.IB",
+      "api": "repo_daily",
+      "field": "weight",
+      "transform": "identity",
+      "sourceUrl": "https://tushare.pro/document/2?doc_id=256",
+      "termsUrl": "https://tushare.pro/document/1?doc_id=20",
+      "accessMode": "api",
+      "displayAllowed": true,
+      "params": {"ts_code": "DR007.IB"},
+      "responseFields": ["trade_date", "ts_code", "repo_maturity", "weight"]
+    },
+    "cn.rate.govbond_10y": {
+      "provider": "chinamoney",
+      "priority": 1,
+      "series": "CGB-10Y",
+      "api": "SddsIntrRateGovYldHis",
+      "field": "tenRate",
+      "transform": "identity",
+      "sourceUrl": "https://www.chinamoney.com.cn/ags/ms/cm-u-bk-currency/SddsIntrRateGovYldHis",
+      "termsUrl": "https://www.chinamoney.com.cn/chinese/mtsjfu/",
+      "accessMode": "public_page",
+      "displayAllowed": true,
+      "params": {"maxPages": "3"},
+      "responseFields": ["dateString", "tenRate"]
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "annualizationDays": 252,
+  "calendarDays": 365.25,
+  "rollingWindow": 126,
+  "minimumSamples": 20,
+  "downThreshold": 0,
+  "riskFreeAnnualRate": null,
+  "defaultCapital": 1000000,
+  "recalculateDelayMs": 500,
+  "defaultWeight": 1,
+  "pairMinimumSamples": 2,
+  "scatterMinimumSamples": 10,
+  "maxCompareAssets": 8,
+  "fetchConcurrency": 3,
+  "apiMaxAssets": 100,
+  "routine": {
+    "enabled": true,
+    "referenceEnabled": true,
+    "dividendsEnabled": true,
+    "referenceIntervalDays": 1,
+    "dividendRevisionDays": 7
+  },
+  "dividendEvidence": {
+    "maxHttpPerRun": 20,
+    "timeoutSeconds": 20
+  },
+  "referenceEvidence": {
+    "maxHttpPerRun": 2,
+    "timeoutSeconds": 20
+  },
+  "optimization": {
+    "scatterMultiplier": 8,
+    "seed": 20261029,
+    "cmlExtension": 1.2,
+    "maxAssets": 16,
+    "points": 61,
+    "maxIterations": 2000,
+    "tolerance": 0.00000001,
+    "ridge": 0.00000001
+  }
+}

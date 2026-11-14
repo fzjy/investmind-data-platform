@@ -1,0 +1,12 @@
+{
+  "sourceUrl": "https://apps.bea.gov/national/Release/TXT/Section1All_csv.zip",
+  "retrievalPage": "https://www.bea.gov/news/2025/gross-domestic-product-1st-quarter-2025-advance-estimate",
+  "documentationUrl": "https://www.bea.gov/help/faq/125",
+  "retrievedAt": "2026-09-21T00:00:00Z",
+  "contentType": "application/zip",
+  "sanitized": true,
+  "catalogEnabled": false,
+  "archiveFiles": {
+    "T10101-Q.csv": "Table 1.1.1. Percent Change From Preceding Period in Real Gross Domestic Product\r\n[Percent]\r\n\r\nLine,,2024Q4,2025Q1\r\n1,Gross domestic product,2.4,-0.3\r\n2,Personal consumption expenditures,4.0,1.8\r\n"
+  }
+}

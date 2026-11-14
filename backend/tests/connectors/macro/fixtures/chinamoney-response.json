@@ -1,0 +1,33 @@
+{
+  "sourceUrl": "https://www.chinamoney.com.cn/r/cms/www/chinamoney/data/fx/ccpr.json",
+  "retrievalPage": "https://www.chinamoney.com.cn/chinese/bkccpr/",
+  "retrievedAt": "2026-09-21T00:00:00Z",
+  "observedPeriod": "2026-09-18",
+  "publishedAt": "2026-09-18T09:15:00+08:00",
+  "providerSeriesCode": "USD/CNY",
+  "value": "6.7521",
+  "contentType": "application/json",
+  "sanitized": true,
+  "payload": {
+    "head": {
+      "version": "2.0",
+      "provider": "CWAP",
+      "req_code": "",
+      "rep_code": "200",
+      "rep_message": ""
+    },
+    "data": {
+      "lastDateEn": "18/09/2026 9:15",
+      "lastDate": "2026-09-18 9:15"
+    },
+    "records": [
+      {
+        "vrtCode": "1",
+        "price": "6.7521",
+        "vrtName": "美元/人民币",
+        "vrtEName": "USD/CNY",
+        "foreignCName": "USD"
+      }
+    ]
+  }
+}

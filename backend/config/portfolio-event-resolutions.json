@@ -1,0 +1,12 @@
+[
+  {
+    "sourceHash": "20776d402b26acee18206d852357d285ab49ce8dd860059e836a1570661b3bab",
+    "cancelHash": "6a3cc05439def9173d4cfc071a46d31d1439c065f16e10d0eef5482e7182b50c",
+    "replacementHash": "e50ed44a7c7fd19e017f0f27bf804dd524c2d5c1843e5419003295f68ef547cb",
+    "scope": "proposal-only",
+    "documents": [
+      {"file":"portfolio-evidence/byd-2025-033.pdf","sha256":"26da674055df5432e7e42937191a766f1dbd7d7d2dc51b5234c406a64e16dc38","publishedAt":"2025-04-22","url":"https://www.hkexnews.hk/listedco/listconews/sehk/2025/0422/2025042201565_c.pdf"},
+      {"file":"portfolio-evidence/byd-2025-047.pdf","sha256":"3b196b9e25e34593717e040b2d4985bc89889d15fdc332f6d5cd2cf2c36fdeb0","publishedAt":"2025-07-21","url":"https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0721/2025072100912_c.pdf"}
+    ]
+  }
+]

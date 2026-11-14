@@ -1,0 +1,120 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DANG_POSTGRES_DB:-danginvest}
+      POSTGRES_USER: ${DANG_POSTGRES_USER:-danginvest}
+      POSTGRES_PASSWORD: ${DANG_POSTGRES_PASSWORD:-danginvest-local-only}
+    volumes:
+      - danginvest-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  migrate:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    working_dir: /app/backend
+    command: ["alembic", "upgrade", "head"]
+    environment:
+      DANG_DATA_BACKEND: database
+      DANG_DATABASE_URL: postgresql+psycopg://${DANG_POSTGRES_USER:-danginvest}:${DANG_POSTGRES_PASSWORD:-danginvest-local-only}@postgres:5432/${DANG_POSTGRES_DB:-danginvest}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  bootstrap:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    restart: "no"
+    working_dir: /app/backend
+    command: ["python", "-m", "app.bootstrap"]
+    environment:
+      DANG_DATA_BACKEND: database
+      DANG_DATABASE_URL: postgresql+psycopg://${DANG_POSTGRES_USER:-danginvest}:${DANG_POSTGRES_PASSWORD:-danginvest-local-only}@postgres:5432/${DANG_POSTGRES_DB:-danginvest}
+      DANG_DATABASE_READ_URL: postgresql+psycopg://${DANG_POSTGRES_USER:-danginvest}:${DANG_POSTGRES_PASSWORD:-danginvest-local-only}@postgres:5432/${DANG_POSTGRES_DB:-danginvest}
+      DANG_TUSHARE_TOKEN: ${DANG_TUSHARE_TOKEN:-}
+      DANG_TUSHARE_MODE: ${DANG_TUSHARE_MODE:-standard}
+      DANG_TUSHARE_STANDARD_REQUESTS_PER_MINUTE: ${DANG_TUSHARE_STANDARD_REQUESTS_PER_MINUTE:-30}
+      DANG_TUSHARE_VIP_REQUESTS_PER_MINUTE: ${DANG_TUSHARE_VIP_REQUESTS_PER_MINUTE:-120}
+      DANG_TUSHARE_PAGE_SIZE: ${DANG_TUSHARE_PAGE_SIZE:-5000}
+      DANG_SYNC_TIMEZONE: ${DANG_SYNC_TIMEZONE:-Asia/Shanghai}
+      DANG_BOOTSTRAP_SYMBOLS: ${DANG_BOOTSTRAP_SYMBOLS-600519.SH}
+      DANG_BOOTSTRAP_AS_OF: ${DANG_BOOTSTRAP_AS_OF:-}
+      DANG_BOOTSTRAP_FORCE: ${DANG_BOOTSTRAP_FORCE:-false}
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    restart: unless-stopped
+    working_dir: /app/backend
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports:
+      - "${DANG_BACKEND_PORT:-8000}:8000"
+    environment:
+      DANG_DATA_BACKEND: database
+      DANG_DATABASE_URL: postgresql+psycopg://${DANG_POSTGRES_USER:-danginvest}:${DANG_POSTGRES_PASSWORD:-danginvest-local-only}@postgres:5432/${DANG_POSTGRES_DB:-danginvest}
+      DANG_DATABASE_READ_URL: postgresql+psycopg://${DANG_POSTGRES_USER:-danginvest}:${DANG_POSTGRES_PASSWORD:-danginvest-local-only}@postgres:5432/${DANG_POSTGRES_DB:-danginvest}
+      DANG_BACKEND_CORS_ORIGINS: ${DANG_BACKEND_CORS_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000}
+      DANG_SYNC_TIMEZONE: ${DANG_SYNC_TIMEZONE:-Asia/Shanghai}
+      DANG_MACRO_SYNC_ENABLED: ${DANG_MACRO_SYNC_ENABLED:-true}
+      DANG_MACRO_SYNC_DAY_OF_WEEK: ${DANG_MACRO_SYNC_DAY_OF_WEEK:-mon}
+      DANG_MACRO_SYNC_TIME: ${DANG_MACRO_SYNC_TIME:-09:00}
+      DANG_MACRO_SYNC_CATCHUP_ON_START: ${DANG_MACRO_SYNC_CATCHUP_ON_START:-true}
+      DANG_MACRO_HISTORY_YEARS: ${DANG_MACRO_HISTORY_YEARS:-10}
+    depends_on:
+      bootstrap:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD-SHELL", "python -c 'import urllib.request; urllib.request.urlopen(\"http://localhost:8000/health\")'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    restart: unless-stopped
+    profiles: ["scheduler"]
+    working_dir: /app/backend
+    command: ["python", "-m", "app.jobs.scheduler"]
+    environment:
+      DANG_DATA_BACKEND: database
+      DANG_DATABASE_URL: postgresql+psycopg://${DANG_POSTGRES_USER:-danginvest}:${DANG_POSTGRES_PASSWORD:-danginvest-local-only}@postgres:5432/${DANG_POSTGRES_DB:-danginvest}
+      DANG_TUSHARE_TOKEN: ${DANG_TUSHARE_TOKEN:-}
+      DANG_TUSHARE_MODE: ${DANG_TUSHARE_MODE:-standard}
+      DANG_SYNC_TIMEZONE: ${DANG_SYNC_TIMEZONE:-Asia/Shanghai}
+      DANG_SYNC_HOUR: ${DANG_SYNC_HOUR:-19}
+      DANG_FRED_API_KEY: ${DANG_FRED_API_KEY:-}
+      DANG_MACRO_SYNC_ENABLED: ${DANG_MACRO_SYNC_ENABLED:-true}
+      DANG_MACRO_SYNC_DAY_OF_WEEK: ${DANG_MACRO_SYNC_DAY_OF_WEEK:-mon}
+      DANG_MACRO_SYNC_TIME: ${DANG_MACRO_SYNC_TIME:-09:00}
+      DANG_MACRO_SYNC_CATCHUP_ON_START: ${DANG_MACRO_SYNC_CATCHUP_ON_START:-true}
+      DANG_MACRO_HISTORY_YEARS: ${DANG_MACRO_HISTORY_YEARS:-10}
+      DANG_SYNC_MINUTE: ${DANG_SYNC_MINUTE:-0}
+      DANG_SYNC_UNIVERSE: ${DANG_SYNC_UNIVERSE:-representative-50}
+      DANG_SYNC_UNIVERSE_FILE: ${DANG_SYNC_UNIVERSE_FILE:-}
+      DANG_SYNC_FAILURE_ALERT_THRESHOLD: ${DANG_SYNC_FAILURE_ALERT_THRESHOLD:-3}
+      DANG_SYNC_CATCHUP_MAX_DAYS: ${DANG_SYNC_CATCHUP_MAX_DAYS:-10}
+      DANG_SCHEDULER_HEARTBEAT_SECONDS: ${DANG_SCHEDULER_HEARTBEAT_SECONDS:-60}
+      DANG_SCHEDULER_HEARTBEAT_TIMEOUT_SECONDS: ${DANG_SCHEDULER_HEARTBEAT_TIMEOUT_SECONDS:-180}
+      DANG_SYNC_FRESHNESS_INTERVAL_SECONDS: ${DANG_SYNC_FRESHNESS_INTERVAL_SECONDS:-300}
+      DANG_EXTERNAL_IMPORT_PATH: /imports
+    volumes:
+      - ${DANG_EXTERNAL_IMPORT_PATH:-./backend/imports}:/imports:ro
+    depends_on:
+      bootstrap:
+        condition: service_completed_successfully
+
+volumes:
+  danginvest-postgres-data:

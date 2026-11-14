@@ -1,0 +1,150 @@
+[
+  {
+    "request": {
+      "filters": {
+        "preset": null,
+        "thresholds": {
+          "dividendYield": 0
+        },
+        "enabledThresholds": [],
+        "exclusions": [],
+        "boards": [
+          "sh-main",
+          "sz-main",
+          "star",
+          "chinext",
+          "bse",
+          "hk"
+        ],
+        "categories": {
+          "majorIndustry": [],
+          "subIndustry": [],
+          "concept": [],
+          "region": []
+        }
+      },
+      "sortMode": "quick",
+      "sortRules": [
+        {
+          "field": "dividendYield",
+          "direction": "desc",
+          "enabled": true
+        }
+      ],
+      "pageSize": 200
+    },
+    "snapshot": {
+      "asOf": "2026-10-21T00:00:00+00:00",
+      "version": "20261021-1c01ff6eb0b7d78a"
+    },
+    "rows": 50,
+    "http": 1,
+    "sql": 1,
+    "nulls": {
+      "dividendYield": 1,
+      "expectedDividendYield": 8,
+      "expectedDividendYieldNTM": 11
+    },
+    "orderedRowsSha256": "18760ca76a1daa7d97d7426526f07ee73ca2142d2e50cdd160981631a47bc2fa"
+  },
+  {
+    "request": {
+      "filters": {
+        "preset": null,
+        "thresholds": {
+          "dividendYield": 0
+        },
+        "enabledThresholds": [
+          "dividendYield"
+        ],
+        "exclusions": [],
+        "boards": [
+          "sh-main",
+          "sz-main",
+          "star",
+          "chinext",
+          "bse",
+          "hk"
+        ],
+        "categories": {
+          "majorIndustry": [],
+          "subIndustry": [],
+          "concept": [],
+          "region": []
+        }
+      },
+      "sortMode": "quick",
+      "sortRules": [
+        {
+          "field": "dividendYield",
+          "direction": "desc",
+          "enabled": true
+        }
+      ],
+      "pageSize": 200
+    },
+    "snapshot": {
+      "asOf": "2026-10-21T00:00:00+00:00",
+      "version": "20261021-1c01ff6eb0b7d78a"
+    },
+    "rows": 41,
+    "http": 1,
+    "sql": 1,
+    "nulls": {
+      "dividendYield": 0,
+      "expectedDividendYield": 2,
+      "expectedDividendYieldNTM": 5
+    },
+    "orderedRowsSha256": "376995d24708644a3637911519167e783d53466578e7085aa1a3d1d19e970c7e"
+  },
+  {
+    "request": {
+      "filters": {
+        "preset": null,
+        "thresholds": {
+          "dividendYield": 0
+        },
+        "enabledThresholds": [
+          "dividendYield"
+        ],
+        "exclusions": [],
+        "boards": [
+          "sh-main",
+          "sz-main",
+          "star",
+          "chinext",
+          "bse",
+          "hk"
+        ],
+        "categories": {
+          "majorIndustry": [],
+          "subIndustry": [],
+          "concept": [],
+          "region": []
+        }
+      },
+      "sortMode": "quick",
+      "sortRules": [
+        {
+          "field": "dividendYield",
+          "direction": "desc",
+          "enabled": true
+        }
+      ],
+      "pageSize": 10
+    },
+    "snapshot": {
+      "asOf": "2026-10-21T00:00:00+00:00",
+      "version": "20261021-1c01ff6eb0b7d78a"
+    },
+    "rows": 41,
+    "http": 5,
+    "sql": 5,
+    "nulls": {
+      "dividendYield": 0,
+      "expectedDividendYield": 2,
+      "expectedDividendYieldNTM": 5
+    },
+    "orderedRowsSha256": "376995d24708644a3637911519167e783d53466578e7085aa1a3d1d19e970c7e"
+  }
+]

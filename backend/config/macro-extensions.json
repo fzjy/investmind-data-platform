@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "contractSamples": {
+    "szMarket": {
+      "enabled": true,
+      "parentRunId": "791bea1e-7eaa-5a72-aefd-848d8edcfb27",
+      "providerUrl": "https://api.tushare.pro",
+      "documentationUrl": "https://tushare.pro/document/2?doc_id=268",
+      "apiName": "sz_daily_info",
+      "fields": ["trade_date", "ts_code", "count", "float_mv"],
+      "unitStatus": "unverified",
+      "useScope": "personal-local-noncommercial",
+      "limits": {"maxTotalHttp": 1, "maxHttpPerRun": 1, "requestsPerMinute": 1, "requestTimeoutSeconds": 20, "maxRetries": 0, "maxResponseBytes": 1048576, "maxResponseRows": 64}
+    }
+  },
+  "groups": {
+    "usdcnh": {
+      "collectionEnabled": true,
+      "schedule": {"frequency": "daily", "weekday": 0, "time": "19:00", "timezone": "Asia/Shanghai"},
+      "lookbackPeriods": 90,
+      "quoteSide": "bid_close",
+      "limits": {"maxHttpPerRun": 1, "maxHttpPerPeriod": 1, "requestsPerMinute": 10, "requestTimeoutSeconds": 20, "maxRetries": 0, "maxResponseBytes": 8388608, "maxResponseRows": 366}
+    },
+    "vix": {
+      "collectionEnabled": true,
+      "schedule": {"frequency": "daily", "weekday": 0, "time": "19:00", "timezone": "Asia/Shanghai"},
+      "lookbackPeriods": 180,
+      "quoteSide": null,
+      "limits": {"maxHttpPerRun": 1, "maxHttpPerPeriod": 1, "requestsPerMinute": 10, "requestTimeoutSeconds": 20, "maxRetries": 0, "maxResponseBytes": 8388608, "maxResponseRows": 366}
+    },
+    "governmentBonds": {
+      "collectionEnabled": true,
+      "schedule": {"frequency": "weekly", "weekday": 0, "time": "09:00", "timezone": "Asia/Shanghai"},
+      "lookbackPeriods": 48,
+      "quoteSide": null,
+      "limits": {"maxHttpPerRun": 5, "maxHttpPerPeriod": 5, "requestsPerMinute": 10, "requestTimeoutSeconds": 20, "maxRetries": 0, "maxResponseBytes": 5242880, "maxResponseRows": 12},
+      "documents": [
+        {"year": 2022, "url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2025/11/2025110416580445143.htm"},
+        {"year": 2023, "url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2025/11/2025110415542195680.htm"},
+        {"year": 2024, "url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2025/11/2025111416250469423.htm"},
+        {"year": 2025, "url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2026/02/2026021416101512219.htm"},
+        {"year": 2026, "url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2026/10/2026101417443343908.htm"}
+      ]
+    },
+    "householdCredit": {
+      "collectionEnabled": true,
+      "schedule": {"frequency": "weekly", "weekday": 0, "time": "09:00", "timezone": "Asia/Shanghai"},
+      "lookbackPeriods": 48, "quoteSide": null, "quarterFallbacks": 0,
+      "limits": {"maxHttpPerRun": 2, "maxHttpPerPeriod": 2, "requestsPerMinute": 10, "requestTimeoutSeconds": 20, "maxRetries": 0, "maxResponseBytes": 5242880, "maxResponseRows": 16, "maxDirectoryCandidates": 2},
+      "documents": [
+        {"id": "household-directory", "role": "household-directory", "period": "latest", "url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116225/index.html", "derivedFrom": null},
+        {"id": "household-report", "role": "household-ytd", "period": "latest-completed-month", "url": null, "derivedFrom": "household-directory"}
+      ]
+    },
+    "tier1Housing": {
+      "collectionEnabled": true,
+      "schedule": {"frequency": "weekly", "weekday": 0, "time": "09:00", "timezone": "Asia/Shanghai"},
+      "lookbackPeriods": 48, "quoteSide": null, "quarterFallbacks": 0,
+      "limits": {"maxHttpPerRun": 3, "maxHttpPerPeriod": 3, "requestsPerMinute": 10, "requestTimeoutSeconds": 20, "maxRetries": 0, "maxResponseBytes": 5242880, "maxResponseRows": 16, "maxDirectoryCandidates": 2},
+      "documents": [
+        {"id": "housing-directory", "role": "tier1-directory", "period": "latest", "url": "https://www.stats.gov.cn/xxgk/jd/sjjd2020/", "derivedFrom": null},
+        {"id": "housing-page", "role": "tier1-directory-page", "period": "latest", "url": "https://www.stats.gov.cn/xxgk/jd/sjjd2020/index_1.html", "derivedFrom": null},
+        {"id": "housing-report", "role": "tier1-prices", "period": "latest-completed-month", "url": null, "derivedFrom": "housing-page"}
+      ]
+    },
+    "specialBonds": {
+      "collectionEnabled": true,
+      "schedule": {"frequency": "weekly", "weekday": 0, "time": "09:00", "timezone": "Asia/Shanghai"},
+      "lookbackPeriods": 48, "quoteSide": null, "quarterFallbacks": 0,
+      "limits": {"maxHttpPerRun": 3, "maxHttpPerPeriod": 5, "requestsPerMinute": 10, "requestTimeoutSeconds": 20, "maxRetries": 0, "maxResponseBytes": 5242880, "maxResponseRows": 16, "maxDirectoryCandidates": 2},
+      "documents": [
+        {"id": "budget-directory", "role": "special-budget-directory", "period": "latest", "url": "https://www.mof.gov.cn/zyyjsgkpt/zyzfyjs/zyys/ysbb/", "derivedFrom": null},
+        {"id": "budget-year", "role": "special-year-directory", "period": "target-year", "url": null, "derivedFrom": "budget-directory"},
+        {"id": "special-quota", "role": "special-quota", "period": "target-year", "url": null, "derivedFrom": "budget-year"},
+        {"id": "special-directory", "role": "special-directory", "period": "latest", "url": "https://zwgls.mof.gov.cn/tjsj/", "derivedFrom": null},
+        {"id": "special-report", "role": "special-issuance", "period": "latest-completed-month", "url": null, "derivedFrom": "special-directory"}
+      ]
+    },
+    "propertyLoans": {
+      "collectionEnabled": true,
+      "schedule": {"frequency": "weekly", "weekday": 0, "time": "09:00", "timezone": "Asia/Shanghai"},
+      "lookbackPeriods": 48, "quoteSide": null, "quarterFallbacks": 1,
+      "limits": {"maxHttpPerRun": 2, "maxHttpPerPeriod": 2, "requestsPerMinute": 10, "requestTimeoutSeconds": 20, "maxRetries": 0, "maxResponseBytes": 5242880, "maxResponseRows": 16, "maxDirectoryCandidates": 2},
+      "documents": [
+        {"id": "property-directory", "role": "property-directory", "period": "latest", "url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116225/index.html", "derivedFrom": null},
+        {"id": "property-report", "role": "property-report", "period": "latest-completed-quarter", "url": null, "derivedFrom": "property-directory"}
+      ]
+    },
+    "marginBalances": {
+      "collectionEnabled": true,
+      "schedule": {"frequency": "daily", "weekday": 0, "time": "19:00", "timezone": "Asia/Shanghai"},
+      "lookbackPeriods": 48, "quoteSide": null,
+      "publicationLagTradingDays": 1, "publicationTime": "10:00", "publicationTimezone": "Asia/Shanghai",
+      "calendarLookbackDays": 45, "calendarLookaheadDays": 14, "calendarExchanges": ["SSE", "SZSE"],
+      "providerUrl": "https://api.tushare.pro", "documentationUrl": "https://tushare.pro/document/2?doc_id=58",
+      "useScope": "personal-local-noncommercial", "apiName": "margin", "fields": ["trade_date", "exchange_id", "rzye"], "unit": "元",
+      "requests": [{"id": "sse", "params": {"exchange_id": "SSE"}}, {"id": "szse", "params": {"exchange_id": "SZSE"}}, {"id": "bse", "params": {"exchange_id": "BSE"}}],
+      "limits": {"maxHttpPerRun": 3, "maxHttpPerPeriod": 3, "requestsPerMinute": 10, "requestTimeoutSeconds": 20, "maxRetries": 0, "maxResponseBytes": 1048576, "maxResponseRows": 1}
+    },
+    "aShareFloatMv": {
+      "collectionEnabled": true,
+      "schedule": {"frequency": "daily", "weekday": 0, "time": "19:00", "timezone": "Asia/Shanghai"},
+      "lookbackPeriods": 48, "quoteSide": null,
+      "publicationLagTradingDays": 1, "publicationTime": "10:00", "publicationTimezone": "Asia/Shanghai",
+      "calendarLookbackDays": 45, "calendarLookaheadDays": 14, "calendarExchanges": ["SSE", "SZSE"],
+      "providerUrl": "https://api.tushare.pro", "documentationUrl": "https://tushare.pro/document/2?doc_id=215",
+      "useScope": "personal-local-noncommercial", "apiName": "daily_info", "fields": ["trade_date", "ts_code", "exchange", "float_mv"], "unit": "亿元",
+      "requests": [{"id": "sh-a", "params": {"ts_code": "SH_A", "exchange": "SH"}}, {"id": "sz-a", "params": {"ts_code": "SZ_A", "exchange": "SZ"}}],
+      "limits": {"maxHttpPerRun": 2, "maxHttpPerPeriod": 2, "requestsPerMinute": 10, "requestTimeoutSeconds": 20, "maxRetries": 0, "maxResponseBytes": 1048576, "maxResponseRows": 1}
+    },
+    "nominalGdp": {
+      "collectionEnabled": true,
+      "schedule": {"frequency": "weekly", "weekday": 0, "time": "09:00", "timezone": "Asia/Shanghai"},
+      "lookbackPeriods": 20,
+      "quoteSide": null,
+      "limits": {"maxHttpPerRun": 1, "maxHttpPerPeriod": 1, "requestsPerMinute": 10, "requestTimeoutSeconds": 20, "maxRetries": 0, "maxResponseBytes": 8388608, "maxResponseRows": 64}
+    }
+  },
+  "historyBackfills": {
+  "tier1Housing": {
+    "collectionEnabled": true,
+    "maxDirectoryPages": 50,
+    "maxHttpPerRun": 3,
+    "maxHttpTotal": 98,
+    "requestsPerMinute": 10,
+    "requestTimeoutSeconds": 20,
+    "maxRetries": 0,
+    "maxResponseBytes": 5242880,
+    "maxResponseRows": 16
+  }
+}
+}

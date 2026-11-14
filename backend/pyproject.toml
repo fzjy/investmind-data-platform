@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "danginvest-backend"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.116,<0.141",
+  "starlette>=0.46,<1",
+  "pydantic>=2.11,<3",
+  "pydantic-settings>=2.10,<3",
+  "sqlalchemy>=2.0,<3",
+  "alembic>=1.16,<2",
+  "psycopg[binary]>=3.2,<4",
+  "httpx>=0.28,<1",
+  "apscheduler>=3.11,<4",
+  "typer>=0.16,<1",
+  "uvicorn>=0.35,<1",
+  "xlrd>=2.0.2,<3",
+  "pypdf>=6.21.2,<7",
+]
+
+[project.optional-dependencies]
+dev = [
+  "setuptools>=75",
+  "testcontainers[postgres]>=4.10,<5",
+  "pytest>=8,<10",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra"
+markers = [
+  "postgres: requires an explicitly enabled disposable PostgreSQL container",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*", "migrations*", "config*"]
+
+[tool.setuptools.package-data]
+config = ["macro-series.json", "macro-series-v7.json", "macro-series-v8.json", "macro-extensions.json", "enterprise-targets.json", "market-data.json", "news-collector.json", "nbs-history-releases.json", "macro-history-sources.json", "stock-mapping.json", "universes/*.json"]

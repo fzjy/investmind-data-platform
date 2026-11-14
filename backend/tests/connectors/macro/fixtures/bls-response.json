@@ -1,0 +1,44 @@
+{
+  "sourceUrl": "https://api.bls.gov/publicAPI/v1/timeseries/data/",
+  "documentationUrl": "https://www.bls.gov/developers/api_signature.htm",
+  "limitsUrl": "https://www.bls.gov/developers/api_faqs.htm",
+  "evidenceUrls": [
+    "https://download.bls.gov/pub/time.series/cu/cu.data.1.AllItems",
+    "https://www.bls.gov/news.release/archives/empsit_03072025.htm"
+  ],
+  "retrievedAt": "2026-09-21T00:00:00Z",
+  "contentType": "application/json",
+  "sanitized": true,
+  "payload": {
+    "status": "REQUEST_SUCCEEDED",
+    "responseTime": 12,
+    "message": [],
+    "Results": {
+      "series": [
+        {
+          "seriesID": "CUSR0000SA0",
+          "data": [
+            {"year": "2025", "period": "M02", "periodName": "February", "value": "319.679", "footnotes": [{}]},
+            {"year": "2025", "period": "M01", "periodName": "January", "value": "318.961", "footnotes": [{}]},
+            {"year": "2024", "period": "M02", "periodName": "February", "value": "310.967", "footnotes": [{}]},
+            {"year": "2024", "period": "M01", "periodName": "January", "value": "309.698", "footnotes": [{}]}
+          ]
+        },
+        {
+          "seriesID": "CES0000000001",
+          "data": [
+            {"year": "2025", "period": "M02", "periodName": "February", "value": "159218", "footnotes": [{"code": "P", "text": "Preliminary."}]},
+            {"year": "2025", "period": "M01", "periodName": "January", "value": "159067", "footnotes": [{"code": "P", "text": "Preliminary."}]},
+            {"year": "2024", "period": "M12", "periodName": "December", "value": "158942", "footnotes": [{}]}
+          ]
+        },
+        {
+          "seriesID": "LNS14000000",
+          "data": [
+            {"year": "2025", "period": "M02", "periodName": "February", "value": "4.1", "footnotes": [{}]}
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,74 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build
+.next/
+out/
+build/
+dist/
+
+# Environment
+.env*
+!.env.example
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Vercel
+.vercel
+
+# Local settings (not project config)
+.claude/settings.local.json
+
+# User-specific skills (not part of the template)
+.claude/skills/customize/
+.claude/skills/release/
+
+# Local temp files
+temp/
+.tmp/
+.superpowers/archive/
+# 本机临时审查产物；持久sdd证据和开发计划仍按原规则保留。
+.superpowers/commit-*.log
+.superpowers/commit-files.json
+.superpowers/commit-paths.txt
+.worktrees/
+.superpowers/worktrees/
+
+# Python backend
+backend/.venv/
+backend/.tmp-*/
+backend/*.egg-info/
+backend/.pytest_cache/
+**/.pytest_cache/
+backend/.coverage
+backend/imports/
+backend/backups/
+.secrets/
+# custom backup roots inside this repository must ignore their ENTIRE directory.
+# Additional safety net for custom-format PostgreSQL archives, not just default root.
+*.dump
+backend/htmlcov/
+**/__pycache__/
+*.py[cod]
+packages/news-collector/src/*.egg-info/
+data/news-collector/
+imports/news-collector/

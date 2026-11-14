@@ -1,0 +1,6072 @@
+{
+  "data": {
+    "688525.SH": {
+      "symbol": "688525.SH",
+      "sidebar": {
+        "referenceDate": "2026-08-13",
+        "events": [
+          {
+            "date": "2026-07-31",
+            "kind": "macro",
+            "title": "中国制造业 PMI"
+          },
+          {
+            "date": "2026-08-13",
+            "kind": "macro",
+            "title": "美国 CPI"
+          },
+          {
+            "date": "2026-08-14",
+            "kind": "macro",
+            "title": "中国 M2（广义货币）"
+          },
+          {
+            "date": "2026-08-14",
+            "kind": "macro",
+            "title": "中国社融增量"
+          },
+          {
+            "date": "2026-08-20",
+            "kind": "macro",
+            "title": "中国贷款市场报价利率（LPR）"
+          },
+          {
+            "date": "2026-09-04",
+            "kind": "macro",
+            "title": "美国非农就业人数"
+          }
+        ],
+        "stocks": [
+          {
+            "symbol": "688525.SH",
+            "name": "佰维存储",
+            "pinyin": "bwcc",
+            "price": 218.34,
+            "changePercent": 5.58,
+            "mentions": 74
+          },
+          {
+            "symbol": "688796.SH",
+            "name": "百奥赛图",
+            "pinyin": "bast",
+            "price": 62.8,
+            "changePercent": 2.1,
+            "mentions": 32,
+            "group": "heaven"
+          },
+          {
+            "symbol": "600519.SH",
+            "name": "贵州茅台",
+            "pinyin": "gzmt",
+            "price": 1472.6,
+            "changePercent": -0.42,
+            "mentions": 24,
+            "group": "heaven"
+          },
+          {
+            "symbol": "300750.SZ",
+            "name": "宁德时代",
+            "pinyin": "ndsd",
+            "price": 264.18,
+            "changePercent": 1.36,
+            "mentions": 20,
+            "group": "mystic"
+          },
+          {
+            "symbol": "600036.SH",
+            "name": "招商银行",
+            "pinyin": "zsyh",
+            "price": 44.91,
+            "changePercent": -0.18,
+            "mentions": 18
+          },
+          {
+            "symbol": "688981.SH",
+            "name": "中芯国际",
+            "pinyin": "zxgj",
+            "price": 93.56,
+            "changePercent": 0.73,
+            "mentions": 13
+          }
+        ]
+      },
+      "quote": {
+        "symbol": "688525.SH",
+        "name": "佰维存储",
+        "market": "SH",
+        "industry": "半导体",
+        "subIndustry": "存储芯片",
+        "mentions": 74,
+        "latestMention": "2026-08-04",
+        "concepts": [
+          {
+            "name": "存储芯片",
+            "changePercent": 3.28
+          },
+          {
+            "name": "国产替代",
+            "changePercent": 2.46
+          },
+          {
+            "name": "先进封装",
+            "changePercent": 1.92
+          }
+        ],
+        "price": 218.34,
+        "changePercent": 5.58,
+        "pe": 27.81,
+        "pb": 12.88,
+        "previousClose": 206.8005304034855,
+        "intraday": {
+          "day": [
+            {
+              "time": "09:30",
+              "price": 207.21
+            },
+            {
+              "time": "10:05",
+              "price": 208.29
+            },
+            {
+              "time": "10:10",
+              "price": 209.19
+            },
+            {
+              "time": "10:15",
+              "price": 209.76
+            },
+            {
+              "time": "10:20",
+              "price": 209.93
+            },
+            {
+              "time": "10:25",
+              "price": 209.67
+            },
+            {
+              "time": "10:30",
+              "price": 209.03
+            },
+            {
+              "time": "10:35",
+              "price": 208.15
+            },
+            {
+              "time": "10:40",
+              "price": 207.17
+            },
+            {
+              "time": "10:45",
+              "price": 206.29
+            },
+            {
+              "time": "10:50",
+              "price": 205.67
+            },
+            {
+              "time": "10:55",
+              "price": 205.43
+            },
+            {
+              "time": "11:00",
+              "price": 205.61
+            },
+            {
+              "time": "11:05",
+              "price": 206.2
+            },
+            {
+              "time": "11:10",
+              "price": 207.11
+            },
+            {
+              "time": "11:15",
+              "price": 208.19
+            },
+            {
+              "time": "11:20",
+              "price": 209.26
+            },
+            {
+              "time": "11:25",
+              "price": 210.14
+            },
+            {
+              "time": "11:30",
+              "price": 210.71
+            },
+            {
+              "time": "11:35",
+              "price": 210.85
+            },
+            {
+              "time": "11:40",
+              "price": 210.58
+            },
+            {
+              "time": "11:45",
+              "price": 209.93
+            },
+            {
+              "time": "11:50",
+              "price": 209.03
+            },
+            {
+              "time": "11:55",
+              "price": 208.06
+            },
+            {
+              "time": "12:00",
+              "price": 207.19
+            },
+            {
+              "time": "12:05",
+              "price": 206.58
+            },
+            {
+              "time": "12:10",
+              "price": 206.35
+            },
+            {
+              "time": "12:15",
+              "price": 206.55
+            },
+            {
+              "time": "12:20",
+              "price": 207.16
+            },
+            {
+              "time": "12:25",
+              "price": 208.08
+            },
+            {
+              "time": "12:30",
+              "price": 209.16
+            },
+            {
+              "time": "12:35",
+              "price": 210.22
+            },
+            {
+              "time": "12:40",
+              "price": 211.1
+            },
+            {
+              "time": "12:45",
+              "price": 211.65
+            },
+            {
+              "time": "12:50",
+              "price": 211.78
+            },
+            {
+              "time": "12:55",
+              "price": 211.48
+            },
+            {
+              "time": "13:00",
+              "price": 210.82
+            },
+            {
+              "time": "13:05",
+              "price": 209.92
+            },
+            {
+              "time": "13:10",
+              "price": 208.95
+            },
+            {
+              "time": "13:15",
+              "price": 208.09
+            },
+            {
+              "time": "13:20",
+              "price": 207.49
+            },
+            {
+              "time": "13:25",
+              "price": 207.28
+            },
+            {
+              "time": "13:30",
+              "price": 207.5
+            },
+            {
+              "time": "13:35",
+              "price": 208.12
+            },
+            {
+              "time": "13:40",
+              "price": 209.05
+            },
+            {
+              "time": "13:45",
+              "price": 210.13
+            },
+            {
+              "time": "13:50",
+              "price": 211.19
+            },
+            {
+              "time": "15:00",
+              "price": 212.06
+            }
+          ],
+          "fiveDay": [
+            {
+              "time": "09:30",
+              "price": 198.53
+            },
+            {
+              "time": "10:05",
+              "price": 200.5
+            },
+            {
+              "time": "10:10",
+              "price": 202.14
+            },
+            {
+              "time": "10:15",
+              "price": 203.2
+            },
+            {
+              "time": "10:20",
+              "price": 203.51
+            },
+            {
+              "time": "10:25",
+              "price": 203.02
+            },
+            {
+              "time": "10:30",
+              "price": 201.86
+            },
+            {
+              "time": "10:35",
+              "price": 200.24
+            },
+            {
+              "time": "10:40",
+              "price": 198.45
+            },
+            {
+              "time": "10:45",
+              "price": 196.84
+            },
+            {
+              "time": "10:50",
+              "price": 195.7
+            },
+            {
+              "time": "10:55",
+              "price": 195.25
+            },
+            {
+              "time": "11:00",
+              "price": 195.59
+            },
+            {
+              "time": "11:05",
+              "price": 196.67
+            },
+            {
+              "time": "11:10",
+              "price": 198.34
+            },
+            {
+              "time": "11:15",
+              "price": 200.31
+            },
+            {
+              "time": "11:20",
+              "price": 202.27
+            },
+            {
+              "time": "11:25",
+              "price": 203.9
+            },
+            {
+              "time": "11:30",
+              "price": 204.93
+            },
+            {
+              "time": "11:35",
+              "price": 205.2
+            },
+            {
+              "time": "11:40",
+              "price": 204.69
+            },
+            {
+              "time": "11:45",
+              "price": 203.5
+            },
+            {
+              "time": "11:50",
+              "price": 201.87
+            },
+            {
+              "time": "11:55",
+              "price": 200.08
+            },
+            {
+              "time": "12:00",
+              "price": 198.49
+            },
+            {
+              "time": "12:05",
+              "price": 197.37
+            },
+            {
+              "time": "12:10",
+              "price": 196.95
+            },
+            {
+              "time": "12:15",
+              "price": 197.32
+            },
+            {
+              "time": "12:20",
+              "price": 198.43
+            },
+            {
+              "time": "12:25",
+              "price": 200.11
+            },
+            {
+              "time": "12:30",
+              "price": 202.09
+            },
+            {
+              "time": "12:35",
+              "price": 204.05
+            },
+            {
+              "time": "12:40",
+              "price": 205.66
+            },
+            {
+              "time": "12:45",
+              "price": 206.66
+            },
+            {
+              "time": "12:50",
+              "price": 206.9
+            },
+            {
+              "time": "12:55",
+              "price": 206.36
+            },
+            {
+              "time": "13:00",
+              "price": 205.15
+            },
+            {
+              "time": "13:05",
+              "price": 203.5
+            },
+            {
+              "time": "13:10",
+              "price": 201.72
+            },
+            {
+              "time": "13:15",
+              "price": 200.13
+            },
+            {
+              "time": "13:20",
+              "price": 199.04
+            },
+            {
+              "time": "13:25",
+              "price": 198.65
+            },
+            {
+              "time": "13:30",
+              "price": 199.05
+            },
+            {
+              "time": "13:35",
+              "price": 200.19
+            },
+            {
+              "time": "13:40",
+              "price": 201.89
+            },
+            {
+              "time": "13:45",
+              "price": 203.88
+            },
+            {
+              "time": "13:50",
+              "price": 205.82
+            },
+            {
+              "time": "13:55",
+              "price": 207.41
+            },
+            {
+              "time": "14:00",
+              "price": 208.38
+            },
+            {
+              "time": "14:05",
+              "price": 208.59
+            },
+            {
+              "time": "14:10",
+              "price": 208.02
+            },
+            {
+              "time": "14:15",
+              "price": 206.79
+            },
+            {
+              "time": "14:20",
+              "price": 205.13
+            },
+            {
+              "time": "14:25",
+              "price": 203.35
+            },
+            {
+              "time": "14:30",
+              "price": 201.78
+            },
+            {
+              "time": "14:35",
+              "price": 200.71
+            },
+            {
+              "time": "14:40",
+              "price": 200.35
+            },
+            {
+              "time": "14:45",
+              "price": 200.78
+            },
+            {
+              "time": "14:50",
+              "price": 201.95
+            },
+            {
+              "time": "15:00",
+              "price": 203.67
+            }
+          ]
+        }
+      },
+      "dailyChart": {
+        "candles": [
+          {
+            "date": "2026-05-04",
+            "open": 56.3,
+            "high": 57.6,
+            "low": 55.88,
+            "close": 57.12,
+            "volume": 4800000
+          },
+          {
+            "date": "2026-05-05",
+            "open": 58.63,
+            "high": 59.24,
+            "low": 57.87,
+            "close": 58.4,
+            "volume": 5748847
+          },
+          {
+            "date": "2026-05-06",
+            "open": 59.36,
+            "high": 60.1,
+            "low": 58.14,
+            "close": 58.78,
+            "volume": 6530707
+          },
+          {
+            "date": "2026-05-07",
+            "open": 58.7,
+            "high": 59.57,
+            "low": 57.73,
+            "close": 58.48,
+            "volume": 7016333
+          },
+          {
+            "date": "2026-05-08",
+            "open": 57.91,
+            "high": 58.91,
+            "low": 57.42,
+            "close": 57.84,
+            "volume": 7143433
+          },
+          {
+            "date": "2026-05-09",
+            "open": 57.39,
+            "high": 57.87,
+            "low": 56.53,
+            "close": 57.06,
+            "volume": 6930741
+          },
+          {
+            "date": "2026-05-10",
+            "open": 56.3,
+            "high": 56.91,
+            "low": 55.47,
+            "close": 56.11,
+            "volume": 6473791
+          },
+          {
+            "date": "2026-05-11",
+            "open": 54.32,
+            "high": 55.69,
+            "low": 53.57,
+            "close": 54.95,
+            "volume": 5923320
+          },
+          {
+            "date": "2026-05-12",
+            "open": 52.72,
+            "high": 54.68,
+            "low": 52.3,
+            "close": 53.81,
+            "volume": 5451202
+          },
+          {
+            "date": "2026-05-13",
+            "open": 52.95,
+            "high": 54.21,
+            "low": 52.42,
+            "close": 53.21,
+            "volume": 3321603
+          },
+          {
+            "date": "2026-05-14",
+            "open": 54.78,
+            "high": 55.26,
+            "low": 52.99,
+            "close": 53.63,
+            "volume": 3416137
+          },
+          {
+            "date": "2026-05-15",
+            "open": 56.55,
+            "high": 57.16,
+            "low": 54.39,
+            "close": 55.14,
+            "volume": 3870900
+          },
+          {
+            "date": "2026-05-16",
+            "open": 57.27,
+            "high": 58.01,
+            "low": 56.8,
+            "close": 57.22,
+            "volume": 4630573
+          },
+          {
+            "date": "2026-05-17",
+            "open": 57.57,
+            "high": 59.77,
+            "low": 57.04,
+            "close": 58.9,
+            "volume": 5570925
+          },
+          {
+            "date": "2026-05-18",
+            "open": 58.18,
+            "high": 60.35,
+            "low": 57.54,
+            "close": 59.35,
+            "volume": 6526889
+          },
+          {
+            "date": "2026-05-19",
+            "open": 58.48,
+            "high": 58.96,
+            "low": 57.58,
+            "close": 58.33,
+            "volume": 7329869
+          },
+          {
+            "date": "2026-05-20",
+            "open": 57.35,
+            "high": 57.96,
+            "low": 55.95,
+            "close": 56.37,
+            "volume": 7845845
+          },
+          {
+            "date": "2026-05-21",
+            "open": 55.03,
+            "high": 55.77,
+            "low": 53.91,
+            "close": 54.44,
+            "volume": 8005665
+          },
+          {
+            "date": "2026-05-22",
+            "open": 53.3,
+            "high": 54.27,
+            "low": 52.66,
+            "close": 53.4,
+            "volume": 5930669
+          },
+          {
+            "date": "2026-05-23",
+            "open": 53.37,
+            "high": 54.56,
+            "low": 52.62,
+            "close": 53.56,
+            "volume": 5490130
+          },
+          {
+            "date": "2026-05-24",
+            "open": 54.61,
+            "high": 55.09,
+            "low": 54.19,
+            "close": 54.61,
+            "volume": 4941077
+          },
+          {
+            "date": "2026-05-25",
+            "open": 55.73,
+            "high": 56.61,
+            "low": 55.2,
+            "close": 56,
+            "volume": 4455063
+          },
+          {
+            "date": "2026-05-26",
+            "open": 56.6,
+            "high": 58.05,
+            "low": 55.96,
+            "close": 57.31,
+            "volume": 4189395
+          },
+          {
+            "date": "2026-05-27",
+            "open": 58.09,
+            "high": 59.28,
+            "low": 57.34,
+            "close": 58.41,
+            "volume": 4251579
+          },
+          {
+            "date": "2026-05-28",
+            "open": 60.2,
+            "high": 61.2,
+            "low": 58.95,
+            "close": 59.37,
+            "volume": 4675021
+          },
+          {
+            "date": "2026-05-29",
+            "open": 61.5,
+            "high": 61.98,
+            "low": 59.65,
+            "close": 60.18,
+            "volume": 5411483
+          },
+          {
+            "date": "2026-05-30",
+            "open": 60.84,
+            "high": 61.45,
+            "low": 59.92,
+            "close": 60.56,
+            "volume": 6341979
+          },
+          {
+            "date": "2026-05-31",
+            "open": 58.95,
+            "high": 60.93,
+            "low": 58.2,
+            "close": 60.19,
+            "volume": 5413668
+          },
+          {
+            "date": "2026-06-01",
+            "open": 57.57,
+            "high": 59.85,
+            "low": 57.15,
+            "close": 58.98,
+            "volume": 6236663
+          },
+          {
+            "date": "2026-06-02",
+            "open": 57.34,
+            "high": 58.38,
+            "low": 56.81,
+            "close": 57.38,
+            "volume": 6782419
+          },
+          {
+            "date": "2026-06-03",
+            "open": 57.41,
+            "high": 57.89,
+            "low": 55.56,
+            "close": 56.2,
+            "volume": 6975052
+          },
+          {
+            "date": "2026-06-04",
+            "open": 57.21,
+            "high": 57.82,
+            "low": 55.47,
+            "close": 56.22,
+            "volume": 6818488
+          },
+          {
+            "date": "2026-06-05",
+            "open": 57.53,
+            "high": 58.39,
+            "low": 57.11,
+            "close": 57.65,
+            "volume": 6395574
+          },
+          {
+            "date": "2026-06-06",
+            "open": 59.31,
+            "high": 60.84,
+            "low": 58.78,
+            "close": 59.97,
+            "volume": 5849355
+          },
+          {
+            "date": "2026-06-07",
+            "open": 61.84,
+            "high": 63.17,
+            "low": 61.2,
+            "close": 62.17,
+            "volume": 5350743
+          },
+          {
+            "date": "2026-06-08",
+            "open": 63.29,
+            "high": 63.8,
+            "low": 62.54,
+            "close": 63.32,
+            "volume": 5059893
+          },
+          {
+            "date": "2026-06-09",
+            "open": 62.85,
+            "high": 63.67,
+            "low": 62.43,
+            "close": 63.06,
+            "volume": 3200001
+          },
+          {
+            "date": "2026-06-10",
+            "open": 61.54,
+            "high": 62.49,
+            "low": 61.01,
+            "close": 61.75,
+            "volume": 3591726
+          },
+          {
+            "date": "2026-06-11",
+            "open": 60.59,
+            "high": 61.46,
+            "low": 59.48,
+            "close": 60.12,
+            "volume": 4303995
+          },
+          {
+            "date": "2026-06-12",
+            "open": 59.85,
+            "high": 60.85,
+            "low": 58.06,
+            "close": 58.81,
+            "volume": 5223290
+          },
+          {
+            "date": "2026-06-13",
+            "open": 58.48,
+            "high": 58.96,
+            "low": 57.65,
+            "close": 58.07,
+            "volume": 6189304
+          },
+          {
+            "date": "2026-06-14",
+            "open": 56.81,
+            "high": 58.4,
+            "low": 56.28,
+            "close": 57.79,
+            "volume": 7031170
+          },
+          {
+            "date": "2026-06-15",
+            "open": 56.33,
+            "high": 58.53,
+            "low": 55.69,
+            "close": 57.79,
+            "volume": 7606079
+          },
+          {
+            "date": "2026-06-16",
+            "open": 57.79,
+            "high": 58.94,
+            "low": 57.04,
+            "close": 58.07,
+            "volume": 7831559
+          },
+          {
+            "date": "2026-06-17",
+            "open": 60.02,
+            "high": 61.02,
+            "low": 58.37,
+            "close": 58.79,
+            "volume": 7704111
+          },
+          {
+            "date": "2026-06-18",
+            "open": 61.34,
+            "high": 61.82,
+            "low": 59.48,
+            "close": 60.01,
+            "volume": 5410001
+          },
+          {
+            "date": "2026-06-19",
+            "open": 61.48,
+            "high": 62.09,
+            "low": 60.82,
+            "close": 61.46,
+            "volume": 4868025
+          },
+          {
+            "date": "2026-06-20",
+            "open": 61.48,
+            "high": 63.22,
+            "low": 60.73,
+            "close": 62.48,
+            "volume": 4358136
+          },
+          {
+            "date": "2026-06-21",
+            "open": 61.68,
+            "high": 63.3,
+            "low": 61.26,
+            "close": 62.43,
+            "volume": 4043038
+          },
+          {
+            "date": "2026-06-22",
+            "open": 61.18,
+            "high": 62.18,
+            "low": 60.59,
+            "close": 61.12,
+            "volume": 4041407
+          },
+          {
+            "date": "2026-06-23",
+            "open": 59.32,
+            "high": 59.8,
+            "low": 58.38,
+            "close": 59.02,
+            "volume": 4401075
+          },
+          {
+            "date": "2026-06-24",
+            "open": 57.19,
+            "high": 57.8,
+            "low": 56.38,
+            "close": 57.13,
+            "volume": 5088214
+          },
+          {
+            "date": "2026-06-25",
+            "open": 56.56,
+            "high": 57.3,
+            "low": 55.97,
+            "close": 56.39,
+            "volume": 5994987
+          },
+          {
+            "date": "2026-06-26",
+            "open": 57.77,
+            "high": 58.64,
+            "low": 56.64,
+            "close": 57.17,
+            "volume": 6963915
+          },
+          {
+            "date": "2026-06-27",
+            "open": 59.49,
+            "high": 60.49,
+            "low": 58.45,
+            "close": 59.09,
+            "volume": 5933474
+          },
+          {
+            "date": "2026-06-28",
+            "open": 60.65,
+            "high": 61.78,
+            "low": 59.9,
+            "close": 61.3,
+            "volume": 6536856
+          },
+          {
+            "date": "2026-06-29",
+            "open": 61.66,
+            "high": 63.57,
+            "low": 61.24,
+            "close": 62.96,
+            "volume": 6795153
+          },
+          {
+            "date": "2026-06-30",
+            "open": 63.25,
+            "high": 64.46,
+            "low": 62.72,
+            "close": 63.72,
+            "volume": 6697450
+          },
+          {
+            "date": "2026-07-01",
+            "open": 64.81,
+            "high": 65.68,
+            "low": 63.1,
+            "close": 63.74,
+            "volume": 6313290
+          },
+          {
+            "date": "2026-07-02",
+            "open": 64.88,
+            "high": 65.88,
+            "low": 62.63,
+            "close": 63.38,
+            "volume": 5776960
+          },
+          {
+            "date": "2026-07-03",
+            "open": 63.17,
+            "high": 63.65,
+            "low": 62.49,
+            "close": 62.91,
+            "volume": 5257137
+          },
+          {
+            "date": "2026-07-04",
+            "open": 61.2,
+            "high": 62.96,
+            "low": 60.67,
+            "close": 62.35,
+            "volume": 4918770
+          },
+          {
+            "date": "2026-07-05",
+            "open": 60.49,
+            "high": 62.38,
+            "low": 59.85,
+            "close": 61.64,
+            "volume": 4885794
+          },
+          {
+            "date": "2026-07-06",
+            "open": 60.87,
+            "high": 61.76,
+            "low": 60.12,
+            "close": 60.89,
+            "volume": 3323125
+          }
+        ],
+        "announcements": [
+          {
+            "id": "announcement-0",
+            "date": "2026-05-06",
+            "kind": "earnings",
+            "label": "业绩快报"
+          },
+          {
+            "id": "announcement-1",
+            "date": "2026-05-13",
+            "kind": "capital",
+            "label": "分红"
+          },
+          {
+            "id": "announcement-2",
+            "date": "2026-05-20",
+            "kind": "major",
+            "label": "重大合同"
+          },
+          {
+            "id": "announcement-3",
+            "date": "2026-05-27",
+            "kind": "risk",
+            "label": "监管问询"
+          },
+          {
+            "id": "announcement-4",
+            "date": "2026-06-03",
+            "kind": "governance",
+            "label": "治理制度"
+          },
+          {
+            "id": "announcement-5",
+            "date": "2026-06-10",
+            "kind": "other",
+            "label": "其他公告"
+          },
+          {
+            "id": "announcement-6",
+            "date": "2026-06-17",
+            "kind": "earnings",
+            "label": "业绩快报"
+          },
+          {
+            "id": "announcement-7",
+            "date": "2026-06-24",
+            "kind": "capital",
+            "label": "分红"
+          },
+          {
+            "id": "announcement-8",
+            "date": "2026-07-01",
+            "kind": "major",
+            "label": "重大合同"
+          }
+        ]
+      },
+      "metrics": {
+        "cards": [
+          {
+            "label": "PE (TTM)",
+            "value": "27.81"
+          },
+          {
+            "label": "PB",
+            "value": "12.88"
+          },
+          {
+            "label": "总市值",
+            "value": "¥1098亿"
+          },
+          {
+            "label": "账上净现金",
+            "value": "-¥73亿"
+          },
+          {
+            "label": "股息率(2025全年·财年归属)",
+            "value": "0.09%"
+          },
+          {
+            "label": "分红次数(近5财年)",
+            "value": "1"
+          },
+          {
+            "label": "预期股息率(本年度·季节性权重)",
+            "value": "0.09%"
+          },
+          {
+            "label": "预期股息率(未来12月·NTM)",
+            "value": "--"
+          }
+        ],
+        "years": [
+          "2016",
+          "2017",
+          "2018",
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+          "2025"
+        ],
+        "fields": [
+          {
+            "id": "cost",
+            "label": "营业成本",
+            "category": "profit",
+            "values": [
+              25,
+              29,
+              33,
+              38,
+              42,
+              46,
+              52,
+              64,
+              68,
+              77
+            ]
+          },
+          {
+            "id": "salesCash",
+            "label": "销售收现",
+            "category": "cashflow",
+            "values": [
+              28,
+              33,
+              40,
+              45,
+              50,
+              56,
+              65,
+              80,
+              92,
+              108
+            ]
+          },
+          {
+            "id": "purchaseCash",
+            "label": "购货付现",
+            "category": "cashflow",
+            "values": [
+              22,
+              27,
+              30,
+              35,
+              40,
+              44,
+              50,
+              60,
+              66,
+              75
+            ]
+          },
+          {
+            "id": "capex",
+            "label": "资本开支",
+            "category": "cashflow",
+            "values": [
+              1.2,
+              1.6,
+              2,
+              3,
+              4,
+              6,
+              7,
+              9,
+              12,
+              16
+            ]
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "category": "profit",
+            "values": [
+              31,
+              36,
+              42,
+              49,
+              55,
+              62,
+              71,
+              86,
+              96,
+              113
+            ]
+          },
+          {
+            "id": "grossProfit",
+            "label": "毛利润",
+            "category": "profit",
+            "values": [
+              6,
+              7,
+              9,
+              11,
+              13,
+              16,
+              19,
+              22,
+              28,
+              36
+            ]
+          },
+          {
+            "id": "operatingProfit",
+            "label": "营业利润",
+            "category": "profit",
+            "values": [
+              2.8,
+              3.3,
+              4,
+              5,
+              6,
+              7,
+              9,
+              11,
+              12,
+              16
+            ]
+          },
+          {
+            "id": "parentNetProfit",
+            "label": "归母净利润",
+            "category": "profit",
+            "values": [
+              2.6,
+              3.1,
+              3.8,
+              4.6,
+              5.1,
+              6.3,
+              7.4,
+              8.2,
+              7.9,
+              8.53
+            ]
+          },
+          {
+            "id": "operatingCashFlow",
+            "label": "经营现金流",
+            "category": "cashflow",
+            "values": [
+              1.4,
+              0.9,
+              0.6,
+              -1.8,
+              -3.2,
+              -6.1,
+              -8.4,
+              -19.2,
+              4.6,
+              -20
+            ]
+          },
+          {
+            "id": "investingCashFlow",
+            "label": "投资现金流",
+            "category": "cashflow",
+            "values": [
+              -1.2,
+              -1.6,
+              -2,
+              -3,
+              -4,
+              -6,
+              -7,
+              -9,
+              -12,
+              -16
+            ]
+          },
+          {
+            "id": "financingCashFlow",
+            "label": "筹资现金流",
+            "category": "cashflow",
+            "values": [
+              1,
+              1.5,
+              2,
+              3,
+              2,
+              4,
+              6,
+              7,
+              9,
+              12
+            ]
+          },
+          {
+            "id": "totalAssets",
+            "label": "资产总计",
+            "category": "balance",
+            "values": [
+              51,
+              59,
+              68,
+              76,
+              88,
+              103,
+              126,
+              168,
+              210,
+              245
+            ]
+          },
+          {
+            "id": "totalLiabilities",
+            "label": "负债合计",
+            "category": "balance",
+            "values": [
+              23,
+              27,
+              31,
+              35,
+              42,
+              51,
+              66,
+              91,
+              104,
+              111
+            ]
+          },
+          {
+            "id": "cash",
+            "label": "货币资金",
+            "category": "balance",
+            "values": [
+              7,
+              8,
+              9,
+              10,
+              12,
+              14,
+              18,
+              24,
+              31,
+              38
+            ]
+          },
+          {
+            "id": "receivables",
+            "label": "应收账款",
+            "category": "working-capital",
+            "values": [
+              6,
+              7,
+              8,
+              9,
+              11,
+              13,
+              16,
+              20,
+              24,
+              29
+            ]
+          },
+          {
+            "id": "freeCashFlow",
+            "label": "自由现金流",
+            "category": "derived",
+            "values": [
+              0.2,
+              -0.7,
+              -1.4,
+              -4.8,
+              -7.2,
+              -12.1,
+              -15.4,
+              -28.2,
+              -7.4,
+              -36
+            ]
+          }
+        ],
+        "presets": [
+          {
+            "id": "cash-profit",
+            "label": "真钱指数",
+            "numerator": "operatingCashFlow",
+            "denominator": "parentNetProfit",
+            "unit": "multiple"
+          },
+          {
+            "id": "cash-revenue",
+            "label": "经现/营收",
+            "numerator": "operatingCashFlow",
+            "denominator": "revenue",
+            "unit": "percent"
+          },
+          {
+            "id": "cash-debt",
+            "label": "经现/负债",
+            "numerator": "operatingCashFlow",
+            "denominator": "totalLiabilities",
+            "unit": "percent"
+          },
+          {
+            "id": "collection",
+            "label": "收现比",
+            "numerator": "salesCash",
+            "denominator": "revenue",
+            "unit": "multiple"
+          },
+          {
+            "id": "payment",
+            "label": "付现比",
+            "numerator": "purchaseCash",
+            "denominator": "cost",
+            "unit": "multiple"
+          },
+          {
+            "id": "fcf",
+            "label": "FCF率",
+            "numerator": "freeCashFlow",
+            "denominator": "revenue",
+            "unit": "percent"
+          },
+          {
+            "id": "capex",
+            "label": "开支保障",
+            "numerator": "operatingCashFlow",
+            "denominator": "capex",
+            "unit": "multiple"
+          }
+        ]
+      },
+      "risks": {
+        "score": 32,
+        "level": "高风险",
+        "groups": [
+          {
+            "id": "operations",
+            "title": "经营风险",
+            "description": "看资产质量、利润结构、会计扰动与现金流支撑",
+            "items": [
+              {
+                "id": "inventory",
+                "title": "存贷双高",
+                "summary": "存贷双高：否",
+                "detail": "现金占比与负债占比共同判断现金与有息债同时偏高风险。",
+                "status": "normal",
+                "reportDate": "2026-03-31",
+                "announcementDate": "2026-04-16",
+                "reportType": "Q1",
+                "inputs": [
+                  {
+                    "label": "货币资金",
+                    "value": "37.95亿元"
+                  },
+                  {
+                    "label": "有息负债",
+                    "value": "110.93亿元"
+                  }
+                ],
+                "formula": "现金占比 > 25% 且负债占比 > 35%",
+                "conclusion": "当前未触发存贷双高。",
+                "missingFields": [],
+                "drilldown": {
+                  "tab": "statements",
+                  "statement": "balance",
+                  "fields": [
+                    "货币资金",
+                    "负债合计",
+                    "资产总计"
+                  ]
+                }
+              },
+              {
+                "id": "goodwill",
+                "title": "商誉/资产",
+                "summary": "商誉字段缺失，无法评估",
+                "detail": "商誉占总资产比例过高时提示并购减值风险。",
+                "status": "unknown",
+                "reportDate": "2026-03-31",
+                "announcementDate": "2026-04-16",
+                "reportType": "Q1",
+                "inputs": [],
+                "formula": "商誉 ÷ 资产总计",
+                "conclusion": "缺少商誉字段。",
+                "missingFields": [
+                  "商誉"
+                ]
+              },
+              {
+                "id": "cash-support",
+                "title": "净资产现金流支撑",
+                "summary": "累计经营现金流/净资产：-0.91",
+                "detail": "衡量净资产是否得到真实现金流支撑。",
+                "status": "risk",
+                "reportDate": "2026-03-31",
+                "announcementDate": "2026-04-16",
+                "reportType": "Q1",
+                "inputs": [
+                  {
+                    "label": "经营现金流",
+                    "value": "-20亿元"
+                  },
+                  {
+                    "label": "归母净利润",
+                    "value": "8.53亿元"
+                  }
+                ],
+                "formula": "累计经营现金流 ÷ 归母净利润",
+                "conclusion": "现金流支撑偏弱。",
+                "missingFields": [],
+                "drilldown": {
+                  "tab": "statements",
+                  "statement": "cashflow",
+                  "fields": [
+                    "经营现金流",
+                    "归母净利润"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": "dividend",
+            "title": "分红安全垫",
+            "description": "看估值带、负债负担、分红可持续性与分红/融资关系",
+            "items": [
+              {
+                "id": "valuation",
+                "title": "估值分位带",
+                "summary": "PE偏低，PB中性",
+                "detail": "近十年 PE/PB 分位组合判断。",
+                "status": "normal",
+                "reportDate": "2026-03-31",
+                "announcementDate": "2026-04-16",
+                "reportType": "Q1",
+                "inputs": [
+                  {
+                    "label": "PE分位",
+                    "value": "29.2%"
+                  },
+                  {
+                    "label": "PB分位",
+                    "value": "53.1%"
+                  }
+                ],
+                "formula": "PE 与 PB 历史分位",
+                "conclusion": "估值处于合理偏低区间。",
+                "missingFields": []
+              },
+              {
+                "id": "dividend-financing",
+                "title": "分红 vs 融资",
+                "summary": "分红与融资关系需关注",
+                "detail": "分红依赖外部融资时降低安全垫。",
+                "status": "watch",
+                "reportDate": "2026-03-31",
+                "announcementDate": "2026-04-16",
+                "reportType": "Q1",
+                "inputs": [
+                  {
+                    "label": "现金分红",
+                    "value": "1亿元"
+                  },
+                  {
+                    "label": "筹资现金流",
+                    "value": "12亿元"
+                  }
+                ],
+                "formula": "现金分红 ÷ 筹资现金流",
+                "conclusion": "融资规模明显高于分红。",
+                "missingFields": [],
+                "drilldown": {
+                  "tab": "statements",
+                  "statement": "cashflow",
+                  "fields": [
+                    "筹资现金流",
+                    "现金分红"
+                  ]
+                }
+              },
+              {
+                "id": "dividend-cover",
+                "title": "分红可持续性",
+                "summary": "经营现金流覆盖不足",
+                "detail": "近三年经营现金流覆盖现金分红。",
+                "status": "risk",
+                "reportDate": "2026-03-31",
+                "announcementDate": "2026-04-16",
+                "reportType": "Q1",
+                "inputs": [
+                  {
+                    "label": "经营现金流",
+                    "value": "-20亿元"
+                  }
+                ],
+                "formula": "经营现金流 ÷ 现金分红",
+                "conclusion": "现金流覆盖不足。",
+                "missingFields": []
+              }
+            ]
+          }
+        ]
+      },
+      "financial": {
+        "years": [
+          "2025",
+          "2024",
+          "2023",
+          "2022"
+        ],
+        "reportTypes": [
+          "年报",
+          "三季报",
+          "中报",
+          "一季报"
+        ],
+        "announcementDate": "2026-03-20",
+        "dashboard": {
+          "products": [
+            {
+              "name": "嵌入式存储",
+              "revenue": 65,
+              "ratio": 58,
+              "color": "#0ea5e9"
+            },
+            {
+              "name": "企业级存储",
+              "revenue": 34,
+              "ratio": 30,
+              "color": "#10b981"
+            },
+            {
+              "name": "先进封装",
+              "revenue": 14,
+              "ratio": 12,
+              "color": "#f59e0b"
+            }
+          ],
+          "productTrend": [
+            {
+              "year": "2022",
+              "values": [
+                38,
+                16,
+                8
+              ]
+            },
+            {
+              "year": "2023",
+              "values": [
+                56,
+                25,
+                13
+              ]
+            },
+            {
+              "year": "2024",
+              "values": [
+                74,
+                34,
+                18
+              ]
+            },
+            {
+              "year": "2025",
+              "values": [
+                92,
+                43,
+                23
+              ]
+            }
+          ],
+          "bands": [
+            {
+              "id": "pe",
+              "label": "PE",
+              "current": 61.39,
+              "bands": [
+                142.27,
+                105.47,
+                68.67,
+                31.88,
+                0
+              ],
+              "points": [
+                {
+                  "period": "2022Q1",
+                  "value": 42.97
+                },
+                {
+                  "period": "2022Q2",
+                  "value": 51
+                },
+                {
+                  "period": "2022Q3",
+                  "value": 55.4
+                },
+                {
+                  "period": "2022Q4",
+                  "value": 54.37
+                },
+                {
+                  "period": "2023Q1",
+                  "value": 48.78
+                },
+                {
+                  "period": "2023Q2",
+                  "value": 41.77
+                },
+                {
+                  "period": "2023Q3",
+                  "value": 37.18
+                },
+                {
+                  "period": "2023Q4",
+                  "value": 37.67
+                },
+                {
+                  "period": "2024Q1",
+                  "value": 43.35
+                },
+                {
+                  "period": "2024Q2",
+                  "value": 51.76
+                },
+                {
+                  "period": "2024Q3",
+                  "value": 59.11
+                },
+                {
+                  "period": "2024Q4",
+                  "value": 62.1
+                },
+                {
+                  "period": "2025Q1",
+                  "value": 59.62
+                },
+                {
+                  "period": "2025Q2",
+                  "value": 53.27
+                },
+                {
+                  "period": "2025Q3",
+                  "value": 46.55
+                },
+                {
+                  "period": "2025Q4",
+                  "value": 43.18
+                },
+                {
+                  "period": "2026Q1",
+                  "value": 45.19
+                },
+                {
+                  "period": "2026Q2",
+                  "value": 51.95
+                },
+                {
+                  "period": "2026Q3",
+                  "value": 60.47
+                },
+                {
+                  "period": "2026Q4",
+                  "value": 66.89
+                }
+              ]
+            },
+            {
+              "id": "pb",
+              "label": "PB",
+              "current": 13.93,
+              "bands": [
+                22.86,
+                18.4,
+                13.93,
+                9.46,
+                4.99
+              ],
+              "points": [
+                {
+                  "period": "2022Q1",
+                  "value": 11.86
+                },
+                {
+                  "period": "2022Q2",
+                  "value": 12.4
+                },
+                {
+                  "period": "2022Q3",
+                  "value": 11.7
+                },
+                {
+                  "period": "2022Q4",
+                  "value": 10.21
+                },
+                {
+                  "period": "2023Q1",
+                  "value": 8.73
+                },
+                {
+                  "period": "2023Q2",
+                  "value": 8.1
+                },
+                {
+                  "period": "2023Q3",
+                  "value": 8.7
+                },
+                {
+                  "period": "2023Q4",
+                  "value": 10.32
+                },
+                {
+                  "period": "2024Q1",
+                  "value": 12.24
+                },
+                {
+                  "period": "2024Q2",
+                  "value": 13.59
+                },
+                {
+                  "period": "2024Q3",
+                  "value": 13.78
+                },
+                {
+                  "period": "2024Q4",
+                  "value": 12.8
+                },
+                {
+                  "period": "2025Q1",
+                  "value": 11.22
+                },
+                {
+                  "period": "2025Q2",
+                  "value": 9.91
+                },
+                {
+                  "period": "2025Q3",
+                  "value": 9.59
+                },
+                {
+                  "period": "2025Q4",
+                  "value": 10.52
+                },
+                {
+                  "period": "2026Q1",
+                  "value": 12.31
+                },
+                {
+                  "period": "2026Q2",
+                  "value": 14.16
+                },
+                {
+                  "period": "2026Q3",
+                  "value": 15.23
+                },
+                {
+                  "period": "2026Q4",
+                  "value": 15.07
+                }
+              ]
+            },
+            {
+              "id": "ps",
+              "label": "PS",
+              "current": 8.72,
+              "bands": [
+                12.22,
+                10.04,
+                7.87,
+                5.7,
+                3.52
+              ],
+              "points": [
+                {
+                  "period": "2022Q1",
+                  "value": 7.53
+                },
+                {
+                  "period": "2022Q2",
+                  "value": 6.85
+                },
+                {
+                  "period": "2022Q3",
+                  "value": 5.85
+                },
+                {
+                  "period": "2022Q4",
+                  "value": 5.08
+                },
+                {
+                  "period": "2023Q1",
+                  "value": 4.97
+                },
+                {
+                  "period": "2023Q2",
+                  "value": 5.64
+                },
+                {
+                  "period": "2023Q3",
+                  "value": 6.79
+                },
+                {
+                  "period": "2023Q4",
+                  "value": 7.91
+                },
+                {
+                  "period": "2024Q1",
+                  "value": 8.5
+                },
+                {
+                  "period": "2024Q2",
+                  "value": 8.32
+                },
+                {
+                  "period": "2024Q3",
+                  "value": 7.5
+                },
+                {
+                  "period": "2024Q4",
+                  "value": 6.51
+                },
+                {
+                  "period": "2025Q1",
+                  "value": 5.89
+                },
+                {
+                  "period": "2025Q2",
+                  "value": 6
+                },
+                {
+                  "period": "2025Q3",
+                  "value": 6.84
+                },
+                {
+                  "period": "2025Q4",
+                  "value": 8.04
+                },
+                {
+                  "period": "2026Q1",
+                  "value": 9.06
+                },
+                {
+                  "period": "2026Q2",
+                  "value": 9.44
+                },
+                {
+                  "period": "2026Q3",
+                  "value": 9.06
+                },
+                {
+                  "period": "2026Q4",
+                  "value": 8.14
+                }
+              ]
+            }
+          ],
+          "peg": {
+            "value": 0.31,
+            "pe": 29.2,
+            "growth": 93.1
+          },
+          "trends": [
+            {
+              "id": "profit",
+              "title": "营收 / 净利润趋势",
+              "series": [
+                {
+                  "label": "营收",
+                  "color": "#0ea5e9",
+                  "points": [
+                    {
+                      "period": "2021",
+                      "value": 67
+                    },
+                    {
+                      "period": "2022",
+                      "value": 83
+                    },
+                    {
+                      "period": "2023",
+                      "value": 91
+                    },
+                    {
+                      "period": "2024",
+                      "value": 99
+                    },
+                    {
+                      "period": "2025",
+                      "value": 113
+                    }
+                  ]
+                },
+                {
+                  "label": "净利润",
+                  "color": "#10b981",
+                  "points": [
+                    {
+                      "period": "2021",
+                      "value": 5
+                    },
+                    {
+                      "period": "2022",
+                      "value": 6
+                    },
+                    {
+                      "period": "2023",
+                      "value": 8
+                    },
+                    {
+                      "period": "2024",
+                      "value": 7
+                    },
+                    {
+                      "period": "2025",
+                      "value": 8.53
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "cash",
+              "title": "经营现金流趋势",
+              "series": [
+                {
+                  "label": "经营现金流",
+                  "color": "#10b981",
+                  "points": [
+                    {
+                      "period": "2021",
+                      "value": -8
+                    },
+                    {
+                      "period": "2022",
+                      "value": -12
+                    },
+                    {
+                      "period": "2023",
+                      "value": -19
+                    },
+                    {
+                      "period": "2024",
+                      "value": 4.6
+                    },
+                    {
+                      "period": "2025",
+                      "value": -20
+                    }
+                  ]
+                },
+                {
+                  "label": "自由现金流",
+                  "color": "#f59e0b",
+                  "points": [
+                    {
+                      "period": "2021",
+                      "value": -11
+                    },
+                    {
+                      "period": "2022",
+                      "value": -15
+                    },
+                    {
+                      "period": "2023",
+                      "value": -28
+                    },
+                    {
+                      "period": "2024",
+                      "value": -7.4
+                    },
+                    {
+                      "period": "2025",
+                      "value": -36
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "return",
+              "title": "ROE / ROIC趋势",
+              "series": [
+                {
+                  "label": "ROE",
+                  "color": "#8b5cf6",
+                  "points": [
+                    {
+                      "period": "2021",
+                      "value": 8
+                    },
+                    {
+                      "period": "2022",
+                      "value": 10
+                    },
+                    {
+                      "period": "2023",
+                      "value": 7
+                    },
+                    {
+                      "period": "2024",
+                      "value": 12
+                    },
+                    {
+                      "period": "2025",
+                      "value": 21.7
+                    }
+                  ]
+                },
+                {
+                  "label": "ROIC",
+                  "color": "#10b981",
+                  "points": [
+                    {
+                      "period": "2021",
+                      "value": 6
+                    },
+                    {
+                      "period": "2022",
+                      "value": 9
+                    },
+                    {
+                      "period": "2023",
+                      "value": 8
+                    },
+                    {
+                      "period": "2024",
+                      "value": 11
+                    },
+                    {
+                      "period": "2025",
+                      "value": 19.2
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "dcf": {
+            "available": false,
+            "message": "暂无展示严格口径 DCF；近五年单年 FCF 不足或为负。"
+          }
+        },
+        "shareholders": {
+          "holders": [
+            {
+              "name": "新余环亚诺金企业管理有限公司",
+              "ratio": 17.69,
+              "cumulative": 17.69,
+              "change": "+0.05%",
+              "color": "#0ea5e9"
+            },
+            {
+              "name": "南京瓴量企业管理合伙企业",
+              "ratio": 6.93,
+              "cumulative": 24.62,
+              "change": "新进",
+              "color": "#10b981"
+            },
+            {
+              "name": "兵投联创股权投资基金",
+              "ratio": 2.74,
+              "cumulative": 27.36,
+              "change": "新进",
+              "color": "#f59e0b"
+            },
+            {
+              "name": "中国建设银行－军工ETF",
+              "ratio": 2.56,
+              "cumulative": 29.92,
+              "change": "+0.05%",
+              "color": "#a855f7"
+            },
+            {
+              "name": "香港中央结算有限公司",
+              "ratio": 1.91,
+              "cumulative": 31.83,
+              "change": "新进",
+              "color": "#f43f5e"
+            },
+            {
+              "name": "全国社保基金一一四组合",
+              "ratio": 1.89,
+              "cumulative": 33.72,
+              "change": "新进",
+              "color": "#14b8a6"
+            },
+            {
+              "name": "中国工商银行－科创ETF",
+              "ratio": 1.72,
+              "cumulative": 35.44,
+              "change": "+0.05%",
+              "color": "#6366f1"
+            },
+            {
+              "name": "张国荣",
+              "ratio": 1.6,
+              "cumulative": 37.04,
+              "change": "新进",
+              "color": "#ec4899"
+            },
+            {
+              "name": "股东 9",
+              "ratio": 1.3,
+              "cumulative": 38.34,
+              "change": "新进",
+              "color": "#84cc16"
+            },
+            {
+              "name": "股东 10",
+              "ratio": 1.26,
+              "cumulative": 39.6,
+              "change": "+0.05%",
+              "color": "#f97316"
+            }
+          ],
+          "dividendSeries": [
+            {
+              "label": "每股分红",
+              "color": "#10b981",
+              "points": [
+                {
+                  "period": "2021",
+                  "value": 0.08
+                },
+                {
+                  "period": "2022",
+                  "value": 0.1
+                },
+                {
+                  "period": "2023",
+                  "value": 0.12
+                },
+                {
+                  "period": "2024",
+                  "value": 0.16
+                },
+                {
+                  "period": "2025",
+                  "value": 0.18
+                }
+              ]
+            },
+            {
+              "label": "股利支付率",
+              "color": "#f59e0b",
+              "points": [
+                {
+                  "period": "2021",
+                  "value": 3
+                },
+                {
+                  "period": "2022",
+                  "value": 4
+                },
+                {
+                  "period": "2023",
+                  "value": 5
+                },
+                {
+                  "period": "2024",
+                  "value": 9
+                },
+                {
+                  "period": "2025",
+                  "value": 11
+                }
+              ]
+            }
+          ],
+          "returnSeries": [
+            {
+              "label": "回购",
+              "color": "#3b82f6",
+              "points": [
+                {
+                  "period": "2021",
+                  "value": 0
+                },
+                {
+                  "period": "2022",
+                  "value": 0
+                },
+                {
+                  "period": "2023",
+                  "value": 0.8
+                },
+                {
+                  "period": "2024",
+                  "value": 1.2
+                },
+                {
+                  "period": "2025",
+                  "value": 4.4
+                }
+              ]
+            },
+            {
+              "label": "分红",
+              "color": "#f43f5e",
+              "points": [
+                {
+                  "period": "2021",
+                  "value": 0.2
+                },
+                {
+                  "period": "2022",
+                  "value": 0.3
+                },
+                {
+                  "period": "2023",
+                  "value": 0.6
+                },
+                {
+                  "period": "2024",
+                  "value": 0.9
+                },
+                {
+                  "period": "2025",
+                  "value": 1.1
+                }
+              ]
+            }
+          ],
+          "concentrationSeries": [
+            {
+              "label": "股东户数",
+              "color": "#8b5cf6",
+              "points": [
+                {
+                  "period": "2021",
+                  "value": 12
+                },
+                {
+                  "period": "2022",
+                  "value": 9
+                },
+                {
+                  "period": "2023",
+                  "value": 8
+                },
+                {
+                  "period": "2024",
+                  "value": 7
+                },
+                {
+                  "period": "2025",
+                  "value": 6
+                }
+              ]
+            },
+            {
+              "label": "人均持股金额",
+              "color": "#10b981",
+              "points": [
+                {
+                  "period": "2021",
+                  "value": 4
+                },
+                {
+                  "period": "2022",
+                  "value": 6
+                },
+                {
+                  "period": "2023",
+                  "value": 8
+                },
+                {
+                  "period": "2024",
+                  "value": 11
+                },
+                {
+                  "period": "2025",
+                  "value": 17
+                }
+              ]
+            }
+          ],
+          "northboundSeries": [
+            {
+              "label": "持股比例",
+              "color": "#0ea5e9",
+              "points": [
+                {
+                  "period": "2021",
+                  "value": 0.2
+                },
+                {
+                  "period": "2022",
+                  "value": 0.45
+                },
+                {
+                  "period": "2023",
+                  "value": 0.8
+                },
+                {
+                  "period": "2024",
+                  "value": 1.2
+                },
+                {
+                  "period": "2025",
+                  "value": 1.6
+                }
+              ]
+            },
+            {
+              "label": "股价",
+              "color": "#f59e0b",
+              "points": [
+                {
+                  "period": "2021",
+                  "value": 52
+                },
+                {
+                  "period": "2022",
+                  "value": 73
+                },
+                {
+                  "period": "2023",
+                  "value": 94
+                },
+                {
+                  "period": "2024",
+                  "value": 166
+                },
+                {
+                  "period": "2025",
+                  "value": 220
+                }
+              ]
+            }
+          ],
+          "executiveTrades": [
+            {
+              "type": "buy",
+              "name": "高佩奥",
+              "role": "核心技术人员",
+              "shares": 10000,
+              "date": "2026-06-25"
+            },
+            {
+              "type": "sell",
+              "name": "邱宏伟",
+              "role": "核心技术人员",
+              "shares": 27000,
+              "date": "2026-06-01"
+            },
+            {
+              "type": "buy",
+              "name": "高佩奥",
+              "role": "核心技术人员",
+              "shares": 21500,
+              "date": "2026-04-10"
+            },
+            {
+              "type": "sell",
+              "name": "何强",
+              "role": "董事、高级管理人员",
+              "shares": 1275000,
+              "date": "2026-03-30"
+            }
+          ]
+        },
+        "statements": {
+          "diagnosis": [
+            {
+              "label": "景气共振",
+              "status": "normal"
+            },
+            {
+              "label": "经营杠杆",
+              "status": "normal"
+            },
+            {
+              "label": "现金约束",
+              "status": "normal"
+            },
+            {
+              "label": "扎实修复",
+              "status": "normal"
+            },
+            {
+              "label": "增收不增利",
+              "status": "unknown"
+            },
+            {
+              "label": "激进扩张",
+              "status": "unknown"
+            },
+            {
+              "label": "低质量营收",
+              "status": "risk"
+            },
+            {
+              "label": "非经营拖利",
+              "status": "watch"
+            },
+            {
+              "label": "坏账/存货暴露",
+              "status": "unknown"
+            },
+            {
+              "label": "财务洗澡",
+              "status": "unknown"
+            },
+            {
+              "label": "债务负担",
+              "status": "unknown"
+            },
+            {
+              "label": "营运加速",
+              "status": "unknown"
+            },
+            {
+              "label": "数据异常",
+              "status": "unknown"
+            }
+          ],
+          "dupont": [
+            {
+              "label": "销售净利率",
+              "values": [
+                2.39,
+                -17.39,
+                2.41,
+                7.55
+              ],
+              "suffix": "%"
+            },
+            {
+              "label": "资产周转率",
+              "values": [
+                0.827,
+                0.668,
+                0.937,
+                0.963
+              ],
+              "suffix": ""
+            },
+            {
+              "label": "权益乘数",
+              "values": [
+                1.703,
+                2.47,
+                3.293,
+                2.99
+              ],
+              "suffix": ""
+            },
+            {
+              "label": "ROE",
+              "values": [
+                3.36,
+                -28.71,
+                7.43,
+                21.73
+              ],
+              "suffix": "%"
+            }
+          ],
+          "operations": [
+            {
+              "label": "存货周转天数",
+              "values": [
+                251.5,
+                284.9,
+                236.9,
+                234.4
+              ],
+              "suffix": "天"
+            },
+            {
+              "label": "应收账款周转天数",
+              "values": [
+                42.1,
+                58,
+                39.1,
+                38.8
+              ],
+              "suffix": "天"
+            },
+            {
+              "label": "资产负债率",
+              "values": [
+                45.1,
+                69.7,
+                69.5,
+                64.5
+              ],
+              "suffix": "%"
+            },
+            {
+              "label": "流动比率",
+              "values": [
+                2.2,
+                1.25,
+                1.24,
+                1.64
+              ],
+              "suffix": "倍"
+            }
+          ],
+          "sankey": {
+            "inflows": [
+              {
+                "label": "销售收款",
+                "value": 113,
+                "color": "#22c55e"
+              },
+              {
+                "label": "借款流入",
+                "value": 43,
+                "color": "#ef4444"
+              },
+              {
+                "label": "股权融资",
+                "value": 16,
+                "color": "#3b82f6"
+              }
+            ],
+            "outflows": [
+              {
+                "label": "购买商品",
+                "value": 92,
+                "color": "#10b981"
+              },
+              {
+                "label": "支付职工",
+                "value": 7,
+                "color": "#14b8a6"
+              },
+              {
+                "label": "资本开支",
+                "value": 16,
+                "color": "#f97316"
+              },
+              {
+                "label": "投资",
+                "value": 9,
+                "color": "#8b5cf6"
+              },
+              {
+                "label": "现金留存",
+                "value": 11,
+                "color": "#06b6d4"
+              }
+            ]
+          },
+          "tables": [
+            {
+              "kind": "income",
+              "label": "利润表",
+              "periods": [
+                "2025Q3",
+                "2024A",
+                "2023A",
+                "2022A"
+              ],
+              "rows": [
+                {
+                  "label": "营业收入",
+                  "values": [
+                    7.82,
+                    9.64,
+                    8.91,
+                    7.46
+                  ],
+                  "yoy": [
+                    12.6,
+                    8.2,
+                    19.4,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "营业成本",
+                  "values": [
+                    4.72,
+                    5.92,
+                    5.67,
+                    4.88
+                  ],
+                  "yoy": [
+                    9.1,
+                    4.4,
+                    16.2,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "销售费用",
+                  "values": [
+                    0.21,
+                    0.28,
+                    0.24,
+                    null
+                  ],
+                  "yoy": [
+                    11.8,
+                    16.7,
+                    26.3,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "研发费用",
+                  "values": [
+                    0.74,
+                    0.91,
+                    0.82,
+                    0.66
+                  ],
+                  "yoy": [
+                    13.2,
+                    11,
+                    24.2,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "营业利润",
+                  "values": [
+                    1.62,
+                    1.94,
+                    1.78,
+                    1.41
+                  ],
+                  "yoy": [
+                    9.5,
+                    9,
+                    26.2,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "归母净利润",
+                  "values": [
+                    1.43,
+                    1.68,
+                    1.55,
+                    1.27
+                  ],
+                  "yoy": [
+                    8.4,
+                    8.4,
+                    22,
+                    null
+                  ],
+                  "qoq": []
+                }
+              ]
+            },
+            {
+              "kind": "balance",
+              "label": "资产负债表",
+              "periods": [
+                "2025Q3",
+                "2024A",
+                "2023A",
+                "2022A"
+              ],
+              "rows": [
+                {
+                  "label": "货币资金",
+                  "values": [
+                    5.62,
+                    4.91,
+                    4.28,
+                    3.76
+                  ],
+                  "yoy": [
+                    18.1,
+                    14.7,
+                    13.8,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "应收账款",
+                  "values": [
+                    4.18,
+                    3.72,
+                    3.26,
+                    2.81
+                  ],
+                  "yoy": [
+                    15.4,
+                    14.1,
+                    16,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "存货",
+                  "values": [
+                    3.24,
+                    2.98,
+                    2.73,
+                    2.44
+                  ],
+                  "yoy": [
+                    10.2,
+                    9.2,
+                    11.9,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "资产总计",
+                  "values": [
+                    24.86,
+                    22.74,
+                    20.68,
+                    18.22
+                  ],
+                  "yoy": [
+                    11.3,
+                    10,
+                    13.5,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "负债合计",
+                  "values": [
+                    7.81,
+                    7.64,
+                    7.52,
+                    7.01
+                  ],
+                  "yoy": [
+                    -1.8,
+                    1.6,
+                    7.3,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "归母净资产",
+                  "values": [
+                    17.02,
+                    15.08,
+                    13.14,
+                    11.19
+                  ],
+                  "yoy": [
+                    15.9,
+                    14.8,
+                    17.4,
+                    null
+                  ],
+                  "qoq": []
+                }
+              ]
+            },
+            {
+              "kind": "cashflow",
+              "label": "现金流量表",
+              "periods": [
+                "2025Q3",
+                "2024A",
+                "2023A",
+                "2022A"
+              ],
+              "rows": [
+                {
+                  "label": "经营现金流",
+                  "values": [
+                    1.76,
+                    1.92,
+                    1.48,
+                    1.13
+                  ],
+                  "yoy": [
+                    24.8,
+                    29.7,
+                    31,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "投资活动现金流",
+                  "values": [
+                    -1.11,
+                    -1.38,
+                    -1.24,
+                    -0.92
+                  ],
+                  "yoy": [
+                    -8.7,
+                    -11.3,
+                    -34.8,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "筹资活动现金流",
+                  "values": [
+                    0.28,
+                    0.12,
+                    -0.36,
+                    0.41
+                  ],
+                  "yoy": [
+                    144.6,
+                    133.3,
+                    -187.8,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "现金净增加额",
+                  "values": [
+                    0.93,
+                    0.66,
+                    -0.12,
+                    0.62
+                  ],
+                  "yoy": [
+                    52.4,
+                    650,
+                    -119.4,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "自由现金流",
+                  "values": [
+                    0.78,
+                    0.91,
+                    0.62,
+                    0.47
+                  ],
+                  "yoy": [
+                    20,
+                    46.8,
+                    31.9,
+                    null
+                  ],
+                  "qoq": []
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "isFallbackSample": false
+    },
+    "688796.SH": {
+      "symbol": "688796.SH",
+      "sidebar": {
+        "referenceDate": "2026-08-13",
+        "events": [
+          {
+            "date": "2026-07-31",
+            "kind": "macro",
+            "title": "中国制造业 PMI"
+          },
+          {
+            "date": "2026-08-13",
+            "kind": "macro",
+            "title": "美国 CPI"
+          },
+          {
+            "date": "2026-08-14",
+            "kind": "macro",
+            "title": "中国 M2（广义货币）"
+          },
+          {
+            "date": "2026-08-14",
+            "kind": "macro",
+            "title": "中国社融增量"
+          },
+          {
+            "date": "2026-08-20",
+            "kind": "macro",
+            "title": "中国贷款市场报价利率（LPR）"
+          },
+          {
+            "date": "2026-09-04",
+            "kind": "macro",
+            "title": "美国非农就业人数"
+          }
+        ],
+        "stocks": [
+          {
+            "symbol": "688525.SH",
+            "name": "佰维存储",
+            "pinyin": "bwcc",
+            "price": 218.34,
+            "changePercent": 5.58,
+            "mentions": 74
+          },
+          {
+            "symbol": "688796.SH",
+            "name": "百奥赛图",
+            "pinyin": "bast",
+            "price": 62.8,
+            "changePercent": 2.1,
+            "mentions": 32,
+            "group": "heaven"
+          },
+          {
+            "symbol": "600519.SH",
+            "name": "贵州茅台",
+            "pinyin": "gzmt",
+            "price": 1472.6,
+            "changePercent": -0.42,
+            "mentions": 24,
+            "group": "heaven"
+          },
+          {
+            "symbol": "300750.SZ",
+            "name": "宁德时代",
+            "pinyin": "ndsd",
+            "price": 264.18,
+            "changePercent": 1.36,
+            "mentions": 20,
+            "group": "mystic"
+          },
+          {
+            "symbol": "600036.SH",
+            "name": "招商银行",
+            "pinyin": "zsyh",
+            "price": 44.91,
+            "changePercent": -0.18,
+            "mentions": 18
+          },
+          {
+            "symbol": "688981.SH",
+            "name": "中芯国际",
+            "pinyin": "zxgj",
+            "price": 93.56,
+            "changePercent": 0.73,
+            "mentions": 13
+          }
+        ]
+      },
+      "quote": {
+        "symbol": "688796.SH",
+        "name": "百奥赛图",
+        "market": "SH",
+        "industry": "电气设备",
+        "subIndustry": "电气设备",
+        "mentions": 32,
+        "latestMention": "2026-08-04",
+        "concepts": [
+          {
+            "name": "存储芯片",
+            "changePercent": 3.28
+          },
+          {
+            "name": "国产替代",
+            "changePercent": 2.46
+          },
+          {
+            "name": "先进封装",
+            "changePercent": 1.92
+          }
+        ],
+        "price": 62.8,
+        "changePercent": 2.1,
+        "pe": 32.4,
+        "pb": 3.18,
+        "previousClose": 61.50832517140059,
+        "intraday": {
+          "day": [
+            {
+              "time": "09:30",
+              "price": 61.63
+            },
+            {
+              "time": "10:05",
+              "price": 61.95
+            },
+            {
+              "time": "10:10",
+              "price": 62.22
+            },
+            {
+              "time": "10:15",
+              "price": 62.39
+            },
+            {
+              "time": "10:20",
+              "price": 62.44
+            },
+            {
+              "time": "10:25",
+              "price": 62.36
+            },
+            {
+              "time": "10:30",
+              "price": 62.17
+            },
+            {
+              "time": "10:35",
+              "price": 61.91
+            },
+            {
+              "time": "10:40",
+              "price": 61.62
+            },
+            {
+              "time": "10:45",
+              "price": 61.36
+            },
+            {
+              "time": "10:50",
+              "price": 61.17
+            },
+            {
+              "time": "10:55",
+              "price": 61.1
+            },
+            {
+              "time": "11:00",
+              "price": 61.15
+            },
+            {
+              "time": "11:05",
+              "price": 61.33
+            },
+            {
+              "time": "11:10",
+              "price": 61.6
+            },
+            {
+              "time": "11:15",
+              "price": 61.92
+            },
+            {
+              "time": "11:20",
+              "price": 62.24
+            },
+            {
+              "time": "11:25",
+              "price": 62.5
+            },
+            {
+              "time": "11:30",
+              "price": 62.67
+            },
+            {
+              "time": "11:35",
+              "price": 62.71
+            },
+            {
+              "time": "11:40",
+              "price": 62.63
+            },
+            {
+              "time": "11:45",
+              "price": 62.44
+            },
+            {
+              "time": "11:50",
+              "price": 62.17
+            },
+            {
+              "time": "11:55",
+              "price": 61.88
+            },
+            {
+              "time": "12:00",
+              "price": 61.62
+            },
+            {
+              "time": "12:05",
+              "price": 61.44
+            },
+            {
+              "time": "12:10",
+              "price": 61.38
+            },
+            {
+              "time": "12:15",
+              "price": 61.43
+            },
+            {
+              "time": "12:20",
+              "price": 61.62
+            },
+            {
+              "time": "12:25",
+              "price": 61.89
+            },
+            {
+              "time": "12:30",
+              "price": 62.21
+            },
+            {
+              "time": "12:35",
+              "price": 62.53
+            },
+            {
+              "time": "12:40",
+              "price": 62.79
+            },
+            {
+              "time": "12:45",
+              "price": 62.95
+            },
+            {
+              "time": "12:50",
+              "price": 62.99
+            },
+            {
+              "time": "12:55",
+              "price": 62.9
+            },
+            {
+              "time": "13:00",
+              "price": 62.71
+            },
+            {
+              "time": "13:05",
+              "price": 62.44
+            },
+            {
+              "time": "13:10",
+              "price": 62.15
+            },
+            {
+              "time": "13:15",
+              "price": 61.89
+            },
+            {
+              "time": "13:20",
+              "price": 61.71
+            },
+            {
+              "time": "13:25",
+              "price": 61.65
+            },
+            {
+              "time": "13:30",
+              "price": 61.72
+            },
+            {
+              "time": "13:35",
+              "price": 61.9
+            },
+            {
+              "time": "13:40",
+              "price": 62.18
+            },
+            {
+              "time": "13:45",
+              "price": 62.5
+            },
+            {
+              "time": "13:50",
+              "price": 62.81
+            },
+            {
+              "time": "15:00",
+              "price": 63.07
+            }
+          ],
+          "fiveDay": [
+            {
+              "time": "09:30",
+              "price": 59.05
+            },
+            {
+              "time": "10:05",
+              "price": 59.63
+            },
+            {
+              "time": "10:10",
+              "price": 60.12
+            },
+            {
+              "time": "10:15",
+              "price": 60.44
+            },
+            {
+              "time": "10:20",
+              "price": 60.53
+            },
+            {
+              "time": "10:25",
+              "price": 60.39
+            },
+            {
+              "time": "10:30",
+              "price": 60.04
+            },
+            {
+              "time": "10:35",
+              "price": 59.56
+            },
+            {
+              "time": "10:40",
+              "price": 59.03
+            },
+            {
+              "time": "10:45",
+              "price": 58.55
+            },
+            {
+              "time": "10:50",
+              "price": 58.21
+            },
+            {
+              "time": "10:55",
+              "price": 58.07
+            },
+            {
+              "time": "11:00",
+              "price": 58.17
+            },
+            {
+              "time": "11:05",
+              "price": 58.5
+            },
+            {
+              "time": "11:10",
+              "price": 58.99
+            },
+            {
+              "time": "11:15",
+              "price": 59.58
+            },
+            {
+              "time": "11:20",
+              "price": 60.16
+            },
+            {
+              "time": "11:25",
+              "price": 60.65
+            },
+            {
+              "time": "11:30",
+              "price": 60.95
+            },
+            {
+              "time": "11:35",
+              "price": 61.03
+            },
+            {
+              "time": "11:40",
+              "price": 60.88
+            },
+            {
+              "time": "11:45",
+              "price": 60.53
+            },
+            {
+              "time": "11:50",
+              "price": 60.04
+            },
+            {
+              "time": "11:55",
+              "price": 59.51
+            },
+            {
+              "time": "12:00",
+              "price": 59.04
+            },
+            {
+              "time": "12:05",
+              "price": 58.7
+            },
+            {
+              "time": "12:10",
+              "price": 58.58
+            },
+            {
+              "time": "12:15",
+              "price": 58.69
+            },
+            {
+              "time": "12:20",
+              "price": 59.02
+            },
+            {
+              "time": "12:25",
+              "price": 59.52
+            },
+            {
+              "time": "12:30",
+              "price": 60.11
+            },
+            {
+              "time": "12:35",
+              "price": 60.69
+            },
+            {
+              "time": "12:40",
+              "price": 61.17
+            },
+            {
+              "time": "12:45",
+              "price": 61.47
+            },
+            {
+              "time": "12:50",
+              "price": 61.54
+            },
+            {
+              "time": "12:55",
+              "price": 61.38
+            },
+            {
+              "time": "13:00",
+              "price": 61.02
+            },
+            {
+              "time": "13:05",
+              "price": 60.53
+            },
+            {
+              "time": "13:10",
+              "price": 60
+            },
+            {
+              "time": "13:15",
+              "price": 59.52
+            },
+            {
+              "time": "13:20",
+              "price": 59.2
+            },
+            {
+              "time": "13:25",
+              "price": 59.08
+            },
+            {
+              "time": "13:30",
+              "price": 59.2
+            },
+            {
+              "time": "13:35",
+              "price": 59.54
+            },
+            {
+              "time": "13:40",
+              "price": 60.05
+            },
+            {
+              "time": "13:45",
+              "price": 60.64
+            },
+            {
+              "time": "13:50",
+              "price": 61.22
+            },
+            {
+              "time": "13:55",
+              "price": 61.69
+            },
+            {
+              "time": "14:00",
+              "price": 61.98
+            },
+            {
+              "time": "14:05",
+              "price": 62.04
+            },
+            {
+              "time": "14:10",
+              "price": 61.87
+            },
+            {
+              "time": "14:15",
+              "price": 61.5
+            },
+            {
+              "time": "14:20",
+              "price": 61.01
+            },
+            {
+              "time": "14:25",
+              "price": 60.48
+            },
+            {
+              "time": "14:30",
+              "price": 60.01
+            },
+            {
+              "time": "14:35",
+              "price": 59.7
+            },
+            {
+              "time": "14:40",
+              "price": 59.59
+            },
+            {
+              "time": "14:45",
+              "price": 59.72
+            },
+            {
+              "time": "14:50",
+              "price": 60.07
+            },
+            {
+              "time": "15:00",
+              "price": 60.58
+            }
+          ]
+        }
+      },
+      "dailyChart": {
+        "candles": [
+          {
+            "date": "2026-05-04",
+            "open": 56.3,
+            "high": 57.6,
+            "low": 55.88,
+            "close": 57.12,
+            "volume": 4800000
+          },
+          {
+            "date": "2026-05-05",
+            "open": 58.63,
+            "high": 59.24,
+            "low": 57.87,
+            "close": 58.4,
+            "volume": 5748847
+          },
+          {
+            "date": "2026-05-06",
+            "open": 59.36,
+            "high": 60.1,
+            "low": 58.14,
+            "close": 58.78,
+            "volume": 6530707
+          },
+          {
+            "date": "2026-05-07",
+            "open": 58.7,
+            "high": 59.57,
+            "low": 57.73,
+            "close": 58.48,
+            "volume": 7016333
+          },
+          {
+            "date": "2026-05-08",
+            "open": 57.91,
+            "high": 58.91,
+            "low": 57.42,
+            "close": 57.84,
+            "volume": 7143433
+          },
+          {
+            "date": "2026-05-09",
+            "open": 57.39,
+            "high": 57.87,
+            "low": 56.53,
+            "close": 57.06,
+            "volume": 6930741
+          },
+          {
+            "date": "2026-05-10",
+            "open": 56.3,
+            "high": 56.91,
+            "low": 55.47,
+            "close": 56.11,
+            "volume": 6473791
+          },
+          {
+            "date": "2026-05-11",
+            "open": 54.32,
+            "high": 55.69,
+            "low": 53.57,
+            "close": 54.95,
+            "volume": 5923320
+          },
+          {
+            "date": "2026-05-12",
+            "open": 52.72,
+            "high": 54.68,
+            "low": 52.3,
+            "close": 53.81,
+            "volume": 5451202
+          },
+          {
+            "date": "2026-05-13",
+            "open": 52.95,
+            "high": 54.21,
+            "low": 52.42,
+            "close": 53.21,
+            "volume": 3321603
+          },
+          {
+            "date": "2026-05-14",
+            "open": 54.78,
+            "high": 55.26,
+            "low": 52.99,
+            "close": 53.63,
+            "volume": 3416137
+          },
+          {
+            "date": "2026-05-15",
+            "open": 56.55,
+            "high": 57.16,
+            "low": 54.39,
+            "close": 55.14,
+            "volume": 3870900
+          },
+          {
+            "date": "2026-05-16",
+            "open": 57.27,
+            "high": 58.01,
+            "low": 56.8,
+            "close": 57.22,
+            "volume": 4630573
+          },
+          {
+            "date": "2026-05-17",
+            "open": 57.57,
+            "high": 59.77,
+            "low": 57.04,
+            "close": 58.9,
+            "volume": 5570925
+          },
+          {
+            "date": "2026-05-18",
+            "open": 58.18,
+            "high": 60.35,
+            "low": 57.54,
+            "close": 59.35,
+            "volume": 6526889
+          },
+          {
+            "date": "2026-05-19",
+            "open": 58.48,
+            "high": 58.96,
+            "low": 57.58,
+            "close": 58.33,
+            "volume": 7329869
+          },
+          {
+            "date": "2026-05-20",
+            "open": 57.35,
+            "high": 57.96,
+            "low": 55.95,
+            "close": 56.37,
+            "volume": 7845845
+          },
+          {
+            "date": "2026-05-21",
+            "open": 55.03,
+            "high": 55.77,
+            "low": 53.91,
+            "close": 54.44,
+            "volume": 8005665
+          },
+          {
+            "date": "2026-05-22",
+            "open": 53.3,
+            "high": 54.27,
+            "low": 52.66,
+            "close": 53.4,
+            "volume": 5930669
+          },
+          {
+            "date": "2026-05-23",
+            "open": 53.37,
+            "high": 54.56,
+            "low": 52.62,
+            "close": 53.56,
+            "volume": 5490130
+          },
+          {
+            "date": "2026-05-24",
+            "open": 54.61,
+            "high": 55.09,
+            "low": 54.19,
+            "close": 54.61,
+            "volume": 4941077
+          },
+          {
+            "date": "2026-05-25",
+            "open": 55.73,
+            "high": 56.61,
+            "low": 55.2,
+            "close": 56,
+            "volume": 4455063
+          },
+          {
+            "date": "2026-05-26",
+            "open": 56.6,
+            "high": 58.05,
+            "low": 55.96,
+            "close": 57.31,
+            "volume": 4189395
+          },
+          {
+            "date": "2026-05-27",
+            "open": 58.09,
+            "high": 59.28,
+            "low": 57.34,
+            "close": 58.41,
+            "volume": 4251579
+          },
+          {
+            "date": "2026-05-28",
+            "open": 60.2,
+            "high": 61.2,
+            "low": 58.95,
+            "close": 59.37,
+            "volume": 4675021
+          },
+          {
+            "date": "2026-05-29",
+            "open": 61.5,
+            "high": 61.98,
+            "low": 59.65,
+            "close": 60.18,
+            "volume": 5411483
+          },
+          {
+            "date": "2026-05-30",
+            "open": 60.84,
+            "high": 61.45,
+            "low": 59.92,
+            "close": 60.56,
+            "volume": 6341979
+          },
+          {
+            "date": "2026-05-31",
+            "open": 58.95,
+            "high": 60.93,
+            "low": 58.2,
+            "close": 60.19,
+            "volume": 5413668
+          },
+          {
+            "date": "2026-06-01",
+            "open": 57.57,
+            "high": 59.85,
+            "low": 57.15,
+            "close": 58.98,
+            "volume": 6236663
+          },
+          {
+            "date": "2026-06-02",
+            "open": 57.34,
+            "high": 58.38,
+            "low": 56.81,
+            "close": 57.38,
+            "volume": 6782419
+          },
+          {
+            "date": "2026-06-03",
+            "open": 57.41,
+            "high": 57.89,
+            "low": 55.56,
+            "close": 56.2,
+            "volume": 6975052
+          },
+          {
+            "date": "2026-06-04",
+            "open": 57.21,
+            "high": 57.82,
+            "low": 55.47,
+            "close": 56.22,
+            "volume": 6818488
+          },
+          {
+            "date": "2026-06-05",
+            "open": 57.53,
+            "high": 58.39,
+            "low": 57.11,
+            "close": 57.65,
+            "volume": 6395574
+          },
+          {
+            "date": "2026-06-06",
+            "open": 59.31,
+            "high": 60.84,
+            "low": 58.78,
+            "close": 59.97,
+            "volume": 5849355
+          },
+          {
+            "date": "2026-06-07",
+            "open": 61.84,
+            "high": 63.17,
+            "low": 61.2,
+            "close": 62.17,
+            "volume": 5350743
+          },
+          {
+            "date": "2026-06-08",
+            "open": 63.29,
+            "high": 63.8,
+            "low": 62.54,
+            "close": 63.32,
+            "volume": 5059893
+          },
+          {
+            "date": "2026-06-09",
+            "open": 62.85,
+            "high": 63.67,
+            "low": 62.43,
+            "close": 63.06,
+            "volume": 3200001
+          },
+          {
+            "date": "2026-06-10",
+            "open": 61.54,
+            "high": 62.49,
+            "low": 61.01,
+            "close": 61.75,
+            "volume": 3591726
+          },
+          {
+            "date": "2026-06-11",
+            "open": 60.59,
+            "high": 61.46,
+            "low": 59.48,
+            "close": 60.12,
+            "volume": 4303995
+          },
+          {
+            "date": "2026-06-12",
+            "open": 59.85,
+            "high": 60.85,
+            "low": 58.06,
+            "close": 58.81,
+            "volume": 5223290
+          },
+          {
+            "date": "2026-06-13",
+            "open": 58.48,
+            "high": 58.96,
+            "low": 57.65,
+            "close": 58.07,
+            "volume": 6189304
+          },
+          {
+            "date": "2026-06-14",
+            "open": 56.81,
+            "high": 58.4,
+            "low": 56.28,
+            "close": 57.79,
+            "volume": 7031170
+          },
+          {
+            "date": "2026-06-15",
+            "open": 56.33,
+            "high": 58.53,
+            "low": 55.69,
+            "close": 57.79,
+            "volume": 7606079
+          },
+          {
+            "date": "2026-06-16",
+            "open": 57.79,
+            "high": 58.94,
+            "low": 57.04,
+            "close": 58.07,
+            "volume": 7831559
+          },
+          {
+            "date": "2026-06-17",
+            "open": 60.02,
+            "high": 61.02,
+            "low": 58.37,
+            "close": 58.79,
+            "volume": 7704111
+          },
+          {
+            "date": "2026-06-18",
+            "open": 61.34,
+            "high": 61.82,
+            "low": 59.48,
+            "close": 60.01,
+            "volume": 5410001
+          },
+          {
+            "date": "2026-06-19",
+            "open": 61.48,
+            "high": 62.09,
+            "low": 60.82,
+            "close": 61.46,
+            "volume": 4868025
+          },
+          {
+            "date": "2026-06-20",
+            "open": 61.48,
+            "high": 63.22,
+            "low": 60.73,
+            "close": 62.48,
+            "volume": 4358136
+          },
+          {
+            "date": "2026-06-21",
+            "open": 61.68,
+            "high": 63.3,
+            "low": 61.26,
+            "close": 62.43,
+            "volume": 4043038
+          },
+          {
+            "date": "2026-06-22",
+            "open": 61.18,
+            "high": 62.18,
+            "low": 60.59,
+            "close": 61.12,
+            "volume": 4041407
+          },
+          {
+            "date": "2026-06-23",
+            "open": 59.32,
+            "high": 59.8,
+            "low": 58.38,
+            "close": 59.02,
+            "volume": 4401075
+          },
+          {
+            "date": "2026-06-24",
+            "open": 57.19,
+            "high": 57.8,
+            "low": 56.38,
+            "close": 57.13,
+            "volume": 5088214
+          },
+          {
+            "date": "2026-06-25",
+            "open": 56.56,
+            "high": 57.3,
+            "low": 55.97,
+            "close": 56.39,
+            "volume": 5994987
+          },
+          {
+            "date": "2026-06-26",
+            "open": 57.77,
+            "high": 58.64,
+            "low": 56.64,
+            "close": 57.17,
+            "volume": 6963915
+          },
+          {
+            "date": "2026-06-27",
+            "open": 59.49,
+            "high": 60.49,
+            "low": 58.45,
+            "close": 59.09,
+            "volume": 5933474
+          },
+          {
+            "date": "2026-06-28",
+            "open": 60.65,
+            "high": 61.78,
+            "low": 59.9,
+            "close": 61.3,
+            "volume": 6536856
+          },
+          {
+            "date": "2026-06-29",
+            "open": 61.66,
+            "high": 63.57,
+            "low": 61.24,
+            "close": 62.96,
+            "volume": 6795153
+          },
+          {
+            "date": "2026-06-30",
+            "open": 63.25,
+            "high": 64.46,
+            "low": 62.72,
+            "close": 63.72,
+            "volume": 6697450
+          },
+          {
+            "date": "2026-07-01",
+            "open": 64.81,
+            "high": 65.68,
+            "low": 63.1,
+            "close": 63.74,
+            "volume": 6313290
+          },
+          {
+            "date": "2026-07-02",
+            "open": 64.88,
+            "high": 65.88,
+            "low": 62.63,
+            "close": 63.38,
+            "volume": 5776960
+          },
+          {
+            "date": "2026-07-03",
+            "open": 63.17,
+            "high": 63.65,
+            "low": 62.49,
+            "close": 62.91,
+            "volume": 5257137
+          },
+          {
+            "date": "2026-07-04",
+            "open": 61.2,
+            "high": 62.96,
+            "low": 60.67,
+            "close": 62.35,
+            "volume": 4918770
+          },
+          {
+            "date": "2026-07-05",
+            "open": 60.49,
+            "high": 62.38,
+            "low": 59.85,
+            "close": 61.64,
+            "volume": 4885794
+          },
+          {
+            "date": "2026-07-06",
+            "open": 60.87,
+            "high": 61.76,
+            "low": 60.12,
+            "close": 60.89,
+            "volume": 3323125
+          }
+        ],
+        "announcements": [
+          {
+            "id": "announcement-0",
+            "date": "2026-05-06",
+            "kind": "earnings",
+            "label": "业绩快报"
+          },
+          {
+            "id": "announcement-1",
+            "date": "2026-05-13",
+            "kind": "capital",
+            "label": "分红"
+          },
+          {
+            "id": "announcement-2",
+            "date": "2026-05-20",
+            "kind": "major",
+            "label": "重大合同"
+          },
+          {
+            "id": "announcement-3",
+            "date": "2026-05-27",
+            "kind": "risk",
+            "label": "监管问询"
+          },
+          {
+            "id": "announcement-4",
+            "date": "2026-06-03",
+            "kind": "governance",
+            "label": "治理制度"
+          },
+          {
+            "id": "announcement-5",
+            "date": "2026-06-10",
+            "kind": "other",
+            "label": "其他公告"
+          },
+          {
+            "id": "announcement-6",
+            "date": "2026-06-17",
+            "kind": "earnings",
+            "label": "业绩快报"
+          },
+          {
+            "id": "announcement-7",
+            "date": "2026-06-24",
+            "kind": "capital",
+            "label": "分红"
+          },
+          {
+            "id": "announcement-8",
+            "date": "2026-07-01",
+            "kind": "major",
+            "label": "重大合同"
+          }
+        ]
+      },
+      "metrics": {
+        "cards": [
+          {
+            "label": "PE (TTM)",
+            "value": "32.40"
+          },
+          {
+            "label": "PB",
+            "value": "3.18"
+          },
+          {
+            "label": "总市值",
+            "value": "¥1098亿"
+          },
+          {
+            "label": "账上净现金",
+            "value": "-¥73亿"
+          },
+          {
+            "label": "股息率(2025全年·财年归属)",
+            "value": "0.09%"
+          },
+          {
+            "label": "分红次数(近5财年)",
+            "value": "1"
+          },
+          {
+            "label": "预期股息率(本年度·季节性权重)",
+            "value": "0.09%"
+          },
+          {
+            "label": "预期股息率(未来12月·NTM)",
+            "value": "--"
+          }
+        ],
+        "years": [
+          "2016",
+          "2017",
+          "2018",
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+          "2025"
+        ],
+        "fields": [
+          {
+            "id": "cost",
+            "label": "营业成本",
+            "category": "profit",
+            "values": [
+              25,
+              29,
+              33,
+              38,
+              42,
+              46,
+              52,
+              64,
+              68,
+              77
+            ]
+          },
+          {
+            "id": "salesCash",
+            "label": "销售收现",
+            "category": "cashflow",
+            "values": [
+              28,
+              33,
+              40,
+              45,
+              50,
+              56,
+              65,
+              80,
+              92,
+              108
+            ]
+          },
+          {
+            "id": "purchaseCash",
+            "label": "购货付现",
+            "category": "cashflow",
+            "values": [
+              22,
+              27,
+              30,
+              35,
+              40,
+              44,
+              50,
+              60,
+              66,
+              75
+            ]
+          },
+          {
+            "id": "capex",
+            "label": "资本开支",
+            "category": "cashflow",
+            "values": [
+              1.2,
+              1.6,
+              2,
+              3,
+              4,
+              6,
+              7,
+              9,
+              12,
+              16
+            ]
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "category": "profit",
+            "values": [
+              31,
+              36,
+              42,
+              49,
+              55,
+              62,
+              71,
+              86,
+              96,
+              113
+            ]
+          },
+          {
+            "id": "grossProfit",
+            "label": "毛利润",
+            "category": "profit",
+            "values": [
+              6,
+              7,
+              9,
+              11,
+              13,
+              16,
+              19,
+              22,
+              28,
+              36
+            ]
+          },
+          {
+            "id": "operatingProfit",
+            "label": "营业利润",
+            "category": "profit",
+            "values": [
+              2.8,
+              3.3,
+              4,
+              5,
+              6,
+              7,
+              9,
+              11,
+              12,
+              16
+            ]
+          },
+          {
+            "id": "parentNetProfit",
+            "label": "归母净利润",
+            "category": "profit",
+            "values": [
+              2.6,
+              3.1,
+              3.8,
+              4.6,
+              5.1,
+              6.3,
+              7.4,
+              8.2,
+              7.9,
+              8.53
+            ]
+          },
+          {
+            "id": "operatingCashFlow",
+            "label": "经营现金流",
+            "category": "cashflow",
+            "values": [
+              1.4,
+              0.9,
+              0.6,
+              -1.8,
+              -3.2,
+              -6.1,
+              -8.4,
+              -19.2,
+              4.6,
+              -20
+            ]
+          },
+          {
+            "id": "investingCashFlow",
+            "label": "投资现金流",
+            "category": "cashflow",
+            "values": [
+              -1.2,
+              -1.6,
+              -2,
+              -3,
+              -4,
+              -6,
+              -7,
+              -9,
+              -12,
+              -16
+            ]
+          },
+          {
+            "id": "financingCashFlow",
+            "label": "筹资现金流",
+            "category": "cashflow",
+            "values": [
+              1,
+              1.5,
+              2,
+              3,
+              2,
+              4,
+              6,
+              7,
+              9,
+              12
+            ]
+          },
+          {
+            "id": "totalAssets",
+            "label": "资产总计",
+            "category": "balance",
+            "values": [
+              51,
+              59,
+              68,
+              76,
+              88,
+              103,
+              126,
+              168,
+              210,
+              245
+            ]
+          },
+          {
+            "id": "totalLiabilities",
+            "label": "负债合计",
+            "category": "balance",
+            "values": [
+              23,
+              27,
+              31,
+              35,
+              42,
+              51,
+              66,
+              91,
+              104,
+              111
+            ]
+          },
+          {
+            "id": "cash",
+            "label": "货币资金",
+            "category": "balance",
+            "values": [
+              7,
+              8,
+              9,
+              10,
+              12,
+              14,
+              18,
+              24,
+              31,
+              38
+            ]
+          },
+          {
+            "id": "receivables",
+            "label": "应收账款",
+            "category": "working-capital",
+            "values": [
+              6,
+              7,
+              8,
+              9,
+              11,
+              13,
+              16,
+              20,
+              24,
+              29
+            ]
+          },
+          {
+            "id": "freeCashFlow",
+            "label": "自由现金流",
+            "category": "derived",
+            "values": [
+              0.2,
+              -0.7,
+              -1.4,
+              -4.8,
+              -7.2,
+              -12.1,
+              -15.4,
+              -28.2,
+              -7.4,
+              -36
+            ]
+          }
+        ],
+        "presets": [
+          {
+            "id": "cash-profit",
+            "label": "真钱指数",
+            "numerator": "operatingCashFlow",
+            "denominator": "parentNetProfit",
+            "unit": "multiple"
+          },
+          {
+            "id": "cash-revenue",
+            "label": "经现/营收",
+            "numerator": "operatingCashFlow",
+            "denominator": "revenue",
+            "unit": "percent"
+          },
+          {
+            "id": "cash-debt",
+            "label": "经现/负债",
+            "numerator": "operatingCashFlow",
+            "denominator": "totalLiabilities",
+            "unit": "percent"
+          },
+          {
+            "id": "collection",
+            "label": "收现比",
+            "numerator": "salesCash",
+            "denominator": "revenue",
+            "unit": "multiple"
+          },
+          {
+            "id": "payment",
+            "label": "付现比",
+            "numerator": "purchaseCash",
+            "denominator": "cost",
+            "unit": "multiple"
+          },
+          {
+            "id": "fcf",
+            "label": "FCF率",
+            "numerator": "freeCashFlow",
+            "denominator": "revenue",
+            "unit": "percent"
+          },
+          {
+            "id": "capex",
+            "label": "开支保障",
+            "numerator": "operatingCashFlow",
+            "denominator": "capex",
+            "unit": "multiple"
+          }
+        ]
+      },
+      "risks": {
+        "score": 32,
+        "level": "高风险",
+        "groups": [
+          {
+            "id": "operations",
+            "title": "经营风险",
+            "description": "看资产质量、利润结构、会计扰动与现金流支撑",
+            "items": [
+              {
+                "id": "inventory",
+                "title": "存贷双高",
+                "summary": "存贷双高：否",
+                "detail": "现金占比与负债占比共同判断现金与有息债同时偏高风险。",
+                "status": "normal",
+                "reportDate": "2026-03-31",
+                "announcementDate": "2026-04-16",
+                "reportType": "Q1",
+                "inputs": [
+                  {
+                    "label": "货币资金",
+                    "value": "37.95亿元"
+                  },
+                  {
+                    "label": "有息负债",
+                    "value": "110.93亿元"
+                  }
+                ],
+                "formula": "现金占比 > 25% 且负债占比 > 35%",
+                "conclusion": "当前未触发存贷双高。",
+                "missingFields": [],
+                "drilldown": {
+                  "tab": "statements",
+                  "statement": "balance",
+                  "fields": [
+                    "货币资金",
+                    "负债合计",
+                    "资产总计"
+                  ]
+                }
+              },
+              {
+                "id": "goodwill",
+                "title": "商誉/资产",
+                "summary": "商誉字段缺失，无法评估",
+                "detail": "商誉占总资产比例过高时提示并购减值风险。",
+                "status": "unknown",
+                "reportDate": "2026-03-31",
+                "announcementDate": "2026-04-16",
+                "reportType": "Q1",
+                "inputs": [],
+                "formula": "商誉 ÷ 资产总计",
+                "conclusion": "缺少商誉字段。",
+                "missingFields": [
+                  "商誉"
+                ]
+              },
+              {
+                "id": "cash-support",
+                "title": "净资产现金流支撑",
+                "summary": "累计经营现金流/净资产：-0.91",
+                "detail": "衡量净资产是否得到真实现金流支撑。",
+                "status": "risk",
+                "reportDate": "2026-03-31",
+                "announcementDate": "2026-04-16",
+                "reportType": "Q1",
+                "inputs": [
+                  {
+                    "label": "经营现金流",
+                    "value": "-20亿元"
+                  },
+                  {
+                    "label": "归母净利润",
+                    "value": "8.53亿元"
+                  }
+                ],
+                "formula": "累计经营现金流 ÷ 归母净利润",
+                "conclusion": "现金流支撑偏弱。",
+                "missingFields": [],
+                "drilldown": {
+                  "tab": "statements",
+                  "statement": "cashflow",
+                  "fields": [
+                    "经营现金流",
+                    "归母净利润"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": "dividend",
+            "title": "分红安全垫",
+            "description": "看估值带、负债负担、分红可持续性与分红/融资关系",
+            "items": [
+              {
+                "id": "valuation",
+                "title": "估值分位带",
+                "summary": "PE偏低，PB中性",
+                "detail": "近十年 PE/PB 分位组合判断。",
+                "status": "normal",
+                "reportDate": "2026-03-31",
+                "announcementDate": "2026-04-16",
+                "reportType": "Q1",
+                "inputs": [
+                  {
+                    "label": "PE分位",
+                    "value": "29.2%"
+                  },
+                  {
+                    "label": "PB分位",
+                    "value": "53.1%"
+                  }
+                ],
+                "formula": "PE 与 PB 历史分位",
+                "conclusion": "估值处于合理偏低区间。",
+                "missingFields": []
+              },
+              {
+                "id": "dividend-financing",
+                "title": "分红 vs 融资",
+                "summary": "分红与融资关系需关注",
+                "detail": "分红依赖外部融资时降低安全垫。",
+                "status": "watch",
+                "reportDate": "2026-03-31",
+                "announcementDate": "2026-04-16",
+                "reportType": "Q1",
+                "inputs": [
+                  {
+                    "label": "现金分红",
+                    "value": "1亿元"
+                  },
+                  {
+                    "label": "筹资现金流",
+                    "value": "12亿元"
+                  }
+                ],
+                "formula": "现金分红 ÷ 筹资现金流",
+                "conclusion": "融资规模明显高于分红。",
+                "missingFields": [],
+                "drilldown": {
+                  "tab": "statements",
+                  "statement": "cashflow",
+                  "fields": [
+                    "筹资现金流",
+                    "现金分红"
+                  ]
+                }
+              },
+              {
+                "id": "dividend-cover",
+                "title": "分红可持续性",
+                "summary": "经营现金流覆盖不足",
+                "detail": "近三年经营现金流覆盖现金分红。",
+                "status": "risk",
+                "reportDate": "2026-03-31",
+                "announcementDate": "2026-04-16",
+                "reportType": "Q1",
+                "inputs": [
+                  {
+                    "label": "经营现金流",
+                    "value": "-20亿元"
+                  }
+                ],
+                "formula": "经营现金流 ÷ 现金分红",
+                "conclusion": "现金流覆盖不足。",
+                "missingFields": []
+              }
+            ]
+          }
+        ]
+      },
+      "financial": {
+        "years": [
+          "2025",
+          "2024",
+          "2023",
+          "2022"
+        ],
+        "reportTypes": [
+          "年报",
+          "三季报",
+          "中报",
+          "一季报"
+        ],
+        "announcementDate": "2026-03-20",
+        "dashboard": {
+          "products": [
+            {
+              "name": "嵌入式存储",
+              "revenue": 65,
+              "ratio": 58,
+              "color": "#0ea5e9"
+            },
+            {
+              "name": "企业级存储",
+              "revenue": 34,
+              "ratio": 30,
+              "color": "#10b981"
+            },
+            {
+              "name": "先进封装",
+              "revenue": 14,
+              "ratio": 12,
+              "color": "#f59e0b"
+            }
+          ],
+          "productTrend": [
+            {
+              "year": "2022",
+              "values": [
+                38,
+                16,
+                8
+              ]
+            },
+            {
+              "year": "2023",
+              "values": [
+                56,
+                25,
+                13
+              ]
+            },
+            {
+              "year": "2024",
+              "values": [
+                74,
+                34,
+                18
+              ]
+            },
+            {
+              "year": "2025",
+              "values": [
+                92,
+                43,
+                23
+              ]
+            }
+          ],
+          "bands": [
+            {
+              "id": "pe",
+              "label": "PE",
+              "current": 61.39,
+              "bands": [
+                142.27,
+                105.47,
+                68.67,
+                31.88,
+                0
+              ],
+              "points": [
+                {
+                  "period": "2022Q1",
+                  "value": 42.97
+                },
+                {
+                  "period": "2022Q2",
+                  "value": 51
+                },
+                {
+                  "period": "2022Q3",
+                  "value": 55.4
+                },
+                {
+                  "period": "2022Q4",
+                  "value": 54.37
+                },
+                {
+                  "period": "2023Q1",
+                  "value": 48.78
+                },
+                {
+                  "period": "2023Q2",
+                  "value": 41.77
+                },
+                {
+                  "period": "2023Q3",
+                  "value": 37.18
+                },
+                {
+                  "period": "2023Q4",
+                  "value": 37.67
+                },
+                {
+                  "period": "2024Q1",
+                  "value": 43.35
+                },
+                {
+                  "period": "2024Q2",
+                  "value": 51.76
+                },
+                {
+                  "period": "2024Q3",
+                  "value": 59.11
+                },
+                {
+                  "period": "2024Q4",
+                  "value": 62.1
+                },
+                {
+                  "period": "2025Q1",
+                  "value": 59.62
+                },
+                {
+                  "period": "2025Q2",
+                  "value": 53.27
+                },
+                {
+                  "period": "2025Q3",
+                  "value": 46.55
+                },
+                {
+                  "period": "2025Q4",
+                  "value": 43.18
+                },
+                {
+                  "period": "2026Q1",
+                  "value": 45.19
+                },
+                {
+                  "period": "2026Q2",
+                  "value": 51.95
+                },
+                {
+                  "period": "2026Q3",
+                  "value": 60.47
+                },
+                {
+                  "period": "2026Q4",
+                  "value": 66.89
+                }
+              ]
+            },
+            {
+              "id": "pb",
+              "label": "PB",
+              "current": 13.93,
+              "bands": [
+                22.86,
+                18.4,
+                13.93,
+                9.46,
+                4.99
+              ],
+              "points": [
+                {
+                  "period": "2022Q1",
+                  "value": 11.86
+                },
+                {
+                  "period": "2022Q2",
+                  "value": 12.4
+                },
+                {
+                  "period": "2022Q3",
+                  "value": 11.7
+                },
+                {
+                  "period": "2022Q4",
+                  "value": 10.21
+                },
+                {
+                  "period": "2023Q1",
+                  "value": 8.73
+                },
+                {
+                  "period": "2023Q2",
+                  "value": 8.1
+                },
+                {
+                  "period": "2023Q3",
+                  "value": 8.7
+                },
+                {
+                  "period": "2023Q4",
+                  "value": 10.32
+                },
+                {
+                  "period": "2024Q1",
+                  "value": 12.24
+                },
+                {
+                  "period": "2024Q2",
+                  "value": 13.59
+                },
+                {
+                  "period": "2024Q3",
+                  "value": 13.78
+                },
+                {
+                  "period": "2024Q4",
+                  "value": 12.8
+                },
+                {
+                  "period": "2025Q1",
+                  "value": 11.22
+                },
+                {
+                  "period": "2025Q2",
+                  "value": 9.91
+                },
+                {
+                  "period": "2025Q3",
+                  "value": 9.59
+                },
+                {
+                  "period": "2025Q4",
+                  "value": 10.52
+                },
+                {
+                  "period": "2026Q1",
+                  "value": 12.31
+                },
+                {
+                  "period": "2026Q2",
+                  "value": 14.16
+                },
+                {
+                  "period": "2026Q3",
+                  "value": 15.23
+                },
+                {
+                  "period": "2026Q4",
+                  "value": 15.07
+                }
+              ]
+            },
+            {
+              "id": "ps",
+              "label": "PS",
+              "current": 8.72,
+              "bands": [
+                12.22,
+                10.04,
+                7.87,
+                5.7,
+                3.52
+              ],
+              "points": [
+                {
+                  "period": "2022Q1",
+                  "value": 7.53
+                },
+                {
+                  "period": "2022Q2",
+                  "value": 6.85
+                },
+                {
+                  "period": "2022Q3",
+                  "value": 5.85
+                },
+                {
+                  "period": "2022Q4",
+                  "value": 5.08
+                },
+                {
+                  "period": "2023Q1",
+                  "value": 4.97
+                },
+                {
+                  "period": "2023Q2",
+                  "value": 5.64
+                },
+                {
+                  "period": "2023Q3",
+                  "value": 6.79
+                },
+                {
+                  "period": "2023Q4",
+                  "value": 7.91
+                },
+                {
+                  "period": "2024Q1",
+                  "value": 8.5
+                },
+                {
+                  "period": "2024Q2",
+                  "value": 8.32
+                },
+                {
+                  "period": "2024Q3",
+                  "value": 7.5
+                },
+                {
+                  "period": "2024Q4",
+                  "value": 6.51
+                },
+                {
+                  "period": "2025Q1",
+                  "value": 5.89
+                },
+                {
+                  "period": "2025Q2",
+                  "value": 6
+                },
+                {
+                  "period": "2025Q3",
+                  "value": 6.84
+                },
+                {
+                  "period": "2025Q4",
+                  "value": 8.04
+                },
+                {
+                  "period": "2026Q1",
+                  "value": 9.06
+                },
+                {
+                  "period": "2026Q2",
+                  "value": 9.44
+                },
+                {
+                  "period": "2026Q3",
+                  "value": 9.06
+                },
+                {
+                  "period": "2026Q4",
+                  "value": 8.14
+                }
+              ]
+            }
+          ],
+          "peg": {
+            "value": 0.31,
+            "pe": 29.2,
+            "growth": 93.1
+          },
+          "trends": [
+            {
+              "id": "profit",
+              "title": "营收 / 净利润趋势",
+              "series": [
+                {
+                  "label": "营收",
+                  "color": "#0ea5e9",
+                  "points": [
+                    {
+                      "period": "2021",
+                      "value": 67
+                    },
+                    {
+                      "period": "2022",
+                      "value": 83
+                    },
+                    {
+                      "period": "2023",
+                      "value": 91
+                    },
+                    {
+                      "period": "2024",
+                      "value": 99
+                    },
+                    {
+                      "period": "2025",
+                      "value": 113
+                    }
+                  ]
+                },
+                {
+                  "label": "净利润",
+                  "color": "#10b981",
+                  "points": [
+                    {
+                      "period": "2021",
+                      "value": 5
+                    },
+                    {
+                      "period": "2022",
+                      "value": 6
+                    },
+                    {
+                      "period": "2023",
+                      "value": 8
+                    },
+                    {
+                      "period": "2024",
+                      "value": 7
+                    },
+                    {
+                      "period": "2025",
+                      "value": 8.53
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "cash",
+              "title": "经营现金流趋势",
+              "series": [
+                {
+                  "label": "经营现金流",
+                  "color": "#10b981",
+                  "points": [
+                    {
+                      "period": "2021",
+                      "value": -8
+                    },
+                    {
+                      "period": "2022",
+                      "value": -12
+                    },
+                    {
+                      "period": "2023",
+                      "value": -19
+                    },
+                    {
+                      "period": "2024",
+                      "value": 4.6
+                    },
+                    {
+                      "period": "2025",
+                      "value": -20
+                    }
+                  ]
+                },
+                {
+                  "label": "自由现金流",
+                  "color": "#f59e0b",
+                  "points": [
+                    {
+                      "period": "2021",
+                      "value": -11
+                    },
+                    {
+                      "period": "2022",
+                      "value": -15
+                    },
+                    {
+                      "period": "2023",
+                      "value": -28
+                    },
+                    {
+                      "period": "2024",
+                      "value": -7.4
+                    },
+                    {
+                      "period": "2025",
+                      "value": -36
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "return",
+              "title": "ROE / ROIC趋势",
+              "series": [
+                {
+                  "label": "ROE",
+                  "color": "#8b5cf6",
+                  "points": [
+                    {
+                      "period": "2021",
+                      "value": 8
+                    },
+                    {
+                      "period": "2022",
+                      "value": 10
+                    },
+                    {
+                      "period": "2023",
+                      "value": 7
+                    },
+                    {
+                      "period": "2024",
+                      "value": 12
+                    },
+                    {
+                      "period": "2025",
+                      "value": 21.7
+                    }
+                  ]
+                },
+                {
+                  "label": "ROIC",
+                  "color": "#10b981",
+                  "points": [
+                    {
+                      "period": "2021",
+                      "value": 6
+                    },
+                    {
+                      "period": "2022",
+                      "value": 9
+                    },
+                    {
+                      "period": "2023",
+                      "value": 8
+                    },
+                    {
+                      "period": "2024",
+                      "value": 11
+                    },
+                    {
+                      "period": "2025",
+                      "value": 19.2
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "dcf": {
+            "available": false,
+            "message": "暂无展示严格口径 DCF；近五年单年 FCF 不足或为负。"
+          }
+        },
+        "shareholders": {
+          "holders": [
+            {
+              "name": "新余环亚诺金企业管理有限公司",
+              "ratio": 17.69,
+              "cumulative": 17.69,
+              "change": "+0.05%",
+              "color": "#0ea5e9"
+            },
+            {
+              "name": "南京瓴量企业管理合伙企业",
+              "ratio": 6.93,
+              "cumulative": 24.62,
+              "change": "新进",
+              "color": "#10b981"
+            },
+            {
+              "name": "兵投联创股权投资基金",
+              "ratio": 2.74,
+              "cumulative": 27.36,
+              "change": "新进",
+              "color": "#f59e0b"
+            },
+            {
+              "name": "中国建设银行－军工ETF",
+              "ratio": 2.56,
+              "cumulative": 29.92,
+              "change": "+0.05%",
+              "color": "#a855f7"
+            },
+            {
+              "name": "香港中央结算有限公司",
+              "ratio": 1.91,
+              "cumulative": 31.83,
+              "change": "新进",
+              "color": "#f43f5e"
+            },
+            {
+              "name": "全国社保基金一一四组合",
+              "ratio": 1.89,
+              "cumulative": 33.72,
+              "change": "新进",
+              "color": "#14b8a6"
+            },
+            {
+              "name": "中国工商银行－科创ETF",
+              "ratio": 1.72,
+              "cumulative": 35.44,
+              "change": "+0.05%",
+              "color": "#6366f1"
+            },
+            {
+              "name": "张国荣",
+              "ratio": 1.6,
+              "cumulative": 37.04,
+              "change": "新进",
+              "color": "#ec4899"
+            },
+            {
+              "name": "股东 9",
+              "ratio": 1.3,
+              "cumulative": 38.34,
+              "change": "新进",
+              "color": "#84cc16"
+            },
+            {
+              "name": "股东 10",
+              "ratio": 1.26,
+              "cumulative": 39.6,
+              "change": "+0.05%",
+              "color": "#f97316"
+            }
+          ],
+          "dividendSeries": [
+            {
+              "label": "每股分红",
+              "color": "#10b981",
+              "points": [
+                {
+                  "period": "2021",
+                  "value": 0.08
+                },
+                {
+                  "period": "2022",
+                  "value": 0.1
+                },
+                {
+                  "period": "2023",
+                  "value": 0.12
+                },
+                {
+                  "period": "2024",
+                  "value": 0.16
+                },
+                {
+                  "period": "2025",
+                  "value": 0.18
+                }
+              ]
+            },
+            {
+              "label": "股利支付率",
+              "color": "#f59e0b",
+              "points": [
+                {
+                  "period": "2021",
+                  "value": 3
+                },
+                {
+                  "period": "2022",
+                  "value": 4
+                },
+                {
+                  "period": "2023",
+                  "value": 5
+                },
+                {
+                  "period": "2024",
+                  "value": 9
+                },
+                {
+                  "period": "2025",
+                  "value": 11
+                }
+              ]
+            }
+          ],
+          "returnSeries": [
+            {
+              "label": "回购",
+              "color": "#3b82f6",
+              "points": [
+                {
+                  "period": "2021",
+                  "value": 0
+                },
+                {
+                  "period": "2022",
+                  "value": 0
+                },
+                {
+                  "period": "2023",
+                  "value": 0.8
+                },
+                {
+                  "period": "2024",
+                  "value": 1.2
+                },
+                {
+                  "period": "2025",
+                  "value": 4.4
+                }
+              ]
+            },
+            {
+              "label": "分红",
+              "color": "#f43f5e",
+              "points": [
+                {
+                  "period": "2021",
+                  "value": 0.2
+                },
+                {
+                  "period": "2022",
+                  "value": 0.3
+                },
+                {
+                  "period": "2023",
+                  "value": 0.6
+                },
+                {
+                  "period": "2024",
+                  "value": 0.9
+                },
+                {
+                  "period": "2025",
+                  "value": 1.1
+                }
+              ]
+            }
+          ],
+          "concentrationSeries": [
+            {
+              "label": "股东户数",
+              "color": "#8b5cf6",
+              "points": [
+                {
+                  "period": "2021",
+                  "value": 12
+                },
+                {
+                  "period": "2022",
+                  "value": 9
+                },
+                {
+                  "period": "2023",
+                  "value": 8
+                },
+                {
+                  "period": "2024",
+                  "value": 7
+                },
+                {
+                  "period": "2025",
+                  "value": 6
+                }
+              ]
+            },
+            {
+              "label": "人均持股金额",
+              "color": "#10b981",
+              "points": [
+                {
+                  "period": "2021",
+                  "value": 4
+                },
+                {
+                  "period": "2022",
+                  "value": 6
+                },
+                {
+                  "period": "2023",
+                  "value": 8
+                },
+                {
+                  "period": "2024",
+                  "value": 11
+                },
+                {
+                  "period": "2025",
+                  "value": 17
+                }
+              ]
+            }
+          ],
+          "northboundSeries": [
+            {
+              "label": "持股比例",
+              "color": "#0ea5e9",
+              "points": [
+                {
+                  "period": "2021",
+                  "value": 0.2
+                },
+                {
+                  "period": "2022",
+                  "value": 0.45
+                },
+                {
+                  "period": "2023",
+                  "value": 0.8
+                },
+                {
+                  "period": "2024",
+                  "value": 1.2
+                },
+                {
+                  "period": "2025",
+                  "value": 1.6
+                }
+              ]
+            },
+            {
+              "label": "股价",
+              "color": "#f59e0b",
+              "points": [
+                {
+                  "period": "2021",
+                  "value": 52
+                },
+                {
+                  "period": "2022",
+                  "value": 73
+                },
+                {
+                  "period": "2023",
+                  "value": 94
+                },
+                {
+                  "period": "2024",
+                  "value": 166
+                },
+                {
+                  "period": "2025",
+                  "value": 220
+                }
+              ]
+            }
+          ],
+          "executiveTrades": [
+            {
+              "type": "buy",
+              "name": "高佩奥",
+              "role": "核心技术人员",
+              "shares": 10000,
+              "date": "2026-06-25"
+            },
+            {
+              "type": "sell",
+              "name": "邱宏伟",
+              "role": "核心技术人员",
+              "shares": 27000,
+              "date": "2026-06-01"
+            },
+            {
+              "type": "buy",
+              "name": "高佩奥",
+              "role": "核心技术人员",
+              "shares": 21500,
+              "date": "2026-04-10"
+            },
+            {
+              "type": "sell",
+              "name": "何强",
+              "role": "董事、高级管理人员",
+              "shares": 1275000,
+              "date": "2026-03-30"
+            }
+          ]
+        },
+        "statements": {
+          "diagnosis": [
+            {
+              "label": "景气共振",
+              "status": "normal"
+            },
+            {
+              "label": "经营杠杆",
+              "status": "normal"
+            },
+            {
+              "label": "现金约束",
+              "status": "normal"
+            },
+            {
+              "label": "扎实修复",
+              "status": "normal"
+            },
+            {
+              "label": "增收不增利",
+              "status": "unknown"
+            },
+            {
+              "label": "激进扩张",
+              "status": "unknown"
+            },
+            {
+              "label": "低质量营收",
+              "status": "risk"
+            },
+            {
+              "label": "非经营拖利",
+              "status": "watch"
+            },
+            {
+              "label": "坏账/存货暴露",
+              "status": "unknown"
+            },
+            {
+              "label": "财务洗澡",
+              "status": "unknown"
+            },
+            {
+              "label": "债务负担",
+              "status": "unknown"
+            },
+            {
+              "label": "营运加速",
+              "status": "unknown"
+            },
+            {
+              "label": "数据异常",
+              "status": "unknown"
+            }
+          ],
+          "dupont": [
+            {
+              "label": "销售净利率",
+              "values": [
+                2.39,
+                -17.39,
+                2.41,
+                7.55
+              ],
+              "suffix": "%"
+            },
+            {
+              "label": "资产周转率",
+              "values": [
+                0.827,
+                0.668,
+                0.937,
+                0.963
+              ],
+              "suffix": ""
+            },
+            {
+              "label": "权益乘数",
+              "values": [
+                1.703,
+                2.47,
+                3.293,
+                2.99
+              ],
+              "suffix": ""
+            },
+            {
+              "label": "ROE",
+              "values": [
+                3.36,
+                -28.71,
+                7.43,
+                21.73
+              ],
+              "suffix": "%"
+            }
+          ],
+          "operations": [
+            {
+              "label": "存货周转天数",
+              "values": [
+                251.5,
+                284.9,
+                236.9,
+                234.4
+              ],
+              "suffix": "天"
+            },
+            {
+              "label": "应收账款周转天数",
+              "values": [
+                42.1,
+                58,
+                39.1,
+                38.8
+              ],
+              "suffix": "天"
+            },
+            {
+              "label": "资产负债率",
+              "values": [
+                45.1,
+                69.7,
+                69.5,
+                64.5
+              ],
+              "suffix": "%"
+            },
+            {
+              "label": "流动比率",
+              "values": [
+                2.2,
+                1.25,
+                1.24,
+                1.64
+              ],
+              "suffix": "倍"
+            }
+          ],
+          "sankey": {
+            "inflows": [
+              {
+                "label": "销售收款",
+                "value": 113,
+                "color": "#22c55e"
+              },
+              {
+                "label": "借款流入",
+                "value": 43,
+                "color": "#ef4444"
+              },
+              {
+                "label": "股权融资",
+                "value": 16,
+                "color": "#3b82f6"
+              }
+            ],
+            "outflows": [
+              {
+                "label": "购买商品",
+                "value": 92,
+                "color": "#10b981"
+              },
+              {
+                "label": "支付职工",
+                "value": 7,
+                "color": "#14b8a6"
+              },
+              {
+                "label": "资本开支",
+                "value": 16,
+                "color": "#f97316"
+              },
+              {
+                "label": "投资",
+                "value": 9,
+                "color": "#8b5cf6"
+              },
+              {
+                "label": "现金留存",
+                "value": 11,
+                "color": "#06b6d4"
+              }
+            ]
+          },
+          "tables": [
+            {
+              "kind": "income",
+              "label": "利润表",
+              "periods": [
+                "2025Q3",
+                "2024A",
+                "2023A",
+                "2022A"
+              ],
+              "rows": [
+                {
+                  "label": "营业收入",
+                  "values": [
+                    7.82,
+                    9.64,
+                    8.91,
+                    7.46
+                  ],
+                  "yoy": [
+                    12.6,
+                    8.2,
+                    19.4,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "营业成本",
+                  "values": [
+                    4.72,
+                    5.92,
+                    5.67,
+                    4.88
+                  ],
+                  "yoy": [
+                    9.1,
+                    4.4,
+                    16.2,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "销售费用",
+                  "values": [
+                    0.21,
+                    0.28,
+                    0.24,
+                    null
+                  ],
+                  "yoy": [
+                    11.8,
+                    16.7,
+                    26.3,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "研发费用",
+                  "values": [
+                    0.74,
+                    0.91,
+                    0.82,
+                    0.66
+                  ],
+                  "yoy": [
+                    13.2,
+                    11,
+                    24.2,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "营业利润",
+                  "values": [
+                    1.62,
+                    1.94,
+                    1.78,
+                    1.41
+                  ],
+                  "yoy": [
+                    9.5,
+                    9,
+                    26.2,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "归母净利润",
+                  "values": [
+                    1.43,
+                    1.68,
+                    1.55,
+                    1.27
+                  ],
+                  "yoy": [
+                    8.4,
+                    8.4,
+                    22,
+                    null
+                  ],
+                  "qoq": []
+                }
+              ]
+            },
+            {
+              "kind": "balance",
+              "label": "资产负债表",
+              "periods": [
+                "2025Q3",
+                "2024A",
+                "2023A",
+                "2022A"
+              ],
+              "rows": [
+                {
+                  "label": "货币资金",
+                  "values": [
+                    5.62,
+                    4.91,
+                    4.28,
+                    3.76
+                  ],
+                  "yoy": [
+                    18.1,
+                    14.7,
+                    13.8,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "应收账款",
+                  "values": [
+                    4.18,
+                    3.72,
+                    3.26,
+                    2.81
+                  ],
+                  "yoy": [
+                    15.4,
+                    14.1,
+                    16,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "存货",
+                  "values": [
+                    3.24,
+                    2.98,
+                    2.73,
+                    2.44
+                  ],
+                  "yoy": [
+                    10.2,
+                    9.2,
+                    11.9,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "资产总计",
+                  "values": [
+                    24.86,
+                    22.74,
+                    20.68,
+                    18.22
+                  ],
+                  "yoy": [
+                    11.3,
+                    10,
+                    13.5,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "负债合计",
+                  "values": [
+                    7.81,
+                    7.64,
+                    7.52,
+                    7.01
+                  ],
+                  "yoy": [
+                    -1.8,
+                    1.6,
+                    7.3,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "归母净资产",
+                  "values": [
+                    17.02,
+                    15.08,
+                    13.14,
+                    11.19
+                  ],
+                  "yoy": [
+                    15.9,
+                    14.8,
+                    17.4,
+                    null
+                  ],
+                  "qoq": []
+                }
+              ]
+            },
+            {
+              "kind": "cashflow",
+              "label": "现金流量表",
+              "periods": [
+                "2025Q3",
+                "2024A",
+                "2023A",
+                "2022A"
+              ],
+              "rows": [
+                {
+                  "label": "经营现金流",
+                  "values": [
+                    1.76,
+                    1.92,
+                    1.48,
+                    1.13
+                  ],
+                  "yoy": [
+                    24.8,
+                    29.7,
+                    31,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "投资活动现金流",
+                  "values": [
+                    -1.11,
+                    -1.38,
+                    -1.24,
+                    -0.92
+                  ],
+                  "yoy": [
+                    -8.7,
+                    -11.3,
+                    -34.8,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "筹资活动现金流",
+                  "values": [
+                    0.28,
+                    0.12,
+                    -0.36,
+                    0.41
+                  ],
+                  "yoy": [
+                    144.6,
+                    133.3,
+                    -187.8,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "现金净增加额",
+                  "values": [
+                    0.93,
+                    0.66,
+                    -0.12,
+                    0.62
+                  ],
+                  "yoy": [
+                    52.4,
+                    650,
+                    -119.4,
+                    null
+                  ],
+                  "qoq": []
+                },
+                {
+                  "label": "自由现金流",
+                  "values": [
+                    0.78,
+                    0.91,
+                    0.62,
+                    0.47
+                  ],
+                  "yoy": [
+                    20,
+                    46.8,
+                    31.9,
+                    null
+                  ],
+                  "qoq": []
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "isFallbackSample": false
+    }
+  },
+  "meta": {
+    "source": "fixture",
+    "asOf": "2026-08-13T15:00:00.000+08:00",
+    "version": "stocks-fixture-v1",
+    "stale": false
+  }
+}

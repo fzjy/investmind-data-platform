@@ -1,0 +1,9 @@
+{
+  "sourceUrl": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/pages/xml",
+  "documentationUrl": "https://home.treasury.gov/treasury-daily-interest-rate-xml-feed",
+  "evidenceUrl": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?field_tdr_date_value_month=202502&type=daily_treasury_yield_curve",
+  "retrievedAt": "2026-09-21T00:00:00Z",
+  "contentType": "application/atom+xml",
+  "sanitized": true,
+  "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><feed xmlns=\"http://www.w3.org/2005/Atom\" xmlns:d=\"http://schemas.microsoft.com/ado/2007/08/dataservices\" xmlns:m=\"http://schemas.microsoft.com/ado/2007/08/dataservices/metadata\"><entry><content type=\"application/xml\"><m:properties><d:NEW_DATE m:type=\"Edm.DateTime\">2025-02-03T00:00:00</d:NEW_DATE><d:BC_10YEAR m:type=\"Edm.Double\">4.54</d:BC_10YEAR></m:properties></content></entry><entry><content type=\"application/xml\"><m:properties><d:NEW_DATE m:type=\"Edm.DateTime\">2025-02-04T00:00:00</d:NEW_DATE><d:BC_10YEAR m:type=\"Edm.Double\">4.52</d:BC_10YEAR></m:properties></content></entry></feed>"
+}

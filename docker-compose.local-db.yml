@@ -1,0 +1,7 @@
+# 可选：宿主机运行前后端、Compose仅运行PostgreSQL。
+# 与docker-compose.backend.yml同时使用；仅启动postgres服务。
+# 不用于全栈容器内部连接，不改变已有卷的账号/密码。
+services:
+  postgres:
+    ports:
+      - "127.0.0.1:${DANG_POSTGRES_PORT:-5432}:5432"

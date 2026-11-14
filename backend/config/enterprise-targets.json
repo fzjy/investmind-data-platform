@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 2,
+  "catalogVersion": "2026-10-22-v2",
+  "mode": "tracking-index-proxy",
+  "maxTargetsPerPreview": 24,
+  "officialEvidence": {
+    "collectionEnabled": true,
+    "dailyBudgetEnabled": false,
+    "useScope": "local-development-only",
+    "bootstrapTargetCodes": ["000300.SH", "512880.SH"],
+    "maxHttpPerRun": 4,
+    "maxHttpPerDay": 4,
+    "requestsPerMinute": 10,
+    "requestTimeoutSeconds": 20,
+    "maxRetries": 0,
+    "maxResponseBytes": 8388608,
+    "maxSnapshotMembers": 10000,
+    "documents": [
+      {"id":"csi-000300","kind":"csi-members","indexCode":"000300","fundCode":null,"subscriptionCode":null,"tradingDate":null,"url":"https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/000300cons.xls"},
+      {"id":"csi-399975","kind":"csi-members","indexCode":"399975","fundCode":null,"subscriptionCode":null,"tradingDate":null,"url":"https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/399975cons.xls"},
+      {"id":"fund-512880","kind":"fund-mapping","indexCode":"399975","fundCode":"512880","subscriptionCode":null,"tradingDate":null,"url":"https://e.gtfund.com/etrade/Jijin/view/id/512880#etf-list"},
+      {"id":"pcf-512880","kind":"fund-pcf","indexCode":"399975","fundCode":"512880","subscriptionCode":"512881","tradingDate":"2026-10-23","url":"https://m.gtfund.com/cochin/etf/download/512881/20261023"}
+    ]
+  },
+  "catalogEvidence": {
+    "collectionEnabled": true,
+    "limitsReference": "officialEvidence",
+    "discoveryEnabled": true,
+    "sampleEnabled": true,
+    "sampleRecoveries": [
+      {"fundCode":"512400","mediaType":"html","url":"https://www.nffund.com/new/personal-financing/detail.html?fundCode=512400"},
+      {"fundCode":"512200","mediaType":"html","url":"https://www.nffund.com/new/personal-financing/detail.html?fundCode=512200"},
+      {"fundCode":"512980","mediaType":"html","url":"https://www.gffunds.com.cn/proxy/pcflist/512980"}
+    ],
+    "sampleDocuments": [
+      {"fundCode":"512800","mediaType":"html","url":"https://www.fsfund.com/fund/512800/fundDetail.shtml"},
+      {"fundCode":"159928","mediaType":"html","url":"https://www.99fund.com/main/products/pofund/159928/fundgk.shtml"},
+      {"fundCode":"512010","mediaType":"pdf","url":"https://cdn.efunds.com.cn/owch/data/bulletin/20250428/易方达沪深300医药卫生交易型开放式指数证券投资基金基金产品资料概要更新.pdf"},
+      {"fundCode":"512400","mediaType":"html","url":"https://www.nffund.com/new/personal-financing/detail.html?fundCode=512400"},
+      {"fundCode":"512980","mediaType":"html","url":"https://www.gffunds.com.cn/funds//?fundcode=512980"},
+      {"fundCode":"515030","mediaType":"pdf","url":"https://fund.chinaamc.com/upload/resources/file/2025/05/29/515030_华夏中证新能源汽车交易型开放式指数证券投资基金招募说明书更新（2025年5月30日公告）.pdf"},
+      {"fundCode":"512200","mediaType":"html","url":"https://www.nffund.com/new/personal-financing/detail.html?fundCode=512200"},
+      {"fundCode":"588200","mediaType":"pdf","url":"https://www.sse.com.cn/disclosure/fund/announcement/c/new/2024-09-10/588200_20240910_RPWQ.pdf"}
+    ],
+    "memberGraphEnabled": true,
+    "memberGraphs": [
+      {"code":"512660.SH","discoveryDocumentId":"fund-512660"},
+      {"code":"515220.SH","discoveryDocumentId":"fund-515220"},
+      {"code":"512400.SH","discoveryDocumentId":"fund-512400"},
+      {"code":"512200.SH","discoveryDocumentId":"fund-512200"},
+      {"code":"512800.SH","discoveryDocumentId":"fund-512800"},
+      {"code":"159928.SZ","discoveryDocumentId":"fund-159928"},
+      {"code":"588200.SH","discoveryDocumentId":"fund-588200"},
+      {"code":"512010.SH","discoveryDocumentId":"fund-512010"},
+      {"code":"515030.SH","discoveryDocumentId":"fund-515030"},
+      {"code":"512980.SH","discoveryDocumentId":"fund-512980"}
+    ],
+    "discoveryDocuments": [
+      {"id":"fund-512660","kind":"fund-mapping","indexCode":"399967","fundCode":"512660","subscriptionCode":null,"tradingDate":null,"url":"https://e.gtfund.com/etrade/Jijin/view/id/512660#etf-list"},
+      {"id":"fund-515220","kind":"fund-mapping","indexCode":"399998","fundCode":"515220","subscriptionCode":null,"tradingDate":null,"url":"https://e.gtfund.com/etrade/Jijin/view/id/515220#etf-list"},
+      {"id":"fund-512400","kind":"fund-mapping","indexCode":"000819","fundCode":"512400","subscriptionCode":null,"tradingDate":null,"url":"https://www.nffund.com/nfwebApi/fund/overreview"},
+      {"id":"fund-512200","kind":"fund-mapping","indexCode":"931775","fundCode":"512200","subscriptionCode":null,"tradingDate":null,"url":"https://www.nffund.com/nfwebApi/fund/overreview"},
+      {"id":"fund-512800","kind":"fund-mapping","indexCode":"399986","fundCode":"512800","subscriptionCode":null,"tradingDate":null,"url":"https://www.fsfund.com/fund/512800/fundDetail.shtml"},
+      {"id":"fund-159928","kind":"fund-mapping","indexCode":"000932","fundCode":"159928","subscriptionCode":null,"tradingDate":"2026-10-28","url":"https://www.99fund.com/cgi-bin/fundproduct/EtfStockAction?function=DownLoad&fundId=159928&tradingDay=20261028&urlType=1"},
+      {"id":"fund-588200","kind":"fund-mapping","indexCode":"000685","fundCode":"588200","subscriptionCode":null,"tradingDate":null,"url":"https://www.jsfund.cn/servlet/json"},
+      {"id":"fund-512010","kind":"fund-mapping","indexCode":"000913","fundCode":"512010","subscriptionCode":null,"tradingDate":"2026-10-27","url":"https://cdn.efunds.com.cn/owch/data/pcf_ims/20261027/etfd_512010_20261027.xml"},
+      {"id":"fund-515030","kind":"fund-mapping","indexCode":"399976","fundCode":"515030","subscriptionCode":null,"tradingDate":"2026-10-28","url":"https://fund.chinaamc.com/front/front/out/etf/query/etfDownload"},
+      {"id":"fund-512980","kind":"fund-mapping","indexCode":"399971","fundCode":"512980","subscriptionCode":null,"tradingDate":"2026-03-25","url":"https://www.sse.com.cn/disclosure/fund/announcement/c/new/2026-03-25/512980_20260325_8HFW.pdf"}
+    ],
+    "targets": [
+      {"code":"000905.SH","documents":[{"id":"csi-000905","kind":"csi-members","indexCode":"000905","fundCode":null,"subscriptionCode":null,"tradingDate":null,"url":"https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/000905cons.xls"}]},
+      {"code":"000510.SH","documents":[{"id":"csi-000510","kind":"csi-members","indexCode":"000510","fundCode":null,"subscriptionCode":null,"tradingDate":null,"url":"https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/000510cons.xls"}]},
+      {"code":"512800.SH","documents":[]},
+      {"code":"159928.SZ","documents":[]},
+      {"code":"512010.SH","documents":[]},
+      {"code":"512400.SH","documents":[]},
+      {"code":"512660.SH","documents":[]},
+      {"code":"515220.SH","documents":[]},
+      {"code":"512980.SH","documents":[]},
+      {"code":"515030.SH","documents":[]},
+      {"code":"512200.SH","documents":[]},
+      {"code":"588200.SH","documents":[]}
+    ]
+  },
+  "evidencePolicy": {
+    "collectionEnabled": true,
+    "useScope": "local-development-only",
+    "bootstrapTargetCodes": ["000300.SH", "512880.SH"],
+    "maxTargetsPerPlan": 2,
+    "maxHttpPerRun": 2,
+    "maxHttpPerPlan": 12,
+    "requestsPerMinute": 10,
+    "requestTimeoutSeconds": 20,
+    "maxRetries": 0,
+    "lookbackMonths": 3,
+    "indexMetadataMarket": "CSI",
+    "maxResponseBytes": 8388608,
+    "maxResponseRows": 20000,
+    "maxSnapshotMembers": 10000
+  },
+  "targets": [
+    { "kind": "index", "code": "000300.SH", "label": "沪深300", "sourceIndexNameHint": null },
+    { "kind": "index", "code": "000905.SH", "label": "中证500", "sourceIndexNameHint": null },
+    { "kind": "index", "code": "000510.SH", "label": "中证A500", "sourceIndexNameHint": null },
+    { "kind": "etf", "code": "512880.SH", "label": "证券ETF", "sourceIndexNameHint": "中证全指证券公司指数" },
+    { "kind": "etf", "code": "512800.SH", "label": "银行ETF", "sourceIndexNameHint": "中证银行指数" },
+    { "kind": "etf", "code": "159928.SZ", "label": "消费ETF", "sourceIndexNameHint": "中证主要消费指数" },
+    { "kind": "etf", "code": "512010.SH", "label": "医药ETF", "sourceIndexNameHint": "沪深300医药卫生指数" },
+    { "kind": "etf", "code": "512400.SH", "label": "有色金属ETF", "sourceIndexNameHint": "中证申万有色金属指数" },
+    { "kind": "etf", "code": "512660.SH", "label": "军工ETF", "sourceIndexNameHint": "中证军工指数" },
+    { "kind": "etf", "code": "515220.SH", "label": "煤炭ETF", "sourceIndexNameHint": "中证煤炭指数" },
+    { "kind": "etf", "code": "512980.SH", "label": "传媒ETF", "sourceIndexNameHint": "中证传媒指数" },
+    { "kind": "etf", "code": "515030.SH", "label": "新能源车ETF", "sourceIndexNameHint": "中证新能源汽车指数" },
+    { "kind": "etf", "code": "512200.SH", "label": "房地产ETF", "sourceIndexNameHint": "中证全指房地产指数" },
+    { "kind": "etf", "code": "588200.SH", "label": "科创芯片ETF", "sourceIndexNameHint": "科创芯片指数" }
+  ]
+}

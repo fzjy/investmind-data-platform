@@ -1,0 +1,80 @@
+# Dependencies (reinstalled inside Docker)
+node_modules
+pnpm-debug.log*
+npm-debug.log*
+yarn-debug.log*
+
+# Build output
+.next
+.tmp
+temp
+backend/.venv
+backend/.tmp-*
+**/__pycache__
+**/*.pyc
+backend/*.egg-info
+backend/tests
+backend/build
+backend/dist
+backend/backups
+backend/imports
+.secrets
+**/*.dump
+out
+build
+dist
+**/.pytest_cache
+
+# Git
+.git
+.gitignore
+
+# Environment files (pass via docker-compose env_file or runtime env vars)
+.env*
+
+# Editor / OS
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Agent / AI tool configs (not needed at runtime)
+.claude
+.codex
+.superpowers
+.worktrees
+**/.superpowers
+**/.worktrees
+.cursor
+.windsurf
+.gemini
+.continue
+.amazonq
+.augment
+.opencode
+.aider.conf.yml
+.clinerules
+.windsurfrules
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+
+# Docs / research (large, not needed at runtime)
+docs
+scripts
+
+# Docker files themselves (no need to copy into image)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Misc
+# 单公司人工公告裁决仅保留研究证据，不进入正式镜像。
+backend/config/portfolio-evidence
+backend/config/portfolio-event-resolutions.json
+*.tsbuildinfo
+README.md
+CHANGELOG.md
+LICENSE

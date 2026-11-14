@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "enabled": true,
+  "sentiment": {
+    "threshold": "0.098", "riseWeight": "0.60", "thresholdWeight": "0.30", "retreatWeight": "0.10",
+    "riseNormalization": "0.05", "retreatNormalization": "0.50",
+    "levels": [
+      { "minimum": 0, "label": "极度恐慌" }, { "minimum": 20, "label": "恐慌" },
+      { "minimum": 40, "label": "中性" }, { "minimum": 60, "label": "贪婪" }, { "minimum": 80, "label": "极度贪婪" }
+    ]
+  },
+  "pulse": { "enabled": true, "maxRequestsPerRun": 60, "maxRetries": 0, "timeoutSeconds": 20 },
+  "region": { "enabled": true, "refreshIntervalDays": 30, "maxRequestsPerRun": 60, "maxRetries": 0, "timeoutSeconds": 20 },
+  "etfHeatmap": { "enabled": true, "maxRequestsPerRun": 20, "maxRetries": 0, "timeoutSeconds": 20 },
+  "commodities": {
+    "enabled": true, "historyDays": 120, "maxRequestsPerRun": 60, "maxRetries": 0, "timeoutSeconds": 20,
+    "assets": [
+      { "code": "AU.SHF", "exchange": "SHFE", "category": "precious", "name": "黄金" },
+      { "code": "AG.SHF", "exchange": "SHFE", "category": "precious", "name": "白银" },
+      { "code": "CU.SHF", "exchange": "SHFE", "category": "nonferrous", "name": "沪铜" },
+      { "code": "AL.SHF", "exchange": "SHFE", "category": "nonferrous", "name": "沪铝" },
+      { "code": "RB.SHF", "exchange": "SHFE", "category": "ferrous", "name": "螺纹钢" },
+      { "code": "I.DCE", "exchange": "DCE", "category": "ferrous", "name": "铁矿石" },
+      { "code": "SC.INE", "exchange": "INE", "category": "energy", "name": "原油" },
+      { "code": "TA.ZCE", "exchange": "CZCE", "category": "energy", "name": "PTA" },
+      { "code": "M.DCE", "exchange": "DCE", "category": "agriculture", "name": "豆粕" },
+      { "code": "P.DCE", "exchange": "DCE", "category": "agriculture", "name": "棕榈油" }
+    ]
+  },
+  "sync": {
+    "lookbackDays": 14,
+    "maxRequestsPerRun": 20,
+    "maxRetries": 0,
+    "timeoutSeconds": 20,
+    "pctChangeTolerancePercentPoints": "0.02"
+  },
+  "schedule": { "frequency": "daily", "time": "19:00", "timezone": "Asia/Shanghai", "catchupOnStart": true },
+  "markets": {
+    "cn": { "timezone": "Asia/Shanghai", "closeTime": "15:00", "publishDelayMinutes": 120 },
+    "hk": { "timezone": "Asia/Hong_Kong", "closeTime": "16:00", "publishDelayMinutes": 120 },
+    "us": { "timezone": "America/New_York", "closeTime": "16:00", "publishDelayMinutes": 120 }
+  },
+  "assets": [
+    { "assetType": "indices", "assetCode": "000001.SH", "name": "上证指数", "market": "cn", "apiName": "index_daily" },
+    { "assetType": "indices", "assetCode": "399001.SZ", "name": "深证成指", "market": "cn", "apiName": "index_daily" },
+    { "assetType": "indices", "assetCode": "399006.SZ", "name": "创业板指", "market": "cn", "apiName": "index_daily" },
+    { "assetType": "indices", "assetCode": "HSI", "name": "恒生指数", "market": "hk", "apiName": "index_global" },
+    { "assetType": "indices", "assetCode": "SPX", "name": "标普500", "market": "us", "apiName": "index_global" },
+    { "assetType": "indices", "assetCode": "IXIC", "name": "纳斯达克", "market": "us", "apiName": "index_global" },
+    { "assetType": "etfs", "assetCode": "510050.SH", "name": "50ETF", "market": "cn", "apiName": "fund_daily" },
+    { "assetType": "etfs", "assetCode": "510300.SH", "name": "300ETF", "market": "cn", "apiName": "fund_daily" },
+    { "assetType": "etfs", "assetCode": "159338.SZ", "name": "中证A500ETF", "market": "cn", "apiName": "fund_daily" },
+    { "assetType": "etfs", "assetCode": "510500.SH", "name": "中证500ETF", "market": "cn", "apiName": "fund_daily" },
+    { "assetType": "etfs", "assetCode": "512100.SH", "name": "中证1000ETF", "market": "cn", "apiName": "fund_daily" },
+    { "assetType": "etfs", "assetCode": "588000.SH", "name": "科创50ETF", "market": "cn", "apiName": "fund_daily" },
+    { "assetType": "etfs", "assetCode": "588190.SH", "name": "科创100ETF", "market": "cn", "apiName": "fund_daily" },
+    { "assetType": "etfs", "assetCode": "510880.SH", "name": "红利ETF", "market": "cn", "apiName": "fund_daily" },
+    { "assetType": "etfs", "assetCode": "512890.SH", "name": "红利低波ETF", "market": "cn", "apiName": "fund_daily" }
+  ]
+}

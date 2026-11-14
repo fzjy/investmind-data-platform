@@ -1,0 +1,3259 @@
+{
+  "data": {
+    "transmission": {
+      "weather": [
+        {
+          "code": "CN10Y",
+          "value": "1.71%",
+          "change": "0.32%"
+        },
+        {
+          "code": "US10Y",
+          "value": "4.68%",
+          "change": "0.21%"
+        },
+        {
+          "code": "USDCNH",
+          "value": "6.80",
+          "change": "0.11%"
+        },
+        {
+          "code": "DXY",
+          "value": "98.12",
+          "change": "0.16%"
+        },
+        {
+          "code": "VIX",
+          "value": "17.08",
+          "change": "1.78%"
+        }
+      ],
+      "modes": [
+        {
+          "id": "broad",
+          "label": "宽基指数",
+          "targets": [
+            {
+              "label": "沪深300 · 000300.SH",
+              "value": "000300.SH"
+            },
+            {
+              "label": "中证500 · 000905.SH",
+              "value": "000905.SH"
+            },
+            {
+              "label": "中证1000 · 000852.SH",
+              "value": "000852.SH"
+            }
+          ],
+          "mainNodes": [
+            {
+              "id": "demand",
+              "title": "需求入口",
+              "state": "open",
+              "metric": "订单温度",
+              "value": "+4.2%",
+              "change": "环比 -6.1pct",
+              "series": [
+                {
+                  "quarter": "2024Q2",
+                  "value": 5.4
+                },
+                {
+                  "quarter": "2024Q3",
+                  "value": 8.3
+                },
+                {
+                  "quarter": "2024Q4",
+                  "value": 7.5
+                },
+                {
+                  "quarter": "2025Q1",
+                  "value": 3.8
+                },
+                {
+                  "quarter": "2025Q2",
+                  "value": 1.2
+                },
+                {
+                  "quarter": "2025Q3",
+                  "value": 2.7
+                },
+                {
+                  "quarter": "2025Q4",
+                  "value": 6.2
+                },
+                {
+                  "quarter": "2026Q1",
+                  "value": 7.3
+                }
+              ]
+            },
+            {
+              "id": "profit",
+              "title": "创利能力",
+              "state": "open",
+              "metric": "定价权",
+              "value": "+1.4pct",
+              "change": "环比 +2.8pct",
+              "series": [
+                {
+                  "quarter": "2024Q2",
+                  "value": 1.1
+                },
+                {
+                  "quarter": "2024Q3",
+                  "value": 4.4
+                },
+                {
+                  "quarter": "2024Q4",
+                  "value": 4.1
+                },
+                {
+                  "quarter": "2025Q1",
+                  "value": 0.8
+                },
+                {
+                  "quarter": "2025Q2",
+                  "value": -1.3
+                },
+                {
+                  "quarter": "2025Q3",
+                  "value": 0.6
+                },
+                {
+                  "quarter": "2025Q4",
+                  "value": 4.5
+                },
+                {
+                  "quarter": "2026Q1",
+                  "value": 6.1
+                }
+              ]
+            },
+            {
+              "id": "cash",
+              "title": "利润/现金入账",
+              "state": "open",
+              "metric": "利润变现",
+              "value": "1.23x",
+              "change": "环比 -132.0pct",
+              "series": [
+                {
+                  "quarter": "2024Q2",
+                  "value": 7.8
+                },
+                {
+                  "quarter": "2024Q3",
+                  "value": 10.4
+                },
+                {
+                  "quarter": "2024Q4",
+                  "value": 9.4
+                },
+                {
+                  "quarter": "2025Q1",
+                  "value": 5.3
+                },
+                {
+                  "quarter": "2025Q2",
+                  "value": 2.5
+                },
+                {
+                  "quarter": "2025Q3",
+                  "value": 3.7
+                },
+                {
+                  "quarter": "2025Q4",
+                  "value": 6.9
+                },
+                {
+                  "quarter": "2026Q1",
+                  "value": 7.8
+                }
+              ]
+            },
+            {
+              "id": "capacity",
+              "title": "产能消化",
+              "state": "blocked",
+              "metric": "产能利用",
+              "value": "-13.3pct",
+              "change": "环比 -11.4pct",
+              "series": [
+                {
+                  "quarter": "2024Q2",
+                  "value": -7.2
+                },
+                {
+                  "quarter": "2024Q3",
+                  "value": -4.8
+                },
+                {
+                  "quarter": "2024Q4",
+                  "value": -6.1
+                },
+                {
+                  "quarter": "2025Q1",
+                  "value": -10.4
+                },
+                {
+                  "quarter": "2025Q2",
+                  "value": -13.5
+                },
+                {
+                  "quarter": "2025Q3",
+                  "value": -12.5
+                },
+                {
+                  "quarter": "2025Q4",
+                  "value": -9.6
+                },
+                {
+                  "quarter": "2026Q1",
+                  "value": -8.9
+                }
+              ]
+            },
+            {
+              "id": "supply",
+              "title": "未来供给",
+              "state": "open",
+              "metric": "设备更新",
+              "value": "1.06x",
+              "change": "环比 -84.1pct",
+              "series": [
+                {
+                  "quarter": "2024Q2",
+                  "value": 4.8
+                },
+                {
+                  "quarter": "2024Q3",
+                  "value": 7.6
+                },
+                {
+                  "quarter": "2024Q4",
+                  "value": 6.8
+                },
+                {
+                  "quarter": "2025Q1",
+                  "value": 2.9
+                },
+                {
+                  "quarter": "2025Q2",
+                  "value": 0.3
+                },
+                {
+                  "quarter": "2025Q3",
+                  "value": 1.7
+                },
+                {
+                  "quarter": "2025Q4",
+                  "value": 5.1
+                },
+                {
+                  "quarter": "2026Q1",
+                  "value": 6.2
+                }
+              ]
+            }
+          ],
+          "branches": [
+            {
+              "id": "household",
+              "title": "居民收入分配支线",
+              "description": "利润和现金流之后，是否传到工资、就业、消费与楼市购买力。",
+              "nodes": [
+                {
+                  "id": "cash-distribution",
+                  "title": "可分配现金",
+                  "state": "open",
+                  "metric": "利润变现",
+                  "value": "1.23x",
+                  "change": "环比 -132.0pct",
+                  "series": [
+                    {
+                      "quarter": "2024Q2",
+                      "value": 6.4
+                    },
+                    {
+                      "quarter": "2024Q3",
+                      "value": 9.2
+                    },
+                    {
+                      "quarter": "2024Q4",
+                      "value": 8.2
+                    },
+                    {
+                      "quarter": "2025Q1",
+                      "value": 4.3
+                    },
+                    {
+                      "quarter": "2025Q2",
+                      "value": 1.6
+                    },
+                    {
+                      "quarter": "2025Q3",
+                      "value": 2.9
+                    },
+                    {
+                      "quarter": "2025Q4",
+                      "value": 6.3
+                    },
+                    {
+                      "quarter": "2026Q1",
+                      "value": 7.3
+                    }
+                  ]
+                },
+                {
+                  "id": "wages",
+                  "title": "工资/就业",
+                  "state": "open",
+                  "metric": "员工现金传导",
+                  "value": "+0.8pct",
+                  "change": "环比 +1.1pct",
+                  "series": [
+                    {
+                      "quarter": "2024Q2",
+                      "value": 0.2
+                    },
+                    {
+                      "quarter": "2024Q3",
+                      "value": 3.5
+                    },
+                    {
+                      "quarter": "2024Q4",
+                      "value": 3.1
+                    },
+                    {
+                      "quarter": "2025Q1",
+                      "value": -0.2
+                    },
+                    {
+                      "quarter": "2025Q2",
+                      "value": -2.4
+                    },
+                    {
+                      "quarter": "2025Q3",
+                      "value": -0.5
+                    },
+                    {
+                      "quarter": "2025Q4",
+                      "value": 3.4
+                    },
+                    {
+                      "quarter": "2026Q1",
+                      "value": 4.9
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "supply-chain",
+              "title": "产业链占款支线",
+              "description": "占用上游现金会抬高自身现金质量，也可能把压力传给供应商。",
+              "nodes": [
+                {
+                  "id": "payable",
+                  "title": "上游账期",
+                  "state": "open",
+                  "metric": "上游占款",
+                  "value": "+8.9pct",
+                  "change": "环比 +5.1pct",
+                  "series": [
+                    {
+                      "quarter": "2024Q2",
+                      "value": 3.2
+                    },
+                    {
+                      "quarter": "2024Q3",
+                      "value": 7
+                    },
+                    {
+                      "quarter": "2024Q4",
+                      "value": 7.1
+                    },
+                    {
+                      "quarter": "2025Q1",
+                      "value": 4.2
+                    },
+                    {
+                      "quarter": "2025Q2",
+                      "value": 2.5
+                    },
+                    {
+                      "quarter": "2025Q3",
+                      "value": 4.9
+                    },
+                    {
+                      "quarter": "2025Q4",
+                      "value": 9.2
+                    },
+                    {
+                      "quarter": "2026Q1",
+                      "value": 11.3
+                    }
+                  ]
+                },
+                {
+                  "id": "cash-quality",
+                  "title": "现金质量",
+                  "state": "open",
+                  "metric": "利润变现",
+                  "value": "1.23x",
+                  "change": "环比 -132.0pct",
+                  "series": [
+                    {
+                      "quarter": "2024Q2",
+                      "value": 7.4
+                    },
+                    {
+                      "quarter": "2024Q3",
+                      "value": 10.1
+                    },
+                    {
+                      "quarter": "2024Q4",
+                      "value": 9.1
+                    },
+                    {
+                      "quarter": "2025Q1",
+                      "value": 5.1
+                    },
+                    {
+                      "quarter": "2025Q2",
+                      "value": 2.3
+                    },
+                    {
+                      "quarter": "2025Q3",
+                      "value": 3.6
+                    },
+                    {
+                      "quarter": "2025Q4",
+                      "value": 6.8
+                    },
+                    {
+                      "quarter": "2026Q1",
+                      "value": 7.8
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "credit",
+              "title": "信用/债务支线",
+              "description": "资产负债表是否扩信用，决定后续资本开支和设备更新意愿。",
+              "nodes": [
+                {
+                  "id": "finance",
+                  "title": "融资意愿",
+                  "state": "open",
+                  "metric": "债务通缩",
+                  "value": "-21.2pct",
+                  "change": "环比 -14.4pct",
+                  "series": [
+                    {
+                      "quarter": "2024Q2",
+                      "value": -12.1
+                    },
+                    {
+                      "quarter": "2024Q3",
+                      "value": -9.9
+                    },
+                    {
+                      "quarter": "2024Q4",
+                      "value": -11.4
+                    },
+                    {
+                      "quarter": "2025Q1",
+                      "value": -15.8
+                    },
+                    {
+                      "quarter": "2025Q2",
+                      "value": -19.1
+                    },
+                    {
+                      "quarter": "2025Q3",
+                      "value": -18.3
+                    },
+                    {
+                      "quarter": "2025Q4",
+                      "value": -15.5
+                    },
+                    {
+                      "quarter": "2026Q1",
+                      "value": -15.1
+                    }
+                  ]
+                },
+                {
+                  "id": "reinvest",
+                  "title": "再投资",
+                  "state": "open",
+                  "metric": "设备更新",
+                  "value": "1.06x",
+                  "change": "环比 -84.1pct",
+                  "series": [
+                    {
+                      "quarter": "2024Q2",
+                      "value": 4.1
+                    },
+                    {
+                      "quarter": "2024Q3",
+                      "value": 7
+                    },
+                    {
+                      "quarter": "2024Q4",
+                      "value": 6.2
+                    },
+                    {
+                      "quarter": "2025Q1",
+                      "value": 2.4
+                    },
+                    {
+                      "quarter": "2025Q2",
+                      "value": -0.2
+                    },
+                    {
+                      "quarter": "2025Q3",
+                      "value": 1.2
+                    },
+                    {
+                      "quarter": "2025Q4",
+                      "value": 4.7
+                    },
+                    {
+                      "quarter": "2026Q1",
+                      "value": 5.8
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "industry",
+          "label": "个股行业",
+          "targets": [
+            {
+              "label": "电气设备",
+              "value": "electrical"
+            },
+            {
+              "label": "电子",
+              "value": "electronics"
+            },
+            {
+              "label": "基础化工",
+              "value": "chemicals"
+            },
+            {
+              "label": "汽车",
+              "value": "auto"
+            }
+          ],
+          "mainNodes": [
+            {
+              "id": "industry-demand",
+              "title": "需求入口",
+              "state": "open",
+              "metric": "订单温度",
+              "value": "+5.0%",
+              "change": "环比 -6.1pct",
+              "series": [
+                {
+                  "quarter": "2024Q2",
+                  "value": 6.4
+                },
+                {
+                  "quarter": "2024Q3",
+                  "value": 9.8
+                },
+                {
+                  "quarter": "2024Q4",
+                  "value": 8.8
+                },
+                {
+                  "quarter": "2025Q1",
+                  "value": 4.5
+                },
+                {
+                  "quarter": "2025Q2",
+                  "value": 1.4
+                },
+                {
+                  "quarter": "2025Q3",
+                  "value": 3.2
+                },
+                {
+                  "quarter": "2025Q4",
+                  "value": 7.3
+                },
+                {
+                  "quarter": "2026Q1",
+                  "value": 8.6
+                }
+              ]
+            },
+            {
+              "id": "industry-profit",
+              "title": "创利能力",
+              "state": "open",
+              "metric": "定价权",
+              "value": "+1.7pct",
+              "change": "环比 +2.8pct",
+              "series": [
+                {
+                  "quarter": "2024Q2",
+                  "value": 1.3
+                },
+                {
+                  "quarter": "2024Q3",
+                  "value": 5.2
+                },
+                {
+                  "quarter": "2024Q4",
+                  "value": 4.8
+                },
+                {
+                  "quarter": "2025Q1",
+                  "value": 0.9
+                },
+                {
+                  "quarter": "2025Q2",
+                  "value": -1.5
+                },
+                {
+                  "quarter": "2025Q3",
+                  "value": 0.7
+                },
+                {
+                  "quarter": "2025Q4",
+                  "value": 5.3
+                },
+                {
+                  "quarter": "2026Q1",
+                  "value": 7.2
+                }
+              ]
+            },
+            {
+              "id": "industry-cash",
+              "title": "利润/现金入账",
+              "state": "blocked",
+              "metric": "利润变现",
+              "value": "1.45x",
+              "change": "环比 -132.0pct",
+              "series": [
+                {
+                  "quarter": "2024Q2",
+                  "value": 9.2
+                },
+                {
+                  "quarter": "2024Q3",
+                  "value": 12.3
+                },
+                {
+                  "quarter": "2024Q4",
+                  "value": 11.1
+                },
+                {
+                  "quarter": "2025Q1",
+                  "value": 6.3
+                },
+                {
+                  "quarter": "2025Q2",
+                  "value": 2.9
+                },
+                {
+                  "quarter": "2025Q3",
+                  "value": 4.4
+                },
+                {
+                  "quarter": "2025Q4",
+                  "value": 8.1
+                },
+                {
+                  "quarter": "2026Q1",
+                  "value": 9.2
+                }
+              ]
+            },
+            {
+              "id": "industry-capacity",
+              "title": "产能消化",
+              "state": "open",
+              "metric": "产能利用",
+              "value": "-15.7pct",
+              "change": "环比 -11.4pct",
+              "series": [
+                {
+                  "quarter": "2024Q2",
+                  "value": -8.5
+                },
+                {
+                  "quarter": "2024Q3",
+                  "value": -5.7
+                },
+                {
+                  "quarter": "2024Q4",
+                  "value": -7.2
+                },
+                {
+                  "quarter": "2025Q1",
+                  "value": -12.3
+                },
+                {
+                  "quarter": "2025Q2",
+                  "value": -15.9
+                },
+                {
+                  "quarter": "2025Q3",
+                  "value": -14.8
+                },
+                {
+                  "quarter": "2025Q4",
+                  "value": -11.3
+                },
+                {
+                  "quarter": "2026Q1",
+                  "value": -10.5
+                }
+              ]
+            },
+            {
+              "id": "industry-supply",
+              "title": "未来供给",
+              "state": "open",
+              "metric": "设备更新",
+              "value": "1.25x",
+              "change": "环比 -84.1pct",
+              "series": [
+                {
+                  "quarter": "2024Q2",
+                  "value": 5.7
+                },
+                {
+                  "quarter": "2024Q3",
+                  "value": 9
+                },
+                {
+                  "quarter": "2024Q4",
+                  "value": 8
+                },
+                {
+                  "quarter": "2025Q1",
+                  "value": 3.4
+                },
+                {
+                  "quarter": "2025Q2",
+                  "value": 0.4
+                },
+                {
+                  "quarter": "2025Q3",
+                  "value": 2
+                },
+                {
+                  "quarter": "2025Q4",
+                  "value": 6
+                },
+                {
+                  "quarter": "2026Q1",
+                  "value": 7.3
+                }
+              ]
+            }
+          ],
+          "branches": [
+            {
+              "id": "industry-household",
+              "title": "居民收入分配支线",
+              "description": "利润和现金流之后，是否传到工资、就业、消费与楼市购买力。",
+              "nodes": [
+                {
+                  "id": "industry-cash-distribution",
+                  "title": "可分配现金",
+                  "state": "open",
+                  "metric": "利润变现",
+                  "value": "1.45x",
+                  "change": "环比 -132.0pct",
+                  "series": [
+                    {
+                      "quarter": "2024Q2",
+                      "value": 7.6
+                    },
+                    {
+                      "quarter": "2024Q3",
+                      "value": 10.9
+                    },
+                    {
+                      "quarter": "2024Q4",
+                      "value": 9.7
+                    },
+                    {
+                      "quarter": "2025Q1",
+                      "value": 5.1
+                    },
+                    {
+                      "quarter": "2025Q2",
+                      "value": 1.9
+                    },
+                    {
+                      "quarter": "2025Q3",
+                      "value": 3.4
+                    },
+                    {
+                      "quarter": "2025Q4",
+                      "value": 7.4
+                    },
+                    {
+                      "quarter": "2026Q1",
+                      "value": 8.6
+                    }
+                  ]
+                },
+                {
+                  "id": "industry-wages",
+                  "title": "工资/就业",
+                  "state": "open",
+                  "metric": "员工现金传导",
+                  "value": "+0.9pct",
+                  "change": "环比 +1.1pct",
+                  "series": [
+                    {
+                      "quarter": "2024Q2",
+                      "value": 0.2
+                    },
+                    {
+                      "quarter": "2024Q3",
+                      "value": 4.1
+                    },
+                    {
+                      "quarter": "2024Q4",
+                      "value": 3.7
+                    },
+                    {
+                      "quarter": "2025Q1",
+                      "value": -0.2
+                    },
+                    {
+                      "quarter": "2025Q2",
+                      "value": -2.8
+                    },
+                    {
+                      "quarter": "2025Q3",
+                      "value": -0.6
+                    },
+                    {
+                      "quarter": "2025Q4",
+                      "value": 4
+                    },
+                    {
+                      "quarter": "2026Q1",
+                      "value": 5.8
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "industry-supply-chain",
+              "title": "产业链占款支线",
+              "description": "占用上游现金会抬高自身现金质量，也可能把压力传给供应商。",
+              "nodes": [
+                {
+                  "id": "industry-payable",
+                  "title": "上游账期",
+                  "state": "open",
+                  "metric": "上游占款",
+                  "value": "+10.5pct",
+                  "change": "环比 +5.1pct",
+                  "series": [
+                    {
+                      "quarter": "2024Q2",
+                      "value": 3.8
+                    },
+                    {
+                      "quarter": "2024Q3",
+                      "value": 8.3
+                    },
+                    {
+                      "quarter": "2024Q4",
+                      "value": 8.4
+                    },
+                    {
+                      "quarter": "2025Q1",
+                      "value": 5
+                    },
+                    {
+                      "quarter": "2025Q2",
+                      "value": 2.9
+                    },
+                    {
+                      "quarter": "2025Q3",
+                      "value": 5.8
+                    },
+                    {
+                      "quarter": "2025Q4",
+                      "value": 10.9
+                    },
+                    {
+                      "quarter": "2026Q1",
+                      "value": 13.3
+                    }
+                  ]
+                },
+                {
+                  "id": "industry-cash-quality",
+                  "title": "现金质量",
+                  "state": "open",
+                  "metric": "利润变现",
+                  "value": "1.45x",
+                  "change": "环比 -132.0pct",
+                  "series": [
+                    {
+                      "quarter": "2024Q2",
+                      "value": 8.7
+                    },
+                    {
+                      "quarter": "2024Q3",
+                      "value": 11.9
+                    },
+                    {
+                      "quarter": "2024Q4",
+                      "value": 10.7
+                    },
+                    {
+                      "quarter": "2025Q1",
+                      "value": 6
+                    },
+                    {
+                      "quarter": "2025Q2",
+                      "value": 2.7
+                    },
+                    {
+                      "quarter": "2025Q3",
+                      "value": 4.2
+                    },
+                    {
+                      "quarter": "2025Q4",
+                      "value": 8
+                    },
+                    {
+                      "quarter": "2026Q1",
+                      "value": 9.2
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "industry-credit",
+              "title": "信用/债务支线",
+              "description": "资产负债表是否扩信用，决定后续资本开支和设备更新意愿。",
+              "nodes": [
+                {
+                  "id": "industry-finance",
+                  "title": "融资意愿",
+                  "state": "open",
+                  "metric": "债务通缩",
+                  "value": "-25.0pct",
+                  "change": "环比 -14.4pct",
+                  "series": [
+                    {
+                      "quarter": "2024Q2",
+                      "value": -14.3
+                    },
+                    {
+                      "quarter": "2024Q3",
+                      "value": -11.7
+                    },
+                    {
+                      "quarter": "2024Q4",
+                      "value": -13.5
+                    },
+                    {
+                      "quarter": "2025Q1",
+                      "value": -18.6
+                    },
+                    {
+                      "quarter": "2025Q2",
+                      "value": -22.5
+                    },
+                    {
+                      "quarter": "2025Q3",
+                      "value": -21.6
+                    },
+                    {
+                      "quarter": "2025Q4",
+                      "value": -18.3
+                    },
+                    {
+                      "quarter": "2026Q1",
+                      "value": -17.8
+                    }
+                  ]
+                },
+                {
+                  "id": "industry-reinvest",
+                  "title": "再投资",
+                  "state": "open",
+                  "metric": "设备更新",
+                  "value": "1.25x",
+                  "change": "环比 -84.1pct",
+                  "series": [
+                    {
+                      "quarter": "2024Q2",
+                      "value": 4.8
+                    },
+                    {
+                      "quarter": "2024Q3",
+                      "value": 8.3
+                    },
+                    {
+                      "quarter": "2024Q4",
+                      "value": 7.3
+                    },
+                    {
+                      "quarter": "2025Q1",
+                      "value": 2.8
+                    },
+                    {
+                      "quarter": "2025Q2",
+                      "value": -0.2
+                    },
+                    {
+                      "quarter": "2025Q3",
+                      "value": 1.4
+                    },
+                    {
+                      "quarter": "2025Q4",
+                      "value": 5.5
+                    },
+                    {
+                      "quarter": "2026Q1",
+                      "value": 6.8
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "etf",
+          "label": "行业 ETF",
+          "targets": [
+            {
+              "label": "证券ETF",
+              "value": "512880.SH"
+            },
+            {
+              "label": "银行ETF",
+              "value": "512800.SH"
+            },
+            {
+              "label": "消费ETF",
+              "value": "159928.SZ"
+            },
+            {
+              "label": "医药ETF",
+              "value": "512010.SH"
+            },
+            {
+              "label": "有色ETF",
+              "value": "512400.SH"
+            },
+            {
+              "label": "军工ETF",
+              "value": "512660.SH"
+            }
+          ],
+          "mainNodes": [
+            {
+              "id": "etf-demand",
+              "title": "需求入口",
+              "state": "blocked",
+              "metric": "订单温度",
+              "value": "+3.4%",
+              "change": "环比 -6.1pct",
+              "series": [
+                {
+                  "quarter": "2024Q2",
+                  "value": 4.4
+                },
+                {
+                  "quarter": "2024Q3",
+                  "value": 6.8
+                },
+                {
+                  "quarter": "2024Q4",
+                  "value": 6.1
+                },
+                {
+                  "quarter": "2025Q1",
+                  "value": 3.1
+                },
+                {
+                  "quarter": "2025Q2",
+                  "value": 1
+                },
+                {
+                  "quarter": "2025Q3",
+                  "value": 2.2
+                },
+                {
+                  "quarter": "2025Q4",
+                  "value": 5.1
+                },
+                {
+                  "quarter": "2026Q1",
+                  "value": 6
+                }
+              ]
+            },
+            {
+              "id": "etf-profit",
+              "title": "创利能力",
+              "state": "open",
+              "metric": "定价权",
+              "value": "+1.1pct",
+              "change": "环比 +2.8pct",
+              "series": [
+                {
+                  "quarter": "2024Q2",
+                  "value": 0.9
+                },
+                {
+                  "quarter": "2024Q3",
+                  "value": 3.6
+                },
+                {
+                  "quarter": "2024Q4",
+                  "value": 3.4
+                },
+                {
+                  "quarter": "2025Q1",
+                  "value": 0.7
+                },
+                {
+                  "quarter": "2025Q2",
+                  "value": -1.1
+                },
+                {
+                  "quarter": "2025Q3",
+                  "value": 0.5
+                },
+                {
+                  "quarter": "2025Q4",
+                  "value": 3.7
+                },
+                {
+                  "quarter": "2026Q1",
+                  "value": 5
+                }
+              ]
+            },
+            {
+              "id": "etf-cash",
+              "title": "利润/现金入账",
+              "state": "open",
+              "metric": "利润变现",
+              "value": "1.01x",
+              "change": "环比 -132.0pct",
+              "series": [
+                {
+                  "quarter": "2024Q2",
+                  "value": 6.4
+                },
+                {
+                  "quarter": "2024Q3",
+                  "value": 8.5
+                },
+                {
+                  "quarter": "2024Q4",
+                  "value": 7.7
+                },
+                {
+                  "quarter": "2025Q1",
+                  "value": 4.3
+                },
+                {
+                  "quarter": "2025Q2",
+                  "value": 2
+                },
+                {
+                  "quarter": "2025Q3",
+                  "value": 3
+                },
+                {
+                  "quarter": "2025Q4",
+                  "value": 5.7
+                },
+                {
+                  "quarter": "2026Q1",
+                  "value": 6.4
+                }
+              ]
+            },
+            {
+              "id": "etf-capacity",
+              "title": "产能消化",
+              "state": "open",
+              "metric": "产能利用",
+              "value": "-10.9pct",
+              "change": "环比 -11.4pct",
+              "series": [
+                {
+                  "quarter": "2024Q2",
+                  "value": -5.9
+                },
+                {
+                  "quarter": "2024Q3",
+                  "value": -3.9
+                },
+                {
+                  "quarter": "2024Q4",
+                  "value": -5
+                },
+                {
+                  "quarter": "2025Q1",
+                  "value": -8.5
+                },
+                {
+                  "quarter": "2025Q2",
+                  "value": -11.1
+                },
+                {
+                  "quarter": "2025Q3",
+                  "value": -10.3
+                },
+                {
+                  "quarter": "2025Q4",
+                  "value": -7.9
+                },
+                {
+                  "quarter": "2026Q1",
+                  "value": -7.3
+                }
+              ]
+            },
+            {
+              "id": "etf-supply",
+              "title": "未来供给",
+              "state": "open",
+              "metric": "设备更新",
+              "value": "0.87x",
+              "change": "环比 -84.1pct",
+              "series": [
+                {
+                  "quarter": "2024Q2",
+                  "value": 3.9
+                },
+                {
+                  "quarter": "2024Q3",
+                  "value": 6.2
+                },
+                {
+                  "quarter": "2024Q4",
+                  "value": 5.6
+                },
+                {
+                  "quarter": "2025Q1",
+                  "value": 2.4
+                },
+                {
+                  "quarter": "2025Q2",
+                  "value": 0.2
+                },
+                {
+                  "quarter": "2025Q3",
+                  "value": 1.4
+                },
+                {
+                  "quarter": "2025Q4",
+                  "value": 4.2
+                },
+                {
+                  "quarter": "2026Q1",
+                  "value": 5.1
+                }
+              ]
+            }
+          ],
+          "branches": [
+            {
+              "id": "etf-household",
+              "title": "居民收入分配支线",
+              "description": "利润和现金流之后，是否传到工资、就业、消费与楼市购买力。",
+              "nodes": [
+                {
+                  "id": "etf-cash-distribution",
+                  "title": "可分配现金",
+                  "state": "blocked",
+                  "metric": "利润变现",
+                  "value": "1.01x",
+                  "change": "环比 -132.0pct",
+                  "series": [
+                    {
+                      "quarter": "2024Q2",
+                      "value": 5.2
+                    },
+                    {
+                      "quarter": "2024Q3",
+                      "value": 7.5
+                    },
+                    {
+                      "quarter": "2024Q4",
+                      "value": 6.7
+                    },
+                    {
+                      "quarter": "2025Q1",
+                      "value": 3.5
+                    },
+                    {
+                      "quarter": "2025Q2",
+                      "value": 1.3
+                    },
+                    {
+                      "quarter": "2025Q3",
+                      "value": 2.4
+                    },
+                    {
+                      "quarter": "2025Q4",
+                      "value": 5.2
+                    },
+                    {
+                      "quarter": "2026Q1",
+                      "value": 6
+                    }
+                  ]
+                },
+                {
+                  "id": "etf-wages",
+                  "title": "工资/就业",
+                  "state": "open",
+                  "metric": "员工现金传导",
+                  "value": "+0.7pct",
+                  "change": "环比 +1.1pct",
+                  "series": [
+                    {
+                      "quarter": "2024Q2",
+                      "value": 0.2
+                    },
+                    {
+                      "quarter": "2024Q3",
+                      "value": 2.9
+                    },
+                    {
+                      "quarter": "2024Q4",
+                      "value": 2.5
+                    },
+                    {
+                      "quarter": "2025Q1",
+                      "value": -0.2
+                    },
+                    {
+                      "quarter": "2025Q2",
+                      "value": -2
+                    },
+                    {
+                      "quarter": "2025Q3",
+                      "value": -0.4
+                    },
+                    {
+                      "quarter": "2025Q4",
+                      "value": 2.8
+                    },
+                    {
+                      "quarter": "2026Q1",
+                      "value": 4
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "etf-supply-chain",
+              "title": "产业链占款支线",
+              "description": "占用上游现金会抬高自身现金质量，也可能把压力传给供应商。",
+              "nodes": [
+                {
+                  "id": "etf-payable",
+                  "title": "上游账期",
+                  "state": "blocked",
+                  "metric": "上游占款",
+                  "value": "+7.3pct",
+                  "change": "环比 +5.1pct",
+                  "series": [
+                    {
+                      "quarter": "2024Q2",
+                      "value": 2.6
+                    },
+                    {
+                      "quarter": "2024Q3",
+                      "value": 5.7
+                    },
+                    {
+                      "quarter": "2024Q4",
+                      "value": 5.8
+                    },
+                    {
+                      "quarter": "2025Q1",
+                      "value": 3.4
+                    },
+                    {
+                      "quarter": "2025Q2",
+                      "value": 2
+                    },
+                    {
+                      "quarter": "2025Q3",
+                      "value": 4
+                    },
+                    {
+                      "quarter": "2025Q4",
+                      "value": 7.5
+                    },
+                    {
+                      "quarter": "2026Q1",
+                      "value": 9.3
+                    }
+                  ]
+                },
+                {
+                  "id": "etf-cash-quality",
+                  "title": "现金质量",
+                  "state": "open",
+                  "metric": "利润变现",
+                  "value": "1.01x",
+                  "change": "环比 -132.0pct",
+                  "series": [
+                    {
+                      "quarter": "2024Q2",
+                      "value": 6.1
+                    },
+                    {
+                      "quarter": "2024Q3",
+                      "value": 8.3
+                    },
+                    {
+                      "quarter": "2024Q4",
+                      "value": 7.5
+                    },
+                    {
+                      "quarter": "2025Q1",
+                      "value": 4.2
+                    },
+                    {
+                      "quarter": "2025Q2",
+                      "value": 1.9
+                    },
+                    {
+                      "quarter": "2025Q3",
+                      "value": 3
+                    },
+                    {
+                      "quarter": "2025Q4",
+                      "value": 5.6
+                    },
+                    {
+                      "quarter": "2026Q1",
+                      "value": 6.4
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "etf-credit",
+              "title": "信用/债务支线",
+              "description": "资产负债表是否扩信用，决定后续资本开支和设备更新意愿。",
+              "nodes": [
+                {
+                  "id": "etf-finance",
+                  "title": "融资意愿",
+                  "state": "blocked",
+                  "metric": "债务通缩",
+                  "value": "-17.4pct",
+                  "change": "环比 -14.4pct",
+                  "series": [
+                    {
+                      "quarter": "2024Q2",
+                      "value": -9.9
+                    },
+                    {
+                      "quarter": "2024Q3",
+                      "value": -8.1
+                    },
+                    {
+                      "quarter": "2024Q4",
+                      "value": -9.3
+                    },
+                    {
+                      "quarter": "2025Q1",
+                      "value": -13
+                    },
+                    {
+                      "quarter": "2025Q2",
+                      "value": -15.7
+                    },
+                    {
+                      "quarter": "2025Q3",
+                      "value": -15
+                    },
+                    {
+                      "quarter": "2025Q4",
+                      "value": -12.7
+                    },
+                    {
+                      "quarter": "2026Q1",
+                      "value": -12.4
+                    }
+                  ]
+                },
+                {
+                  "id": "etf-reinvest",
+                  "title": "再投资",
+                  "state": "open",
+                  "metric": "设备更新",
+                  "value": "0.87x",
+                  "change": "环比 -84.1pct",
+                  "series": [
+                    {
+                      "quarter": "2024Q2",
+                      "value": 3.4
+                    },
+                    {
+                      "quarter": "2024Q3",
+                      "value": 5.7
+                    },
+                    {
+                      "quarter": "2024Q4",
+                      "value": 5.1
+                    },
+                    {
+                      "quarter": "2025Q1",
+                      "value": 2
+                    },
+                    {
+                      "quarter": "2025Q2",
+                      "value": -0.2
+                    },
+                    {
+                      "quarter": "2025Q3",
+                      "value": 1
+                    },
+                    {
+                      "quarter": "2025Q4",
+                      "value": 3.9
+                    },
+                    {
+                      "quarter": "2026Q1",
+                      "value": 4.8
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "industries": [
+        {
+          "name": "电气设备",
+          "orderGrowth": "+12.8%",
+          "state": "open"
+        },
+        {
+          "name": "电子",
+          "orderGrowth": "+11.9%",
+          "state": "open"
+        },
+        {
+          "name": "基础化工",
+          "orderGrowth": "+11.0%",
+          "state": "open"
+        },
+        {
+          "name": "汽车",
+          "orderGrowth": "+10.0%",
+          "state": "open"
+        },
+        {
+          "name": "机械设备",
+          "orderGrowth": "+9.1%",
+          "state": "open"
+        },
+        {
+          "name": "有色金属",
+          "orderGrowth": "+8.2%",
+          "state": "open"
+        },
+        {
+          "name": "国防军工",
+          "orderGrowth": "+7.3%",
+          "state": "open"
+        },
+        {
+          "name": "通信",
+          "orderGrowth": "+6.4%",
+          "state": "open"
+        },
+        {
+          "name": "计算机",
+          "orderGrowth": "+5.4%",
+          "state": "open"
+        },
+        {
+          "name": "家用电器",
+          "orderGrowth": "+4.5%",
+          "state": "open"
+        },
+        {
+          "name": "医药生物",
+          "orderGrowth": "+3.6%",
+          "state": "open"
+        },
+        {
+          "name": "食品饮料",
+          "orderGrowth": "+2.7%",
+          "state": "open"
+        },
+        {
+          "name": "商贸零售",
+          "orderGrowth": "+1.8%",
+          "state": "open"
+        },
+        {
+          "name": "社会服务",
+          "orderGrowth": "0.8%",
+          "state": "open"
+        },
+        {
+          "name": "美容护理",
+          "orderGrowth": "-0.1%",
+          "state": "open"
+        },
+        {
+          "name": "轻工制造",
+          "orderGrowth": "-1.0%",
+          "state": "open"
+        },
+        {
+          "name": "纺织服饰",
+          "orderGrowth": "-1.9%",
+          "state": "open"
+        },
+        {
+          "name": "建筑材料",
+          "orderGrowth": "-2.8%",
+          "state": "blocked"
+        },
+        {
+          "name": "建筑装饰",
+          "orderGrowth": "-3.8%",
+          "state": "blocked"
+        },
+        {
+          "name": "钢铁",
+          "orderGrowth": "-4.7%",
+          "state": "blocked"
+        },
+        {
+          "name": "煤炭",
+          "orderGrowth": "-5.6%",
+          "state": "blocked"
+        },
+        {
+          "name": "石油石化",
+          "orderGrowth": "-6.5%",
+          "state": "blocked"
+        },
+        {
+          "name": "交通运输",
+          "orderGrowth": "-7.4%",
+          "state": "blocked"
+        },
+        {
+          "name": "公用事业",
+          "orderGrowth": "-8.4%",
+          "state": "blocked"
+        }
+      ]
+    },
+    "analysis": {
+      "cards": [
+        {
+          "id": "scissors",
+          "title": "营收利润剪刀差",
+          "defaultPeriod": 40,
+          "description": "营收与利润增速的错位，观察利润弹性与成本压力。",
+          "meta": {
+            "primaryLabel": "营收同比",
+            "secondaryLabel": "利润同比",
+            "resultLabel": "剪刀差",
+            "primaryColor": "#38bdf8",
+            "secondaryColor": "#fb7185"
+          },
+          "points": [
+            {
+              "quarter": "2016Q1",
+              "primary": 9.1,
+              "secondary": 12.5,
+              "result": -3.4
+            },
+            {
+              "quarter": "2016Q2",
+              "primary": 12.5,
+              "secondary": 11.5,
+              "result": 0.9
+            },
+            {
+              "quarter": "2016Q3",
+              "primary": 14,
+              "secondary": 8.6,
+              "result": 5.5
+            },
+            {
+              "quarter": "2016Q4",
+              "primary": 13,
+              "secondary": 4.6,
+              "result": 8.4
+            },
+            {
+              "quarter": "2017Q1",
+              "primary": 9.8,
+              "secondary": 1,
+              "result": 8.8
+            },
+            {
+              "quarter": "2017Q2",
+              "primary": 5.8,
+              "secondary": -1.2,
+              "result": 7
+            },
+            {
+              "quarter": "2017Q3",
+              "primary": 2.9,
+              "secondary": -1.1,
+              "result": 4.1
+            },
+            {
+              "quarter": "2017Q4",
+              "primary": 2.5,
+              "secondary": 1.2,
+              "result": 1.3
+            },
+            {
+              "quarter": "2018Q1",
+              "primary": 4.4,
+              "secondary": 4.9,
+              "result": -0.5
+            },
+            {
+              "quarter": "2018Q2",
+              "primary": 7.7,
+              "secondary": 9,
+              "result": -1.4
+            },
+            {
+              "quarter": "2018Q3",
+              "primary": 10.4,
+              "secondary": 12.2,
+              "result": -1.7
+            },
+            {
+              "quarter": "2018Q4",
+              "primary": 11.2,
+              "secondary": 13.3,
+              "result": -2.1
+            },
+            {
+              "quarter": "2019Q1",
+              "primary": 9.4,
+              "secondary": 12,
+              "result": -2.6
+            },
+            {
+              "quarter": "2019Q2",
+              "primary": 5.9,
+              "secondary": 8.8,
+              "result": -2.9
+            },
+            {
+              "quarter": "2019Q3",
+              "primary": 2.2,
+              "secondary": 4.5,
+              "result": -2.3
+            },
+            {
+              "quarter": "2019Q4",
+              "primary": 0.2,
+              "secondary": 0.4,
+              "result": -0.2
+            },
+            {
+              "quarter": "2020Q1",
+              "primary": 0.8,
+              "secondary": -2.1,
+              "result": 2.9
+            },
+            {
+              "quarter": "2020Q2",
+              "primary": 3.7,
+              "secondary": -2.4,
+              "result": 6.1
+            },
+            {
+              "quarter": "2020Q3",
+              "primary": 7.5,
+              "secondary": -0.5,
+              "result": 8
+            },
+            {
+              "quarter": "2020Q4",
+              "primary": 10.3,
+              "secondary": 3,
+              "result": 7.3
+            },
+            {
+              "quarter": "2021Q1",
+              "primary": 10.9,
+              "secondary": 6.9,
+              "result": 4
+            },
+            {
+              "quarter": "2021Q2",
+              "primary": 9.1,
+              "secondary": 9.9,
+              "result": -0.9
+            },
+            {
+              "quarter": "2021Q3",
+              "primary": 5.8,
+              "secondary": 11,
+              "result": -5.2
+            },
+            {
+              "quarter": "2021Q4",
+              "primary": 2.9,
+              "secondary": 9.8,
+              "result": -6.9
+            },
+            {
+              "quarter": "2022Q1",
+              "primary": 1.9,
+              "secondary": 6.6,
+              "result": -4.7
+            },
+            {
+              "quarter": "2022Q2",
+              "primary": 3.4,
+              "secondary": 2.4,
+              "result": 1
+            },
+            {
+              "quarter": "2022Q3",
+              "primary": 6.9,
+              "secondary": -1.5,
+              "result": 8.4
+            },
+            {
+              "quarter": "2022Q4",
+              "primary": 10.6,
+              "secondary": -3.9,
+              "result": 14.5
+            },
+            {
+              "quarter": "2023Q1",
+              "primary": 12.9,
+              "secondary": -4,
+              "result": 16.9
+            },
+            {
+              "quarter": "2023Q2",
+              "primary": 12.6,
+              "secondary": -1.8,
+              "result": 14.4
+            },
+            {
+              "quarter": "2023Q3",
+              "primary": 9.9,
+              "secondary": 2,
+              "result": 7.9
+            },
+            {
+              "quarter": "2023Q4",
+              "primary": 6.1,
+              "secondary": 6.3,
+              "result": -0.1
+            },
+            {
+              "quarter": "2024Q1",
+              "primary": 3.2,
+              "secondary": 9.7,
+              "result": -6.5
+            },
+            {
+              "quarter": "2024Q2",
+              "primary": 2.4,
+              "secondary": 11.2,
+              "result": -8.8
+            },
+            {
+              "quarter": "2024Q3",
+              "primary": 4,
+              "secondary": 10.3,
+              "result": -6.3
+            },
+            {
+              "quarter": "2024Q4",
+              "primary": 7.2,
+              "secondary": 7.5,
+              "result": -0.3
+            },
+            {
+              "quarter": "2025Q1",
+              "primary": 10.2,
+              "secondary": 3.6,
+              "result": 6.6
+            },
+            {
+              "quarter": "2025Q2",
+              "primary": 11.3,
+              "secondary": -0.1,
+              "result": 11.4
+            },
+            {
+              "quarter": "2025Q3",
+              "primary": 9.9,
+              "secondary": -2.3,
+              "result": 12.2
+            },
+            {
+              "quarter": "2025Q4",
+              "primary": 6.4,
+              "secondary": -2.4,
+              "result": 8.8
+            }
+          ]
+        },
+        {
+          "id": "white-strip",
+          "title": "宏观白条指数",
+          "defaultPeriod": 16,
+          "description": "收入兑现与应收扩张的差异，衡量增长中的赊销成分。",
+          "meta": {
+            "primaryLabel": "应收同比",
+            "secondaryLabel": "营收同比",
+            "resultLabel": "白条指数",
+            "primaryColor": "#a78bfa",
+            "secondaryColor": "#22d3ee"
+          },
+          "points": [
+            {
+              "quarter": "2016Q1",
+              "primary": 12.9,
+              "secondary": 10.5,
+              "result": 2.4
+            },
+            {
+              "quarter": "2016Q2",
+              "primary": 16,
+              "secondary": 10.1,
+              "result": 5.9
+            },
+            {
+              "quarter": "2016Q3",
+              "primary": 17.5,
+              "secondary": 8.7,
+              "result": 8.7
+            },
+            {
+              "quarter": "2016Q4",
+              "primary": 16.5,
+              "secondary": 6.8,
+              "result": 9.7
+            },
+            {
+              "quarter": "2017Q1",
+              "primary": 13.5,
+              "secondary": 5.1,
+              "result": 8.4
+            },
+            {
+              "quarter": "2017Q2",
+              "primary": 9.8,
+              "secondary": 4.1,
+              "result": 5.7
+            },
+            {
+              "quarter": "2017Q3",
+              "primary": 7.2,
+              "secondary": 4.2,
+              "result": 3
+            },
+            {
+              "quarter": "2017Q4",
+              "primary": 6.7,
+              "secondary": 5.3,
+              "result": 1.4
+            },
+            {
+              "quarter": "2018Q1",
+              "primary": 8.5,
+              "secondary": 7.3,
+              "result": 1.2
+            },
+            {
+              "quarter": "2018Q2",
+              "primary": 11.5,
+              "secondary": 9.3,
+              "result": 2.2
+            },
+            {
+              "quarter": "2018Q3",
+              "primary": 14,
+              "secondary": 10.8,
+              "result": 3.2
+            },
+            {
+              "quarter": "2018Q4",
+              "primary": 14.7,
+              "secondary": 11.4,
+              "result": 3.3
+            },
+            {
+              "quarter": "2019Q1",
+              "primary": 13,
+              "secondary": 10.7,
+              "result": 2.3
+            },
+            {
+              "quarter": "2019Q2",
+              "primary": 9.8,
+              "secondary": 9,
+              "result": 0.8
+            },
+            {
+              "quarter": "2019Q3",
+              "primary": 6.4,
+              "secondary": 6.7,
+              "result": -0.4
+            },
+            {
+              "quarter": "2019Q4",
+              "primary": 4.5,
+              "secondary": 4.6,
+              "result": -0.1
+            },
+            {
+              "quarter": "2020Q1",
+              "primary": 5.1,
+              "secondary": 3.2,
+              "result": 1.9
+            },
+            {
+              "quarter": "2020Q2",
+              "primary": 7.8,
+              "secondary": 3,
+              "result": 4.8
+            },
+            {
+              "quarter": "2020Q3",
+              "primary": 11.3,
+              "secondary": 3.8,
+              "result": 7.5
+            },
+            {
+              "quarter": "2020Q4",
+              "primary": 14,
+              "secondary": 5.5,
+              "result": 8.5
+            },
+            {
+              "quarter": "2021Q1",
+              "primary": 14.6,
+              "secondary": 7.3,
+              "result": 7.2
+            },
+            {
+              "quarter": "2021Q2",
+              "primary": 12.9,
+              "secondary": 8.7,
+              "result": 4.2
+            },
+            {
+              "quarter": "2021Q3",
+              "primary": 9.9,
+              "secondary": 9.2,
+              "result": 0.7
+            },
+            {
+              "quarter": "2021Q4",
+              "primary": 7.2,
+              "secondary": 8.5,
+              "result": -1.3
+            },
+            {
+              "quarter": "2022Q1",
+              "primary": 6.3,
+              "secondary": 6.8,
+              "result": -0.5
+            },
+            {
+              "quarter": "2022Q2",
+              "primary": 7.8,
+              "secondary": 4.7,
+              "result": 3.1
+            },
+            {
+              "quarter": "2022Q3",
+              "primary": 11,
+              "secondary": 2.7,
+              "result": 8.3
+            },
+            {
+              "quarter": "2022Q4",
+              "primary": 14.5,
+              "secondary": 1.5,
+              "result": 12.9
+            },
+            {
+              "quarter": "2023Q1",
+              "primary": 16.6,
+              "secondary": 1.5,
+              "result": 15.1
+            },
+            {
+              "quarter": "2023Q2",
+              "primary": 16.3,
+              "secondary": 2.6,
+              "result": 13.7
+            },
+            {
+              "quarter": "2023Q3",
+              "primary": 13.8,
+              "secondary": 4.6,
+              "result": 9.2
+            },
+            {
+              "quarter": "2023Q4",
+              "primary": 10.4,
+              "secondary": 6.8,
+              "result": 3.6
+            },
+            {
+              "quarter": "2024Q1",
+              "primary": 7.6,
+              "secondary": 8.6,
+              "result": -0.9
+            },
+            {
+              "quarter": "2024Q2",
+              "primary": 6.9,
+              "secondary": 9.4,
+              "result": -2.5
+            },
+            {
+              "quarter": "2024Q3",
+              "primary": 8.4,
+              "secondary": 9.1,
+              "result": -0.7
+            },
+            {
+              "quarter": "2024Q4",
+              "primary": 11.3,
+              "secondary": 7.8,
+              "result": 3.6
+            },
+            {
+              "quarter": "2025Q1",
+              "primary": 14.1,
+              "secondary": 5.9,
+              "result": 8.2
+            },
+            {
+              "quarter": "2025Q2",
+              "primary": 15.1,
+              "secondary": 4.2,
+              "result": 10.9
+            },
+            {
+              "quarter": "2025Q3",
+              "primary": 13.8,
+              "secondary": 3.1,
+              "result": 10.6
+            },
+            {
+              "quarter": "2025Q4",
+              "primary": 10.5,
+              "secondary": 3.2,
+              "result": 7.3
+            }
+          ]
+        },
+        {
+          "id": "lying-flat",
+          "title": "企业躺平指数",
+          "defaultPeriod": 16,
+          "description": "经营现金流与资本开支的背离，观察企业扩产意愿。",
+          "meta": {
+            "primaryLabel": "经营现金流",
+            "secondaryLabel": "资本开支",
+            "resultLabel": "现金-开支",
+            "primaryColor": "#2dd4bf",
+            "secondaryColor": "#60a5fa"
+          },
+          "points": [
+            {
+              "quarter": "2016Q1",
+              "primary": 5.8,
+              "secondary": 16,
+              "result": -10.2
+            },
+            {
+              "quarter": "2016Q2",
+              "primary": 9.1,
+              "secondary": 15.5,
+              "result": -6.4
+            },
+            {
+              "quarter": "2016Q3",
+              "primary": 10.7,
+              "secondary": 14,
+              "result": -3.3
+            },
+            {
+              "quarter": "2016Q4",
+              "primary": 9.7,
+              "secondary": 11.8,
+              "result": -2.1
+            },
+            {
+              "quarter": "2017Q1",
+              "primary": 6.5,
+              "secondary": 9.8,
+              "result": -3.3
+            },
+            {
+              "quarter": "2017Q2",
+              "primary": 2.7,
+              "secondary": 8.7,
+              "result": -6
+            },
+            {
+              "quarter": "2017Q3",
+              "primary": -0.1,
+              "secondary": 8.8,
+              "result": -8.9
+            },
+            {
+              "quarter": "2017Q4",
+              "primary": -0.5,
+              "secondary": 10.1,
+              "result": -10.7
+            },
+            {
+              "quarter": "2018Q1",
+              "primary": 1.4,
+              "secondary": 12.3,
+              "result": -10.9
+            },
+            {
+              "quarter": "2018Q2",
+              "primary": 4.6,
+              "secondary": 14.6,
+              "result": -10
+            },
+            {
+              "quarter": "2018Q3",
+              "primary": 7.3,
+              "secondary": 16.4,
+              "result": -9.1
+            },
+            {
+              "quarter": "2018Q4",
+              "primary": 8.1,
+              "secondary": 17,
+              "result": -8.9
+            },
+            {
+              "quarter": "2019Q1",
+              "primary": 6.4,
+              "secondary": 16.3,
+              "result": -9.9
+            },
+            {
+              "quarter": "2019Q2",
+              "primary": 2.9,
+              "secondary": 14.4,
+              "result": -11.4
+            },
+            {
+              "quarter": "2019Q3",
+              "primary": -0.6,
+              "secondary": 11.9,
+              "result": -12.5
+            },
+            {
+              "quarter": "2019Q4",
+              "primary": -2.6,
+              "secondary": 9.5,
+              "result": -12.1
+            },
+            {
+              "quarter": "2020Q1",
+              "primary": -1.9,
+              "secondary": 8,
+              "result": -9.9
+            },
+            {
+              "quarter": "2020Q2",
+              "primary": 0.9,
+              "secondary": 7.7,
+              "result": -6.8
+            },
+            {
+              "quarter": "2020Q3",
+              "primary": 4.7,
+              "secondary": 8.7,
+              "result": -4
+            },
+            {
+              "quarter": "2020Q4",
+              "primary": 7.5,
+              "secondary": 10.6,
+              "result": -3.1
+            },
+            {
+              "quarter": "2021Q1",
+              "primary": 8.1,
+              "secondary": 12.8,
+              "result": -4.6
+            },
+            {
+              "quarter": "2021Q2",
+              "primary": 6.3,
+              "secondary": 14.4,
+              "result": -8.1
+            },
+            {
+              "quarter": "2021Q3",
+              "primary": 3.2,
+              "secondary": 15,
+              "result": -11.8
+            },
+            {
+              "quarter": "2021Q4",
+              "primary": 0.3,
+              "secondary": 14.2,
+              "result": -13.9
+            },
+            {
+              "quarter": "2022Q1",
+              "primary": -0.6,
+              "secondary": 12.4,
+              "result": -13
+            },
+            {
+              "quarter": "2022Q2",
+              "primary": 0.9,
+              "secondary": 10,
+              "result": -9
+            },
+            {
+              "quarter": "2022Q3",
+              "primary": 4.4,
+              "secondary": 7.8,
+              "result": -3.4
+            },
+            {
+              "quarter": "2022Q4",
+              "primary": 8.1,
+              "secondary": 6.4,
+              "result": 1.6
+            },
+            {
+              "quarter": "2023Q1",
+              "primary": 10.3,
+              "secondary": 6.4,
+              "result": 3.9
+            },
+            {
+              "quarter": "2023Q2",
+              "primary": 10.1,
+              "secondary": 7.7,
+              "result": 2.4
+            },
+            {
+              "quarter": "2023Q3",
+              "primary": 7.4,
+              "secondary": 9.9,
+              "result": -2.5
+            },
+            {
+              "quarter": "2023Q4",
+              "primary": 3.8,
+              "secondary": 12.4,
+              "result": -8.6
+            },
+            {
+              "quarter": "2024Q1",
+              "primary": 0.9,
+              "secondary": 14.4,
+              "result": -13.5
+            },
+            {
+              "quarter": "2024Q2",
+              "primary": 0.1,
+              "secondary": 15.4,
+              "result": -15.2
+            },
+            {
+              "quarter": "2024Q3",
+              "primary": 1.8,
+              "secondary": 15,
+              "result": -13.2
+            },
+            {
+              "quarter": "2024Q4",
+              "primary": 5,
+              "secondary": 13.5,
+              "result": -8.5
+            },
+            {
+              "quarter": "2025Q1",
+              "primary": 7.9,
+              "secondary": 11.4,
+              "result": -3.4
+            },
+            {
+              "quarter": "2025Q2",
+              "primary": 9.1,
+              "secondary": 9.4,
+              "result": -0.3
+            },
+            {
+              "quarter": "2025Q3",
+              "primary": 7.7,
+              "secondary": 8.2,
+              "result": -0.5
+            },
+            {
+              "quarter": "2025Q4",
+              "primary": 4.3,
+              "secondary": 8.3,
+              "result": -4
+            }
+          ],
+          "summaries": [
+            {
+              "label": "经营现金流-资本开支差",
+              "value": "-8.3pct"
+            },
+            {
+              "label": "资本开支/经营现金流",
+              "value": "64%"
+            }
+          ]
+        },
+        {
+          "id": "dividend",
+          "title": "分红挤出扩产",
+          "defaultPeriod": 16,
+          "description": "现金分配与资本开支的竞合，观察分红是否挤压扩产。",
+          "meta": {
+            "primaryLabel": "资本开支",
+            "secondaryLabel": "分红/偿息",
+            "resultLabel": "现金差",
+            "primaryColor": "#f59e0b",
+            "secondaryColor": "#f43f5e"
+          },
+          "points": [
+            {
+              "quarter": "2016Q1",
+              "primary": 7,
+              "secondary": 14.4,
+              "result": -7.4
+            },
+            {
+              "quarter": "2016Q2",
+              "primary": 9.7,
+              "secondary": 13.9,
+              "result": -4.2
+            },
+            {
+              "quarter": "2016Q3",
+              "primary": 11,
+              "secondary": 12.1,
+              "result": -1.1
+            },
+            {
+              "quarter": "2016Q4",
+              "primary": 10.2,
+              "secondary": 9.7,
+              "result": 0.5
+            },
+            {
+              "quarter": "2017Q1",
+              "primary": 7.6,
+              "secondary": 7.5,
+              "result": 0.1
+            },
+            {
+              "quarter": "2017Q2",
+              "primary": 4.5,
+              "secondary": 6.2,
+              "result": -1.7
+            },
+            {
+              "quarter": "2017Q3",
+              "primary": 2.2,
+              "secondary": 6.3,
+              "result": -4.1
+            },
+            {
+              "quarter": "2017Q4",
+              "primary": 1.8,
+              "secondary": 7.8,
+              "result": -6
+            },
+            {
+              "quarter": "2018Q1",
+              "primary": 3.3,
+              "secondary": 10.3,
+              "result": -7
+            },
+            {
+              "quarter": "2018Q2",
+              "primary": 5.9,
+              "secondary": 12.9,
+              "result": -7.1
+            },
+            {
+              "quarter": "2018Q3",
+              "primary": 8,
+              "secondary": 14.9,
+              "result": -6.9
+            },
+            {
+              "quarter": "2018Q4",
+              "primary": 8.6,
+              "secondary": 15.7,
+              "result": -7
+            },
+            {
+              "quarter": "2019Q1",
+              "primary": 7.2,
+              "secondary": 14.9,
+              "result": -7.6
+            },
+            {
+              "quarter": "2019Q2",
+              "primary": 4.5,
+              "secondary": 12.8,
+              "result": -8.3
+            },
+            {
+              "quarter": "2019Q3",
+              "primary": 1.6,
+              "secondary": 10,
+              "result": -8.4
+            },
+            {
+              "quarter": "2019Q4",
+              "primary": 0.1,
+              "secondary": 7.4,
+              "result": -7.3
+            },
+            {
+              "quarter": "2020Q1",
+              "primary": 0.6,
+              "secondary": 5.8,
+              "result": -5.1
+            },
+            {
+              "quarter": "2020Q2",
+              "primary": 3,
+              "secondary": 5.5,
+              "result": -2.5
+            },
+            {
+              "quarter": "2020Q3",
+              "primary": 6,
+              "secondary": 6.7,
+              "result": -0.6
+            },
+            {
+              "quarter": "2020Q4",
+              "primary": 8.4,
+              "secondary": 8.9,
+              "result": -0.5
+            },
+            {
+              "quarter": "2021Q1",
+              "primary": 9,
+              "secondary": 11.3,
+              "result": -2.3
+            },
+            {
+              "quarter": "2021Q2",
+              "primary": 7.6,
+              "secondary": 13.2,
+              "result": -5.5
+            },
+            {
+              "quarter": "2021Q3",
+              "primary": 5.2,
+              "secondary": 13.8,
+              "result": -8.7
+            },
+            {
+              "quarter": "2021Q4",
+              "primary": 3,
+              "secondary": 13,
+              "result": -10.1
+            },
+            {
+              "quarter": "2022Q1",
+              "primary": 2.3,
+              "secondary": 11,
+              "result": -8.7
+            },
+            {
+              "quarter": "2022Q2",
+              "primary": 3.6,
+              "secondary": 8.3,
+              "result": -4.7
+            },
+            {
+              "quarter": "2022Q3",
+              "primary": 6.5,
+              "secondary": 5.9,
+              "result": 0.6
+            },
+            {
+              "quarter": "2022Q4",
+              "primary": 9.5,
+              "secondary": 4.4,
+              "result": 5.1
+            },
+            {
+              "quarter": "2023Q1",
+              "primary": 11.4,
+              "secondary": 4.4,
+              "result": 7
+            },
+            {
+              "quarter": "2023Q2",
+              "primary": 11.2,
+              "secondary": 5.9,
+              "result": 5.4
+            },
+            {
+              "quarter": "2023Q3",
+              "primary": 9.2,
+              "secondary": 8.4,
+              "result": 0.8
+            },
+            {
+              "quarter": "2023Q4",
+              "primary": 6.3,
+              "secondary": 11.2,
+              "result": -4.9
+            },
+            {
+              "quarter": "2024Q1",
+              "primary": 3.9,
+              "secondary": 13.4,
+              "result": -9.5
+            },
+            {
+              "quarter": "2024Q2",
+              "primary": 3.3,
+              "secondary": 14.5,
+              "result": -11.1
+            },
+            {
+              "quarter": "2024Q3",
+              "primary": 4.6,
+              "secondary": 14,
+              "result": -9.4
+            },
+            {
+              "quarter": "2024Q4",
+              "primary": 7.1,
+              "secondary": 12.3,
+              "result": -5.2
+            },
+            {
+              "quarter": "2025Q1",
+              "primary": 9.5,
+              "secondary": 10,
+              "result": -0.5
+            },
+            {
+              "quarter": "2025Q2",
+              "primary": 10.4,
+              "secondary": 7.7,
+              "result": 2.6
+            },
+            {
+              "quarter": "2025Q3",
+              "primary": 9.2,
+              "secondary": 6.4,
+              "result": 2.8
+            },
+            {
+              "quarter": "2025Q4",
+              "primary": 6.4,
+              "secondary": 6.5,
+              "result": 0
+            }
+          ],
+          "summaries": [
+            {
+              "label": "分红/偿息-资本开支差",
+              "value": "-4.7pct"
+            },
+            {
+              "label": "分红/偿息现金同比",
+              "value": "-6.0%"
+            }
+          ]
+        },
+        {
+          "id": "inventory",
+          "title": "宏观库存钟",
+          "defaultPeriod": 16,
+          "description": "营收与存货的四象限轨迹，观察库存周期位置。",
+          "meta": {
+            "primaryLabel": "营收同比",
+            "secondaryLabel": "存货同比",
+            "resultLabel": "库存差",
+            "primaryColor": "#0ea5e9",
+            "secondaryColor": "#f59e0b"
+          },
+          "points": [
+            {
+              "quarter": "2016Q1",
+              "primary": 6.3,
+              "secondary": 17.7,
+              "result": -11.4
+            },
+            {
+              "quarter": "2016Q2",
+              "primary": 11.9,
+              "secondary": 16.8,
+              "result": -4.9
+            },
+            {
+              "quarter": "2016Q3",
+              "primary": 14.7,
+              "secondary": 14.1,
+              "result": 0.6
+            },
+            {
+              "quarter": "2016Q4",
+              "primary": 13.3,
+              "secondary": 10.4,
+              "result": 2.9
+            },
+            {
+              "quarter": "2017Q1",
+              "primary": 8.3,
+              "secondary": 7,
+              "result": 1.3
+            },
+            {
+              "quarter": "2017Q2",
+              "primary": 2.1,
+              "secondary": 5,
+              "result": -2.9
+            },
+            {
+              "quarter": "2017Q3",
+              "primary": -2.2,
+              "secondary": 5.2,
+              "result": -7.4
+            },
+            {
+              "quarter": "2017Q4",
+              "primary": -2.6,
+              "secondary": 7.4,
+              "result": -10.1
+            },
+            {
+              "quarter": "2018Q1",
+              "primary": 0.9,
+              "secondary": 11.2,
+              "result": -10.2
+            },
+            {
+              "quarter": "2018Q2",
+              "primary": 6.6,
+              "secondary": 15.2,
+              "result": -8.6
+            },
+            {
+              "quarter": "2018Q3",
+              "primary": 11.4,
+              "secondary": 18.3,
+              "result": -6.8
+            },
+            {
+              "quarter": "2018Q4",
+              "primary": 13,
+              "secondary": 19.4,
+              "result": -6.4
+            },
+            {
+              "quarter": "2019Q1",
+              "primary": 10.4,
+              "secondary": 18.3,
+              "result": -7.9
+            },
+            {
+              "quarter": "2019Q2",
+              "primary": 4.8,
+              "secondary": 15.2,
+              "result": -10.4
+            },
+            {
+              "quarter": "2019Q3",
+              "primary": -0.9,
+              "secondary": 11.2,
+              "result": -12.1
+            },
+            {
+              "quarter": "2019Q4",
+              "primary": -4,
+              "secondary": 7.4,
+              "result": -11.4
+            },
+            {
+              "quarter": "2020Q1",
+              "primary": -2.9,
+              "secondary": 5,
+              "result": -8
+            },
+            {
+              "quarter": "2020Q2",
+              "primary": 1.9,
+              "secondary": 4.8,
+              "result": -2.9
+            },
+            {
+              "quarter": "2020Q3",
+              "primary": 8.1,
+              "secondary": 6.7,
+              "result": 1.4
+            },
+            {
+              "quarter": "2020Q4",
+              "primary": 12.8,
+              "secondary": 10.2,
+              "result": 2.6
+            },
+            {
+              "quarter": "2021Q1",
+              "primary": 13.7,
+              "secondary": 14,
+              "result": -0.3
+            },
+            {
+              "quarter": "2021Q2",
+              "primary": 10.6,
+              "secondary": 16.9,
+              "result": -6.3
+            },
+            {
+              "quarter": "2021Q3",
+              "primary": 5.2,
+              "secondary": 18.1,
+              "result": -12.9
+            },
+            {
+              "quarter": "2021Q4",
+              "primary": 0.3,
+              "secondary": 17,
+              "result": -16.6
+            },
+            {
+              "quarter": "2022Q1",
+              "primary": -1.4,
+              "secondary": 14,
+              "result": -15.3
+            },
+            {
+              "quarter": "2022Q2",
+              "primary": 1.1,
+              "secondary": 10,
+              "result": -8.9
+            },
+            {
+              "quarter": "2022Q3",
+              "primary": 6.8,
+              "secondary": 6.4,
+              "result": 0.4
+            },
+            {
+              "quarter": "2022Q4",
+              "primary": 12.9,
+              "secondary": 4.2,
+              "result": 8.7
+            },
+            {
+              "quarter": "2023Q1",
+              "primary": 16.6,
+              "secondary": 4.2,
+              "result": 12.5
+            },
+            {
+              "quarter": "2023Q2",
+              "primary": 16.2,
+              "secondary": 6.3,
+              "result": 9.9
+            },
+            {
+              "quarter": "2023Q3",
+              "primary": 11.9,
+              "secondary": 10.1,
+              "result": 1.9
+            },
+            {
+              "quarter": "2023Q4",
+              "primary": 6,
+              "secondary": 14.3,
+              "result": -8.3
+            },
+            {
+              "quarter": "2024Q1",
+              "primary": 1.3,
+              "secondary": 17.6,
+              "result": -16.3
+            },
+            {
+              "quarter": "2024Q2",
+              "primary": 0.3,
+              "secondary": 19.1,
+              "result": -18.9
+            },
+            {
+              "quarter": "2024Q3",
+              "primary": 3.3,
+              "secondary": 18.4,
+              "result": -15.1
+            },
+            {
+              "quarter": "2024Q4",
+              "primary": 8.8,
+              "secondary": 15.8,
+              "result": -7
+            },
+            {
+              "quarter": "2025Q1",
+              "primary": 14.1,
+              "secondary": 12.1,
+              "result": 1.9
+            },
+            {
+              "quarter": "2025Q2",
+              "primary": 16.3,
+              "secondary": 8.7,
+              "result": 7.6
+            },
+            {
+              "quarter": "2025Q3",
+              "primary": 4.7,
+              "secondary": 10.6,
+              "result": -5.9
+            },
+            {
+              "quarter": "2026Q1",
+              "primary": 5.5,
+              "secondary": 15,
+              "result": -9.5
+            }
+          ]
+        },
+        {
+          "id": "loss",
+          "title": "亏损扩散度",
+          "defaultPeriod": 16,
+          "description": "亏损与利润下滑市值覆盖，观察盈利压力的扩散范围。",
+          "meta": {
+            "primaryLabel": "亏损市值",
+            "secondaryLabel": "利润下滑市值",
+            "resultLabel": "扩散差",
+            "primaryColor": "#f43f5e",
+            "secondaryColor": "#f59e0b"
+          },
+          "points": [
+            {
+              "quarter": "2016Q1",
+              "primary": 5.2,
+              "secondary": 36.9,
+              "result": -31.7
+            },
+            {
+              "quarter": "2016Q2",
+              "primary": 6.7,
+              "secondary": 35.8,
+              "result": -29.1
+            },
+            {
+              "quarter": "2016Q3",
+              "primary": 7.4,
+              "secondary": 32.5,
+              "result": -25.1
+            },
+            {
+              "quarter": "2016Q4",
+              "primary": 6.8,
+              "secondary": 28.1,
+              "result": -21.3
+            },
+            {
+              "quarter": "2017Q1",
+              "primary": 5.2,
+              "secondary": 24.1,
+              "result": -18.9
+            },
+            {
+              "quarter": "2017Q2",
+              "primary": 3.2,
+              "secondary": 21.7,
+              "result": -18.5
+            },
+            {
+              "quarter": "2017Q3",
+              "primary": 1.8,
+              "secondary": 21.8,
+              "result": -20
+            },
+            {
+              "quarter": "2017Q4",
+              "primary": 1.3,
+              "secondary": 24.3,
+              "result": -23
+            },
+            {
+              "quarter": "2018Q1",
+              "primary": 2.1,
+              "secondary": 28.5,
+              "result": -26.5
+            },
+            {
+              "quarter": "2018Q2",
+              "primary": 3.4,
+              "secondary": 33.1,
+              "result": -29.7
+            },
+            {
+              "quarter": "2018Q3",
+              "primary": 4.5,
+              "secondary": 36.6,
+              "result": -32.1
+            },
+            {
+              "quarter": "2018Q4",
+              "primary": 4.7,
+              "secondary": 37.8,
+              "result": -33.1
+            },
+            {
+              "quarter": "2019Q1",
+              "primary": 3.8,
+              "secondary": 36.5,
+              "result": -32.7
+            },
+            {
+              "quarter": "2019Q2",
+              "primary": 2,
+              "secondary": 32.9,
+              "result": -30.9
+            },
+            {
+              "quarter": "2019Q3",
+              "primary": 0.3,
+              "secondary": 28.2,
+              "result": -27.9
+            },
+            {
+              "quarter": "2019Q4",
+              "primary": -0.7,
+              "secondary": 23.7,
+              "result": -24.4
+            },
+            {
+              "quarter": "2020Q1",
+              "primary": -0.4,
+              "secondary": 21,
+              "result": -21.3
+            },
+            {
+              "quarter": "2020Q2",
+              "primary": 1,
+              "secondary": 20.6,
+              "result": -19.6
+            },
+            {
+              "quarter": "2020Q3",
+              "primary": 2.9,
+              "secondary": 22.8,
+              "result": -20
+            },
+            {
+              "quarter": "2020Q4",
+              "primary": 4.3,
+              "secondary": 26.8,
+              "result": -22.4
+            },
+            {
+              "quarter": "2021Q1",
+              "primary": 4.7,
+              "secondary": 31.1,
+              "result": -26.4
+            },
+            {
+              "quarter": "2021Q2",
+              "primary": 4,
+              "secondary": 34.5,
+              "result": -30.4
+            },
+            {
+              "quarter": "2021Q3",
+              "primary": 2.7,
+              "secondary": 35.7,
+              "result": -33
+            },
+            {
+              "quarter": "2021Q4",
+              "primary": 1.5,
+              "secondary": 34.4,
+              "result": -32.9
+            },
+            {
+              "quarter": "2022Q1",
+              "primary": 1.2,
+              "secondary": 30.9,
+              "result": -29.6
+            },
+            {
+              "quarter": "2022Q2",
+              "primary": 2.1,
+              "secondary": 26.3,
+              "result": -24.1
+            },
+            {
+              "quarter": "2022Q3",
+              "primary": 3.9,
+              "secondary": 22,
+              "result": -18.1
+            },
+            {
+              "quarter": "2022Q4",
+              "primary": 5.7,
+              "secondary": 19.3,
+              "result": -13.6
+            },
+            {
+              "quarter": "2023Q1",
+              "primary": 6.8,
+              "secondary": 19.2,
+              "result": -12.4
+            },
+            {
+              "quarter": "2023Q2",
+              "primary": 6.7,
+              "secondary": 21.7,
+              "result": -14.9
+            },
+            {
+              "quarter": "2023Q3",
+              "primary": 5.5,
+              "secondary": 25.9,
+              "result": -20.4
+            },
+            {
+              "quarter": "2023Q4",
+              "primary": 3.8,
+              "secondary": 30.6,
+              "result": -26.9
+            },
+            {
+              "quarter": "2024Q1",
+              "primary": 2.3,
+              "secondary": 34.4,
+              "result": -32
+            },
+            {
+              "quarter": "2024Q2",
+              "primary": 1.9,
+              "secondary": 36,
+              "result": -34.2
+            },
+            {
+              "quarter": "2024Q3",
+              "primary": 2.5,
+              "secondary": 35.1,
+              "result": -32.6
+            },
+            {
+              "quarter": "2024Q4",
+              "primary": 3.8,
+              "secondary": 31.9,
+              "result": -28.1
+            },
+            {
+              "quarter": "2025Q1",
+              "primary": 5,
+              "secondary": 27.6,
+              "result": -22.6
+            },
+            {
+              "quarter": "2025Q2",
+              "primary": 5.4,
+              "secondary": 23.5,
+              "result": -18.1
+            },
+            {
+              "quarter": "2025Q3",
+              "primary": 4.5,
+              "secondary": 21,
+              "result": -16.5
+            },
+            {
+              "quarter": "2025Q4",
+              "primary": 2.8,
+              "secondary": 21,
+              "result": -18.2
+            }
+          ],
+          "summaries": [
+            {
+              "label": "亏损市值占比",
+              "value": "3.6%"
+            },
+            {
+              "label": "利润下滑市值占比",
+              "value": "28.7%"
+            }
+          ]
+        }
+      ]
+    },
+    "seriesStatus": []
+  },
+  "meta": {
+    "source": "fixture",
+    "asOf": "2026-08-03T00:00:00.000+08:00",
+    "version": "macro-fixture-v1+macro-fixture-v1",
+    "stale": false
+  }
+}

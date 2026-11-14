@@ -1,0 +1,2055 @@
+{
+  "data": {
+    "bootstrap": {
+      "presets": [
+        {
+          "id": "high-dividend-stable",
+          "label": "高股息稳健",
+          "tone": "amber",
+          "patch": {
+            "thresholds": {
+              "dividendYield": 4,
+              "dividendYears": 5,
+              "pe": 15
+            }
+          }
+        },
+        {
+          "id": "cash-cow",
+          "label": "现金奶牛",
+          "tone": "emerald",
+          "patch": {
+            "thresholds": {
+              "realMoneyIndex": 1.2,
+              "roe": 10,
+              "dividendYield": 3
+            }
+          }
+        },
+        {
+          "id": "low-valuation-bluechip",
+          "label": "低估蓝筹",
+          "tone": "indigo",
+          "patch": {
+            "thresholds": {
+              "pePercentile": 30,
+              "pbPercentile": 30,
+              "marketCap": 500
+            }
+          }
+        },
+        {
+          "id": "quality-growth",
+          "label": "优质成长",
+          "tone": "violet",
+          "patch": {
+            "thresholds": {
+              "roe": 15,
+              "roic": 12,
+              "realMoneyIndex": 1
+            }
+          }
+        },
+        {
+          "id": "deep-value",
+          "label": "深度价值",
+          "tone": "indigo",
+          "patch": {
+            "thresholds": {
+              "pe": 10,
+              "pb": 1.5,
+              "dividendYield": 3
+            }
+          }
+        },
+        {
+          "id": "dividend-aristocrat",
+          "label": "分红贵族",
+          "tone": "amber",
+          "patch": {
+            "thresholds": {
+              "dividendYears": 10,
+              "dividendYield": 3,
+              "roe": 8
+            }
+          }
+        },
+        {
+          "id": "small-cap-value",
+          "label": "小盘价值",
+          "tone": "cyan",
+          "patch": {
+            "thresholds": {
+              "marketCap": 200,
+              "pe": 15,
+              "pb": 2,
+              "dividendYield": 2
+            },
+            "thresholdDirections": {
+              "marketCap": "lt"
+            }
+          }
+        },
+        {
+          "id": "high-roe-low-pe",
+          "label": "高ROE低PE",
+          "tone": "violet",
+          "patch": {
+            "thresholds": {
+              "roe": 20,
+              "pe": 20,
+              "realMoneyIndex": 0.8
+            }
+          }
+        },
+        {
+          "id": "ntm-dividend-hunter",
+          "label": "NTM股息猎手",
+          "tone": "amber",
+          "patch": {
+            "thresholds": {
+              "expectedDividendYieldNTM": 5,
+              "pe": 20,
+              "marketCap": 100
+            }
+          }
+        },
+        {
+          "id": "historical-low",
+          "label": "历史低位",
+          "tone": "cyan",
+          "patch": {
+            "thresholds": {
+              "pePercentile": 20,
+              "pbPercentile": 20
+            }
+          }
+        }
+      ],
+      "exclusions": [
+        {
+          "id": "loss",
+          "label": "亏损股"
+        },
+        {
+          "id": "st",
+          "label": "ST/*ST"
+        },
+        {
+          "id": "inventoryRisk",
+          "label": "存贷双高"
+        },
+        {
+          "id": "lowRealMoney",
+          "label": "真钱不足"
+        },
+        {
+          "id": "netDebt",
+          "label": "净负债"
+        },
+        {
+          "id": "performanceDecline",
+          "label": "业绩下滑"
+        },
+        {
+          "id": "noDividend",
+          "label": "不分红"
+        },
+        {
+          "id": "revenueDecline",
+          "label": "主营下滑"
+        },
+        {
+          "id": "cashflowDecline",
+          "label": "现金下滑"
+        }
+      ],
+      "boards": [
+        {
+          "id": "sh-main",
+          "label": "沪市主板"
+        },
+        {
+          "id": "sz-main",
+          "label": "深市主板"
+        },
+        {
+          "id": "star",
+          "label": "科创板"
+        },
+        {
+          "id": "chinext",
+          "label": "创业板"
+        },
+        {
+          "id": "bse",
+          "label": "北交所"
+        },
+        {
+          "id": "hk",
+          "label": "港股（通资格待核验）"
+        }
+      ],
+      "categories": [
+        {
+          "id": "majorIndustry",
+          "label": "大类行业"
+        },
+        {
+          "id": "subIndustry",
+          "label": "细分行业"
+        },
+        {
+          "id": "concept",
+          "label": "概念"
+        },
+        {
+          "id": "region",
+          "label": "地域"
+        }
+      ],
+      "categoryValues": {
+        "majorIndustry": [
+          "半导体",
+          "电气设备",
+          "电子",
+          "公用事业",
+          "机械设备",
+          "家用电器",
+          "煤炭",
+          "汽车",
+          "食品饮料",
+          "医药生物",
+          "银行",
+          "有色金属"
+        ],
+        "subIndustry": [
+          "安防设备",
+          "白酒",
+          "白色家电",
+          "电气零部件",
+          "调味品",
+          "动力电池",
+          "工程机械",
+          "股份制银行",
+          "光伏设备",
+          "黄金",
+          "晶圆代工",
+          "煤炭开采",
+          "水电",
+          "消费电子",
+          "新能源汽车",
+          "医疗器械",
+          "医疗研发",
+          "中药",
+          "AI芯片",
+          "CRO"
+        ],
+        "concept": [
+          "创新药",
+          "大消费",
+          "高端制造",
+          "高股息",
+          "国产替代",
+          "苹果产业链",
+          "人工智能",
+          "新能源",
+          "央企",
+          "医疗器械",
+          "智能家居",
+          "专精特新",
+          "资源股",
+          "ST板块"
+        ],
+        "region": [
+          "北京",
+          "福建",
+          "广东",
+          "贵州",
+          "江苏",
+          "陕西",
+          "上海",
+          "浙江"
+        ]
+      },
+      "groups": [
+        {
+          "id": "valuation",
+          "label": "估值",
+          "thresholds": [
+            "pe",
+            "pb",
+            "pePercentile",
+            "pbPercentile"
+          ]
+        },
+        {
+          "id": "dividend",
+          "label": "分红",
+          "thresholds": [
+            "dividendYield",
+            "expectedDividendYield",
+            "expectedDividendYieldNTM",
+            "dividendYears",
+            "payoutRatio",
+            "capitalReturnRatio",
+            "capitalReturnRatioCum3y",
+            "capitalReturnRatioCum5y",
+            "capitalReturnRatioCum10y"
+          ]
+        },
+        {
+          "id": "quality",
+          "label": "质量",
+          "thresholds": [
+            "roe",
+            "roic",
+            "realMoneyIndex",
+            "realMoneyIndexCum3y",
+            "realMoneyIndexCum5y",
+            "realMoneyIndexCum10y",
+            "ocfToRevenue",
+            "ocfToRevenueCum3y",
+            "ocfToRevenueCum5y",
+            "ocfToRevenueCum10y",
+            "ocfToTotalLiab",
+            "ocfToTotalLiabCum3y",
+            "ocfToTotalLiabCum5y",
+            "ocfToTotalLiabCum10y",
+            "capexCoverageRatio",
+            "capexCoverageRatioCum3y",
+            "capexCoverageRatioCum5y",
+            "capexCoverageRatioCum10y",
+            "freeCashFlowFy",
+            "freeCashFlowFyCum3y",
+            "freeCashFlowFyCum5y",
+            "freeCashFlowFyCum10y",
+            "freeCashFlowMarginFy",
+            "freeCashFlowMarginFyCum3y",
+            "freeCashFlowMarginFyCum5y",
+            "freeCashFlowMarginFyCum10y",
+            "cashCollectionRatio",
+            "cashCollectionRatioCum3y",
+            "cashCollectionRatioCum5y",
+            "cashCollectionRatioCum10y",
+            "cashPaymentRatio",
+            "cashPaymentRatioCum3y",
+            "cashPaymentRatioCum5y",
+            "cashPaymentRatioCum10y"
+          ]
+        },
+        {
+          "id": "institution",
+          "label": "机构",
+          "thresholds": [
+            "institutionHolding",
+            "institutionHoldingChange",
+            "longMoneyHoldingRatio",
+            "fundHeavyCount",
+            "chipConcentrationChange"
+          ]
+        },
+        {
+          "id": "size",
+          "label": "规模",
+          "thresholds": [
+            "marketCap"
+          ]
+        }
+      ],
+      "thresholds": [
+        {
+          "key": "pe",
+          "label": "PE · 市盈率",
+          "direction": "lt",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "defaultValue": 15,
+          "unit": "",
+          "group": "valuation",
+          "logarithmic": false
+        },
+        {
+          "key": "pb",
+          "label": "PB · 市净率",
+          "direction": "lt",
+          "min": 0,
+          "max": 20,
+          "step": 0.1,
+          "defaultValue": 2,
+          "unit": "",
+          "group": "valuation",
+          "logarithmic": false
+        },
+        {
+          "key": "pePercentile",
+          "label": "PE分位 · 5年",
+          "direction": "lt",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "defaultValue": 30,
+          "unit": "%",
+          "group": "valuation",
+          "logarithmic": false
+        },
+        {
+          "key": "pbPercentile",
+          "label": "PB分位 · 5年",
+          "direction": "lt",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "defaultValue": 30,
+          "unit": "%",
+          "group": "valuation",
+          "logarithmic": false
+        },
+        {
+          "key": "dividendYield",
+          "label": "股息率(FY·财年归属) · 按 fiscal_year 归属",
+          "direction": "gt",
+          "min": 0,
+          "max": 10,
+          "step": 0.1,
+          "defaultValue": 4,
+          "unit": "%",
+          "group": "dividend",
+          "logarithmic": false
+        },
+        {
+          "key": "expectedDividendYield",
+          "label": "预期股息率(本年度·季节性权重)",
+          "direction": "gt",
+          "min": 0,
+          "max": 10,
+          "step": 0.1,
+          "defaultValue": 4,
+          "unit": "%",
+          "group": "dividend",
+          "logarithmic": false
+        },
+        {
+          "key": "expectedDividendYieldNTM",
+          "label": "预期股息率(未来12月·NTM)",
+          "direction": "gt",
+          "min": 0,
+          "max": 10,
+          "step": 0.1,
+          "defaultValue": 4,
+          "unit": "%",
+          "group": "dividend",
+          "logarithmic": false
+        },
+        {
+          "key": "dividendYears",
+          "label": "连续分红 · 年数",
+          "direction": "gte",
+          "min": 0,
+          "max": 30,
+          "step": 1,
+          "defaultValue": 5,
+          "unit": "年",
+          "group": "dividend",
+          "logarithmic": false
+        },
+        {
+          "key": "payoutRatio",
+          "label": "股利支付率 · 3年均值",
+          "direction": "gt",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "defaultValue": 30,
+          "unit": "%",
+          "group": "dividend",
+          "logarithmic": false
+        },
+        {
+          "key": "capitalReturnRatio",
+          "label": "资本回报/股权筹资(FY) · 分红+回购/股权筹资",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "dividend",
+          "logarithmic": false
+        },
+        {
+          "key": "capitalReturnRatioCum3y",
+          "label": "资本回报/股权筹资(3年) · 累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "dividend",
+          "logarithmic": false
+        },
+        {
+          "key": "capitalReturnRatioCum5y",
+          "label": "资本回报/股权筹资(5年) · 累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "dividend",
+          "logarithmic": false
+        },
+        {
+          "key": "capitalReturnRatioCum10y",
+          "label": "资本回报/股权筹资(10年) · 累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "dividend",
+          "logarithmic": false
+        },
+        {
+          "key": "roe",
+          "label": "ROE · 净资产收益率",
+          "direction": "gt",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "defaultValue": 10,
+          "unit": "%",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "roic",
+          "label": "ROIC · 投入资本回报率",
+          "direction": "gt",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "defaultValue": 10,
+          "unit": "%",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "realMoneyIndex",
+          "label": "真钱指数 · 现金流/归母净利润",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "realMoneyIndexCum3y",
+          "label": "真钱指数(3年) · 年报累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "realMoneyIndexCum5y",
+          "label": "真钱指数(5年) · 年报累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "realMoneyIndexCum10y",
+          "label": "真钱指数(10年) · 年报累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "ocfToRevenue",
+          "label": "经现/营收 · FY年报",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 0.1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "ocfToRevenueCum3y",
+          "label": "经现/营收(3年) · 累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 0.1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "ocfToRevenueCum5y",
+          "label": "经现/营收(5年) · 累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 0.1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "ocfToRevenueCum10y",
+          "label": "经现/营收(10年) · 累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 0.1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "ocfToTotalLiab",
+          "label": "经现/负债 · FY年报",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 0.05,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "ocfToTotalLiabCum3y",
+          "label": "经现/负债(3年) · 累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 0.05,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "ocfToTotalLiabCum5y",
+          "label": "经现/负债(5年) · 累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 0.05,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "ocfToTotalLiabCum10y",
+          "label": "经现/负债(10年) · 累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 0.05,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "capexCoverageRatio",
+          "label": "资本开支保障 · A股 OCF/capex",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "capexCoverageRatioCum3y",
+          "label": "资本开支保障(3年) · 累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "capexCoverageRatioCum5y",
+          "label": "资本开支保障(5年) · 累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "capexCoverageRatioCum10y",
+          "label": "资本开支保障(10年) · 累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "freeCashFlowFy",
+          "label": "自由现金流 · A股 OCF-capex",
+          "direction": "gt",
+          "min": 10,
+          "max": 10000,
+          "step": 1,
+          "defaultValue": 0,
+          "unit": "亿",
+          "group": "quality",
+          "logarithmic": true
+        },
+        {
+          "key": "freeCashFlowFyCum3y",
+          "label": "自由现金流(3年) · 累计口径",
+          "direction": "gt",
+          "min": 10,
+          "max": 10000,
+          "step": 1,
+          "defaultValue": 0,
+          "unit": "亿",
+          "group": "quality",
+          "logarithmic": true
+        },
+        {
+          "key": "freeCashFlowFyCum5y",
+          "label": "自由现金流(5年) · 累计口径",
+          "direction": "gt",
+          "min": 10,
+          "max": 10000,
+          "step": 1,
+          "defaultValue": 0,
+          "unit": "亿",
+          "group": "quality",
+          "logarithmic": true
+        },
+        {
+          "key": "freeCashFlowFyCum10y",
+          "label": "自由现金流(10年) · 累计口径",
+          "direction": "gt",
+          "min": 10,
+          "max": 10000,
+          "step": 1,
+          "defaultValue": 0,
+          "unit": "亿",
+          "group": "quality",
+          "logarithmic": true
+        },
+        {
+          "key": "freeCashFlowMarginFy",
+          "label": "自由现金流率 · A股 OCF-capex/营收",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 0.05,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "freeCashFlowMarginFyCum3y",
+          "label": "自由现金流率(3年) · 累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 0.05,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "freeCashFlowMarginFyCum5y",
+          "label": "自由现金流率(5年) · 累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 0.05,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "freeCashFlowMarginFyCum10y",
+          "label": "自由现金流率(10年) · 累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 0.05,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "cashCollectionRatio",
+          "label": "收现比 · A股现金流明细",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "cashCollectionRatioCum3y",
+          "label": "收现比(3年) · 累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "cashCollectionRatioCum5y",
+          "label": "收现比(5年) · 累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "cashCollectionRatioCum10y",
+          "label": "收现比(10年) · 累计口径",
+          "direction": "gt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "cashPaymentRatio",
+          "label": "付现比 · A股现金流明细",
+          "direction": "lt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "cashPaymentRatioCum3y",
+          "label": "付现比(3年) · 累计口径",
+          "direction": "lt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "cashPaymentRatioCum5y",
+          "label": "付现比(5年) · 累计口径",
+          "direction": "lt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "cashPaymentRatioCum10y",
+          "label": "付现比(10年) · 累计口径",
+          "direction": "lt",
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "defaultValue": 1,
+          "unit": "",
+          "group": "quality",
+          "logarithmic": false
+        },
+        {
+          "key": "institutionHolding",
+          "label": "机构持仓 · 前十大流通股东合计",
+          "direction": "gt",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "defaultValue": 5,
+          "unit": "%",
+          "group": "institution",
+          "logarithmic": false
+        },
+        {
+          "key": "institutionHoldingChange",
+          "label": "机构增减 · 较上期变化",
+          "direction": "gt",
+          "min": 0,
+          "max": 10,
+          "step": 0.1,
+          "defaultValue": 0,
+          "unit": "%",
+          "group": "institution",
+          "logarithmic": false
+        },
+        {
+          "key": "longMoneyHoldingRatio",
+          "label": "长钱持仓 · 国家队/社保/险资/QFII",
+          "direction": "gt",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "defaultValue": 1,
+          "unit": "%",
+          "group": "institution",
+          "logarithmic": false
+        },
+        {
+          "key": "fundHeavyCount",
+          "label": "基金重仓数 · 公募重仓",
+          "direction": "gt",
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "defaultValue": 5,
+          "unit": "次",
+          "group": "institution",
+          "logarithmic": false
+        },
+        {
+          "key": "chipConcentrationChange",
+          "label": "筹码集中 · 股东户数下降",
+          "direction": "gt",
+          "min": 0,
+          "max": 10,
+          "step": 0.1,
+          "defaultValue": 0,
+          "unit": "%",
+          "group": "institution",
+          "logarithmic": false
+        },
+        {
+          "key": "marketCap",
+          "label": "市值 · 亿元",
+          "direction": "gt",
+          "min": 10,
+          "max": 10000,
+          "step": 1,
+          "defaultValue": 100,
+          "unit": "亿",
+          "group": "size",
+          "logarithmic": true
+        }
+      ],
+      "sortFields": [
+        {
+          "value": "pe",
+          "label": "PE · 市盈率"
+        },
+        {
+          "value": "pb",
+          "label": "PB · 市净率"
+        },
+        {
+          "value": "pePercentile",
+          "label": "PE分位 · 5年"
+        },
+        {
+          "value": "pbPercentile",
+          "label": "PB分位 · 5年"
+        },
+        {
+          "value": "dividendYield",
+          "label": "股息率(FY·财年归属) · 按 fiscal_year 归属"
+        },
+        {
+          "value": "expectedDividendYield",
+          "label": "预期股息率(本年度·季节性权重)"
+        },
+        {
+          "value": "expectedDividendYieldNTM",
+          "label": "预期股息率(未来12月·NTM)"
+        },
+        {
+          "value": "dividendYears",
+          "label": "连续分红 · 年数"
+        },
+        {
+          "value": "payoutRatio",
+          "label": "股利支付率 · 3年均值"
+        },
+        {
+          "value": "capitalReturnRatio",
+          "label": "资本回报/股权筹资(FY) · 分红+回购/股权筹资"
+        },
+        {
+          "value": "capitalReturnRatioCum3y",
+          "label": "资本回报/股权筹资(3年) · 累计口径"
+        },
+        {
+          "value": "capitalReturnRatioCum5y",
+          "label": "资本回报/股权筹资(5年) · 累计口径"
+        },
+        {
+          "value": "capitalReturnRatioCum10y",
+          "label": "资本回报/股权筹资(10年) · 累计口径"
+        },
+        {
+          "value": "roe",
+          "label": "ROE · 净资产收益率"
+        },
+        {
+          "value": "roic",
+          "label": "ROIC · 投入资本回报率"
+        },
+        {
+          "value": "realMoneyIndex",
+          "label": "真钱指数 · 现金流/归母净利润"
+        },
+        {
+          "value": "realMoneyIndexCum3y",
+          "label": "真钱指数(3年) · 年报累计口径"
+        },
+        {
+          "value": "realMoneyIndexCum5y",
+          "label": "真钱指数(5年) · 年报累计口径"
+        },
+        {
+          "value": "realMoneyIndexCum10y",
+          "label": "真钱指数(10年) · 年报累计口径"
+        },
+        {
+          "value": "ocfToRevenue",
+          "label": "经现/营收 · FY年报"
+        },
+        {
+          "value": "ocfToRevenueCum3y",
+          "label": "经现/营收(3年) · 累计口径"
+        },
+        {
+          "value": "ocfToRevenueCum5y",
+          "label": "经现/营收(5年) · 累计口径"
+        },
+        {
+          "value": "ocfToRevenueCum10y",
+          "label": "经现/营收(10年) · 累计口径"
+        },
+        {
+          "value": "ocfToTotalLiab",
+          "label": "经现/负债 · FY年报"
+        },
+        {
+          "value": "ocfToTotalLiabCum3y",
+          "label": "经现/负债(3年) · 累计口径"
+        },
+        {
+          "value": "ocfToTotalLiabCum5y",
+          "label": "经现/负债(5年) · 累计口径"
+        },
+        {
+          "value": "ocfToTotalLiabCum10y",
+          "label": "经现/负债(10年) · 累计口径"
+        },
+        {
+          "value": "capexCoverageRatio",
+          "label": "资本开支保障 · A股 OCF/capex"
+        },
+        {
+          "value": "capexCoverageRatioCum3y",
+          "label": "资本开支保障(3年) · 累计口径"
+        },
+        {
+          "value": "capexCoverageRatioCum5y",
+          "label": "资本开支保障(5年) · 累计口径"
+        },
+        {
+          "value": "capexCoverageRatioCum10y",
+          "label": "资本开支保障(10年) · 累计口径"
+        },
+        {
+          "value": "freeCashFlowFy",
+          "label": "自由现金流 · A股 OCF-capex"
+        },
+        {
+          "value": "freeCashFlowFyCum3y",
+          "label": "自由现金流(3年) · 累计口径"
+        },
+        {
+          "value": "freeCashFlowFyCum5y",
+          "label": "自由现金流(5年) · 累计口径"
+        },
+        {
+          "value": "freeCashFlowFyCum10y",
+          "label": "自由现金流(10年) · 累计口径"
+        },
+        {
+          "value": "freeCashFlowMarginFy",
+          "label": "自由现金流率 · A股 OCF-capex/营收"
+        },
+        {
+          "value": "freeCashFlowMarginFyCum3y",
+          "label": "自由现金流率(3年) · 累计口径"
+        },
+        {
+          "value": "freeCashFlowMarginFyCum5y",
+          "label": "自由现金流率(5年) · 累计口径"
+        },
+        {
+          "value": "freeCashFlowMarginFyCum10y",
+          "label": "自由现金流率(10年) · 累计口径"
+        },
+        {
+          "value": "cashCollectionRatio",
+          "label": "收现比 · A股现金流明细"
+        },
+        {
+          "value": "cashCollectionRatioCum3y",
+          "label": "收现比(3年) · 累计口径"
+        },
+        {
+          "value": "cashCollectionRatioCum5y",
+          "label": "收现比(5年) · 累计口径"
+        },
+        {
+          "value": "cashCollectionRatioCum10y",
+          "label": "收现比(10年) · 累计口径"
+        },
+        {
+          "value": "cashPaymentRatio",
+          "label": "付现比 · A股现金流明细"
+        },
+        {
+          "value": "cashPaymentRatioCum3y",
+          "label": "付现比(3年) · 累计口径"
+        },
+        {
+          "value": "cashPaymentRatioCum5y",
+          "label": "付现比(5年) · 累计口径"
+        },
+        {
+          "value": "cashPaymentRatioCum10y",
+          "label": "付现比(10年) · 累计口径"
+        },
+        {
+          "value": "institutionHolding",
+          "label": "机构持仓 · 前十大流通股东合计"
+        },
+        {
+          "value": "institutionHoldingChange",
+          "label": "机构增减 · 较上期变化"
+        },
+        {
+          "value": "longMoneyHoldingRatio",
+          "label": "长钱持仓 · 国家队/社保/险资/QFII"
+        },
+        {
+          "value": "fundHeavyCount",
+          "label": "基金重仓数 · 公募重仓"
+        },
+        {
+          "value": "chipConcentrationChange",
+          "label": "筹码集中 · 股东户数下降"
+        },
+        {
+          "value": "marketCap",
+          "label": "市值 · 亿元"
+        },
+        {
+          "value": "profitGrowth",
+          "label": "净利润同比"
+        },
+        {
+          "value": "revenueGrowingFy",
+          "label": "FY营收增长（布尔）"
+        },
+        {
+          "value": "ocfGrowingFy",
+          "label": "FY经营现金流增长（布尔）"
+        }
+      ],
+      "totalCount": 21,
+      "evidenceBadge": "确定性演示数据"
+    },
+    "stocks": [
+      {
+        "symbol": "688796.SH",
+        "name": "百奥赛图",
+        "price": 68.42,
+        "change": 2.31,
+        "marketCap": 268.4,
+        "pe": 34.2,
+        "pb": 3.8,
+        "dividendYield": 1.12,
+        "roe": 12.4,
+        "grossMargin": 36.8,
+        "netMargin": 14.3,
+        "revenueGrowth": 18.7,
+        "profitGrowth": 24.1,
+        "realMoneyIndex": 1.08,
+        "cashflowGrowth": 16.2,
+        "dividendYears": 2,
+        "payoutRatio": 28.5,
+        "incomeSafety": -0.68,
+        "industry": "电气设备",
+        "board": "star",
+        "isST": false,
+        "isLoss": false,
+        "listingYears": 2.8,
+        "pePercentile": 43,
+        "pbPercentile": 38,
+        "expectedDividendYield": 1.37,
+        "capitalReturnRatio": 0.97,
+        "roic": 8.9,
+        "institutionHolding": 18,
+        "majorIndustry": "医药生物",
+        "subIndustry": "医疗研发",
+        "concepts": [
+          "创新药"
+        ],
+        "region": "北京",
+        "inventoryRisk": false,
+        "netDebt": false
+      },
+      {
+        "symbol": "600519.SH",
+        "name": "贵州茅台",
+        "price": 1488.2,
+        "change": 0.86,
+        "marketCap": 18698,
+        "pe": 22.6,
+        "pb": 7.4,
+        "dividendYield": 3.46,
+        "roe": 34.8,
+        "grossMargin": 91.4,
+        "netMargin": 52.1,
+        "revenueGrowth": 11.3,
+        "profitGrowth": 13.2,
+        "realMoneyIndex": 1.21,
+        "cashflowGrowth": 18.6,
+        "dividendYears": 24,
+        "payoutRatio": 78.2,
+        "incomeSafety": 1.66,
+        "industry": "食品饮料",
+        "board": "sh-main",
+        "isST": false,
+        "isLoss": false,
+        "listingYears": 24.1,
+        "pePercentile": 28,
+        "pbPercentile": 74,
+        "expectedDividendYield": 3.71,
+        "capitalReturnRatio": 1.09,
+        "roic": 25.1,
+        "institutionHolding": 25,
+        "majorIndustry": "食品饮料",
+        "subIndustry": "白酒",
+        "concepts": [
+          "大消费"
+        ],
+        "region": "贵州",
+        "inventoryRisk": false,
+        "netDebt": false
+      },
+      {
+        "symbol": "300750.SZ",
+        "name": "宁德时代",
+        "price": 272.65,
+        "change": 1.53,
+        "marketCap": 12035,
+        "pe": 24.8,
+        "pb": 5.1,
+        "dividendYield": 1.9,
+        "roe": 22.7,
+        "grossMargin": 26.4,
+        "netMargin": 12.8,
+        "revenueGrowth": 9.5,
+        "profitGrowth": 14.7,
+        "realMoneyIndex": 1.13,
+        "cashflowGrowth": 22.4,
+        "dividendYears": 7,
+        "payoutRatio": 42.3,
+        "incomeSafety": 0.1,
+        "industry": "电气设备",
+        "board": "chinext",
+        "isST": false,
+        "isLoss": false,
+        "listingYears": 8.2,
+        "pePercentile": 31,
+        "pbPercentile": 51,
+        "expectedDividendYield": 2.15,
+        "capitalReturnRatio": 1.02,
+        "roic": 16.3,
+        "institutionHolding": 32,
+        "majorIndustry": "电气设备",
+        "subIndustry": "动力电池",
+        "concepts": [
+          "新能源"
+        ],
+        "region": "福建",
+        "inventoryRisk": true,
+        "netDebt": false
+      },
+      {
+        "symbol": "600036.SH",
+        "name": "招商银行",
+        "price": 46.38,
+        "change": -0.22,
+        "marketCap": 11698,
+        "pe": 7.1,
+        "pb": 1.02,
+        "dividendYield": 4.21,
+        "roe": 15.8,
+        "grossMargin": null,
+        "netMargin": 41.5,
+        "revenueGrowth": 3.6,
+        "profitGrowth": 5.4,
+        "realMoneyIndex": null,
+        "cashflowGrowth": null,
+        "dividendYears": 23,
+        "payoutRatio": 31.2,
+        "incomeSafety": 2.41,
+        "industry": "银行",
+        "board": "sh-main",
+        "isST": false,
+        "isLoss": false,
+        "listingYears": 24.3,
+        "pePercentile": 9,
+        "pbPercentile": 10,
+        "expectedDividendYield": 4.46,
+        "capitalReturnRatio": null,
+        "roic": 11.4,
+        "institutionHolding": 39,
+        "majorIndustry": "银行",
+        "subIndustry": "股份制银行",
+        "concepts": [
+          "高股息"
+        ],
+        "region": "广东",
+        "inventoryRisk": false,
+        "netDebt": false
+      },
+      {
+        "symbol": "600900.SH",
+        "name": "长江电力",
+        "price": 29.67,
+        "change": 0.34,
+        "marketCap": 7259,
+        "pe": 18.4,
+        "pb": 3.1,
+        "dividendYield": 4.72,
+        "roe": 17.2,
+        "grossMargin": 58.3,
+        "netMargin": 45.6,
+        "revenueGrowth": 7.8,
+        "profitGrowth": 9.6,
+        "realMoneyIndex": 1.37,
+        "cashflowGrowth": 12.1,
+        "dividendYears": 22,
+        "payoutRatio": 72.4,
+        "incomeSafety": 2.92,
+        "industry": "电气设备",
+        "board": "sh-main",
+        "isST": false,
+        "isLoss": false,
+        "listingYears": 22.7,
+        "pePercentile": 23,
+        "pbPercentile": 31,
+        "expectedDividendYield": 4.97,
+        "capitalReturnRatio": 1.23,
+        "roic": 12.4,
+        "institutionHolding": 46,
+        "majorIndustry": "公用事业",
+        "subIndustry": "水电",
+        "concepts": [
+          "高股息"
+        ],
+        "region": "北京",
+        "inventoryRisk": false,
+        "netDebt": true
+      },
+      {
+        "symbol": "601088.SH",
+        "name": "中国神华",
+        "price": 42.16,
+        "change": -0.61,
+        "marketCap": 8376,
+        "pe": 11.2,
+        "pb": 2.05,
+        "dividendYield": 6.35,
+        "roe": 18.9,
+        "grossMargin": 33.7,
+        "netMargin": 20.8,
+        "revenueGrowth": -2.4,
+        "profitGrowth": -4.6,
+        "realMoneyIndex": 1.46,
+        "cashflowGrowth": 6.8,
+        "dividendYears": 18,
+        "payoutRatio": 69.1,
+        "incomeSafety": 4.55,
+        "industry": "有色金属",
+        "board": "sh-main",
+        "isST": false,
+        "isLoss": false,
+        "listingYears": 18.9,
+        "pePercentile": 14,
+        "pbPercentile": 21,
+        "expectedDividendYield": 6.6,
+        "capitalReturnRatio": 1.31,
+        "roic": 13.6,
+        "institutionHolding": 53,
+        "majorIndustry": "煤炭",
+        "subIndustry": "煤炭开采",
+        "concepts": [
+          "央企"
+        ],
+        "region": "北京",
+        "inventoryRisk": false,
+        "netDebt": false
+      },
+      {
+        "symbol": "601899.SH",
+        "name": "紫金矿业",
+        "price": 21.58,
+        "change": 1.24,
+        "marketCap": 5682,
+        "pe": 15.6,
+        "pb": 3.7,
+        "dividendYield": 2.47,
+        "roe": 25.4,
+        "grossMargin": 19.8,
+        "netMargin": 8.9,
+        "revenueGrowth": 12.6,
+        "profitGrowth": 34.5,
+        "realMoneyIndex": 1.09,
+        "cashflowGrowth": 28.4,
+        "dividendYears": 17,
+        "payoutRatio": 35.8,
+        "incomeSafety": 0.67,
+        "industry": "有色金属",
+        "board": "sh-main",
+        "isST": false,
+        "isLoss": false,
+        "listingYears": 17.3,
+        "pePercentile": 20,
+        "pbPercentile": 37,
+        "expectedDividendYield": 2.72,
+        "capitalReturnRatio": 0.98,
+        "roic": 18.3,
+        "institutionHolding": 60,
+        "majorIndustry": "有色金属",
+        "subIndustry": "黄金",
+        "concepts": [
+          "资源股"
+        ],
+        "region": "福建",
+        "inventoryRisk": false,
+        "netDebt": true
+      },
+      {
+        "symbol": "000333.SZ",
+        "name": "美的集团",
+        "price": 75.32,
+        "change": 0.48,
+        "marketCap": 5754,
+        "pe": 13.7,
+        "pb": 3.15,
+        "dividendYield": 4.05,
+        "roe": 24.1,
+        "grossMargin": 27.9,
+        "netMargin": 9.8,
+        "revenueGrowth": 8.2,
+        "profitGrowth": 11.5,
+        "realMoneyIndex": 1.28,
+        "cashflowGrowth": 15.7,
+        "dividendYears": 12,
+        "payoutRatio": 55.4,
+        "incomeSafety": 2.25,
+        "industry": "电气设备",
+        "board": "sz-main",
+        "isST": false,
+        "isLoss": false,
+        "listingYears": 12.9,
+        "pePercentile": 17,
+        "pbPercentile": 32,
+        "expectedDividendYield": 4.3,
+        "capitalReturnRatio": 1.15,
+        "roic": 17.4,
+        "institutionHolding": 67,
+        "majorIndustry": "家用电器",
+        "subIndustry": "白色家电",
+        "concepts": [
+          "智能家居"
+        ],
+        "region": "广东",
+        "inventoryRisk": true,
+        "netDebt": false
+      },
+      {
+        "symbol": "000651.SZ",
+        "name": "格力电器",
+        "price": 45.21,
+        "change": -0.35,
+        "marketCap": 2546,
+        "pe": 8.9,
+        "pb": 2.31,
+        "dividendYield": 5.88,
+        "roe": 27.6,
+        "grossMargin": 29.4,
+        "netMargin": 12.1,
+        "revenueGrowth": 4.3,
+        "profitGrowth": 7.8,
+        "realMoneyIndex": 1.34,
+        "cashflowGrowth": 10.4,
+        "dividendYears": 15,
+        "payoutRatio": 52.7,
+        "incomeSafety": 4.08,
+        "industry": "电气设备",
+        "board": "sz-main",
+        "isST": false,
+        "isLoss": false,
+        "listingYears": 29.7,
+        "pePercentile": 11,
+        "pbPercentile": 23,
+        "expectedDividendYield": 6.13,
+        "capitalReturnRatio": 1.21,
+        "roic": 19.9,
+        "institutionHolding": 74,
+        "majorIndustry": "家用电器",
+        "subIndustry": "白色家电",
+        "concepts": [
+          "高股息"
+        ],
+        "region": "广东",
+        "inventoryRisk": false,
+        "netDebt": false
+      },
+      {
+        "symbol": "603259.SH",
+        "name": "药明康德",
+        "price": 86.45,
+        "change": 2.18,
+        "marketCap": 2511,
+        "pe": 21.3,
+        "pb": 3.42,
+        "dividendYield": 1.05,
+        "roe": 16.1,
+        "grossMargin": 41.2,
+        "netMargin": 20.3,
+        "revenueGrowth": 14.8,
+        "profitGrowth": 17.9,
+        "realMoneyIndex": 0.86,
+        "cashflowGrowth": -6.2,
+        "dividendYears": 7,
+        "payoutRatio": 22.6,
+        "incomeSafety": -0.75,
+        "industry": "医药生物",
+        "board": "sh-main",
+        "isST": false,
+        "isLoss": false,
+        "listingYears": 8.2,
+        "pePercentile": 27,
+        "pbPercentile": 34,
+        "expectedDividendYield": 1.3,
+        "capitalReturnRatio": 0.77,
+        "roic": 11.6,
+        "institutionHolding": 23,
+        "majorIndustry": "医药生物",
+        "subIndustry": "CRO",
+        "concepts": [
+          "创新药"
+        ],
+        "region": "江苏",
+        "inventoryRisk": false,
+        "netDebt": false
+      },
+      {
+        "symbol": "688981.SH",
+        "name": "中芯国际",
+        "price": 101.8,
+        "change": -1.42,
+        "marketCap": 8112,
+        "pe": 79.5,
+        "pb": 4.6,
+        "dividendYield": 0.18,
+        "roe": 5.9,
+        "grossMargin": 19.4,
+        "netMargin": 9.1,
+        "revenueGrowth": 23.7,
+        "profitGrowth": 28.6,
+        "realMoneyIndex": 0.73,
+        "cashflowGrowth": 31.8,
+        "dividendYears": 3,
+        "payoutRatio": 12.5,
+        "incomeSafety": -1.62,
+        "industry": "半导体",
+        "board": "star",
+        "isST": false,
+        "isLoss": false,
+        "listingYears": 6,
+        "pePercentile": 99,
+        "pbPercentile": 46,
+        "expectedDividendYield": 0.43,
+        "capitalReturnRatio": 0.66,
+        "roic": 4.2,
+        "institutionHolding": 30,
+        "majorIndustry": "半导体",
+        "subIndustry": "晶圆代工",
+        "concepts": [
+          "国产替代"
+        ],
+        "region": "上海",
+        "inventoryRisk": true,
+        "netDebt": false
+      },
+      {
+        "symbol": "002415.SZ",
+        "name": "海康威视",
+        "price": 32.14,
+        "change": 0.12,
+        "marketCap": 2968,
+        "pe": 19.8,
+        "pb": 3.65,
+        "dividendYield": 3.11,
+        "roe": 19.6,
+        "grossMargin": 45.7,
+        "netMargin": 16.9,
+        "revenueGrowth": 6.4,
+        "profitGrowth": 8.1,
+        "realMoneyIndex": 1.04,
+        "cashflowGrowth": 9.3,
+        "dividendYears": 14,
+        "payoutRatio": 48.9,
+        "incomeSafety": 1.31,
+        "industry": "半导体",
+        "board": "sz-main",
+        "isST": false,
+        "isLoss": false,
+        "listingYears": 16.2,
+        "pePercentile": 25,
+        "pbPercentile": 37,
+        "expectedDividendYield": 3.36,
+        "capitalReturnRatio": 0.94,
+        "roic": 14.1,
+        "institutionHolding": 37,
+        "majorIndustry": "电子",
+        "subIndustry": "安防设备",
+        "concepts": [
+          "人工智能"
+        ],
+        "region": "浙江",
+        "inventoryRisk": true,
+        "netDebt": false
+      },
+      {
+        "symbol": "002594.SZ",
+        "name": "比亚迪",
+        "price": 112.36,
+        "change": 1.77,
+        "marketCap": 10284,
+        "pe": 26.9,
+        "pb": 5.22,
+        "dividendYield": 1.24,
+        "roe": 21.5,
+        "grossMargin": 21.8,
+        "netMargin": 5.7,
+        "revenueGrowth": 18.9,
+        "profitGrowth": 22.3,
+        "realMoneyIndex": 0.92,
+        "cashflowGrowth": 14.5,
+        "dividendYears": 8,
+        "payoutRatio": 26.4,
+        "incomeSafety": -0.56,
+        "industry": "电气设备",
+        "board": "sz-main",
+        "isST": false,
+        "isLoss": false,
+        "listingYears": 15.1,
+        "pePercentile": 34,
+        "pbPercentile": 52,
+        "expectedDividendYield": 1.49,
+        "capitalReturnRatio": 0.83,
+        "roic": 15.5,
+        "institutionHolding": 44,
+        "majorIndustry": "汽车",
+        "subIndustry": "新能源汽车",
+        "concepts": [
+          "新能源"
+        ],
+        "region": "广东",
+        "inventoryRisk": true,
+        "netDebt": true
+      },
+      {
+        "symbol": "300760.SZ",
+        "name": "迈瑞医疗",
+        "price": 238.9,
+        "change": -0.78,
+        "marketCap": 2896,
+        "pe": 25.1,
+        "pb": 7.3,
+        "dividendYield": 2.72,
+        "roe": 31.4,
+        "grossMargin": 64.9,
+        "netMargin": 31.7,
+        "revenueGrowth": 10.8,
+        "profitGrowth": 12.4,
+        "realMoneyIndex": 1.18,
+        "cashflowGrowth": 13.6,
+        "dividendYears": 7,
+        "payoutRatio": 58.7,
+        "incomeSafety": 0.92,
+        "industry": "医药生物",
+        "board": "chinext",
+        "isST": false,
+        "isLoss": false,
+        "listingYears": 7.8,
+        "pePercentile": 31,
+        "pbPercentile": 73,
+        "expectedDividendYield": 2.97,
+        "capitalReturnRatio": 1.06,
+        "roic": 22.6,
+        "institutionHolding": 51,
+        "majorIndustry": "医药生物",
+        "subIndustry": "医疗器械",
+        "concepts": [
+          "医疗器械"
+        ],
+        "region": "广东",
+        "inventoryRisk": false,
+        "netDebt": false
+      },
+      {
+        "symbol": "603288.SH",
+        "name": "海天味业",
+        "price": 41.73,
+        "change": 0.25,
+        "marketCap": 2321,
+        "pe": 28.4,
+        "pb": 7.1,
+        "dividendYield": 1.86,
+        "roe": 25.9,
+        "grossMargin": 37.6,
+        "netMargin": 24.8,
+        "revenueGrowth": 7.2,
+        "profitGrowth": 9.4,
+        "realMoneyIndex": 1.31,
+        "cashflowGrowth": 11.8,
+        "dividendYears": 11,
+        "payoutRatio": 53.2,
+        "incomeSafety": 0.06,
+        "industry": "食品饮料",
+        "board": "sh-main",
+        "isST": false,
+        "isLoss": false,
+        "listingYears": 11.6,
+        "pePercentile": 36,
+        "pbPercentile": 71,
+        "expectedDividendYield": 2.11,
+        "capitalReturnRatio": 1.18,
+        "roic": 18.6,
+        "institutionHolding": 58,
+        "majorIndustry": "食品饮料",
+        "subIndustry": "调味品",
+        "concepts": [
+          "大消费"
+        ],
+        "region": "广东",
+        "inventoryRisk": false,
+        "netDebt": false
+      },
+      {
+        "symbol": "600031.SH",
+        "name": "三一重工",
+        "price": 21.45,
+        "change": 0.93,
+        "marketCap": 1818,
+        "pe": 17.2,
+        "pb": 2.34,
+        "dividendYield": 2.93,
+        "roe": 14.2,
+        "grossMargin": 28.1,
+        "netMargin": 10.6,
+        "revenueGrowth": 13.1,
+        "profitGrowth": 18.5,
+        "realMoneyIndex": 1.02,
+        "cashflowGrowth": 21.3,
+        "dividendYears": 19,
+        "payoutRatio": 39.6,
+        "incomeSafety": 1.13,
+        "industry": "电气设备",
+        "board": "sh-main",
+        "isST": false,
+        "isLoss": false,
+        "listingYears": 22.3,
+        "pePercentile": 22,
+        "pbPercentile": 23,
+        "expectedDividendYield": 3.18,
+        "capitalReturnRatio": 0.92,
+        "roic": 10.2,
+        "institutionHolding": 65,
+        "majorIndustry": "机械设备",
+        "subIndustry": "工程机械",
+        "concepts": [
+          "高端制造"
+        ],
+        "region": "北京",
+        "inventoryRisk": true,
+        "netDebt": true
+      },
+      {
+        "symbol": "002475.SZ",
+        "name": "立讯精密",
+        "price": 42.82,
+        "change": 1.05,
+        "marketCap": 3098,
+        "pe": 22.5,
+        "pb": 4.12,
+        "dividendYield": 1.08,
+        "roe": 20.3,
+        "grossMargin": 12.4,
+        "netMargin": 5.9,
+        "revenueGrowth": 16.7,
+        "profitGrowth": 20.1,
+        "realMoneyIndex": 0.97,
+        "cashflowGrowth": 18.9,
+        "dividendYears": 10,
+        "payoutRatio": 24.8,
+        "incomeSafety": -0.72,
+        "industry": "半导体",
+        "board": "sz-main",
+        "isST": false,
+        "isLoss": false,
+        "listingYears": 15,
+        "pePercentile": 28,
+        "pbPercentile": 41,
+        "expectedDividendYield": 1.33,
+        "capitalReturnRatio": 0.87,
+        "roic": 14.6,
+        "institutionHolding": 72,
+        "majorIndustry": "电子",
+        "subIndustry": "消费电子",
+        "concepts": [
+          "苹果产业链"
+        ],
+        "region": "广东",
+        "inventoryRisk": true,
+        "netDebt": false
+      },
+      {
+        "symbol": "601012.SH",
+        "name": "隆基绿能",
+        "price": 18.76,
+        "change": -2.14,
+        "marketCap": 1421,
+        "pe": null,
+        "pb": 2.01,
+        "dividendYield": 0.62,
+        "roe": -4.2,
+        "grossMargin": 8.7,
+        "netMargin": -3.8,
+        "revenueGrowth": -18.6,
+        "profitGrowth": -142.3,
+        "realMoneyIndex": 0.41,
+        "cashflowGrowth": -36.8,
+        "dividendYears": 9,
+        "payoutRatio": null,
+        "incomeSafety": -1.18,
+        "industry": "电气设备",
+        "board": "sh-main",
+        "isST": false,
+        "isLoss": true,
+        "listingYears": 14.4,
+        "pePercentile": null,
+        "pbPercentile": 20,
+        "expectedDividendYield": 0.87,
+        "capitalReturnRatio": 0.37,
+        "roic": -3,
+        "institutionHolding": 21,
+        "majorIndustry": "电气设备",
+        "subIndustry": "光伏设备",
+        "concepts": [
+          "新能源"
+        ],
+        "region": "陕西",
+        "inventoryRisk": true,
+        "netDebt": true
+      },
+      {
+        "symbol": "600518.SH",
+        "name": "ST康美",
+        "price": 2.18,
+        "change": -4.8,
+        "marketCap": 302,
+        "pe": null,
+        "pb": 4.8,
+        "dividendYield": null,
+        "roe": -12.7,
+        "grossMargin": 18.2,
+        "netMargin": -22.1,
+        "revenueGrowth": -9.4,
+        "profitGrowth": -38.2,
+        "realMoneyIndex": 0.22,
+        "cashflowGrowth": -41.6,
+        "dividendYears": 0,
+        "payoutRatio": null,
+        "incomeSafety": null,
+        "industry": "医药生物",
+        "board": "sh-main",
+        "isST": true,
+        "isLoss": true,
+        "listingYears": 24.2,
+        "pePercentile": null,
+        "pbPercentile": 48,
+        "expectedDividendYield": null,
+        "capitalReturnRatio": 0.2,
+        "roic": -9.1,
+        "institutionHolding": 28,
+        "majorIndustry": "医药生物",
+        "subIndustry": "中药",
+        "concepts": [
+          "ST板块"
+        ],
+        "region": "广东",
+        "inventoryRisk": true,
+        "netDebt": true
+      },
+      {
+        "symbol": "688256.SH",
+        "name": "寒武纪",
+        "price": 612.5,
+        "change": 1.68,
+        "marketCap": 2561,
+        "pe": null,
+        "pb": 22.4,
+        "dividendYield": null,
+        "roe": -8.9,
+        "grossMargin": 56.8,
+        "netMargin": -34.2,
+        "revenueGrowth": 65.4,
+        "profitGrowth": 41.2,
+        "realMoneyIndex": 0.38,
+        "cashflowGrowth": -18.4,
+        "dividendYears": 0,
+        "payoutRatio": null,
+        "incomeSafety": null,
+        "industry": "半导体",
+        "board": "star",
+        "isST": false,
+        "isLoss": true,
+        "listingYears": 6.1,
+        "pePercentile": null,
+        "pbPercentile": 100,
+        "expectedDividendYield": null,
+        "capitalReturnRatio": 0.34,
+        "roic": -6.4,
+        "institutionHolding": 35,
+        "majorIndustry": "半导体",
+        "subIndustry": "AI芯片",
+        "concepts": [
+          "人工智能"
+        ],
+        "region": "北京",
+        "inventoryRisk": false,
+        "netDebt": false
+      },
+      {
+        "symbol": "920000.BJ",
+        "name": "北证样本",
+        "price": 18.6,
+        "change": 0.72,
+        "marketCap": 86,
+        "pe": 16.4,
+        "pb": 2.1,
+        "dividendYield": 2.2,
+        "roe": 13.6,
+        "grossMargin": 31.2,
+        "netMargin": 12.4,
+        "revenueGrowth": 15.8,
+        "profitGrowth": 18.2,
+        "realMoneyIndex": 1.16,
+        "cashflowGrowth": 12.8,
+        "dividendYears": 4,
+        "payoutRatio": 36,
+        "incomeSafety": 0.4,
+        "industry": "电气设备",
+        "board": "bse",
+        "isST": false,
+        "isLoss": false,
+        "listingYears": 5.2,
+        "pePercentile": 21,
+        "pbPercentile": 21,
+        "expectedDividendYield": 2.45,
+        "capitalReturnRatio": 1.04,
+        "roic": 9.8,
+        "institutionHolding": 24,
+        "majorIndustry": "电气设备",
+        "subIndustry": "电气零部件",
+        "concepts": [
+          "专精特新"
+        ],
+        "region": "北京",
+        "inventoryRisk": false,
+        "netDebt": false
+      }
+    ]
+  },
+  "meta": {
+    "source": "fixture",
+    "asOf": "2026-08-13T15:00:00.000+08:00",
+    "version": "stocks-fixture-v1",
+    "stale": false
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "sourceUrl": "https://markets.newyorkfed.org/api/rates/unsecured/effr/search.json",
+  "documentationUrl": "https://markets.newyorkfed.org/static/docs/markets-api.html",
+  "termsUrl": "https://www.newyorkfed.org/privacy/termsofuse",
+  "evidenceUrl": "https://www.newyorkfed.org/markets/reference-rates",
+  "retrievedAt": "2026-09-21T00:00:00Z",
+  "contentType": "application/json",
+  "sanitized": true,
+  "payload": {
+    "refRates": [
+      {"effectiveDate": "2025-02-03", "type": "EFFR", "percent": 4.33, "revisionIndicator": ""},
+      {"effectiveDate": "2025-02-04", "type": "EFFR", "percent": 4.33, "revisionIndicator": ""}
+    ]
+  }
+}

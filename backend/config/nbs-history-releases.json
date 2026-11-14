@@ -1,0 +1,590 @@
+{
+  "schemaVersion": "1.0",
+  "releases": [
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899283.html",
+      "title": "2016年9月份居民消费价格同比上涨1.9%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899420.html",
+      "title": "2017年1月份居民消费价格同比上涨2.5%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899685.html",
+      "title": "2017年9月份规模以上工业增加值增长6.6%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899845.html",
+      "title": "2018年1月份居民消费价格同比上涨1.5%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900105.html",
+      "title": "2018年9月份规模以上工业增加值增长5.8%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900871.html",
+      "title": "2020年9月份规模以上工业增加值增长6.9%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1901241.html",
+      "title": "2021年9月份规模以上工业增加值增长3.1%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900631.html",
+      "title": "2020年1月份居民消费价格同比上涨5.4%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1901616.html",
+      "title": "2022年9月份规模以上工业增加值增长6.3%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1901703.html",
+      "title": "2022年12月份居民消费价格同比上涨1.8%环比持平"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900472.html",
+      "title": "2019年9月份规模以上工业增加值增长5.8%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899320.html",
+      "title": "2016年10月份居民消费价格同比上涨2.1%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900448.html",
+      "title": "2019年8月份规模以上工业增加值增长4.4%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900513.html",
+      "title": "2019年10月份规模以上工业增加值增长4.7%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900848.html",
+      "title": "2020年8月份规模以上工业增加值增长5.6%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899353.html",
+      "title": "2016年11月份居民消费价格同比上涨2.3%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899387.html",
+      "title": "2016年12月份居民消费价格同比上涨2.1%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899396.html",
+      "title": "2016年12月份规模以上工业增加值增长6.0%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900246.html",
+      "title": "2019年2月份居民消费价格同比上涨1.5%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900270.html",
+      "title": "2019年3月份居民消费价格同比上涨2.3%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900307.html",
+      "title": "2019年4月份居民消费价格同比上涨2.5%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900647.html",
+      "title": "2020年2月份居民消费价格同比上涨5.2%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899765.html",
+      "title": "2017年11月份规模以上工业增加值增长6.1%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900100.html",
+      "title": "2018年9月份居民消费价格同比上涨2.5%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900018.html",
+      "title": "2018年7月份居民消费价格同比上涨2.1%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900673.html",
+      "title": "2020年3月份居民消费价格同比上涨4.3%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900595.html",
+      "title": "2019年12月份规模以上工业增加值增长6.9%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900562.html",
+      "title": "2019年11月份规模以上工业增加值增长6.2%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1901237.html",
+      "title": "2021年9月份居民消费价格同比上涨0.7%环比持平"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202402/t20240208_1947623.html",
+      "title": "2024年1月份居民消费价格环比上涨0.3%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202408/t20240809_1955948.html",
+      "title": "2024年7月份居民消费价格上涨0.5%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202307/t20230715_1941268.html",
+      "title": "2023年上半年规模以上工业增加值增长3.8%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900194.html",
+      "title": "2018年12月份居民消费价格同比上涨1.9%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899887.html",
+      "title": "2018年3月份居民消费价格同比上涨2.1%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899471.html",
+      "title": "2017年3月份规模以上工业增加值增长7.6%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899898.html",
+      "title": "2018年3月份规模以上工业增加值增长6.0%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900142.html",
+      "title": "2018年10月份规模以上工业增加值增长5.9%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900334.html",
+      "title": "2019年5月份居民消费价格同比上涨2.7%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900361.html",
+      "title": "2019年6月份居民消费价格同比上涨2.7%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900409.html",
+      "title": "2019年7月份居民消费价格同比上涨2.8%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900746.html",
+      "title": "2020年5月份居民消费价格同比上涨2.4%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900714.html",
+      "title": "2020年4月份居民消费价格同比上涨3.3%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900770.html",
+      "title": "2020年6月份居民消费价格同比上涨2.5%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900813.html",
+      "title": "2020年7月份居民消费价格同比上涨2.7%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1901077.html",
+      "title": "2021年4月份居民消费价格同比上涨0.9%环比下降0.3%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900277.html",
+      "title": "2019年3月份规模以上工业增加值增长8.5%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900316.html",
+      "title": "2019年4月份规模以上工业增加值增长5.4%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900342.html",
+      "title": "2019年5月份规模以上工业增加值增长5.0%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900841.html",
+      "title": "2020年8月份居民消费价格同比上涨2.4%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900867.html",
+      "title": "2020年9月份居民消费价格同比上涨1.7%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900902.html",
+      "title": "2020年10月份居民消费价格同比上涨0.5%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900504.html",
+      "title": "2019年10月份居民消费价格同比上涨3.8%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900924.html",
+      "title": "2020年11月份居民消费价格同比下降0.5%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900958.html",
+      "title": "2020年12月份居民消费价格同比上涨0.2%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1901099.html",
+      "title": "2021年4月份规模以上工业增加值增长9.8%两年平均增长6.8%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1901191.html",
+      "title": "2021年7月份规模以上工业增加值增长6.4%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1901218.html",
+      "title": "2021年8月份规模以上工业增加值增长5.3%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900754.html",
+      "title": "2020年5月份规模以上工业增加值增长4.4%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900781.html",
+      "title": "2020年6月份规模以上工业增加值增长4.8%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900822.html",
+      "title": "2020年7月份规模以上工业增加值增长4.8%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900680.html",
+      "title": "2020年3月份规模以上工业增加值下降1.1%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900933.html",
+      "title": "2020年11月份规模以上工业增加值增长7.0%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900965.html",
+      "title": "2020年12月份规模以上工业增加值增长7.3%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1901184.html",
+      "title": "2021年7月份居民消费价格同比上涨1.0%环比上涨0.3%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1901120.html",
+      "title": "2021年5月份居民消费价格同比上涨1.3%环比下降0.2%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1901146.html",
+      "title": "2021年6月份居民消费价格同比上涨1.1%环比下降0.4%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1901211.html",
+      "title": "2021年8月份居民消费价格同比上涨0.8%环比上涨0.1%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1901126.html",
+      "title": "2021年5月份规模以上工业增加值增长8.8%两年平均增长6.6%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1901155.html",
+      "title": "2021年6月份规模以上工业增加值增长8.3%两年平均增长6.5%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900374.html",
+      "title": "2019年6月份规模以上工业增加值增长6.3%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900419.html",
+      "title": "2019年7月份规模以上工业增加值增长4.8%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900584.html",
+      "title": "2019年12月份居民消费价格同比上涨4.5%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900162.html",
+      "title": "2018年11月份居民消费价格同比上涨2.2%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899807.html",
+      "title": "2017年12月份居民消费价格同比上涨1.8%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900132.html",
+      "title": "2018年10月份居民消费价格同比上涨2.5%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900172.html",
+      "title": "2018年11月份规模以上工业增加值增长5.4%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900207.html",
+      "title": "2018年12月份规模以上工业增加值增长5.7%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900062.html",
+      "title": "2018年8月份居民消费价格同比上涨2.3%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899815.html",
+      "title": "2017年12月份规模以上工业增加值增长6.2%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899681.html",
+      "title": "2017年9月份居民消费价格同比上涨1.6%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899983.html",
+      "title": "2018年6月份居民消费价格同比上涨1.9%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899508.html",
+      "title": "2017年4月份规模以上工业增加值增长6.5%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899543.html",
+      "title": "2017年5月份规模以上工业增加值增长6.5%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899615.html",
+      "title": "2017年7月份规模以上工业增加值增长6.4%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899649.html",
+      "title": "2017年8月份规模以上工业增加值增长6.0%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899990.html",
+      "title": "2018年6月份规模以上工业增加值增长6.0%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900026.html",
+      "title": "2018年7月份规模以上工业增加值增长6.0%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900074.html",
+      "title": "2018年8月份规模以上工业增加值增长6.1%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899288.html",
+      "title": "2016年9月份规模以上工业增加值增长6.1%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899328.html",
+      "title": "2016年10月份规模以上工业增加值增长6.1%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899357.html",
+      "title": "2016年11月份规模以上工业增加值增长6.2%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899577.html",
+      "title": "2017年6月份规模以上工业增加值增长7.6%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899729.html",
+      "title": "2017年10月份规模以上工业增加值增长6.2%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899934.html",
+      "title": "2018年4月份规模以上工业增加值增长7.0%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899961.html",
+      "title": "2018年5月份规模以上工业增加值增长6.8%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900909.html",
+      "title": "2020年10月份规模以上工业增加值增长6.9%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1901047.html",
+      "title": "2021年3月份规模以上工业增加值增长14.1%"
+    },
+    {
+      "seriesId": "cn.industry.value_added_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900719.html",
+      "title": "2020年4月份规模以上工业增加值增长3.9%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899436.html",
+      "title": "2017年2月份居民消费价格同比上涨0.8%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899465.html",
+      "title": "2017年3月份居民消费价格同比上涨0.9%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899502.html",
+      "title": "2017年4月份居民消费价格同比上涨1.2%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899537.html",
+      "title": "2017年5月份居民消费价格同比上涨1.5%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899956.html",
+      "title": "2018年5月份居民消费价格同比上涨1.8%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900235.html",
+      "title": "2019年1月份居民消费价格同比上涨1.7%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900443.html",
+      "title": "2019年8月份居民消费价格同比上涨2.8%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900468.html",
+      "title": "2019年9月份居民消费价格同比上涨3.0%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900552.html",
+      "title": "2019年11月份居民消费价格同比上涨4.5%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1900992.html",
+      "title": "2021年1月份居民消费价格同比下降0.3%环比上涨1%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1901015.html",
+      "title": "2021年2月份居民消费价格同比下降0.2%环比上涨0.6%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1901040.html",
+      "title": "2021年3月份居民消费价格同比上涨0.4%环比下降0.5%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899568.html",
+      "title": "2017年6月份居民消费价格同比上涨1.5%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899609.html",
+      "title": "2017年7月份居民消费价格同比上涨1.4%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899643.html",
+      "title": "2017年8月份居民消费价格同比上涨1.8%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899722.html",
+      "title": "2017年10月份居民消费价格同比上涨1.9%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899756.html",
+      "title": "2017年11月份居民消费价格同比上涨1.7%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899858.html",
+      "title": "2018年2月份居民消费价格同比上涨2.9%"
+    },
+    {
+      "seriesId": "cn.cpi.core_yoy",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1899929.html",
+      "title": "2018年4月份居民消费价格同比上涨1.8%"
+    }
+  ]
+}

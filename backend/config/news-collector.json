@@ -1,0 +1,23 @@
+{
+  "enabled": true,
+  "page_size": 20,
+  "max_pages": 3,
+  "interval_seconds": 300,
+  "request_interval_seconds": 1,
+  "timeout_seconds": 15,
+  "retry_count": 1,
+  "backoff_seconds": 2,
+  "overlap_hours": 6,
+  "lookback_hours": 24,
+  "stale_hours": 12,
+  "failure_threshold": 2,
+  "retention_days": 365,
+  "log_retention_days": 90,
+  "cleanup_interval_seconds": 86400,
+  "cleanup_batch_size": 500,
+  "cleanup_max_batches": 20,
+  "worker_retry_seconds": 30,
+  "database_connect_timeout_seconds": 5,
+  "database_statement_timeout_seconds": 30,
+  "database_lock_timeout_seconds": 5
+}

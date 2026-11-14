@@ -1,0 +1,317 @@
+{
+  "schemaVersion": "1.0",
+  "catalogVersion": "2026-10-08-v9",
+  "defaults": {
+    "requestTimeoutSeconds": 30,
+    "maxAttempts": 3,
+    "retryBackoffSeconds": [1, 3, 10],
+    "freshnessDays": {
+      "daily": 7,
+      "monthly": 62,
+      "quarterly": 130
+    },
+    "overlap": {
+      "dailyDays": 31,
+      "monthlyMonths": 18,
+      "quarterlyQuarters": 12
+    }
+  },
+  "series": [
+    {
+      "id": "cn.gdp.real_yoy",
+      "name": "中国实际 GDP 同比",
+      "region": "CN",
+      "category": "growth",
+      "frequency": "quarterly",
+      "unit": "%",
+      "seasonalAdjustment": "not_adjusted",
+      "displayPrecision": 1,
+      "freshnessDays": 130,
+      "sources": [
+        {"provider": "tushare", "priority": 1, "api": "cn_gdp", "field": "gdp_yoy", "transform": "identity", "sourceUrl": "https://tushare.pro/document/2", "termsUrl": "https://tushare.pro/document/1?doc_id=1", "accessMode": "api", "displayAllowed": true, "responseFields": ["quarter", "gdp_yoy"]}
+      ]
+    },
+    {
+      "id": "cn.cpi.yoy",
+      "name": "中国 CPI 同比",
+      "region": "CN",
+      "category": "inflation",
+      "frequency": "monthly",
+      "unit": "%",
+      "seasonalAdjustment": "not_adjusted",
+      "displayPrecision": 1,
+      "freshnessDays": 62,
+      "sources": [
+        {"provider": "tushare", "priority": 1, "api": "cn_cpi", "field": "nt_yoy", "transform": "identity", "sourceUrl": "https://tushare.pro/document/2", "termsUrl": "https://tushare.pro/document/1?doc_id=1", "accessMode": "api", "displayAllowed": true, "responseFields": ["month", "nt_yoy"]}
+      ]
+    },
+    {
+      "id": "cn.cpi.core_yoy",
+      "name": "中国核心 CPI 同比",
+      "region": "CN",
+      "category": "inflation",
+      "frequency": "monthly",
+      "unit": "%",
+      "seasonalAdjustment": "not_adjusted",
+      "displayPrecision": 1,
+      "freshnessDays": 62,
+      "sources": [
+        {"provider": "nbs", "priority": 1, "series": "不包括食品和能源", "field": "同比涨跌幅（%）", "transform": "identity", "sourceUrl": "https://www.stats.gov.cn/sj/zxfb/", "termsUrl": "https://www.stats.gov.cn/", "accessMode": "public_page", "displayAllowed": true, "params": {"maxIndexPages": "24"}, "responseFields": ["ArticleTitle", "PubDate"]}
+      ]
+    },
+    {
+      "id": "cn.ppi.yoy",
+      "name": "中国 PPI 同比",
+      "region": "CN",
+      "category": "inflation",
+      "frequency": "monthly",
+      "unit": "%",
+      "seasonalAdjustment": "not_adjusted",
+      "displayPrecision": 1,
+      "freshnessDays": 62,
+      "sources": [
+        {"provider": "tushare", "priority": 1, "api": "cn_ppi", "field": "ppi_yoy", "transform": "identity", "sourceUrl": "https://tushare.pro/document/2", "termsUrl": "https://tushare.pro/document/1?doc_id=1", "accessMode": "api", "displayAllowed": true, "responseFields": ["month", "ppi_yoy"]}
+      ]
+    },
+    {
+      "id": "cn.pmi.manufacturing",
+      "name": "中国制造业 PMI",
+      "region": "CN",
+      "category": "growth",
+      "frequency": "monthly",
+      "unit": "index",
+      "seasonalAdjustment": "seasonally_adjusted",
+      "displayPrecision": 1,
+      "freshnessDays": 62,
+      "sources": [
+        {"provider": "tushare", "priority": 1, "api": "cn_pmi", "field": "pmi010000", "transform": "identity", "sourceUrl": "https://tushare.pro/document/2", "termsUrl": "https://tushare.pro/document/1?doc_id=1", "accessMode": "api", "displayAllowed": true, "responseFields": ["month", "pmi010000"]}
+      ]
+    },
+    {
+      "id": "cn.industry.value_added_yoy",
+      "name": "中国规模以上工业增加值同比",
+      "region": "CN",
+      "category": "growth",
+      "frequency": "monthly",
+      "unit": "%",
+      "seasonalAdjustment": "not_adjusted",
+      "displayPrecision": 1,
+      "freshnessDays": 62,
+      "sources": [
+        {"provider": "nbs", "priority": 1, "series": "规模以上工业增加值", "field": "同比实际增长（%）", "transform": "identity", "sourceUrl": "https://www.stats.gov.cn/sj/zxfb/", "termsUrl": "https://www.stats.gov.cn/", "accessMode": "public_page", "displayAllowed": true, "params": {"maxIndexPages": "24"}, "responseFields": ["ArticleTitle", "PubDate"]}
+      ]
+    },
+    {
+      "id": "cn.money.m1_yoy",
+      "name": "中国 M1 同比",
+      "region": "CN",
+      "category": "money_credit",
+      "frequency": "monthly",
+      "unit": "%",
+      "seasonalAdjustment": "not_adjusted",
+      "displayPrecision": 1,
+      "freshnessDays": 62,
+      "sources": [
+        {"provider": "tushare", "priority": 1, "api": "cn_m", "field": "m1_yoy", "transform": "identity", "sourceUrl": "https://tushare.pro/document/2", "termsUrl": "https://tushare.pro/document/1?doc_id=1", "accessMode": "api", "displayAllowed": true, "responseFields": ["month", "m1_yoy"]}
+      ]
+    },
+    {
+      "id": "cn.money.m2_yoy",
+      "name": "中国 M2 同比",
+      "region": "CN",
+      "category": "money_credit",
+      "frequency": "monthly",
+      "unit": "%",
+      "seasonalAdjustment": "not_adjusted",
+      "displayPrecision": 1,
+      "freshnessDays": 62,
+      "sources": [
+        {"provider": "tushare", "priority": 1, "api": "cn_m", "field": "m2_yoy", "transform": "identity", "sourceUrl": "https://tushare.pro/document/2", "termsUrl": "https://tushare.pro/document/1?doc_id=1", "accessMode": "api", "displayAllowed": true, "responseFields": ["month", "m2_yoy"]}
+      ]
+    },
+    {
+      "id": "cn.credit.tsf_stock_yoy",
+      "name": "中国社会融资规模存量同比",
+      "region": "CN",
+      "category": "money_credit",
+      "frequency": "monthly",
+      "unit": "%",
+      "seasonalAdjustment": "not_adjusted",
+      "displayPrecision": 1,
+      "freshnessDays": 62,
+      "sources": []
+    },
+    {
+      "id": "cn.rate.dr007",
+      "name": "中国 DR007",
+      "region": "CN",
+      "category": "rates_fx",
+      "frequency": "daily",
+      "unit": "%",
+      "seasonalAdjustment": "unknown",
+      "displayPrecision": 2,
+      "freshnessDays": 7,
+      "sources": [
+        {"provider":"tushare","priority":1,"series":"DR007.IB","api":"repo_daily","field":"weight","transform":"identity","sourceUrl":"https://tushare.pro/document/2?doc_id=256","termsUrl":"https://tushare.pro/document/1?doc_id=20","accessMode":"api","displayAllowed":true,"params":{"ts_code":"DR007.IB","maxPages":"24"},"responseFields":["trade_date","ts_code","repo_maturity","weight"]}
+      ]
+    },
+    {
+      "id": "cn.rate.govbond_10y",
+      "name": "中国 10 年期国债收益率",
+      "region": "CN",
+      "category": "rates_fx",
+      "frequency": "daily",
+      "unit": "%",
+      "seasonalAdjustment": "unknown",
+      "displayPrecision": 2,
+      "freshnessDays": 7,
+      "sources": [
+        {
+          "provider": "chinamoney",
+          "priority": 1,
+          "series": "CGB-10Y",
+          "api": "SddsIntrRateGovYldHis",
+          "field": "tenRate",
+          "transform": "identity",
+          "sourceUrl": "https://www.chinamoney.com.cn/ags/ms/cm-u-bk-currency/SddsIntrRateGovYldHis",
+          "termsUrl": "https://www.chinamoney.com.cn/chinese/mtsjfu/",
+          "accessMode": "public_page",
+          "displayAllowed": true,
+          "params": {"maxPages": "24"},
+          "responseFields": ["dateString", "tenRate"]
+        }
+      ]
+    },
+    {
+      "id": "cn.fx.usdcny",
+      "name": "美元兑人民币汇率",
+      "region": "CN",
+      "category": "rates_fx",
+      "frequency": "daily",
+      "unit": "CNY per USD",
+      "seasonalAdjustment": "unknown",
+      "displayPrecision": 4,
+      "freshnessDays": 7,
+      "sources": []
+    },
+    {
+      "id": "us.gdp.real_qoq_annualized",
+      "name": "美国实际 GDP 环比折年率",
+      "region": "US",
+      "category": "growth",
+      "frequency": "quarterly",
+      "unit": "%",
+      "seasonalAdjustment": "seasonally_adjusted",
+      "displayPrecision": 1,
+      "freshnessDays": 130,
+      "sources": [
+        {"provider": "fred", "priority": 1, "series": "A191RL1Q225SBEA", "api": "series_observations", "field": "value", "transform": "identity", "sourceUrl": "https://api.stlouisfed.org/fred/series/observations", "termsUrl": "https://fred.stlouisfed.org/docs/api/terms_of_use.html", "accessMode": "api", "displayAllowed": true, "responseFields": ["date", "value", "realtime_start", "realtime_end"]}
+      ]
+    },
+    {
+      "id": "us.cpi.yoy",
+      "name": "美国 CPI 同比",
+      "region": "US",
+      "category": "inflation",
+      "frequency": "monthly",
+      "unit": "%",
+      "seasonalAdjustment": "seasonally_adjusted",
+      "displayPrecision": 1,
+      "freshnessDays": 62,
+      "sources": [
+        {"provider": "fred", "priority": 1, "series": "CPIAUCSL", "api": "series_observations", "field": "value", "transform": "pc1", "sourceUrl": "https://api.stlouisfed.org/fred/series/observations", "termsUrl": "https://fred.stlouisfed.org/docs/api/terms_of_use.html", "accessMode": "api", "displayAllowed": true, "responseFields": ["date", "value", "realtime_start", "realtime_end"]},
+        {"provider": "bls", "priority": 2, "series": "CUSR0000SA0", "api": "publicAPI/v1/timeseries/data", "field": "value", "transform": "pc1", "sourceUrl": "https://api.bls.gov/publicAPI/v1/timeseries/data/", "termsUrl": "https://www.bls.gov/developers/termsOfService.htm", "accessMode": "api", "displayAllowed": true, "responseFields": ["status", "Results[].series[].seriesID", "Results[].series[].data.year", "Results[].series[].data.period", "Results[].series[].data.value"]}
+      ]
+    },
+    {
+      "id": "us.cpi.core_yoy",
+      "name": "美国核心 CPI 同比",
+      "region": "US",
+      "category": "inflation",
+      "frequency": "monthly",
+      "unit": "%",
+      "seasonalAdjustment": "seasonally_adjusted",
+      "displayPrecision": 1,
+      "freshnessDays": 62,
+      "sources": [
+        {"provider": "fred", "priority": 1, "series": "CPILFESL", "api": "series_observations", "field": "value", "transform": "pc1", "sourceUrl": "https://api.stlouisfed.org/fred/series/observations", "termsUrl": "https://fred.stlouisfed.org/docs/api/terms_of_use.html", "accessMode": "api", "displayAllowed": true, "responseFields": ["date", "value", "realtime_start", "realtime_end"]},
+        {"provider": "bls", "priority": 2, "series": "CUSR0000SA0L1E", "api": "publicAPI/v1/timeseries/data", "field": "value", "transform": "pc1", "sourceUrl": "https://api.bls.gov/publicAPI/v1/timeseries/data/", "termsUrl": "https://www.bls.gov/developers/termsOfService.htm", "accessMode": "api", "displayAllowed": true, "responseFields": ["status", "Results[].series[].seriesID", "Results[].series[].data.year", "Results[].series[].data.period", "Results[].series[].data.value"]}
+      ]
+    },
+    {
+      "id": "us.pce.core_yoy",
+      "name": "美国核心 PCE 同比",
+      "region": "US",
+      "category": "inflation",
+      "frequency": "monthly",
+      "unit": "%",
+      "seasonalAdjustment": "seasonally_adjusted",
+      "displayPrecision": 1,
+      "freshnessDays": 62,
+      "sources": [
+        {"provider": "fred", "priority": 1, "series": "PCEPILFE", "api": "series_observations", "field": "value", "transform": "pc1", "sourceUrl": "https://api.stlouisfed.org/fred/series/observations", "termsUrl": "https://fred.stlouisfed.org/docs/api/terms_of_use.html", "accessMode": "api", "displayAllowed": true, "responseFields": ["date", "value", "realtime_start", "realtime_end"]}
+      ]
+    },
+    {
+      "id": "us.labor.unemployment_rate",
+      "name": "美国失业率",
+      "region": "US",
+      "category": "labor",
+      "frequency": "monthly",
+      "unit": "%",
+      "seasonalAdjustment": "seasonally_adjusted",
+      "displayPrecision": 1,
+      "freshnessDays": 62,
+      "sources": [
+        {"provider": "fred", "priority": 1, "series": "UNRATE", "api": "series_observations", "field": "value", "transform": "identity", "sourceUrl": "https://api.stlouisfed.org/fred/series/observations", "termsUrl": "https://fred.stlouisfed.org/docs/api/terms_of_use.html", "accessMode": "api", "displayAllowed": true, "responseFields": ["date", "value", "realtime_start", "realtime_end"]},
+        {"provider": "bls", "priority": 2, "series": "LNS14000000", "api": "publicAPI/v1/timeseries/data", "field": "value", "transform": "identity", "sourceUrl": "https://api.bls.gov/publicAPI/v1/timeseries/data/", "termsUrl": "https://www.bls.gov/developers/termsOfService.htm", "accessMode": "api", "displayAllowed": true, "responseFields": ["status", "Results[].series[].seriesID", "Results[].series[].data.year", "Results[].series[].data.period", "Results[].series[].data.value"]}
+      ]
+    },
+    {
+      "id": "us.labor.nonfarm_payroll_change",
+      "name": "美国非农就业月增量",
+      "region": "US",
+      "category": "labor",
+      "frequency": "monthly",
+      "unit": "thousand persons",
+      "seasonalAdjustment": "seasonally_adjusted",
+      "displayPrecision": 0,
+      "freshnessDays": 62,
+      "sources": [
+        {"provider": "fred", "priority": 1, "series": "PAYEMS", "api": "series_observations", "field": "value", "transform": "chg", "sourceUrl": "https://api.stlouisfed.org/fred/series/observations", "termsUrl": "https://fred.stlouisfed.org/docs/api/terms_of_use.html", "accessMode": "api", "displayAllowed": true, "responseFields": ["date", "value", "realtime_start", "realtime_end"]},
+        {"provider": "bls", "priority": 2, "series": "CES0000000001", "api": "publicAPI/v1/timeseries/data", "field": "value", "transform": "chg", "sourceUrl": "https://api.bls.gov/publicAPI/v1/timeseries/data/", "termsUrl": "https://www.bls.gov/developers/termsOfService.htm", "accessMode": "api", "displayAllowed": true, "responseFields": ["status", "Results[].series[].seriesID", "Results[].series[].data.year", "Results[].series[].data.period", "Results[].series[].data.value"]}
+      ]
+    },
+    {
+      "id": "us.rate.effective_fed_funds",
+      "name": "美国有效联邦基金利率",
+      "region": "US",
+      "category": "rates_fx",
+      "frequency": "daily",
+      "unit": "%",
+      "seasonalAdjustment": "unknown",
+      "displayPrecision": 2,
+      "freshnessDays": 7,
+      "sources": [
+        {"provider": "fred", "priority": 1, "series": "DFF", "api": "series_observations", "field": "value", "transform": "identity", "sourceUrl": "https://api.stlouisfed.org/fred/series/observations", "termsUrl": "https://fred.stlouisfed.org/docs/api/terms_of_use.html", "accessMode": "api", "displayAllowed": true, "responseFields": ["date", "value", "realtime_start", "realtime_end"]},
+        {"provider": "nyfed", "priority": 2, "series": "EFFR", "api": "rates/unsecured/effr/search", "field": "percent", "transform": "identity", "sourceUrl": "https://markets.newyorkfed.org/api/rates/unsecured/effr/search.json", "termsUrl": "https://www.newyorkfed.org/privacy/termsofuse", "accessMode": "api", "displayAllowed": true, "responseFields": ["refRates.type", "refRates.effectiveDate", "refRates.percent", "refRates.revisionIndicator"]}
+      ]
+    },
+    {
+      "id": "us.rate.treasury_10y",
+      "name": "美国 10 年期国债收益率",
+      "region": "US",
+      "category": "rates_fx",
+      "frequency": "daily",
+      "unit": "%",
+      "seasonalAdjustment": "unknown",
+      "displayPrecision": 2,
+      "freshnessDays": 7,
+      "sources": [
+        {"provider": "fred", "priority": 1, "series": "DGS10", "api": "series_observations", "field": "value", "transform": "identity", "sourceUrl": "https://api.stlouisfed.org/fred/series/observations", "termsUrl": "https://fred.stlouisfed.org/docs/api/terms_of_use.html", "accessMode": "api", "displayAllowed": true, "responseFields": ["date", "value", "realtime_start", "realtime_end"]},
+        {"provider": "us_treasury", "priority": 2, "series": "BC_10YEAR", "api": "daily_treasury_yield_curve", "field": "BC_10YEAR", "transform": "identity", "sourceUrl": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/pages/xml", "termsUrl": "https://home.treasury.gov/utility/policies-and-disclaimers", "accessMode": "public_download", "displayAllowed": true, "responseFields": ["NEW_DATE", "BC_10YEAR"]},
+        {"provider": "tushare", "priority": 3, "api": "us_tycr", "field": "y10", "transform": "identity", "sourceUrl": "https://tushare.pro/document/2?doc_id=219", "termsUrl": "https://tushare.pro/document/1?doc_id=1", "accessMode": "api", "displayAllowed": true, "responseFields": ["date", "y10"]}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,293 @@
+{
+  "data": {
+    "marketSnapshot": {
+      "asOf": "2026-07-29",
+      "delayLabel": "延迟",
+      "aggregationLabel": "盘中聚合",
+      "support": "日内支持：A股核心指数、美股指数、宽基ETF、行业ETF、期货主连（国内）"
+    },
+    "marketStatuses": [
+      {
+        "label": "A股·估算：已收盘",
+        "tone": "neutral"
+      },
+      {
+        "label": "港股·估算：已收盘",
+        "tone": "neutral"
+      },
+      {
+        "label": "美股·估算：盘前",
+        "tone": "warning"
+      },
+      {
+        "label": "国内期货·估算：已收盘",
+        "tone": "neutral"
+      },
+      {
+        "label": "海外期货·估算：交易中",
+        "tone": "success"
+      }
+    ],
+    "globalIndices": [
+      {
+        "code": "000001.SH",
+        "name": "上证指数",
+        "value": "3829.11",
+        "change": 0.41,
+        "market": "cn",
+        "intraday": null
+      },
+      {
+        "code": "399001.SZ",
+        "name": "深证成指",
+        "value": "13661.22",
+        "change": 1.12,
+        "market": "cn",
+        "intraday": null
+      },
+      {
+        "code": "399006.SZ",
+        "name": "创业板指",
+        "value": "3381.18",
+        "change": 1.63,
+        "market": "cn",
+        "intraday": null
+      },
+      {
+        "code": "HSI",
+        "name": "恒生指数",
+        "value": "25773.44",
+        "change": -0.43,
+        "market": "hk",
+        "intraday": [
+          61,
+          58,
+          60,
+          54,
+          55,
+          49,
+          51,
+          47,
+          45,
+          43,
+          44,
+          40
+        ]
+      },
+      {
+        "code": "SPX",
+        "name": "标普500",
+        "value": "6389.77",
+        "change": 0.26,
+        "market": "us",
+        "intraday": [
+          42,
+          44,
+          43,
+          47,
+          46,
+          50,
+          49,
+          53,
+          52,
+          55,
+          57,
+          59
+        ]
+      },
+      {
+        "code": "IXIC",
+        "name": "纳斯达克",
+        "value": "21178.58",
+        "change": 0.33,
+        "market": "us",
+        "intraday": [
+          40,
+          43,
+          42,
+          46,
+          48,
+          47,
+          51,
+          54,
+          52,
+          56,
+          58,
+          61
+        ]
+      }
+    ],
+    "turnoverSnapshot": {
+      "value": "22832.5",
+      "unit": "亿元",
+      "title": "全市场成交额 Top 10",
+      "explanation": "取 amount/turnover_yuan 按成交额降序（盘中为累计成交额，单位元）。"
+    },
+    "turnoverTop10": [
+      {
+        "rank": 1,
+        "code": "300308.SZ",
+        "name": "中际旭创",
+        "turnover": "435.1亿",
+        "change": 4.74
+      },
+      {
+        "rank": 2,
+        "code": "603986.SH",
+        "name": "兆易创新",
+        "turnover": "324.4亿",
+        "change": -6.81
+      },
+      {
+        "rank": 3,
+        "code": "300502.SZ",
+        "name": "新易盛",
+        "turnover": "269.1亿",
+        "change": 3.51
+      },
+      {
+        "rank": 4,
+        "code": "002384.SZ",
+        "name": "东山精密",
+        "turnover": "226.5亿",
+        "change": -5.73
+      },
+      {
+        "rank": 5,
+        "code": "688256.SH",
+        "name": "寒武纪",
+        "turnover": "159.9亿",
+        "change": 1.68
+      },
+      {
+        "rank": 6,
+        "code": "300750.SZ",
+        "name": "宁德时代",
+        "turnover": "159.3亿",
+        "change": 1.53
+      },
+      {
+        "rank": 7,
+        "code": "688012.SH",
+        "name": "中微公司",
+        "turnover": "135.5亿",
+        "change": -6.01
+      },
+      {
+        "rank": 8,
+        "code": "000938.SZ",
+        "name": "紫光股份",
+        "turnover": "132.7亿",
+        "change": -10
+      },
+      {
+        "rank": 9,
+        "code": "688008.SH",
+        "name": "澜起科技",
+        "turnover": "128.8亿",
+        "change": 0.9
+      },
+      {
+        "rank": 10,
+        "code": "002156.SZ",
+        "name": "通富微电",
+        "turnover": "124.9亿",
+        "change": -10
+      }
+    ],
+    "limitStats": {
+      "riseLimit": 100,
+      "fallLimit": 31,
+      "status": "演示快照",
+      "explanation": "普通股票按 ±10% 阈值统计，ST 股票及不同板块按各自交易规则口径归集。"
+    },
+    "sentimentSnapshot": {
+      "score": 73,
+      "level": "偏多",
+      "formula": "情绪分 = 涨停比 × 35% + 上涨比 × 35% + (1 - 炸板率) × 30%",
+      "limitRatio": "76.3%",
+      "riseRatio": "76.7%",
+      "burstRate": "18.4%",
+      "breakdown": "27 + 27 + 19 = 73"
+    },
+    "fundFlowSnapshot": {
+      "status": "待接入",
+      "northbound": "--",
+      "mainForce": "--"
+    },
+    "breadthSnapshots": [
+      {
+        "market": "A股",
+        "sentiment": "偏多",
+        "rise": 4252,
+        "fall": 1213,
+        "averageChange": 1.27,
+        "total": 5547,
+        "refreshLabel": "每30秒刷新",
+        "riseWidthClass": "basis-[77.8%]"
+      },
+      {
+        "market": "港股通",
+        "sentiment": "偏多",
+        "rise": 650,
+        "fall": 195,
+        "averageChange": 1.18,
+        "total": 956,
+        "riseWidthClass": "basis-[76.9%]"
+      }
+    ],
+    "etfQuotes": [
+      {
+        "name": "50ETF",
+        "code": "510050",
+        "change": -0.07
+      },
+      {
+        "name": "300ETF",
+        "code": "510300",
+        "change": 0.61
+      },
+      {
+        "name": "中证A500ETF",
+        "code": "159338",
+        "change": 0.75
+      },
+      {
+        "name": "中证500ETF",
+        "code": "510500",
+        "change": 0.92
+      },
+      {
+        "name": "中证1000ETF",
+        "code": "512100",
+        "change": 1.02
+      },
+      {
+        "name": "科创50ETF",
+        "code": "588000",
+        "change": -0.45
+      },
+      {
+        "name": "科创100ETF",
+        "code": "588190",
+        "change": -0.19
+      },
+      {
+        "name": "红利ETF",
+        "code": "510880",
+        "change": 1.33
+      },
+      {
+        "name": "红利低波ETF",
+        "code": "512890",
+        "change": 0.94
+      }
+    ]
+  },
+  "meta": {
+    "source": "fixture",
+    "asOf": "2026-07-29T15:00:00.000+08:00",
+    "version": "market-fixture-v1",
+    "stale": false
+  }
+}
