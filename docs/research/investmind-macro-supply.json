@@ -1,0 +1,1864 @@
+{
+  "catalogVersion": "2026-10-08-v9",
+  "overlap": {
+    "dailyDays": 31,
+    "monthlyMonths": 18,
+    "quarterlyQuarters": 12
+  },
+  "schedule": {
+    "enabled": true,
+    "weekday": "mon",
+    "time": "09:00:00",
+    "zone": "Asia/Shanghai",
+    "catchupOnStart": true,
+    "historyYears": 10
+  },
+  "routes": {
+    "transmission": {
+      "pointerVersion": "20261108-366f83bfc727036c",
+      "asOf": "2026-11-08T14:51:37.835243+00:00",
+      "historyVersions": 58,
+      "historyBusinessInstants": 55,
+      "historyRange": [
+        "2026-08-24T00:00:00+00:00",
+        "2026-11-08T14:51:37.835243+00:00"
+      ],
+      "routeCases": [
+        {
+          "params": {},
+          "status": 200
+        },
+        {
+          "params": {
+            "version": "20261108-366f83bfc727036c"
+          },
+          "status": 200
+        },
+        {
+          "params": {
+            "version": "20260824-c19d525ee7f0e7b2"
+          },
+          "status": 200
+        },
+        {
+          "params": {
+            "version": "no-such-audit-version"
+          },
+          "status": 404
+        },
+        {
+          "params": {
+            "version": ""
+          },
+          "status": 422
+        },
+        {
+          "params": {
+            "view": "initial"
+          },
+          "status": 200
+        },
+        {
+          "params": {
+            "view": "initial",
+            "version": "20261108-366f83bfc727036c"
+          },
+          "status": 200
+        },
+        {
+          "params": {
+            "view": "invalid"
+          },
+          "status": 422
+        }
+      ]
+    },
+    "insights": {
+      "pointerVersion": "20261108-366f83bfc727036c",
+      "asOf": "2026-11-08T14:51:37.835243+00:00",
+      "historyVersions": 58,
+      "historyBusinessInstants": 55,
+      "historyRange": [
+        "2026-08-24T00:00:00+00:00",
+        "2026-11-08T14:51:37.835243+00:00"
+      ],
+      "routeCases": [
+        {
+          "params": {},
+          "status": 200
+        },
+        {
+          "params": {
+            "version": "20261108-366f83bfc727036c"
+          },
+          "status": 200
+        },
+        {
+          "params": {
+            "version": "20260824-c19d525ee7f0e7b2"
+          },
+          "status": 200
+        },
+        {
+          "params": {
+            "version": "no-such-audit-version"
+          },
+          "status": 404
+        },
+        {
+          "params": {
+            "version": ""
+          },
+          "status": 422
+        }
+      ]
+    }
+  },
+  "transmissionKeys": [
+    "analysis",
+    "enterpriseAnalysis",
+    "extensionInsights",
+    "missingData",
+    "seriesStatus",
+    "transmission"
+  ],
+  "insightsKeys": [
+    "compassPoints",
+    "derivedInsights",
+    "extensionInsights",
+    "missingData",
+    "missingSeries",
+    "quality",
+    "sandboxGroups",
+    "sandboxIndicators",
+    "sandboxMonths",
+    "sandboxPresets",
+    "seriesStatus",
+    "stateInsights",
+    "statusCards",
+    "trendDefinitions"
+  ],
+  "series": {
+    "cn.gdp.real_yoy": {
+      "name": "中国实际 GDP 同比",
+      "frequency": "quarterly",
+      "unit": "%",
+      "configuredSources": [
+        {
+          "provider": "tushare",
+          "locator": "cn_gdp",
+          "field": "gdp_yoy",
+          "transform": "identity"
+        }
+      ],
+      "status": {
+        "id": "cn.gdp.real_yoy",
+        "name": "中国实际 GDP 同比",
+        "region": "CN",
+        "category": "growth",
+        "frequency": "quarterly",
+        "unit": "%",
+        "actualSource": "tushare",
+        "sourceUrl": "https://tushare.pro/document/2",
+        "fallbackUsed": false,
+        "stale": false,
+        "staleReason": null,
+        "observedAt": "2026-07-01",
+        "releasedAt": "2026-10-21T11:54:10.990364+00:00",
+        "lastCheckedAt": "2026-10-21T11:54:10.618175+00:00",
+        "lastSuccessAt": "2026-10-21T11:54:10.618175+00:00"
+      },
+      "currentAudit": {
+        "id": "cn.gdp.real_yoy",
+        "enabled": true,
+        "status": "success",
+        "checkedAt": "2026-10-21T11:54:10.618175+00:00",
+        "successAt": "2026-10-21T11:54:10.618175+00:00",
+        "errorCode": null
+      },
+      "periodCount": 40,
+      "firstPeriod": "2016-10-01",
+      "latestPeriod": "2026-07-01",
+      "latest": "4.6000000000",
+      "latestCoreId": 15415,
+      "sameSourceMultiVersionPeriods": 0,
+      "sameSourceValueRevisions": 0,
+      "exampleRevision": [],
+      "latestRawSample": {
+        "rawId": 2794,
+        "batchId": "7c3d48ea-94a1-5ea4-b313-6cb450ce5ce8",
+        "capturedAt": "2026-10-21T11:54:10.974827+00:00",
+        "requestWindow": {
+          "start": "2024-01-01",
+          "end": "2026-10-21",
+          "asOf": "2026-10-21T11:54:10.618175+00:00"
+        },
+        "transform": "identity",
+        "reconstructed": "4.6",
+        "sourceField": "gdp_yoy",
+        "status": "raw-equal"
+      }
+    },
+    "cn.cpi.yoy": {
+      "name": "中国 CPI 同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "configuredSources": [
+        {
+          "provider": "tushare",
+          "locator": "cn_cpi",
+          "field": "nt_yoy",
+          "transform": "identity"
+        }
+      ],
+      "status": {
+        "id": "cn.cpi.yoy",
+        "name": "中国 CPI 同比",
+        "region": "CN",
+        "category": "inflation",
+        "frequency": "monthly",
+        "unit": "%",
+        "actualSource": "tushare",
+        "sourceUrl": "https://tushare.pro/document/2",
+        "fallbackUsed": false,
+        "stale": false,
+        "staleReason": null,
+        "observedAt": "2026-09-01",
+        "releasedAt": "2026-10-21T11:54:12.756923+00:00",
+        "lastCheckedAt": "2026-10-21T11:54:10.618175+00:00",
+        "lastSuccessAt": "2026-10-21T11:54:10.618175+00:00"
+      },
+      "currentAudit": {
+        "id": "cn.cpi.yoy",
+        "enabled": true,
+        "status": "success",
+        "checkedAt": "2026-10-21T11:54:10.618175+00:00",
+        "successAt": "2026-10-21T11:54:10.618175+00:00",
+        "errorCode": null
+      },
+      "periodCount": 120,
+      "firstPeriod": "2016-10-01",
+      "latestPeriod": "2026-09-01",
+      "latest": "0.9000000000",
+      "latestCoreId": 15416,
+      "sameSourceMultiVersionPeriods": 0,
+      "sameSourceValueRevisions": 0,
+      "exampleRevision": [],
+      "latestRawSample": {
+        "rawId": 2795,
+        "batchId": "46d892d7-fdf6-5b4e-99f2-3fda06880513",
+        "capturedAt": "2026-10-21T11:54:12.745124+00:00",
+        "requestWindow": {
+          "start": "2025-04-01",
+          "end": "2026-10-21",
+          "asOf": "2026-10-21T11:54:10.618175+00:00"
+        },
+        "transform": "identity",
+        "reconstructed": "0.9",
+        "sourceField": "nt_yoy",
+        "status": "raw-equal"
+      }
+    },
+    "cn.cpi.core_yoy": {
+      "name": "中国核心 CPI 同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "configuredSources": [
+        {
+          "provider": "nbs",
+          "locator": "不包括食品和能源",
+          "field": "同比涨跌幅（%）",
+          "transform": "identity"
+        }
+      ],
+      "status": {
+        "id": "cn.cpi.core_yoy",
+        "name": "中国核心 CPI 同比",
+        "region": "CN",
+        "category": "inflation",
+        "frequency": "monthly",
+        "unit": "%",
+        "actualSource": "nbs",
+        "sourceUrl": "https://www.stats.gov.cn/sj/zxfb/202610/t20261014_1965477.html",
+        "fallbackUsed": false,
+        "stale": false,
+        "staleReason": null,
+        "observedAt": "2026-09-01",
+        "releasedAt": "2026-10-14T01:30:00+00:00",
+        "lastCheckedAt": "2026-10-21T11:53:44.400372+00:00",
+        "lastSuccessAt": "2026-10-21T11:53:44.400372+00:00"
+      },
+      "currentAudit": {
+        "id": "cn.cpi.core_yoy",
+        "enabled": true,
+        "status": "success",
+        "checkedAt": "2026-10-21T11:53:44.400372+00:00",
+        "successAt": "2026-10-21T11:53:44.400372+00:00",
+        "errorCode": null
+      },
+      "periodCount": 121,
+      "firstPeriod": "2016-09-01",
+      "latestPeriod": "2026-09-01",
+      "latest": "1.0000000000",
+      "latestCoreId": 15390,
+      "sameSourceMultiVersionPeriods": 0,
+      "sameSourceValueRevisions": 0,
+      "exampleRevision": [],
+      "latestRawSample": {
+        "rawId": 2792,
+        "batchId": "ccbf3007-daee-55a1-87c9-1c935985c20f",
+        "capturedAt": "2026-10-21T11:54:07.737897+00:00",
+        "requestWindow": {
+          "start": "2026-07-01",
+          "end": "2026-10-21",
+          "asOf": "2026-10-21T11:53:44.400372+00:00"
+        },
+        "transform": "identity",
+        "reconstructed": "1.0",
+        "sourceField": "同比涨跌幅（%）",
+        "status": "raw-equal"
+      }
+    },
+    "cn.ppi.yoy": {
+      "name": "中国 PPI 同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "configuredSources": [
+        {
+          "provider": "tushare",
+          "locator": "cn_ppi",
+          "field": "ppi_yoy",
+          "transform": "identity"
+        }
+      ],
+      "status": {
+        "id": "cn.ppi.yoy",
+        "name": "中国 PPI 同比",
+        "region": "CN",
+        "category": "inflation",
+        "frequency": "monthly",
+        "unit": "%",
+        "actualSource": "tushare",
+        "sourceUrl": "https://tushare.pro/document/2",
+        "fallbackUsed": false,
+        "stale": false,
+        "staleReason": null,
+        "observedAt": "2026-09-01",
+        "releasedAt": "2026-10-21T11:54:14.760169+00:00",
+        "lastCheckedAt": "2026-10-21T11:54:10.618175+00:00",
+        "lastSuccessAt": "2026-10-21T11:54:10.618175+00:00"
+      },
+      "currentAudit": {
+        "id": "cn.ppi.yoy",
+        "enabled": true,
+        "status": "success",
+        "checkedAt": "2026-10-21T11:54:10.618175+00:00",
+        "successAt": "2026-10-21T11:54:10.618175+00:00",
+        "errorCode": null
+      },
+      "periodCount": 120,
+      "firstPeriod": "2016-10-01",
+      "latestPeriod": "2026-09-01",
+      "latest": "5.0000000000",
+      "latestCoreId": 15417,
+      "sameSourceMultiVersionPeriods": 0,
+      "sameSourceValueRevisions": 0,
+      "exampleRevision": [],
+      "latestRawSample": {
+        "rawId": 2796,
+        "batchId": "b0ba7aee-0eaa-505b-9daa-01df39fdea23",
+        "capturedAt": "2026-10-21T11:54:14.748363+00:00",
+        "requestWindow": {
+          "start": "2025-04-01",
+          "end": "2026-10-21",
+          "asOf": "2026-10-21T11:54:10.618175+00:00"
+        },
+        "transform": "identity",
+        "reconstructed": "5.0",
+        "sourceField": "ppi_yoy",
+        "status": "raw-equal"
+      }
+    },
+    "cn.pmi.manufacturing": {
+      "name": "中国制造业 PMI",
+      "frequency": "monthly",
+      "unit": "index",
+      "configuredSources": [
+        {
+          "provider": "tushare",
+          "locator": "cn_pmi",
+          "field": "pmi010000",
+          "transform": "identity"
+        }
+      ],
+      "status": {
+        "id": "cn.pmi.manufacturing",
+        "name": "中国制造业 PMI",
+        "region": "CN",
+        "category": "growth",
+        "frequency": "monthly",
+        "unit": "index",
+        "actualSource": "tushare",
+        "sourceUrl": "https://tushare.pro/document/2",
+        "fallbackUsed": false,
+        "stale": false,
+        "staleReason": null,
+        "observedAt": "2026-09-01",
+        "releasedAt": "2026-09-30T13:36:07.918152+00:00",
+        "lastCheckedAt": "2026-10-21T11:54:10.618175+00:00",
+        "lastSuccessAt": "2026-10-21T11:54:10.618175+00:00"
+      },
+      "currentAudit": {
+        "id": "cn.pmi.manufacturing",
+        "enabled": true,
+        "status": "success",
+        "checkedAt": "2026-10-21T11:54:10.618175+00:00",
+        "successAt": "2026-10-21T11:54:10.618175+00:00",
+        "errorCode": null
+      },
+      "periodCount": 120,
+      "firstPeriod": "2016-10-01",
+      "latestPeriod": "2026-09-01",
+      "latest": "50.1000000000",
+      "latestCoreId": 10084,
+      "sameSourceMultiVersionPeriods": 0,
+      "sameSourceValueRevisions": 0,
+      "exampleRevision": [],
+      "latestRawSample": {
+        "rawId": 2797,
+        "batchId": "98c0dfa7-d654-5341-af24-c4e3621aef78",
+        "capturedAt": "2026-10-21T11:54:16.761820+00:00",
+        "requestWindow": {
+          "start": "2025-04-01",
+          "end": "2026-10-21",
+          "asOf": "2026-10-21T11:54:10.618175+00:00"
+        },
+        "transform": "identity",
+        "reconstructed": "50.1",
+        "sourceField": "pmi010000",
+        "status": "raw-equal"
+      }
+    },
+    "cn.industry.value_added_yoy": {
+      "name": "中国规模以上工业增加值同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "configuredSources": [
+        {
+          "provider": "nbs",
+          "locator": "规模以上工业增加值",
+          "field": "同比实际增长（%）",
+          "transform": "identity"
+        }
+      ],
+      "status": {
+        "id": "cn.industry.value_added_yoy",
+        "name": "中国规模以上工业增加值同比",
+        "region": "CN",
+        "category": "growth",
+        "frequency": "monthly",
+        "unit": "%",
+        "actualSource": "nbs",
+        "sourceUrl": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965617.html",
+        "fallbackUsed": false,
+        "stale": false,
+        "staleReason": null,
+        "observedAt": "2026-09-01",
+        "releasedAt": "2026-10-19T02:00:00+00:00",
+        "lastCheckedAt": "2026-10-21T11:53:44.400372+00:00",
+        "lastSuccessAt": "2026-10-21T11:53:44.400372+00:00"
+      },
+      "currentAudit": {
+        "id": "cn.industry.value_added_yoy",
+        "enabled": true,
+        "status": "success",
+        "checkedAt": "2026-10-21T11:53:44.400372+00:00",
+        "successAt": "2026-10-21T11:53:44.400372+00:00",
+        "errorCode": null
+      },
+      "periodCount": 101,
+      "firstPeriod": "2016-09-01",
+      "latestPeriod": "2026-09-01",
+      "latest": "5.5000000000",
+      "latestCoreId": 15414,
+      "sameSourceMultiVersionPeriods": 0,
+      "sameSourceValueRevisions": 0,
+      "exampleRevision": [],
+      "latestRawSample": {
+        "rawId": 2793,
+        "batchId": "ecd6e6c5-6d35-5ea4-ba87-effe79f0ece2",
+        "capturedAt": "2026-10-21T11:54:10.383383+00:00",
+        "requestWindow": {
+          "start": "2026-07-01",
+          "end": "2026-10-21",
+          "asOf": "2026-10-21T11:53:44.400372+00:00"
+        },
+        "transform": "identity",
+        "reconstructed": "5.5",
+        "sourceField": "同比实际增长（%）",
+        "status": "raw-equal"
+      }
+    },
+    "cn.money.m1_yoy": {
+      "name": "中国 M1 同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "configuredSources": [
+        {
+          "provider": "tushare",
+          "locator": "cn_m",
+          "field": "m1_yoy",
+          "transform": "identity"
+        }
+      ],
+      "status": {
+        "id": "cn.money.m1_yoy",
+        "name": "中国 M1 同比",
+        "region": "CN",
+        "category": "money_credit",
+        "frequency": "monthly",
+        "unit": "%",
+        "actualSource": "tushare",
+        "sourceUrl": "https://tushare.pro/document/2",
+        "fallbackUsed": false,
+        "stale": false,
+        "staleReason": null,
+        "observedAt": "2026-09-01",
+        "releasedAt": "2026-10-21T11:54:18.765114+00:00",
+        "lastCheckedAt": "2026-10-21T11:54:10.618175+00:00",
+        "lastSuccessAt": "2026-10-21T11:54:10.618175+00:00"
+      },
+      "currentAudit": {
+        "id": "cn.money.m1_yoy",
+        "enabled": true,
+        "status": "success",
+        "checkedAt": "2026-10-21T11:54:10.618175+00:00",
+        "successAt": "2026-10-21T11:54:10.618175+00:00",
+        "errorCode": null
+      },
+      "periodCount": 120,
+      "firstPeriod": "2016-10-01",
+      "latestPeriod": "2026-09-01",
+      "latest": "3.2000000000",
+      "latestCoreId": 15418,
+      "sameSourceMultiVersionPeriods": 0,
+      "sameSourceValueRevisions": 0,
+      "exampleRevision": [],
+      "latestRawSample": {
+        "rawId": 2798,
+        "batchId": "b90b9962-d173-578d-9b37-a36a19041561",
+        "capturedAt": "2026-10-21T11:54:18.752893+00:00",
+        "requestWindow": {
+          "start": "2025-04-01",
+          "end": "2026-10-21",
+          "asOf": "2026-10-21T11:54:10.618175+00:00"
+        },
+        "transform": "identity",
+        "reconstructed": "3.2",
+        "sourceField": "m1_yoy",
+        "status": "raw-equal"
+      }
+    },
+    "cn.money.m2_yoy": {
+      "name": "中国 M2 同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "configuredSources": [
+        {
+          "provider": "tushare",
+          "locator": "cn_m",
+          "field": "m2_yoy",
+          "transform": "identity"
+        }
+      ],
+      "status": {
+        "id": "cn.money.m2_yoy",
+        "name": "中国 M2 同比",
+        "region": "CN",
+        "category": "money_credit",
+        "frequency": "monthly",
+        "unit": "%",
+        "actualSource": "tushare",
+        "sourceUrl": "https://tushare.pro/document/2",
+        "fallbackUsed": false,
+        "stale": false,
+        "staleReason": null,
+        "observedAt": "2026-09-01",
+        "releasedAt": "2026-10-21T11:54:20.762226+00:00",
+        "lastCheckedAt": "2026-10-21T11:54:10.618175+00:00",
+        "lastSuccessAt": "2026-10-21T11:54:10.618175+00:00"
+      },
+      "currentAudit": {
+        "id": "cn.money.m2_yoy",
+        "enabled": true,
+        "status": "success",
+        "checkedAt": "2026-10-21T11:54:10.618175+00:00",
+        "successAt": "2026-10-21T11:54:10.618175+00:00",
+        "errorCode": null
+      },
+      "periodCount": 120,
+      "firstPeriod": "2016-10-01",
+      "latestPeriod": "2026-09-01",
+      "latest": "7.2000000000",
+      "latestCoreId": 15419,
+      "sameSourceMultiVersionPeriods": 0,
+      "sameSourceValueRevisions": 0,
+      "exampleRevision": [],
+      "latestRawSample": {
+        "rawId": 2799,
+        "batchId": "74e77ef5-8e5e-5123-9dd0-ff4a188e8e7c",
+        "capturedAt": "2026-10-21T11:54:20.749634+00:00",
+        "requestWindow": {
+          "start": "2025-04-01",
+          "end": "2026-10-21",
+          "asOf": "2026-10-21T11:54:10.618175+00:00"
+        },
+        "transform": "identity",
+        "reconstructed": "7.2",
+        "sourceField": "m2_yoy",
+        "status": "raw-equal"
+      }
+    },
+    "cn.credit.tsf_stock_yoy": {
+      "name": "中国社会融资规模存量同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "configuredSources": [],
+      "status": {
+        "id": "cn.credit.tsf_stock_yoy",
+        "name": "中国社会融资规模存量同比",
+        "region": "CN",
+        "category": "money_credit",
+        "frequency": "monthly",
+        "unit": "%",
+        "actualSource": null,
+        "sourceUrl": null,
+        "fallbackUsed": false,
+        "stale": true,
+        "staleReason": "missing",
+        "observedAt": null,
+        "releasedAt": null,
+        "lastCheckedAt": "2026-09-30T14:25:45.420503+00:00",
+        "lastSuccessAt": null
+      },
+      "currentAudit": {
+        "id": "cn.credit.tsf_stock_yoy",
+        "enabled": false,
+        "status": "paused",
+        "checkedAt": "2026-09-30T14:25:45.420503+00:00",
+        "successAt": null,
+        "errorCode": "MACRO_NO_SOURCE"
+      },
+      "periodCount": 0,
+      "firstPeriod": null,
+      "latestPeriod": null,
+      "latest": null,
+      "latestCoreId": null,
+      "sameSourceMultiVersionPeriods": 0,
+      "sameSourceValueRevisions": 0,
+      "exampleRevision": []
+    },
+    "cn.rate.dr007": {
+      "name": "中国 DR007",
+      "frequency": "daily",
+      "unit": "%",
+      "configuredSources": [
+        {
+          "provider": "tushare",
+          "locator": "repo_daily",
+          "field": "weight",
+          "transform": "identity"
+        }
+      ],
+      "status": {
+        "id": "cn.rate.dr007",
+        "name": "中国 DR007",
+        "region": "CN",
+        "category": "rates_fx",
+        "frequency": "daily",
+        "unit": "%",
+        "actualSource": "tushare",
+        "sourceUrl": "https://tushare.pro/document/2?doc_id=256",
+        "fallbackUsed": false,
+        "stale": true,
+        "staleReason": "MACRO_VALUE_EXPIRED",
+        "observedAt": "2026-10-21",
+        "releasedAt": "2026-10-21T11:53:44.034890+00:00",
+        "lastCheckedAt": "2026-10-21T11:53:43.647116+00:00",
+        "lastSuccessAt": "2026-10-21T11:53:43.647116+00:00"
+      },
+      "currentAudit": {
+        "id": "cn.rate.dr007",
+        "enabled": true,
+        "status": "success",
+        "checkedAt": "2026-10-21T11:53:43.647116+00:00",
+        "successAt": "2026-10-21T11:53:43.647116+00:00",
+        "errorCode": null
+      },
+      "periodCount": 2504,
+      "firstPeriod": "2016-10-08",
+      "latestPeriod": "2026-10-21",
+      "latest": "1.3246000000",
+      "latestCoreId": 15408,
+      "sameSourceMultiVersionPeriods": 0,
+      "sameSourceValueRevisions": 0,
+      "exampleRevision": [],
+      "latestRawSample": {
+        "rawId": 2791,
+        "batchId": "8fb037ac-e722-5d40-ab69-f4ee0c85568e",
+        "capturedAt": "2026-10-21T11:53:44.023473+00:00",
+        "requestWindow": {
+          "start": "2026-09-21",
+          "end": "2026-10-21",
+          "asOf": "2026-10-21T11:53:43.647116+00:00"
+        },
+        "transform": "identity",
+        "reconstructed": "1.3246",
+        "sourceField": "weight",
+        "status": "raw-equal"
+      }
+    },
+    "cn.rate.govbond_10y": {
+      "name": "中国 10 年期国债收益率",
+      "frequency": "daily",
+      "unit": "%",
+      "configuredSources": [
+        {
+          "provider": "chinamoney",
+          "locator": "SddsIntrRateGovYldHis",
+          "field": "tenRate",
+          "transform": "identity"
+        }
+      ],
+      "status": {
+        "id": "cn.rate.govbond_10y",
+        "name": "中国 10 年期国债收益率",
+        "region": "CN",
+        "category": "rates_fx",
+        "frequency": "daily",
+        "unit": "%",
+        "actualSource": "chinamoney",
+        "sourceUrl": "https://www.chinamoney.com.cn/ags/ms/cm-u-bk-currency/SddsIntrRateGovYldHis",
+        "fallbackUsed": false,
+        "stale": true,
+        "staleReason": "MACRO_VALUE_EXPIRED",
+        "observedAt": "2026-10-21",
+        "releasedAt": "2026-10-21T11:53:38.095782+00:00",
+        "lastCheckedAt": "2026-10-21T11:53:37.662271+00:00",
+        "lastSuccessAt": "2026-10-21T11:53:37.662271+00:00"
+      },
+      "currentAudit": {
+        "id": "cn.rate.govbond_10y",
+        "enabled": true,
+        "status": "success",
+        "checkedAt": "2026-10-21T11:53:37.662271+00:00",
+        "successAt": "2026-10-21T11:53:37.662271+00:00",
+        "errorCode": null
+      },
+      "periodCount": 2504,
+      "firstPeriod": "2016-10-08",
+      "latestPeriod": "2026-10-21",
+      "latest": "1.6333000000",
+      "latestCoreId": 15403,
+      "sameSourceMultiVersionPeriods": 0,
+      "sameSourceValueRevisions": 0,
+      "exampleRevision": [],
+      "latestRawSample": {
+        "rawId": 2790,
+        "batchId": "a63d20a7-1a6e-509f-82c4-c88cc85889ce",
+        "capturedAt": "2026-10-21T11:53:38.080754+00:00",
+        "requestWindow": {
+          "start": "2026-09-21",
+          "end": "2026-10-21",
+          "asOf": "2026-10-21T11:53:37.662271+00:00"
+        },
+        "transform": "identity",
+        "reconstructed": "1.6333",
+        "sourceField": "tenRate",
+        "status": "raw-equal"
+      }
+    },
+    "cn.fx.usdcny": {
+      "name": "美元兑人民币汇率",
+      "frequency": "daily",
+      "unit": "CNY per USD",
+      "configuredSources": [],
+      "status": {
+        "id": "cn.fx.usdcny",
+        "name": "美元兑人民币汇率",
+        "region": "CN",
+        "category": "rates_fx",
+        "frequency": "daily",
+        "unit": "CNY per USD",
+        "actualSource": null,
+        "sourceUrl": null,
+        "fallbackUsed": false,
+        "stale": true,
+        "staleReason": "missing",
+        "observedAt": null,
+        "releasedAt": null,
+        "lastCheckedAt": "2026-09-30T14:25:45.420503+00:00",
+        "lastSuccessAt": null
+      },
+      "currentAudit": {
+        "id": "cn.fx.usdcny",
+        "enabled": false,
+        "status": "paused",
+        "checkedAt": "2026-09-30T14:25:45.420503+00:00",
+        "successAt": null,
+        "errorCode": "MACRO_NO_SOURCE"
+      },
+      "periodCount": 0,
+      "firstPeriod": null,
+      "latestPeriod": null,
+      "latest": null,
+      "latestCoreId": null,
+      "sameSourceMultiVersionPeriods": 0,
+      "sameSourceValueRevisions": 0,
+      "exampleRevision": []
+    },
+    "us.gdp.real_qoq_annualized": {
+      "name": "美国实际 GDP 环比折年率",
+      "frequency": "quarterly",
+      "unit": "%",
+      "configuredSources": [
+        {
+          "provider": "fred",
+          "locator": "series_observations",
+          "field": "value",
+          "transform": "identity"
+        }
+      ],
+      "status": {
+        "id": "us.gdp.real_qoq_annualized",
+        "name": "美国实际 GDP 环比折年率",
+        "region": "US",
+        "category": "growth",
+        "frequency": "quarterly",
+        "unit": "%",
+        "actualSource": "fred",
+        "sourceUrl": "https://api.stlouisfed.org/fred/series/observations",
+        "fallbackUsed": false,
+        "stale": true,
+        "staleReason": "MACRO_VALUE_EXPIRED",
+        "observedAt": "2026-04-01",
+        "releasedAt": "2026-09-30T00:00:00+00:00",
+        "lastCheckedAt": "2026-10-21T11:54:21.074284+00:00",
+        "lastSuccessAt": "2026-10-21T11:54:21.074284+00:00"
+      },
+      "currentAudit": {
+        "id": "us.gdp.real_qoq_annualized",
+        "enabled": true,
+        "status": "success",
+        "checkedAt": "2026-10-21T11:54:21.074284+00:00",
+        "successAt": "2026-10-21T11:54:21.074284+00:00",
+        "errorCode": null
+      },
+      "periodCount": 39,
+      "firstPeriod": "2016-10-01",
+      "latestPeriod": "2026-04-01",
+      "latest": "2.2000000000",
+      "latestCoreId": 10110,
+      "sameSourceMultiVersionPeriods": 39,
+      "sameSourceValueRevisions": 39,
+      "exampleRevision": [
+        {
+          "id": 635,
+          "period": "2016-10-01",
+          "value": "1.9000000000",
+          "source": "fred",
+          "releasedAt": "2017-01-27T00:00:00+00:00",
+          "revision": "2017-01-27"
+        },
+        {
+          "id": 636,
+          "period": "2016-10-01",
+          "value": "2.1000000000",
+          "source": "fred",
+          "releasedAt": "2017-03-30T00:00:00+00:00",
+          "revision": "2017-03-30"
+        },
+        {
+          "id": 637,
+          "period": "2016-10-01",
+          "value": "1.8000000000",
+          "source": "fred",
+          "releasedAt": "2017-07-28T00:00:00+00:00",
+          "revision": "2017-07-28"
+        },
+        {
+          "id": 638,
+          "period": "2016-10-01",
+          "value": "2.0000000000",
+          "source": "fred",
+          "releasedAt": "2019-07-26T00:00:00+00:00",
+          "revision": "2019-07-26"
+        },
+        {
+          "id": 639,
+          "period": "2016-10-01",
+          "value": "2.5000000000",
+          "source": "fred",
+          "releasedAt": "2020-07-30T00:00:00+00:00",
+          "revision": "2020-07-30"
+        },
+        {
+          "id": 640,
+          "period": "2016-10-01",
+          "value": "2.0000000000",
+          "source": "fred",
+          "releasedAt": "2021-07-29T00:00:00+00:00",
+          "revision": "2021-07-29"
+        },
+        {
+          "id": 641,
+          "period": "2016-10-01",
+          "value": "2.2000000000",
+          "source": "fred",
+          "releasedAt": "2023-09-28T00:00:00+00:00",
+          "revision": "2023-09-28"
+        }
+      ],
+      "latestRawSample": {
+        "rawId": 2800,
+        "batchId": "4cee26f3-f3ed-5bf7-9fef-d5682db42b9b",
+        "capturedAt": "2026-10-21T11:54:24.261829+00:00",
+        "requestWindow": {
+          "start": "2024-01-01",
+          "end": "2026-10-21",
+          "asOf": "2026-10-21T11:54:21.074284+00:00"
+        },
+        "transform": "identity",
+        "reconstructed": "2.2",
+        "sourceField": "value",
+        "status": "raw-equal"
+      }
+    },
+    "us.cpi.yoy": {
+      "name": "美国 CPI 同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "configuredSources": [
+        {
+          "provider": "fred",
+          "locator": "series_observations",
+          "field": "value",
+          "transform": "pc1"
+        },
+        {
+          "provider": "bls",
+          "locator": "publicAPI/v1/timeseries/data",
+          "field": "value",
+          "transform": "pc1"
+        }
+      ],
+      "status": {
+        "id": "us.cpi.yoy",
+        "name": "美国 CPI 同比",
+        "region": "US",
+        "category": "inflation",
+        "frequency": "monthly",
+        "unit": "%",
+        "actualSource": "fred",
+        "sourceUrl": "https://api.stlouisfed.org/fred/series/observations",
+        "fallbackUsed": false,
+        "stale": false,
+        "staleReason": null,
+        "observedAt": "2026-09-01",
+        "releasedAt": "2026-10-14T00:00:00+00:00",
+        "lastCheckedAt": "2026-10-21T11:54:21.074284+00:00",
+        "lastSuccessAt": "2026-10-21T11:54:21.074284+00:00"
+      },
+      "currentAudit": {
+        "id": "us.cpi.yoy",
+        "enabled": true,
+        "status": "success",
+        "checkedAt": "2026-10-21T11:54:21.074284+00:00",
+        "successAt": "2026-10-21T11:54:21.074284+00:00",
+        "errorCode": null
+      },
+      "periodCount": 119,
+      "firstPeriod": "2016-10-01",
+      "latestPeriod": "2026-09-01",
+      "latest": "3.7172508443",
+      "latestCoreId": 15420,
+      "sameSourceMultiVersionPeriods": 110,
+      "sameSourceValueRevisions": 110,
+      "exampleRevision": [
+        {
+          "id": 7220,
+          "period": "2017-01-01",
+          "value": "2.5417251140",
+          "source": "fred",
+          "releasedAt": "2017-02-15T00:00:00+00:00",
+          "revision": "2017-02-15"
+        },
+        {
+          "id": 7221,
+          "period": "2017-01-01",
+          "value": "2.5370813900",
+          "source": "fred",
+          "releasedAt": "2018-02-14T00:00:00+00:00",
+          "revision": "2018-02-14"
+        },
+        {
+          "id": 7222,
+          "period": "2017-01-01",
+          "value": "2.5004940441",
+          "source": "fred",
+          "releasedAt": "2019-02-11T00:00:00+00:00",
+          "revision": "2019-02-11"
+        },
+        {
+          "id": 7223,
+          "period": "2017-01-01",
+          "value": "2.4765901264",
+          "source": "fred",
+          "releasedAt": "2020-02-11T00:00:00+00:00",
+          "revision": "2020-02-11"
+        },
+        {
+          "id": 7224,
+          "period": "2017-01-01",
+          "value": "2.5112349149",
+          "source": "fred",
+          "releasedAt": "2021-02-08T00:00:00+00:00",
+          "revision": "2021-02-08"
+        },
+        {
+          "id": 7225,
+          "period": "2017-01-01",
+          "value": "2.5103933483",
+          "source": "fred",
+          "releasedAt": "2022-02-08T00:00:00+00:00",
+          "revision": "2022-02-08"
+        }
+      ],
+      "latestRawSample": {
+        "rawId": 2801,
+        "batchId": "c6e6c3f8-bc01-52ca-b04b-071d25c05532",
+        "capturedAt": "2026-10-21T11:54:25.399497+00:00",
+        "requestWindow": {
+          "start": "2025-04-01",
+          "end": "2026-10-21",
+          "asOf": "2026-10-21T11:54:21.074284+00:00"
+        },
+        "transform": "pc1",
+        "reconstructed": "3.717250844268994124813027200",
+        "sourceField": "value",
+        "status": "raw-equal"
+      }
+    },
+    "us.cpi.core_yoy": {
+      "name": "美国核心 CPI 同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "configuredSources": [
+        {
+          "provider": "fred",
+          "locator": "series_observations",
+          "field": "value",
+          "transform": "pc1"
+        },
+        {
+          "provider": "bls",
+          "locator": "publicAPI/v1/timeseries/data",
+          "field": "value",
+          "transform": "pc1"
+        }
+      ],
+      "status": {
+        "id": "us.cpi.core_yoy",
+        "name": "美国核心 CPI 同比",
+        "region": "US",
+        "category": "inflation",
+        "frequency": "monthly",
+        "unit": "%",
+        "actualSource": "fred",
+        "sourceUrl": "https://api.stlouisfed.org/fred/series/observations",
+        "fallbackUsed": false,
+        "stale": false,
+        "staleReason": null,
+        "observedAt": "2026-09-01",
+        "releasedAt": "2026-10-14T00:00:00+00:00",
+        "lastCheckedAt": "2026-10-21T11:54:21.074284+00:00",
+        "lastSuccessAt": "2026-10-21T11:54:21.074284+00:00"
+      },
+      "currentAudit": {
+        "id": "us.cpi.core_yoy",
+        "enabled": true,
+        "status": "success",
+        "checkedAt": "2026-10-21T11:54:21.074284+00:00",
+        "successAt": "2026-10-21T11:54:21.074284+00:00",
+        "errorCode": null
+      },
+      "periodCount": 119,
+      "firstPeriod": "2016-10-01",
+      "latestPeriod": "2026-09-01",
+      "latest": "2.5658408440",
+      "latestCoreId": 15421,
+      "sameSourceMultiVersionPeriods": 110,
+      "sameSourceValueRevisions": 110,
+      "exampleRevision": [
+        {
+          "id": 7754,
+          "period": "2016-10-01",
+          "value": "2.1665893862",
+          "source": "fred",
+          "releasedAt": "2016-11-17T00:00:00+00:00",
+          "revision": "2016-11-17"
+        },
+        {
+          "id": 7755,
+          "period": "2016-10-01",
+          "value": "2.1713530746",
+          "source": "fred",
+          "releasedAt": "2017-02-13T00:00:00+00:00",
+          "revision": "2017-02-13"
+        },
+        {
+          "id": 7756,
+          "period": "2016-10-01",
+          "value": "2.1738149447",
+          "source": "fred",
+          "releasedAt": "2018-02-14T00:00:00+00:00",
+          "revision": "2018-02-14"
+        },
+        {
+          "id": 7757,
+          "period": "2016-10-01",
+          "value": "2.1810112148",
+          "source": "fred",
+          "releasedAt": "2019-02-11T00:00:00+00:00",
+          "revision": "2019-02-11"
+        },
+        {
+          "id": 7758,
+          "period": "2016-10-01",
+          "value": "2.1741984182",
+          "source": "fred",
+          "releasedAt": "2020-02-11T00:00:00+00:00",
+          "revision": "2020-02-11"
+        },
+        {
+          "id": 7759,
+          "period": "2016-10-01",
+          "value": "2.2045551508",
+          "source": "fred",
+          "releasedAt": "2021-02-08T00:00:00+00:00",
+          "revision": "2021-02-08"
+        }
+      ],
+      "latestRawSample": {
+        "rawId": 2802,
+        "batchId": "26adcb8c-27ac-57b4-bf24-f20f0719ef8a",
+        "capturedAt": "2026-10-21T11:54:26.524462+00:00",
+        "requestWindow": {
+          "start": "2025-04-01",
+          "end": "2026-10-21",
+          "asOf": "2026-10-21T11:54:21.074284+00:00"
+        },
+        "transform": "pc1",
+        "reconstructed": "2.565840844021814792172339300",
+        "sourceField": "value",
+        "status": "raw-equal"
+      }
+    },
+    "us.pce.core_yoy": {
+      "name": "美国核心 PCE 同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "configuredSources": [
+        {
+          "provider": "fred",
+          "locator": "series_observations",
+          "field": "value",
+          "transform": "pc1"
+        }
+      ],
+      "status": {
+        "id": "us.pce.core_yoy",
+        "name": "美国核心 PCE 同比",
+        "region": "US",
+        "category": "inflation",
+        "frequency": "monthly",
+        "unit": "%",
+        "actualSource": "fred",
+        "sourceUrl": "https://api.stlouisfed.org/fred/series/observations",
+        "fallbackUsed": false,
+        "stale": true,
+        "staleReason": "MACRO_VALUE_EXPIRED",
+        "observedAt": "2026-08-01",
+        "releasedAt": "2026-09-30T00:00:00+00:00",
+        "lastCheckedAt": "2026-10-21T11:54:21.074284+00:00",
+        "lastSuccessAt": "2026-10-21T11:54:21.074284+00:00"
+      },
+      "currentAudit": {
+        "id": "us.pce.core_yoy",
+        "enabled": true,
+        "status": "success",
+        "checkedAt": "2026-10-21T11:54:21.074284+00:00",
+        "successAt": "2026-10-21T11:54:21.074284+00:00",
+        "errorCode": null
+      },
+      "periodCount": 119,
+      "firstPeriod": "2016-10-01",
+      "latestPeriod": "2026-08-01",
+      "latest": "3.0075959762",
+      "latestCoreId": 10178,
+      "sameSourceMultiVersionPeriods": 118,
+      "sameSourceValueRevisions": 118,
+      "exampleRevision": [
+        {
+          "id": 8306,
+          "period": "2016-10-01",
+          "value": "1.7385137163",
+          "source": "fred",
+          "releasedAt": "2016-11-30T00:00:00+00:00",
+          "revision": "2016-11-30"
+        },
+        {
+          "id": 8307,
+          "period": "2016-10-01",
+          "value": "1.7694287091",
+          "source": "fred",
+          "releasedAt": "2016-12-22T00:00:00+00:00",
+          "revision": "2016-12-22"
+        },
+        {
+          "id": 8308,
+          "period": "2016-10-01",
+          "value": "1.7639731221",
+          "source": "fred",
+          "releasedAt": "2017-01-30T00:00:00+00:00",
+          "revision": "2017-01-30"
+        },
+        {
+          "id": 8309,
+          "period": "2016-10-01",
+          "value": "1.7357859228",
+          "source": "fred",
+          "releasedAt": "2017-03-01T00:00:00+00:00",
+          "revision": "2017-03-01"
+        },
+        {
+          "id": 8310,
+          "period": "2016-10-01",
+          "value": "1.7521526837",
+          "source": "fred",
+          "releasedAt": "2017-03-31T00:00:00+00:00",
+          "revision": "2017-03-31"
+        },
+        {
+          "id": 8311,
+          "period": "2016-10-01",
+          "value": "1.9145548023",
+          "source": "fred",
+          "releasedAt": "2017-08-01T00:00:00+00:00",
+          "revision": "2017-08-01"
+        },
+        {
+          "id": 8312,
+          "period": "2016-10-01",
+          "value": "1.8630283268",
+          "source": "fred",
+          "releasedAt": "2018-07-31T00:00:00+00:00",
+          "revision": "2018-07-31"
+        },
+        {
+          "id": 8313,
+          "period": "2016-10-01",
+          "value": "1.7856802000",
+          "source": "fred",
+          "releasedAt": "2019-07-30T00:00:00+00:00",
+          "revision": "2019-07-30"
+        },
+        {
+          "id": 8314,
+          "period": "2016-10-01",
+          "value": "1.8393196331",
+          "source": "fred",
+          "releasedAt": "2020-07-31T00:00:00+00:00",
+          "revision": "2020-07-31"
+        },
+        {
+          "id": 8315,
+          "period": "2016-10-01",
+          "value": "1.8201070315",
+          "source": "fred",
+          "releasedAt": "2021-07-30T00:00:00+00:00",
+          "revision": "2021-07-30"
+        },
+        {
+          "id": 8316,
+          "period": "2016-10-01",
+          "value": "1.7824083597",
+          "source": "fred",
+          "releasedAt": "2023-09-29T00:00:00+00:00",
+          "revision": "2023-09-29"
+        }
+      ],
+      "latestRawSample": {
+        "rawId": 2803,
+        "batchId": "2b5f454b-f1df-549b-97df-2e5eeb3b53ff",
+        "capturedAt": "2026-10-21T11:54:28.435492+00:00",
+        "requestWindow": {
+          "start": "2025-04-01",
+          "end": "2026-10-21",
+          "asOf": "2026-10-21T11:54:21.074284+00:00"
+        },
+        "transform": "pc1",
+        "reconstructed": "3.007595976185588174912748900",
+        "sourceField": "value",
+        "status": "raw-equal"
+      }
+    },
+    "us.labor.unemployment_rate": {
+      "name": "美国失业率",
+      "frequency": "monthly",
+      "unit": "%",
+      "configuredSources": [
+        {
+          "provider": "fred",
+          "locator": "series_observations",
+          "field": "value",
+          "transform": "identity"
+        },
+        {
+          "provider": "bls",
+          "locator": "publicAPI/v1/timeseries/data",
+          "field": "value",
+          "transform": "identity"
+        }
+      ],
+      "status": {
+        "id": "us.labor.unemployment_rate",
+        "name": "美国失业率",
+        "region": "US",
+        "category": "labor",
+        "frequency": "monthly",
+        "unit": "%",
+        "actualSource": "fred",
+        "sourceUrl": "https://api.stlouisfed.org/fred/series/observations",
+        "fallbackUsed": false,
+        "stale": false,
+        "staleReason": null,
+        "observedAt": "2026-09-01",
+        "releasedAt": "2026-10-02T00:00:00+00:00",
+        "lastCheckedAt": "2026-10-21T11:54:21.074284+00:00",
+        "lastSuccessAt": "2026-10-21T11:54:21.074284+00:00"
+      },
+      "currentAudit": {
+        "id": "us.labor.unemployment_rate",
+        "enabled": true,
+        "status": "success",
+        "checkedAt": "2026-10-21T11:54:21.074284+00:00",
+        "successAt": "2026-10-21T11:54:21.074284+00:00",
+        "errorCode": null
+      },
+      "periodCount": 119,
+      "firstPeriod": "2016-10-01",
+      "latestPeriod": "2026-09-01",
+      "latest": "4.2000000000",
+      "latestCoreId": 15375,
+      "sameSourceMultiVersionPeriods": 57,
+      "sameSourceValueRevisions": 57,
+      "exampleRevision": [
+        {
+          "id": 856,
+          "period": "2016-10-01",
+          "value": "4.9000000000",
+          "source": "fred",
+          "releasedAt": "2016-11-04T00:00:00+00:00",
+          "revision": "2016-11-04"
+        },
+        {
+          "id": 857,
+          "period": "2016-10-01",
+          "value": "4.8000000000",
+          "source": "fred",
+          "releasedAt": "2017-01-06T00:00:00+00:00",
+          "revision": "2017-01-06"
+        },
+        {
+          "id": 858,
+          "period": "2016-10-01",
+          "value": "4.9000000000",
+          "source": "fred",
+          "releasedAt": "2018-01-05T00:00:00+00:00",
+          "revision": "2018-01-05"
+        }
+      ],
+      "latestRawSample": {
+        "rawId": 2804,
+        "batchId": "248f509f-a56c-5435-8b32-fc18e0fc695c",
+        "capturedAt": "2026-10-21T11:54:29.938373+00:00",
+        "requestWindow": {
+          "start": "2025-04-01",
+          "end": "2026-10-21",
+          "asOf": "2026-10-21T11:54:21.074284+00:00"
+        },
+        "transform": "identity",
+        "reconstructed": "4.2",
+        "sourceField": "value",
+        "status": "raw-equal"
+      }
+    },
+    "us.labor.nonfarm_payroll_change": {
+      "name": "美国非农就业月增量",
+      "frequency": "monthly",
+      "unit": "thousand persons",
+      "configuredSources": [
+        {
+          "provider": "fred",
+          "locator": "series_observations",
+          "field": "value",
+          "transform": "chg"
+        },
+        {
+          "provider": "bls",
+          "locator": "publicAPI/v1/timeseries/data",
+          "field": "value",
+          "transform": "chg"
+        }
+      ],
+      "status": {
+        "id": "us.labor.nonfarm_payroll_change",
+        "name": "美国非农就业月增量",
+        "region": "US",
+        "category": "labor",
+        "frequency": "monthly",
+        "unit": "thousand persons",
+        "actualSource": "fred",
+        "sourceUrl": "https://api.stlouisfed.org/fred/series/observations",
+        "fallbackUsed": false,
+        "stale": false,
+        "staleReason": null,
+        "observedAt": "2026-09-01",
+        "releasedAt": "2026-10-02T00:00:00+00:00",
+        "lastCheckedAt": "2026-10-21T11:54:21.074284+00:00",
+        "lastSuccessAt": "2026-10-21T11:54:21.074284+00:00"
+      },
+      "currentAudit": {
+        "id": "us.labor.nonfarm_payroll_change",
+        "enabled": true,
+        "status": "success",
+        "checkedAt": "2026-10-21T11:54:21.074284+00:00",
+        "successAt": "2026-10-21T11:54:21.074284+00:00",
+        "errorCode": null
+      },
+      "periodCount": 120,
+      "firstPeriod": "2016-10-01",
+      "latestPeriod": "2026-09-01",
+      "latest": "29.0000000000",
+      "latestCoreId": 15378,
+      "sameSourceMultiVersionPeriods": 119,
+      "sameSourceValueRevisions": 119,
+      "exampleRevision": [
+        {
+          "id": 9178,
+          "period": "2016-10-01",
+          "value": "161.0000000000",
+          "source": "fred",
+          "releasedAt": "2016-11-04T00:00:00+00:00",
+          "revision": "2016-11-04"
+        },
+        {
+          "id": 9179,
+          "period": "2016-10-01",
+          "value": "142.0000000000",
+          "source": "fred",
+          "releasedAt": "2016-12-02T00:00:00+00:00",
+          "revision": "2016-12-02"
+        },
+        {
+          "id": 9180,
+          "period": "2016-10-01",
+          "value": "135.0000000000",
+          "source": "fred",
+          "releasedAt": "2017-01-06T00:00:00+00:00",
+          "revision": "2017-01-06"
+        },
+        {
+          "id": 9181,
+          "period": "2016-10-01",
+          "value": "124.0000000000",
+          "source": "fred",
+          "releasedAt": "2017-02-03T00:00:00+00:00",
+          "revision": "2017-02-03"
+        },
+        {
+          "id": 9182,
+          "period": "2016-10-01",
+          "value": "140.0000000000",
+          "source": "fred",
+          "releasedAt": "2018-02-02T00:00:00+00:00",
+          "revision": "2018-02-02"
+        },
+        {
+          "id": 9183,
+          "period": "2016-10-01",
+          "value": "128.0000000000",
+          "source": "fred",
+          "releasedAt": "2019-02-01T00:00:00+00:00",
+          "revision": "2019-02-01"
+        },
+        {
+          "id": 9184,
+          "period": "2016-10-01",
+          "value": "145.0000000000",
+          "source": "fred",
+          "releasedAt": "2020-02-07T00:00:00+00:00",
+          "revision": "2020-02-07"
+        },
+        {
+          "id": 9185,
+          "period": "2016-10-01",
+          "value": "118.0000000000",
+          "source": "fred",
+          "releasedAt": "2021-02-05T00:00:00+00:00",
+          "revision": "2021-02-05"
+        },
+        {
+          "id": 9186,
+          "period": "2016-10-01",
+          "value": "108.0000000000",
+          "source": "fred",
+          "releasedAt": "2023-02-03T00:00:00+00:00",
+          "revision": "2023-02-03"
+        },
+        {
+          "id": 9187,
+          "period": "2016-10-01",
+          "value": "99.0000000000",
+          "source": "fred",
+          "releasedAt": "2025-02-07T00:00:00+00:00",
+          "revision": "2025-02-07"
+        },
+        {
+          "id": 9188,
+          "period": "2016-10-01",
+          "value": "98.0000000000",
+          "source": "fred",
+          "releasedAt": "2026-02-11T00:00:00+00:00",
+          "revision": "2026-02-11"
+        }
+      ],
+      "latestRawSample": {
+        "rawId": 2805,
+        "batchId": "62221326-7050-59a4-a9a7-aa9eb80d4f4f",
+        "capturedAt": "2026-10-21T11:54:30.982814+00:00",
+        "requestWindow": {
+          "start": "2025-04-01",
+          "end": "2026-10-21",
+          "asOf": "2026-10-21T11:54:21.074284+00:00"
+        },
+        "transform": "chg",
+        "reconstructed": "29",
+        "sourceField": "value",
+        "status": "raw-equal"
+      }
+    },
+    "us.rate.effective_fed_funds": {
+      "name": "美国有效联邦基金利率",
+      "frequency": "daily",
+      "unit": "%",
+      "configuredSources": [
+        {
+          "provider": "fred",
+          "locator": "series_observations",
+          "field": "value",
+          "transform": "identity"
+        },
+        {
+          "provider": "nyfed",
+          "locator": "rates/unsecured/effr/search",
+          "field": "percent",
+          "transform": "identity"
+        }
+      ],
+      "status": {
+        "id": "us.rate.effective_fed_funds",
+        "name": "美国有效联邦基金利率",
+        "region": "US",
+        "category": "rates_fx",
+        "frequency": "daily",
+        "unit": "%",
+        "actualSource": "fred",
+        "sourceUrl": "https://api.stlouisfed.org/fred/series/observations",
+        "fallbackUsed": false,
+        "stale": true,
+        "staleReason": "MACRO_VALUE_EXPIRED",
+        "observedAt": "2026-10-19",
+        "releasedAt": "2026-10-21T11:53:32.350969+00:00",
+        "lastCheckedAt": "2026-10-21T11:53:31.481377+00:00",
+        "lastSuccessAt": "2026-10-21T11:53:31.481377+00:00"
+      },
+      "currentAudit": {
+        "id": "us.rate.effective_fed_funds",
+        "enabled": true,
+        "status": "success",
+        "checkedAt": "2026-10-21T11:53:31.481377+00:00",
+        "successAt": "2026-10-21T11:53:31.481377+00:00",
+        "errorCode": null
+      },
+      "periodCount": 3673,
+      "firstPeriod": "2016-09-29",
+      "latestPeriod": "2026-10-19",
+      "latest": "3.8800000000",
+      "latestCoreId": 15397,
+      "sameSourceMultiVersionPeriods": 0,
+      "sameSourceValueRevisions": 0,
+      "exampleRevision": [],
+      "latestRawSample": {
+        "rawId": 2788,
+        "batchId": "adf2557c-2370-55ee-a042-a5f0044bbcf8",
+        "capturedAt": "2026-10-21T11:53:32.330898+00:00",
+        "requestWindow": {
+          "start": "2026-09-21",
+          "end": "2026-10-21",
+          "asOf": "2026-10-21T11:53:31.481377+00:00"
+        },
+        "transform": "identity",
+        "reconstructed": "3.88",
+        "sourceField": "value",
+        "status": "raw-equal"
+      }
+    },
+    "us.rate.treasury_10y": {
+      "name": "美国 10 年期国债收益率",
+      "frequency": "daily",
+      "unit": "%",
+      "configuredSources": [
+        {
+          "provider": "fred",
+          "locator": "series_observations",
+          "field": "value",
+          "transform": "identity"
+        },
+        {
+          "provider": "us_treasury",
+          "locator": "daily_treasury_yield_curve",
+          "field": "BC_10YEAR",
+          "transform": "identity"
+        },
+        {
+          "provider": "tushare",
+          "locator": "us_tycr",
+          "field": "y10",
+          "transform": "identity"
+        }
+      ],
+      "status": {
+        "id": "us.rate.treasury_10y",
+        "name": "美国 10 年期国债收益率",
+        "region": "US",
+        "category": "rates_fx",
+        "frequency": "daily",
+        "unit": "%",
+        "actualSource": "fred",
+        "sourceUrl": "https://api.stlouisfed.org/fred/series/observations",
+        "fallbackUsed": false,
+        "stale": true,
+        "staleReason": "MACRO_VALUE_EXPIRED",
+        "observedAt": "2026-10-19",
+        "releasedAt": "2026-10-21T11:53:33.160232+00:00",
+        "lastCheckedAt": "2026-10-21T11:53:31.481377+00:00",
+        "lastSuccessAt": "2026-10-21T11:53:31.481377+00:00"
+      },
+      "currentAudit": {
+        "id": "us.rate.treasury_10y",
+        "enabled": true,
+        "status": "success",
+        "checkedAt": "2026-10-21T11:53:31.481377+00:00",
+        "successAt": "2026-10-21T11:53:31.481377+00:00",
+        "errorCode": null
+      },
+      "periodCount": 2512,
+      "firstPeriod": "2016-09-29",
+      "latestPeriod": "2026-10-19",
+      "latest": "5.1500000000",
+      "latestCoreId": 15402,
+      "sameSourceMultiVersionPeriods": 0,
+      "sameSourceValueRevisions": 0,
+      "exampleRevision": [],
+      "latestRawSample": {
+        "rawId": 2789,
+        "batchId": "152f114a-77ed-55e1-a4df-6aa192d25e02",
+        "capturedAt": "2026-10-21T11:53:33.146676+00:00",
+        "requestWindow": {
+          "start": "2026-09-21",
+          "end": "2026-10-21",
+          "asOf": "2026-10-21T11:53:31.481377+00:00"
+        },
+        "transform": "identity",
+        "reconstructed": "5.15",
+        "sourceField": "value",
+        "status": "raw-equal"
+      }
+    }
+  },
+  "datesInUnion": 3676,
+  "derived": {
+    "cn.ppi_cpi_spread": {
+      "inputs": [
+        "cn.ppi.yoy",
+        "cn.cpi.yoy"
+      ],
+      "unit": "百分点",
+      "points": 120,
+      "latest": "2026-09-01",
+      "status": "current",
+      "reason": null
+    },
+    "cn.m2_m1_spread": {
+      "inputs": [
+        "cn.money.m2_yoy",
+        "cn.money.m1_yoy"
+      ],
+      "unit": "百分点",
+      "points": 120,
+      "latest": "2026-09-01",
+      "status": "current",
+      "reason": null
+    },
+    "cn.money.m1_minus_m2_yoy": {
+      "inputs": [
+        "cn.money.m1_yoy",
+        "cn.money.m2_yoy"
+      ],
+      "unit": "百分点",
+      "points": 120,
+      "latest": "2026-09-01",
+      "status": "current",
+      "reason": null
+    },
+    "cn.govbond_dr007_spread": {
+      "inputs": [
+        "cn.rate.govbond_10y",
+        "cn.rate.dr007"
+      ],
+      "unit": "百分点",
+      "points": 2504,
+      "latest": "2026-10-21",
+      "status": "lagged",
+      "reason": "input-stale"
+    },
+    "us.treasury_fed_funds_spread": {
+      "inputs": [
+        "us.rate.treasury_10y",
+        "us.rate.effective_fed_funds"
+      ],
+      "unit": "百分点",
+      "points": 2512,
+      "latest": "2026-10-19",
+      "status": "lagged",
+      "reason": "input-stale"
+    },
+    "cn.us.rate_spread": {
+      "inputs": [
+        "cn.rate.govbond_10y",
+        "us.rate.treasury_10y"
+      ],
+      "unit": "bp",
+      "points": 2339,
+      "latest": "2026-10-19",
+      "status": "lagged",
+      "reason": "latest-period-mismatch"
+    }
+  },
+  "collectionAudit": {
+    "entries": 183,
+    "statuses": {
+      "success": 178,
+      "paused": 2,
+      "failed": 3
+    },
+    "basis": "current-collection-records"
+  },
+  "jobLog": [
+    {
+      "job_name": "backfill-macro-history",
+      "status": "completed",
+      "trigger": null,
+      "runs": 2,
+      "first": "2026-10-01 09:11:10.399050+00:00",
+      "last": "2026-10-01 09:12:13.062550+00:00"
+    },
+    {
+      "job_name": "backfill-macro-history",
+      "status": "partial",
+      "trigger": null,
+      "runs": 51,
+      "first": "2026-10-01 01:08:31.240437+00:00",
+      "last": "2026-10-01 08:46:08.555663+00:00"
+    },
+    {
+      "job_name": "catchup-macro",
+      "status": "partial",
+      "trigger": "cli",
+      "runs": 3,
+      "first": "2026-10-11 04:46:11.815116+00:00",
+      "last": "2026-10-21 11:53:31.176603+00:00"
+    },
+    {
+      "job_name": "sync-macro",
+      "status": "completed",
+      "trigger": "cli",
+      "runs": 89,
+      "first": "2026-09-30 00:15:13.333270+00:00",
+      "last": "2026-11-08 14:58:10.751949+00:00"
+    },
+    {
+      "job_name": "sync-macro",
+      "status": "failed",
+      "trigger": "cli",
+      "runs": 3,
+      "first": "2026-09-29 12:53:53.190892+00:00",
+      "last": "2026-09-29 14:40:08.591089+00:00"
+    },
+    {
+      "job_name": "sync-macro",
+      "status": "partial",
+      "trigger": "cli",
+      "runs": 4,
+      "first": "2026-09-30 13:35:39.818416+00:00",
+      "last": "2026-09-30 14:25:45.415243+00:00"
+    }
+  ],
+  "extensions": {
+    "basis": "retrieval-visible-restated-history-not-strict-pit",
+    "realGdp": 40,
+    "nominalGdp": 20,
+    "vixPeriod": "2026-10-22",
+    "fxPeriod": null,
+    "fiscal": {
+      "status": "partial",
+      "points": 48,
+      "missingPeriods": 45,
+      "documents": 1,
+      "latest": {
+        "month": "2022-12-01",
+        "value": 2809.0
+      }
+    },
+    "officialGroups": [
+      "householdCredit",
+      "propertyLoans",
+      "specialBonds",
+      "tier1Housing"
+    ],
+    "marketSummaryGroups": [
+      "aShareFloatMv",
+      "marginBalances"
+    ]
+  },
+  "enterprise": {
+    "poolCount": 50,
+    "basis": "current-pool-restated-history-not-strict-pit",
+    "version": "enterprise-quarter-v7",
+    "asOfDate": "2026-11-08",
+    "poolVersion": "2026-09-19-v2",
+    "cards": 6
+  }
+}
