@@ -95,6 +95,7 @@ def test_portfolio_requires_storage_contract() -> None:
         ("/api/data/macro-transmission", "transmission"),
         ("/api/data/macro-insights", "statusCards"),
         ("/api/data/portfolio", "assets"),
+        ("/api/v1/portfolio", "assets"),
     ],
 )
 def test_read_routes_return_stable_envelope(path: str, required_key: str) -> None:

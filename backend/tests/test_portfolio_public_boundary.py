@@ -12,5 +12,7 @@ def test_public_portfolio_api_excludes_private_analysis():
     api = FastAPI()
     api.include_router(create_router(provider=PublicInputs()))
     with TestClient(api) as client:
-        assert client.post("/api/data/portfolio/analysis", json={"holdings": []}).status_code == 404
-    assert "/api/data/portfolio" in api.openapi()["paths"]
+        for path in ("/api/data/portfolio", "/api/v1/portfolio"):
+            assert client.post(path + "/analysis", json={"holdings": []}).status_code == 404
+            assert client.post(path, json={"holdings": []}).status_code == 405
+    assert set(api.openapi()["paths"]) == {"/api/data/portfolio", "/api/v1/portfolio"}

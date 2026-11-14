@@ -1,0 +1,1575 @@
+{
+  "meta": {
+    "source": "database",
+    "asOf": "2026-10-21T00:00:00+00:00",
+    "version": "20261021-690705b397d4b878",
+    "stale": false
+  },
+  "aliasesSame": true,
+  "sqlPerAlias": 1,
+  "publicTemplatePositions": 0,
+  "publicFields": [
+    "assets",
+    "attributionInputs",
+    "benchmarks",
+    "defaultState",
+    "dividendLedger",
+    "dividendYieldInputs",
+    "factorCoverage",
+    "missingData",
+    "prices",
+    "snapshotLabel",
+    "storageKey",
+    "treasuryReference",
+    "unadjustedPrices"
+  ],
+  "missingData": [
+    {
+      "source": "commodities",
+      "check": "external-data-coverage"
+    },
+    {
+      "source": "etfs",
+      "check": "external-data-coverage"
+    },
+    {
+      "source": "fundFlow",
+      "check": "external-data-coverage"
+    },
+    {
+      "source": "indices",
+      "check": "external-data-coverage"
+    },
+    {
+      "source": "macro",
+      "check": "external-data-coverage"
+    }
+  ],
+  "assets": {
+    "stock": 50,
+    "cash": 1
+  },
+  "priceDates": {
+    "prices": {
+      "assets": 51,
+      "points": 36038
+    },
+    "unadjustedPrices": {
+      "assets": 51,
+      "points": 36038
+    }
+  },
+  "benchmarks": {
+    "H00300.CSI": {
+      "start": "2023-10-23",
+      "end": "2026-10-21",
+      "complete": true
+    },
+    "H00922.CSI": {
+      "start": "2023-10-23",
+      "end": "2026-10-21",
+      "complete": true
+    }
+  },
+  "ledgerAssets": 50,
+  "yieldAssets": 50,
+  "attributionAssets": 50,
+  "factorCoverageAssets": 50,
+  "publicSnapshotDigest": "46bf01f7908a2b9064097f69b9ad22d1aabd9f4438e5e81b0244a356f9d7ed88",
+  "privateServiceReads": [
+    {
+      "method": "GET",
+      "path": "/api/v1/portfolio",
+      "sql": 1,
+      "bodyBytes": 0
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/portfolio",
+      "sql": 1,
+      "bodyBytes": 0
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/portfolio",
+      "sql": 1,
+      "bodyBytes": 0
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/portfolio",
+      "sql": 1,
+      "bodyBytes": 0
+    }
+  ],
+  "rejectedPrivateFields": {
+    "trades": 422,
+    "publicRequests": 0
+  },
+  "privateResults": [
+    {
+      "name": "\u6574\u6bb5\u53d1\u5e03\u5386\u53f2",
+      "window": {
+        "startDate": "2023-10-23",
+        "endDate": "2026-10-21",
+        "observations": 726
+      },
+      "metrics": {
+        "totalReturn": 0.02886633272142758,
+        "annualReturn": 0.009940533352039867,
+        "annualVolatility": 0.17375260300534728,
+        "sharpe": 0.14326991491847765,
+        "maximumDrawdown": -0.19297149177524686
+      },
+      "capabilities": {
+        "dividends": "partial",
+        "attribution": "partial",
+        "indexBenchmarks": "available",
+        "mpt": "missing"
+      },
+      "warnings": [
+        "benchmarkAssetId \u5df2\u9a8c\u8bc1\u5c5e\u4e8e\u53d1\u5e03\u8d44\u4ea7\u6216\u72ec\u7acb\u6307\u6570\u53c2\u7167\uff1b\u672c\u63a5\u53e3\u672a\u8f93\u51fa\u57fa\u51c6\u98ce\u9669\u7edf\u8ba1\uff0c\u524d\u7aef\u6309\u540c\u65e5\u5e8f\u5217\u8ba1\u7b97\u5e76\u533a\u5206\u4ef7\u683c/\u5168\u6536\u76ca\u53e3\u5f84\u3002"
+      ]
+    },
+    {
+      "name": "\u4e00\u5e74\u7a97\u53e3",
+      "window": {
+        "startDate": "2025-10-21",
+        "endDate": "2026-10-21",
+        "observations": 243
+      },
+      "metrics": {
+        "totalReturn": -0.02437495182433591,
+        "annualReturn": -0.02536929762433746,
+        "annualVolatility": 0.15850725067175547,
+        "sharpe": -0.08344793756270077,
+        "maximumDrawdown": -0.15714592400676308
+      },
+      "capabilities": {
+        "dividends": "partial",
+        "attribution": "partial",
+        "indexBenchmarks": "available",
+        "mpt": "missing"
+      },
+      "warnings": [
+        "benchmarkAssetId \u5df2\u9a8c\u8bc1\u5c5e\u4e8e\u53d1\u5e03\u8d44\u4ea7\u6216\u72ec\u7acb\u6307\u6570\u53c2\u7167\uff1b\u672c\u63a5\u53e3\u672a\u8f93\u51fa\u57fa\u51c6\u98ce\u9669\u7edf\u8ba1\uff0c\u524d\u7aef\u6309\u540c\u65e5\u5e8f\u5217\u8ba1\u7b97\u5e76\u533a\u5206\u4ef7\u683c/\u5168\u6536\u76ca\u53e3\u5f84\u3002"
+      ]
+    },
+    {
+      "name": "\u7eaf\u73b0\u91d1",
+      "window": {
+        "startDate": "2025-10-21",
+        "endDate": "2026-10-21",
+        "observations": 243
+      },
+      "metrics": {
+        "totalReturn": 0.0,
+        "annualReturn": 0.0,
+        "annualVolatility": 0.0,
+        "sharpe": null,
+        "maximumDrawdown": 0.0
+      },
+      "capabilities": {
+        "dividends": "partial",
+        "attribution": "partial",
+        "indexBenchmarks": "available",
+        "mpt": "missing"
+      },
+      "warnings": [
+        "\u65e5\u6536\u76ca\u4e3a\u5e38\u6570\uff0c\u590f\u666e\u6bd4\u7387\u65e0\u5b9a\u4e49\uff08\u516c\u5171 Rf=0\uff09\u3002",
+        "benchmarkAssetId \u5df2\u9a8c\u8bc1\u5c5e\u4e8e\u53d1\u5e03\u8d44\u4ea7\u6216\u72ec\u7acb\u6307\u6570\u53c2\u7167\uff1b\u672c\u63a5\u53e3\u672a\u8f93\u51fa\u57fa\u51c6\u98ce\u9669\u7edf\u8ba1\uff0c\u524d\u7aef\u6309\u540c\u65e5\u5e8f\u5217\u8ba1\u7b97\u5e76\u533a\u5206\u4ef7\u683c/\u5168\u6536\u76ca\u53e3\u5f84\u3002"
+      ]
+    },
+    {
+      "name": "\u4e1a\u52a1\u65e5\u540e\u7a7a\u7a97\u53e3",
+      "window": {
+        "startDate": null,
+        "endDate": null,
+        "observations": 0
+      },
+      "metrics": {
+        "totalReturn": null,
+        "annualReturn": null,
+        "annualVolatility": null,
+        "sharpe": null,
+        "maximumDrawdown": null
+      },
+      "capabilities": {
+        "dividends": "partial",
+        "attribution": "partial",
+        "indexBenchmarks": "available",
+        "mpt": "missing"
+      },
+      "warnings": [
+        "\u5171\u540c\u4ef7\u683c\u89c2\u6d4b\u4e0d\u8db3\u4e24\u4e2a\uff0c\u65e0\u6cd5\u8ba1\u7b97\u533a\u95f4\u6536\u76ca\u548c\u98ce\u9669\u6307\u6807\uff1b\u672a\u751f\u6210\u4ea4\u6613\u65e5\u3002",
+        "benchmarkAssetId \u5df2\u9a8c\u8bc1\u5c5e\u4e8e\u53d1\u5e03\u8d44\u4ea7\u6216\u72ec\u7acb\u6307\u6570\u53c2\u7167\uff1b\u672c\u63a5\u53e3\u672a\u8f93\u51fa\u57fa\u51c6\u98ce\u9669\u7edf\u8ba1\uff0c\u524d\u7aef\u6309\u540c\u65e5\u5e8f\u5217\u8ba1\u7b97\u5e76\u533a\u5206\u4ef7\u683c/\u5168\u6536\u76ca\u53e3\u5f84\u3002"
+      ]
+    }
+  ],
+  "websiteResults": [
+    {
+      "name": "\u6574\u6bb5\u53d1\u5e03\u5386\u53f2",
+      "window": {
+        "start": "2023-10-23",
+        "end": "2026-10-21",
+        "days": 726
+      },
+      "dailyStatisticsAvailable": true,
+      "benchmarks": {
+        "H00300.CSI": {
+          "days": 726,
+          "dailyAvailable": true
+        },
+        "H00922.CSI": {
+          "days": 726,
+          "dailyAvailable": true
+        }
+      },
+      "periods": {
+        "1m": {
+          "start": "2026-09-21",
+          "end": "2026-10-21",
+          "days": 17,
+          "shortHistory": false
+        },
+        "3m": {
+          "start": "2026-07-21",
+          "end": "2026-10-21",
+          "days": 61,
+          "shortHistory": false
+        },
+        "6m": {
+          "start": "2026-04-21",
+          "end": "2026-10-21",
+          "days": 122,
+          "shortHistory": false
+        },
+        "1y": {
+          "start": "2025-10-21",
+          "end": "2026-10-21",
+          "days": 243,
+          "shortHistory": false
+        },
+        "3y": {
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "shortHistory": true
+        },
+        "5y": {
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "shortHistory": true
+        },
+        "all": {
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "shortHistory": false
+        }
+      },
+      "quantityExample": {
+        "price": 1643.98,
+        "start": "2023-10-23",
+        "weights": [
+          99.39539776780856,
+          0.6046022321914413
+        ]
+      },
+      "stockCoverage": [
+        {
+          "asset": "000001.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.06906267955079655,
+            "ttm": 0.05337423312883436,
+            "averageDynamic": 0.056631633429020285,
+            "ntm": 0.056081972429
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "000063.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.02041621365744401,
+            "ttm": 0.014875135722041258,
+            "averageDynamic": 0.01655794836619026,
+            "ntm": null
+          },
+          "missingDividends": {
+            "ntm": "\u4e2d\u5174\u901a\u8baf\uff082026-10-21\uff09\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          },
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "000333.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.06771377809820532,
+            "ttm": 0.05127593608394944,
+            "averageDynamic": 0.045126651083778994,
+            "ntm": 0.049565172994
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "000425.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.03543671221014145,
+            "ttm": 0.034900284900284906,
+            "averageDynamic": 0.021594927697416475,
+            "ntm": 0.024478482681
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "000538.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.055247288151894815,
+            "ttm": 0.04964015151515152,
+            "averageDynamic": 0.04404148149902875,
+            "ntm": 0.050197841893
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "000568.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.028936338812188704,
+            "ttm": 0.08347964006938423,
+            "averageDynamic": 0.045913344419963864,
+            "ntm": 0.013727670764999998
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "000792.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0,
+            "ttm": 0,
+            "averageDynamic": 0,
+            "ntm": 0
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "000821.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 725,
+          "daily": false,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.004457810506679891,
+            "ttm": 0.004838709677419355,
+            "averageDynamic": 0.004876110724506305,
+            "ntm": null
+          },
+          "missingDividends": {
+            "averageDynamic": "ST\u4eac\u673a\uff082026-01-19\uff09\u7f3a\u5c11\u5f53\u65e5\u672a\u590d\u6743\u6536\u76d8\u4ef7",
+            "ntm": "ST\u4eac\u673a\uff082026-10-21\uff09\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          },
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 0,
+            "H00922.CSI": 0
+          }
+        },
+        {
+          "asset": "000858.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.03616833809267944,
+            "ttm": 0.07163451666666668,
+            "averageDynamic": 0.04650228749990117,
+            "ntm": 0.051949780058
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "002230.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.0019309805945041203,
+            "ttm": 0.0026954177897574125,
+            "averageDynamic": 0.002167199778652171,
+            "ntm": 0.003770706203
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "002415.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.032596437804917625,
+            "ttm": 0.040197897340754477,
+            "averageDynamic": 0.029931800049605443,
+            "ntm": 0.05040131675
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "002594.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": null,
+            "ttm": null,
+            "averageDynamic": 0.008037905327713504,
+            "ntm": null
+          },
+          "missingDividends": {
+            "yoc": "\u6bd4\u4e9a\u8fea\uff082023-10-23 \u81f3 2026-10-21\uff09\u6709\u4e00\u6761\u64a4\u56de\u8bb0\u5f55\u65e0\u6cd5\u5bf9\u5e94\u5230\u5177\u4f53\u5206\u7ea2\u65b9\u6848\uff1bdistribution:9fc86eecca4d5e5dd68bfdcd8adad3a58fd4b762facc710ca5a1b839d1895262 \u73b0\u91d1\u672a\u77e5\u6216\u6ea2\u51fa/\u4e0b\u6ea2\uff1bdistribution:2776dc5fb839b21164a71242f294a16bc1fb3e5366141c5694ffc4ea158cffdf \u73b0\u91d1\u672a\u77e5\u6216\u6ea2\u51fa/\u4e0b\u6ea2\uff1b\u6709\u4e00\u6761\u64a4\u56de\u8bb0\u5f55\u65e0\u6cd5\u5bf9\u5e94\u5230\u5177\u4f53\u5206\u7ea2\u65b9\u6848",
+            "ttm": "\u6bd4\u4e9a\u8fea\uff082026-10-21\uff09\u6709\u4e00\u6761\u64a4\u56de\u8bb0\u5f55\u65e0\u6cd5\u5bf9\u5e94\u5230\u5177\u4f53\u5206\u7ea2\u65b9\u6848",
+            "averageDynamic": "\u6bd4\u4e9a\u8fea\uff082025-07-22\uff09\u6709\u4e00\u6761\u64a4\u56de\u8bb0\u5f55\u65e0\u6cd5\u5bf9\u5e94\u5230\u5177\u4f53\u5206\u7ea2\u65b9\u6848",
+            "ntm": "\u6bd4\u4e9a\u8fea\uff082026-10-21\uff09\u6709\u4e00\u6761\u64a4\u56de\u8bb0\u5f55\u65e0\u6cd5\u5bf9\u5e94\u5230\u5177\u4f53\u5206\u7ea2\u65b9\u6848"
+          },
+          "attribution": "unsupported",
+          "attributionReason": "unlocated_cancellation",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "002714.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.029161440398958117,
+            "ttm": 0.010161825321275582,
+            "averageDynamic": 0.023611251228581147,
+            "ntm": null
+          },
+          "missingDividends": {
+            "ntm": "\u7267\u539f\u80a1\u4efd\uff082026-10-21\uff09\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          },
+          "attribution": "price+dividend",
+          "attributionReason": "\u8d77\u6b62\u65e5TTM\u6bcf\u80a1\u76c8\u5229\u4e3a\u975e\u6b63\u503c\uff0c\u589e\u957f\u4e0e\u5e02\u76c8\u7387\u62c6\u5206\u4e0d\u53ef\u7528",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "300015.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.009856108459890751,
+            "ttm": 0.022613065326633167,
+            "averageDynamic": 0.013139219783513477,
+            "ntm": 0.009930837697
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "300059.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.004592387136035246,
+            "ttm": 0.005586592178770951,
+            "averageDynamic": 0.003265677707150405,
+            "ntm": 0.007559007825000001
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "300122.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.006043927313355581,
+            "ttm": 0,
+            "averageDynamic": 0.015767688950060164,
+            "ntm": null
+          },
+          "missingDividends": {
+            "ntm": "\u667a\u98de\u751f\u7269\uff082026-10-21\uff092025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          },
+          "attribution": "price+dividend",
+          "attributionReason": "\u8d77\u6b62\u65e5TTM\u6bcf\u80a1\u76c8\u5229\u4e3a\u975e\u6b63\u503c\uff0c\u589e\u957f\u4e0e\u5e02\u76c8\u7387\u62c6\u5206\u4e0d\u53ef\u7528",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "300308.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.016641214875577126,
+            "ttm": 0.003401518314083833,
+            "averageDynamic": 0.0020505593961506734,
+            "ntm": 0.005774261813
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "300750.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.040336713997616784,
+            "ttm": 0.036717858709960506,
+            "averageDynamic": 0.020850572874715805,
+            "ntm": 0.056678947886
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "300760.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.02663616429247439,
+            "ttm": 0.024929444967074315,
+            "averageDynamic": 0.03046740313105197,
+            "ntm": 0.022755867677
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "300999.SZ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.004815177991224396,
+            "ttm": 0.008980866848887154,
+            "averageDynamic": 0.004221540520748066,
+            "ntm": 0.010289069423
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "301589.SZ",
+          "start": "2024-02-08",
+          "end": "2026-10-21",
+          "days": 649,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.014568196613487261,
+            "ttm": 0.010021565393885578,
+            "averageDynamic": 0.016111833738101454,
+            "ntm": 0.008979923857
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 649,
+            "H00922.CSI": 649
+          }
+        },
+        {
+          "asset": "600030.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.026718781558954068,
+            "ttm": 0.027988804478208715,
+            "averageDynamic": 0.0235319882163773,
+            "ntm": 0.050464297325
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "600031.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.02508688222788242,
+            "ttm": 0.010175240248728094,
+            "averageDynamic": 0.01829748538367252,
+            "ntm": 0.031347378965
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "600036.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.0640151415370188,
+            "ttm": 0.04768211920529801,
+            "averageDynamic": 0.055680504291341394,
+            "ntm": 0.051333131097
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "600234.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 724,
+          "daily": false,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0,
+            "ttm": 0,
+            "averageDynamic": 0,
+            "ntm": null
+          },
+          "missingDividends": {
+            "averageDynamic": "\u79d1\u65b0\u53d1\u5c55\uff082024-04-29\uff09\u7f3a\u5c11\u5f53\u65e5\u672a\u590d\u6743\u6536\u76d8\u4ef7",
+            "ntm": "\u79d1\u65b0\u53d1\u5c55\uff082026-10-21\uff092025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          },
+          "attribution": "price+dividend",
+          "attributionReason": "\u8d77\u6b62\u65e5TTM\u6bcf\u80a1\u76c8\u5229\u4e3a\u975e\u6b63\u503c\uff0c\u589e\u957f\u4e0e\u5e02\u76c8\u7387\u62c6\u5206\u4e0d\u53ef\u7528",
+          "benchmarkDays": {
+            "H00300.CSI": 0,
+            "H00922.CSI": 0
+          }
+        },
+        {
+          "asset": "600276.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.0046510315039205346,
+            "ttm": 0.004221190375685944,
+            "averageDynamic": 0.003850706842030978,
+            "ntm": 0.004636238954
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "600519.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.031177143890035182,
+            "ttm": 0.03968972046820239,
+            "averageDynamic": 0.03454130467952465,
+            "ntm": 0.034588398995
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "600547.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.011084018983139377,
+            "ttm": 0.017073601201652275,
+            "averageDynamic": 0.0071650926904061355,
+            "ntm": 0.020655918889
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "600624.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 725,
+          "daily": false,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0,
+            "ttm": 0,
+            "averageDynamic": 0,
+            "ntm": null
+          },
+          "missingDividends": {
+            "averageDynamic": "ST\u590d\u534e\uff082025-09-22\uff09\u7f3a\u5c11\u5f53\u65e5\u672a\u590d\u6743\u6536\u76d8\u4ef7",
+            "ntm": "ST\u590d\u534e\uff082026-10-21\uff092024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          },
+          "attribution": "price+dividend",
+          "attributionReason": "2022-12-31\u5f52\u6bcd\u51c0\u5229\u6da6\u7f3a\u5931\u6216\u540c\u7248\u51b2\u7a81",
+          "benchmarkDays": {
+            "H00300.CSI": 0,
+            "H00922.CSI": 0
+          }
+        },
+        {
+          "asset": "601012.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.0022978669074599028,
+            "ttm": 0,
+            "averageDynamic": 0.007923687918806861,
+            "ntm": null
+          },
+          "missingDividends": {
+            "ntm": "\u9686\u57fa\u7eff\u80fd\uff082026-10-21\uff092024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          },
+          "attribution": "price+dividend",
+          "attributionReason": "\u8d77\u6b62\u65e5TTM\u6bcf\u80a1\u76c8\u5229\u4e3a\u975e\u6b63\u503c\uff0c\u589e\u957f\u4e0e\u5e02\u76c8\u7387\u62c6\u5206\u4e0d\u53ef\u7528",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "601088.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 716,
+          "daily": false,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.07048653532095532,
+            "ttm": 0.04079561599350517,
+            "averageDynamic": 0.06259676126161529,
+            "ntm": 0.042657173605
+          },
+          "missingDividends": {
+            "averageDynamic": "\u4e2d\u56fd\u795e\u534e\uff082025-08-04\uff09\u7f3a\u5c11\u5f53\u65e5\u672a\u590d\u6743\u6536\u76d8\u4ef7"
+          },
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 0,
+            "H00922.CSI": 0
+          }
+        },
+        {
+          "asset": "601100.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.015679661615516264,
+            "ttm": 0.013760379596678531,
+            "averageDynamic": 0.010369765041205313,
+            "ntm": 0.010120356866
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "601318.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.06293609660164001,
+            "ttm": 0.071875,
+            "averageDynamic": 0.04986472467923037,
+            "ntm": 0.075676518371
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "601398.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.0745173503910428,
+            "ttm": 0.054603550295858005,
+            "averageDynamic": 0.052401925911103826,
+            "ntm": 0.039836621244
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "601688.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.032732014195074745,
+            "ttm": 0.03203261502620851,
+            "averageDynamic": 0.02929699428994328,
+            "ntm": 0.048298101333
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "601766.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.04724526577213619,
+            "ttm": 0.05431309904153355,
+            "averageDynamic": 0.03498677041531166,
+            "ntm": 0.034263325194
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "601857.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.06306858111616381,
+            "ttm": 0.040605095541401265,
+            "averageDynamic": 0.05012697678891323,
+            "ntm": 0.045452683743
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "601888.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.012602933854615214,
+            "ttm": 0.014309076042518395,
+            "averageDynamic": 0.01787884974470912,
+            "ntm": 0.020069374652
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "603019.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 716,
+          "daily": false,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.008627793985565868,
+            "ttm": 0.005922611213477231,
+            "averageDynamic": 0.0046348033084206985,
+            "ntm": 0.006608612677
+          },
+          "missingDividends": {
+            "averageDynamic": "\u4e2d\u79d1\u66d9\u5149\uff082025-05-26\uff09\u7f3a\u5c11\u5f53\u65e5\u672a\u590d\u6743\u6536\u76d8\u4ef7"
+          },
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 0,
+            "H00922.CSI": 0
+          }
+        },
+        {
+          "asset": "603259.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.018843372374399786,
+            "ttm": 0.014178961655921278,
+            "averageDynamic": 0.01747811025607198,
+            "ntm": 0.021479348482
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "603288.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.02741761189034832,
+            "ttm": 0.03287507471607891,
+            "averageDynamic": 0.02313201406477121,
+            "ntm": 0.038970904869
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "603799.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.019726236028937215,
+            "ttm": 0.015752993068683052,
+            "averageDynamic": 0.01778502329767447,
+            "ntm": 0.024172606605
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "688041.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 716,
+          "daily": false,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.0029356549441277332,
+            "ttm": 0.0012415933781686496,
+            "averageDynamic": 0.0008694884253655712,
+            "ntm": 0.002131823672
+          },
+          "missingDividends": {
+            "averageDynamic": "\u6d77\u5149\u4fe1\u606f\uff082025-05-26\uff09\u7f3a\u5c11\u5f53\u65e5\u672a\u590d\u6743\u6536\u76d8\u4ef7"
+          },
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 0,
+            "H00922.CSI": 0
+          }
+        },
+        {
+          "asset": "688111.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.003314681788893218,
+            "ttm": 0.005270481089513851,
+            "averageDynamic": 0.0033591934367877604,
+            "ntm": 0.01467869344
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "688180.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0,
+            "ttm": 0,
+            "averageDynamic": 0,
+            "ntm": null
+          },
+          "missingDividends": {
+            "ntm": "\u541b\u5b9e\u751f\u7269\uff082026-10-21\uff092024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS"
+          },
+          "attribution": "price+dividend",
+          "attributionReason": "\u8d77\u6b62\u65e5TTM\u6bcf\u80a1\u76c8\u5229\u4e3a\u975e\u6b63\u503c\uff0c\u589e\u957f\u4e0e\u5e02\u76c8\u7387\u62c6\u5206\u4e0d\u53ef\u7528",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "688472.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.008401634382566586,
+            "ttm": 0.012796632124352334,
+            "averageDynamic": 0.007103102490745567,
+            "ntm": null
+          },
+          "missingDividends": {
+            "ntm": "\u963f\u7279\u65af\uff082026-10-21\uff09\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          },
+          "attribution": "price+dividend",
+          "attributionReason": "2022-06-30\u5f52\u6bcd\u51c0\u5229\u6da6\u7f3a\u5931\u6216\u540c\u7248\u51b2\u7a81",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "688981.SH",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 720,
+          "daily": false,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0,
+            "ttm": 0,
+            "averageDynamic": 0,
+            "ntm": 0
+          },
+          "missingDividends": {
+            "averageDynamic": "\u4e2d\u82af\u56fd\u9645\uff082025-09-01\uff09\u7f3a\u5c11\u5f53\u65e5\u672a\u590d\u6743\u6536\u76d8\u4ef7"
+          },
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 0,
+            "H00922.CSI": 0
+          }
+        },
+        {
+          "asset": "920002.BJ",
+          "start": "2024-05-30",
+          "end": "2026-10-21",
+          "days": 580,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.005127004308037832,
+            "ttm": 0.004538400726144117,
+            "averageDynamic": 0.0020664973966715242,
+            "ntm": 0.00469419951
+          },
+          "missingDividends": {},
+          "attribution": "price+dividend",
+          "attributionReason": "2023-03-31\u5f52\u6bcd\u51c0\u5229\u6da6\u7f3a\u5931\u6216\u540c\u7248\u51b2\u7a81",
+          "benchmarkDays": {
+            "H00300.CSI": 580,
+            "H00922.CSI": 580
+          }
+        },
+        {
+          "asset": "920047.BJ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0,
+            "ttm": 0,
+            "averageDynamic": 0,
+            "ntm": null
+          },
+          "missingDividends": {
+            "ntm": "\u8bfa\u601d\u5170\u5fb7\uff082026-10-21\uff092024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          },
+          "attribution": "price+dividend",
+          "attributionReason": "\u8d77\u6b62\u65e5TTM\u6bcf\u80a1\u76c8\u5229\u4e3a\u975e\u6b63\u503c\uff0c\u589e\u957f\u4e0e\u5e02\u76c8\u7387\u62c6\u5206\u4e0d\u53ef\u7528",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        },
+        {
+          "asset": "920185.BJ",
+          "start": "2023-10-23",
+          "end": "2026-10-21",
+          "days": 726,
+          "daily": true,
+          "returnBasis": "verified",
+          "dividends": {
+            "yoc": 0.018280398171664443,
+            "ttm": 0.014778325123152707,
+            "averageDynamic": 0.015350882504898775,
+            "ntm": 0.011700957975
+          },
+          "missingDividends": {},
+          "attribution": "full",
+          "attributionReason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "benchmarkDays": {
+            "H00300.CSI": 726,
+            "H00922.CSI": 726
+          }
+        }
+      ],
+      "dividends": {
+        "yoc": 0.043805655776955645,
+        "ttm": 0.04523845133125934,
+        "averageDynamic": 0.04281565566541758,
+        "ntm": 0.0433035105395794
+      },
+      "dividendReasons": {
+        "yoc": [],
+        "ttm": [],
+        "averageDynamic": [],
+        "ntm": []
+      },
+      "attribution": [
+        {
+          "asset": "600519.SH",
+          "mode": "full",
+          "reason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "buckets": [
+            0.14944714081086907,
+            -0.3527890306148813,
+            0.09007528555421429,
+            0
+          ]
+        },
+        {
+          "asset": "000001.SZ",
+          "mode": "full",
+          "reason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "buckets": [
+            -0.1097203728362185,
+            0.19638703950288516,
+            0.23608765090435502,
+            0
+          ]
+        },
+        {
+          "asset": "CNY",
+          "mode": "full",
+          "reason": "\u4eba\u6c11\u5e01\u73b0\u91d1\u6309\u9762\u503c\u6301\u6709\uff0c\u6536\u76ca\u8d21\u732e\u4e3a\u96f6\u3002",
+          "buckets": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "privateDatesMatch": true,
+      "unavailableReason": "",
+      "return": 0.0288663327214278
+    },
+    {
+      "name": "\u4e00\u5e74\u7a97\u53e3",
+      "window": {
+        "start": "2025-10-21",
+        "end": "2026-10-21",
+        "days": 243
+      },
+      "dailyStatisticsAvailable": true,
+      "benchmarks": {
+        "H00300.CSI": {
+          "days": 243,
+          "dailyAvailable": true
+        },
+        "H00922.CSI": {
+          "days": 243,
+          "dailyAvailable": true
+        }
+      },
+      "dividends": {
+        "yoc": 0.04145931661603315,
+        "ttm": 0.04458673036361179,
+        "averageDynamic": 0.04368204745285333,
+        "ntm": 0.04227988530541902
+      },
+      "dividendReasons": {
+        "yoc": [],
+        "ttm": [],
+        "averageDynamic": [],
+        "ntm": []
+      },
+      "attribution": [
+        {
+          "asset": "600519.SH",
+          "mode": "full",
+          "reason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "buckets": [
+            -0.09294372056031797,
+            -0.011394769174749575,
+            0.03680785953683574,
+            0
+          ]
+        },
+        {
+          "asset": "000001.SZ",
+          "mode": "full",
+          "reason": "\u6bcf\u80a1\u76c8\u5229\u6309\u5f52\u6bcd\u51c0\u5229\u6da6TTM\u4e0e\u5f53\u65e5\u603b\u80a1\u672c\u8ba1\u7b97\uff0c\u5e76\u5c06\u9001\u8f6c\u6298\u7b97\u5230\u5efa\u4ed3\u6301\u80a1\u5355\u4f4d\u3002\u4f30\u503c\u8d21\u732e\u542b\u76c8\u5229\u4e0e\u4f30\u503c\u53d8\u5316\u7684\u4ea4\u4e92\u9879\uff0c\u80a1\u4e1c\u56de\u62a5\u542b\u5206\u7ea2\u518d\u6295\u5f71\u54cd\u3002",
+          "buckets": [
+            -0.0009195613692269955,
+            -0.0008302199081132722,
+            0.055561202259350906,
+            0
+          ]
+        },
+        {
+          "asset": "CNY",
+          "mode": "full",
+          "reason": "\u4eba\u6c11\u5e01\u73b0\u91d1\u6309\u9762\u503c\u6301\u6709\uff0c\u6536\u76ca\u8d21\u732e\u4e3a\u96f6\u3002",
+          "buckets": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "privateDatesMatch": true,
+      "unavailableReason": "",
+      "return": -0.02437495182433569
+    },
+    {
+      "name": "\u7eaf\u73b0\u91d1",
+      "window": {
+        "start": null,
+        "end": null,
+        "days": 0
+      },
+      "dailyStatisticsAvailable": false,
+      "benchmarks": {
+        "H00300.CSI": {
+          "days": 0,
+          "dailyAvailable": false
+        },
+        "H00922.CSI": {
+          "days": 0,
+          "dailyAvailable": false
+        }
+      },
+      "dividends": {
+        "yoc": null,
+        "ttm": null,
+        "averageDynamic": null,
+        "ntm": null
+      },
+      "dividendReasons": {
+        "yoc": [
+          "\u7ec4\u5408\u6ca1\u6709\u6b63\u6743\u91cd\u666e\u901a\u80a1\u7968"
+        ],
+        "ttm": [
+          "\u7ec4\u5408\u6ca1\u6709\u6b63\u6743\u91cd\u666e\u901a\u80a1\u7968"
+        ],
+        "averageDynamic": [
+          "\u7ec4\u5408\u6ca1\u6709\u6b63\u6743\u91cd\u666e\u901a\u80a1\u7968"
+        ],
+        "ntm": [
+          "\u7ec4\u5408\u6ca1\u6709\u6b63\u6743\u91cd\u666e\u901a\u80a1\u7968"
+        ]
+      },
+      "attribution": [],
+      "privateDatesMatch": false,
+      "unavailableReason": "\u5171\u540c\u53ef\u7528\u89c2\u6d4b\u5c11\u4e8e\u4e24\u4e2a\uff0c\u65e0\u6cd5\u8ba1\u7b97",
+      "return": null
+    },
+    {
+      "name": "\u4e1a\u52a1\u65e5\u540e\u7a7a\u7a97\u53e3",
+      "window": {
+        "start": null,
+        "end": null,
+        "days": 0
+      },
+      "dailyStatisticsAvailable": false,
+      "benchmarks": {
+        "H00300.CSI": {
+          "days": 0,
+          "dailyAvailable": false
+        },
+        "H00922.CSI": {
+          "days": 0,
+          "dailyAvailable": false
+        }
+      },
+      "dividends": {
+        "yoc": null,
+        "ttm": null,
+        "averageDynamic": null,
+        "ntm": null
+      },
+      "dividendReasons": {
+        "yoc": [
+          "\u7ec4\u5408\u6ca1\u6709\u6b63\u6743\u91cd\u666e\u901a\u80a1\u7968"
+        ],
+        "ttm": [
+          "\u7ec4\u5408\u6ca1\u6709\u6b63\u6743\u91cd\u666e\u901a\u80a1\u7968"
+        ],
+        "averageDynamic": [
+          "\u7ec4\u5408\u6ca1\u6709\u6b63\u6743\u91cd\u666e\u901a\u80a1\u7968"
+        ],
+        "ntm": [
+          "\u7ec4\u5408\u6ca1\u6709\u6b63\u6743\u91cd\u666e\u901a\u80a1\u7968"
+        ]
+      },
+      "attribution": [],
+      "privateDatesMatch": true,
+      "unavailableReason": "\u951a\u70b9\u6216\u65f6\u671f\u4e4b\u540e\u5171\u540c\u53ef\u7528\u89c2\u6d4b\u5c11\u4e8e\u4e24\u4e2a",
+      "return": null
+    }
+  ]
+}
