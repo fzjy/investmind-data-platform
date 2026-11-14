@@ -36,8 +36,8 @@ def create_router(service: MarketService | None = None, provider: MarketProvider
         if news == 'latest' and latest_news is not None:
             try:
                 page = latest_news()
-            except SQLAlchemyError:
-                # 市场主体仍可展示；客户端沿既有快讯接口重试。
+            except (SQLAlchemyError, TypeError, ValueError, OverflowError):
+                # 快讯数据库或已存运维状态异常时，保留市场快照供客户端重试。
                 return _json_result(result)
             items, pagination = page['items'], {key: page[key] for key in ('health', 'nextCursor')}
             data = {**result.data, 'marketNews': items, 'liveNewsPage': pagination}
