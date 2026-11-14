@@ -51,16 +51,16 @@
 | --- | --- |
 | name、price、marketCap | 名称、代码、收盘价、涨跌和从万元转亿元的市值已对当日 Core。交易所标签从代码后缀生成。[当日对账](research/investmind-screener-field-contracts.json) |
 | pe、pb | 当日倍数、五年分位、十年窗口缺数均有证据；当前无非空十年样本。 |
-| industry、board、concept、region | 使用大类/细分行业、地域、板块、概念标签。板块逐证券核过筛选成员，分类筛选核过样例。industry 明细读取子行业与地域，board 也用于卡片；后三者无独立普通表格列。供应商标签分类的沿革不在本次财报重算范围。 |
+| industry、board、concept、region | 大类、细分行业、地域与板块逐证券核对，概念本版均空。行业与地域逐行追溯到供应商原件，见[分类与来源](screener-history-evidence.md)。 |
 | sector、thsIndustry、bankCentralBorrowRatio、bankInterbankLiabilityRatio | 已检查配置，页面无独立显示列。 |
 | risk | 五项状态及缺数分布见上表。 |
-| dividendYield、payoutRatio、dividendYears | 财年及两种预期股息率有指标卡证据；财年分红年数和三年支付率从分红记录复核。支付率浮层另外列最新报告参考，其口径独立于三年均值。[股息试点](research/investmind-dividend-lineage-observed.json) · [股东回报核验](screener-capital-fields.md) |
+| dividendYield、payoutRatio、dividendYears | 财年及两种预期股息率有指标卡证据；财年分红年数和三年支付率从分红记录复核。支付率浮层另列带年份的最新财年值。[股息试点](research/investmind-dividend-lineage-observed.json) · [股东回报核验](screener-capital-fields.md) · [最新单期支付率](screener-history-evidence.md) |
 | shareholderReturn | FY、3/5/10 年资本回报对股权筹资之比缺上市公司筹资分项及回购依据，200 个研究层空值已核。[回购和融资边界](screener-capital-fields.md) |
-| roeRoic | 年报 ROIC 与核心年报百分数逐只对账；ROE 阈值按最新报告已核。该列按所选报告窗读取逐期 ROE/ROIC；阈值或年报对账不能证明所有季度明细均已逐期重算。[ROIC 证据](research/investmind-screener-field-contracts.json) |
+| roeRoic | 年报 ROIC 与核心年报百分数逐只对账；ROE 阈值按最新报告已核。所选报告窗中的逐期历史另对 604 份报告。[ROIC 条件](research/investmind-screener-field-contracts.json) · [逐报告核验](screener-history-evidence.md) |
 | revenueTrend、profit、cashflowTrend、marginTrend、contractLiabilityTrend、receivableTrend、inventoryTrend、payableTrend | 每只证券的年度/单季来源金额、利润率、余额及收入分母逐格核对。均值、同比和期间范围由界面在相同序列上计算。 |
-| revenueGrowth、profitGrowth | 银行表中增速使用年度与单季金额计算同比、环比和累计同比；上述金额已逐期复核，页面另有根同比参考值，其公式须与财报期间分别追溯。 |
+| revenueGrowth、profitGrowth | 银行表中增速使用年度与单季金额计算同比、环比和累计同比；上述金额已逐期复核，根同比参考与同版输入凭据另行重算。[根同比核验](screener-history-evidence.md) |
 | realMoneyIndex、cashQualityRatios、cashOcfRevenue、cashOcfLiab、cashCapexCoverage、cashFreeCashFlow、cashFcfMargin、cashCollection、cashPayment | 八套 FY 与 3/5/10 年累计口径已有 1,600 值重算，风险项另核单财年真钱阈值。[现金指标核验](screener-fiscal-cash.md) |
-| institutionHolding、longMoneyFund、chipConcentration | 机构本期与较上期变化已核，长钱及基金缺正式覆盖。筹码显示按户数历史比较，研究层变化字段为空；前十机构核验不证明所有历史明细。[持有人与缺源](screener-capital-fields.md) |
+| institutionHolding、longMoneyFund、chipConcentration | 本期和历史机构持仓、股东户数均有原行核对，长钱及基金缺正式覆盖。筹码显示按户数历史比较，研究层变化字段为空。[持有人与缺源](screener-capital-fields.md) · [历史明细](screener-history-evidence.md) |
 | ahPriceGap、bankExpectedYield、bankNimTrend、bankAssetQuality、bankScore | 银行表及卡片依赖同一 bankEvaluation。现有 3 家银行，缺同日 A/H 配对汇率、预测、息差、拨备等正式输入，默认五项总分均空，已有覆盖与缺项详情可核。[银行字段与请求](screener-api-fields.md) |
 
 使用有本机数据库只读权限的项目 Python 运行 `python -I scripts/audit-screener-display.py --output docs/research/investmind-screener-display.json`。脚本对期间、证券、字段、数值、风险顺序及状态执行断言，发生数值差异时记录在 `differences` 并返回非零状态。
