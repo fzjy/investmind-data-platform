@@ -15,10 +15,14 @@ def _json_result(result: DataResult[dict[str, object]]) -> JSONResponse:
 
 
 def transmission_view(payload: dict, view: str) -> dict:
-    if view != 'initial' or not isinstance(payload.get('enterpriseAnalysis'), dict):
-        return payload
-    return {**payload, 'enterpriseAnalysis': {key: value for key, value in payload['enterpriseAnalysis'].items()
-        if key not in ('industryComparison', 'officialTargets')}}
+    enterprise = payload.get('enterpriseAnalysis')
+    deferred = ('industryComparison', 'officialTargets')
+    if view == 'scope':
+        return {'enterpriseAnalysis': {key: enterprise[key] for key in ('inputHash', *deferred)
+                                      if key in enterprise} if isinstance(enterprise, dict) else None}
+    if view == 'initial' and isinstance(enterprise, dict):
+        return {**payload, 'enterpriseAnalysis': {key: value for key, value in enterprise.items() if key not in deferred}}
+    return payload
 
 
 def create_router(service: MacroService | None = None, provider: MacroProvider | None = None, *, collection_audit: Callable[[], dict | None] | None = None) -> APIRouter:
@@ -32,7 +36,7 @@ def create_router(service: MacroService | None = None, provider: MacroProvider |
     @router.get("/api/data/macro-transmission")
     @router.get("/api/v1/macro/transmission")
     def macro_transmission(version: str | None = Query(default=None, min_length=1, max_length=64),
-                           view: Literal['full', 'initial'] = 'full') -> JSONResponse:
+                           view: Literal['full', 'initial', 'scope'] = 'full') -> JSONResponse:
         result = active_service.get_transmission(version)
         return _json_result(result.model_copy(update={'data': transmission_view(result.data, view)}))
 

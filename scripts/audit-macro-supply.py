@@ -5,6 +5,7 @@ from collections import Counter, defaultdict
 from datetime import date, datetime, timezone
 from decimal import Decimal
 from hashlib import sha256
+import gzip
 import json
 from math import isclose
 from pathlib import Path
@@ -128,10 +129,13 @@ def capture_routes(factory, session):
     sampled_old = next(iter(history["transmission"]))
     with TestClient(app) as client:
         for group, product in products.items():
+            sizes = {}
             queries = [{}, {"version": product.version}, {"version": sampled_old}, {"version": "no-such-audit-version"},
                        {"version": ""}]
             if group == "transmission":
-                queries += [{"view":"initial"}, {"view":"initial", "version":product.version}, {"view":"invalid"}]
+                queries += [{"view":"initial"}, {"view":"initial", "version":product.version},
+                            {"view":"scope", "version":product.version}, {"view":"scope", "version":sampled_old},
+                            {"view":"invalid"}]
             modes = []
             for params in queries:
                 a,b = [client.get(path, params=params) for path in (f"/api/v1/macro/{group}", f"/api/data/macro-{group}")]
@@ -148,13 +152,24 @@ def capture_routes(factory, session):
                 if params.get("view") == "initial":
                     base = product.payload.get("enterpriseAnalysis", {})
                     assert obj["data"]["enterpriseAnalysis"] == {k:v for k,v in base.items() if k not in ("industryComparison","officialTargets")}
+                elif params.get("view") == "scope":
+                    base = (product.payload if version==product.version else session.execute(text(
+                        "select payload from mart.page_snapshot where product=:product and snapshot_version=:version"
+                    ), {"product":product.product,"version":version}).scalar_one()).get("enterpriseAnalysis")
+                    expected_scope = {k:base[k] for k in ("inputHash","industryComparison","officialTargets") if k in base} if isinstance(base,dict) else None
+                    assert obj["data"] == {"enterpriseAnalysis":expected_scope}
                 elif version == product.version:
                     assert obj["data"] == product.payload
+                if group=="transmission" and version==product.version:
+                    view = params.get("view", "full")
+                    sizes[view] = {"bytes":len(a.content),"gzipBytes":len(gzip.compress(a.content,mtime=0))}
                 if group=="insights":
                     assert a.headers["cache-control"] == b.headers["cache-control"] == "no-store"
                     assert obj["collectionAudit"]["basis"] == "current-collection-records"
                     latest_audit = obj["collectionAudit"]
             evidence[group]["routeCases"] = modes
+            if sizes:
+                evidence[group]["responseSizes"] = sizes
     return products, evidence, latest_audit
 
 

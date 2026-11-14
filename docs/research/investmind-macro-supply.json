@@ -67,11 +67,39 @@
         },
         {
           "params": {
+            "view": "scope",
+            "version": "20261108-366f83bfc727036c"
+          },
+          "status": 200
+        },
+        {
+          "params": {
+            "view": "scope",
+            "version": "20260824-c19d525ee7f0e7b2"
+          },
+          "status": 200
+        },
+        {
+          "params": {
             "view": "invalid"
           },
           "status": 422
         }
-      ]
+      ],
+      "responseSizes": {
+        "full": {
+          "bytes": 16511553,
+          "gzipBytes": 1743819
+        },
+        "initial": {
+          "bytes": 3117095,
+          "gzipBytes": 344164
+        },
+        "scope": {
+          "bytes": 13394693,
+          "gzipBytes": 1399736
+        }
+      }
     },
     "insights": {
       "pointerVersion": "20261108-366f83bfc727036c",

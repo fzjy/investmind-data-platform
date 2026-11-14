@@ -6,10 +6,22 @@
 
 | 底座接口 | 请求与响应 | InvestMind 用途 |
 |---|---|---|
-| `GET /api/v1/macro/transmission` | 可选 `version` 和 `view=full/initial`。初始视图从 `enterpriseAnalysis` 中省略 `industryComparison`、`officialTargets`，按同版再读 `full` 可补全。 | 宏观传导链、分析卡、企业财报与行业/官方对照；首屏后展开企业范围可延迟取数。 |
+| `GET /api/v1/macro/transmission` | 可选 `version` 和 `view=full/initial/scope`。初始视图从 `enterpriseAnalysis` 中省略 `industryComparison`、`officialTargets`，按同版再读 `scope`，只返回 `enterpriseAnalysis.inputHash/industryComparison/officialTargets`。旧版无企业分析时返回 `enterpriseAnalysis=null`。 | 宏观传导链、分析卡、企业财报与行业/官方对照；首屏后展开企业范围可延迟取数。 |
 | `GET /api/v1/macro/insights` | 可选 `version`。正文为对应版本洞察，外层 `collectionAudit` 为读取当时的采集状态，每次请求返回 `Cache-Control: no-store`。 | 基础指标趋势、沙盘、经济罗盘、状态卡、专项观察与采集状态。 |
 
-原有 `/api/data/macro-transmission` 和 `/api/data/macro-insights` 各与相应 v1 路径共用一个处理函数。网站先并发取当期两项，若版本不同，再指定传导的版本取洞察。历史业务字段来源为 `mart.page_snapshot`；未指定版本时读 `mart.published_snapshot`。已重放当前、显式当前版、最早历史版、不存在版本、非法参数及传导首屏视图，逐一对比响应码和内容。不存在版本返回 404，空版本及无效视图返回 422。历史洞察带的采集状态代表当前读取时刻。
+原有 `/api/data/macro-transmission` 和 `/api/data/macro-insights` 各与相应 v1 路径共用一个处理函数。网站先并发取当期两项，若版本不同，再指定传导的版本取洞察。历史业务字段来源为 `mart.page_snapshot`；未指定版本时读 `mart.published_snapshot`。已重放当前、显式当前版、最早历史版、不存在版本、非法参数及传导首屏、企业差量视图，逐一对比响应码和内容。不存在版本返回 404，空版本及无效视图返回 422。历史洞察带的采集状态代表当前读取时刻。
+
+### 企业范围二次请求的实际载荷
+
+宏观页面首次取传导首屏与洞察各一次。有企业范围数据时再按传导版本取一次范围；站内会话缓存仍以版本与企业输入哈希复用。原二次请求会重复返回整份传导，现取 `view=scope`，仅用已核对版本和相同 `inputHash` 的两个延迟字段补回首屏企业对象。以该发布版本的 HTTP JSON 响应正文计量，前后均为两次传导读取；另有独立的一次洞察读取。
+
+| 传导响应 | JSON 字节 | 相同 gzip 编码下的字节 |
+|---|---:|---:|
+| 首屏 initial | 3,117,095 | 344,164 |
+| 原二次读取 full | 16,511,553 | 1,743,819 |
+| 当前二次读取 scope | 13,394,693 | 1,399,736 |
+
+二次响应减少 3,116,860 个 JSON 字节（18.88%），gzip 对照减少 344,083 字节（19.73%）。完整传导仍供显式 full 请求和既有调用者使用。范围路由沿用当前的 JSON 快照读取路径；这些结果衡量从 API 发出的响应体，不等于数据库读取字节或真实网络吞吐。浏览器接收的传输字节还取决于代理压缩与缓存。
 
 ## 基础指标的实际供给
 
