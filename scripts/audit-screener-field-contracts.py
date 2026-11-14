@@ -188,14 +188,49 @@ def inspect(client, session):
           and as_of = :day and ts_code = any(:symbols)
     """), {"day": baseline["snapshot"]["asOf"][:10], "symbols": symbols(stocks)}).mappings()
     by_symbol = {r["ts_code"]: r for r in roic}
+    raw_rows = session.execute(text("""
+        select payload from mart.page_snapshot
+        where product = 'screener' and snapshot_version = :version
+    """), {"version": baseline["snapshot"]["version"]}).scalar_one()["stocks"]
+    raw = {r["symbol"]: r["roic"] for r in raw_rows}
+    core_roic = session.execute(text("""
+        select ts_code, end_date, coalesce(f_ann_date, ann_date) as disclosed,
+               coalesce(update_flag, '') as revision, data->>'roic' as roic
+        from core.financial_indicator
+        where ts_code = any(:symbols) and end_date <= :day
+          and extract(month from end_date) = 12 and extract(day from end_date) = 31
+          and coalesce(report_type, '') in ('', '1')
+          and (coalesce(f_ann_date, ann_date) is null or coalesce(f_ann_date, ann_date) <= :day)
+        order by ts_code, end_date
+    """), {"day": baseline["snapshot"]["asOf"][:10], "symbols": symbols(stocks)}).mappings()
+    grouped = {}
+    for record in core_roic:
+        grouped.setdefault(record["ts_code"], {}).setdefault(record["end_date"], []).append(record)
+    detail = {}
+    for row in stocks:
+        amount = period = None
+        years = grouped.get(row["symbol"], {})
+        for year in sorted(years, reverse=True)[:8]:
+            candidates = [c for c in years[year] if c["disclosed"] is None or c["disclosed"] >= year]
+            if not candidates or any(c["disclosed"] is None for c in candidates):
+                continue
+            latest = max((c["disclosed"], c["revision"]) for c in candidates)
+            values = {float(c["roic"]) if c["roic"] is not None else None for c in candidates
+                      if (c["disclosed"], c["revision"]) == latest}
+            if len(values) == 1 and None not in values:
+                amount, period = values.pop(), year.isoformat()
+                break
+        assert row["roic"] == row["researchValues"]["roic"] == amount, (row["symbol"], row["roic"], amount)
+        detail[row["symbol"]] = dict(reportPeriod=period, reportedPercent=amount, rawSnapshotValue=raw[row["symbol"]])
     amounts = [r["roic"] for r in stocks if r["roic"] is not None]
     result["roicUnits"] = {
         "storedRows": len(by_symbol), "storedNonNullUnits": sorted({r["unit"] for r in by_symbol.values()
                                                                   if r["value"] is not None and r["unit"]}),
-        "publishedMinMax": [min(amounts), max(amounts)] if amounts else [],
-        "publishedEqualsStoredNonNull": sum(
-            r["roic"] is not None and r["symbol"] in by_symbol and by_symbol[r["symbol"]]["value"] is not None
-            and isclose(r["roic"], float(by_symbol[r["symbol"]]["value"]), abs_tol=1e-8) for r in stocks),
+        "rawSnapshotEqualsStoredRatioNonNull": sum(
+            v is not None and key in by_symbol and by_symbol[key]["value"] is not None
+            and isclose(v, float(by_symbol[key]["value"]), abs_tol=1e-8) for key, v in raw.items()),
+        "apiPercentMinMax": [min(amounts), max(amounts)] if amounts else [],
+        "apiMatchesCoreNonNull": len(amounts), "bothNull": len(stocks)-len(amounts), "bySymbol": detail,
     }
     numeric = {}
     for item in REA_THRESHOLD_UI:

@@ -47,11 +47,265 @@
     "storedNonNullUnits": [
       "ratio"
     ],
-    "publishedMinMax": [
-      -5.1153,
-      -0.0106
+    "rawSnapshotEqualsStoredRatioNonNull": 47,
+    "apiPercentMinMax": [
+      -48.0011,
+      40.5978
     ],
-    "publishedEqualsStoredNonNull": 47
+    "apiMatchesCoreNonNull": 44,
+    "bothNull": 6,
+    "bySymbol": {
+      "000001.SZ": {
+        "reportPeriod": null,
+        "reportedPercent": null,
+        "rawSnapshotValue": -0.0464
+      },
+      "000063.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 3.6319,
+        "rawSnapshotValue": -0.2018
+      },
+      "000333.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 12.6817,
+        "rawSnapshotValue": -1.4511
+      },
+      "000425.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 6.7594,
+        "rawSnapshotValue": -0.625
+      },
+      "000538.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 12.7993,
+        "rawSnapshotValue": -1.0899
+      },
+      "000568.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 18.4236,
+        "rawSnapshotValue": -2.3147
+      },
+      "000792.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 15.6375,
+        "rawSnapshotValue": -1.9631
+      },
+      "000821.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 3.7237,
+        "rawSnapshotValue": -0.2098
+      },
+      "000858.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 5.6061,
+        "rawSnapshotValue": -2.1545
+      },
+      "002230.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 2.8454,
+        "rawSnapshotValue": -0.0166
+      },
+      "002415.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 15.5721,
+        "rawSnapshotValue": -2.0134
+      },
+      "002594.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 10.7355,
+        "rawSnapshotValue": -0.7657
+      },
+      "002714.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 11.9765,
+        "rawSnapshotValue": -0.0276
+      },
+      "300015.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 12.2561,
+        "rawSnapshotValue": -3.6617
+      },
+      "300059.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 3.5026,
+        "rawSnapshotValue": -0.2264
+      },
+      "300122.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": -48.0011,
+        "rawSnapshotValue": -0.0316
+      },
+      "300308.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 40.5978,
+        "rawSnapshotValue": -5.0125
+      },
+      "300750.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 15.5561,
+        "rawSnapshotValue": -1.5415
+      },
+      "300760.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 19.0795,
+        "rawSnapshotValue": -1.0749
+      },
+      "300999.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 1.9706,
+        "rawSnapshotValue": -0.3405
+      },
+      "301589.SZ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 13.9175,
+        "rawSnapshotValue": -0.7527
+      },
+      "600030.SH": {
+        "reportPeriod": null,
+        "reportedPercent": null,
+        "rawSnapshotValue": -0.2562
+      },
+      "600031.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 7.4586,
+        "rawSnapshotValue": -0.8472
+      },
+      "600036.SH": {
+        "reportPeriod": null,
+        "reportedPercent": null,
+        "rawSnapshotValue": -0.0738
+      },
+      "600234.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": -4.1955,
+        "rawSnapshotValue": -0.2017
+      },
+      "600276.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 13.0167,
+        "rawSnapshotValue": null
+      },
+      "600519.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 31.5022,
+        "rawSnapshotValue": -5.1153
+      },
+      "600547.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 6.2556,
+        "rawSnapshotValue": -2.0698
+      },
+      "600624.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": -18.6804,
+        "rawSnapshotValue": -0.0177
+      },
+      "601012.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": -7.7923,
+        "rawSnapshotValue": -0.0295
+      },
+      "601088.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 11.7766,
+        "rawSnapshotValue": -1.3335
+      },
+      "601100.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 15.5815,
+        "rawSnapshotValue": -0.8148
+      },
+      "601318.SH": {
+        "reportPeriod": null,
+        "reportedPercent": null,
+        "rawSnapshotValue": null
+      },
+      "601398.SH": {
+        "reportPeriod": null,
+        "reportedPercent": null,
+        "rawSnapshotValue": -0.0445
+      },
+      "601688.SH": {
+        "reportPeriod": null,
+        "reportedPercent": null,
+        "rawSnapshotValue": -0.1439
+      },
+      "601766.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 6.9739,
+        "rawSnapshotValue": -0.6864
+      },
+      "601857.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 8.4915,
+        "rawSnapshotValue": -1.2338
+      },
+      "601888.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 4.8299,
+        "rawSnapshotValue": null
+      },
+      "603019.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 9.0028,
+        "rawSnapshotValue": -0.4374
+      },
+      "603259.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 23.9198,
+        "rawSnapshotValue": -2.169
+      },
+      "603288.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 17.5965,
+        "rawSnapshotValue": -1.7077
+      },
+      "603799.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 8.1545,
+        "rawSnapshotValue": -0.9705
+      },
+      "688041.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 12.2193,
+        "rawSnapshotValue": -0.2608
+      },
+      "688111.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 14.8793,
+        "rawSnapshotValue": -0.4381
+      },
+      "688180.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": -10.3947,
+        "rawSnapshotValue": -0.0106
+      },
+      "688472.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 3.7936,
+        "rawSnapshotValue": -0.6108
+      },
+      "688981.SH": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 2.1748,
+        "rawSnapshotValue": -0.1326
+      },
+      "920002.BJ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 8.8183,
+        "rawSnapshotValue": -0.6082
+      },
+      "920047.BJ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": -13.1256,
+        "rawSnapshotValue": -0.0717
+      },
+      "920185.BJ": {
+        "reportPeriod": "2025-12-31",
+        "reportedPercent": 5.5523,
+        "rawSnapshotValue": -0.7164
+      }
+    }
   },
   "thresholds": {
     "pe": {
@@ -472,14 +726,17 @@
       "unit": "%",
       "operator": "gt",
       "threshold": 10,
-      "available": 47,
-      "matched": 0,
+      "available": 44,
+      "matched": 20,
       "missingSymbols": [
-        "600276.SH",
+        "000001.SZ",
+        "600030.SH",
+        "600036.SH",
         "601318.SH",
-        "601888.SH"
+        "601398.SH",
+        "601688.SH"
       ],
-      "missingWithReason": 0
+      "missingWithReason": 6
     },
     "realMoneyIndex": {
       "unit": "",
@@ -1153,7 +1410,7 @@
         "realMoneyIndex": 1
       },
       "directionOverrides": {},
-      "matched": 0
+      "matched": 4
     },
     "deep-value": {
       "label": "\u6df1\u5ea6\u4ef7\u503c",
@@ -1276,8 +1533,8 @@
       "orderedSymbolsHash": "c152a64759b6c239a2914515fd5008688ffd934004bc41e7a76febcce3d3624c"
     },
     "roic": {
-      "usable": 47,
-      "orderedSymbolsHash": "29f62502c365bec05f218dbd1137959898eb2b19681f4825ad9f24e91598e6e9"
+      "usable": 44,
+      "orderedSymbolsHash": "ffd5df3b325fa426ea5dd214981e6fe3c1a550ae4cf1defecf13383b3e4d0545"
     },
     "realMoneyIndex": {
       "usable": 50,
@@ -1506,7 +1763,7 @@
           "weight": 30
         }
       ],
-      "orderedSymbolsHash": "c2b88db10f7248e224e73ce7a180573463246dcb4ba1bc9ef45c7412c21ef62f"
+      "orderedSymbolsHash": "0bae02d06b8919f77921d18c29f62986777b59ded0abd908990460561c52afb9"
     },
     "\u4fbf\u5b9c\u597d\u516c\u53f8": {
       "rules": [
@@ -1811,7 +2068,7 @@
     },
     "roic": {
       "present": 50,
-      "nonNull": 47
+      "nonNull": 44
     },
     "subIndustry": {
       "present": 50,
