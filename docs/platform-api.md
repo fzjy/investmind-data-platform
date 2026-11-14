@@ -1,5 +1,8 @@
 # 公共数据接口目录
 
+[10 个 v1 接口的请求参数、默认值与校验约束](api-requests.md) · [OpenAPI 规范](openapi-v1.json) · [字段到项目、页面和指标](field-consumers.md)。在底座虚拟环境内运行 `python -I scripts/export-api-requests.py` 可按当前路由重新生成请求合同。
+
+
 [选股器](screener-api-fields.md) · [工作台](workbench-api.md) · [市场](market-supply.md) · [快讯](news-api.md) · [宏观](macro-supply.md) · [组合](portfolio-split-lineage.md) · [证券搜索](security-search.md)
 
 核验日期：2026-11-14。开工代码基线 `ab00ce213b093472a3647d581519fcdb9a4cb43e`；旧文档范围见 InvestMind 仓库的 `docs/research/investmind-split-reference-scope.md`。这是现有实现目录，不表示独立底座已部署。

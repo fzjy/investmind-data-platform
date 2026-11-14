@@ -1,0 +1,1040 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "InvestMind Data API",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/v1/news": {
+      "get": {
+        "summary": "Market News",
+        "operationId": "market_news_api_v1_news_get",
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 300
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "default": 20,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/market/overview": {
+      "get": {
+        "summary": "Market Overview",
+        "operationId": "market_overview_api_v1_market_overview_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/market/explorer": {
+      "get": {
+        "summary": "Market Explorer",
+        "operationId": "market_explorer_api_v1_market_explorer_get",
+        "parameters": [
+          {
+            "name": "news",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "snapshot",
+                "latest"
+              ],
+              "type": "string",
+              "default": "snapshot",
+              "title": "News"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/macro/transmission": {
+      "get": {
+        "summary": "Macro Transmission",
+        "operationId": "macro_transmission_api_v1_macro_transmission_get",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 64
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Version"
+            }
+          },
+          {
+            "name": "view",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "full",
+                "initial",
+                "scope"
+              ],
+              "type": "string",
+              "default": "full",
+              "title": "View"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/macro/insights": {
+      "get": {
+        "summary": "Macro Insights",
+        "operationId": "macro_insights_api_v1_macro_insights_get",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 64
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Version"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/portfolio": {
+      "get": {
+        "summary": "Portfolio",
+        "operationId": "portfolio_api_v1_portfolio_get",
+        "parameters": [
+          {
+            "name": "if-none-match",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "If-None-Match"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/stocks/research": {
+      "post": {
+        "summary": "Research Tools",
+        "operationId": "research_tools_api_v1_stocks_research_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/stocks/screener": {
+      "post": {
+        "summary": "Screener",
+        "operationId": "screener_api_v1_stocks_screener_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScreenerRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/stocks/{symbol}": {
+      "get": {
+        "summary": "Stock Workbench",
+        "operationId": "stock_workbench_api_v1_stocks__symbol__get",
+        "parameters": [
+          {
+            "name": "symbol",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Symbol"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/search": {
+      "get": {
+        "summary": "Search",
+        "operationId": "search_api_v1_search_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BankCondition": {
+        "properties": {
+          "field": {
+            "type": "string",
+            "title": "Field"
+          },
+          "operator": {
+            "type": "string",
+            "enum": [
+              "gt",
+              "lt",
+              "gte",
+              "lte"
+            ],
+            "title": "Operator"
+          },
+          "value": {
+            "type": "number",
+            "title": "Value"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "field",
+          "operator",
+          "value"
+        ],
+        "title": "BankCondition"
+      },
+      "BankRequest": {
+        "properties": {
+          "divisor": {
+            "type": "number",
+            "title": "Divisor"
+          },
+          "weights": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Weights"
+          },
+          "conditions": {
+            "items": {
+              "$ref": "#/components/schemas/BankCondition"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Conditions"
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "code",
+              "score-desc"
+            ],
+            "title": "Sort",
+            "default": "code"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "BankRequest"
+      },
+      "Categories": {
+        "properties": {
+          "majorIndustry": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Majorindustry"
+          },
+          "subIndustry": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Subindustry"
+          },
+          "concept": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Concept"
+          },
+          "region": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Region"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "majorIndustry",
+          "subIndustry",
+          "concept",
+          "region"
+        ],
+        "title": "Categories"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ResearchRequest": {
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "title": "Symbol"
+          },
+          "peerSymbol": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Peersymbol"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "symbol"
+        ],
+        "title": "ResearchRequest"
+      },
+      "ScreenerFilters": {
+        "properties": {
+          "preset": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Preset"
+          },
+          "thresholds": {
+            "$ref": "#/components/schemas/Thresholds"
+          },
+          "enabledThresholds": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Enabledthresholds"
+          },
+          "thresholdDirections": {
+            "additionalProperties": {
+              "type": "string",
+              "enum": [
+                "gt",
+                "lt",
+                "gte",
+                "lte"
+              ]
+            },
+            "type": "object",
+            "title": "Thresholddirections"
+          },
+          "exclusions": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "loss",
+                "st",
+                "inventoryRisk",
+                "lowRealMoney",
+                "netDebt",
+                "performanceDecline",
+                "noDividend",
+                "revenueDecline",
+                "cashflowDecline"
+              ]
+            },
+            "type": "array",
+            "title": "Exclusions"
+          },
+          "boards": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "sh-main",
+                "sz-main",
+                "star",
+                "chinext",
+                "bse",
+                "hk"
+              ]
+            },
+            "type": "array",
+            "title": "Boards"
+          },
+          "categories": {
+            "$ref": "#/components/schemas/Categories"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "preset",
+          "thresholds",
+          "exclusions",
+          "boards",
+          "categories"
+        ],
+        "title": "ScreenerFilters"
+      },
+      "ScreenerRequest": {
+        "properties": {
+          "filters": {
+            "$ref": "#/components/schemas/ScreenerFilters"
+          },
+          "bank": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BankRequest"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "sortRules": {
+            "items": {
+              "$ref": "#/components/schemas/SortRule"
+            },
+            "type": "array",
+            "title": "Sortrules"
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Page"
+          },
+          "pageSize": {
+            "type": "integer",
+            "maximum": 200.0,
+            "minimum": 1.0,
+            "title": "Pagesize"
+          },
+          "sortMode": {
+            "type": "string",
+            "enum": [
+              "advanced",
+              "quick"
+            ],
+            "title": "Sortmode",
+            "default": "advanced"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "filters",
+          "sortRules",
+          "page",
+          "pageSize"
+        ],
+        "title": "ScreenerRequest"
+      },
+      "SortRule": {
+        "properties": {
+          "field": {
+            "type": "string",
+            "title": "Field"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "title": "Direction"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled"
+          },
+          "weight": {
+            "type": "number",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Weight",
+            "default": 100
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "field",
+          "direction",
+          "enabled"
+        ],
+        "title": "SortRule"
+      },
+      "Thresholds": {
+        "properties": {
+          "pe": {
+            "type": "number",
+            "title": "Pe",
+            "default": 15
+          },
+          "pb": {
+            "type": "number",
+            "title": "Pb",
+            "default": 2
+          },
+          "pePercentile": {
+            "type": "number",
+            "title": "Pepercentile",
+            "default": 30
+          },
+          "pbPercentile": {
+            "type": "number",
+            "title": "Pbpercentile",
+            "default": 30
+          },
+          "dividendYield": {
+            "type": "number",
+            "title": "Dividendyield",
+            "default": 4
+          },
+          "expectedDividendYield": {
+            "type": "number",
+            "title": "Expecteddividendyield",
+            "default": 4
+          },
+          "expectedDividendYieldNTM": {
+            "type": "number",
+            "title": "Expecteddividendyieldntm",
+            "default": 4
+          },
+          "dividendYears": {
+            "type": "number",
+            "title": "Dividendyears",
+            "default": 5
+          },
+          "payoutRatio": {
+            "type": "number",
+            "title": "Payoutratio",
+            "default": 30
+          },
+          "capitalReturnRatio": {
+            "type": "number",
+            "title": "Capitalreturnratio",
+            "default": 1
+          },
+          "capitalReturnRatioCum3y": {
+            "type": "number",
+            "title": "Capitalreturnratiocum3Y",
+            "default": 1
+          },
+          "capitalReturnRatioCum5y": {
+            "type": "number",
+            "title": "Capitalreturnratiocum5Y",
+            "default": 1
+          },
+          "capitalReturnRatioCum10y": {
+            "type": "number",
+            "title": "Capitalreturnratiocum10Y",
+            "default": 1
+          },
+          "roe": {
+            "type": "number",
+            "title": "Roe",
+            "default": 10
+          },
+          "roic": {
+            "type": "number",
+            "title": "Roic",
+            "default": 10
+          },
+          "realMoneyIndex": {
+            "type": "number",
+            "title": "Realmoneyindex",
+            "default": 1
+          },
+          "realMoneyIndexCum3y": {
+            "type": "number",
+            "title": "Realmoneyindexcum3Y",
+            "default": 1
+          },
+          "realMoneyIndexCum5y": {
+            "type": "number",
+            "title": "Realmoneyindexcum5Y",
+            "default": 1
+          },
+          "realMoneyIndexCum10y": {
+            "type": "number",
+            "title": "Realmoneyindexcum10Y",
+            "default": 1
+          },
+          "ocfToRevenue": {
+            "type": "number",
+            "title": "Ocftorevenue",
+            "default": 0.1
+          },
+          "ocfToRevenueCum3y": {
+            "type": "number",
+            "title": "Ocftorevenuecum3Y",
+            "default": 0.1
+          },
+          "ocfToRevenueCum5y": {
+            "type": "number",
+            "title": "Ocftorevenuecum5Y",
+            "default": 0.1
+          },
+          "ocfToRevenueCum10y": {
+            "type": "number",
+            "title": "Ocftorevenuecum10Y",
+            "default": 0.1
+          },
+          "ocfToTotalLiab": {
+            "type": "number",
+            "title": "Ocftototalliab",
+            "default": 0.05
+          },
+          "ocfToTotalLiabCum3y": {
+            "type": "number",
+            "title": "Ocftototalliabcum3Y",
+            "default": 0.05
+          },
+          "ocfToTotalLiabCum5y": {
+            "type": "number",
+            "title": "Ocftototalliabcum5Y",
+            "default": 0.05
+          },
+          "ocfToTotalLiabCum10y": {
+            "type": "number",
+            "title": "Ocftototalliabcum10Y",
+            "default": 0.05
+          },
+          "capexCoverageRatio": {
+            "type": "number",
+            "title": "Capexcoverageratio",
+            "default": 1
+          },
+          "capexCoverageRatioCum3y": {
+            "type": "number",
+            "title": "Capexcoverageratiocum3Y",
+            "default": 1
+          },
+          "capexCoverageRatioCum5y": {
+            "type": "number",
+            "title": "Capexcoverageratiocum5Y",
+            "default": 1
+          },
+          "capexCoverageRatioCum10y": {
+            "type": "number",
+            "title": "Capexcoverageratiocum10Y",
+            "default": 1
+          },
+          "freeCashFlowFy": {
+            "type": "number",
+            "title": "Freecashflowfy",
+            "default": 0
+          },
+          "freeCashFlowFyCum3y": {
+            "type": "number",
+            "title": "Freecashflowfycum3Y",
+            "default": 0
+          },
+          "freeCashFlowFyCum5y": {
+            "type": "number",
+            "title": "Freecashflowfycum5Y",
+            "default": 0
+          },
+          "freeCashFlowFyCum10y": {
+            "type": "number",
+            "title": "Freecashflowfycum10Y",
+            "default": 0
+          },
+          "freeCashFlowMarginFy": {
+            "type": "number",
+            "title": "Freecashflowmarginfy",
+            "default": 0.05
+          },
+          "freeCashFlowMarginFyCum3y": {
+            "type": "number",
+            "title": "Freecashflowmarginfycum3Y",
+            "default": 0.05
+          },
+          "freeCashFlowMarginFyCum5y": {
+            "type": "number",
+            "title": "Freecashflowmarginfycum5Y",
+            "default": 0.05
+          },
+          "freeCashFlowMarginFyCum10y": {
+            "type": "number",
+            "title": "Freecashflowmarginfycum10Y",
+            "default": 0.05
+          },
+          "cashCollectionRatio": {
+            "type": "number",
+            "title": "Cashcollectionratio",
+            "default": 1
+          },
+          "cashCollectionRatioCum3y": {
+            "type": "number",
+            "title": "Cashcollectionratiocum3Y",
+            "default": 1
+          },
+          "cashCollectionRatioCum5y": {
+            "type": "number",
+            "title": "Cashcollectionratiocum5Y",
+            "default": 1
+          },
+          "cashCollectionRatioCum10y": {
+            "type": "number",
+            "title": "Cashcollectionratiocum10Y",
+            "default": 1
+          },
+          "cashPaymentRatio": {
+            "type": "number",
+            "title": "Cashpaymentratio",
+            "default": 1
+          },
+          "cashPaymentRatioCum3y": {
+            "type": "number",
+            "title": "Cashpaymentratiocum3Y",
+            "default": 1
+          },
+          "cashPaymentRatioCum5y": {
+            "type": "number",
+            "title": "Cashpaymentratiocum5Y",
+            "default": 1
+          },
+          "cashPaymentRatioCum10y": {
+            "type": "number",
+            "title": "Cashpaymentratiocum10Y",
+            "default": 1
+          },
+          "institutionHolding": {
+            "type": "number",
+            "title": "Institutionholding",
+            "default": 5
+          },
+          "institutionHoldingChange": {
+            "type": "number",
+            "title": "Institutionholdingchange",
+            "default": 0
+          },
+          "longMoneyHoldingRatio": {
+            "type": "number",
+            "title": "Longmoneyholdingratio",
+            "default": 1
+          },
+          "fundHeavyCount": {
+            "type": "number",
+            "title": "Fundheavycount",
+            "default": 5
+          },
+          "chipConcentrationChange": {
+            "type": "number",
+            "title": "Chipconcentrationchange",
+            "default": 0
+          },
+          "marketCap": {
+            "type": "number",
+            "title": "Marketcap",
+            "default": 100
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "Thresholds"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
