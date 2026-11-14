@@ -24,6 +24,7 @@ from app.stocks.marts.prices import AdjustmentIndex, adjusted_value, build_adjus
 from app.shared.boards import normalize_board
 from app.shared.stock_mapping import StockMappingPolicy, classification_fields
 from app.stocks.research import financial_research
+from app.stocks.return_history import project_screener_roic
 from app.stocks.marts.screener_list import list_projection, valuation_windows
 from app.stocks.workbench_enrichment import load_holders,valuation_bands
 
@@ -522,7 +523,7 @@ def _stock_row(
         "pbPercentile": metrics.get("pbPercentile"),
         "expectedDividendYield": metrics.get("expectedDividendYield"),
         "capitalReturnRatio": metrics.get("capitalReturnRatio"),
-        "roic": metrics.get("roic"),
+        "roic": None,  # 下方使用同一可见年报序列投影已披露百分数。
         "institutionHolding": metrics.get("institutionHolding"),
         "majorIndustry": categories["majorIndustry"],
         "subIndustry": categories["subIndustry"],
@@ -634,6 +635,7 @@ class ScreenerMartBuilder:
             code = row['symbol']
             list_projection(row, risk_inputs.get(code, {'reports':{}, 'dividends':{}}), card_inputs.get(code),
                             shareholder_reports.get(code, {}).get('annualDistributions', []), snapshot.as_of)
+            project_screener_roic(row)
         payload = {
             "bootstrap": screener_bootstrap(selected),
             "stocks": list(selected),

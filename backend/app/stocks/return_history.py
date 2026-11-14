@@ -2,6 +2,34 @@
 from collections import defaultdict
 from decimal import Decimal,InvalidOperation
 from math import isfinite
+import re
+
+
+SCREENER_ROIC_BASIS = 'tushare-fina-indicator-roic-reported-percent-latest-of-eight-fy'
+
+
+def project_screener_roic(stock):
+    """按结果表默认年报窗口，投影最近八个已披露 FY 中最新的非空百分数。"""
+    history = stock.get('listHistory')
+    reports = history.get('returns') if isinstance(history, dict) else None
+    if not isinstance(reports, list):
+        reports = []
+    annual = [r for r in reports if isinstance(r, dict) and r.get('frequency') == 'FY'
+              and isinstance(r.get('period'), str) and re.fullmatch(r'[0-9]{4}-12-31', r['period'])]
+    annual = sorted(annual, key=lambda r: r['period'])[-8:]
+    latest = next((r for r in reversed(annual)
+                   if type(r.get('roic')) in (int, float) and isfinite(r['roic'])), None)
+    amount = latest['roic'] if latest else None
+    stock['roic'] = amount
+    for key in ('researchValues', 'metricBasis', 'listMissingReasons'):
+        if not isinstance(stock.get(key), dict):
+            stock[key] = {}
+    stock['researchValues']['roic'] = amount
+    stock['metricBasis']['roic'] = SCREENER_ROIC_BASIS
+    if latest:
+        stock['listMissingReasons'].pop('roic', None)
+    else:
+        stock['listMissingReasons']['roic'] = '最近八个年报期缺少已披露的 fina_indicator.roic 百分数'
 
 
 def _number(value):

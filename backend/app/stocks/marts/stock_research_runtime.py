@@ -20,7 +20,7 @@ def project_research_snapshots(current,screener,workbenches):
     payload=deepcopy(current['screener']);payload['bootstrap']=deepcopy(screener.payload['bootstrap'])
     for row in payload['stocks']:
         source=fresh[row['symbol']]
-        for key in ('listRisks','listMissingReasons','researchValues','financialTrends','listHistory','profitTrend','metricBasis','realMoneyIndex','pePercentile','pbPercentile','institutionHolding','dividendYears','dividendYield','payoutRatio','expectedDividendYield','expectedDividendYieldNTM'):
+        for key in ('listRisks','listMissingReasons','researchValues','financialTrends','listHistory','profitTrend','metricBasis','realMoneyIndex','roic','pePercentile','pbPercentile','institutionHolding','dividendYears','dividendYield','payoutRatio','expectedDividendYield','expectedDividendYieldNTM'):
             if key in source:row[key]=deepcopy(source[key])
     results=[replace(screener,payload=payload,rows=MartRows(screener=tuple(payload['stocks'])))]
     for candidate in workbenches:

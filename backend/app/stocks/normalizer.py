@@ -4,6 +4,7 @@ from copy import deepcopy
 
 from app.shared.boards import normalize_board
 from app.stocks.derived.risk_assessment import assess_risk_checklist
+from app.stocks.return_history import project_screener_roic
 from app.shared.errors import DataServiceError
 from app.shared.validation import require_object
 from app.stocks.rea_fields import REA_PRESETS, REA_GROUPS, REA_BOARDS, REA_EXCLUSIONS, REA_THRESHOLD_UI, REA_SORT_FIELDS
@@ -19,6 +20,7 @@ def normalize_screener_universe(value: object) -> dict[str, object]:
         raise DataServiceError("INVALID_SOURCE_PAYLOAD", "数据源响应不符合契约")
     normalized_stocks = deepcopy(stocks)
     for stock in normalized_stocks:
+        project_screener_roic(stock)
         if stock.get('metricBasis',{}).get('realMoneyIndex')=='annual-OCF/parent-profit':
             stock.setdefault('researchValues',{}).setdefault('pePercentile',None)
             stock.setdefault('researchValues',{}).setdefault('pbPercentile',None)

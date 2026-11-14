@@ -48,3 +48,42 @@ def test_known_legacy_three_year_percentile_cannot_pass_five_year_condition():
     def enable(r):
         r['filters']['enabledThresholds']=['pePercentile'];r['filters']['thresholds']['pePercentile']=30
     assert query([a],enable)['total']==0
+
+def test_roic_uses_disclosed_annual_percent_within_display_window_and_keeps_raw_input():
+    records = []
+    for i, reports in enumerate([
+        [{'period':'2024-12-31','frequency':'FY','roic':12.5}, {'period':'2025-06-30','frequency':'YTD','roic':4}],
+        [{'period':'2024-12-31','frequency':'FY','roic':0}],
+        [],
+        [{'period':f'{y}-12-31','frequency':'FY','roic':20 if y == 2010 else None} for y in range(2010,2019)],
+    ]):
+        a = row(f'{i:06d}.SH')
+        a.update(roic=0.4, researchValues={'roic':0.4}, listHistory={'returns':reports})
+        records.append(a)
+    data = query(records, lambda r:r.update(sortMode='quick', sortRules=[dict(field='roic',direction='desc',enabled=True)]))
+    assert [item['roic'] for item in data['items']] == [12.5, 0, None, None]
+    assert [item['researchValues']['roic'] for item in data['items']] == [12.5, 0, None, None]
+    assert data['bootstrap']['availableCounts']['roic'] == 2
+    def enable(r):
+        r['filters']['thresholds']['roic'] = 10
+        r['filters']['enabledThresholds'] = ['roic']
+    assert [item['symbol'] for item in query(records, enable)['items']] == ['000000.SH']
+    assert records[0]['roic'] == 0.4
+
+def test_legacy_missing_or_malformed_projection_keeps_other_fields_and_zero():
+    valid = {'frequency':'FY','period':'2024-12-31','roic':0}
+    invalid = [None, 'FY', {}, {'frequency':'FY', 'period':None, 'roic':80},
+               {'frequency':'FY', 'period':'2025-06-30', 'roic':80}]
+    for history in (None, 'old', {}, {'returns':None}, {'returns':{}}, {'returns':invalid}):
+        record = row()
+        record.update(listHistory=history, metricBasis=None, researchValues=None, listMissingReasons=[])
+        actual = query([record])['items'][0]
+        assert actual['roic'] is actual['researchValues']['roic'] is None
+        assert actual['listMissingReasons']['roic']
+    record = row()
+    record.update(listHistory={'returns':[valid, *invalid]}, researchValues={'other':4},
+                  metricBasis={'other':'ok'}, listMissingReasons=None)
+    actual = query([record])['items'][0]
+    assert actual['roic'] == 0 and actual['researchValues'] == {'other':4, 'roic':0}
+    assert actual['metricBasis']['other'] == 'ok'
+    assert 'roic' not in actual['listMissingReasons']
