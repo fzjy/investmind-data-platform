@@ -1,0 +1,916 @@
+{
+  "tables": [
+    {
+      "schemaname": "core",
+      "tablename": "adjustment_factor",
+      "bytes": 5177344
+    },
+    {
+      "schemaname": "core",
+      "tablename": "balance_sheet",
+      "bytes": 638976
+    },
+    {
+      "schemaname": "core",
+      "tablename": "business_segment",
+      "bytes": 90112
+    },
+    {
+      "schemaname": "core",
+      "tablename": "cashflow_statement",
+      "bytes": 647168
+    },
+    {
+      "schemaname": "core",
+      "tablename": "classification",
+      "bytes": 409600
+    },
+    {
+      "schemaname": "core",
+      "tablename": "classification_member",
+      "bytes": 98304
+    },
+    {
+      "schemaname": "core",
+      "tablename": "content_document",
+      "bytes": 3547136
+    },
+    {
+      "schemaname": "core",
+      "tablename": "daily_basic",
+      "bytes": 20520960
+    },
+    {
+      "schemaname": "core",
+      "tablename": "daily_price",
+      "bytes": 15818752
+    },
+    {
+      "schemaname": "core",
+      "tablename": "disclosure_schedule",
+      "bytes": 237568
+    },
+    {
+      "schemaname": "core",
+      "tablename": "dividend",
+      "bytes": 286720
+    },
+    {
+      "schemaname": "core",
+      "tablename": "enterprise_order_supplement",
+      "bytes": 344064
+    },
+    {
+      "schemaname": "core",
+      "tablename": "enterprise_rea_supplement",
+      "bytes": 884736
+    },
+    {
+      "schemaname": "core",
+      "tablename": "enterprise_receivable_supplement",
+      "bytes": 335872
+    },
+    {
+      "schemaname": "core",
+      "tablename": "enterprise_target_candidate",
+      "bytes": 49152
+    },
+    {
+      "schemaname": "core",
+      "tablename": "financial_express",
+      "bytes": 81920
+    },
+    {
+      "schemaname": "core",
+      "tablename": "financial_forecast",
+      "bytes": 106496
+    },
+    {
+      "schemaname": "core",
+      "tablename": "financial_indicator",
+      "bytes": 483328
+    },
+    {
+      "schemaname": "core",
+      "tablename": "income_statement",
+      "bytes": 933888
+    },
+    {
+      "schemaname": "core",
+      "tablename": "index_constituent",
+      "bytes": 16384
+    },
+    {
+      "schemaname": "core",
+      "tablename": "listing_status_history",
+      "bytes": 8192
+    },
+    {
+      "schemaname": "core",
+      "tablename": "macro_observation",
+      "bytes": 6660096
+    },
+    {
+      "schemaname": "core",
+      "tablename": "market_daily_quote",
+      "bytes": 73728
+    },
+    {
+      "schemaname": "core",
+      "tablename": "price_limit",
+      "bytes": 16384
+    },
+    {
+      "schemaname": "core",
+      "tablename": "repurchase",
+      "bytes": 188416
+    },
+    {
+      "schemaname": "core",
+      "tablename": "security",
+      "bytes": 1892352
+    },
+    {
+      "schemaname": "core",
+      "tablename": "security_name_history",
+      "bytes": 16384
+    },
+    {
+      "schemaname": "core",
+      "tablename": "share_unlock",
+      "bytes": 327680
+    },
+    {
+      "schemaname": "core",
+      "tablename": "shareholder_count",
+      "bytes": 393216
+    },
+    {
+      "schemaname": "core",
+      "tablename": "suspension",
+      "bytes": 24576
+    },
+    {
+      "schemaname": "core",
+      "tablename": "top_holder",
+      "bytes": 2883584
+    },
+    {
+      "schemaname": "core",
+      "tablename": "trade_calendar",
+      "bytes": 360448
+    },
+    {
+      "schemaname": "derived",
+      "tablename": "macro_xray_result",
+      "bytes": 16384
+    },
+    {
+      "schemaname": "derived",
+      "tablename": "metric_input",
+      "bytes": 4677632
+    },
+    {
+      "schemaname": "derived",
+      "tablename": "metric_value",
+      "bytes": 2088960
+    },
+    {
+      "schemaname": "derived",
+      "tablename": "risk_result",
+      "bytes": 2531328
+    },
+    {
+      "schemaname": "mart",
+      "tablename": "page_snapshot",
+      "bytes": 388153344
+    },
+    {
+      "schemaname": "mart",
+      "tablename": "published_snapshot",
+      "bytes": 26386432
+    },
+    {
+      "schemaname": "mart",
+      "tablename": "stock_daily_chart",
+      "bytes": 298205184
+    },
+    {
+      "schemaname": "mart",
+      "tablename": "stock_screener_daily",
+      "bytes": 7774208
+    },
+    {
+      "schemaname": "mart",
+      "tablename": "stock_workbench_snapshot",
+      "bytes": 310452224
+    },
+    {
+      "schemaname": "ops",
+      "tablename": "enterprise_order_attempt",
+      "bytes": 1064960
+    },
+    {
+      "schemaname": "ops",
+      "tablename": "enterprise_rea_attempt",
+      "bytes": 1916928
+    },
+    {
+      "schemaname": "ops",
+      "tablename": "enterprise_rea_plan",
+      "bytes": 737280
+    },
+    {
+      "schemaname": "ops",
+      "tablename": "enterprise_receivable_attempt",
+      "bytes": 950272
+    },
+    {
+      "schemaname": "ops",
+      "tablename": "enterprise_target_execution_attempt",
+      "bytes": 32768
+    },
+    {
+      "schemaname": "ops",
+      "tablename": "enterprise_target_execution_plan",
+      "bytes": 49152
+    },
+    {
+      "schemaname": "ops",
+      "tablename": "job_cursor",
+      "bytes": 4194304
+    },
+    {
+      "schemaname": "ops",
+      "tablename": "job_failure",
+      "bytes": 81920
+    },
+    {
+      "schemaname": "ops",
+      "tablename": "job_run",
+      "bytes": 2088960
+    },
+    {
+      "schemaname": "ops",
+      "tablename": "macro_series_state",
+      "bytes": 32768
+    },
+    {
+      "schemaname": "ops",
+      "tablename": "news_delivery",
+      "bytes": 9560064
+    },
+    {
+      "schemaname": "ops",
+      "tablename": "operational_alert",
+      "bytes": 49152
+    },
+    {
+      "schemaname": "ops",
+      "tablename": "quality_check_result",
+      "bytes": 311296
+    },
+    {
+      "schemaname": "ops",
+      "tablename": "scheduler_checkpoint",
+      "bytes": 16384
+    },
+    {
+      "schemaname": "ops",
+      "tablename": "scheduler_heartbeat",
+      "bytes": 24576
+    },
+    {
+      "schemaname": "raw",
+      "tablename": "enterprise_order_response",
+      "bytes": 606208
+    },
+    {
+      "schemaname": "raw",
+      "tablename": "enterprise_rea_response",
+      "bytes": 1097728
+    },
+    {
+      "schemaname": "raw",
+      "tablename": "enterprise_receivable_response",
+      "bytes": 598016
+    },
+    {
+      "schemaname": "raw",
+      "tablename": "enterprise_target_observation",
+      "bytes": 32768
+    },
+    {
+      "schemaname": "raw",
+      "tablename": "external_file",
+      "bytes": 163840
+    },
+    {
+      "schemaname": "raw",
+      "tablename": "external_record",
+      "bytes": 7290880
+    },
+    {
+      "schemaname": "raw",
+      "tablename": "ingestion_batch",
+      "bytes": 1384448
+    },
+    {
+      "schemaname": "raw",
+      "tablename": "rejected_record",
+      "bytes": 2113536
+    },
+    {
+      "schemaname": "raw",
+      "tablename": "source_payload",
+      "bytes": 48275456
+    }
+  ],
+  "raw": [
+    {
+      "source": "bls",
+      "api_name": "macro:bls",
+      "rows": 15,
+      "request_keys": 15,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "chinamoney",
+      "api_name": "macro:chinamoney",
+      "rows": 126,
+      "request_keys": 126,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "cninfo",
+      "api_name": "hisAnnouncement/query",
+      "rows": 2,
+      "request_keys": 2,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "fred",
+      "api_name": "fred/series/observations",
+      "rows": 1,
+      "request_keys": 1,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "fred",
+      "api_name": "macro:fred",
+      "rows": 108,
+      "request_keys": 108,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "nbs",
+      "api_name": "macro:nbs",
+      "rows": 255,
+      "request_keys": 244,
+      "repeated_bodies": 2,
+      "revised_request_keys": 9
+    },
+    {
+      "source": "nyfed",
+      "api_name": "macro:nyfed",
+      "rows": 1,
+      "request_keys": 1,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "official",
+      "api_name": "official-access-check/household-ytd",
+      "rows": 1,
+      "request_keys": 1,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "official",
+      "api_name": "official-fund-contract",
+      "rows": 10,
+      "request_keys": 10,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "official",
+      "api_name": "official-fund-members/csi-members",
+      "rows": 10,
+      "request_keys": 10,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "official",
+      "api_name": "official-fund-members/fund-pcf",
+      "rows": 10,
+      "request_keys": 10,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "official",
+      "api_name": "official-issuer-contract-sample",
+      "rows": 5,
+      "request_keys": 5,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "official",
+      "api_name": "official-issuer-sample-recovery",
+      "rows": 2,
+      "request_keys": 2,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "official",
+      "api_name": "official-macro/household-ytd",
+      "rows": 1,
+      "request_keys": 1,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "official",
+      "api_name": "official-macro/special-briefing",
+      "rows": 1,
+      "request_keys": 1,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "official",
+      "api_name": "official-macro/special-directory",
+      "rows": 1,
+      "request_keys": 1,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "official",
+      "api_name": "official-macro/special-issuance",
+      "rows": 1,
+      "request_keys": 1,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "official",
+      "api_name": "official-macro/special-quota",
+      "rows": 1,
+      "request_keys": 1,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "official",
+      "api_name": "official-macro/tier1-directory",
+      "rows": 1,
+      "request_keys": 1,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "official",
+      "api_name": "official-macro/tier1-directory-page",
+      "rows": 1,
+      "request_keys": 1,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "official",
+      "api_name": "official-macro/tier1-history-directory",
+      "rows": 50,
+      "request_keys": 50,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "official",
+      "api_name": "official-macro/tier1-prices",
+      "rows": 42,
+      "request_keys": 42,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "official",
+      "api_name": "official-members/csi-members",
+      "rows": 4,
+      "request_keys": 4,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "official",
+      "api_name": "official-members/fund-mapping",
+      "rows": 1,
+      "request_keys": 1,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "official",
+      "api_name": "official-members/fund-pcf",
+      "rows": 1,
+      "request_keys": 1,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "pboc",
+      "api_name": "pboc/government-bonds/html",
+      "rows": 1,
+      "request_keys": 1,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "adj_factor",
+      "rows": 214,
+      "request_keys": 203,
+      "repeated_bodies": 11,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "balancesheet",
+      "rows": 232,
+      "request_keys": 221,
+      "repeated_bodies": 11,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "bse_mapping",
+      "rows": 1,
+      "request_keys": 1,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "cashflow",
+      "rows": 247,
+      "request_keys": 236,
+      "repeated_bodies": 11,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "cn_gdp",
+      "rows": 1,
+      "request_keys": 1,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "daily",
+      "rows": 223,
+      "request_keys": 211,
+      "repeated_bodies": 12,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "daily_basic",
+      "rows": 368,
+      "request_keys": 357,
+      "repeated_bodies": 11,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "daily_info",
+      "rows": 4,
+      "request_keys": 4,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "disclosure_date",
+      "rows": 151,
+      "request_keys": 50,
+      "repeated_bodies": 96,
+      "revised_request_keys": 5
+    },
+    {
+      "source": "tushare",
+      "api_name": "dividend",
+      "rows": 365,
+      "request_keys": 155,
+      "repeated_bodies": 156,
+      "revised_request_keys": 54
+    },
+    {
+      "source": "tushare",
+      "api_name": "express",
+      "rows": 62,
+      "request_keys": 53,
+      "repeated_bodies": 9,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "fina_indicator",
+      "rows": 72,
+      "request_keys": 61,
+      "repeated_bodies": 11,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "fina_mainbz",
+      "rows": 446,
+      "request_keys": 437,
+      "repeated_bodies": 9,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "forecast",
+      "rows": 65,
+      "request_keys": 56,
+      "repeated_bodies": 9,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "fund_daily",
+      "rows": 18,
+      "request_keys": 18,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "fund_share",
+      "rows": 9,
+      "request_keys": 9,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "fut_basic",
+      "rows": 10,
+      "request_keys": 10,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "fut_daily",
+      "rows": 33,
+      "request_keys": 31,
+      "repeated_bodies": 2,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "fut_mapping",
+      "rows": 10,
+      "request_keys": 10,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "fut_trade_cal",
+      "rows": 4,
+      "request_keys": 4,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "fx_daily",
+      "rows": 4,
+      "request_keys": 4,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "income",
+      "rows": 170,
+      "request_keys": 109,
+      "repeated_bodies": 11,
+      "revised_request_keys": 50
+    },
+    {
+      "source": "tushare",
+      "api_name": "index_basic",
+      "rows": 2,
+      "request_keys": 2,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "index_classify",
+      "rows": 6,
+      "request_keys": 5,
+      "repeated_bodies": 1,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "index_daily",
+      "rows": 5,
+      "request_keys": 5,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "index_global",
+      "rows": 3,
+      "request_keys": 3,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "index_member_all",
+      "rows": 100,
+      "request_keys": 100,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "macro:tushare",
+      "rows": 197,
+      "request_keys": 197,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "margin",
+      "rows": 6,
+      "request_keys": 6,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "repurchase",
+      "rows": 62,
+      "request_keys": 53,
+      "repeated_bodies": 9,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "share_float",
+      "rows": 65,
+      "request_keys": 56,
+      "repeated_bodies": 9,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "stk_holdernumber",
+      "rows": 63,
+      "request_keys": 53,
+      "repeated_bodies": 10,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "stock_basic",
+      "rows": 58,
+      "request_keys": 53,
+      "repeated_bodies": 4,
+      "revised_request_keys": 1
+    },
+    {
+      "source": "tushare",
+      "api_name": "sz_daily_info",
+      "rows": 1,
+      "request_keys": 1,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "top10_holders",
+      "rows": 62,
+      "request_keys": 53,
+      "repeated_bodies": 9,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "tushare",
+      "api_name": "trade_cal",
+      "rows": 12,
+      "request_keys": 9,
+      "repeated_bodies": 3,
+      "revised_request_keys": 0
+    },
+    {
+      "source": "us_treasury",
+      "api_name": "macro:us_treasury",
+      "rows": 1,
+      "request_keys": 1,
+      "repeated_bodies": 0,
+      "revised_request_keys": 0
+    }
+  ],
+  "currentAndHistory": [
+    {
+      "family": "macro-insights",
+      "current": 1,
+      "also_in_history": 1,
+      "identical": 1
+    },
+    {
+      "family": "macro-transmission",
+      "current": 1,
+      "also_in_history": 1,
+      "identical": 1
+    },
+    {
+      "family": "market-explorer",
+      "current": 1,
+      "also_in_history": 1,
+      "identical": 1
+    },
+    {
+      "family": "market-overview",
+      "current": 1,
+      "also_in_history": 1,
+      "identical": 1
+    },
+    {
+      "family": "portfolio",
+      "current": 1,
+      "also_in_history": 1,
+      "identical": 1
+    },
+    {
+      "family": "screener",
+      "current": 1,
+      "also_in_history": 1,
+      "identical": 1
+    },
+    {
+      "family": "stock-workbench",
+      "current": 50,
+      "also_in_history": 50,
+      "identical": 0
+    }
+  ],
+  "screenerVersions": [
+    {
+      "date": "2026-10-21",
+      "rows": 550,
+      "symbols": 50,
+      "versions": 11
+    },
+    {
+      "date": "2026-10-16",
+      "rows": 50,
+      "symbols": 50,
+      "versions": 1
+    },
+    {
+      "date": "2026-10-13",
+      "rows": 150,
+      "symbols": 50,
+      "versions": 3
+    },
+    {
+      "date": "2026-09-18",
+      "rows": 50,
+      "symbols": 50,
+      "versions": 1
+    },
+    {
+      "date": "2026-08-24",
+      "rows": 5556,
+      "symbols": 5548,
+      "versions": 5
+    }
+  ],
+  "screenerFallback": {
+    "asOf": "2026-10-21",
+    "version": "20261021-1c01ff6eb0b7d78a",
+    "symbols": 50
+  }
+}

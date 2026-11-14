@@ -16,8 +16,11 @@ def test_database_provider_reads_screener_rows_when_snapshot_pointer_is_missing(
     MartBase.metadata.create_all(engine)
     factory = sessionmaker(engine, expire_on_commit=False)
     with factory.begin() as session:
-        session.add(StockScreenerDaily(ts_code="600000.SH", as_of=date(2026, 8, 17), snapshot_version="v1", fields={"symbol": "600000.SH", "pe": None}))
+        for symbol, version in [("600000.SH", "v1"), ("000001.SZ", "v1"), ("600000.SH", "v2")]:
+            session.add(StockScreenerDaily(ts_code=symbol, as_of=date(2026, 8, 17), snapshot_version=version,
+                                           fields={"symbol": symbol, "pe": None}))
     provider = StocksDatabaseProvider(SnapshotRepository(factory), factory)
     result = provider.read_screener_universe()
-    assert result.raw["stocks"][0]["symbol"] == "600000.SH"
+    assert result.raw["stocks"] == [{"symbol": "600000.SH", "pe": None}]
+    assert result.meta.version == "v2"
     assert result.meta.source == "database"

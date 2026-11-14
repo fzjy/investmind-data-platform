@@ -1,6 +1,6 @@
 # 公共数据接口目录
 
-[市场快讯接口](news-api.md)：股息率试点
+[选股器](screener-api-fields.md) · [工作台](workbench-api.md) · [市场](market-supply.md) · [快讯](news-api.md) · [宏观](macro-supply.md) · [组合](portfolio-split-lineage.md) · [证券搜索](security-search.md)
 
 核验日期：2026-11-14。开工代码基线 `ab00ce213b093472a3647d581519fcdb9a4cb43e`；旧文档范围见 InvestMind 仓库的 `docs/research/investmind-split-reference-scope.md`。这是现有实现目录，不表示独立底座已部署。
 

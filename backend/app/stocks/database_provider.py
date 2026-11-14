@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
-from sqlalchemy import func, select
+from sqlalchemy import select, tuple_
 
 from app.db.models import StockScreenerDaily, StockWorkbenchSnapshot
 from app.shared.repository import SnapshotRepository
@@ -22,15 +22,17 @@ class StocksDatabaseProvider:
             if error.code != "DATA_NOT_READY" or self._session_factory is None:
                 raise
             with self._session_factory() as session:
-                latest = session.scalar(select(func.max(StockScreenerDaily.as_of)))
-                if latest is None:
-                    raise
-                rows = session.scalars(select(StockScreenerDaily).where(StockScreenerDaily.as_of == latest)).all()
+                latest = select(StockScreenerDaily.as_of, StockScreenerDaily.snapshot_version).order_by(
+                    StockScreenerDaily.as_of.desc(), StockScreenerDaily.id.desc()
+                ).limit(1)
+                rows = session.scalars(select(StockScreenerDaily).where(
+                    tuple_(StockScreenerDaily.as_of, StockScreenerDaily.snapshot_version).in_(latest)
+                ).order_by(StockScreenerDaily.id)).all()
                 if not rows:
                     raise
                 version = rows[0].snapshot_version
                 stocks = [dict(row.fields) for row in rows]
-                return ProviderSnapshot({"bootstrap": {"totalCount": len(stocks)}, "stocks": stocks}, DataMeta(source="database", asOf=latest.isoformat(), version=version, stale=False))
+                return ProviderSnapshot({"bootstrap": {"totalCount": len(stocks)}, "stocks": stocks}, DataMeta(source="database", asOf=rows[0].as_of.isoformat(), version=version, stale=False))
 
     def read_workbench(self, symbol: str):
         try:
@@ -39,7 +41,8 @@ class StocksDatabaseProvider:
             if error.code != "DATA_NOT_READY" or self._session_factory is None:
                 raise
             with self._session_factory() as session:
-                row = session.scalar(select(StockWorkbenchSnapshot).where(StockWorkbenchSnapshot.ts_code == symbol).order_by(StockWorkbenchSnapshot.as_of.desc()))
+                row = session.scalar(select(StockWorkbenchSnapshot).where(StockWorkbenchSnapshot.ts_code == symbol)
+                                     .order_by(StockWorkbenchSnapshot.as_of.desc(), StockWorkbenchSnapshot.id.desc()).limit(1))
                 if row is None:
                     raise
                 from app.stocks.normalizer import historical_workbench
