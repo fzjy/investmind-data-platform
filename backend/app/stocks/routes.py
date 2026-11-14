@@ -23,6 +23,7 @@ def create_router(service: ScreenerService | None = None, provider: StocksProvid
     workbench_service = WorkbenchService(active_provider)
 
     @router.post("/api/data/stocks/research")
+    @router.post("/api/v1/stocks/research")
     def research_tools(request: ResearchRequest) -> JSONResponse:
         return _json_result(ResearchToolsService(active_provider).query(request))
 
@@ -32,6 +33,7 @@ def create_router(service: ScreenerService | None = None, provider: StocksProvid
         return _json_result(active_service.query(request))
 
     @router.get("/api/data/stocks/{symbol}")
+    @router.get("/api/v1/stocks/{symbol}")
     async def stock_workbench(symbol: str) -> JSONResponse:
         return _json_result(workbench_service.get_workbench(symbol))
 

@@ -150,6 +150,7 @@ def test_http_route_envelope_validation_and_readonly_provider_contract():
         assert response.status_code == 200
         assert response.json()['data']['current']['symbol'] == '000001.SZ'
         assert response.json()['meta']['version'] == 'fixed'
+        assert client.post('/api/v1/stocks/research', json={'symbol':'000001.SZ'}).json() == response.json()
         assert client.post('/api/data/stocks/research', json={'symbol': '000001.SZ', 'price': 1}).status_code == 422
 
 
