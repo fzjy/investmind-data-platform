@@ -41,4 +41,4 @@ v1 对既有快照也剔除 `defaultState` 和 `storageKey`，新建与重建不
 
 Next 布局和私有分析服务使用独立进程。冷启动首次打开页面、首次分析各自需要可信公共正文，合计两次完整读取；用户浏览器提供的版本或内容不能替代私有服务自己的底座来源。后续试算只重新验证服务内保存的一份公共快照，各用户的配置与分析结果不进入缓存。页面各标签共用本地 `result`，切换标签未列入本次 HTTP 测量。普通买入持有且不指定参考日历时才启用服务端核对，扩展策略由网站本地计算。
 
-可在网站仓库运行 `backend/.venv/Scripts/python.exe -I scripts/audit-portfolio-split.py --output docs/research/investmind-portfolio-split.json`。它要求已有只读本地数据库和 Node，调用真实 HTTP 私有处理器、公共路由和页面 TypeScript 模型，禁止数据库写入且不启动采集。底座仓库保留证据和公开接口测试，网站专属的私有服务与复核脚本由网站仓库管理。逐股结果见[本次核验记录](research/investmind-portfolio-split.json)。
+从独立底座运行 `backend/.venv/Scripts/python.exe -I scripts/audit-portfolio-split.py --website <网站仓目录> --output <新回执路径>`。底座协调器使用只读事务核对公共路由及 SQL 次数，以 HTTP 访问网站仓自身启动的私有服务。私有服务、页面计算和 Node 投影驱动归网站管理。逐股结果见[本次核验记录](research/investmind-portfolio-split.json)。

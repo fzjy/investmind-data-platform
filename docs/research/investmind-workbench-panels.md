@@ -40,4 +40,4 @@
 
 网页独立内容模块还会更新 `quote.mentions/latestMention`。36 只有可见提及，其中 35 只的最近内容晚于价格业务日。按该证券显示的最新提及时间核对来源，再独立统计该时间之后库中已存在的内容；50 只的计数和最新时间全部匹配，未发现之后还有可见关联内容。茅台为 20 次，最近一次是 2026-11-14 01:03:04 UTC。快照缺少显式的“本次内容扫描截止”字段，最后提及时间只证明一条具体内容的公开时间。
 
-在配置只读开发库的仓库根目录运行 `python -I scripts/audit-workbench-panels.py`。底座独立生成数据侧证据；在网站仓执行同一脚本还会加载网站转换器，额外生成 `websiteRatio`。两仓留档包含本批两侧实测结果。[源库核验脚本](../../scripts/audit-workbench-panels.py)
+在配置只读开发库的仓库根目录运行 `python -I scripts/audit-workbench-panels.py`。底座独立生成数据侧证据；网站用标准输入驱动 `scripts/audit-workbench-ratio.mjs` 单独生成 `websiteRatio`，见[双仓运行方法](../audit-script-locations.md)。两仓留档包含本批两侧实测结果。[源库核验脚本](../../scripts/audit-workbench-panels.py)

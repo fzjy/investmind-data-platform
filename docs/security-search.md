@@ -25,6 +25,6 @@
 
 在 2026-10-21 的 50 股发布池 `20261021-1c01ff6eb0b7d78a` 上，对新旧底座读路径分别通过实际回环 HTTP 查询。全角 `６００５１９.sh` 匹配 `600519.SH`，名称“银行”匹配 3 只，查询“6”匹配 29 只，两页各 2 个结果无重叠。每次非空合法请求都只执行 1 次当前发布指针读取，空关键词和 4 种无效请求均为 0 次 SQL。结果顺序逐项与完整发布池独立匹配的证券代码一致。[HTTP、SQL 次数与命中证券](research/investmind-security-search.json)
 
-重放接口使用 `python -I scripts/audit-security-search.py --output docs/research/investmind-security-search.json`；在有当前生产构建的网站仓库加 `--site`，可同时核验 SSR 与两个旧网站路径。两者均使用本机临时回环服务及只读数据库。
+重放接口使用 `python -I scripts/audit-security-search.py --output docs/research/investmind-security-search.json`；从底座运行时加 `--website <已构建的网站仓目录>`，可同时核验 SSR 与两个旧网站路径。两者均使用本机临时回环服务及只读数据库。
 
 网站生产构建的九次访问已通过。搜索页和两个兼容路径分别验证了证券“600519”、页面“宏观”和空输入，均发起一次 v1 搜索请求；非空各一条证券 SQL，空输入零条。SSR 搜索页另外读取一次根布局所需的组合快照，两个 JSON 兼容路由均没有布局读取。
