@@ -80,25 +80,37 @@
       "method": "GET",
       "path": "/api/v1/portfolio",
       "sql": 1,
-      "bodyBytes": 0
+      "bodyBytes": 0,
+      "responseStatus": 200,
+      "responseBytes": 8131607,
+      "selectedPayload": true
     },
     {
       "method": "GET",
       "path": "/api/v1/portfolio",
       "sql": 1,
-      "bodyBytes": 0
+      "bodyBytes": 0,
+      "responseStatus": 304,
+      "responseBytes": 0,
+      "selectedPayload": false
     },
     {
       "method": "GET",
       "path": "/api/v1/portfolio",
       "sql": 1,
-      "bodyBytes": 0
+      "bodyBytes": 0,
+      "responseStatus": 304,
+      "responseBytes": 0,
+      "selectedPayload": false
     },
     {
       "method": "GET",
       "path": "/api/v1/portfolio",
       "sql": 1,
-      "bodyBytes": 0
+      "bodyBytes": 0,
+      "responseStatus": 304,
+      "responseBytes": 0,
+      "selectedPayload": false
     }
   ],
   "rejectedPrivateFields": {

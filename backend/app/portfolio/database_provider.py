@@ -9,3 +9,6 @@ class PortfolioDatabaseProvider:
 
     def read_portfolio(self):
         return self._repository.read("portfolio")
+
+    def read_portfolio_meta(self):
+        return self._repository.read_meta("portfolio")

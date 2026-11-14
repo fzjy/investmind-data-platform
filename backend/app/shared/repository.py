@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from typing import Any
 
+from sqlalchemy import select
 from sqlalchemy.orm import Session, sessionmaker
 
 from app.db.models import PageSnapshot, PublishedSnapshot
@@ -13,6 +14,17 @@ from app.shared.errors import DataServiceError
 class SnapshotRepository:
     def __init__(self, session_factory: sessionmaker[Session]) -> None:
         self._session_factory = session_factory
+
+    def read_meta(self, product: str) -> DataMeta:
+        with self._session_factory() as session:
+            row = session.execute(select(
+                PublishedSnapshot.as_of, PublishedSnapshot.version,
+                PublishedSnapshot.stale, PublishedSnapshot.stale_reason,
+            ).where(PublishedSnapshot.product == product)).one_or_none()
+            if row is None:
+                raise DataServiceError("DATA_NOT_READY", f"数据产品 {product} 尚未发布")
+            return DataMeta(source="database", asOf=row.as_of.isoformat(), version=row.version,
+                            stale=row.stale, staleReason=row.stale_reason)
 
     def read(self, product: str) -> ProviderSnapshot[dict[str, object]]:
         with self._session_factory() as session:
