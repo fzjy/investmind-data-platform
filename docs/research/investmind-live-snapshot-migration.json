@@ -1,0 +1,110 @@
+{
+  "platformMigrationCommit": "2ab0cd2",
+  "platformHeadAtMigration": "85ddd41",
+  "originalRevision": "20261111_0020",
+  "newRevision": "20261115_0021",
+  "officialPreMigrationRecovery": {
+    "backupId": "20261114T172444Z-e8c47cd281044bafb628e94c18b6d264",
+    "verificationLevel": "restore_verified",
+    "archiveSize": 425594084,
+    "archiveSha256": "e21e724d233382e3e6c6d9be346005b755ce74b7cff7b86de15b0bd93fdf2ea5",
+    "tableCount": 66,
+    "manifestSha256": "34d7008d831c7f846261049b2cd997feb5d9e268e9cff81c177d6b533eb39e66",
+    "endedAt": "2026-11-14T17:42:59.156813Z"
+  },
+  "spareArchiveRestoredUpgradedRedumpedAndDowngraded": {
+    "oldArchiveSha256": "e21e724d233382e3e6c6d9be346005b755ce74b7cff7b86de15b0bd93fdf2ea5",
+    "oldArchiveBytes": 425594084,
+    "oldRevision": "20261111_0020",
+    "newRevision": "20261115_0021",
+    "logical": {
+      "currentCount": 56,
+      "currentSha256": "37cc1ed7c1ad5c75405c199fc707e9ce27570745b85486c9511e494b29789bd5",
+      "historyCount": 1879,
+      "historyHash": "8c23043640d13d2b945d890dcdf78a05"
+    },
+    "sharedVersions": {
+      "screener": "20261021-1c01ff6eb0b7d78a",
+      "macro-transmission": "20261108-366f83bfc727036c",
+      "market-overview": "20261021-6319db232c0a22d0",
+      "portfolio": "20261021-690705b397d4b878",
+      "macro-insights": "20261108-366f83bfc727036c"
+    },
+    "compactBeforeBytes": {
+      "page_snapshot": 315727872,
+      "published_snapshot": 16146432
+    },
+    "compactAfterBytes": {
+      "page_snapshot": 316030976,
+      "published_snapshot": 10469376
+    },
+    "netBytesSaved": 5373952,
+    "newPgDumpBytes": 422400088,
+    "restoredAndDowngraded": true
+  },
+  "liveBeforeAndAfter": {
+    "isLoopback": true,
+    "matchesVerifiedArchiveSource": true,
+    "currentCount": 56,
+    "currentSha256": "661ee895b3e2f8378bd98401229df35d59b7138ae0b7591c1d3725ad1b891924",
+    "historyCount": 1879,
+    "historyMd5": "8c23043640d13d2b945d890dcdf78a05",
+    "shared": [
+      "macro-insights",
+      "macro-transmission",
+      "market-overview",
+      "portfolio",
+      "screener"
+    ]
+  },
+  "twoIndependentBeforeReadsMatch": true,
+  "identicalApiBeforeAndAfter": {
+    "/api/v1/portfolio": {
+      "code": 200,
+      "version": "20261021-690705b397d4b878",
+      "dataSha256": "cccb46dc1aed53b0fe638733cc377c80fb54bd1aacf98757800670a69265658f",
+      "etag": "W/\"ad491b8679636047a3d3a69ab287f34aaf298dd668ee7c3aed889910f4435ac5\""
+    },
+    "/api/v1/market/overview": {
+      "code": 200,
+      "version": "20261021-6319db232c0a22d0",
+      "dataSha256": "976ddf16000fe03a4f45c045f769b1349420c277c65eca31771b196f5411e23b"
+    },
+    "/api/v1/market/explorer": {
+      "code": 200,
+      "version": "content-0ee74f8f06c384cd9a6cd0016ef745fa",
+      "dataSha256": "c7b42575d5baadc92050d61f8cc0e1601db392ef5160d0ac51abe37be352cac1"
+    },
+    "/api/v1/macro/insights?version=20261108-366f83bfc727036c": {
+      "code": 200,
+      "version": "20261108-366f83bfc727036c",
+      "dataSha256": "e0943bd109c71545a602597a5b2b0d10431b5b0504663afc962e67d6c0907d27"
+    },
+    "/api/v1/macro/transmission?view=initial": {
+      "code": 200,
+      "version": "20261108-366f83bfc727036c",
+      "dataSha256": "2f0030dbd5fb9b99e6b8f84cb0d0a31f7ea70568153ee80c459faae3ae2df18f"
+    },
+    "/api/v1/stocks/screener": {
+      "code": 200,
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "dataSha256": "b2140af44a2ac7a416142a49c00d1f78cf0e2234787a41d642d50e82fb311233"
+    },
+    "/api/v1/stocks/600519.SH": {
+      "code": 200,
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "dataSha256": "256c199a32fae7c7177c155210a4b81e821c3a35063da883cab35a9be50c6eaa"
+    },
+    "/api/v1/search?q=600519": {
+      "code": 200,
+      "version": null,
+      "dataSha256": "b4a08a93a34fdf068a8fbc24ee73126b4bcb5f52152929fe2c3cea5c9da4869d"
+    }
+  },
+  "portfolioConditionalResponse": {
+    "status": 304,
+    "bodyBytes": 0
+  },
+  "onlineVacuumFull": false,
+  "backgroundJobsStarted": false
+}
