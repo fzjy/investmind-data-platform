@@ -30,7 +30,7 @@
 | snapshot-freshness | 启动立即评估，以后每 300 秒 | 日历推算期望业务日并查看缺口，更新新鲜度和告警；不会轮询供应商 | 无同名执行记录或 scheduler 实例证明 |
 | startup-catchup | 每次启动一次，无固定墙钟时刻 | 顺序尝试股票、已启用市场子任务、宏观以及开启的公告。股票补跑上限 10 个业务日，并记录剩余；各子任务有独立检查点 | scheduler_checkpoint 为 0 行，没有可归因于本实例的启动补跑 |
 
-市场五项已有真实作业，但日志的 trigger 缺少 scheduler 标记。补跑和人工调用会复用采集器。单独调整 `DANG_ROUTINE_STOCKS_ENABLED` 不会停掉 scheduler 的 sync-daily，`DANG_ROUTINE_MACRO_ENABLED` 控制手动汇总器的宏观分支，常驻宏观使用 `DANG_MACRO_SYNC_ENABLED`。现有 Compose scheduler 的 21 个显式环境变量中没有七个 ROUTINE 开关。若单独启用五项市场定时，应在底座部署层传入相应开关并核验下一次真实执行。当前没有进行该启用操作。
+市场五项已有真实作业，但日志的 trigger 缺少 scheduler 标记。补跑和人工调用会复用采集器。单独调整 `DANG_ROUTINE_STOCKS_ENABLED` 不会停掉 scheduler 的 sync-daily，`DANG_ROUTINE_MACRO_ENABLED` 控制手动汇总器的宏观分支，常驻宏观使用 `DANG_MACRO_SYNC_ENABLED`。Compose scheduler 已接通五项市场任务各自的 ROUTINE 开关。通过 compose config 核对模板五项默认关闭、指定开关及分钟有效；此次未启动调度。其余两个 ROUTINE 开关只供手动汇总。
 
 ## 手动日常更新与独立新闻进程
 

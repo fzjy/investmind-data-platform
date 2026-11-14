@@ -151,6 +151,11 @@
       "DANG_MACRO_SYNC_DAY_OF_WEEK",
       "DANG_MACRO_SYNC_ENABLED",
       "DANG_MACRO_SYNC_TIME",
+      "DANG_ROUTINE_COMMODITIES_ENABLED",
+      "DANG_ROUTINE_ETF_HEATMAP_ENABLED",
+      "DANG_ROUTINE_MARKET_ENABLED",
+      "DANG_ROUTINE_MARKET_PULSE_ENABLED",
+      "DANG_ROUTINE_REGION_ENABLED",
       "DANG_SCHEDULER_HEARTBEAT_SECONDS",
       "DANG_SCHEDULER_HEARTBEAT_TIMEOUT_SECONDS",
       "DANG_SYNC_CATCHUP_MAX_DAYS",
@@ -415,7 +420,7 @@
   "database": {
     "transaction": [
       {
-        "checked_at": "2026-11-14T15:19:39.983307+00:00",
+        "checked_at": "2026-11-14T15:56:44.424282+00:00",
         "read_only": "on",
         "isolation": "repeatable read"
       }
@@ -1993,8 +1998,8 @@
     "newsDelivery": [
       {
         "delivered": true,
-        "total": 10797,
-        "latest_fetch": "2026-11-14T15:08:13.357930+00:00"
+        "total": 10815,
+        "latest_fetch": "2026-11-14T15:43:41.838876+00:00"
       }
     ],
     "ingestion": [
