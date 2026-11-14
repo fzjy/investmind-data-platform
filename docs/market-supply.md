@@ -1,5 +1,7 @@
 # 市场总览与市场浏览的供给核验
 
+InvestMind 市场页使用 `GET /api/v1/market/overview` 和 `GET /api/v1/market/explorer`。以下两个旧入口保留，与对应 v1 入口共用处理函数。版本化的是数据访问合同，字段自己的交易日、发布时间及产品版本见下表。
+
 2026-11-14 从本机 PostgreSQL 只读重放。两个 GET 接口分别返回一个完整市场产品；返回正文逐字段等于 `mart.published_snapshot.payload`，对应版本在 `mart.page_snapshot` 各有一份相同正文。两个指针均标记 `stale=true`、原因为 `SNAPSHOT_BEHIND_EXPECTED_DATE`。 [逐产品版本、字段日期、覆盖和源记录](research/investmind-market-supply.json)
 
 | 接口与产品键 | 指针业务日 / 版本 | 已保存历史 |
