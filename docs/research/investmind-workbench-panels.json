@@ -1,0 +1,4856 @@
+{
+  "asOf": "2026-10-21",
+  "symbols": 50,
+  "counts": {
+    "industryPresent": 50,
+    "subIndustryPresent": 50,
+    "hasMentions": 36,
+    "symbolsWithLaterContent": 0,
+    "mentionsAfterPriceDay": 35,
+    "conceptPopulated": 0,
+    "intradayAvailable": 0,
+    "intradayDayPopulated": 0,
+    "intradayFiveDayPopulated": 0,
+    "distribution.partial": 49,
+    "distribution.complete": 868,
+    "concentrationPeriods": 1332,
+    "concentrationAverageKnown": 1031,
+    "holdingPeriods": 679,
+    "holdingPeriodsWithRows": 676,
+    "roeRoicPeriods": 604,
+    "businessReports": 1805,
+    "businessReportsQueryComplete": 1805,
+    "operatingAnnualPeriods": 921,
+    "operatingQuarterPeriods": 3363,
+    "bandPoints.pe": 32929,
+    "bandPoints.pb": 36037,
+    "bandPoints.ps": 36037,
+    "pegAvailable": 0,
+    "businessSymbols": 50,
+    "returnHistorySymbols": 50,
+    "ratioInputFields": 1600,
+    "distribution.missing": 172
+  },
+  "cardCounts": {
+    "workbenchPeTtm": {
+      "missing": 50
+    },
+    "workbenchPb": {
+      "missing": 50
+    },
+    "workbenchMarketCap": {
+      "value": 50
+    },
+    "workbenchNetCash": {
+      "missing": 50
+    },
+    "workbenchFiscalDividendYield": {
+      "value": 49,
+      "missing": 1
+    },
+    "workbenchFiveYearDividendCount": {
+      "value": 45,
+      "missing": 5
+    },
+    "workbenchAnnualDividendYield": {
+      "value": 42,
+      "missing": 8
+    },
+    "workbenchNtmDividendYield": {
+      "value": 39,
+      "missing": 11
+    }
+  },
+  "securities": {
+    "000001.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u94f6\u884c",
+      "subIndustry": "\u80a1\u4efd\u5236\u94f6\u884c\u2162",
+      "mentions": {
+        "published": 7,
+        "latest": "2026-11-13T10:46:21+00:00",
+        "throughLatest": 7,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "221421526639.1800000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u91d1\u878d\u884c\u4e1a\u62a5\u8868\u7f3a\u5c11\u53ef\u6bd4\u7684\u6709\u606f\u8d1f\u503a\u79d1\u76ee",
+            "\u7f3a\u5c11\u8d27\u5e01\u8d44\u91d1 money_cap"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "5.2234881683",
+          "missing": [],
+          "sourceCount": 18
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "7.0000000000",
+          "missing": [],
+          "sourceCount": 64
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "6.1911193860",
+          "missing": [],
+          "sourceCount": 50
+        },
+        "workbenchNtmDividendYield": {
+          "value": "5.6081972429",
+          "missing": [],
+          "sourceCount": 51
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 5.1937
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 0.4729
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.6689
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.249,
+        "cashAmount": 4832073631.302,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "000063.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u901a\u4fe1",
+      "subIndustry": "\u901a\u4fe1\u7f51\u7edc\u8bbe\u5907\u53ca\u5668\u4ef6",
+      "mentions": {
+        "published": 3,
+        "latest": "2026-11-10T12:43:15+00:00",
+        "throughLatest": 3,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "132169068927.8100000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "1.4875135722",
+          "missing": [],
+          "sourceCount": 15
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "5.0000000000",
+          "missing": [],
+          "sourceCount": 61
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "1.0973433941",
+          "missing": [],
+          "sourceCount": 47
+        },
+        "workbenchNtmDividendYield": {
+          "value": null,
+          "missing": [
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ],
+          "sourceCount": 48
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 23.5271
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.7541
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 0.9416
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "000333.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u5bb6\u7528\u7535\u5668",
+      "subIndustry": "\u7a7a\u8c03",
+      "mentions": {
+        "published": 7,
+        "latest": "2026-11-14T02:07:14+00:00",
+        "throughLatest": 7,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "639855456547.5800000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "5.1275936084",
+          "missing": [],
+          "sourceCount": 21
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "6.0000000000",
+          "missing": [],
+          "sourceCount": 67
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "5.3163809428",
+          "missing": [],
+          "sourceCount": 53
+        },
+        "workbenchNtmDividendYield": {
+          "value": "4.9565172994",
+          "missing": [],
+          "sourceCount": 54
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 14.5602
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 3.0213
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.3749
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "000425.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u673a\u68b0\u8bbe\u5907",
+      "subIndustry": "\u5de5\u7a0b\u673a\u68b0\u6574\u673a",
+      "mentions": {
+        "published": 4,
+        "latest": "2026-11-12T08:56:08+00:00",
+        "throughLatest": 4,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "82212697351.9800000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "2.8490028490",
+          "missing": [],
+          "sourceCount": 18
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "5.0000000000",
+          "missing": [],
+          "sourceCount": 64
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "2.6702718357",
+          "missing": [],
+          "sourceCount": 50
+        },
+        "workbenchNtmDividendYield": {
+          "value": "2.4478482681",
+          "missing": [],
+          "sourceCount": 51
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 12.5091
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.2735
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 0.7665
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.045,
+        "cashAmount": 524013155.415,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "000538.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u533b\u836f\u751f\u7269",
+      "subIndustry": "\u4e2d\u836f\u2162",
+      "mentions": {
+        "published": 0,
+        "latest": "",
+        "throughLatest": 0,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "94209065438.4000000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "4.9280303030",
+          "missing": [],
+          "sourceCount": 21
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "7.0000000000",
+          "missing": [],
+          "sourceCount": 76
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "5.5126738542",
+          "missing": [],
+          "sourceCount": 62
+        },
+        "workbenchNtmDividendYield": {
+          "value": "5.0197841893",
+          "missing": [],
+          "sourceCount": 63
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 18.2806
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 2.2993
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 2.2531
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 1.038,
+        "cashAmount": 1852064581.914,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "000568.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u98df\u54c1\u996e\u6599",
+      "subIndustry": "\u767d\u9152\u2162",
+      "mentions": {
+        "published": 2,
+        "latest": "2026-11-10T01:52:43+00:00",
+        "throughLatest": 2,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "101826143210.3400000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "8.3479640069",
+          "missing": [],
+          "sourceCount": 21
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "7.0000000000",
+          "missing": [],
+          "sourceCount": 76
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "5.3824546399",
+          "missing": [],
+          "sourceCount": 62
+        },
+        "workbenchNtmDividendYield": {
+          "value": "1.3727670765",
+          "missing": [],
+          "sourceCount": 63
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 9.4016
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 2.2265
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 5.1559
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "000792.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u57fa\u7840\u5316\u5de5",
+      "subIndustry": "\u94be\u80a5",
+      "mentions": {
+        "published": 0,
+        "latest": "",
+        "throughLatest": 0,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "119219129348.7300000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "0E-10",
+          "missing": [],
+          "sourceCount": 14
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "0E-10",
+          "missing": [],
+          "sourceCount": 51
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "0E-10",
+          "missing": [],
+          "sourceCount": 44
+        },
+        "workbenchNtmDividendYield": {
+          "value": "0E-10",
+          "missing": [],
+          "sourceCount": 45
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 14.0663
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 2.4967
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 5.5978
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "000821.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u7535\u529b\u8bbe\u5907",
+      "subIndustry": "\u5149\u4f0f\u52a0\u5de5\u8bbe\u5907",
+      "mentions": {
+        "published": 0,
+        "latest": "",
+        "throughLatest": 0,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "4248005985.9600000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "0.4838709677",
+          "missing": [],
+          "sourceCount": 18
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "3.0000000000",
+          "missing": [],
+          "sourceCount": 60
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "0.2405087149",
+          "missing": [],
+          "sourceCount": 50
+        },
+        "workbenchNtmDividendYield": {
+          "value": null,
+          "missing": [
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ],
+          "sourceCount": 51
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 725,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 21.4942
+        },
+        "pb": {
+          "points": 725,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.0179
+        },
+        "ps": {
+          "points": 725,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 0.7536
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "000858.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u98df\u54c1\u996e\u6599",
+      "subIndustry": "\u767d\u9152\u2162",
+      "mentions": {
+        "published": 7,
+        "latest": "2026-11-14T01:03:04+00:00",
+        "throughLatest": 7,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "279475776360.0000000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u501f\u6b3e st_borr",
+            "\u7f3a\u5c11\u957f\u671f\u501f\u6b3e lt_borr"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "7.1634516667",
+          "missing": [],
+          "sourceCount": 21
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "7.0000000000",
+          "missing": [],
+          "sourceCount": 76
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "9.2539575444",
+          "missing": [],
+          "sourceCount": 62
+        },
+        "workbenchNtmDividendYield": {
+          "value": "5.1949780058",
+          "missing": [],
+          "sourceCount": 63
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 31.2115
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 2.3588
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 6.1511
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "002230.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u8ba1\u7b97\u673a",
+      "subIndustry": "\u6a2a\u5411\u901a\u7528\u8f6f\u4ef6",
+      "mentions": {
+        "published": 6,
+        "latest": "2026-11-13T11:55:35+00:00",
+        "throughLatest": 6,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2026Q2 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "89117162101.1000000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "0.2695417790",
+          "missing": [],
+          "sourceCount": 15
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "5.0000000000",
+          "missing": [],
+          "sourceCount": 61
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "0.0177638677",
+          "missing": [],
+          "sourceCount": 48
+        },
+        "workbenchNtmDividendYield": {
+          "value": "0.3770706203",
+          "missing": [],
+          "sourceCount": 48
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 106.1688
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 3.9053
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 3.1487
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "002415.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u8ba1\u7b97\u673a",
+      "subIndustry": "\u5b89\u9632\u8bbe\u5907",
+      "mentions": {
+        "published": 3,
+        "latest": "2026-11-13T07:36:21+00:00",
+        "throughLatest": 3,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2026Q2 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "296391945927.0000000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "3.5559678417",
+          "missing": [],
+          "sourceCount": 32
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "6.0000000000",
+          "missing": [],
+          "sourceCount": 78
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "4.4014914963",
+          "missing": [],
+          "sourceCount": 65
+        },
+        "workbenchNtmDividendYield": {
+          "value": "5.0401316750",
+          "missing": [],
+          "sourceCount": 65
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 20.8795
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 3.517
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 2.9406
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.55,
+        "cashAmount": 5040679352.5,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "002594.SZ": {
+      "version": "content-e7cf8f3e621d9c4e74edc06872646a1a",
+      "industry": "\u6c7d\u8f66",
+      "subIndustry": "\u7535\u52a8\u4e58\u7528\u8f66",
+      "mentions": {
+        "published": 17,
+        "latest": "2026-11-14T13:23:51+00:00",
+        "throughLatest": 17,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "735757843495.5000000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "0.4436183395",
+          "missing": [],
+          "sourceCount": 15
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": null,
+          "missing": [
+            "2024 \u5e74\uff1a\u65e0\u6cd5\u5b9a\u4f4d\u64a4\u56de\u7684\u5206\u914d\u65b9\u6848",
+            "2024 \u5e74\uff1a\u5b9e\u9645\u6d3e\u606f\u8bb0\u5f55\u5b58\u5728\u5f85\u6838\u9a8c\u7f3a\u9879"
+          ],
+          "sourceCount": 64
+        },
+        "workbenchAnnualDividendYield": {
+          "value": null,
+          "missing": [
+            "2024 \u5e74\uff1a\u65e0\u6cd5\u5b9a\u4f4d\u64a4\u56de\u7684\u5206\u914d\u65b9\u6848",
+            "2024 \u5e74\uff1a\u5b9e\u9645\u6d3e\u606f\u8bb0\u5f55\u5b58\u5728\u5f85\u6838\u9a8c\u7f3a\u9879"
+          ],
+          "sourceCount": 50
+        },
+        "workbenchNtmDividendYield": {
+          "value": null,
+          "missing": [
+            "2024 \u5e74\uff1a\u65e0\u6cd5\u5b9a\u4f4d\u64a4\u56de\u7684\u5206\u914d\u65b9\u6848",
+            "2024 \u5e74\uff1a\u5b9e\u9645\u6d3e\u606f\u8bb0\u5f55\u5b58\u5728\u5f85\u6838\u9a8c\u7f3a\u9879"
+          ],
+          "sourceCount": 51
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 22.5561
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 3.066
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 0.9463
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "002714.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u519c\u6797\u7267\u6e14",
+      "subIndustry": "\u751f\u732a\u517b\u6b96",
+      "mentions": {
+        "published": 1,
+        "latest": "2026-11-10T10:41:22+00:00",
+        "throughLatest": 1,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 7
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "242581297970.8800000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "3.2235157068",
+          "missing": [],
+          "sourceCount": 18
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "6.0000000000",
+          "missing": [],
+          "sourceCount": 70
+        },
+        "workbenchAnnualDividendYield": {
+          "value": null,
+          "missing": [
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ],
+          "sourceCount": 59
+        },
+        "workbenchNtmDividendYield": {
+          "value": null,
+          "missing": [
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ],
+          "sourceCount": 60
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 511,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 15.6637
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 3.0641
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.9087
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 11,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "300015.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u533b\u836f\u751f\u7269",
+      "subIndustry": "\u533b\u9662",
+      "mentions": {
+        "published": 2,
+        "latest": "2026-11-12T11:55:46+00:00",
+        "throughLatest": 2,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "73876761695.4800000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "2.2613065327",
+          "missing": [],
+          "sourceCount": 24
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "6.0000000000",
+          "missing": [],
+          "sourceCount": 70
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "1.6186564309",
+          "missing": [],
+          "sourceCount": 56
+        },
+        "workbenchNtmDividendYield": {
+          "value": "0.9930837697",
+          "missing": [],
+          "sourceCount": 57
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 22.7996
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 3.2093
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 3.2415
+        }
+      },
+      "businessReports": 38,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "300059.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u975e\u94f6\u91d1\u878d",
+      "subIndustry": "\u8bc1\u5238\u2162",
+      "mentions": {
+        "published": 2,
+        "latest": "2026-11-12T03:50:30+00:00",
+        "throughLatest": 2,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "283217377762.5000000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u957f\u671f\u501f\u6b3e lt_borr",
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "0.5586592179",
+          "missing": [],
+          "sourceCount": 18
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "5.0000000000",
+          "missing": [],
+          "sourceCount": 64
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "0.7169705481",
+          "missing": [],
+          "sourceCount": 50
+        },
+        "workbenchNtmDividendYield": {
+          "value": "0.7559007825",
+          "missing": [],
+          "sourceCount": 51
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 23.4362
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 2.878
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 66.8899
+        }
+      },
+      "businessReports": 32,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "300122.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u533b\u836f\u751f\u7269",
+      "subIndustry": "\u75ab\u82d7",
+      "mentions": {
+        "published": 1,
+        "latest": "2026-11-13T08:40:14+00:00",
+        "throughLatest": 1,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 7
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "30496881376.7800000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "0E-10",
+          "missing": [],
+          "sourceCount": 14
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "4.0000000000",
+          "missing": [],
+          "sourceCount": 66
+        },
+        "workbenchAnnualDividendYield": {
+          "value": null,
+          "missing": [
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ],
+          "sourceCount": 49
+        },
+        "workbenchNtmDividendYield": {
+          "value": null,
+          "missing": [
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ],
+          "sourceCount": 50
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 609,
+          "first": "2023-10-23",
+          "last": "2026-04-27",
+          "current": 17.706
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 2.0289
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 3.7867
+        }
+      },
+      "businessReports": 30,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "300308.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u901a\u4fe1",
+      "subIndustry": "\u901a\u4fe1\u7f51\u7edc\u8bbe\u5907\u53ca\u5668\u4ef6",
+      "mentions": {
+        "published": 38,
+        "latest": "2026-11-13T09:13:25+00:00",
+        "throughLatest": 38,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "761836618509.5700000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "0.2164602564",
+          "missing": [],
+          "sourceCount": 21
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "6.0000000000",
+          "missing": [],
+          "sourceCount": 67
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "0.6085350049",
+          "missing": [],
+          "sourceCount": 53
+        },
+        "workbenchNtmDividendYield": {
+          "value": "0.5774261813",
+          "missing": [],
+          "sourceCount": 54
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 70.5584
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 19.1132
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 11.6795
+        }
+      },
+      "businessReports": 37,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 1.2,
+        "cashAmount": 1406707893.6,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "300750.SZ": {
+      "version": "content-f89e0d8241df239d85c63844de17055e",
+      "industry": "\u7535\u529b\u8bbe\u5907",
+      "subIndustry": "\u9502\u7535\u6c60",
+      "mentions": {
+        "published": 22,
+        "latest": "2026-11-14T09:14:46+00:00",
+        "throughLatest": 22,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2026Q2 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "1054550203439.4000000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "3.4945151382",
+          "missing": [],
+          "sourceCount": 18
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "8.0000000000",
+          "missing": [],
+          "sourceCount": 76
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "5.1955520802",
+          "missing": [],
+          "sourceCount": 63
+        },
+        "workbenchNtmDividendYield": {
+          "value": "5.6678947886",
+          "missing": [],
+          "sourceCount": 63
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 14.6057
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 2.7258
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.8096
+        }
+      },
+      "businessReports": 38,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 1.411,
+        "cashAmount": 6488251919.625,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "300760.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u533b\u836f\u751f\u7269",
+      "subIndustry": "\u533b\u7597\u8bbe\u5907",
+      "mentions": {
+        "published": 1,
+        "latest": "2026-11-10T08:39:18+00:00",
+        "throughLatest": 1,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "206102847224.4800000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "2.5752587018",
+          "missing": [],
+          "sourceCount": 30
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "12.0000000000",
+          "missing": [],
+          "sourceCount": 92
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "2.8526058122",
+          "missing": [],
+          "sourceCount": 71
+        },
+        "workbenchNtmDividendYield": {
+          "value": "2.2755867677",
+          "missing": [],
+          "sourceCount": 72
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 25.3329
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 5.0819
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 6.0113
+        }
+      },
+      "businessReports": 37,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 2.58,
+        "cashAmount": 3127244985.73,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "300999.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u519c\u6797\u7267\u6e14",
+      "subIndustry": "\u7cae\u6cb9\u52a0\u5de5",
+      "mentions": {
+        "published": 1,
+        "latest": "2026-11-12T07:52:10+00:00",
+        "throughLatest": 1,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "138846959236.9600000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "0.8980866849",
+          "missing": [],
+          "sourceCount": 18
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "5.0000000000",
+          "missing": [],
+          "sourceCount": 64
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "1.0317087557",
+          "missing": [],
+          "sourceCount": 50
+        },
+        "workbenchNtmDividendYield": {
+          "value": "1.0289069423",
+          "missing": [],
+          "sourceCount": 51
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 44.0379
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.4244
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 0.5503
+        }
+      },
+      "businessReports": 38,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "301589.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u8ba1\u7b97\u673a",
+      "subIndustry": "\u5176\u4ed6\u8ba1\u7b97\u673a\u8bbe\u5907",
+      "mentions": {
+        "published": 0,
+        "latest": "",
+        "throughLatest": 0,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "14575351680.0000000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "0.9260433845",
+          "missing": [],
+          "sourceCount": 18
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": null,
+          "missing": [
+            "2021 \u5e74\u5206\u7ea2\u53e3\u5f84\u7248\u672c\u8fc7\u65e7\uff0c\u9700\u91cd\u5efa",
+            "2022 \u5e74\u5206\u7ea2\u53e3\u5f84\u7248\u672c\u8fc7\u65e7\uff0c\u9700\u91cd\u5efa"
+          ],
+          "sourceCount": 49
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "0.9048846873",
+          "missing": [],
+          "sourceCount": 58
+        },
+        "workbenchNtmDividendYield": {
+          "value": "0.8979923857",
+          "missing": [],
+          "sourceCount": 60
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 649,
+          "first": "2024-02-08",
+          "last": "2026-10-21",
+          "current": 24.7946
+        },
+        "pb": {
+          "points": 649,
+          "first": "2024-02-08",
+          "last": "2026-10-21",
+          "current": 3.567
+        },
+        "ps": {
+          "points": 649,
+          "first": "2024-02-08",
+          "last": "2026-10-21",
+          "current": 3.8947
+        }
+      },
+      "businessReports": 28,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.68,
+        "cashAmount": 60445139.48,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 4,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "600030.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u975e\u94f6\u91d1\u878d",
+      "subIndustry": "\u8bc1\u5238\u2162",
+      "mentions": {
+        "published": 14,
+        "latest": "2026-11-13T10:16:29+00:00",
+        "throughLatest": 14,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "390763048022.1200000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u91d1\u878d\u884c\u4e1a\u62a5\u8868\u7f3a\u5c11\u53ef\u6bd4\u7684\u6709\u606f\u8d1f\u503a\u79d1\u76ee",
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "2.7988804478",
+          "missing": [],
+          "sourceCount": 21
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "7.0000000000",
+          "missing": [],
+          "sourceCount": 70
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "4.2019746445",
+          "missing": [],
+          "sourceCount": 56
+        },
+        "workbenchNtmDividendYield": {
+          "value": "5.0464297325",
+          "missing": [],
+          "sourceCount": 57
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 12.9925
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.3225
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 4.2744
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "600031.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u673a\u68b0\u8bbe\u5907",
+      "subIndustry": "\u5de5\u7a0b\u673a\u68b0\u6574\u673a",
+      "mentions": {
+        "published": 4,
+        "latest": "2026-11-12T09:39:21+00:00",
+        "throughLatest": 4,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "162659628490.5300000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "2.7699265122",
+          "missing": [],
+          "sourceCount": 18
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "6.0000000000",
+          "missing": [],
+          "sourceCount": 64
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "2.5683574967",
+          "missing": [],
+          "sourceCount": 50
+        },
+        "workbenchNtmDividendYield": {
+          "value": "3.1347378965",
+          "missing": [],
+          "sourceCount": 51
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 19.3457
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.7664
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.6597
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "600036.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u94f6\u884c",
+      "subIndustry": "\u80a1\u4efd\u5236\u94f6\u884c\u2162",
+      "mentions": {
+        "published": 1,
+        "latest": "2026-11-11T08:44:15+00:00",
+        "throughLatest": 1,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "1066295072010.2800000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u91d1\u878d\u884c\u4e1a\u62a5\u8868\u7f3a\u5c11\u53ef\u6bd4\u7684\u6709\u606f\u8d1f\u503a\u79d1\u76ee",
+            "\u7f3a\u5c11\u8d27\u5e01\u8d44\u91d1 money_cap"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "4.7682119205",
+          "missing": [],
+          "sourceCount": 15
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "6.0000000000",
+          "missing": [],
+          "sourceCount": 61
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "5.0049451974",
+          "missing": [],
+          "sourceCount": 46
+        },
+        "workbenchNtmDividendYield": {
+          "value": "5.1333131097",
+          "missing": [],
+          "sourceCount": 47
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 7.1001
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 0.9312
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 3.0841
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "600234.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u5efa\u7b51\u88c5\u9970",
+      "subIndustry": "\u88c5\u4fee\u88c5\u9970\u2162",
+      "mentions": {
+        "published": 0,
+        "latest": "",
+        "throughLatest": 0,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 7
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "4720127094.5400000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u501f\u6b3e st_borr",
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "0E-10",
+          "missing": [],
+          "sourceCount": 14
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "0E-10",
+          "missing": [],
+          "sourceCount": 51
+        },
+        "workbenchAnnualDividendYield": {
+          "value": null,
+          "missing": [
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS"
+          ],
+          "sourceCount": 44
+        },
+        "workbenchNtmDividendYield": {
+          "value": null,
+          "missing": [
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ],
+          "sourceCount": 45
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 240,
+          "first": "2025-04-30",
+          "last": "2026-04-28",
+          "current": 156.1587
+        },
+        "pb": {
+          "points": 724,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 10.4407
+        },
+        "ps": {
+          "points": 724,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 11.625
+        }
+      },
+      "businessReports": 31,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "600276.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u533b\u836f\u751f\u7269",
+      "subIndustry": "\u5316\u5b66\u5236\u5242",
+      "mentions": {
+        "published": 5,
+        "latest": "2026-11-13T08:37:06+00:00",
+        "throughLatest": 5,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "314470530030.1200000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u501f\u6b3e st_borr",
+            "\u7f3a\u5c11\u957f\u671f\u501f\u6b3e lt_borr"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "0.4221190376",
+          "missing": [],
+          "sourceCount": 18
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "5.0000000000",
+          "missing": [],
+          "sourceCount": 64
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "0.4587298848",
+          "missing": [],
+          "sourceCount": 50
+        },
+        "workbenchNtmDividendYield": {
+          "value": "0.4636238954",
+          "missing": [],
+          "sourceCount": 51
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 40.7818
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 4.8781
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 10.0393
+        }
+      },
+      "businessReports": 25,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "600519.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u98df\u54c1\u996e\u6599",
+      "subIndustry": "\u767d\u9152\u2162",
+      "mentions": {
+        "published": 20,
+        "latest": "2026-11-14T01:03:04+00:00",
+        "throughLatest": 20,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "1637219372013.6900000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u501f\u6b3e st_borr",
+            "\u7f3a\u5c11\u957f\u671f\u501f\u6b3e lt_borr"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "3.9689720468",
+          "missing": [],
+          "sourceCount": 26
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "9.0000000000",
+          "missing": [],
+          "sourceCount": 83
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "4.2884002896",
+          "missing": [],
+          "sourceCount": 66
+        },
+        "workbenchNtmDividendYield": {
+          "value": "3.4588398995",
+          "missing": [],
+          "sourceCount": 67
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 19.8885
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 6.5162
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 9.6221
+        }
+      },
+      "businessReports": 42,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "600547.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u6709\u8272\u91d1\u5c5e",
+      "subIndustry": "\u9ec4\u91d1",
+      "mentions": {
+        "published": 2,
+        "latest": "2026-11-12T11:24:44+00:00",
+        "throughLatest": 2,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "122762423250.7500000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "1.3318437852",
+          "missing": [],
+          "sourceCount": 15
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "7.0000000000",
+          "missing": [],
+          "sourceCount": 58
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "2.3623876260",
+          "missing": [],
+          "sourceCount": 46
+        },
+        "workbenchNtmDividendYield": {
+          "value": "2.0655918889",
+          "missing": [],
+          "sourceCount": 47
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 25.9026
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 3.7053
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.2142
+        }
+      },
+      "businessReports": 33,
+      "latestHolders": 11,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.1,
+        "cashAmount": 460992952.5,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "600624.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u533b\u836f\u751f\u7269",
+      "subIndustry": "\u5316\u5b66\u5236\u5242",
+      "mentions": {
+        "published": 0,
+        "latest": "",
+        "throughLatest": 0,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 7
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "2887224503.5000000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u957f\u671f\u501f\u6b3e lt_borr",
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "0E-10",
+          "missing": [],
+          "sourceCount": 10
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "0E-10",
+          "missing": [],
+          "sourceCount": 41
+        },
+        "workbenchAnnualDividendYield": {
+          "value": null,
+          "missing": [
+            "\u524d\u4e94\u5e74\u65e0\u5408\u683c\u7684\u540c\u671f\u5b63\u8282\u6027\u6837\u672c",
+            "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS"
+          ],
+          "sourceCount": 36
+        },
+        "workbenchNtmDividendYield": {
+          "value": null,
+          "missing": [
+            "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS"
+          ],
+          "sourceCount": 37
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 242,
+          "first": "2024-04-30",
+          "last": "2025-04-29",
+          "current": 680.1499
+        },
+        "pb": {
+          "points": 725,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 7.102
+        },
+        "ps": {
+          "points": 725,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 4.8572
+        }
+      },
+      "businessReports": 32,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "601012.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u7535\u529b\u8bbe\u5907",
+      "subIndustry": "\u5149\u4f0f\u7535\u6c60\u7ec4\u4ef6",
+      "mentions": {
+        "published": 4,
+        "latest": "2026-11-13T10:10:41+00:00",
+        "throughLatest": 4,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 7
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "83282987464.6700000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "0E-10",
+          "missing": [],
+          "sourceCount": 10
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "3.0000000000",
+          "missing": [],
+          "sourceCount": 48
+        },
+        "workbenchAnnualDividendYield": {
+          "value": null,
+          "missing": [
+            "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS"
+          ],
+          "sourceCount": 36
+        },
+        "workbenchNtmDividendYield": {
+          "value": null,
+          "missing": [
+            "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS"
+          ],
+          "sourceCount": 37
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 369,
+          "first": "2023-10-23",
+          "last": "2025-04-29",
+          "current": 10.4739
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.7294
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.2896
+        }
+      },
+      "businessReports": 38,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "601088.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u7164\u70ad",
+      "subIndustry": "\u52a8\u529b\u7164",
+      "mentions": {
+        "published": 1,
+        "latest": "2026-11-13T09:10:22+00:00",
+        "throughLatest": 1,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "1068638428158.0800000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "4.0795615994",
+          "missing": [],
+          "sourceCount": 15
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "6.0000000000",
+          "missing": [],
+          "sourceCount": 55
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "3.8709512216",
+          "missing": [],
+          "sourceCount": 43
+        },
+        "workbenchNtmDividendYield": {
+          "value": "4.2657173605",
+          "missing": [],
+          "sourceCount": 44
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 716,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 20.2206
+        },
+        "pb": {
+          "points": 716,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 2.3698
+        },
+        "ps": {
+          "points": 716,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 3.4603
+        }
+      },
+      "businessReports": 37,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "601100.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u673a\u68b0\u8bbe\u5907",
+      "subIndustry": "\u5de5\u7a0b\u673a\u68b0\u5668\u4ef6",
+      "mentions": {
+        "published": 0,
+        "latest": "",
+        "throughLatest": 0,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "113031209625.6000000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "1.0201660735",
+          "missing": [],
+          "sourceCount": 15
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "6.0000000000",
+          "missing": [],
+          "sourceCount": 55
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "1.0173642552",
+          "missing": [],
+          "sourceCount": 43
+        },
+        "workbenchNtmDividendYield": {
+          "value": "1.0120356866",
+          "missing": [],
+          "sourceCount": 44
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 41.341
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 6.3102
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 8.969
+        }
+      },
+      "businessReports": 22,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.3,
+        "cashAmount": 402246297.6,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "601318.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u975e\u94f6\u91d1\u878d",
+      "subIndustry": "\u4fdd\u9669\u2162",
+      "mentions": {
+        "published": 1,
+        "latest": "2026-11-09T04:51:31+00:00",
+        "throughLatest": 1,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "927111270144.0000000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u91d1\u878d\u884c\u4e1a\u62a5\u8868\u7f3a\u5c11\u53ef\u6bd4\u7684\u6709\u606f\u8d1f\u503a\u79d1\u76ee",
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "5.2734375000",
+          "missing": [],
+          "sourceCount": 15
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "10.0000000000",
+          "missing": [],
+          "sourceCount": 57
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "5.5128110884",
+          "missing": [],
+          "sourceCount": 44
+        },
+        "workbenchNtmDividendYield": {
+          "value": "7.5676518371",
+          "missing": [],
+          "sourceCount": 45
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 6.8788
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 0.9018
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 0.8237
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.98,
+        "cashAmount": 17745489155.1,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "601398.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u94f6\u884c",
+      "subIndustry": "\u56fd\u6709\u5927\u578b\u94f6\u884c\u2162",
+      "mentions": {
+        "published": 5,
+        "latest": "2026-11-14T02:36:18+00:00",
+        "throughLatest": 5,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "3011632872402.0500000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u91d1\u878d\u884c\u4e1a\u62a5\u8868\u7f3a\u5c11\u53ef\u6bd4\u7684\u6709\u606f\u8d1f\u503a\u79d1\u76ee",
+            "\u7f3a\u5c11\u8d27\u5e01\u8d44\u91d1 money_cap"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "3.6721893491",
+          "missing": [],
+          "sourceCount": 17
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "7.0000000000",
+          "missing": [],
+          "sourceCount": 60
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "3.8349082740",
+          "missing": [],
+          "sourceCount": 48
+        },
+        "workbenchNtmDividendYield": {
+          "value": "3.9836621244",
+          "missing": [],
+          "sourceCount": 49
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 8.1713
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 0.7601
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 3.4339
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.1511,
+        "cashAmount": 53852985446.1479,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "601688.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u975e\u94f6\u91d1\u878d",
+      "subIndustry": "\u8bc1\u5238\u2162",
+      "mentions": {
+        "published": 16,
+        "latest": "2026-11-14T01:48:39+00:00",
+        "throughLatest": 16,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "154991251205.6200000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u91d1\u878d\u884c\u4e1a\u62a5\u8868\u7f3a\u5c11\u53ef\u6bd4\u7684\u6709\u606f\u8d1f\u503a\u79d1\u76ee",
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "3.2032615026",
+          "missing": [],
+          "sourceCount": 17
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "7.0000000000",
+          "missing": [],
+          "sourceCount": 58
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "5.0364717527",
+          "missing": [],
+          "sourceCount": 46
+        },
+        "workbenchNtmDividendYield": {
+          "value": "4.8298101333",
+          "missing": [],
+          "sourceCount": 47
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 9.4602
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 0.8666
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 3.5837
+        }
+      },
+      "businessReports": 39,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "601766.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u673a\u68b0\u8bbe\u5907",
+      "subIndustry": "\u8f68\u4ea4\u8bbe\u5907\u2162",
+      "mentions": {
+        "published": 0,
+        "latest": "",
+        "throughLatest": 0,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "179654889190.8800000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "3.6741214058",
+          "missing": [],
+          "sourceCount": 15
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "6.0000000000",
+          "missing": [],
+          "sourceCount": 55
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "5.9900858130",
+          "missing": [],
+          "sourceCount": 43
+        },
+        "workbenchNtmDividendYield": {
+          "value": "3.4263325194",
+          "missing": [],
+          "sourceCount": 44
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 13.6298
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.018
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 0.6304
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.11,
+        "cashAmount": 3156875049.68,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "601857.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u77f3\u6cb9\u77f3\u5316",
+      "subIndustry": "\u70bc\u6cb9\u5316\u5de5",
+      "mentions": {
+        "published": 5,
+        "latest": "2026-11-13T23:45:38+00:00",
+        "throughLatest": 5,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "2298743481394.0800000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "3.7420382166",
+          "missing": [],
+          "sourceCount": 15
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "10.0000000000",
+          "missing": [],
+          "sourceCount": 56
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "4.4530163435",
+          "missing": [],
+          "sourceCount": 44
+        },
+        "workbenchNtmDividendYield": {
+          "value": "4.5452683743",
+          "missing": [],
+          "sourceCount": 45
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 14.6136
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.4032
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 0.7814
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.26,
+        "cashAmount": 47585454232.68,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "601888.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u5546\u8d38\u96f6\u552e",
+      "subIndustry": "\u65c5\u6e38\u96f6\u552e\u2162",
+      "mentions": {
+        "published": 0,
+        "latest": "",
+        "throughLatest": 0,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "101645811824.4800000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "1.4309076043",
+          "missing": [],
+          "sourceCount": 19
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "6.0000000000",
+          "missing": [],
+          "sourceCount": 59
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "1.9876680275",
+          "missing": [],
+          "sourceCount": 47
+        },
+        "workbenchNtmDividendYield": {
+          "value": "2.0069374652",
+          "missing": [],
+          "sourceCount": 48
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 28.3438
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.7692
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.9107
+        }
+      },
+      "businessReports": 29,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "603019.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u8ba1\u7b97\u673a",
+      "subIndustry": "\u5176\u4ed6\u8ba1\u7b97\u673a\u8bbe\u5907",
+      "mentions": {
+        "published": 2,
+        "latest": "2026-11-12T13:20:04+00:00",
+        "throughLatest": 2,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "111167537268.3200000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "0.5922611213",
+          "missing": [],
+          "sourceCount": 21
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "7.0000000000",
+          "missing": [],
+          "sourceCount": 64
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "0.7534206160",
+          "missing": [],
+          "sourceCount": 49
+        },
+        "workbenchNtmDividendYield": {
+          "value": "0.6608612677",
+          "missing": [],
+          "sourceCount": 50
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 716,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 51.0811
+        },
+        "pb": {
+          "points": 716,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 4.8223
+        },
+        "ps": {
+          "points": 716,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 6.7051
+        }
+      },
+      "businessReports": 40,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "603259.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u533b\u836f\u751f\u7269",
+      "subIndustry": "\u533b\u7597\u7814\u53d1\u5916\u5305",
+      "mentions": {
+        "published": 8,
+        "latest": "2026-11-12T03:50:30+00:00",
+        "throughLatest": 8,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "447193114125.1000000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "1.5468408551",
+          "missing": [],
+          "sourceCount": 26
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "7.0000000000",
+          "missing": [],
+          "sourceCount": 75
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "1.6100980329",
+          "missing": [],
+          "sourceCount": 58
+        },
+        "workbenchNtmDividendYield": {
+          "value": "2.1479348482",
+          "missing": [],
+          "sourceCount": 59
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 23.3514
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 5.3663
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 8.3503
+        }
+      },
+      "businessReports": 37,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.51,
+        "cashAmount": 1527375622.62,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "603288.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u98df\u54c1\u996e\u6599",
+      "subIndustry": "\u8c03\u5473\u53d1\u9175\u54c1\u2162",
+      "mentions": {
+        "published": 3,
+        "latest": "2026-11-13T10:17:19+00:00",
+        "throughLatest": 3,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "195539351436.2400000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u957f\u671f\u501f\u6b3e lt_borr",
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "4.0645546922",
+          "missing": [],
+          "sourceCount": 22
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "7.0000000000",
+          "missing": [],
+          "sourceCount": 62
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "3.8638305903",
+          "missing": [],
+          "sourceCount": 50
+        },
+        "workbenchNtmDividendYield": {
+          "value": "3.8970904869",
+          "missing": [],
+          "sourceCount": 51
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 27.7815
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 5.0018
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 6.5643
+        }
+      },
+      "businessReports": 46,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "603799.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u6709\u8272\u91d1\u5c5e",
+      "subIndustry": "\u94b4",
+      "mentions": {
+        "published": 1,
+        "latest": "2026-11-09T08:43:28+00:00",
+        "throughLatest": 1,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "60100563389.5800000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "1.5752993069",
+          "missing": [],
+          "sourceCount": 14
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "5.0000000000",
+          "missing": [],
+          "sourceCount": 54
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "2.0310722250",
+          "missing": [],
+          "sourceCount": 42
+        },
+        "workbenchNtmDividendYield": {
+          "value": "2.4172606605",
+          "missing": [],
+          "sourceCount": 43
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 9.8358
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.1814
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 0.6047
+        }
+      },
+      "businessReports": 35,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "688041.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u7535\u5b50",
+      "subIndustry": "\u6570\u5b57\u82af\u7247\u8bbe\u8ba1",
+      "mentions": {
+        "published": 5,
+        "latest": "2026-11-13T14:23:34+00:00",
+        "throughLatest": 5,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2026Q2 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "449294552990.3000000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "0.1241593378",
+          "missing": [],
+          "sourceCount": 21
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": null,
+          "missing": [
+            "2021 \u5e74\u5206\u7ea2\u53e3\u5f84\u7248\u672c\u8fc7\u65e7\uff0c\u9700\u91cd\u5efa"
+          ],
+          "sourceCount": 52
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "0.1947987665",
+          "missing": [],
+          "sourceCount": 50
+        },
+        "workbenchNtmDividendYield": {
+          "value": "0.2131823672",
+          "missing": [],
+          "sourceCount": 50
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 716,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 176.5477
+        },
+        "pb": {
+          "points": 716,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 17.0037
+        },
+        "ps": {
+          "points": 716,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 22.644
+        }
+      },
+      "businessReports": 26,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "688111.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u8ba1\u7b97\u673a",
+      "subIndustry": "\u6a2a\u5411\u901a\u7528\u8f6f\u4ef6",
+      "mentions": {
+        "published": 8,
+        "latest": "2026-08-19T16:00:00+00:00",
+        "throughLatest": 8,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 6
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "110050066378.9500000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u501f\u6b3e st_borr",
+            "\u7f3a\u5c11\u957f\u671f\u501f\u6b3e lt_borr"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "0.5270481090",
+          "missing": [],
+          "sourceCount": 19
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "5.0000000000",
+          "missing": [],
+          "sourceCount": 73
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "1.4542427812",
+          "missing": [],
+          "sourceCount": 52
+        },
+        "workbenchNtmDividendYield": {
+          "value": "1.4678693440",
+          "missing": [],
+          "sourceCount": 53
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 59.9248
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 7.2993
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 16.7125
+        }
+      },
+      "businessReports": 34,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "688180.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u533b\u836f\u751f\u7269",
+      "subIndustry": "\u5176\u4ed6\u751f\u7269\u5236\u54c1",
+      "mentions": {
+        "published": 0,
+        "latest": "",
+        "throughLatest": 0,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 7
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "31888987393.2600000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "0E-10",
+          "missing": [],
+          "sourceCount": 10
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "0E-10",
+          "missing": [],
+          "sourceCount": 41
+        },
+        "workbenchAnnualDividendYield": {
+          "value": null,
+          "missing": [
+            "\u524d\u4e94\u5e74\u65e0\u5408\u683c\u7684\u540c\u671f\u5b63\u8282\u6027\u6837\u672c",
+            "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS"
+          ],
+          "sourceCount": 36
+        },
+        "workbenchNtmDividendYield": {
+          "value": null,
+          "missing": [
+            "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS"
+          ],
+          "sourceCount": 37
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 0,
+          "first": null,
+          "last": null,
+          "current": null
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 5.3651
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 10.5375
+        }
+      },
+      "businessReports": 34,
+      "latestHolders": 11,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "688472.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u7535\u529b\u8bbe\u5907",
+      "subIndustry": "\u5149\u4f0f\u7535\u6c60\u7ec4\u4ef6",
+      "mentions": {
+        "published": 0,
+        "latest": "",
+        "throughLatest": 0,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "28125041664.6400000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "1.2796632124",
+          "missing": [],
+          "sourceCount": 12
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": null,
+          "missing": [
+            "2021 \u5e74\u5206\u7ea2\u53e3\u5f84\u7248\u672c\u8fc7\u65e7\uff0c\u9700\u91cd\u5efa",
+            "2022 \u5e74\u5206\u7ea2\u53e3\u5f84\u7248\u672c\u8fc7\u65e7\uff0c\u9700\u91cd\u5efa"
+          ],
+          "sourceCount": 37
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "0.4594071080",
+          "missing": [],
+          "sourceCount": 38
+        },
+        "workbenchNtmDividendYield": {
+          "value": null,
+          "missing": [
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ],
+          "sourceCount": 41
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 27.6884
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.2375
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 0.8792
+        }
+      },
+      "businessReports": 27,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "688981.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u7535\u5b50",
+      "subIndustry": "\u96c6\u6210\u7535\u8def\u5236\u9020",
+      "mentions": {
+        "published": 18,
+        "latest": "2026-11-13T02:18:15+00:00",
+        "throughLatest": 18,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "858293162558.1600000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "0E-10",
+          "missing": [],
+          "sourceCount": 10
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "0E-10",
+          "missing": [],
+          "sourceCount": 41
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "0E-10",
+          "missing": [],
+          "sourceCount": 36
+        },
+        "workbenchNtmDividendYield": {
+          "value": "0E-10",
+          "missing": [],
+          "sourceCount": 37
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 720,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 170.2715
+        },
+        "pb": {
+          "points": 720,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 5.0059
+        },
+        "ps": {
+          "points": 720,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 11.66
+        }
+      },
+      "businessReports": 33,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "920002.BJ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u673a\u68b0\u8bbe\u5907",
+      "subIndustry": "\u91d1\u5c5e\u5236\u54c1",
+      "mentions": {
+        "published": 0,
+        "latest": "",
+        "throughLatest": 0,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 10
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "3108125722.4500000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u957f\u671f\u501f\u6b3e lt_borr",
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": null,
+          "missing": [
+            "2025 \u5e74\u7a0e\u524d\u6bcf\u80a1\u5206\u7ea2\u4e0e\u80a1\u4ef7\u7684\u9001\u8f6c\u57fa\u51c6\u5f85\u6838\u5bf9\uff08\u57fa\u51c6\u65e5 2026-02-11\u30012026-10-21\uff0c\u9001\u8f6c\u9664\u6743\u65e5 2026-05-27\uff09",
+            "2025 \u5e74\u7a0e\u524d\u6bcf\u80a1\u5206\u7ea2\u4e0e\u80a1\u4ef7\u7684\u9001\u8f6c\u57fa\u51c6\u5f85\u6838\u5bf9\uff08\u57fa\u51c6\u65e5 2026-05-26\u30012026-10-21\uff0c\u9001\u8f6c\u9664\u6743\u65e5 2026-05-27\uff09"
+          ],
+          "sourceCount": 22
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": null,
+          "missing": [
+            "2021 \u5e74\u5206\u7ea2\u53e3\u5f84\u7248\u672c\u8fc7\u65e7\uff0c\u9700\u91cd\u5efa",
+            "2022 \u5e74\u5206\u7ea2\u53e3\u5f84\u7248\u672c\u8fc7\u65e7\uff0c\u9700\u91cd\u5efa"
+          ],
+          "sourceCount": 38
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "0.4605738139",
+          "missing": [],
+          "sourceCount": 56
+        },
+        "workbenchNtmDividendYield": {
+          "value": "0.4694199510",
+          "missing": [],
+          "sourceCount": 58
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 580,
+          "first": "2024-05-30",
+          "last": "2026-10-21",
+          "current": 49.5902
+        },
+        "pb": {
+          "points": 580,
+          "first": "2024-05-30",
+          "last": "2026-10-21",
+          "current": 4.0908
+        },
+        "ps": {
+          "points": 580,
+          "first": "2024-05-30",
+          "last": "2026-10-21",
+          "current": 8.2858
+        }
+      },
+      "businessReports": 20,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 4,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "920047.BJ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u533b\u836f\u751f\u7269",
+      "subIndustry": "\u5176\u4ed6\u751f\u7269\u5236\u54c1",
+      "mentions": {
+        "published": 0,
+        "latest": "",
+        "throughLatest": 0,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 7
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "3691700770.0400000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "0E-10",
+          "missing": [],
+          "sourceCount": 12
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "0E-10",
+          "missing": [],
+          "sourceCount": 42
+        },
+        "workbenchAnnualDividendYield": {
+          "value": null,
+          "missing": [
+            "\u524d\u4e94\u5e74\u65e0\u5408\u683c\u7684\u540c\u671f\u5b63\u8282\u6027\u6837\u672c",
+            "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS"
+          ],
+          "sourceCount": 38
+        },
+        "workbenchNtmDividendYield": {
+          "value": null,
+          "missing": [
+            "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS"
+          ],
+          "sourceCount": 39
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 0,
+          "first": null,
+          "last": null,
+          "current": null
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 14.8691
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 61.8909
+        }
+      },
+      "businessReports": 31,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    },
+    "920185.BJ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "industry": "\u7535\u529b\u8bbe\u5907",
+      "subIndustry": "\u7535\u6c60\u5316\u5b66\u54c1",
+      "mentions": {
+        "published": 0,
+        "latest": "",
+        "throughLatest": 0,
+        "laterDocuments": 0
+      },
+      "cards": {
+        "workbenchPeTtm": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11 2025Q3 \u5355\u5b63\u57fa\u672c EPS",
+            "\u7f3a\u5c11 2025Q4 \u5355\u5b63\u57fa\u672c EPS"
+          ],
+          "sourceCount": 8
+        },
+        "workbenchPb": {
+          "value": null,
+          "missing": [
+            "\u6700\u8fd1\u4e00\u671f\u7f3a\u6bcf\u80a1\u51c0\u8d44\u4ea7 bps"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchMarketCap": {
+          "value": "23105265079.4000000000",
+          "missing": [],
+          "sourceCount": 2
+        },
+        "workbenchNetCash": {
+          "value": null,
+          "missing": [
+            "\u7f3a\u5c11\u77ed\u671f\u5e94\u4ed8\u503a\u5238 st_bonds_payable",
+            "\u7f3a\u5c11\u5e94\u4ed8\u503a\u5238 bond_payable"
+          ],
+          "sourceCount": 3
+        },
+        "workbenchFiscalDividendYield": {
+          "value": "1.4778325123",
+          "missing": [],
+          "sourceCount": 16
+        },
+        "workbenchFiveYearDividendCount": {
+          "value": "5.0000000000",
+          "missing": [],
+          "sourceCount": 52
+        },
+        "workbenchAnnualDividendYield": {
+          "value": "1.3980757042",
+          "missing": [],
+          "sourceCount": 43
+        },
+        "workbenchNtmDividendYield": {
+          "value": "1.1700957975",
+          "missing": [],
+          "sourceCount": 44
+        }
+      },
+      "bands": {
+        "pe": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 26.4037
+        },
+        "pb": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.813
+        },
+        "ps": {
+          "points": 726,
+          "first": "2023-10-23",
+          "last": "2026-10-21",
+          "current": 1.1931
+        }
+      },
+      "businessReports": 36,
+      "latestHolders": 10,
+      "latestDistribution": {
+        "year": "2026",
+        "status": "complete",
+        "dps": 0.0,
+        "cashAmount": 0.0,
+        "parentProfit": null,
+        "payoutRatio": null
+      },
+      "ratioYears": 3,
+      "ratioFields": 32,
+      "ratioPresets": 2
+    }
+  },
+  "differences": [],
+  "websiteRatio": {
+    "checked": 50,
+    "matchedSource": 1812,
+    "available": 50,
+    "missing": 0,
+    "samples": [
+      {
+        "symbol": "000001.SZ",
+        "year": 2025,
+        "numerator": 3158.58,
+        "denominator": 426.33,
+        "ratio": 7.4087678558862855,
+        "years": 21,
+        "fields": 44
+      },
+      {
+        "symbol": "600519.SH",
+        "year": 2025,
+        "numerator": 615.2220498935,
+        "denominator": 823.2006710167999,
+        "ratio": 0.747353678822432,
+        "years": 21,
+        "fields": 44
+      },
+      {
+        "symbol": "920002.BJ",
+        "year": 2025,
+        "numerator": 0.6923506584,
+        "denominator": 0.6267619515,
+        "ratio": 1.1046469185677745,
+        "years": 4,
+        "fields": 44
+      }
+    ]
+  }
+}
