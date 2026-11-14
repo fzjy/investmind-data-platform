@@ -1,0 +1,94 @@
+{
+  "current": 56,
+  "equivalent": [
+    {
+      "product": "macro-insights",
+      "version": "20261108-366f83bfc727036c",
+      "as_of": "2026-11-08 14:51:37.835243+00",
+      "historical_id": 932,
+      "equal_json": true,
+      "equal_text": true,
+      "equal_as_of": true,
+      "current_column_bytes": 325758,
+      "history_column_bytes": 325758,
+      "text_bytes": 1730827
+    },
+    {
+      "product": "macro-transmission",
+      "version": "20261108-366f83bfc727036c",
+      "as_of": "2026-11-08 14:51:37.835243+00",
+      "historical_id": 931,
+      "equal_json": true,
+      "equal_text": true,
+      "equal_as_of": true,
+      "current_column_bytes": 3264573,
+      "history_column_bytes": 3264573,
+      "text_bytes": 17723037
+    },
+    {
+      "product": "market-explorer",
+      "version": "content-0ee74f8f06c384cd9a6cd0016ef745fa",
+      "as_of": "2026-10-21 00:00:00+00",
+      "historical_id": 1879,
+      "equal_json": true,
+      "equal_text": true,
+      "equal_as_of": true,
+      "current_column_bytes": 91313,
+      "history_column_bytes": 91313,
+      "text_bytes": 342511
+    },
+    {
+      "product": "market-overview",
+      "version": "20261021-6319db232c0a22d0",
+      "as_of": "2026-10-21 00:00:00+00",
+      "historical_id": 933,
+      "equal_json": true,
+      "equal_text": true,
+      "equal_as_of": true,
+      "current_column_bytes": 2780,
+      "history_column_bytes": 2780,
+      "text_bytes": 7728
+    },
+    {
+      "product": "portfolio",
+      "version": "20261021-690705b397d4b878",
+      "as_of": "2026-10-21 00:00:00+00",
+      "historical_id": 1847,
+      "equal_json": true,
+      "equal_text": true,
+      "equal_as_of": true,
+      "current_column_bytes": 1555366,
+      "history_column_bytes": 1555366,
+      "text_bytes": 8932620
+    },
+    {
+      "product": "screener",
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "as_of": "2026-10-21 00:00:00+00",
+      "historical_id": 1786,
+      "equal_json": true,
+      "equal_text": true,
+      "equal_as_of": true,
+      "current_column_bytes": 327377,
+      "history_column_bytes": 327377,
+      "text_bytes": 841871
+    }
+  ],
+  "workbenchOverrides": 50,
+  "otherOverrides": [],
+  "unmatchedHistory": [],
+  "isolated": {
+    "historyOnlyEditChangesAliasedCurrent": true,
+    "sameEditLeavesIndependentCurrentUnchanged": true,
+    "bytes": {
+      "pointer_baseline": 16146432,
+      "pointer_reference": 10362880
+    },
+    "netPointerBytesSaved": 5783552,
+    "resolvedReadComparison": {
+      "pointers": 56,
+      "references": 6,
+      "conflicts": 0
+    }
+  }
+}
