@@ -133,7 +133,7 @@ def audit(output, website):
                 site=f"http://127.0.0.1:{port}"
                 env={**os.environ,"BACKEND_INTERNAL_API_BASE_URL":api,"NEXT_TELEMETRY_DISABLED":"1"}
                 web=subprocess.Popen(["node","node_modules/next/dist/bin/next","start","-H","127.0.0.1","-p",str(port)],
-                                     cwd=ROOT,env=env,stdout=subprocess.DEVNULL)
+                                     cwd=website,env=env,stdout=subprocess.DEVNULL)
                 for _ in range(150):
                     try:
                         with socket.create_connection(("127.0.0.1",port),.25):
@@ -164,7 +164,7 @@ def audit(output, website):
                         site_evidence[path+"?q="+q]={"searchHttp":1,"searchSql":len(actual[0]["sql"]),
                                                       "layoutCalls":extra,"status":status}
                 result["site"]=site_evidence
-                result["buildId"]=(ROOT/".next"/"BUILD_ID").read_text().strip()
+                result["buildId"]=(website/".next"/"BUILD_ID").read_text().strip()
             output.write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf8")
             print(f"{len(record)} 组新旧接口及 4 个无效请求通过；网站访问 {len(result.get('site',{}))} 次。")
         finally:
@@ -177,7 +177,7 @@ def audit(output, website):
 
 if __name__=="__main__":
     parser=ArgumentParser(description=__doc__)
-    parser.add_argument("--site",action="store_true",help="网站仓库有当前生产构建时同时验证兼容路由与 SSR")
+    parser.add_argument("--website",type=Path,help="可选，已构建的网站仓目录；同时验证兼容路由与 SSR")
     parser.add_argument("--output",type=Path,required=True)
     args=parser.parse_args()
-    audit(args.output,args.site)
+    audit(args.output,args.website.resolve() if args.website else None)

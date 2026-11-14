@@ -6,7 +6,6 @@ import json
 from math import isclose
 from pathlib import Path
 from statistics import mean, pstdev
-import subprocess
 import sys
 from types import SimpleNamespace
 
@@ -161,11 +160,6 @@ def audit(factory, session):
             'ratioYears':len(metrics['years']),'ratioFields':len(metrics['fields']),'ratioPresets':len(metrics['presets'])}
     report={'asOf':str(day), 'symbols':len(codes), 'counts':dict(counts),'cardCounts':dict(card_counts),
             'securities':per_symbol,'differences':errors}
-    site_driver=Path(__file__).with_name('audit-workbench-ratio.mjs')
-    if site_driver.exists():
-        records=[dict(symbol=r['quote']['symbol'], metrics=r['metrics'], tables=r['tables']) for r in rows]
-        child=subprocess.run(['node',str(site_driver)],input=json.dumps(records),text=True,stdout=subprocess.PIPE,check=True)
-        report['websiteRatio']=json.loads(child.stdout)
     return report
 
 
