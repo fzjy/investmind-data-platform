@@ -56,9 +56,10 @@ def read_news(factory, cursor=None, limit=20, now=None):
 
 
 def create_router(factory):
-    router = APIRouter(prefix='/api/data')
+    router = APIRouter()
 
-    @router.get('/market-news')
+    @router.get('/api/data/market-news')
+    @router.get('/api/v1/news')
     def market_news(cursor: str | None = Query(default=None, max_length=300), limit: int = Query(default=20, ge=1, le=50)):
         try:
             return read_news(factory, cursor, limit)

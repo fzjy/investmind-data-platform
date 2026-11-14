@@ -1,0 +1,39 @@
+{
+  "checkedAt": "2026-11-14T14:53:11.595908+00:00",
+  "visible": 10766,
+  "pagesOf50": 216,
+  "firstPage": 20,
+  "sameNewsIdsInMarketSnapshot": 20,
+  "snapshotEntries": 50,
+  "copyright": {
+    "link_only": 10766
+  },
+  "health": {
+    "status": "ok",
+    "code": null,
+    "retention": {
+      "status": "completed",
+      "startedAt": "2026-11-14T03:55:03.357816+00:00",
+      "cutoff": "2025-11-14T03:55:03.357816+00:00",
+      "retentionDays": 365,
+      "phase": 6,
+      "lastId": 0,
+      "counts": {
+        "content_document": 0,
+        "external_record": 0,
+        "news_delivery": 0,
+        "page_snapshot": 662,
+        "published_snapshot": 0,
+        "stock_workbench_snapshot": 662
+      },
+      "checkedAt": "2026-11-14T04:07:30.763839+00:00",
+      "completedAt": "2026-11-14T04:07:30.763839+00:00"
+    },
+    "lastSuccessAt": "2026-11-14T14:42:46.749053+00:00",
+    "latestPublishedAt": "2026-11-14T14:39:42+00:00",
+    "catchingUp": false
+  },
+  "oldest": "2026-11-09T01:43:05+00:00",
+  "newest": "2026-11-14T14:39:42+00:00",
+  "orderedIdsSha256": "610c7cc6744817b2aad1cbdfb109d0a01af3be189adb8d9583fc8aefebff3ad9"
+}

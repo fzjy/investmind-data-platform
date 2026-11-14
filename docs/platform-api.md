@@ -1,4 +1,6 @@
-# 公共数据接口目录：股息率试点
+# 公共数据接口目录
+
+[市场快讯接口](news-api.md)：股息率试点
 
 核验日期：2026-11-14。开工代码基线 `ab00ce213b093472a3647d581519fcdb9a4cb43e`；旧文档范围见 InvestMind 仓库的 `docs/research/investmind-split-reference-scope.md`。这是现有实现目录，不表示独立底座已部署。
 

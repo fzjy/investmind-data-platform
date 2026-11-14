@@ -1,5 +1,7 @@
 # 市场总览与市场浏览的供给核验
 
+浏览接口默认返回历史快照内的快讯。市场页传入 `news=latest` 时，底座以当前可交付的第一页替换该列表，并附带游标和采集状态。价格仍保留原业务日，快讯使用各自发布时间。[快讯字段与查询参数](news-api.md)
+
 InvestMind 市场页使用 `GET /api/v1/market/overview` 和 `GET /api/v1/market/explorer`。以下两个旧入口保留，与对应 v1 入口共用处理函数。版本化的是数据访问合同，字段自己的交易日、发布时间及产品版本见下表。
 
 2026-11-14 从本机 PostgreSQL 只读重放。两个 GET 接口分别返回一个完整市场产品；返回正文逐字段等于 `mart.published_snapshot.payload`，对应版本在 `mart.page_snapshot` 各有一份相同正文。两个指针均标记 `stale=true`、原因为 `SNAPSHOT_BEHIND_EXPECTED_DATE`。 [逐产品版本、字段日期、覆盖和源记录](research/investmind-market-supply.json)

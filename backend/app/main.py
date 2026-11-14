@@ -24,7 +24,7 @@ from app.stocks.database_provider import StocksDatabaseProvider
 from app.stocks.routes import create_router as create_stocks_router
 from app.search.routes import create_router as create_search_router
 from app.search.models import SearchOptions
-from app.content.routes import create_router as create_content_router
+from app.content.routes import create_router as create_content_router, read_news
 from app.content.news_worker import news_lifespan
 
 
@@ -71,7 +71,10 @@ def create_app(*, background_news: bool = True) -> FastAPI:
     session_factory = sessionmaker(database_engine, expire_on_commit=False)
     application.include_router(create_content_router(session_factory))
     repository = SnapshotRepository(session_factory)
-    application.include_router(create_market_router(provider=MarketDatabaseProvider(repository)))
+    application.include_router(create_market_router(
+        provider=MarketDatabaseProvider(repository),
+        latest_news=lambda: read_news(session_factory),
+    ))
     application.include_router(create_macro_router(provider=MacroDatabaseProvider(repository), collection_audit=CollectionAuditReader(session_factory)))
     application.include_router(create_portfolio_router(provider=PortfolioDatabaseProvider(repository)))
     application.include_router(create_stocks_router(provider=StocksDatabaseProvider(repository, session_factory)))
