@@ -1,0 +1,353 @@
+{
+  "snapshot": "20261021-1c01ff6eb0b7d78a",
+  "asOf": "2026-10-21",
+  "algorithm": "rea-bank-score-20261020",
+  "symbols": [
+    "000001.SZ",
+    "600036.SH",
+    "601398.SH"
+  ],
+  "coreEvidence": {
+    "000001.SZ": {
+      "identity": {
+        "ts_code": "000001.SZ",
+        "basic_id": 37240,
+        "pb": "0.47290000",
+        "indicator_id": 13,
+        "end_date": "2026-06-30",
+        "ann_date": "2026-08-15",
+        "roe": "4.6746"
+      },
+      "values": {
+        "pb": 0.4729,
+        "roe": 4.6746,
+        "dividendYield": 5.223488168273445,
+        "expectedDividendYield": 6.191119386042572
+      },
+      "yieldInputs": {
+        "asOf": "2026-10-21",
+        "close": "11.41000000",
+        "shares": "19405918198.0000",
+        "fiscalPaidDps": "0.596",
+        "seasonalPeriods": 5,
+        "anchor": "2026-06-30",
+        "weightedPayout": "0.2859982024491630153915290418",
+        "predictedProfit": "47932018254.78748860205092064"
+      },
+      "generalPbPercentile10y": null,
+      "generalPbWindowGap": "2016-10-21 \u81f3 2026-10-21 \u7f3a\u5b8c\u6574\u4ea4\u6613\u65e5\u5386"
+    },
+    "600036.SH": {
+      "identity": {
+        "ts_code": "600036.SH",
+        "basic_id": 37309,
+        "pb": "0.93120000",
+        "indicator_id": 334,
+        "end_date": "2026-06-30",
+        "ann_date": "2026-08-29",
+        "roe": "5.8402"
+      },
+      "values": {
+        "pb": 0.9312,
+        "roe": 5.8402,
+        "dividendYield": 4.768211920529802,
+        "expectedDividendYield": 5.0049451974285475
+      },
+      "yieldInputs": {
+        "asOf": "2026-10-21",
+        "close": "42.28000000",
+        "shares": "25219845601.0000",
+        "fiscalPaidDps": "2.016",
+        "seasonalPeriods": 5,
+        "anchor": "2026-06-30",
+        "weightedPayout": "0.3535614655012088525199925609",
+        "predictedProfit": "150942591895.1377104962019549"
+      },
+      "generalPbPercentile10y": null,
+      "generalPbWindowGap": "2016-10-21 \u81f3 2026-10-21 \u7f3a\u5b8c\u6574\u4ea4\u6613\u65e5\u5386"
+    },
+    "601398.SH": {
+      "identity": {
+        "ts_code": "601398.SH",
+        "basic_id": 37339,
+        "pb": "0.76010000",
+        "indicator_id": 477,
+        "end_date": "2026-06-30",
+        "ann_date": "2026-08-29",
+        "roe": "4.0527"
+      },
+      "values": {
+        "pb": 0.7601,
+        "roe": 4.0527,
+        "dividendYield": 3.672189349112426,
+        "expectedDividendYield": 3.834908273973725
+      },
+      "yieldInputs": {
+        "asOf": "2026-10-21",
+        "close": "8.45000000",
+        "shares": "356406257089.0000",
+        "fiscalPaidDps": "0.3103",
+        "seasonalPeriods": 5,
+        "anchor": "2026-06-30",
+        "weightedPayout": "0.3117946428571428571428571429",
+        "predictedProfit": "370414825434.8782109843593470"
+      },
+      "generalPbPercentile10y": null,
+      "generalPbWindowGap": "2016-10-21 \u81f3 2026-10-21 \u7f3a\u5b8c\u6574\u4ea4\u6613\u65e5\u5386"
+    }
+  },
+  "conditions": {
+    "pb": {
+      "field": "pb",
+      "operator": "lt",
+      "value": 1.2,
+      "available": 3,
+      "passing": [
+        "000001.SZ",
+        "600036.SH",
+        "601398.SH"
+      ]
+    },
+    "pbPercentile10y": {
+      "field": "pbPercentile10y",
+      "operator": "lt",
+      "value": 40,
+      "available": 0,
+      "passing": []
+    },
+    "dividendYield": {
+      "field": "dividendYield",
+      "operator": "gt",
+      "value": 4,
+      "available": 3,
+      "passing": [
+        "000001.SZ",
+        "600036.SH"
+      ]
+    },
+    "expectedDividendYield": {
+      "field": "expectedDividendYield",
+      "operator": "gt",
+      "value": 4,
+      "available": 3,
+      "passing": [
+        "000001.SZ",
+        "600036.SH"
+      ]
+    },
+    "bankRevisedExpectedDividendYield": {
+      "field": "bankRevisedExpectedDividendYield",
+      "operator": "gt",
+      "value": 5,
+      "available": 0,
+      "passing": []
+    },
+    "netInterestMargin": {
+      "field": "netInterestMargin",
+      "operator": "gt",
+      "value": 1.8,
+      "available": 0,
+      "passing": []
+    },
+    "bankRevisedExpectedGrowth": {
+      "field": "bankRevisedExpectedGrowth",
+      "operator": "gt",
+      "value": 3,
+      "available": 0,
+      "passing": []
+    },
+    "roe": {
+      "field": "roe",
+      "operator": "gt",
+      "value": 10,
+      "available": 3,
+      "passing": []
+    },
+    "nplRatio": {
+      "field": "nplRatio",
+      "operator": "lt",
+      "value": 1.5,
+      "available": 0,
+      "passing": []
+    },
+    "provisionCoverage": {
+      "field": "provisionCoverage",
+      "operator": "gt",
+      "value": 250,
+      "available": 0,
+      "passing": []
+    },
+    "loanDepositRatio": {
+      "field": "loanDepositRatio",
+      "operator": "lt",
+      "value": 90,
+      "available": 0,
+      "passing": []
+    },
+    "coreTier1CapitalAdequacyRatio": {
+      "field": "coreTier1CapitalAdequacyRatio",
+      "operator": "gt",
+      "value": 8,
+      "available": 0,
+      "passing": []
+    },
+    "bankDefensiveScore": {
+      "field": "bankDefensiveScore",
+      "operator": "gt",
+      "value": 6,
+      "available": 0,
+      "passing": []
+    },
+    "bankOffensiveScore": {
+      "field": "bankOffensiveScore",
+      "operator": "gt",
+      "value": 6,
+      "available": 0,
+      "passing": []
+    },
+    "dilutionEventCount3y": {
+      "field": "dilutionEventCount3y",
+      "operator": "lte",
+      "value": 0,
+      "available": 0,
+      "passing": []
+    }
+  },
+  "presets": {
+    "defensive": {
+      "divisor": 5,
+      "weights": {
+        "yield": 100,
+        "pb": 100,
+        "large": 100,
+        "nim": 100,
+        "provision": 100
+      },
+      "scores": {
+        "000001.SZ": {
+          "pb": 2.114611968703743,
+          "weightedPb": 2.114611968703743,
+          "total": null
+        },
+        "600036.SH": {
+          "pb": 1.0738831615120275,
+          "weightedPb": 1.0738831615120275,
+          "total": null
+        },
+        "601398.SH": {
+          "pb": 1.3156163662675964,
+          "weightedPb": 1.3156163662675966,
+          "total": null
+        }
+      }
+    },
+    "balanced": {
+      "divisor": 4,
+      "weights": {
+        "yield": 100,
+        "pb": 100,
+        "large": 100,
+        "nim": 100,
+        "provision": 100
+      },
+      "scores": {
+        "000001.SZ": {
+          "pb": 2.114611968703743,
+          "weightedPb": 2.114611968703743,
+          "total": null
+        },
+        "600036.SH": {
+          "pb": 1.0738831615120275,
+          "weightedPb": 1.0738831615120275,
+          "total": null
+        },
+        "601398.SH": {
+          "pb": 1.3156163662675964,
+          "weightedPb": 1.3156163662675966,
+          "total": null
+        }
+      }
+    },
+    "offensive": {
+      "divisor": 3,
+      "weights": {
+        "yield": 100,
+        "pb": 100,
+        "large": 100,
+        "nim": 100,
+        "provision": 100
+      },
+      "scores": {
+        "000001.SZ": {
+          "pb": 2.114611968703743,
+          "weightedPb": 2.114611968703743,
+          "total": null
+        },
+        "600036.SH": {
+          "pb": 1.0738831615120275,
+          "weightedPb": 1.0738831615120275,
+          "total": null
+        },
+        "601398.SH": {
+          "pb": 1.3156163662675964,
+          "weightedPb": 1.3156163662675966,
+          "total": null
+        }
+      }
+    },
+    "quality": {
+      "divisor": 5,
+      "weights": {
+        "yield": 80,
+        "pb": 80,
+        "large": 80,
+        "nim": 140,
+        "provision": 140
+      },
+      "scores": {
+        "000001.SZ": {
+          "pb": 2.114611968703743,
+          "weightedPb": 1.6916895749629943,
+          "total": null
+        },
+        "600036.SH": {
+          "pb": 1.0738831615120275,
+          "weightedPb": 0.8591065292096219,
+          "total": null
+        },
+        "601398.SH": {
+          "pb": 1.3156163662675964,
+          "weightedPb": 1.052493093014077,
+          "total": null
+        }
+      }
+    },
+    "dividend": {
+      "divisor": 5,
+      "weights": {
+        "yield": 130,
+        "pb": 130,
+        "large": 100,
+        "nim": 80,
+        "provision": 80
+      },
+      "scores": {
+        "000001.SZ": {
+          "pb": 2.114611968703743,
+          "weightedPb": 2.748995559314866,
+          "total": null
+        },
+        "600036.SH": {
+          "pb": 1.0738831615120275,
+          "weightedPb": 1.3960481099656357,
+          "total": null
+        },
+        "601398.SH": {
+          "pb": 1.3156163662675964,
+          "weightedPb": 1.710301276147875,
+          "total": null
+        }
+      }
+    }
+  }
+}

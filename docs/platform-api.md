@@ -52,3 +52,7 @@
 `research/investmind-screener-baseline.json`：快照 `20261021-1c01ff6eb0b7d78a`，asOf 2026-10-21。全板块默认50行，三项 null 分别1/8/11；开启 dividendYield>=0 后41行，null 为0/2/5。两组有序行 SHA256 分别 `18760ca76a1daa7d97d7426526f07ee73ca2142d2e50cdd160981631a47bc2fa`、`376995d24708644a3637911519167e783d53466578e7085aa1a3d1d19e970c7e`。默认页200各1 HTTP/1 SQL；筛选页10为5 HTTP/5 SQL，摘要相同。该证据为现有50股开发池，不是全市场、在线供应商或独立服务迁移验收。
 
 用途反查见 消费项目 InvestMind 仓库的 docs/investmind-lineage.md。
+
+## 股票接口专题
+
+[完整选股条件与排序](screener-api-fields.md) · [银行字段与评分](research/investmind-bank-lineage.md) · [股票工作台与同业研究](workbench-api.md)

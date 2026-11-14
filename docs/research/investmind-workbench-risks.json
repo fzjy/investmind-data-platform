@@ -1,0 +1,1118 @@
+{
+  "stocks": {
+    "000001.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "watch",
+        "impairment_pressure": "unknown",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "risk",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "000063.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "unknown",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "000333.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": 84,
+      "level": "\u4e2d\u6027",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "000425.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "unknown",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "watch",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "000538.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": 38,
+      "level": "\u9ad8\u98ce\u9669",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "watch",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "risk",
+        "dividend_sustainability": "risk",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "000568.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "unknown",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "unknown",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "risk",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "000792.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "unknown",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "000821.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": 38,
+      "level": "\u9ad8\u98ce\u9669",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "risk",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "watch",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "risk",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "000858.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "unknown",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "002230.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": 56,
+      "level": "\u8c28\u614e",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "risk",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "watch",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "002415.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": 84,
+      "level": "\u4e2d\u6027",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "002594.SZ": {
+      "version": "content-e7cf8f3e621d9c4e74edc06872646a1a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "unknown",
+        "dividend_sustainability": "unknown",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "002714.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "unknown",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "300015.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": 74,
+      "level": "\u4e2d\u6027",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "watch",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "300059.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "unknown",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "watch",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "risk",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "300122.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "unknown",
+        "impairment_pressure": "unknown",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "unknown",
+        "interest_debt_burden": "risk",
+        "dividend_vs_financing": "risk",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "300308.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": 64,
+      "level": "\u8c28\u614e",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "watch",
+        "valuation_band": "watch",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "300750.SZ": {
+      "version": "content-f89e0d8241df239d85c63844de17055e",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": 84,
+      "level": "\u4e2d\u6027",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "300760.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": 84,
+      "level": "\u4e2d\u6027",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "300999.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": 74,
+      "level": "\u4e2d\u6027",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "watch",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "301589.SZ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "unknown",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "risk",
+        "dividend_sustainability": "unknown",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "600030.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "risk",
+        "impairment_pressure": "unknown",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "risk",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "600031.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": 84,
+      "level": "\u4e2d\u6027",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "600036.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "unknown",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "600234.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "unknown",
+        "profit_structure_non_operating_dependency": "unknown",
+        "impairment_pressure": "unknown",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "risk",
+        "valuation_band": "unknown",
+        "interest_debt_burden": "risk",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "600276.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "unknown",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "watch",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "600519.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "unknown",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "unknown",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "watch",
+        "dividend_sustainability": "watch",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "600547.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": 74,
+      "level": "\u4e2d\u6027",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "watch",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "600624.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "unknown",
+        "profit_structure_non_operating_dependency": "unknown",
+        "impairment_pressure": "unknown",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "watch",
+        "valuation_band": "unknown",
+        "interest_debt_burden": "risk",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "601012.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "unknown",
+        "impairment_pressure": "unknown",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "unknown",
+        "interest_debt_burden": "risk",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "601088.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "unknown",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "risk",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "601100.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": 74,
+      "level": "\u4e2d\u6027",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "watch",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "601318.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "risk",
+        "impairment_pressure": "unknown",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "601398.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "unknown",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "unknown",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "watch",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "601688.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "risk",
+        "impairment_pressure": "unknown",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "risk",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "risk",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "601766.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": 64,
+      "level": "\u8c28\u614e",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "watch",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "watch",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "601857.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": 74,
+      "level": "\u4e2d\u6027",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "watch",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "601888.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "unknown",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "watch",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "603019.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "unknown",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "watch",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "603259.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": 64,
+      "level": "\u8c28\u614e",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "watch",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "watch",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "603288.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": 66,
+      "level": "\u8c28\u614e",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "risk",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "603799.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": 66,
+      "level": "\u8c28\u614e",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "risk",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "688041.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "unknown",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "risk",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "unknown",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "688111.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": 84,
+      "level": "\u4e2d\u6027",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "normal",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "normal",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "688180.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "unknown",
+        "profit_structure_non_operating_dependency": "unknown",
+        "impairment_pressure": "unknown",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "risk",
+        "valuation_band": "unknown",
+        "interest_debt_burden": "risk",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "688472.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "unknown",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "risk",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "unknown",
+        "valuation_band": "watch",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "688981.SH": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "unknown",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "watch",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "watch",
+        "valuation_band": "watch",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "920002.BJ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "unknown",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "unknown",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "unknown",
+        "dividend_sustainability": "unknown",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "920047.BJ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "unknown",
+        "profit_structure_non_operating_dependency": "unknown",
+        "impairment_pressure": "unknown",
+        "comprehensive_income_gap": "normal",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "risk",
+        "valuation_band": "unknown",
+        "interest_debt_burden": "risk",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    },
+    "920185.BJ": {
+      "version": "20261021-1c01ff6eb0b7d78a",
+      "asOf": "2026-10-21",
+      "ruleVersion": "workbench-risk-v3",
+      "score": null,
+      "level": "\u6570\u636e\u4e0d\u8db3",
+      "status": {
+        "high_cash_high_debt": "unknown",
+        "goodwill_risk": "unknown",
+        "profit_structure_non_operating_dependency": "normal",
+        "impairment_pressure": "normal",
+        "comprehensive_income_gap": "watch",
+        "eps_quality_gap": "unknown",
+        "equity_cash_support": "risk",
+        "valuation_band": "normal",
+        "interest_debt_burden": "unknown",
+        "dividend_vs_financing": "normal",
+        "dividend_sustainability": "normal",
+        "earnings_quality_non_recurring": "unknown"
+      }
+    }
+  },
+  "coverageByRule": {
+    "high_cash_high_debt": {
+      "unknown": 50
+    },
+    "goodwill_risk": {
+      "normal": 31,
+      "unknown": 18,
+      "watch": 1
+    },
+    "profit_structure_non_operating_dependency": {
+      "watch": 2,
+      "normal": 36,
+      "unknown": 9,
+      "risk": 3
+    },
+    "impairment_pressure": {
+      "unknown": 15,
+      "normal": 32,
+      "risk": 3
+    },
+    "comprehensive_income_gap": {
+      "normal": 45,
+      "watch": 4,
+      "risk": 1
+    },
+    "eps_quality_gap": {
+      "unknown": 50
+    },
+    "equity_cash_support": {
+      "risk": 7,
+      "normal": 24,
+      "watch": 15,
+      "unknown": 4
+    },
+    "valuation_band": {
+      "normal": 38,
+      "unknown": 6,
+      "watch": 5,
+      "risk": 1
+    },
+    "interest_debt_burden": {
+      "unknown": 44,
+      "risk": 6
+    },
+    "dividend_vs_financing": {
+      "normal": 38,
+      "risk": 9,
+      "unknown": 2,
+      "watch": 1
+    },
+    "dividend_sustainability": {
+      "normal": 45,
+      "risk": 1,
+      "unknown": 3,
+      "watch": 1
+    },
+    "earnings_quality_non_recurring": {
+      "unknown": 50
+    }
+  },
+  "historicalPageRows": {
+    "versions": 1592,
+    "with_risks": 0
+  }
+}

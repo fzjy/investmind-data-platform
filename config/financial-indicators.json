@@ -3398,7 +3398,7 @@
     "minimumSampleCount": 2,
     "currencyByBoard": { "sh-main": "CNY", "sz-main": "CNY", "star": "CNY", "chinext": "CNY", "bse": "CNY", "hk": "HKD" },
     "metrics": [
-      { "key": "pe", "label": "PE(TTM)", "unit": "倍", "direction": "lower", "qualified": false, "positive": true },
+      { "key": "pe", "label": "PE（静态）", "unit": "倍", "direction": "lower", "qualified": false, "positive": true },
       { "key": "pb", "label": "PB", "unit": "倍", "direction": "lower", "qualified": false, "positive": true },
       { "key": "marketCap", "label": "总市值", "unit": "亿元", "direction": "neutral", "qualified": false, "positive": true },
       { "key": "netCash", "label": "账上净现金", "unit": "亿元", "direction": "neutral", "qualified": true },

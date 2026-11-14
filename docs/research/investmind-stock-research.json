@@ -1,0 +1,320 @@
+[
+  {
+    "symbol": "600519.SH",
+    "peer": "000858.SZ",
+    "snapshot": "20261021-1c01ff6eb0b7d78a",
+    "metrics": {
+      "pe": {
+        "label": "PE\uff08\u9759\u6001\uff09",
+        "value": 19.8885,
+        "peerValue": 31.2115,
+        "difference": -11.323,
+        "sampleCount": 44,
+        "industrySampleCount": 4,
+        "percentile": 40.90909090909091,
+        "industryPercentile": 50.0,
+        "zScore": -0.3482339889959698
+      },
+      "pb": {
+        "label": "PB",
+        "value": 6.5162,
+        "peerValue": 2.3588,
+        "difference": 4.157400000000001,
+        "sampleCount": 50,
+        "industrySampleCount": 4,
+        "percentile": 88.0,
+        "industryPercentile": 100.0,
+        "zScore": 0.6524299779615443
+      },
+      "marketCap": {
+        "label": "\u603b\u5e02\u503c",
+        "value": 16372.19370704,
+        "peerValue": 2794.75776,
+        "difference": 13577.43594704,
+        "sampleCount": 50,
+        "industrySampleCount": 4,
+        "percentile": 96.0,
+        "industryPercentile": 100.0,
+        "zScore": 2.100755897221906
+      },
+      "netCash": {
+        "label": "\u8d26\u4e0a\u51c0\u73b0\u91d1",
+        "value": null,
+        "peerValue": null,
+        "difference": null,
+        "sampleCount": 0,
+        "industrySampleCount": 0,
+        "percentile": null,
+        "industryPercentile": null,
+        "zScore": null
+      },
+      "dividendYield": {
+        "label": "FY\u80a1\u606f\u7387",
+        "value": 3.9689720468,
+        "peerValue": 7.1634516667,
+        "difference": -3.1944796199000005,
+        "sampleCount": 49,
+        "industrySampleCount": 4,
+        "percentile": 81.63265306122449,
+        "industryPercentile": 25.0,
+        "zScore": 0.8622476759883161
+      },
+      "dividendCount5y": {
+        "label": "\u8fd15\u8d22\u5e74\u5206\u7ea2\u6b21\u6570",
+        "value": null,
+        "peerValue": null,
+        "difference": null,
+        "sampleCount": 0,
+        "industrySampleCount": 0,
+        "percentile": null,
+        "industryPercentile": null,
+        "zScore": null
+      },
+      "expectedDividendYield": {
+        "label": "\u672c\u5e74\u5ea6\u5b63\u8282\u6027\u9884\u671f\u80a1\u606f\u7387",
+        "value": 4.2884002896,
+        "peerValue": 9.2539575444,
+        "difference": -4.9655572548,
+        "sampleCount": 42,
+        "industrySampleCount": 4,
+        "percentile": 71.42857142857143,
+        "industryPercentile": 50.0,
+        "zScore": 0.6814905937052594
+      },
+      "expectedDividendYieldNTM": {
+        "label": "\u672a\u676512\u6708\u9884\u671f\u80a1\u606f\u7387",
+        "value": 3.4588398995,
+        "peerValue": 5.1949780058,
+        "difference": -1.7361381063000003,
+        "sampleCount": 39,
+        "industrySampleCount": 4,
+        "percentile": 64.1025641025641,
+        "industryPercentile": 50.0,
+        "zScore": 0.36976308385905016
+      }
+    },
+    "pair": {
+      "status": "available",
+      "reason": "\u6cbf\u5df2\u53d1\u5e03K\u7ebf\u7684\u540c\u65e5\u4ef7\u683c\u6bd4\uff1b\u590d\u6743\u5b8c\u6574\u6027\u672a\u6838\u9a8c\uff0c\u4e0d\u4ee3\u8868\u6536\u76ca\u7387\u3001\u5168\u6536\u76ca\u6216A/H\u6ea2\u4ef7",
+      "currency": "CNY",
+      "peerSymbol": "000858.SZ",
+      "ratio": 18.19013888888889,
+      "asOf": "2026-10-21",
+      "basis": "published-chart-close-ratio"
+    },
+    "firstDay": "2023-10-23",
+    "comparedDays": 726
+  },
+  {
+    "symbol": "600519.SH",
+    "peer": "002594.SZ",
+    "snapshot": "20261021-1c01ff6eb0b7d78a",
+    "metrics": {
+      "pe": {
+        "label": "PE\uff08\u9759\u6001\uff09",
+        "value": 19.8885,
+        "peerValue": 22.5561,
+        "difference": -2.6676,
+        "sampleCount": 44,
+        "industrySampleCount": 4,
+        "percentile": 40.90909090909091,
+        "industryPercentile": 50.0,
+        "zScore": -0.3482339889959698
+      },
+      "pb": {
+        "label": "PB",
+        "value": 6.5162,
+        "peerValue": 3.066,
+        "difference": 3.4502000000000006,
+        "sampleCount": 50,
+        "industrySampleCount": 4,
+        "percentile": 88.0,
+        "industryPercentile": 100.0,
+        "zScore": 0.6524299779615443
+      },
+      "marketCap": {
+        "label": "\u603b\u5e02\u503c",
+        "value": 16372.19370704,
+        "peerValue": 7357.5783825,
+        "difference": 9014.61532454,
+        "sampleCount": 50,
+        "industrySampleCount": 4,
+        "percentile": 96.0,
+        "industryPercentile": 100.0,
+        "zScore": 2.100755897221906
+      },
+      "netCash": {
+        "label": "\u8d26\u4e0a\u51c0\u73b0\u91d1",
+        "value": null,
+        "peerValue": null,
+        "difference": null,
+        "sampleCount": 0,
+        "industrySampleCount": 0,
+        "percentile": null,
+        "industryPercentile": null,
+        "zScore": null
+      },
+      "dividendYield": {
+        "label": "FY\u80a1\u606f\u7387",
+        "value": 3.9689720468,
+        "peerValue": 0.4436183395,
+        "difference": 3.5253537073,
+        "sampleCount": 49,
+        "industrySampleCount": 4,
+        "percentile": 81.63265306122449,
+        "industryPercentile": 25.0,
+        "zScore": 0.8622476759883161
+      },
+      "dividendCount5y": {
+        "label": "\u8fd15\u8d22\u5e74\u5206\u7ea2\u6b21\u6570",
+        "value": null,
+        "peerValue": null,
+        "difference": null,
+        "sampleCount": 0,
+        "industrySampleCount": 0,
+        "percentile": null,
+        "industryPercentile": null,
+        "zScore": null
+      },
+      "expectedDividendYield": {
+        "label": "\u672c\u5e74\u5ea6\u5b63\u8282\u6027\u9884\u671f\u80a1\u606f\u7387",
+        "value": 4.2884002896,
+        "peerValue": null,
+        "difference": null,
+        "sampleCount": 42,
+        "industrySampleCount": 4,
+        "percentile": 71.42857142857143,
+        "industryPercentile": 50.0,
+        "zScore": 0.6814905937052594
+      },
+      "expectedDividendYieldNTM": {
+        "label": "\u672a\u676512\u6708\u9884\u671f\u80a1\u606f\u7387",
+        "value": 3.4588398995,
+        "peerValue": null,
+        "difference": null,
+        "sampleCount": 39,
+        "industrySampleCount": 4,
+        "percentile": 64.1025641025641,
+        "industryPercentile": 50.0,
+        "zScore": 0.36976308385905016
+      }
+    },
+    "pair": {
+      "status": "unavailable",
+      "reason": "\u914d\u5bf9\u5de5\u4f5c\u53f0\u4e0e\u9009\u80a1\u53d1\u5e03\u7248\u672c\u3001\u6765\u6e90\u6216\u4e1a\u52a1\u65e5\u671f\u4e0d\u4e00\u81f4",
+      "currency": "CNY",
+      "peerSymbol": "002594.SZ",
+      "ratio": null,
+      "asOf": null,
+      "basis": "published-chart-close-ratio"
+    },
+    "firstDay": null,
+    "comparedDays": 0
+  },
+  {
+    "symbol": "000001.SZ",
+    "peer": "601398.SH",
+    "snapshot": "20261021-1c01ff6eb0b7d78a",
+    "metrics": {
+      "pe": {
+        "label": "PE\uff08\u9759\u6001\uff09",
+        "value": 5.1937,
+        "peerValue": 8.1713,
+        "difference": -2.9776000000000007,
+        "sampleCount": 44,
+        "industrySampleCount": 3,
+        "percentile": 2.272727272727273,
+        "industryPercentile": 33.333333333333336,
+        "zScore": -0.7523731086484728
+      },
+      "pb": {
+        "label": "PB",
+        "value": 0.4729,
+        "peerValue": 0.7601,
+        "difference": -0.2872,
+        "sampleCount": 50,
+        "industrySampleCount": 3,
+        "percentile": 2.0,
+        "industryPercentile": 33.333333333333336,
+        "zScore": -0.8822085299361712
+      },
+      "marketCap": {
+        "label": "\u603b\u5e02\u503c",
+        "value": 2214.21526662,
+        "peerValue": 30116.32872495,
+        "difference": -27902.11345833,
+        "sampleCount": 50,
+        "industrySampleCount": 3,
+        "percentile": 62.0,
+        "industryPercentile": 33.333333333333336,
+        "zScore": -0.2863974214701926
+      },
+      "netCash": {
+        "label": "\u8d26\u4e0a\u51c0\u73b0\u91d1",
+        "value": null,
+        "peerValue": null,
+        "difference": null,
+        "sampleCount": 0,
+        "industrySampleCount": 0,
+        "percentile": null,
+        "industryPercentile": null,
+        "zScore": null
+      },
+      "dividendYield": {
+        "label": "FY\u80a1\u606f\u7387",
+        "value": 5.2234881683,
+        "peerValue": 3.6721893491,
+        "difference": 1.5512988192000003,
+        "sampleCount": 49,
+        "industrySampleCount": 3,
+        "percentile": 93.87755102040816,
+        "industryPercentile": 100.0,
+        "zScore": 1.4707664913593224
+      },
+      "dividendCount5y": {
+        "label": "\u8fd15\u8d22\u5e74\u5206\u7ea2\u6b21\u6570",
+        "value": null,
+        "peerValue": null,
+        "difference": null,
+        "sampleCount": 0,
+        "industrySampleCount": 0,
+        "percentile": null,
+        "industryPercentile": null,
+        "zScore": null
+      },
+      "expectedDividendYield": {
+        "label": "\u672c\u5e74\u5ea6\u5b63\u8282\u6027\u9884\u671f\u80a1\u606f\u7387",
+        "value": 6.191119386,
+        "peerValue": 3.834908274,
+        "difference": 2.3562111119999996,
+        "sampleCount": 42,
+        "industrySampleCount": 3,
+        "percentile": 97.61904761904762,
+        "industryPercentile": 100.0,
+        "zScore": 1.528649968955995
+      },
+      "expectedDividendYieldNTM": {
+        "label": "\u672a\u676512\u6708\u9884\u671f\u80a1\u606f\u7387",
+        "value": 5.6081972429,
+        "peerValue": 3.9836621244,
+        "difference": 1.6245351185000003,
+        "sampleCount": 39,
+        "industrySampleCount": 3,
+        "percentile": 94.87179487179488,
+        "industryPercentile": 100.0,
+        "zScore": 1.427733638740095
+      }
+    },
+    "pair": {
+      "status": "available",
+      "reason": "\u6cbf\u5df2\u53d1\u5e03K\u7ebf\u7684\u540c\u65e5\u4ef7\u683c\u6bd4\uff1b\u590d\u6743\u5b8c\u6574\u6027\u672a\u6838\u9a8c\uff0c\u4e0d\u4ee3\u8868\u6536\u76ca\u7387\u3001\u5168\u6536\u76ca\u6216A/H\u6ea2\u4ef7",
+      "currency": "CNY",
+      "peerSymbol": "601398.SH",
+      "ratio": 1.3502958579881656,
+      "asOf": "2026-10-21",
+      "basis": "published-chart-close-ratio"
+    },
+    "firstDay": "2023-10-23",
+    "comparedDays": 726
+  }
+]

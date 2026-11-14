@@ -76,6 +76,7 @@ def test_difference_units_and_sample_standard_deviation_are_exact():
                   row('000002.SZ', pe=20, researchValues={'dividendYield': 1}),
                   row('000003.SZ', pe=30, industry='煤炭', majorIndustry='煤炭')])
     data = query(p, peerSymbol='000002.SZ')
+    assert metric(data, 'pe')['label'] == 'PE（静态）'
     assert metric(data, 'pe')['zScore'] == -1
     assert metric(data, 'pe')['industrySampleCount'] == 2
     assert metric(data, 'dividendYield')['difference'] == 2
