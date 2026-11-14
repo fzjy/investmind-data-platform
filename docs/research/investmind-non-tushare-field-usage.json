@@ -1,0 +1,1543 @@
+{
+  "checkedAt": "2026-11-14T16:59:05.100015+00:00",
+  "version": "20261108-366f83bfc727036c",
+  "readOnly": true,
+  "sourceRequests": 0,
+  "basicSeries": {
+    "cn.gdp.real_yoy": {
+      "name": "中国实际 GDP 同比",
+      "frequency": "quarterly",
+      "unit": "%",
+      "sources": [
+        {
+          "priority": 1,
+          "provider": "tushare",
+          "api": "cn_gdp",
+          "series": null,
+          "field": "gdp_yoy",
+          "responseFields": [
+            "quarter",
+            "gdp_yoy"
+          ],
+          "transform": "identity",
+          "sourceUrl": "https://tushare.pro/document/2"
+        }
+      ],
+      "publishedSource": "tushare",
+      "periods": 40,
+      "collection": "success",
+      "sourceError": null,
+      "derivedConsumers": [],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "seriesStatus[].id",
+          "transmission.modes[].mainNodes[].id",
+          "transmission.modes[].targets[].value"
+        ],
+        "macro-insights": [
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "statusCards[].id",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    },
+    "cn.cpi.yoy": {
+      "name": "中国 CPI 同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "sources": [
+        {
+          "priority": 1,
+          "provider": "tushare",
+          "api": "cn_cpi",
+          "series": null,
+          "field": "nt_yoy",
+          "responseFields": [
+            "month",
+            "nt_yoy"
+          ],
+          "transform": "identity",
+          "sourceUrl": "https://tushare.pro/document/2"
+        }
+      ],
+      "publishedSource": "tushare",
+      "periods": 120,
+      "collection": "success",
+      "sourceError": null,
+      "derivedConsumers": [
+        "cn.ppi_cpi_spread"
+      ],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "analysis.cards[].meta.second",
+          "seriesStatus[].id",
+          "transmission.modes[].mainNodes[].id",
+          "transmission.modes[].targets[].value"
+        ],
+        "macro-insights": [
+          "derivedInsights.series[].inputIds[]",
+          "derivedInsights.series[].inputLatestPeriods.{seriesId}",
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "statusCards[].id",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    },
+    "cn.cpi.core_yoy": {
+      "name": "中国核心 CPI 同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "sources": [
+        {
+          "priority": 1,
+          "provider": "nbs",
+          "api": null,
+          "series": "不包括食品和能源",
+          "field": "同比涨跌幅（%）",
+          "responseFields": [
+            "ArticleTitle",
+            "PubDate"
+          ],
+          "transform": "identity",
+          "sourceUrl": "https://www.stats.gov.cn/sj/zxfb/"
+        }
+      ],
+      "publishedSource": "nbs",
+      "periods": 121,
+      "collection": "success",
+      "sourceError": null,
+      "derivedConsumers": [],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "seriesStatus[].id",
+          "transmission.modes[].mainNodes[].id",
+          "transmission.modes[].targets[].value"
+        ],
+        "macro-insights": [
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "statusCards[].id",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    },
+    "cn.ppi.yoy": {
+      "name": "中国 PPI 同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "sources": [
+        {
+          "priority": 1,
+          "provider": "tushare",
+          "api": "cn_ppi",
+          "series": null,
+          "field": "ppi_yoy",
+          "responseFields": [
+            "month",
+            "ppi_yoy"
+          ],
+          "transform": "identity",
+          "sourceUrl": "https://tushare.pro/document/2"
+        }
+      ],
+      "publishedSource": "tushare",
+      "periods": 120,
+      "collection": "success",
+      "sourceError": null,
+      "derivedConsumers": [
+        "cn.ppi_cpi_spread"
+      ],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "analysis.cards[].meta.first",
+          "seriesStatus[].id",
+          "transmission.modes[].mainNodes[].id",
+          "transmission.modes[].targets[].value"
+        ],
+        "macro-insights": [
+          "derivedInsights.compass.inputIds[]",
+          "derivedInsights.compass.inputLatestPeriods.{seriesId}",
+          "derivedInsights.series[].inputIds[]",
+          "derivedInsights.series[].inputLatestPeriods.{seriesId}",
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "stateInsights.signals.price.inputIds[]",
+          "stateInsights.signals.price.inputLatestPeriods.{seriesId}",
+          "statusCards[].id",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    },
+    "cn.pmi.manufacturing": {
+      "name": "中国制造业 PMI",
+      "frequency": "monthly",
+      "unit": "index",
+      "sources": [
+        {
+          "priority": 1,
+          "provider": "tushare",
+          "api": "cn_pmi",
+          "series": null,
+          "field": "pmi010000",
+          "responseFields": [
+            "month",
+            "pmi010000"
+          ],
+          "transform": "identity",
+          "sourceUrl": "https://tushare.pro/document/2"
+        }
+      ],
+      "publishedSource": "tushare",
+      "periods": 120,
+      "collection": "success",
+      "sourceError": null,
+      "derivedConsumers": [],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "seriesStatus[].id",
+          "transmission.modes[].mainNodes[].id",
+          "transmission.modes[].targets[].value"
+        ],
+        "macro-insights": [
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "statusCards[].id",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    },
+    "cn.industry.value_added_yoy": {
+      "name": "中国规模以上工业增加值同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "sources": [
+        {
+          "priority": 1,
+          "provider": "nbs",
+          "api": null,
+          "series": "规模以上工业增加值",
+          "field": "同比实际增长（%）",
+          "responseFields": [
+            "ArticleTitle",
+            "PubDate"
+          ],
+          "transform": "identity",
+          "sourceUrl": "https://www.stats.gov.cn/sj/zxfb/"
+        }
+      ],
+      "publishedSource": "nbs",
+      "periods": 101,
+      "collection": "success",
+      "sourceError": null,
+      "derivedConsumers": [],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "seriesStatus[].id",
+          "transmission.modes[].mainNodes[].id",
+          "transmission.modes[].targets[].value"
+        ],
+        "macro-insights": [
+          "derivedInsights.compass.inputIds[]",
+          "derivedInsights.compass.inputLatestPeriods.{seriesId}",
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "statusCards[].id",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    },
+    "cn.money.m1_yoy": {
+      "name": "中国 M1 同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "sources": [
+        {
+          "priority": 1,
+          "provider": "tushare",
+          "api": "cn_m",
+          "series": null,
+          "field": "m1_yoy",
+          "responseFields": [
+            "month",
+            "m1_yoy"
+          ],
+          "transform": "identity",
+          "sourceUrl": "https://tushare.pro/document/2"
+        }
+      ],
+      "publishedSource": "tushare",
+      "periods": 120,
+      "collection": "success",
+      "sourceError": null,
+      "derivedConsumers": [
+        "cn.m2_m1_spread",
+        "cn.money.m1_minus_m2_yoy"
+      ],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "analysis.cards[].meta.second",
+          "seriesStatus[].id",
+          "transmission.modes[].mainNodes[].id",
+          "transmission.modes[].targets[].value"
+        ],
+        "macro-insights": [
+          "derivedInsights.series[].inputIds[]",
+          "derivedInsights.series[].inputLatestPeriods.{seriesId}",
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "stateInsights.signals.scissors.inputIds[]",
+          "stateInsights.signals.scissors.inputLatestPeriods.{seriesId}",
+          "statusCards[].id",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    },
+    "cn.money.m2_yoy": {
+      "name": "中国 M2 同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "sources": [
+        {
+          "priority": 1,
+          "provider": "tushare",
+          "api": "cn_m",
+          "series": null,
+          "field": "m2_yoy",
+          "responseFields": [
+            "month",
+            "m2_yoy"
+          ],
+          "transform": "identity",
+          "sourceUrl": "https://tushare.pro/document/2"
+        }
+      ],
+      "publishedSource": "tushare",
+      "periods": 120,
+      "collection": "success",
+      "sourceError": null,
+      "derivedConsumers": [
+        "cn.m2_m1_spread",
+        "cn.money.m1_minus_m2_yoy"
+      ],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "analysis.cards[].meta.first",
+          "seriesStatus[].id",
+          "transmission.modes[].mainNodes[].id",
+          "transmission.modes[].targets[].value"
+        ],
+        "macro-insights": [
+          "derivedInsights.series[].inputIds[]",
+          "derivedInsights.series[].inputLatestPeriods.{seriesId}",
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "stateInsights.signals.scissors.inputIds[]",
+          "stateInsights.signals.scissors.inputLatestPeriods.{seriesId}",
+          "statusCards[].id",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    },
+    "cn.credit.tsf_stock_yoy": {
+      "name": "中国社会融资规模存量同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "sources": [],
+      "publishedSource": null,
+      "periods": 0,
+      "collection": "paused",
+      "sourceError": "MACRO_NO_SOURCE",
+      "derivedConsumers": [],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "missingData[].source",
+          "seriesStatus[].id"
+        ],
+        "macro-insights": [
+          "missingData[].source",
+          "missingSeries[]",
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "stateInsights.signals.credit.inputIds[]",
+          "stateInsights.signals.credit.inputLatestPeriods.{seriesId}",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    },
+    "cn.rate.dr007": {
+      "name": "中国 DR007",
+      "frequency": "daily",
+      "unit": "%",
+      "sources": [
+        {
+          "priority": 1,
+          "provider": "tushare",
+          "api": "repo_daily",
+          "series": "DR007.IB",
+          "field": "weight",
+          "responseFields": [
+            "trade_date",
+            "ts_code",
+            "repo_maturity",
+            "weight"
+          ],
+          "transform": "identity",
+          "sourceUrl": "https://tushare.pro/document/2?doc_id=256"
+        }
+      ],
+      "publishedSource": "tushare",
+      "periods": 2504,
+      "collection": "success",
+      "sourceError": null,
+      "derivedConsumers": [
+        "cn.govbond_dr007_spread"
+      ],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "analysis.cards[].meta.second",
+          "seriesStatus[].id",
+          "transmission.modes[].mainNodes[].id",
+          "transmission.modes[].targets[].value",
+          "transmission.weather[].code"
+        ],
+        "macro-insights": [
+          "derivedInsights.series[].inputIds[]",
+          "derivedInsights.series[].inputLatestPeriods.{seriesId}",
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "stateInsights.signals.money.inputIds[]",
+          "stateInsights.signals.money.inputLatestPeriods.{seriesId}",
+          "statusCards[].id",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    },
+    "cn.rate.govbond_10y": {
+      "name": "中国 10 年期国债收益率",
+      "frequency": "daily",
+      "unit": "%",
+      "sources": [
+        {
+          "priority": 1,
+          "provider": "chinamoney",
+          "api": "SddsIntrRateGovYldHis",
+          "series": "CGB-10Y",
+          "field": "tenRate",
+          "responseFields": [
+            "dateString",
+            "tenRate"
+          ],
+          "transform": "identity",
+          "sourceUrl": "https://www.chinamoney.com.cn/ags/ms/cm-u-bk-currency/SddsIntrRateGovYldHis"
+        }
+      ],
+      "publishedSource": "chinamoney",
+      "periods": 2504,
+      "collection": "success",
+      "sourceError": null,
+      "derivedConsumers": [
+        "cn.govbond_dr007_spread",
+        "cn.us.rate_spread"
+      ],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "analysis.cards[].meta.first",
+          "seriesStatus[].id",
+          "transmission.modes[].mainNodes[].id",
+          "transmission.modes[].targets[].value",
+          "transmission.weather[].code"
+        ],
+        "macro-insights": [
+          "derivedInsights.series[].inputIds[]",
+          "derivedInsights.series[].inputLatestPeriods.{seriesId}",
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "stateInsights.signals.stockBondSpread.inputIds[]",
+          "stateInsights.signals.stockBondSpread.inputLatestPeriods.{seriesId}",
+          "statusCards[].id",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    },
+    "cn.fx.usdcny": {
+      "name": "美元兑人民币汇率",
+      "frequency": "daily",
+      "unit": "CNY per USD",
+      "sources": [],
+      "publishedSource": null,
+      "periods": 0,
+      "collection": "paused",
+      "sourceError": "MACRO_NO_SOURCE",
+      "derivedConsumers": [],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "missingData[].source",
+          "seriesStatus[].id"
+        ],
+        "macro-insights": [
+          "missingData[].source",
+          "missingSeries[]",
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    },
+    "us.gdp.real_qoq_annualized": {
+      "name": "美国实际 GDP 环比折年率",
+      "frequency": "quarterly",
+      "unit": "%",
+      "sources": [
+        {
+          "priority": 1,
+          "provider": "fred",
+          "api": "series_observations",
+          "series": "A191RL1Q225SBEA",
+          "field": "value",
+          "responseFields": [
+            "date",
+            "value",
+            "realtime_start",
+            "realtime_end"
+          ],
+          "transform": "identity",
+          "sourceUrl": "https://api.stlouisfed.org/fred/series/observations"
+        }
+      ],
+      "publishedSource": "fred",
+      "periods": 39,
+      "collection": "success",
+      "sourceError": null,
+      "derivedConsumers": [],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "seriesStatus[].id",
+          "transmission.modes[].mainNodes[].id",
+          "transmission.modes[].targets[].value"
+        ],
+        "macro-insights": [
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "statusCards[].id",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    },
+    "us.cpi.yoy": {
+      "name": "美国 CPI 同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "sources": [
+        {
+          "priority": 1,
+          "provider": "fred",
+          "api": "series_observations",
+          "series": "CPIAUCSL",
+          "field": "value",
+          "responseFields": [
+            "date",
+            "value",
+            "realtime_start",
+            "realtime_end"
+          ],
+          "transform": "pc1",
+          "sourceUrl": "https://api.stlouisfed.org/fred/series/observations"
+        },
+        {
+          "priority": 2,
+          "provider": "bls",
+          "api": "publicAPI/v1/timeseries/data",
+          "series": "CUSR0000SA0",
+          "field": "value",
+          "responseFields": [
+            "status",
+            "Results[].series[].seriesID",
+            "Results[].series[].data.year",
+            "Results[].series[].data.period",
+            "Results[].series[].data.value"
+          ],
+          "transform": "pc1",
+          "sourceUrl": "https://api.bls.gov/publicAPI/v1/timeseries/data/"
+        }
+      ],
+      "publishedSource": "fred",
+      "periods": 119,
+      "collection": "success",
+      "sourceError": null,
+      "derivedConsumers": [],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "seriesStatus[].id",
+          "transmission.modes[].mainNodes[].id",
+          "transmission.modes[].targets[].value"
+        ],
+        "macro-insights": [
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "statusCards[].id",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    },
+    "us.cpi.core_yoy": {
+      "name": "美国核心 CPI 同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "sources": [
+        {
+          "priority": 1,
+          "provider": "fred",
+          "api": "series_observations",
+          "series": "CPILFESL",
+          "field": "value",
+          "responseFields": [
+            "date",
+            "value",
+            "realtime_start",
+            "realtime_end"
+          ],
+          "transform": "pc1",
+          "sourceUrl": "https://api.stlouisfed.org/fred/series/observations"
+        },
+        {
+          "priority": 2,
+          "provider": "bls",
+          "api": "publicAPI/v1/timeseries/data",
+          "series": "CUSR0000SA0L1E",
+          "field": "value",
+          "responseFields": [
+            "status",
+            "Results[].series[].seriesID",
+            "Results[].series[].data.year",
+            "Results[].series[].data.period",
+            "Results[].series[].data.value"
+          ],
+          "transform": "pc1",
+          "sourceUrl": "https://api.bls.gov/publicAPI/v1/timeseries/data/"
+        }
+      ],
+      "publishedSource": "fred",
+      "periods": 119,
+      "collection": "success",
+      "sourceError": null,
+      "derivedConsumers": [],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "seriesStatus[].id",
+          "transmission.modes[].mainNodes[].id",
+          "transmission.modes[].targets[].value"
+        ],
+        "macro-insights": [
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "statusCards[].id",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    },
+    "us.pce.core_yoy": {
+      "name": "美国核心 PCE 同比",
+      "frequency": "monthly",
+      "unit": "%",
+      "sources": [
+        {
+          "priority": 1,
+          "provider": "fred",
+          "api": "series_observations",
+          "series": "PCEPILFE",
+          "field": "value",
+          "responseFields": [
+            "date",
+            "value",
+            "realtime_start",
+            "realtime_end"
+          ],
+          "transform": "pc1",
+          "sourceUrl": "https://api.stlouisfed.org/fred/series/observations"
+        }
+      ],
+      "publishedSource": "fred",
+      "periods": 119,
+      "collection": "success",
+      "sourceError": null,
+      "derivedConsumers": [],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "seriesStatus[].id",
+          "transmission.modes[].mainNodes[].id",
+          "transmission.modes[].targets[].value"
+        ],
+        "macro-insights": [
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "statusCards[].id",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    },
+    "us.labor.unemployment_rate": {
+      "name": "美国失业率",
+      "frequency": "monthly",
+      "unit": "%",
+      "sources": [
+        {
+          "priority": 1,
+          "provider": "fred",
+          "api": "series_observations",
+          "series": "UNRATE",
+          "field": "value",
+          "responseFields": [
+            "date",
+            "value",
+            "realtime_start",
+            "realtime_end"
+          ],
+          "transform": "identity",
+          "sourceUrl": "https://api.stlouisfed.org/fred/series/observations"
+        },
+        {
+          "priority": 2,
+          "provider": "bls",
+          "api": "publicAPI/v1/timeseries/data",
+          "series": "LNS14000000",
+          "field": "value",
+          "responseFields": [
+            "status",
+            "Results[].series[].seriesID",
+            "Results[].series[].data.year",
+            "Results[].series[].data.period",
+            "Results[].series[].data.value"
+          ],
+          "transform": "identity",
+          "sourceUrl": "https://api.bls.gov/publicAPI/v1/timeseries/data/"
+        }
+      ],
+      "publishedSource": "fred",
+      "periods": 119,
+      "collection": "success",
+      "sourceError": null,
+      "derivedConsumers": [],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "seriesStatus[].id",
+          "transmission.modes[].mainNodes[].id",
+          "transmission.modes[].targets[].value"
+        ],
+        "macro-insights": [
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "statusCards[].id",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    },
+    "us.labor.nonfarm_payroll_change": {
+      "name": "美国非农就业月增量",
+      "frequency": "monthly",
+      "unit": "thousand persons",
+      "sources": [
+        {
+          "priority": 1,
+          "provider": "fred",
+          "api": "series_observations",
+          "series": "PAYEMS",
+          "field": "value",
+          "responseFields": [
+            "date",
+            "value",
+            "realtime_start",
+            "realtime_end"
+          ],
+          "transform": "chg",
+          "sourceUrl": "https://api.stlouisfed.org/fred/series/observations"
+        },
+        {
+          "priority": 2,
+          "provider": "bls",
+          "api": "publicAPI/v1/timeseries/data",
+          "series": "CES0000000001",
+          "field": "value",
+          "responseFields": [
+            "status",
+            "Results[].series[].seriesID",
+            "Results[].series[].data.year",
+            "Results[].series[].data.period",
+            "Results[].series[].data.value"
+          ],
+          "transform": "chg",
+          "sourceUrl": "https://api.bls.gov/publicAPI/v1/timeseries/data/"
+        }
+      ],
+      "publishedSource": "fred",
+      "periods": 120,
+      "collection": "success",
+      "sourceError": null,
+      "derivedConsumers": [],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "seriesStatus[].id",
+          "transmission.modes[].mainNodes[].id",
+          "transmission.modes[].targets[].value"
+        ],
+        "macro-insights": [
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "statusCards[].id",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    },
+    "us.rate.effective_fed_funds": {
+      "name": "美国有效联邦基金利率",
+      "frequency": "daily",
+      "unit": "%",
+      "sources": [
+        {
+          "priority": 1,
+          "provider": "fred",
+          "api": "series_observations",
+          "series": "DFF",
+          "field": "value",
+          "responseFields": [
+            "date",
+            "value",
+            "realtime_start",
+            "realtime_end"
+          ],
+          "transform": "identity",
+          "sourceUrl": "https://api.stlouisfed.org/fred/series/observations"
+        },
+        {
+          "priority": 2,
+          "provider": "nyfed",
+          "api": "rates/unsecured/effr/search",
+          "series": "EFFR",
+          "field": "percent",
+          "responseFields": [
+            "refRates.type",
+            "refRates.effectiveDate",
+            "refRates.percent",
+            "refRates.revisionIndicator"
+          ],
+          "transform": "identity",
+          "sourceUrl": "https://markets.newyorkfed.org/api/rates/unsecured/effr/search.json"
+        }
+      ],
+      "publishedSource": "fred",
+      "periods": 3673,
+      "collection": "success",
+      "sourceError": null,
+      "derivedConsumers": [
+        "us.treasury_fed_funds_spread"
+      ],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "analysis.cards[].meta.second",
+          "seriesStatus[].id",
+          "transmission.modes[].mainNodes[].id",
+          "transmission.modes[].targets[].value",
+          "transmission.weather[].code"
+        ],
+        "macro-insights": [
+          "derivedInsights.series[].inputIds[]",
+          "derivedInsights.series[].inputLatestPeriods.{seriesId}",
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "statusCards[].id",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    },
+    "us.rate.treasury_10y": {
+      "name": "美国 10 年期国债收益率",
+      "frequency": "daily",
+      "unit": "%",
+      "sources": [
+        {
+          "priority": 1,
+          "provider": "fred",
+          "api": "series_observations",
+          "series": "DGS10",
+          "field": "value",
+          "responseFields": [
+            "date",
+            "value",
+            "realtime_start",
+            "realtime_end"
+          ],
+          "transform": "identity",
+          "sourceUrl": "https://api.stlouisfed.org/fred/series/observations"
+        },
+        {
+          "priority": 2,
+          "provider": "us_treasury",
+          "api": "daily_treasury_yield_curve",
+          "series": "BC_10YEAR",
+          "field": "BC_10YEAR",
+          "responseFields": [
+            "NEW_DATE",
+            "BC_10YEAR"
+          ],
+          "transform": "identity",
+          "sourceUrl": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/pages/xml"
+        },
+        {
+          "priority": 3,
+          "provider": "tushare",
+          "api": "us_tycr",
+          "series": null,
+          "field": "y10",
+          "responseFields": [
+            "date",
+            "y10"
+          ],
+          "transform": "identity",
+          "sourceUrl": "https://tushare.pro/document/2?doc_id=219"
+        }
+      ],
+      "publishedSource": "fred",
+      "periods": 2512,
+      "collection": "success",
+      "sourceError": null,
+      "derivedConsumers": [
+        "us.treasury_fed_funds_spread",
+        "cn.us.rate_spread"
+      ],
+      "publishedFieldPaths": {
+        "macro-transmission": [
+          "analysis.cards[].meta.first",
+          "seriesStatus[].id",
+          "transmission.modes[].mainNodes[].id",
+          "transmission.modes[].targets[].value",
+          "transmission.weather[].code"
+        ],
+        "macro-insights": [
+          "derivedInsights.series[].inputIds[]",
+          "derivedInsights.series[].inputLatestPeriods.{seriesId}",
+          "sandboxGroups[].indicatorIds[]",
+          "sandboxIndicators[].id",
+          "sandboxPresets[].indicatorIds[]",
+          "seriesStatus[].id",
+          "statusCards[].id",
+          "trendDefinitions[].code",
+          "trendDefinitions[].id",
+          "trendDefinitions[].primarySeriesIds[]",
+          "trendDefinitions[].series[].id"
+        ]
+      }
+    }
+  },
+  "extensions": {
+    "usdcnh": {
+      "enabled": true,
+      "schedule": {
+        "frequency": "daily",
+        "weekday": 0,
+        "time": "19:00",
+        "timezone": "Asia/Shanghai"
+      },
+      "sourceGroupEvidence": "usdcnh"
+    },
+    "vix": {
+      "enabled": true,
+      "schedule": {
+        "frequency": "daily",
+        "weekday": 0,
+        "time": "19:00",
+        "timezone": "Asia/Shanghai"
+      },
+      "sourceGroupEvidence": "vix"
+    },
+    "governmentBonds": {
+      "enabled": true,
+      "schedule": {
+        "frequency": "weekly",
+        "weekday": 0,
+        "time": "09:00",
+        "timezone": "Asia/Shanghai"
+      },
+      "sourceGroupEvidence": "governmentBonds"
+    },
+    "householdCredit": {
+      "enabled": true,
+      "schedule": {
+        "frequency": "weekly",
+        "weekday": 0,
+        "time": "09:00",
+        "timezone": "Asia/Shanghai"
+      },
+      "sourceGroupEvidence": "householdCredit"
+    },
+    "tier1Housing": {
+      "enabled": true,
+      "schedule": {
+        "frequency": "weekly",
+        "weekday": 0,
+        "time": "09:00",
+        "timezone": "Asia/Shanghai"
+      },
+      "sourceGroupEvidence": "tier1Housing"
+    },
+    "specialBonds": {
+      "enabled": true,
+      "schedule": {
+        "frequency": "weekly",
+        "weekday": 0,
+        "time": "09:00",
+        "timezone": "Asia/Shanghai"
+      },
+      "sourceGroupEvidence": "specialBonds"
+    },
+    "propertyLoans": {
+      "enabled": true,
+      "schedule": {
+        "frequency": "weekly",
+        "weekday": 0,
+        "time": "09:00",
+        "timezone": "Asia/Shanghai"
+      },
+      "sourceGroupEvidence": "propertyLoans"
+    },
+    "marginBalances": {
+      "enabled": true,
+      "schedule": {
+        "frequency": "daily",
+        "weekday": 0,
+        "time": "19:00",
+        "timezone": "Asia/Shanghai"
+      },
+      "sourceGroupEvidence": "marginBalances"
+    },
+    "aShareFloatMv": {
+      "enabled": true,
+      "schedule": {
+        "frequency": "daily",
+        "weekday": 0,
+        "time": "19:00",
+        "timezone": "Asia/Shanghai"
+      },
+      "sourceGroupEvidence": "aShareFloatMv"
+    },
+    "nominalGdp": {
+      "enabled": true,
+      "schedule": {
+        "frequency": "weekly",
+        "weekday": 0,
+        "time": "09:00",
+        "timezone": "Asia/Shanghai"
+      },
+      "sourceGroupEvidence": "nominalGdp"
+    }
+  },
+  "officialTargets": {
+    "000300.SH": {
+      "name": "沪深300",
+      "sourceStatus": "verified",
+      "memberDate": "2026-10-23",
+      "members": 300,
+      "membersInPool": 42,
+      "sourceDocuments": [
+        {
+          "kind": "csi-members",
+          "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/000300cons.xls",
+          "sha256": "21f68496cd4beef9d21574ee09e82183191ee02f740bcdeb394b5363213a564d"
+        }
+      ]
+    },
+    "000905.SH": {
+      "name": "中证500",
+      "sourceStatus": "verified",
+      "memberDate": "2026-10-23",
+      "members": 500,
+      "membersInPool": 1,
+      "sourceDocuments": [
+        {
+          "kind": "csi-members",
+          "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/000905cons.xls",
+          "sha256": "ae67d12b986b3e7af5f1b522be52a5bdc6b93679c2c297fe3d6a6d539cacae2b"
+        }
+      ]
+    },
+    "000510.SH": {
+      "name": "中证A500",
+      "sourceStatus": "verified",
+      "memberDate": "2026-10-23",
+      "members": 500,
+      "membersInPool": 41,
+      "sourceDocuments": [
+        {
+          "kind": "csi-members",
+          "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/000510cons.xls",
+          "sha256": "09d641206b8ff414c50b969735dec73fb93e2ea181598a0bff38cbf8fa744b56"
+        }
+      ]
+    },
+    "512880.SH": {
+      "name": "证券ETF",
+      "sourceStatus": "verified",
+      "memberDate": "2026-10-23",
+      "members": 47,
+      "membersInPool": 3,
+      "sourceDocuments": [
+        {
+          "kind": "csi-members",
+          "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/399975cons.xls",
+          "sha256": "2759c5153eb3ad6030e8fc472ef8c48b1f127b24b144fa92f4bbae8b0af8cb7d"
+        },
+        {
+          "kind": "fund-mapping",
+          "url": "https://e.gtfund.com/etrade/Jijin/view/id/512880#etf-list",
+          "sha256": "6d43aeae154cef6d405caacd2edc504aa37ac316f252bf5dbe6eb5ea707dfff7"
+        },
+        {
+          "kind": "fund-pcf",
+          "url": "https://m.gtfund.com/cochin/etf/download/512881/20261023",
+          "sha256": "445c868b5abcdfc14381bf28d21c864cf9e72cb05bdea2825e305e0e3fd9ce7c"
+        }
+      ]
+    },
+    "512800.SH": {
+      "name": "银行ETF",
+      "sourceStatus": "verified",
+      "memberDate": "2026-10-27",
+      "members": 42,
+      "membersInPool": 3,
+      "sourceDocuments": [
+        {
+          "kind": "csi-members",
+          "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/399986cons.xls",
+          "sha256": "850e5a4241f6164f766037f6fdadddc9653de1236db919e51bc2670ad26365bd"
+        },
+        {
+          "kind": "fund-mapping",
+          "url": "https://www.fsfund.com/fund/512800/fundDetail.shtml",
+          "sha256": "a228920b53f386163aef378584850a0a3e52c07e40ba8ed2dc69f28e798fc92b"
+        },
+        {
+          "kind": "fund-pcf",
+          "url": "https://api.fsfund.com/v2/webzk/queryController/getFundShareInfo",
+          "sha256": "dcbeb89f83d76859e962db734eaee80c063a3ae6dfc210a636b9c21b9bf6e2d3"
+        }
+      ]
+    },
+    "159928.SZ": {
+      "name": "消费ETF",
+      "sourceStatus": "verified",
+      "memberDate": "2026-10-27",
+      "members": 36,
+      "membersInPool": 6,
+      "sourceDocuments": [
+        {
+          "kind": "csi-members",
+          "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/000932cons.xls",
+          "sha256": "23f5ccfded5170aa6d3c9476c532cdab3acc959f158dd83e62de4be5f7556a92"
+        },
+        {
+          "kind": "fund-mapping",
+          "url": "https://www.99fund.com/cgi-bin/fundproduct/EtfStockAction?function=DownLoad&fundId=159928&tradingDay=20261028&urlType=1",
+          "sha256": "3effd4a48372566e6108b5a09dec49d315d64cf0c26667b2e2c05638bf1c3740"
+        },
+        {
+          "kind": "fund-pcf",
+          "url": "https://www.99fund.com/cgi-bin/fundproduct/EtfStockAction?function=DownLoad&fundId=159928&tradingDay=20261027&urlType=1",
+          "sha256": "17a89f9c217b6fbe1bc7d926b6c7b13ef8be28c7549f48beaff508e60b72760b"
+        }
+      ]
+    },
+    "512010.SH": {
+      "name": "医药ETF",
+      "sourceStatus": "verified",
+      "memberDate": "2026-10-27",
+      "members": 20,
+      "membersInPool": 6,
+      "sourceDocuments": [
+        {
+          "kind": "csi-members",
+          "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/000913cons.xls",
+          "sha256": "906055e4fa00e776cc550865d231827b270f68cbbbe1e8c0fc85a87d270c454c"
+        },
+        {
+          "kind": "fund-mapping",
+          "url": "https://cdn.efunds.com.cn/owch/data/pcf_ims/20261027/etfd_512010_20261027.xml",
+          "sha256": "4fa96ded49638ea21233a65d85c5603b874dd5ab0d4626d3180cbbd4cbacf60b"
+        },
+        {
+          "kind": "fund-pcf",
+          "url": "https://cdn.efunds.com.cn/owch/data/pcf_ims/20261027/etfd_512010_20261027.xml",
+          "sha256": "4fa96ded49638ea21233a65d85c5603b874dd5ab0d4626d3180cbbd4cbacf60b"
+        }
+      ]
+    },
+    "512400.SH": {
+      "name": "有色金属ETF",
+      "sourceStatus": "verified",
+      "memberDate": "2026-10-27",
+      "members": 50,
+      "membersInPool": 2,
+      "sourceDocuments": [
+        {
+          "kind": "csi-members",
+          "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/000819cons.xls",
+          "sha256": "2ecb8161f5add1e7c308818365af7938f975aa98a2173c297a13ea40a0b8d950"
+        },
+        {
+          "kind": "fund-mapping",
+          "url": "https://www.nffund.com/nfwebApi/fund/overreview",
+          "sha256": "5dac6211222fc7d36235b371446ac9cc60f21ea4b6dfa12f20887f56d546ded8"
+        },
+        {
+          "kind": "fund-pcf",
+          "url": "https://www.nffund.com/etf/bulletin/ETFYSJS/ssepcf_512400_20261027.xml",
+          "sha256": "78526e7fc65a31a49b5e89ab67eb8ad61e69bf73421ff6249ce28822af37b5fb"
+        }
+      ]
+    },
+    "512660.SH": {
+      "name": "军工ETF",
+      "sourceStatus": "verified",
+      "memberDate": "2026-10-26",
+      "members": 79,
+      "membersInPool": 0,
+      "sourceDocuments": [
+        {
+          "kind": "csi-members",
+          "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/399967cons.xls",
+          "sha256": "7d95472d1e61652996def21fa889c8c88546d01b6985fb92f36ad52d062f6127"
+        },
+        {
+          "kind": "fund-mapping",
+          "url": "https://e.gtfund.com/etrade/Jijin/view/id/512660#etf-list",
+          "sha256": "24ce6e5b44290ac6aa2ada67466d0ab5442358638e1e000088e463bd119a6983"
+        },
+        {
+          "kind": "fund-pcf",
+          "url": "https://m.gtfund.com/cochin/etf/download/512661/20261026",
+          "sha256": "4f5320559ac5ef3385ce9228369cdc56fb3f44bf274b66b6ee3002179ee86e1b"
+        }
+      ]
+    },
+    "515220.SH": {
+      "name": "煤炭ETF",
+      "sourceStatus": "verified",
+      "memberDate": "2026-10-26",
+      "members": 31,
+      "membersInPool": 1,
+      "sourceDocuments": [
+        {
+          "kind": "csi-members",
+          "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/399998cons.xls",
+          "sha256": "dd05af91d3c458c041188ef43b7456781550eba20456b6814d581827a2115fc3"
+        },
+        {
+          "kind": "fund-mapping",
+          "url": "https://e.gtfund.com/etrade/Jijin/view/id/515220#etf-list",
+          "sha256": "13d36ca16e30ce72a370ecc31c00ac5a920187afb72bbe56a0626fd30e534522"
+        },
+        {
+          "kind": "fund-pcf",
+          "url": "https://m.gtfund.com/cochin/etf/download/515221/20261026",
+          "sha256": "17b0f81207fb559fa076addb13af8e099333f4c159130642ae4c27ed93e46b8a"
+        }
+      ]
+    },
+    "512980.SH": {
+      "name": "传媒ETF",
+      "sourceStatus": "verified",
+      "memberDate": "2026-10-28",
+      "members": 50,
+      "membersInPool": 0,
+      "sourceDocuments": [
+        {
+          "kind": "csi-members",
+          "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/399971cons.xls",
+          "sha256": "4d8054feee229312782799aab46f097e8c9acc124928fb5d58e2cc5720916ff5"
+        },
+        {
+          "kind": "fund-mapping",
+          "url": "https://www.sse.com.cn/disclosure/fund/announcement/c/new/2026-03-25/512980_20260325_8HFW.pdf",
+          "sha256": "8934c92c6c6f2835b75e6f7be43a25e229569fa52c871852a79b7b2cab841f30"
+        },
+        {
+          "kind": "fund-pcf",
+          "url": "https://query.sse.com.cn/etfDownload/downloadETF2Bulletin.do?fundCode=512980",
+          "sha256": "183cf362fa92a2fd7b44c326024af7ca86eb745791f8449d41824f411ded77d6"
+        }
+      ]
+    },
+    "515030.SH": {
+      "name": "新能源车ETF",
+      "sourceStatus": "verified",
+      "memberDate": "2026-10-27",
+      "members": 50,
+      "membersInPool": 4,
+      "sourceDocuments": [
+        {
+          "kind": "csi-members",
+          "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/399976cons.xls",
+          "sha256": "daebcd58bf08e23f1ce4e6ccec881f6fdbd8ce4525f083e5a923c1adfdb584c1"
+        },
+        {
+          "kind": "fund-mapping",
+          "url": "https://fund.chinaamc.com/front/front/out/etf/query/etfDownload",
+          "sha256": "6b87e28138ed6cdab10df75ee96f97bbe2fe43a1891d7cad109c5efbeb9c0823"
+        },
+        {
+          "kind": "fund-pcf",
+          "url": "https://fund.chinaamc.com/front/front/out/etf/query/etfDownload",
+          "sha256": "9f17672a314b9f56f11621cc4818544c103844c0deddd2634c808478fe77122d"
+        }
+      ]
+    },
+    "512200.SH": {
+      "name": "房地产ETF",
+      "sourceStatus": "verified",
+      "memberDate": "2026-10-27",
+      "members": 69,
+      "membersInPool": 0,
+      "sourceDocuments": [
+        {
+          "kind": "csi-members",
+          "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/931775cons.xls",
+          "sha256": "d31a26b4f213a519ff4c36fae47bdb8071622e9022eed1c9888ea9b34ecbec45"
+        },
+        {
+          "kind": "fund-mapping",
+          "url": "https://www.nffund.com/nfwebApi/fund/overreview",
+          "sha256": "07931a01b54f36e13b9d220ea5286f932f8355e7a9f572ee789e6d4f0f1f8482"
+        },
+        {
+          "kind": "fund-pcf",
+          "url": "https://www.nffund.com/etf/bulletin/ETFFDC/ssepcf_512200_20261027.xml",
+          "sha256": "725e7b871ecd55f64e84233194829830537cc9f4a59303984070f8554733627f"
+        }
+      ]
+    },
+    "588200.SH": {
+      "name": "科创芯片ETF",
+      "sourceStatus": "verified",
+      "memberDate": "2026-10-27",
+      "members": 50,
+      "membersInPool": 2,
+      "sourceDocuments": [
+        {
+          "kind": "csi-members",
+          "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/cons/000685cons.xls",
+          "sha256": "4f011d14a40e0217e2e604d2608327d7ba593035d7de4424302bfd4fbf8bca99"
+        },
+        {
+          "kind": "fund-mapping",
+          "url": "https://www.jsfund.cn/servlet/json",
+          "sha256": "3a1c337dba2d67a094c1d602a6228fc65482876d912979b3be5d81cf0048f00f"
+        },
+        {
+          "kind": "fund-pcf",
+          "url": "https://www.jsfund.cn/servlet/json",
+          "sha256": "1c41cf05bfb92c84fcd3114046085cffe8127ca4a24e032f03459582a3315997"
+        }
+      ]
+    }
+  },
+  "externalImport": {
+    "schemaFields": {
+      "macro": [
+        "schemaVersion",
+        "recordType",
+        "source",
+        "seriesId",
+        "name",
+        "region",
+        "frequency",
+        "unit",
+        "seasonalAdjustment",
+        "observedAt",
+        "releasedAt",
+        "revision",
+        "value",
+        "sourceUrl"
+      ],
+      "content": [
+        "schemaVersion",
+        "recordType",
+        "source",
+        "externalId",
+        "contentType",
+        "title",
+        "summary",
+        "body",
+        "publishedAt",
+        "sourceUrl",
+        "securities",
+        "securityNames",
+        "copyrightStatus",
+        "ingestionRevision"
+      ]
+    },
+    "files": [
+      {
+        "status": "imported",
+        "files": 251,
+        "valid_rows": 10833,
+        "rejected_rows": 0
+      }
+    ],
+    "rows": [
+      {
+        "status": "imported",
+        "record_type": "content",
+        "source": "sina-finance",
+        "rows": 10831
+      },
+      {
+        "status": "imported",
+        "record_type": "macro",
+        "source": "nbs-official-release",
+        "rows": 2
+      }
+    ],
+    "macroRowsAtPublication": [
+      {
+        "recordId": 1,
+        "seriesId": "cn.cpi.core_yoy",
+        "source": "nbs-official-release",
+        "observedAt": "2026-08-01",
+        "releasedAt": "2026-09-09T01:30:00Z",
+        "revision": "nbs-2026-09-09-0930",
+        "importedValue": "1.0",
+        "sourceUrl": "https://www.stats.gov.cn/sj/sjjd/202609/t20260909_1965261.html",
+        "selectedSource": "nbs",
+        "selectedCoreId": 10083,
+        "publishedValue": 1.0,
+        "selectedImportedRecord": false
+      },
+      {
+        "recordId": 2,
+        "seriesId": "cn.industry.value_added_yoy",
+        "source": "nbs-official-release",
+        "observedAt": "2026-08-01",
+        "releasedAt": "2026-09-15T02:00:00Z",
+        "revision": "nbs-2026-09-15-1000",
+        "importedValue": "5.2",
+        "sourceUrl": "https://www.stats.gov.cn/sj/zxfb/202609/t20260915_1965308.html",
+        "selectedSource": "nbs",
+        "selectedCoreId": 10100,
+        "publishedValue": 5.2,
+        "selectedImportedRecord": false
+      }
+    ]
+  },
+  "storedContent": [
+    {
+      "content_type": "announcement",
+      "source": "cninfo",
+      "copyright_status": "link_only",
+      "rows": 8,
+      "summaries": 0,
+      "bodies": 0
+    },
+    {
+      "content_type": "news",
+      "source": "sina-finance",
+      "copyright_status": "link_only",
+      "rows": 10808,
+      "summaries": 0,
+      "bodies": 0
+    }
+  ]
+}
