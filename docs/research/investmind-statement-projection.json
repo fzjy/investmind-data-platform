@@ -1,0 +1,305 @@
+[
+  {
+    "symbol": "000001.SZ",
+    "version": "20261021-1c01ff6eb0b7d78a",
+    "selected": "2026-06-30",
+    "totalShare": {
+      "raw": 19406000000,
+      "unitClass": "count"
+    },
+    "entries": [
+      {
+        "mode": "annual",
+        "kind": "income",
+        "periods": [
+          "2023-06-30",
+          "2024-06-30",
+          "2025-06-30",
+          "2026-06-30"
+        ],
+        "fields": 29,
+        "nonNull": 228,
+        "missing": 120,
+        "negativeBase": 10,
+        "zeroBase": 0
+      },
+      {
+        "mode": "annual",
+        "kind": "balance",
+        "periods": [
+          "2023-06-30",
+          "2024-06-30",
+          "2025-06-30",
+          "2026-06-30"
+        ],
+        "fields": 42,
+        "nonNull": 204,
+        "missing": 300,
+        "negativeBase": 0,
+        "zeroBase": 0
+      },
+      {
+        "mode": "annual",
+        "kind": "cashflow",
+        "periods": [
+          "2023-06-30",
+          "2024-06-30",
+          "2025-06-30",
+          "2026-06-30"
+        ],
+        "fields": 62,
+        "nonNull": 398,
+        "missing": 346,
+        "negativeBase": 18,
+        "zeroBase": 0
+      },
+      {
+        "mode": "quarterly",
+        "kind": "income",
+        "periods": [
+          "2025-09-30",
+          "2025-12-31",
+          "2026-03-31",
+          "2026-06-30"
+        ],
+        "fields": 29,
+        "nonNull": 208,
+        "missing": 140,
+        "negativeBase": 13,
+        "zeroBase": 0
+      },
+      {
+        "mode": "quarterly",
+        "kind": "balance",
+        "periods": [
+          "2025-09-30",
+          "2025-12-31",
+          "2026-03-31",
+          "2026-06-30"
+        ],
+        "fields": 42,
+        "nonNull": 204,
+        "missing": 300,
+        "negativeBase": 0,
+        "zeroBase": 0
+      },
+      {
+        "mode": "quarterly",
+        "kind": "cashflow",
+        "periods": [
+          "2025-09-30",
+          "2025-12-31",
+          "2026-03-31",
+          "2026-06-30"
+        ],
+        "fields": 62,
+        "nonNull": 357,
+        "missing": 387,
+        "negativeBase": 42,
+        "zeroBase": 4
+      }
+    ]
+  },
+  {
+    "symbol": "600519.SH",
+    "version": "20261021-1c01ff6eb0b7d78a",
+    "selected": "2026-06-30",
+    "totalShare": {
+      "raw": 1250081601,
+      "unitClass": "count"
+    },
+    "entries": [
+      {
+        "mode": "annual",
+        "kind": "income",
+        "periods": [
+          "2023-06-30",
+          "2024-06-30",
+          "2025-06-30",
+          "2026-06-30"
+        ],
+        "fields": 29,
+        "nonNull": 322,
+        "missing": 26,
+        "negativeBase": 14,
+        "zeroBase": 0
+      },
+      {
+        "mode": "annual",
+        "kind": "balance",
+        "periods": [
+          "2023-06-30",
+          "2024-06-30",
+          "2025-06-30",
+          "2026-06-30"
+        ],
+        "fields": 42,
+        "nonNull": 389,
+        "missing": 115,
+        "negativeBase": 0,
+        "zeroBase": 0
+      },
+      {
+        "mode": "annual",
+        "kind": "cashflow",
+        "periods": [
+          "2023-06-30",
+          "2024-06-30",
+          "2025-06-30",
+          "2026-06-30"
+        ],
+        "fields": 62,
+        "nonNull": 427,
+        "missing": 317,
+        "negativeBase": 40,
+        "zeroBase": 0
+      },
+      {
+        "mode": "quarterly",
+        "kind": "income",
+        "periods": [
+          "2025-09-30",
+          "2025-12-31",
+          "2026-03-31",
+          "2026-06-30"
+        ],
+        "fields": 29,
+        "nonNull": 303,
+        "missing": 45,
+        "negativeBase": 15,
+        "zeroBase": 1
+      },
+      {
+        "mode": "quarterly",
+        "kind": "balance",
+        "periods": [
+          "2025-09-30",
+          "2025-12-31",
+          "2026-03-31",
+          "2026-06-30"
+        ],
+        "fields": 42,
+        "nonNull": 392,
+        "missing": 112,
+        "negativeBase": 0,
+        "zeroBase": 0
+      },
+      {
+        "mode": "quarterly",
+        "kind": "cashflow",
+        "periods": [
+          "2025-09-30",
+          "2025-12-31",
+          "2026-03-31",
+          "2026-06-30"
+        ],
+        "fields": 62,
+        "nonNull": 398,
+        "missing": 346,
+        "negativeBase": 34,
+        "zeroBase": 3
+      }
+    ]
+  },
+  {
+    "symbol": "920002.BJ",
+    "version": "20261021-1c01ff6eb0b7d78a",
+    "selected": "2026-06-30",
+    "totalShare": {
+      "raw": 63704155,
+      "unitClass": "count"
+    },
+    "entries": [
+      {
+        "mode": "annual",
+        "kind": "income",
+        "periods": [
+          "2023-06-30",
+          "2024-06-30",
+          "2025-06-30",
+          "2026-06-30"
+        ],
+        "fields": 29,
+        "nonNull": 298,
+        "missing": 50,
+        "negativeBase": 20,
+        "zeroBase": 0
+      },
+      {
+        "mode": "annual",
+        "kind": "balance",
+        "periods": [
+          "2023-06-30",
+          "2024-06-30",
+          "2025-06-30",
+          "2026-06-30"
+        ],
+        "fields": 42,
+        "nonNull": 314,
+        "missing": 190,
+        "negativeBase": 0,
+        "zeroBase": 0
+      },
+      {
+        "mode": "annual",
+        "kind": "cashflow",
+        "periods": [
+          "2023-06-30",
+          "2024-06-30",
+          "2025-06-30",
+          "2026-06-30"
+        ],
+        "fields": 62,
+        "nonNull": 297,
+        "missing": 447,
+        "negativeBase": 21,
+        "zeroBase": 0
+      },
+      {
+        "mode": "quarterly",
+        "kind": "income",
+        "periods": [
+          "2025-09-30",
+          "2025-12-31",
+          "2026-03-31",
+          "2026-06-30"
+        ],
+        "fields": 29,
+        "nonNull": 296,
+        "missing": 52,
+        "negativeBase": 17,
+        "zeroBase": 2
+      },
+      {
+        "mode": "quarterly",
+        "kind": "balance",
+        "periods": [
+          "2025-09-30",
+          "2025-12-31",
+          "2026-03-31",
+          "2026-06-30"
+        ],
+        "fields": 42,
+        "nonNull": 384,
+        "missing": 120,
+        "negativeBase": 0,
+        "zeroBase": 0
+      },
+      {
+        "mode": "quarterly",
+        "kind": "cashflow",
+        "periods": [
+          "2025-09-30",
+          "2025-12-31",
+          "2026-03-31",
+          "2026-06-30"
+        ],
+        "fields": 62,
+        "nonNull": 318,
+        "missing": 426,
+        "negativeBase": 34,
+        "zeroBase": 14
+      }
+    ]
+  }
+]
