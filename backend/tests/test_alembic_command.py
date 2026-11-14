@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 from pathlib import Path
 import subprocess
 import sys
@@ -28,18 +27,10 @@ def test_alembic_config_resolves_paths_from_project_root() -> None:
     assert result.stdout.strip() == "20261111_0020 (head)"
 
 
-def test_package_exposes_cross_platform_database_commands() -> None:
-    project_root = Path(__file__).resolve().parents[2]
-    package = json.loads((project_root / "package.json").read_text(encoding="utf-8"))
-
-    assert package["scripts"]["db:migrate"] == (
-        "node scripts/run-backend-python.mjs alembic "
-        "-c backend/alembic.ini upgrade head"
-    )
-    assert package["scripts"]["db:current"] == (
-        "node scripts/run-backend-python.mjs alembic "
-        "-c backend/alembic.ini current"
-    )
-    assert package["scripts"]["backend:cli"] == (
-        "node scripts/run-backend-python.mjs app.cli.main"
-    )
+def test_documented_python_migration_commands_use_the_packaged_configuration() -> None:
+    root = Path(__file__).resolve().parents[2]
+    guide = (root/"backend/README.md").read_text(encoding="utf-8")
+    for command in ("current", "upgrade head"):
+        assert "python -m alembic -c backend/alembic.ini " + command in guide
+    assert "python -m app.cli.main" in guide
+    assert (root/"backend/migrations/env.py").is_file()

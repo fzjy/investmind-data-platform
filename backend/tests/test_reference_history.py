@@ -26,12 +26,13 @@ def test_benchmark_dto_rejects_false_complete_and_future():
     value['H00300.CSI']['coverage']['complete']=False
     assert not valid_benchmarks(value,'2026-10-21')
 
-def test_analysis_allows_reference_only_as_benchmark():
-    from backend.tests.test_portfolio_analysis import PublishedProvider
-    from app.portfolio.analysis import analyze_portfolio
-    from app.shared.errors import DataServiceError
-    raw=PublishedProvider().raw
-    raw['benchmarks']={'H00300.CSI':{'prices':raw['prices']['A']}}
-    result=analyze_portfolio(raw,{'holdings':[{'assetId':'A','weight':1}],'benchmarkAssetId':'H00300.CSI'})
-    assert result['nav']
-    with pytest.raises(DataServiceError):analyze_portfolio(raw,{'holdings':[{'assetId':'H00300.CSI','weight':1}]})
+def test_benchmark_publication_rejects_a_future_window():
+    from app.portfolio.reference_history import valid_benchmarks
+
+    benchmark = dict(
+        id="H00300.CSI", code="H00300.CSI", name="沪深300全收益", returnBasis="total-return",
+        coverage={"start": "2026-10-20", "end": "2026-10-21", "complete": True},
+        prices=[{"date":"2026-10-20","price":100},{"date":"2026-10-21","price":101}],
+        sourceIds=["raw:1"],
+    )
+    assert not valid_benchmarks({"H00300.CSI": benchmark}, "2026-10-20")

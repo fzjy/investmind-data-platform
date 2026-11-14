@@ -29,6 +29,8 @@ def _render_compose_config(
         [
             "docker",
             "compose",
+            "--env-file",
+            str(PROJECT_ROOT / ".env.example"),
             "--project-name",
             project_name,
             "-f",

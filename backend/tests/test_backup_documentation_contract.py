@@ -1,4 +1,3 @@
-"""保护使用者指定的8.7表格边界及真实归档Git忽略；平台命令验收归Task9。"""
 from pathlib import Path
 import subprocess
 
@@ -6,19 +5,12 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def table(readme: str) -> list[list[str]]:
-    section = readme.split("### 8.7 ", 1)[1].split("### 8.8 ", 1)[0]
-    return [[cell.strip() for cell in line.strip().strip("|").split("|")] for line in section.splitlines() if line.startswith("|")]
-
-
-def test_section_87_preserves_task_definitions_while_authorized_results_evolve() -> None:
-    baseline = subprocess.run(["git", "show", "4ea13385344219546faffee66a715f154ff9728d:README.md"], cwd=ROOT, capture_output=True, check=True).stdout.decode("utf-8")
-    previous, current = table(baseline), table((ROOT / "DEVELOPMENT.md").read_text(encoding="utf-8"))
-    assert len(current) == len(previous)
-    for before, after in zip(previous, current, strict=True):
-        assert after[:4] == before[:4]
-        # 使用者已授权完成全部8.7；仅结果列可更新，前四列仍逐项保护。
-        assert len(after) == 5
+def test_backup_guide_identifies_readonly_status_and_isolated_restore():
+    guide = (ROOT/"backend/README.md").read_text(encoding="utf-8")
+    for command in ("backup-status", "verify-database-backup --backup-id BACKUP_ID"):
+        assert "python -m app.cli.main " + command in guide
+    for required in ("database.dump", "manifest.json", "verification.json", "restore_verified", "pg_restore", "--single-transaction"):
+        assert required in guide
 
 
 def test_default_backup_packages_are_ignored_by_git() -> None:

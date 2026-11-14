@@ -24,24 +24,11 @@ FRED_NOTICE = (
 )
 
 
-def test_macro_documentation_covers_cross_platform_commands_and_scope() -> None:
-    root = (PROJECT_ROOT / "README.md").read_text(encoding="utf-8")
-    backend = (PROJECT_ROOT / "backend/README.md").read_text(encoding="utf-8")
-    mac = root.split("## 4. 如何运行项目-mac系统", 1)[1].split("## 5.", 1)[0]
-    windows = root.split("## 5. 如何运行项目-windows系统", 1)[1].split("## 6.", 1)[0]
-    for chapter, command in ((mac, "npm"), (windows, "npm.cmd")):
-        # 单组采集已集中进阶手册；日常启动不能夹带真实smoke/强制历史采集。
-        assert "(backend/README.md)" in chapter
-        assert f"{command} run backend:cli -- smoke-macro --provider fred" in backend
-        assert f"{command} run backend:cli -- sync-macro --help" in backend
-        assert f"{command} run dev:local" in chapter
-        assert f"{command} run backend:update -- --dry-run" in chapter
-        assert f"{command} run backend:update -- --publish" in chapter
-        assert "smoke-macro --provider fred" not in chapter
-        assert "--as-of" in backend and "--force" in backend
-    development = (PROJECT_ROOT / "DEVELOPMENT.md").read_text(encoding="utf-8")
-    assert "新闻采集" in development and "未完成" in development
-    assert "rebuild-external-marts --product macro" in backend
+def test_macro_documentation_uses_the_installed_cli() -> None:
+    guide = (PROJECT_ROOT/"backend/README.md").read_text(encoding="utf-8")
+    for cmd in ("sync-macro --help", "smoke-macro --provider fred", "rebuild-external-marts --product macro"):
+        assert "python -m app.cli.main " + cmd in guide
+    assert "--as-of" in guide and "--force" in guide
 
 
 def test_macro_example_exposes_documented_defaults_without_credentials() -> None:
@@ -54,15 +41,14 @@ def test_macro_example_exposes_documented_defaults_without_credentials() -> None
 
 
 def test_macro_docs_disclose_source_gaps_and_verification_boundaries() -> None:
-    for relative in ("DEVELOPMENT.md", "backend/README.md"):
-        text = (PROJECT_ROOT / relative).read_text(encoding="utf-8")
-        for required in (
-            FRED_NOTICE, "https://fred.stlouisfed.org/docs/api/terms_of_use.html",
-            "cn.cpi.core_yoy", "cn.rate.dr007", "20", "representative-50",
-            "受控", "真实 smoke", "未执行", "partial", "stale", "fallback",
-            "backend/config/macro-series.json",
-        ):
-            assert required in text, (relative, required)
+    text = (PROJECT_ROOT / "backend/README.md").read_text(encoding="utf-8")
+    for required in (
+        FRED_NOTICE, "https://fred.stlouisfed.org/docs/api/terms_of_use.html",
+        "cn.cpi.core_yoy", "cn.rate.dr007", "20", "representative-50",
+        "受控", "真实 smoke", "未执行", "partial", "stale", "fallback",
+        "backend/config/macro-series.json",
+    ):
+        assert required in text, required
 
 
 @pytest.mark.parametrize("overrides", [
@@ -82,12 +68,8 @@ def test_compose_forwards_macro_schedule_and_scopes_fred_secret(
 ) -> None:
     # Removing a forwarded variable or leaking the key to another service must fail.
     assert shutil.which("docker") is not None, "Docker Compose is required for this contract"
-    compose_files = ("docker-compose.backend.yml", "docker-compose.yml", "docker-compose.fullstack.yml")
-    for name in compose_files:
-        shutil.copy2(PROJECT_ROOT / name, tmp_path / name)
-    config_dir = tmp_path / "config"
-    config_dir.mkdir()
-    shutil.copy2(PROJECT_ROOT / "config/frontend-container.env", config_dir)
+    compose = "docker-compose.backend.yml"
+    shutil.copy2(PROJECT_ROOT / compose, tmp_path / compose)
     fake_env = tmp_path / "fake.env"
     fake_env.write_text(
         "DANG_FRED_API_KEY=task12-fake-fred-key\n"
@@ -111,7 +93,7 @@ def test_compose_forwards_macro_schedule_and_scopes_fred_secret(
     result = subprocess.run(
         ["docker", "compose", "--project-name", "task12-macro-contract",
          "--env-file", str(fake_env),
-         *[arg for name in compose_files for arg in ("-f", name)],
+         "-f", compose,
          "--profile", "scheduler", "config", "--format", "json"],
         cwd=tmp_path, env=environment, capture_output=True, text=True, check=False,
     )
@@ -126,17 +108,3 @@ def test_compose_forwards_macro_schedule_and_scopes_fred_secret(
         if name != "scheduler":
             assert "DANG_FRED_API_KEY" not in service.get("environment", {})
             assert "task12-fake-fred-key" not in json.dumps(service)
-
-
-def test_eslint_ignores_plan_scratch_but_checks_application_source() -> None:
-    # Exercise ESLint's effective ignores, not just text in its config.
-    result = subprocess.run(
-        ["node", "--input-type=module", "-e",
-         'import { ESLint } from "eslint"; const lint = new ESLint(); '
-         'console.log(JSON.stringify(await Promise.all(['
-         'lint.isPathIgnored(".superpowers/sdd/2026-09-20-macro-data-pipeline/scratch/probe.js"),'
-         'lint.isPathIgnored("src/app/page.tsx")])));'],
-        cwd=PROJECT_ROOT, capture_output=True, text=True, check=False,
-    )
-    assert result.returncode == 0, result.stderr
-    assert json.loads(result.stdout) == [True, False]

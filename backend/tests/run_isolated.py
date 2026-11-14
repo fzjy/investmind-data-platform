@@ -69,7 +69,7 @@ def main() -> None:
     if not args or (args[0] != "pytest" and not args[0].startswith("backend.tests.")):
         raise SystemExit("Only pytest or backend.tests modules are allowed")
     root = Path(__file__).resolve().parents[2]
-    sys.path[:0] = [str(root), str(root / "backend")]
+    sys.path[:0] = [str(root), str(root / "backend"), str(root / "packages/news-collector/src")]
     for name in tuple(os.environ):
         if name.upper().startswith(("DANG_", "COMPOSE_")):
             del os.environ[name]
