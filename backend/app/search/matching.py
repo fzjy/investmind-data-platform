@@ -1,11 +1,9 @@
 import unicodedata
 import re
 
-from app.search.models import SearchOptions, SearchPageItem, SearchStockItem
-from app.search.page_catalog import PAGE_CATALOG
+from app.search.models import SearchOptions, SearchStockItem
 from app.shared.errors import DataServiceError
 from app.shared.validation import normalize_stock_symbol
-from app.stocks.api.quotes import normalize_screener_universe
 
 
 def normalize_query(raw: str, options: SearchOptions) -> str:
@@ -16,11 +14,14 @@ def normalize_query(raw: str, options: SearchOptions) -> str:
 
 
 def match_stocks(raw: object, query: str) -> list[SearchStockItem]:
-    rows = normalize_screener_universe(raw)["stocks"]
+    if not isinstance(raw, dict) or not isinstance(raw.get("bootstrap"), dict) or not isinstance(raw.get("stocks"), list):
+        raise DataServiceError("INVALID_SOURCE_PAYLOAD", "股票搜索来源不符合契约")
     seen: set[str] = set()
     matches: list[tuple[int, SearchStockItem]] = []
     key = query.casefold()
-    for row in rows:
+    for row in raw["stocks"]:
+        if not isinstance(row, dict):
+            raise DataServiceError("INVALID_SOURCE_PAYLOAD", "股票搜索来源不符合契约")
         symbol, name = row.get("symbol"), row.get("name")
         if not isinstance(symbol, str) or not isinstance(name, str) or not name.strip():
             raise DataServiceError("INVALID_SOURCE_PAYLOAD", "股票搜索来源不符合契约")
@@ -47,25 +48,5 @@ def match_stocks(raw: object, query: str) -> list[SearchStockItem]:
             rank = 3
         else:
             continue
-        matches.append((rank, SearchStockItem(symbol=symbol, code=code, name=name, href="/stocks/" + symbol)))
+        matches.append((rank, SearchStockItem(symbol=symbol, code=code, name=name)))
     return [item for rank, item in sorted(matches, key=lambda value: (value[0], value[1].symbol))]
-
-
-def match_pages(query: str) -> list[SearchPageItem]:
-    key = query.casefold()
-    matches = []
-    for entry in PAGE_CATALOG:
-        candidates = (entry.title.casefold(), *(word.casefold() for word in entry.keywords))
-        if not key:
-            rank = 0
-        elif key == candidates[0]:
-            rank = 0
-        elif any(value.startswith(key) for value in candidates):
-            rank = 1
-        elif any(key in value for value in candidates):
-            rank = 2
-        else:
-            continue
-        matches.append((rank, entry))
-    return [SearchPageItem(id=entry.id, title=entry.title, description=entry.description, href=entry.href)
-            for rank, entry in sorted(matches, key=lambda value: (value[0], value[1].id))]

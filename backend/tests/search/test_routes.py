@@ -42,7 +42,15 @@ def test_application_registers_fixture_search(monkeypatch):
     body = response.json()
     assert [item["symbol"] for item in body["data"]["stocks"]["items"]] == ["600519.SH"]
     assert body["data"]["stocks"]["meta"]["source"] == "fixture"
-    assert set(body["meta"]) == {"requestId", "pageCatalogVersion"}
+    assert set(body["meta"]) == {"requestId"}
+
+
+def test_v1_security_search_exposes_no_project_navigation(monkeypatch):
+    client, provider = controlled_client(monkeypatch)
+    body = client.get("/api/v1/search?q=600519").json()
+    assert set(body["data"]) == {"query", "stocks"} and set(body["meta"]) == {"requestId"}
+    assert body["data"]["stocks"]["items"] == [{"symbol":"600519.SH", "code":"600519", "name":"贵州茅台"}]
+    assert provider.read_count == 1
 
 
 def test_empty_input_and_wrong_method_do_not_read_provider(monkeypatch):
@@ -52,12 +60,12 @@ def test_empty_input_and_wrong_method_do_not_read_provider(monkeypatch):
     assert provider.read_count == 0
 
 
-def test_local_source_failure_still_returns_page_results(monkeypatch):
+def test_local_source_failure_preserves_security_unavailability(monkeypatch):
     client, _ = controlled_client(monkeypatch, error=DataServiceError("DATA_NOT_READY", "private password"))
     response = client.get("/api/data/search?q=宏观")
     assert response.status_code == 200
     body = response.json()["data"]
-    assert [item["id"] for item in body["pages"]["items"]] == ["macro"]
+    assert set(body) == {"query","stocks"}
     assert body["stocks"]["status"] == "unavailable" and body["stocks"]["total"] is None
     assert body["stocks"]["error"]["code"] == "DATA_NOT_READY"
     assert "password" not in response.text

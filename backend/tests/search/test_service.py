@@ -50,7 +50,7 @@ def test_stock_outage_does_not_turn_into_empty_success():
     assert result.data.stocks.total is None and result.data.stocks.meta is None
     assert result.data.stocks.error.code == "DATA_NOT_READY"
     assert "private" not in result.model_dump_json()
-    assert [item.id for item in result.data.pages.items] == ["market"]
+    assert set(result.data.model_dump()) == {"query", "stocks"}
 
 
 def test_empty_query_does_not_read_provider():
@@ -60,8 +60,7 @@ def test_empty_query_does_not_read_provider():
     assert result.data.query == ""
     assert result.data.stocks.status == "idle" and result.data.stocks.total is None
     assert result.data.stocks.meta is None and result.data.stocks.error is None
-    assert {item.id for item in result.data.pages.items} == {"home", "market", "macro", "screener"}
-    assert result.meta.request_id == "test-id" and result.meta.page_catalog_version == "site-pages-v1"
+    assert result.meta.request_id == "test-id"
 
 
 def test_empty_published_universe_is_ready():
@@ -91,7 +90,6 @@ def test_database_error_is_safe_local_failure():
     service, _ = setup_service(error=OperationalError("private SQL", {}, Exception("password")))
     result = query(service, "宏观")
     assert result.data.stocks.error.code == "DATA_SOURCE_UNAVAILABLE"
-    assert [item.id for item in result.data.pages.items] == ["macro"]
     assert "password" not in result.model_dump_json() and "private" not in result.model_dump_json()
 
 
@@ -102,7 +100,7 @@ def test_code_name_normalization_and_st_inclusion(text, wanted):
     result = query(service, text)
     assert [item.symbol for item in result.data.stocks.items] == [wanted]
     item = result.data.stocks.items[0]
-    assert item.code == wanted[:6] and item.href == "/stocks/" + wanted
+    assert item.code == wanted[:6]
     assert result.data.stocks.meta == META
 
 
@@ -119,7 +117,7 @@ def test_equal_rank_sort_is_stable_and_only_public_fields_are_returned():
                                { "symbol": "600001.SH", "name": "测试"}])
     result = query(service, "测试")
     assert [item.symbol for item in result.data.stocks.items] == ["600001.SH", "600002.SH"]
-    assert set(result.data.stocks.items[0].model_dump()) == {"symbol", "code", "name", "href"}
+    assert set(result.data.stocks.items[0].model_dump()) == {"symbol", "code", "name"}
     assert "not-returned" not in result.model_dump_json()
 
 
@@ -140,7 +138,6 @@ def test_malformed_or_duplicate_source_is_not_silently_dropped(raw):
     result = query(service, "市场")
     assert result.data.stocks.status == "unavailable"
     assert result.data.stocks.error.code == "INVALID_SOURCE_PAYLOAD"
-    assert [item.id for item in result.data.pages.items] == ["market"]
 
 
 @pytest.mark.parametrize("text", ["a" * 65, "㍿" * 17])
@@ -178,14 +175,6 @@ def test_real_fixture_provider_is_searched_without_synthetic_expansion():
     assert query(service, "999999").data.stocks.total == 0
 
 
-def test_page_catalog_is_not_stock_data_and_never_lists_placeholders():
-    service, _ = setup_service()
-    pages = query(service).data.pages.items
-    assert {item.href for item in pages} == {"/", "/market", "/macro", "/stocks?mode=screener"}
-    assert query(service, "筛选器").data.pages.items[0].id == "screener"
-    assert query(service, "文章").data.pages.total == 0
-
-
 @pytest.mark.parametrize("symbol", ["６００５１９.SH", "٦٠٠٥١٩.SH"])
 @pytest.mark.parametrize("keyword", ["600519", "Example", "市场"])
 def test_non_ascii_source_codes_fail_locally_instead_of_fake_zero(symbol, keyword):
@@ -194,5 +183,3 @@ def test_non_ascii_source_codes_fail_locally_instead_of_fake_zero(symbol, keywor
     assert result.data.stocks.status == "unavailable"
     assert result.data.stocks.total is None
     assert result.data.stocks.error.code == "INVALID_SOURCE_PAYLOAD"
-    if keyword == "市场":
-        assert result.data.pages.items[0].id == "market"

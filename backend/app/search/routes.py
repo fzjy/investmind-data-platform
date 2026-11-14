@@ -36,11 +36,12 @@ def parse_search_query(params: QueryParams, options: SearchOptions) -> SearchReq
 
 
 def create_router(provider: StocksProvider, options: SearchOptions | None = None) -> APIRouter:
-    router = APIRouter(prefix="/api/data")
+    router = APIRouter()
     active_options = options or SearchOptions.from_settings(settings)
     service = SearchService(provider, active_options)
 
-    @router.get("/search")
+    @router.get("/api/data/search")
+    @router.get("/api/v1/search")
     async def search(request: Request) -> JSONResponse:
         result = service.query(parse_search_query(request.query_params, active_options), request_id=str(uuid.uuid4()))
         return JSONResponse(result.model_dump(mode="json", by_alias=True))

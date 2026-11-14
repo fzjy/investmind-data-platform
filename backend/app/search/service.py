@@ -1,7 +1,7 @@
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.search.matching import match_pages, match_stocks, normalize_query
-from app.search.models import SearchData, SearchError, SearchMeta, SearchOptions, SearchPages, SearchRequest, SearchResponse, SearchStocks
+from app.search.matching import match_stocks, normalize_query
+from app.search.models import SearchData, SearchError, SearchMeta, SearchOptions, SearchRequest, SearchResponse, SearchStocks
 from app.shared.errors import DataServiceError
 from app.stocks.api.quotes import StocksProvider
 
@@ -16,7 +16,6 @@ class SearchService:
         page_size = request.page_size if request.page_size is not None else self._options.default_page_size
         if page_size > self._options.max_page_size:
             raise DataServiceError("INVALID_REQUEST", "搜索页大小超出上限")
-        page_items = match_pages(query)
         if not query:
             stocks = SearchStocks(status="idle", page=request.page, pageSize=page_size)
         else:
@@ -36,5 +35,4 @@ class SearchService:
                 start = (request.page - 1) * page_size
                 stocks = SearchStocks(status="ready", page=request.page, pageSize=page_size,
                     items=items[start:start + page_size], total=len(items), meta=snapshot.meta)
-        return SearchResponse(data=SearchData(query=query, stocks=stocks,
-            pages=SearchPages(items=page_items, total=len(page_items))), meta=SearchMeta(requestId=request_id))
+        return SearchResponse(data=SearchData(query=query, stocks=stocks), meta=SearchMeta(requestId=request_id))

@@ -1,0 +1,163 @@
+{
+  "version": "20261021-1c01ff6eb0b7d78a",
+  "asOf": "2026-10-21T00:00:00+00:00",
+  "universe": 50,
+  "api": {
+    "idle": {
+      "q": "",
+      "page": 1,
+      "total": null,
+      "symbols": [],
+      "sqlPerRequest": 0
+    },
+    "fullwidth": {
+      "q": "600519.sh",
+      "page": 1,
+      "total": 1,
+      "symbols": [
+        "600519.SH"
+      ],
+      "sqlPerRequest": 1
+    },
+    "exact-name": {
+      "q": "平安银行",
+      "page": 1,
+      "total": 1,
+      "symbols": [
+        "000001.SZ"
+      ],
+      "sqlPerRequest": 1
+    },
+    "substring": {
+      "q": "银行",
+      "page": 1,
+      "total": 3,
+      "symbols": [
+        "000001.SZ",
+        "600036.SH",
+        "601398.SH"
+      ],
+      "sqlPerRequest": 1
+    },
+    "prefix-first": {
+      "q": "6",
+      "page": 1,
+      "total": 29,
+      "symbols": [
+        "600030.SH",
+        "600031.SH"
+      ],
+      "sqlPerRequest": 1
+    },
+    "prefix-next": {
+      "q": "6",
+      "page": 2,
+      "total": 29,
+      "symbols": [
+        "600036.SH",
+        "600234.SH"
+      ],
+      "sqlPerRequest": 1
+    },
+    "past-last": {
+      "q": "6",
+      "page": 999,
+      "total": 29,
+      "symbols": [],
+      "sqlPerRequest": 1
+    },
+    "no-results": {
+      "q": "不存在的证券关键词",
+      "page": 1,
+      "total": 0,
+      "symbols": [],
+      "sqlPerRequest": 1
+    },
+    "literal-wildcard": {
+      "q": "%",
+      "page": 1,
+      "total": 0,
+      "symbols": [],
+      "sqlPerRequest": 1
+    }
+  },
+  "invalidRequestsWithoutSql": 4,
+  "site": {
+    "/api/data/search?q=600519": {
+      "searchHttp": 1,
+      "searchSql": 1,
+      "layoutCalls": [],
+      "status": 200
+    },
+    "/api/data/search?q=宏观": {
+      "searchHttp": 1,
+      "searchSql": 1,
+      "layoutCalls": [],
+      "status": 200
+    },
+    "/api/data/search?q=": {
+      "searchHttp": 1,
+      "searchSql": 0,
+      "layoutCalls": [],
+      "status": 200
+    },
+    "/backend-api/api/data/search?q=600519": {
+      "searchHttp": 1,
+      "searchSql": 1,
+      "layoutCalls": [],
+      "status": 200
+    },
+    "/backend-api/api/data/search?q=宏观": {
+      "searchHttp": 1,
+      "searchSql": 1,
+      "layoutCalls": [],
+      "status": 200
+    },
+    "/backend-api/api/data/search?q=": {
+      "searchHttp": 1,
+      "searchSql": 0,
+      "layoutCalls": [],
+      "status": 200
+    },
+    "/search?q=600519": {
+      "searchHttp": 1,
+      "searchSql": 1,
+      "layoutCalls": [
+        {
+          "path": "/api/v1/portfolio",
+          "sql": [
+            "mart.published_snapshot"
+          ]
+        }
+      ],
+      "status": 200
+    },
+    "/search?q=宏观": {
+      "searchHttp": 1,
+      "searchSql": 1,
+      "layoutCalls": [
+        {
+          "path": "/api/v1/portfolio",
+          "sql": [
+            "mart.published_snapshot"
+          ]
+        }
+      ],
+      "status": 200
+    },
+    "/search?q=": {
+      "searchHttp": 1,
+      "searchSql": 0,
+      "layoutCalls": [
+        {
+          "path": "/api/v1/portfolio",
+          "sql": [
+            "mart.published_snapshot"
+          ]
+        }
+      ],
+      "status": 200
+    }
+  },
+  "buildId": "BCU4GRmSI-10eZRWD8P4u"
+}

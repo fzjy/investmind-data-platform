@@ -42,14 +42,6 @@ class SearchStockItem(SearchModel):
     symbol: str
     code: str
     name: str
-    href: str
-
-
-class SearchPageItem(SearchModel):
-    id: str
-    title: str
-    description: str
-    href: str
 
 
 class SearchError(SearchModel):
@@ -79,20 +71,13 @@ class SearchStocks(SearchModel):
         return self
 
 
-class SearchPages(SearchModel):
-    items: list[SearchPageItem]
-    total: int = Field(ge=0, strict=True)
-
-
 class SearchData(SearchModel):
     query: str
     stocks: SearchStocks
-    pages: SearchPages
 
 
 class SearchMeta(SearchModel):
     request_id: str = Field(alias="requestId")
-    page_catalog_version: str = Field(default="site-pages-v1", alias="pageCatalogVersion")
 
 
 class SearchResponse(SearchModel):

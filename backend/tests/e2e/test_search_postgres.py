@@ -89,5 +89,5 @@ def test_real_empty_publication_is_distinct_from_no_publication(database):
     body = client.get("/api/data/search?q=股票").json()["data"]
     assert body["stocks"]["status"] == "ready" and body["stocks"]["total"] == 0
     assert body["stocks"]["meta"]["version"] == "empty"
-    assert body["pages"]["total"] == 1
+    assert set(body) == {"query","stocks"}
     assert inventory(factory) == before
