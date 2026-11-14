@@ -1,0 +1,1466 @@
+{
+  "checkedAt": "2026-11-14 13:43:54.200862+00:00",
+  "publication": {
+    "version": "20261021-1c01ff6eb0b7d78a",
+    "asOf": "2026-10-21 00:00:00+00:00",
+    "publishedAt": "2026-11-14 05:35:53.138320+00:00",
+    "symbols": 50,
+    "inputRecordCounts": [
+      {
+        "metric_id": "workbenchAnnualDividendYield",
+        "source_table": "core.daily_basic",
+        "input_records": 50,
+        "symbols": 50
+      },
+      {
+        "metric_id": "workbenchAnnualDividendYield",
+        "source_table": "core.daily_price",
+        "input_records": 50,
+        "symbols": 50
+      },
+      {
+        "metric_id": "workbenchAnnualDividendYield",
+        "source_table": "core.dividend",
+        "input_records": 360,
+        "symbols": 45
+      },
+      {
+        "metric_id": "workbenchAnnualDividendYield",
+        "source_table": "core.income_statement",
+        "input_records": 303,
+        "symbols": 50
+      },
+      {
+        "metric_id": "workbenchAnnualDividendYield",
+        "source_table": "derived.workbench_calculation",
+        "input_records": 50,
+        "symbols": 50
+      },
+      {
+        "metric_id": "workbenchAnnualDividendYield",
+        "source_table": "raw.source_payload",
+        "input_records": 1725,
+        "symbols": 50
+      },
+      {
+        "metric_id": "workbenchFiscalDividendYield",
+        "source_table": "core.daily_basic",
+        "input_records": 42,
+        "symbols": 42
+      },
+      {
+        "metric_id": "workbenchFiscalDividendYield",
+        "source_table": "core.daily_price",
+        "input_records": 50,
+        "symbols": 50
+      },
+      {
+        "metric_id": "workbenchFiscalDividendYield",
+        "source_table": "core.dividend",
+        "input_records": 178,
+        "symbols": 45
+      },
+      {
+        "metric_id": "workbenchFiscalDividendYield",
+        "source_table": "derived.workbench_calculation",
+        "input_records": 50,
+        "symbols": 50
+      },
+      {
+        "metric_id": "workbenchFiscalDividendYield",
+        "source_table": "raw.source_payload",
+        "input_records": 618,
+        "symbols": 50
+      },
+      {
+        "metric_id": "workbenchNtmDividendYield",
+        "source_table": "core.daily_basic",
+        "input_records": 50,
+        "symbols": 50
+      },
+      {
+        "metric_id": "workbenchNtmDividendYield",
+        "source_table": "core.daily_price",
+        "input_records": 50,
+        "symbols": 50
+      },
+      {
+        "metric_id": "workbenchNtmDividendYield",
+        "source_table": "core.dividend",
+        "input_records": 360,
+        "symbols": 45
+      },
+      {
+        "metric_id": "workbenchNtmDividendYield",
+        "source_table": "core.income_statement",
+        "input_records": 446,
+        "symbols": 50
+      },
+      {
+        "metric_id": "workbenchNtmDividendYield",
+        "source_table": "derived.workbench_calculation",
+        "input_records": 50,
+        "symbols": 50
+      },
+      {
+        "metric_id": "workbenchNtmDividendYield",
+        "source_table": "raw.source_payload",
+        "input_records": 1632,
+        "symbols": 50
+      }
+    ],
+    "codeCardVersion": "v2",
+    "storedCardsByVersion": {
+      "v1": 150,
+      "v2": 150
+    },
+    "unmatchedCurrentCards": [],
+    "nulls": {
+      "expectedDividendYieldNTM": 11,
+      "expectedDividendYield": 8,
+      "dividendYield": 1
+    },
+    "bySymbol": {
+      "000001.SZ": {
+        "dividendYield": {
+          "value": 5.2234881683,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 6.191119386,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 5.6081972429,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "000063.SZ": {
+        "dividendYield": {
+          "value": 1.4875135722,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 1.0973433941,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387",
+          "cardMissingFields": [
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ]
+        }
+      },
+      "000333.SZ": {
+        "dividendYield": {
+          "value": 5.1275936084,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 5.3163809428,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 4.9565172994,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "000425.SZ": {
+        "dividendYield": {
+          "value": 2.849002849,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 2.6702718357,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 2.4478482681,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "000538.SZ": {
+        "dividendYield": {
+          "value": 4.928030303,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 5.5126738542,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 5.0197841893,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "000568.SZ": {
+        "dividendYield": {
+          "value": 8.3479640069,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 5.3824546399,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 1.3727670765,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "000792.SZ": {
+        "dividendYield": {
+          "value": 0.0,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 0.0,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 0.0,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "000821.SZ": {
+        "dividendYield": {
+          "value": 0.4838709677,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 0.2405087149,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387",
+          "cardMissingFields": [
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ]
+        }
+      },
+      "000858.SZ": {
+        "dividendYield": {
+          "value": 7.1634516667,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 9.2539575444,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 5.1949780058,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "002230.SZ": {
+        "dividendYield": {
+          "value": 0.269541779,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 0.0177638677,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 0.3770706203,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "002415.SZ": {
+        "dividendYield": {
+          "value": 3.5559678417,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 4.4014914963,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 5.040131675,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "002594.SZ": {
+        "dividendYield": {
+          "value": 0.4436183395,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "2024 \u5e74\uff1a\u65e0\u6cd5\u5b9a\u4f4d\u64a4\u56de\u7684\u5206\u914d\u65b9\u6848\uff1b2024 \u5e74\uff1a\u5b9e\u9645\u6d3e\u606f\u8bb0\u5f55\u5b58\u5728\u5f85\u6838\u9a8c\u7f3a\u9879",
+          "cardMissingFields": [
+            "2024 \u5e74\uff1a\u65e0\u6cd5\u5b9a\u4f4d\u64a4\u56de\u7684\u5206\u914d\u65b9\u6848",
+            "2024 \u5e74\uff1a\u5b9e\u9645\u6d3e\u606f\u8bb0\u5f55\u5b58\u5728\u5f85\u6838\u9a8c\u7f3a\u9879"
+          ]
+        },
+        "expectedDividendYieldNTM": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "2024 \u5e74\uff1a\u65e0\u6cd5\u5b9a\u4f4d\u64a4\u56de\u7684\u5206\u914d\u65b9\u6848\uff1b2024 \u5e74\uff1a\u5b9e\u9645\u6d3e\u606f\u8bb0\u5f55\u5b58\u5728\u5f85\u6838\u9a8c\u7f3a\u9879",
+          "cardMissingFields": [
+            "2024 \u5e74\uff1a\u65e0\u6cd5\u5b9a\u4f4d\u64a4\u56de\u7684\u5206\u914d\u65b9\u6848",
+            "2024 \u5e74\uff1a\u5b9e\u9645\u6d3e\u606f\u8bb0\u5f55\u5b58\u5728\u5f85\u6838\u9a8c\u7f3a\u9879"
+          ]
+        }
+      },
+      "002714.SZ": {
+        "dividendYield": {
+          "value": 3.2235157068,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387",
+          "cardMissingFields": [
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ]
+        },
+        "expectedDividendYieldNTM": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387",
+          "cardMissingFields": [
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ]
+        }
+      },
+      "300015.SZ": {
+        "dividendYield": {
+          "value": 2.2613065327,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 1.6186564309,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 0.9930837697,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "300059.SZ": {
+        "dividendYield": {
+          "value": 0.5586592179,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 0.7169705481,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 0.7559007825,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "300122.SZ": {
+        "dividendYield": {
+          "value": 0.0,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387",
+          "cardMissingFields": [
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ]
+        },
+        "expectedDividendYieldNTM": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387",
+          "cardMissingFields": [
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ]
+        }
+      },
+      "300308.SZ": {
+        "dividendYield": {
+          "value": 0.2164602564,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 0.6085350049,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 0.5774261813,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "300750.SZ": {
+        "dividendYield": {
+          "value": 3.4945151382,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 5.1955520802,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 5.6678947886,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "300760.SZ": {
+        "dividendYield": {
+          "value": 2.5752587018,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 2.8526058122,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 2.2755867677,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "300999.SZ": {
+        "dividendYield": {
+          "value": 0.8980866849,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 1.0317087557,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 1.0289069423,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "301589.SZ": {
+        "dividendYield": {
+          "value": 0.9260433845,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 0.9048846873,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 0.8979923857,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "600030.SH": {
+        "dividendYield": {
+          "value": 2.7988804478,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 4.2019746445,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 5.0464297325,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "600031.SH": {
+        "dividendYield": {
+          "value": 2.7699265122,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 2.5683574967,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 3.1347378965,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "600036.SH": {
+        "dividendYield": {
+          "value": 4.7682119205,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 5.0049451974,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 5.1333131097,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "600234.SH": {
+        "dividendYield": {
+          "value": 0.0,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+          "cardMissingFields": [
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS"
+          ]
+        },
+        "expectedDividendYieldNTM": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387",
+          "cardMissingFields": [
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ]
+        }
+      },
+      "600276.SH": {
+        "dividendYield": {
+          "value": 0.4221190376,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 0.4587298848,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 0.4636238954,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "600519.SH": {
+        "dividendYield": {
+          "value": 3.9689720468,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 4.2884002896,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 3.4588398995,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "600547.SH": {
+        "dividendYield": {
+          "value": 1.3318437852,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 2.362387626,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 2.0655918889,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "600624.SH": {
+        "dividendYield": {
+          "value": 0.0,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "\u524d\u4e94\u5e74\u65e0\u5408\u683c\u7684\u540c\u671f\u5b63\u8282\u6027\u6837\u672c\uff1b2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+          "cardMissingFields": [
+            "\u524d\u4e94\u5e74\u65e0\u5408\u683c\u7684\u540c\u671f\u5b63\u8282\u6027\u6837\u672c",
+            "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS"
+          ]
+        },
+        "expectedDividendYieldNTM": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387",
+          "cardMissingFields": [
+            "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ]
+        }
+      },
+      "601012.SH": {
+        "dividendYield": {
+          "value": 0.0,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387",
+          "cardMissingFields": [
+            "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ]
+        },
+        "expectedDividendYieldNTM": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387",
+          "cardMissingFields": [
+            "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ]
+        }
+      },
+      "601088.SH": {
+        "dividendYield": {
+          "value": 4.0795615994,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 3.8709512216,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 4.2657173605,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "601100.SH": {
+        "dividendYield": {
+          "value": 1.0201660735,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 1.0173642552,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 1.0120356866,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "601318.SH": {
+        "dividendYield": {
+          "value": 5.2734375,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 5.5128110884,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 7.5676518371,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "601398.SH": {
+        "dividendYield": {
+          "value": 3.6721893491,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 3.834908274,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 3.9836621244,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "601688.SH": {
+        "dividendYield": {
+          "value": 3.2032615026,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 5.0364717527,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 4.8298101333,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "601766.SH": {
+        "dividendYield": {
+          "value": 3.6741214058,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 5.990085813,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 3.4263325194,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "601857.SH": {
+        "dividendYield": {
+          "value": 3.7420382166,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 4.4530163435,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 4.5452683743,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "601888.SH": {
+        "dividendYield": {
+          "value": 1.4309076043,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 1.9876680275,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 2.0069374652,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "603019.SH": {
+        "dividendYield": {
+          "value": 0.5922611213,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 0.753420616,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 0.6608612677,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "603259.SH": {
+        "dividendYield": {
+          "value": 1.5468408551,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 1.6100980329,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 2.1479348482,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "603288.SH": {
+        "dividendYield": {
+          "value": 4.0645546922,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 3.8638305903,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 3.8970904869,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "603799.SH": {
+        "dividendYield": {
+          "value": 1.5752993069,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 2.031072225,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 2.4172606605,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "688041.SH": {
+        "dividendYield": {
+          "value": 0.1241593378,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 0.1947987665,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 0.2131823672,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "688111.SH": {
+        "dividendYield": {
+          "value": 0.527048109,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 1.4542427812,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 1.467869344,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "688180.SH": {
+        "dividendYield": {
+          "value": 0.0,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "\u524d\u4e94\u5e74\u65e0\u5408\u683c\u7684\u540c\u671f\u5b63\u8282\u6027\u6837\u672c\uff1b2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+          "cardMissingFields": [
+            "\u524d\u4e94\u5e74\u65e0\u5408\u683c\u7684\u540c\u671f\u5b63\u8282\u6027\u6837\u672c",
+            "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS"
+          ]
+        },
+        "expectedDividendYieldNTM": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+          "cardMissingFields": [
+            "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS"
+          ]
+        }
+      },
+      "688472.SH": {
+        "dividendYield": {
+          "value": 1.2796632124,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 0.459407108,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387",
+          "cardMissingFields": [
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ]
+        }
+      },
+      "688981.SH": {
+        "dividendYield": {
+          "value": 0.0,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 0.0,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 0.0,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "920002.BJ": {
+        "dividendYield": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "2025 \u5e74\u7a0e\u524d\u6bcf\u80a1\u5206\u7ea2\u4e0e\u80a1\u4ef7\u7684\u9001\u8f6c\u57fa\u51c6\u5f85\u6838\u5bf9\uff08\u57fa\u51c6\u65e5 2026-02-11\u30012026-10-21\uff0c\u9001\u8f6c\u9664\u6743\u65e5 2026-05-27\uff09\uff1b2025 \u5e74\u7a0e\u524d\u6bcf\u80a1\u5206\u7ea2\u4e0e\u80a1\u4ef7\u7684\u9001\u8f6c\u57fa\u51c6\u5f85\u6838\u5bf9\uff08\u57fa\u51c6\u65e5 2026-05-26\u30012026-10-21\uff0c\u9001\u8f6c\u9664\u6743\u65e5 2026-05-27\uff09",
+          "cardMissingFields": [
+            "2025 \u5e74\u7a0e\u524d\u6bcf\u80a1\u5206\u7ea2\u4e0e\u80a1\u4ef7\u7684\u9001\u8f6c\u57fa\u51c6\u5f85\u6838\u5bf9\uff08\u57fa\u51c6\u65e5 2026-02-11\u30012026-10-21\uff0c\u9001\u8f6c\u9664\u6743\u65e5 2026-05-27\uff09",
+            "2025 \u5e74\u7a0e\u524d\u6bcf\u80a1\u5206\u7ea2\u4e0e\u80a1\u4ef7\u7684\u9001\u8f6c\u57fa\u51c6\u5f85\u6838\u5bf9\uff08\u57fa\u51c6\u65e5 2026-05-26\u30012026-10-21\uff0c\u9001\u8f6c\u9664\u6743\u65e5 2026-05-27\uff09"
+          ]
+        },
+        "expectedDividendYield": {
+          "value": 0.4605738139,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 0.469419951,
+          "basis": "paid-cash-records-v1"
+        }
+      },
+      "920047.BJ": {
+        "dividendYield": {
+          "value": 0.0,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "\u524d\u4e94\u5e74\u65e0\u5408\u683c\u7684\u540c\u671f\u5b63\u8282\u6027\u6837\u672c\uff1b2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+          "cardMissingFields": [
+            "\u524d\u4e94\u5e74\u65e0\u5408\u683c\u7684\u540c\u671f\u5b63\u8282\u6027\u6837\u672c",
+            "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS"
+          ]
+        },
+        "expectedDividendYieldNTM": {
+          "value": null,
+          "basis": "paid-cash-records-v1",
+          "publishedMissingReason": "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS\uff1b\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387",
+          "cardMissingFields": [
+            "2024 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "2025 \u5e74\u7f3a\u5c11\u6b63\u7684\u5e74\u5ea6\u57fa\u672c EPS",
+            "\u9884\u6d4b\u4e8f\u635f\uff0c\u76c8\u5229\u4e0d\u8db3\u4ee5\u4f30\u7b97\u80a1\u606f\u7387"
+          ]
+        }
+      },
+      "920185.BJ": {
+        "dividendYield": {
+          "value": 1.4778325123,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYield": {
+          "value": 1.3980757042,
+          "basis": "paid-cash-records-v1"
+        },
+        "expectedDividendYieldNTM": {
+          "value": 1.1700957975,
+          "basis": "paid-cash-records-v1"
+        }
+      }
+    }
+  },
+  "capturedPayloads": [
+    {
+      "api_name": "daily",
+      "dataset": "daily",
+      "mode": "manual",
+      "payloads": 150,
+      "distinct_request_contents": 150,
+      "captured_from": "2026-10-14 00:43:38.389686+00:00",
+      "captured_through": "2026-10-21 11:51:57.985987+00:00"
+    },
+    {
+      "api_name": "daily",
+      "dataset": "daily",
+      "mode": "standard",
+      "payloads": 73,
+      "distinct_request_contents": 61,
+      "captured_from": "2026-08-19 15:55:37.966736+00:00",
+      "captured_through": "2026-09-19 14:48:26.476333+00:00"
+    },
+    {
+      "api_name": "daily_basic",
+      "dataset": "daily_basic",
+      "mode": "manual",
+      "payloads": 150,
+      "distinct_request_contents": 150,
+      "captured_from": "2026-10-14 00:43:40.387566+00:00",
+      "captured_through": "2026-10-21 11:51:59.997988+00:00"
+    },
+    {
+      "api_name": "daily_basic",
+      "dataset": "daily_basic",
+      "mode": "standard",
+      "payloads": 68,
+      "distinct_request_contents": 57,
+      "captured_from": "2026-08-19 15:55:43.047643+00:00",
+      "captured_through": "2026-09-19 14:49:12.173799+00:00"
+    },
+    {
+      "api_name": "daily_basic",
+      "dataset": "market:pulse:limit_status",
+      "mode": "live",
+      "payloads": 50,
+      "distinct_request_contents": 50,
+      "captured_from": "2026-10-16 16:13:53.479034+00:00",
+      "captured_through": "2026-10-16 16:13:53.479034+00:00"
+    },
+    {
+      "api_name": "daily_basic",
+      "dataset": "stock-valuation-evidence",
+      "mode": null,
+      "payloads": 100,
+      "distinct_request_contents": 100,
+      "captured_from": "2026-11-06 06:01:38.666477+00:00",
+      "captured_through": "2026-11-11 14:21:42.015559+00:00"
+    },
+    {
+      "api_name": "dividend",
+      "dataset": "dividend",
+      "mode": "manual",
+      "payloads": 201,
+      "distinct_request_contents": 54,
+      "captured_from": "2026-10-14 00:32:27.265033+00:00",
+      "captured_through": "2026-10-21 11:47:00.280996+00:00"
+    },
+    {
+      "api_name": "dividend",
+      "dataset": "dividend",
+      "mode": "standard",
+      "payloads": 62,
+      "distinct_request_contents": 53,
+      "captured_from": "2026-08-24 14:38:27.477097+00:00",
+      "captured_through": "2026-09-19 14:49:34.665321+00:00"
+    },
+    {
+      "api_name": "dividend",
+      "dataset": "portfolio_dividend_evidence",
+      "mode": "manual",
+      "payloads": 102,
+      "distinct_request_contents": 102,
+      "captured_from": "2026-10-30 13:57:48.438058+00:00",
+      "captured_through": "2026-11-14 04:47:33.201694+00:00"
+    },
+    {
+      "api_name": "fina_indicator",
+      "dataset": "financial_indicator",
+      "mode": "manual",
+      "payloads": 4,
+      "distinct_request_contents": 4,
+      "captured_from": "2026-10-21 11:52:10.771757+00:00",
+      "captured_through": "2026-10-21 11:52:34.765053+00:00"
+    },
+    {
+      "api_name": "fina_indicator",
+      "dataset": "financial_indicator",
+      "mode": "standard",
+      "payloads": 66,
+      "distinct_request_contents": 55,
+      "captured_from": "2026-08-24 14:38:15.153573+00:00",
+      "captured_through": "2026-09-19 14:50:34.678455+00:00"
+    },
+    {
+      "api_name": "fina_indicator",
+      "dataset": "workbench-quarter-fields-sample",
+      "mode": "standard",
+      "payloads": 2,
+      "distinct_request_contents": 2,
+      "captured_from": "2026-11-11 05:10:20.729799+00:00",
+      "captured_through": "2026-11-11 05:10:20.796538+00:00"
+    },
+    {
+      "api_name": "income",
+      "dataset": "financial-statement-evidence",
+      "mode": null,
+      "payloads": 100,
+      "distinct_request_contents": 100,
+      "captured_from": "2026-11-05 14:36:40.123150+00:00",
+      "captured_through": "2026-11-12 06:47:43.734927+00:00"
+    },
+    {
+      "api_name": "income",
+      "dataset": "income",
+      "mode": "manual",
+      "payloads": 4,
+      "distinct_request_contents": 4,
+      "captured_from": "2026-10-21 11:52:04.770697+00:00",
+      "captured_through": "2026-10-21 11:52:28.764304+00:00"
+    },
+    {
+      "api_name": "income",
+      "dataset": "income",
+      "mode": "standard",
+      "payloads": 66,
+      "distinct_request_contents": 55,
+      "captured_from": "2026-08-24 14:38:03.516232+00:00",
+      "captured_through": "2026-09-19 14:50:54.679431+00:00"
+    }
+  ],
+  "batchCounters": [
+    {
+      "source": "tushare",
+      "dataset": "daily",
+      "mode": "manual",
+      "status": "completed",
+      "batches": 150,
+      "requests": 150,
+      "zero_request_batches": 0,
+      "first_start": "2026-10-14 00:43:38.389686+00:00",
+      "last_start": "2026-10-21 11:51:57.985987+00:00"
+    },
+    {
+      "source": "tushare",
+      "dataset": "daily",
+      "mode": "standard",
+      "status": "completed",
+      "batches": 74,
+      "requests": 74,
+      "zero_request_batches": 0,
+      "first_start": "2026-08-19 15:55:37.966736+00:00",
+      "last_start": "2026-09-19 14:48:26.476333+00:00"
+    },
+    {
+      "source": "tushare",
+      "dataset": "daily",
+      "mode": "standard",
+      "status": "partial",
+      "batches": 1,
+      "requests": 1,
+      "zero_request_batches": 0,
+      "first_start": "2026-09-19 14:11:27.016150+00:00",
+      "last_start": "2026-09-19 14:11:27.016150+00:00"
+    },
+    {
+      "source": "tushare",
+      "dataset": "daily_basic",
+      "mode": "manual",
+      "status": "completed",
+      "batches": 150,
+      "requests": 150,
+      "zero_request_batches": 0,
+      "first_start": "2026-10-14 00:43:40.387566+00:00",
+      "last_start": "2026-10-21 11:51:59.997988+00:00"
+    },
+    {
+      "source": "tushare",
+      "dataset": "daily_basic",
+      "mode": "standard",
+      "status": "completed",
+      "batches": 69,
+      "requests": 69,
+      "zero_request_batches": 0,
+      "first_start": "2026-08-19 15:55:43.047643+00:00",
+      "last_start": "2026-09-19 14:49:12.173799+00:00"
+    },
+    {
+      "source": "tushare",
+      "dataset": "daily_basic",
+      "mode": "standard",
+      "status": "partial",
+      "batches": 1,
+      "requests": 1,
+      "zero_request_batches": 0,
+      "first_start": "2026-09-19 14:12:06.750895+00:00",
+      "last_start": "2026-09-19 14:12:06.750895+00:00"
+    },
+    {
+      "source": "tushare",
+      "dataset": "dividend",
+      "mode": "manual",
+      "status": "completed",
+      "batches": 200,
+      "requests": 158,
+      "zero_request_batches": 50,
+      "first_start": "2026-10-14 00:32:27.265033+00:00",
+      "last_start": "2026-10-21 11:47:00.280996+00:00"
+    },
+    {
+      "source": "tushare",
+      "dataset": "dividend",
+      "mode": "manual",
+      "status": "failed",
+      "batches": 1,
+      "requests": 1,
+      "zero_request_batches": 0,
+      "first_start": "2026-10-14 00:37:43.524797+00:00",
+      "last_start": "2026-10-14 00:37:43.524797+00:00"
+    },
+    {
+      "source": "tushare",
+      "dataset": "dividend",
+      "mode": "standard",
+      "status": "completed",
+      "batches": 62,
+      "requests": 62,
+      "zero_request_batches": 0,
+      "first_start": "2026-08-24 14:38:27.477097+00:00",
+      "last_start": "2026-09-19 14:49:34.665321+00:00"
+    },
+    {
+      "source": "tushare",
+      "dataset": "financial-statement-evidence",
+      "mode": null,
+      "status": "completed",
+      "batches": 100,
+      "requests": 100,
+      "zero_request_batches": 0,
+      "first_start": "2026-11-05 14:36:39.832090+00:00",
+      "last_start": "2026-11-12 06:47:41.761870+00:00"
+    },
+    {
+      "source": "tushare",
+      "dataset": "financial_indicator",
+      "mode": "manual",
+      "status": "completed",
+      "batches": 4,
+      "requests": 4,
+      "zero_request_batches": 0,
+      "first_start": "2026-10-21 11:52:10.771757+00:00",
+      "last_start": "2026-10-21 11:52:34.765053+00:00"
+    },
+    {
+      "source": "tushare",
+      "dataset": "financial_indicator",
+      "mode": "standard",
+      "status": "completed",
+      "batches": 65,
+      "requests": 65,
+      "zero_request_batches": 0,
+      "first_start": "2026-08-24 14:38:15.153573+00:00",
+      "last_start": "2026-09-19 14:50:34.678455+00:00"
+    },
+    {
+      "source": "tushare",
+      "dataset": "financial_indicator",
+      "mode": "standard",
+      "status": "partial",
+      "batches": 1,
+      "requests": 1,
+      "zero_request_batches": 0,
+      "first_start": "2026-09-19 14:13:34.807506+00:00",
+      "last_start": "2026-09-19 14:13:34.807506+00:00"
+    },
+    {
+      "source": "tushare",
+      "dataset": "income",
+      "mode": "manual",
+      "status": "completed",
+      "batches": 4,
+      "requests": 4,
+      "zero_request_batches": 0,
+      "first_start": "2026-10-21 11:52:04.770697+00:00",
+      "last_start": "2026-10-21 11:52:28.764304+00:00"
+    },
+    {
+      "source": "tushare",
+      "dataset": "income",
+      "mode": "standard",
+      "status": "completed",
+      "batches": 65,
+      "requests": 65,
+      "zero_request_batches": 0,
+      "first_start": "2026-08-24 14:38:03.516232+00:00",
+      "last_start": "2026-09-19 14:50:54.679431+00:00"
+    },
+    {
+      "source": "tushare",
+      "dataset": "income",
+      "mode": "standard",
+      "status": "partial",
+      "batches": 1,
+      "requests": 1,
+      "zero_request_batches": 0,
+      "first_start": "2026-09-19 14:13:54.654148+00:00",
+      "last_start": "2026-09-19 14:13:54.654148+00:00"
+    },
+    {
+      "source": "tushare",
+      "dataset": "market:pulse:limit_status",
+      "mode": "live",
+      "status": "completed",
+      "batches": 50,
+      "requests": 50,
+      "zero_request_batches": 0,
+      "first_start": "2026-10-16 16:13:53.479034+00:00",
+      "last_start": "2026-10-16 16:13:53.479034+00:00"
+    },
+    {
+      "source": "tushare",
+      "dataset": "portfolio_dividend_evidence",
+      "mode": "manual",
+      "status": "completed",
+      "batches": 102,
+      "requests": 102,
+      "zero_request_batches": 0,
+      "first_start": "2026-10-30 13:57:48.188237+00:00",
+      "last_start": "2026-11-14 04:47:31.253868+00:00"
+    },
+    {
+      "source": "tushare",
+      "dataset": "stock-valuation-evidence",
+      "mode": null,
+      "status": "completed",
+      "batches": 100,
+      "requests": 100,
+      "zero_request_batches": 0,
+      "first_start": "2026-11-06 06:01:38.337185+00:00",
+      "last_start": "2026-11-11 14:21:40.059431+00:00"
+    },
+    {
+      "source": "tushare",
+      "dataset": "workbench-quarter-fields-sample",
+      "mode": "standard",
+      "status": "completed",
+      "batches": 2,
+      "requests": 2,
+      "zero_request_batches": 0,
+      "first_start": "2026-11-11 05:10:20.729799+00:00",
+      "last_start": "2026-11-11 05:10:20.796538+00:00"
+    }
+  ],
+  "observedCoreRanges": {
+    "dividend": {
+      "groups": 265,
+      "rows": "528",
+      "first_period": "2023-06-30",
+      "last_period": "2026-06-30",
+      "first_ann": "2023-08-30",
+      "last_ann": "2026-09-30",
+      "multi_announcement_groups": 103
+    },
+    "income_statement": {
+      "groups": 606,
+      "rows": "753",
+      "first_period": "2022-12-31",
+      "last_period": "2026-09-30",
+      "first_ann": "2023-10-18",
+      "last_ann": "2026-10-21",
+      "multi_announcement_groups": 6
+    },
+    "financial_indicator": {
+      "groups": 604,
+      "rows": "722",
+      "first_period": "2023-09-30",
+      "last_period": "2026-09-30",
+      "first_ann": "2023-10-18",
+      "last_ann": "2026-10-21",
+      "multi_announcement_groups": 3
+    }
+  },
+  "clockConfiguration": {
+    "timezone": "Asia/Shanghai",
+    "hour": 19,
+    "minute": 0,
+    "routineStocks": true
+  },
+  "stockUpdates": [
+    {
+      "id": "d057fb9e-679b-4851-889d-66e8b3ad38fb",
+      "business_key": "88af4e1f4ebc1052d7664eeefc02a3493c995fbcfcf94b835d3b67a20b62d3f4",
+      "status": "failed",
+      "started_at": "2026-10-14 00:32:18.368442+00:00",
+      "finished_at": "2026-10-14 00:32:56.420586+00:00",
+      "request_count": 16
+    },
+    {
+      "id": "312a30ee-7a90-4456-a8aa-0e7ecac5126a",
+      "business_key": "88af4e1f4ebc1052d7664eeefc02a3493c995fbcfcf94b835d3b67a20b62d3f4",
+      "status": "failed",
+      "started_at": "2026-10-14 00:36:25.399121+00:00",
+      "finished_at": "2026-10-14 00:37:45.537140+00:00",
+      "request_count": 40
+    },
+    {
+      "id": "c50e5cf7-3ceb-423a-a687-91ae4a41b06b",
+      "business_key": "88af4e1f4ebc1052d7664eeefc02a3493c995fbcfcf94b835d3b67a20b62d3f4",
+      "status": "completed",
+      "started_at": "2026-10-14 00:42:02.251890+00:00",
+      "finished_at": "2026-10-14 00:48:41.872473+00:00",
+      "request_count": 198
+    },
+    {
+      "id": "2c7c1372-f286-45cc-bb1d-5a25662dd01f",
+      "business_key": "88af4e1f4ebc1052d7664eeefc02a3493c995fbcfcf94b835d3b67a20b62d3f4",
+      "status": "completed",
+      "started_at": "2026-10-14 01:04:56.150669+00:00",
+      "finished_at": "2026-10-14 01:04:58.248067+00:00",
+      "request_count": 0
+    },
+    {
+      "id": "44a8bdf9-d244-491c-bddb-1d16ab2f7524",
+      "business_key": "88af4e1f4ebc1052d7664eeefc02a3493c995fbcfcf94b835d3b67a20b62d3f4",
+      "status": "completed",
+      "started_at": "2026-10-14 01:10:21.444725+00:00",
+      "finished_at": "2026-10-14 01:10:23.551190+00:00",
+      "request_count": 0
+    },
+    {
+      "id": "d32e8c0e-438c-49f1-bce9-31db19ce3cfe",
+      "business_key": "88af4e1f4ebc1052d7664eeefc02a3493c995fbcfcf94b835d3b67a20b62d3f4",
+      "status": "completed",
+      "started_at": "2026-10-14 06:39:09.768229+00:00",
+      "finished_at": "2026-10-14 06:39:11.952182+00:00",
+      "request_count": 0
+    },
+    {
+      "id": "23faef4a-f2cb-4275-8adf-8864a8a6b11c",
+      "business_key": "88af4e1f4ebc1052d7664eeefc02a3493c995fbcfcf94b835d3b67a20b62d3f4",
+      "status": "completed",
+      "started_at": "2026-10-14 06:42:16.091972+00:00",
+      "finished_at": "2026-10-14 06:42:18.212072+00:00",
+      "request_count": 0
+    },
+    {
+      "id": "4e1736b5-9a37-45eb-bb0e-b83f6a32c665",
+      "business_key": "88af4e1f4ebc1052d7664eeefc02a3493c995fbcfcf94b835d3b67a20b62d3f4",
+      "status": "completed",
+      "started_at": "2026-10-14 06:47:39.814338+00:00",
+      "finished_at": "2026-10-14 06:47:42.194526+00:00",
+      "request_count": 0
+    },
+    {
+      "id": "48d90d2a-5ce5-494a-a02c-3230691c6a3b",
+      "business_key": "88af4e1f4ebc1052d7664eeefc02a3493c995fbcfcf94b835d3b67a20b62d3f4",
+      "status": "completed",
+      "started_at": "2026-10-14 06:58:53.103159+00:00",
+      "finished_at": "2026-10-14 06:58:55.198800+00:00",
+      "request_count": 0
+    },
+    {
+      "id": "aad38734-ea49-48f4-9131-e497d273b24c",
+      "business_key": "88af4e1f4ebc1052d7664eeefc02a3493c995fbcfcf94b835d3b67a20b62d3f4",
+      "status": "completed",
+      "started_at": "2026-10-14 08:22:25.911420+00:00",
+      "finished_at": "2026-10-14 08:22:28.006830+00:00",
+      "request_count": 0
+    },
+    {
+      "id": "421f55c6-1f88-4728-8e58-06bab37278a6",
+      "business_key": "88af4e1f4ebc1052d7664eeefc02a3493c995fbcfcf94b835d3b67a20b62d3f4",
+      "status": "completed",
+      "started_at": "2026-10-14 08:37:18.950342+00:00",
+      "finished_at": "2026-10-14 08:37:21.025597+00:00",
+      "request_count": 0
+    },
+    {
+      "id": "bed7c68a-5b44-4174-b60a-c1c7d4d276f5",
+      "business_key": "fa1831afb2ecfc3b7d762f430b7de6ed978fe35c4cc7dfb16dc462717b25fbec",
+      "status": "completed",
+      "started_at": "2026-10-16 11:46:35.432087+00:00",
+      "finished_at": "2026-10-16 11:55:27.622540+00:00",
+      "request_count": 264
+    },
+    {
+      "id": "f300bff6-3edf-4170-b7d0-0e71ee9b245d",
+      "business_key": "fa1831afb2ecfc3b7d762f430b7de6ed978fe35c4cc7dfb16dc462717b25fbec",
+      "status": "completed",
+      "started_at": "2026-10-16 11:57:58.805253+00:00",
+      "finished_at": "2026-10-16 11:58:01.937870+00:00",
+      "request_count": 0
+    },
+    {
+      "id": "54fd1174-7470-4e1c-8565-5f7c72e54707",
+      "business_key": "d50e2694ccf396669395e93021e18eeb6f1ff13b7f231077ec3f48a82eae1f1f",
+      "status": "completed",
+      "started_at": "2026-10-21 11:43:39.823256+00:00",
+      "finished_at": "2026-10-21 11:52:36.718762+00:00",
+      "request_count": 268
+    },
+    {
+      "id": "a8238cbf-2bd5-4b4a-b764-8f3d0443007e",
+      "business_key": "d50e2694ccf396669395e93021e18eeb6f1ff13b7f231077ec3f48a82eae1f1f",
+      "status": "completed",
+      "started_at": "2026-10-21 11:56:24.866834+00:00",
+      "finished_at": "2026-10-21 11:56:27.220119+00:00",
+      "request_count": 0
+    }
+  ],
+  "schedulerHeartbeats": [],
+  "historicalScreenerVersions": [
+    {
+      "as_of": "2026-08-24 00:00:00+00:00",
+      "versions": 5
+    },
+    {
+      "as_of": "2026-09-18 00:00:00+00:00",
+      "versions": 1
+    },
+    {
+      "as_of": "2026-10-13 00:00:00+00:00",
+      "versions": 3
+    },
+    {
+      "as_of": "2026-10-16 00:00:00+00:00",
+      "versions": 1
+    },
+    {
+      "as_of": "2026-10-21 00:00:00+00:00",
+      "versions": 11
+    }
+  ]
+}
