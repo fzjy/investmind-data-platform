@@ -1,0 +1,36 @@
+{
+  "before": {
+    "captures": 4004,
+    "allRowsSha256": "fc12788692294187ea49faad727ec01240f3b5d1829ede80a1b2773472d27bdd",
+    "repeatCapturesAndRevisedRequests": [
+      406,
+      119
+    ],
+    "quoteReferences": 114
+  },
+  "compactBaselineBytes": {
+    "source_payload": 46071808
+  },
+  "splitTableBytes": {
+    "source_capture": 1957888,
+    "source_body": 43122688
+  },
+  "byteReduction": 991232,
+  "uniqueBodies": 3398,
+  "unchangedAfterMigration": true,
+  "unchangedAfterRollback": true,
+  "ormProjectionInsertAndUpdate": true,
+  "concurrentSameBodyCaptureIds": [
+    4005,
+    4006
+  ],
+  "duplicateWithinBatchSqlstate": "23505",
+  "afterTwoTestCaptureRemovalsOrphanBodies": 2,
+  "backupInventory": "unsupported_database_objects",
+  "readonlySourceMeasurement": {
+    "duplicate_text_bytes": 5503780,
+    "duplicate_column_bytes": 1629466,
+    "all_stored_column_bytes": 41452396,
+    "live_relation_bytes": 48275456
+  }
+}
