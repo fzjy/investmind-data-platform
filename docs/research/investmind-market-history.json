@@ -1,0 +1,1062 @@
+{
+  "checkedAt": "2026-11-14T15:33:54.710112+00:00",
+  "counts": {
+    "market-overview": 15,
+    "market-explorer": 116
+  },
+  "versions": {
+    "market-overview": {
+      "2026-08-24": {
+        "75caca008a767da8": [
+          "20260824-ad8856539d0b1b70",
+          "20260824-c19d525ee7f0e7b2",
+          "20260824-fd137aff908c8d5f",
+          "20260824-f4cd48cae7bf602f",
+          "20260824-040bb81afe213875"
+        ]
+      },
+      "2026-09-18": {
+        "265cabc384f9e0b2": [
+          "20260918-c8db62995f1352cf"
+        ]
+      },
+      "2026-10-13": {
+        "e335cad92afa4757": [
+          "20261013-bb1ad4302f9827cd",
+          "20261013-905b82a8b630a4fa",
+          "20261013-092632f84732d442"
+        ]
+      },
+      "2026-10-16": {
+        "81eb3678787bcc72": [
+          "20261016-058b2e48f61f1da7",
+          "20261016-c656603d8f654924",
+          "20261016-91b24ff823b8d939",
+          "20261016-44ebaa6ea41bf937",
+          "20261016-58a47e377008b7fd"
+        ]
+      },
+      "2026-10-21": {
+        "8833fed1a77cadd1": [
+          "20261021-6319db232c0a22d0"
+        ]
+      }
+    },
+    "market-explorer": {
+      "2026-08-24": {
+        "3b05e32ecfa740c2": [
+          "20260824-ad8856539d0b1b70",
+          "20260824-c19d525ee7f0e7b2",
+          "20260824-fd137aff908c8d5f",
+          "20260824-f4cd48cae7bf602f",
+          "20260824-040bb81afe213875"
+        ]
+      },
+      "2026-09-18": {
+        "06f8abc27fec74dd": [
+          "20260918-c8db62995f1352cf"
+        ]
+      },
+      "2026-10-13": {
+        "188fe6a944157a2c": [
+          "20261013-bb1ad4302f9827cd",
+          "20261013-905b82a8b630a4fa",
+          "20261013-092632f84732d442"
+        ]
+      },
+      "2026-10-16": {
+        "f24bee2e178c3d58": [
+          "20261016-058b2e48f61f1da7"
+        ],
+        "fcb2c9e972405624": [
+          "20261016-c656603d8f654924"
+        ],
+        "4c3225a8519471d3": [
+          "20261016-91b24ff823b8d939"
+        ],
+        "dda2a50204df53a7": [
+          "20261016-44ebaa6ea41bf937",
+          "20261016-58a47e377008b7fd"
+        ]
+      },
+      "2026-10-21": {
+        "b411b1349dd823a6": [
+          "20261021-6319db232c0a22d0",
+          "content-d6ff9fd8a1c50a256ffea77cf219f2de",
+          "content-2083b4f4a1a8c02f43b025a83a62d5de",
+          "content-81b6702b2cd313a73b4b2d93e2f2d42a",
+          "content-5de61961a8a6c240b3a978b751115b96",
+          "content-7b75b83814c864d053bbfad4421d56ff",
+          "content-47e0885c9a234ab883e2da80b01a30aa",
+          "content-3238d961c80abf6d068602cc95dc1235",
+          "content-97c3767e79513e6d1942d34a3c811973",
+          "content-e75e574f690f3c407a5a1d49883ac3bd",
+          "content-d3a3ca6c643643d5b25e6c903c2b1b17",
+          "content-c4efd53158ead4ea9e40ad9a55396916",
+          "content-47cec970f02f29c2b3004d01a9c01cc0",
+          "content-d1cac003ade3abae5f864329245eb35a",
+          "content-8ca88534298988d4a68cb8840ca7aa2f",
+          "content-2f9a4dc14952aeab1d9f34606d563d9e",
+          "content-92bd884718e54f08517dafcd44e056bf",
+          "content-2904b5409cbf7c26c17dcf23bcef591c",
+          "content-902e71fffc82206400de790f07001e4b",
+          "content-17713c1ce744b35182f8faa8d6d59aa9",
+          "content-e49a95d3458f63d7e6f77a1469918e64",
+          "content-2a6de8ae137e7c6720a5560adef5a589",
+          "content-19b70c490039fc7b5c990e68e457e596",
+          "content-c20e6f16b1422f27d0f4c8ff27035081",
+          "content-a03c7ebfc25572c8797fa9c1c63413c2",
+          "content-5f18001d10bdca8c33457e52631e5635",
+          "content-219cb5bebef92cc7b1540ba1320b4108",
+          "content-4a8d2db5bfffc8d8a9341f18d7ff18af",
+          "content-9b40d9ebebf71aba2d0b889980640852",
+          "content-a4f03746332b718ececf50b9df098ae6",
+          "content-d9f6a3654b540e37ed0f5b57fecd7ac1",
+          "content-a3d2222274c71104d3fa4bca3c444845",
+          "content-dfda279bf97355f9f1ba8639d1d3b2ba",
+          "content-50fb160d96ae3a7388b55332bbf266bc",
+          "content-c9c9b74513eae7b7c50948a117831155",
+          "content-a9dc497d6c1db5025a8f22d141a92ab3",
+          "content-464ff58ec349b926cc6f89eff1644595",
+          "content-e6948d753d9fdaca91282dbf281d6d48",
+          "content-b26647bfa657e80e5a4a995a1a51568a",
+          "content-01b908852ca8973b997330a003b725f2",
+          "content-0f8686bf3a1252b37d02432abfe429f9",
+          "content-ee6e85fb179967c3b3a09a05c690f0fe",
+          "content-3fe9a653389e20fa4e365917b60c078e",
+          "content-d0f3547eb1f73f7319468137770a742c",
+          "content-e53dee8fbb7ccf03505f634e20c69ae5",
+          "content-603fa4519bdd772ed9fb69fad932cbf6",
+          "content-27cdc69ba2804032911717059fbcd166",
+          "content-b8b6ccf8ed4f72b08d2dbaeaba585869",
+          "content-05e5f1ecb4ad13ddea29e6afea6679b1",
+          "content-6486352df024cbe78b08a09dbd6e0a16",
+          "content-824a70aab68df806b5112c8bc7d067dd",
+          "content-18262b3c8bce2ee86a1b898494292dee",
+          "content-f550798c448d5f4247bc1195a5580ece",
+          "content-84ce460ef4f3b03e0c89b51dfde43546",
+          "content-7d806f25b18fc2c4e75eb20ee4535a6d",
+          "content-865ab27fcc46f8103a115e2486271e89",
+          "content-66acc40171fee7e539b4ae92b2d0aaaa",
+          "content-6843ee8834769c00fd158c423be772ba",
+          "content-9c9a463f04703e68d123969dcad6ee82",
+          "content-86d1545f92054dee6120be03e2d7a815",
+          "content-6ad5d57018e8481bd2e6c9a89575962d",
+          "content-40323645d3443fb960bf8d02aa5af682",
+          "content-9443fab54980a7f30314918477fdda8f",
+          "content-d044b8b741c4877ea7eb7611baeb269d",
+          "content-380765a5a76c67d2655e320908c727f7",
+          "content-617d95377dea329d945ca47c640bf53b",
+          "content-df98877e34caa86e7671751d17576b9d",
+          "content-8d20fe4fdadb3bc471d28f1dcb00a1a9",
+          "content-f6903c947af594af1a25ec423061390a",
+          "content-05b21c203bf84c9f6c8d9168a86afa3d",
+          "content-85aafed3f006c98d6d601e2075514355",
+          "content-de4baef4626b7605b46597d284bfd6f6",
+          "content-1cdec60ec7494b54ad2496fa17ed0ff9",
+          "content-b50fe853a7ff0d90e78dfe7855edc9a4",
+          "content-9393899f680f16594c7b80fced78abc0",
+          "content-5e6adc19e7e3979b96431396dafa070f",
+          "content-6faa6d50d37b5c536dd06f6694ee7a30",
+          "content-d592395a2dce9d3221d799f3afd04acf",
+          "content-f89e0d8241df239d85c63844de17055e",
+          "content-62685afee72176d8cd8d5105a058f934",
+          "content-3906968ee40eb2abc059d8d7cc17bfed",
+          "content-c427400e484029379006ff1ccd91c91b",
+          "content-8a9d9cd46b23fba7a75dac7f0a1bb4c3",
+          "content-ee1402de19a1aff9e8bb2fed433ea084",
+          "content-66c8075a73c0fa6e9ef6baa8443f4205",
+          "content-54567f9db45e37e5a170c71308baddce",
+          "content-6b5de2efab3a12a4126f1fafe611c99f",
+          "content-69da5a700007aa9bc787a24cc35f69a7",
+          "content-5a01907e21fd1f9c33b5dd3461c902df",
+          "content-9efb7024ea56f7735ae5ab38397e4468",
+          "content-3004f19ee796a7013c82065e50af11be",
+          "content-ca0deb4a80aac03c98b504eb49f3fae6",
+          "content-7fd7247aa263aca1cc4d63ce011ff31b",
+          "content-e7cf8f3e621d9c4e74edc06872646a1a",
+          "content-8a023e7bb5c84d5541e3c6c5a3c2d9e2",
+          "content-f836b807988a945aa43da7ab77f8f3f7",
+          "content-12d7130312afd02f435f4f46d4bfc95e",
+          "content-40840744fde0c83ab45b3d437e27f469",
+          "content-9e747f56664f0d1426f338d191f36e0b",
+          "content-b7577789c9399ca0b2f2c5118a6d1e9c",
+          "content-64cc7bbaf499a1ac5be3338899f8d490",
+          "content-7b0b1e14a8a0b119ad1d0686d8d7088a"
+        ]
+      }
+    }
+  },
+  "profiles": {
+    "75caca008a767da8": {
+      "fieldDay": "2026-08-19",
+      "symbols": 2,
+      "symbolSetHash": "5563f614ddc477b94e5c0e23a2a3c17341b37cf54aef52bae87fabcc0fc49ff0",
+      "coreDayRows": 50,
+      "scopeBasis": "complete-snapshot-ranking-and-matching-same-page-day-pool",
+      "breadthAndTurnover": {
+        "rise": 2,
+        "fall": 0,
+        "flat": 0,
+        "turnoverQianYuan": "6473373.55208000",
+        "topRows": 2
+      }
+    },
+    "3b05e32ecfa740c2": {
+      "fieldDay": "2026-08-19",
+      "symbols": 2,
+      "symbolSetHash": "5563f614ddc477b94e5c0e23a2a3c17341b37cf54aef52bae87fabcc0fc49ff0",
+      "coreDayRows": 50,
+      "scopeBasis": "complete-snapshot-ranking-and-matching-same-page-day-pool",
+      "ranks": {
+        "rankingLeaders": 2,
+        "rankingDecliners": 2
+      },
+      "heatmaps": {
+        "majorIndustry": {
+          "tiles": 0
+        },
+        "subIndustry": {
+          "tiles": 0
+        },
+        "region": {
+          "tiles": 0
+        }
+      },
+      "etf": null,
+      "commodity": null
+    },
+    "265cabc384f9e0b2": {
+      "fieldDay": "2026-09-18",
+      "symbols": 50,
+      "symbolSetHash": "6edad121079e7897f3fd05b1f141d77c71a6df10f3548cd3201e98e88e2cf7be",
+      "coreDayRows": 50,
+      "scopeBasis": "same-page-day-screener-unanimous-members",
+      "breadthAndTurnover": {
+        "rise": 33,
+        "fall": 16,
+        "flat": 1,
+        "turnoverQianYuan": "107865403.21837000",
+        "topRows": 10
+      }
+    },
+    "06f8abc27fec74dd": {
+      "fieldDay": "2026-09-18",
+      "symbols": 50,
+      "symbolSetHash": "6edad121079e7897f3fd05b1f141d77c71a6df10f3548cd3201e98e88e2cf7be",
+      "coreDayRows": 50,
+      "scopeBasis": "same-page-day-screener-unanimous-members",
+      "ranks": {
+        "rankingLeaders": 10,
+        "rankingDecliners": 10
+      },
+      "heatmaps": {
+        "majorIndustry": {
+          "tiles": 0
+        },
+        "subIndustry": {
+          "tiles": 0
+        },
+        "region": {
+          "tiles": 0
+        }
+      },
+      "etf": null,
+      "commodity": null
+    },
+    "e335cad92afa4757": {
+      "fieldDay": "2026-10-13",
+      "symbols": 50,
+      "symbolSetHash": "6edad121079e7897f3fd05b1f141d77c71a6df10f3548cd3201e98e88e2cf7be",
+      "coreDayRows": 50,
+      "scopeBasis": "same-page-day-screener-unanimous-members",
+      "breadthAndTurnover": {
+        "rise": 12,
+        "fall": 38,
+        "flat": 0,
+        "turnoverQianYuan": "106013008.48864000",
+        "topRows": 10
+      }
+    },
+    "188fe6a944157a2c": {
+      "fieldDay": "2026-10-13",
+      "symbols": 50,
+      "symbolSetHash": "6edad121079e7897f3fd05b1f141d77c71a6df10f3548cd3201e98e88e2cf7be",
+      "coreDayRows": 50,
+      "scopeBasis": "same-page-day-screener-unanimous-members",
+      "ranks": {
+        "rankingLeaders": 10,
+        "rankingDecliners": 10
+      },
+      "heatmaps": {
+        "majorIndustry": {
+          "tiles": 18,
+          "memberships": 50
+        },
+        "subIndustry": {
+          "tiles": 38,
+          "memberships": 50
+        },
+        "region": {
+          "tiles": 0
+        }
+      },
+      "etf": null,
+      "commodity": null
+    },
+    "81eb3678787bcc72": {
+      "fieldDay": "2026-10-16",
+      "symbols": 50,
+      "symbolSetHash": "6edad121079e7897f3fd05b1f141d77c71a6df10f3548cd3201e98e88e2cf7be",
+      "coreDayRows": 50,
+      "scopeBasis": "same-page-day-screener-unanimous-members",
+      "breadthAndTurnover": {
+        "rise": 25,
+        "fall": 24,
+        "flat": 1,
+        "turnoverQianYuan": "105997229.25142000",
+        "topRows": 10
+      }
+    },
+    "f24bee2e178c3d58": {
+      "fieldDay": "2026-10-16",
+      "symbols": 50,
+      "symbolSetHash": "6edad121079e7897f3fd05b1f141d77c71a6df10f3548cd3201e98e88e2cf7be",
+      "coreDayRows": 50,
+      "scopeBasis": "same-page-day-screener-unanimous-members",
+      "ranks": {
+        "rankingLeaders": 10,
+        "rankingDecliners": 10
+      },
+      "heatmaps": {
+        "majorIndustry": {
+          "tiles": 18,
+          "memberships": 50
+        },
+        "subIndustry": {
+          "tiles": 38,
+          "memberships": 50
+        },
+        "region": {
+          "tiles": 0
+        }
+      },
+      "etf": null,
+      "commodity": null
+    },
+    "fcb2c9e972405624": {
+      "fieldDay": "2026-10-16",
+      "symbols": 50,
+      "symbolSetHash": "6edad121079e7897f3fd05b1f141d77c71a6df10f3548cd3201e98e88e2cf7be",
+      "coreDayRows": 50,
+      "scopeBasis": "same-page-day-screener-unanimous-members",
+      "ranks": {
+        "rankingLeaders": 10,
+        "rankingDecliners": 10
+      },
+      "heatmaps": {
+        "majorIndustry": {
+          "tiles": 18,
+          "memberships": 50
+        },
+        "subIndustry": {
+          "tiles": 38,
+          "memberships": 50
+        },
+        "region": {
+          "tiles": 20,
+          "memberships": 50
+        }
+      },
+      "etf": null,
+      "commodity": null
+    },
+    "4c3225a8519471d3": {
+      "fieldDay": "2026-10-16",
+      "symbols": 50,
+      "symbolSetHash": "6edad121079e7897f3fd05b1f141d77c71a6df10f3548cd3201e98e88e2cf7be",
+      "coreDayRows": 50,
+      "scopeBasis": "same-page-day-screener-unanimous-members",
+      "ranks": {
+        "rankingLeaders": 10,
+        "rankingDecliners": 10
+      },
+      "heatmaps": {
+        "majorIndustry": {
+          "tiles": 18,
+          "memberships": 50
+        },
+        "subIndustry": {
+          "tiles": 38,
+          "memberships": 50
+        },
+        "region": {
+          "tiles": 20,
+          "memberships": 50
+        }
+      },
+      "etf": "ecf9a5f2be70d2d97fddcdc9ae340a61288224a5420689d8a805d7079c2496cb",
+      "commodity": null
+    },
+    "dda2a50204df53a7": {
+      "fieldDay": "2026-10-16",
+      "symbols": 50,
+      "symbolSetHash": "6edad121079e7897f3fd05b1f141d77c71a6df10f3548cd3201e98e88e2cf7be",
+      "coreDayRows": 50,
+      "scopeBasis": "same-page-day-screener-unanimous-members",
+      "ranks": {
+        "rankingLeaders": 10,
+        "rankingDecliners": 10
+      },
+      "heatmaps": {
+        "majorIndustry": {
+          "tiles": 18,
+          "memberships": 50
+        },
+        "subIndustry": {
+          "tiles": 38,
+          "memberships": 50
+        },
+        "region": {
+          "tiles": 20,
+          "memberships": 50
+        }
+      },
+      "etf": "ecf9a5f2be70d2d97fddcdc9ae340a61288224a5420689d8a805d7079c2496cb",
+      "commodity": "846c1b197b9ac244a9961f919b0eec8906a439be10de5cd05a4f9b787bdb817d"
+    },
+    "8833fed1a77cadd1": {
+      "fieldDay": "2026-10-21",
+      "symbols": 50,
+      "symbolSetHash": "6edad121079e7897f3fd05b1f141d77c71a6df10f3548cd3201e98e88e2cf7be",
+      "coreDayRows": 50,
+      "scopeBasis": "same-page-day-screener-unanimous-members",
+      "breadthAndTurnover": {
+        "rise": 15,
+        "fall": 34,
+        "flat": 1,
+        "turnoverQianYuan": "111915637.30952000",
+        "topRows": 10
+      }
+    },
+    "b411b1349dd823a6": {
+      "fieldDay": "2026-10-21",
+      "symbols": 50,
+      "symbolSetHash": "6edad121079e7897f3fd05b1f141d77c71a6df10f3548cd3201e98e88e2cf7be",
+      "coreDayRows": 50,
+      "scopeBasis": "same-page-day-screener-unanimous-members",
+      "ranks": {
+        "rankingLeaders": 10,
+        "rankingDecliners": 10
+      },
+      "heatmaps": {
+        "majorIndustry": {
+          "tiles": 18,
+          "memberships": 50
+        },
+        "subIndustry": {
+          "tiles": 38,
+          "memberships": 50
+        },
+        "region": {
+          "tiles": 20,
+          "memberships": 50
+        }
+      },
+      "etf": "ecf9a5f2be70d2d97fddcdc9ae340a61288224a5420689d8a805d7079c2496cb",
+      "commodity": "846c1b197b9ac244a9961f919b0eec8906a439be10de5cd05a4f9b787bdb817d"
+    }
+  },
+  "rawVerifiedArtifacts": {
+    "ecf9a5f2be70d2d97fddcdc9ae340a61288224a5420689d8a805d7079c2496cb": {
+      "family": "etf",
+      "verifiedEtfs": 9
+    },
+    "846c1b197b9ac244a9961f919b0eec8906a439be10de5cd05a4f9b787bdb817d": {
+      "family": "commodity",
+      "instruments": 10,
+      "bars": {
+        "daily": 790,
+        "weekly": 170,
+        "monthly": 50
+      }
+    }
+  },
+  "rawPagesByApi": {
+    "fund_daily": 9,
+    "fund_share": 9,
+    "fut_trade_cal": 4,
+    "fut_basic": 10,
+    "fut_mapping": 10,
+    "fut_daily": 31
+  },
+  "historicalPoolSizes": {
+    "2026-08-24": {
+      "20260824-040bb81afe213875": 2,
+      "20260824-ad8856539d0b1b70": 5548,
+      "20260824-c19d525ee7f0e7b2": 2,
+      "20260824-f4cd48cae7bf602f": 2,
+      "20260824-fd137aff908c8d5f": 2
+    },
+    "2026-09-18": {
+      "20260918-c8db62995f1352cf": 50
+    },
+    "2026-10-13": {
+      "20261013-0685c6157542c722": 50,
+      "20261013-9298081e891e942c": 50,
+      "20261013-fea0c0dac59892eb": 50
+    },
+    "2026-10-16": {
+      "20261016-b9f551f48a7389ff": 50
+    },
+    "2026-10-21": {
+      "20261021-0d82c3b77bd05244": 50,
+      "20261021-13c360503f7c32d6": 50,
+      "20261021-1c01ff6eb0b7d78a": 50,
+      "20261021-38ccadd9d4d80449": 50,
+      "20261021-4115e30d4bec2c8d": 50,
+      "20261021-704c2b8dabd5feb7": 50,
+      "20261021-99f88d965e4c3558": 50,
+      "20261021-ab18219e3b8bb920": 50,
+      "20261021-d2e794a732f23211": 50,
+      "20261021-e7b9f024b65de840": 50,
+      "20261021-fbe332e1ab2a12fd": 50
+    }
+  },
+  "stockOriginals": {
+    "2026-08-19": {
+      "daily": {
+        "requiredSymbols": 2,
+        "matchedSymbols": 2,
+        "withoutMatch": [],
+        "additionalDistinctValues": [],
+        "earliestMatchingPagesBySymbol": {
+          "000001.SZ": 4,
+          "600519.SH": 3
+        },
+        "firstCaptureRange": [
+          "2026-08-19",
+          "2026-08-19"
+        ]
+      },
+      "daily_basic": {
+        "requiredSymbols": 2,
+        "matchedSymbols": 2,
+        "withoutMatch": [],
+        "additionalDistinctValues": [],
+        "earliestMatchingPagesBySymbol": {
+          "000001.SZ": 6,
+          "600519.SH": 5
+        },
+        "firstCaptureRange": [
+          "2026-08-19",
+          "2026-08-19"
+        ]
+      }
+    },
+    "2026-09-18": {
+      "daily": {
+        "requiredSymbols": 50,
+        "matchedSymbols": 50,
+        "withoutMatch": [],
+        "additionalDistinctValues": [],
+        "earliestMatchingPagesBySymbol": {
+          "000001.SZ": 119,
+          "000063.SZ": 120,
+          "000333.SZ": 121,
+          "000425.SZ": 122,
+          "000538.SZ": 123,
+          "000568.SZ": 124,
+          "000792.SZ": 126,
+          "000821.SZ": 280,
+          "000858.SZ": 127,
+          "002230.SZ": 128,
+          "002415.SZ": 423,
+          "002594.SZ": 424,
+          "002714.SZ": 425,
+          "300015.SZ": 426,
+          "300059.SZ": 427,
+          "300122.SZ": 428,
+          "300308.SZ": 429,
+          "300750.SZ": 430,
+          "300760.SZ": 431,
+          "300999.SZ": 432,
+          "301589.SZ": 573,
+          "600030.SH": 574,
+          "600031.SH": 575,
+          "600036.SH": 576,
+          "600234.SH": 577,
+          "600276.SH": 578,
+          "600519.SH": 579,
+          "600547.SH": 580,
+          "600624.SH": 581,
+          "601012.SH": 582,
+          "601088.SH": 725,
+          "601100.SH": 726,
+          "601318.SH": 727,
+          "601398.SH": 728,
+          "601688.SH": 729,
+          "601766.SH": 730,
+          "601857.SH": 731,
+          "601888.SH": 732,
+          "603019.SH": 733,
+          "603259.SH": 734,
+          "603288.SH": 875,
+          "603799.SH": 876,
+          "688041.SH": 877,
+          "688111.SH": 878,
+          "688180.SH": 879,
+          "688472.SH": 880,
+          "688981.SH": 881,
+          "920002.BJ": 882,
+          "920047.BJ": 883,
+          "920185.BJ": 884
+        },
+        "firstCaptureRange": [
+          "2026-09-19",
+          "2026-09-19"
+        ]
+      },
+      "daily_basic": {
+        "requiredSymbols": 50,
+        "matchedSymbols": 50,
+        "withoutMatch": [],
+        "additionalDistinctValues": [],
+        "earliestMatchingPagesBySymbol": {
+          "000001.SZ": 129,
+          "000063.SZ": 130,
+          "000333.SZ": 131,
+          "000425.SZ": 132,
+          "000538.SZ": 133,
+          "000568.SZ": 134,
+          "000792.SZ": 136,
+          "000821.SZ": 290,
+          "000858.SZ": 137,
+          "002230.SZ": 138,
+          "002415.SZ": 433,
+          "002594.SZ": 434,
+          "002714.SZ": 435,
+          "300015.SZ": 436,
+          "300059.SZ": 437,
+          "300122.SZ": 438,
+          "300308.SZ": 439,
+          "300750.SZ": 440,
+          "300760.SZ": 441,
+          "300999.SZ": 442,
+          "301589.SZ": 583,
+          "600030.SH": 584,
+          "600031.SH": 585,
+          "600036.SH": 586,
+          "600234.SH": 587,
+          "600276.SH": 588,
+          "600519.SH": 589,
+          "600547.SH": 590,
+          "600624.SH": 591,
+          "601012.SH": 592,
+          "601088.SH": 735,
+          "601100.SH": 736,
+          "601318.SH": 737,
+          "601398.SH": 738,
+          "601688.SH": 739,
+          "601766.SH": 740,
+          "601857.SH": 741,
+          "601888.SH": 742,
+          "603019.SH": 743,
+          "603259.SH": 744,
+          "603288.SH": 885,
+          "603799.SH": 886,
+          "688041.SH": 887,
+          "688111.SH": 888,
+          "688180.SH": 889,
+          "688472.SH": 890,
+          "688981.SH": 891,
+          "920002.BJ": 892,
+          "920047.BJ": 893,
+          "920185.BJ": 894
+        },
+        "firstCaptureRange": [
+          "2026-09-19",
+          "2026-09-19"
+        ]
+      }
+    },
+    "2026-10-13": {
+      "daily": {
+        "requiredSymbols": 50,
+        "matchedSymbols": 50,
+        "withoutMatch": [],
+        "additionalDistinctValues": [],
+        "earliestMatchingPagesBySymbol": {
+          "000001.SZ": 1860,
+          "000063.SZ": 1863,
+          "000333.SZ": 1866,
+          "000425.SZ": 1869,
+          "000538.SZ": 1872,
+          "000568.SZ": 1875,
+          "000792.SZ": 1878,
+          "000821.SZ": 1881,
+          "000858.SZ": 1884,
+          "002230.SZ": 1887,
+          "002415.SZ": 1890,
+          "002594.SZ": 1893,
+          "002714.SZ": 1896,
+          "300015.SZ": 1899,
+          "300059.SZ": 1902,
+          "300122.SZ": 1905,
+          "300308.SZ": 1908,
+          "300750.SZ": 1911,
+          "300760.SZ": 1914,
+          "300999.SZ": 1917,
+          "301589.SZ": 1920,
+          "600030.SH": 1923,
+          "600031.SH": 1926,
+          "600036.SH": 1929,
+          "600234.SH": 1932,
+          "600276.SH": 1935,
+          "600519.SH": 1938,
+          "600547.SH": 1941,
+          "600624.SH": 1944,
+          "601012.SH": 1947,
+          "601088.SH": 1950,
+          "601100.SH": 1953,
+          "601318.SH": 1956,
+          "601398.SH": 1959,
+          "601688.SH": 1962,
+          "601766.SH": 1965,
+          "601857.SH": 1968,
+          "601888.SH": 1971,
+          "603019.SH": 1974,
+          "603259.SH": 1977,
+          "603288.SH": 1980,
+          "603799.SH": 1983,
+          "688041.SH": 1986,
+          "688111.SH": 1989,
+          "688180.SH": 1992,
+          "688472.SH": 1995,
+          "688981.SH": 1998,
+          "920002.BJ": 2001,
+          "920047.BJ": 2004,
+          "920185.BJ": 2007
+        },
+        "firstCaptureRange": [
+          "2026-10-14",
+          "2026-10-14"
+        ]
+      },
+      "daily_basic": {
+        "requiredSymbols": 50,
+        "matchedSymbols": 50,
+        "withoutMatch": [],
+        "additionalDistinctValues": [],
+        "earliestMatchingPagesBySymbol": {
+          "000001.SZ": 1861,
+          "000063.SZ": 1864,
+          "000333.SZ": 1867,
+          "000425.SZ": 1870,
+          "000538.SZ": 1873,
+          "000568.SZ": 1876,
+          "000792.SZ": 1879,
+          "000821.SZ": 1882,
+          "000858.SZ": 1885,
+          "002230.SZ": 1888,
+          "002415.SZ": 1891,
+          "002594.SZ": 1894,
+          "002714.SZ": 1897,
+          "300015.SZ": 1900,
+          "300059.SZ": 1903,
+          "300122.SZ": 1906,
+          "300308.SZ": 1909,
+          "300750.SZ": 1912,
+          "300760.SZ": 1915,
+          "300999.SZ": 1918,
+          "301589.SZ": 1921,
+          "600030.SH": 1924,
+          "600031.SH": 1927,
+          "600036.SH": 1930,
+          "600234.SH": 1933,
+          "600276.SH": 1936,
+          "600519.SH": 1939,
+          "600547.SH": 1942,
+          "600624.SH": 1945,
+          "601012.SH": 1948,
+          "601088.SH": 1951,
+          "601100.SH": 1954,
+          "601318.SH": 1957,
+          "601398.SH": 1960,
+          "601688.SH": 1963,
+          "601766.SH": 1966,
+          "601857.SH": 1969,
+          "601888.SH": 1972,
+          "603019.SH": 1975,
+          "603259.SH": 1978,
+          "603288.SH": 1981,
+          "603799.SH": 1984,
+          "688041.SH": 1987,
+          "688111.SH": 1990,
+          "688180.SH": 1993,
+          "688472.SH": 1996,
+          "688981.SH": 1999,
+          "920002.BJ": 2002,
+          "920047.BJ": 2005,
+          "920185.BJ": 2008
+        },
+        "firstCaptureRange": [
+          "2026-10-14",
+          "2026-10-14"
+        ]
+      }
+    },
+    "2026-10-16": {
+      "daily": {
+        "requiredSymbols": 50,
+        "matchedSymbols": 50,
+        "withoutMatch": [],
+        "additionalDistinctValues": [],
+        "earliestMatchingPagesBySymbol": {
+          "000001.SZ": 2195,
+          "000063.SZ": 2198,
+          "000333.SZ": 2201,
+          "000425.SZ": 2204,
+          "000538.SZ": 2207,
+          "000568.SZ": 2210,
+          "000792.SZ": 2213,
+          "000821.SZ": 2216,
+          "000858.SZ": 2219,
+          "002230.SZ": 2222,
+          "002415.SZ": 2225,
+          "002594.SZ": 2228,
+          "002714.SZ": 2231,
+          "300015.SZ": 2234,
+          "300059.SZ": 2237,
+          "300122.SZ": 2240,
+          "300308.SZ": 2243,
+          "300750.SZ": 2246,
+          "300760.SZ": 2249,
+          "300999.SZ": 2252,
+          "301589.SZ": 2255,
+          "600030.SH": 2258,
+          "600031.SH": 2261,
+          "600036.SH": 2264,
+          "600234.SH": 2267,
+          "600276.SH": 2270,
+          "600519.SH": 2273,
+          "600547.SH": 2276,
+          "600624.SH": 2279,
+          "601012.SH": 2282,
+          "601088.SH": 2285,
+          "601100.SH": 2288,
+          "601318.SH": 2291,
+          "601398.SH": 2294,
+          "601688.SH": 2297,
+          "601766.SH": 2300,
+          "601857.SH": 2303,
+          "601888.SH": 2306,
+          "603019.SH": 2309,
+          "603259.SH": 2312,
+          "603288.SH": 2315,
+          "603799.SH": 2318,
+          "688041.SH": 2321,
+          "688111.SH": 2324,
+          "688180.SH": 2327,
+          "688472.SH": 2330,
+          "688981.SH": 2333,
+          "920002.BJ": 2336,
+          "920047.BJ": 2339,
+          "920185.BJ": 2342
+        },
+        "firstCaptureRange": [
+          "2026-10-16",
+          "2026-10-16"
+        ]
+      },
+      "daily_basic": {
+        "requiredSymbols": 50,
+        "matchedSymbols": 50,
+        "withoutMatch": [],
+        "additionalDistinctValues": [],
+        "earliestMatchingPagesBySymbol": {
+          "000001.SZ": 2196,
+          "000063.SZ": 2199,
+          "000333.SZ": 2202,
+          "000425.SZ": 2205,
+          "000538.SZ": 2208,
+          "000568.SZ": 2211,
+          "000792.SZ": 2214,
+          "000821.SZ": 2217,
+          "000858.SZ": 2220,
+          "002230.SZ": 2223,
+          "002415.SZ": 2226,
+          "002594.SZ": 2229,
+          "002714.SZ": 2232,
+          "300015.SZ": 2235,
+          "300059.SZ": 2238,
+          "300122.SZ": 2241,
+          "300308.SZ": 2244,
+          "300750.SZ": 2247,
+          "300760.SZ": 2250,
+          "300999.SZ": 2253,
+          "301589.SZ": 2256,
+          "600030.SH": 2259,
+          "600031.SH": 2262,
+          "600036.SH": 2265,
+          "600234.SH": 2268,
+          "600276.SH": 2271,
+          "600519.SH": 2274,
+          "600547.SH": 2277,
+          "600624.SH": 2280,
+          "601012.SH": 2283,
+          "601088.SH": 2286,
+          "601100.SH": 2289,
+          "601318.SH": 2292,
+          "601398.SH": 2295,
+          "601688.SH": 2298,
+          "601766.SH": 2301,
+          "601857.SH": 2304,
+          "601888.SH": 2307,
+          "603019.SH": 2310,
+          "603259.SH": 2313,
+          "603288.SH": 2316,
+          "603799.SH": 2319,
+          "688041.SH": 2322,
+          "688111.SH": 2325,
+          "688180.SH": 2328,
+          "688472.SH": 2331,
+          "688981.SH": 2334,
+          "920002.BJ": 2337,
+          "920047.BJ": 2340,
+          "920185.BJ": 2343
+        },
+        "firstCaptureRange": [
+          "2026-10-16",
+          "2026-10-16"
+        ]
+      }
+    },
+    "2026-10-21": {
+      "daily": {
+        "requiredSymbols": 50,
+        "matchedSymbols": 50,
+        "withoutMatch": [],
+        "additionalDistinctValues": [],
+        "earliestMatchingPagesBySymbol": {
+          "000001.SZ": 2622,
+          "000063.SZ": 2625,
+          "000333.SZ": 2628,
+          "000425.SZ": 2631,
+          "000538.SZ": 2634,
+          "000568.SZ": 2637,
+          "000792.SZ": 2640,
+          "000821.SZ": 2643,
+          "000858.SZ": 2646,
+          "002230.SZ": 2649,
+          "002415.SZ": 2652,
+          "002594.SZ": 2655,
+          "002714.SZ": 2658,
+          "300015.SZ": 2661,
+          "300059.SZ": 2664,
+          "300122.SZ": 2667,
+          "300308.SZ": 2670,
+          "300750.SZ": 2673,
+          "300760.SZ": 2676,
+          "300999.SZ": 2679,
+          "301589.SZ": 2682,
+          "600030.SH": 2685,
+          "600031.SH": 2688,
+          "600036.SH": 2691,
+          "600234.SH": 2694,
+          "600276.SH": 2697,
+          "600519.SH": 2700,
+          "600547.SH": 2703,
+          "600624.SH": 2706,
+          "601012.SH": 2709,
+          "601088.SH": 2712,
+          "601100.SH": 2715,
+          "601318.SH": 2718,
+          "601398.SH": 2721,
+          "601688.SH": 2724,
+          "601766.SH": 2727,
+          "601857.SH": 2730,
+          "601888.SH": 2733,
+          "603019.SH": 2736,
+          "603259.SH": 2739,
+          "603288.SH": 2742,
+          "603799.SH": 2745,
+          "688041.SH": 2748,
+          "688111.SH": 2751,
+          "688180.SH": 2754,
+          "688472.SH": 2757,
+          "688981.SH": 2760,
+          "920002.BJ": 2763,
+          "920047.BJ": 2766,
+          "920185.BJ": 2769
+        },
+        "firstCaptureRange": [
+          "2026-10-21",
+          "2026-10-21"
+        ]
+      },
+      "daily_basic": {
+        "requiredSymbols": 50,
+        "matchedSymbols": 50,
+        "withoutMatch": [],
+        "additionalDistinctValues": [],
+        "earliestMatchingPagesBySymbol": {
+          "000001.SZ": 2623,
+          "000063.SZ": 2626,
+          "000333.SZ": 2629,
+          "000425.SZ": 2632,
+          "000538.SZ": 2635,
+          "000568.SZ": 2638,
+          "000792.SZ": 2641,
+          "000821.SZ": 2644,
+          "000858.SZ": 2647,
+          "002230.SZ": 2650,
+          "002415.SZ": 2653,
+          "002594.SZ": 2656,
+          "002714.SZ": 2659,
+          "300015.SZ": 2662,
+          "300059.SZ": 2665,
+          "300122.SZ": 2668,
+          "300308.SZ": 2671,
+          "300750.SZ": 2674,
+          "300760.SZ": 2677,
+          "300999.SZ": 2680,
+          "301589.SZ": 2683,
+          "600030.SH": 2686,
+          "600031.SH": 2689,
+          "600036.SH": 2692,
+          "600234.SH": 2695,
+          "600276.SH": 2698,
+          "600519.SH": 2701,
+          "600547.SH": 2704,
+          "600624.SH": 2707,
+          "601012.SH": 2710,
+          "601088.SH": 2713,
+          "601100.SH": 2716,
+          "601318.SH": 2719,
+          "601398.SH": 2722,
+          "601688.SH": 2725,
+          "601766.SH": 2728,
+          "601857.SH": 2731,
+          "601888.SH": 2734,
+          "603019.SH": 2737,
+          "603259.SH": 2740,
+          "603288.SH": 2743,
+          "603799.SH": 2746,
+          "688041.SH": 2749,
+          "688111.SH": 2752,
+          "688180.SH": 2755,
+          "688472.SH": 2758,
+          "688981.SH": 2761,
+          "920002.BJ": 2764,
+          "920047.BJ": 2767,
+          "920185.BJ": 2770
+        },
+        "firstCaptureRange": [
+          "2026-10-21",
+          "2026-10-21"
+        ]
+      }
+    }
+  }
+}

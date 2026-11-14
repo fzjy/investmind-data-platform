@@ -35,6 +35,6 @@ InvestMind 市场页使用 `GET /api/v1/market/overview` 和 `GET /api/v1/market
 | `commodityCategories,commodityData,commodityPeriods,commodityMetadata` | 贵金属、有色、黑色、能源、农产品各 2 个国内主力品种，报价 10-16，日线窗为 06-19 至 10-16；海外 0、日内 0。 | 按品种对账 `fut_trade_cal,fut_mapping,fut_basic,fut_daily` 原件。交易日、主力合约映射及日线日期集合相同。790 根日 K 的 OHLC、量、额、持仓、昨收、结算等逐根核对；从日线重算 170 根周 K、50 根月 K 的七个聚合数值。未复权。该历史包实际涨跌字段依 `changeBasis` 取前结算口径，形成当前主力报价。 |
 | `marketNews` | 实际正文 50 条新浪财经快讯，2026-11-14 11:03:15～14:29:46 UTC；全部为 `link_only`。 | 按 ID 对到 `core.content_document` 的标题、链接、来源、发布时间与授权状态。这里只核对已发布正文；历史页面的行情基准日不限制编辑更新后的新闻日期。 |
 
-`missingData` 在两产品均列出资金流、海外商品、日内商品。指数与商品不能用产品外层的 10-21 当作自身最新交易日。区域/行业热力图、排名及宽度本次只复算最新 50 股样本；历史页核对了存在区间、版本分布及当前指针的同版正文，尚未逐历史版本重新聚合。指数/ETF/期货本次共核 88 页供应商原件的内容哈希，接口数量见证据中的 `verifiedRawPagesByApi`。ETF 概览和浏览用不同字段合同，底层可重复利用的数据仍由请求和采集去重阶段另行核算。
+`missingData` 在两产品均列出资金流、海外商品、日内商品。指数与商品不能用产品外层的 10-21 当作自身最新交易日。本节是当前版 50 股核验。11 月 14 日稍晚重新核对全库 15 版总览、116 版浏览，包括 08-19 两股旧范围和四个 50 股行情日。[历史逐版证据与原料缺口](market-history.md) 指数/ETF/期货本次共核 88 页供应商原件的内容哈希，接口数量见证据中的 `verifiedRawPagesByApi`。ETF 概览和浏览用不同字段合同，底层可重复利用的数据仍由请求和采集去重阶段另行核算。
 
 在底座根目录执行 `python -I scripts/audit-market-supply.py --output docs/research/investmind-market-supply.json`。脚本在同一个只读事务通过生产路由读取响应，从已存事实重算，全部断言成功后保存 JSON。该次核验无采集、发布或补数操作。
