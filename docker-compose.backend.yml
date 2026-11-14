@@ -80,6 +80,23 @@ services:
       timeout: 5s
       retries: 5
 
+  news-worker:
+    profiles: ["scheduler"]
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    restart: unless-stopped
+    working_dir: /app/backend
+    command: ["python", "-m", "app.cli.main", "watch-news"]
+    environment:
+      DANG_DATABASE_URL: postgresql+psycopg://${DANG_POSTGRES_USER:-danginvest}:${DANG_POSTGRES_PASSWORD:-danginvest-local-only}@postgres:5432/${DANG_POSTGRES_DB:-danginvest}
+      DANG_NEWS_STATE_PATH: /app/data/news-collector/state.sqlite
+    volumes:
+      - ${INVESTMIND_NEWS_STATE_DIRECTORY:-./data/news-collector}:/app/data/news-collector
+    depends_on:
+      bootstrap:
+        condition: service_completed_successfully
+
   scheduler:
     build:
       context: .

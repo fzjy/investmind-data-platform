@@ -84,6 +84,8 @@ def test_backend_compose_has_bootstrap_success_gate() -> None:
         == "service_completed_successfully"
     )
     assert services["scheduler"]["profiles"] == ["scheduler"]
+    assert services["news-worker"]["profiles"] == ["scheduler"]
+    assert services["news-worker"]["command"] == ["python", "-m", "app.cli.main", "watch-news"]
     assert "DANG_DATABASE_URL" in services["api"]["environment"]
     assert "DANG_DATABASE_READ_URL" in services["api"]["environment"]
     for name in ("postgres", "bootstrap", "api", "scheduler"):

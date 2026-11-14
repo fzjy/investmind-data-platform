@@ -40,7 +40,7 @@ def _validation_details(exc: RequestValidationError) -> list[dict[str, str]]:
     return details
 
 
-def create_app(*, background_news: bool = True) -> FastAPI:
+def create_app(*, background_news: bool = False) -> FastAPI:
     application = FastAPI(title="InvestMind Data API", version="0.1.0", lifespan=news_lifespan if background_news else None)
     if not settings.database_read_url:
         raise ValueError("DANG_DATABASE_READ_URL or DANG_DATABASE_URL is required")
