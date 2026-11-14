@@ -1,0 +1,1974 @@
+{
+  "snapshot": {
+    "asOf": "2026-10-21T00:00:00+00:00",
+    "version": "20261021-1c01ff6eb0b7d78a"
+  },
+  "rows": 50,
+  "pageCoverage": {
+    "pageSize": 10,
+    "pages": 5,
+    "uniqueSymbols": 50,
+    "orderedSymbolsHash": "8a6816d25987d144ed64cbec39a7b18f7f4cc630eecdfa078310e3c6e81035e9"
+  },
+  "sameDayCore": {
+    "name": {
+      "equalNonNull": 50,
+      "equalNull": 0,
+      "different": []
+    },
+    "price": {
+      "equalNonNull": 50,
+      "equalNull": 0,
+      "different": []
+    },
+    "change": {
+      "equalNonNull": 50,
+      "equalNull": 0,
+      "different": []
+    },
+    "pe": {
+      "equalNonNull": 44,
+      "equalNull": 6,
+      "different": []
+    },
+    "pb": {
+      "equalNonNull": 50,
+      "equalNull": 0,
+      "different": []
+    },
+    "marketCap": {
+      "equalNonNull": 50,
+      "equalNull": 0,
+      "different": []
+    }
+  },
+  "roicUnits": {
+    "storedRows": 50,
+    "storedNonNullUnits": [
+      "ratio"
+    ],
+    "publishedMinMax": [
+      -5.1153,
+      -0.0106
+    ],
+    "publishedEqualsStoredNonNull": 47
+  },
+  "thresholds": {
+    "pe": {
+      "unit": "",
+      "operator": "lt",
+      "threshold": 15,
+      "available": 44,
+      "matched": 14,
+      "missingSymbols": [
+        "300122.SZ",
+        "600234.SH",
+        "600624.SH",
+        "601012.SH",
+        "688180.SH",
+        "920047.BJ"
+      ],
+      "missingWithReason": 0
+    },
+    "pb": {
+      "unit": "",
+      "operator": "lt",
+      "threshold": 2,
+      "available": 50,
+      "matched": 18,
+      "missingSymbols": [],
+      "missingWithReason": 0
+    },
+    "pePercentile": {
+      "unit": "%",
+      "operator": "lt",
+      "threshold": 30,
+      "available": 31,
+      "matched": 16,
+      "missingSymbols": [
+        "000425.SZ",
+        "000821.SZ",
+        "002714.SZ",
+        "300122.SZ",
+        "301589.SZ",
+        "600030.SH",
+        "600234.SH",
+        "600547.SH",
+        "600624.SH",
+        "601012.SH",
+        "601088.SH",
+        "603019.SH",
+        "688041.SH",
+        "688180.SH",
+        "688472.SH",
+        "688981.SH",
+        "920002.BJ",
+        "920047.BJ",
+        "920185.BJ"
+      ],
+      "missingWithReason": 0
+    },
+    "pbPercentile": {
+      "unit": "%",
+      "operator": "lt",
+      "threshold": 30,
+      "available": 36,
+      "matched": 26,
+      "missingSymbols": [
+        "000425.SZ",
+        "000821.SZ",
+        "301589.SZ",
+        "600030.SH",
+        "600234.SH",
+        "600624.SH",
+        "601088.SH",
+        "603019.SH",
+        "688041.SH",
+        "688472.SH",
+        "688981.SH",
+        "920002.BJ",
+        "920047.BJ",
+        "920185.BJ"
+      ],
+      "missingWithReason": 0
+    },
+    "dividendYield": {
+      "unit": "%",
+      "operator": "gt",
+      "threshold": 4,
+      "available": 49,
+      "matched": 9,
+      "missingSymbols": [
+        "920002.BJ"
+      ],
+      "missingWithReason": 1
+    },
+    "expectedDividendYield": {
+      "unit": "%",
+      "operator": "gt",
+      "threshold": 4,
+      "available": 42,
+      "matched": 14,
+      "missingSymbols": [
+        "002594.SZ",
+        "002714.SZ",
+        "300122.SZ",
+        "600234.SH",
+        "600624.SH",
+        "601012.SH",
+        "688180.SH",
+        "920047.BJ"
+      ],
+      "missingWithReason": 8
+    },
+    "expectedDividendYieldNTM": {
+      "unit": "%",
+      "operator": "gt",
+      "threshold": 4,
+      "available": 39,
+      "matched": 12,
+      "missingSymbols": [
+        "000063.SZ",
+        "000821.SZ",
+        "002594.SZ",
+        "002714.SZ",
+        "300122.SZ",
+        "600234.SH",
+        "600624.SH",
+        "601012.SH",
+        "688180.SH",
+        "688472.SH",
+        "920047.BJ"
+      ],
+      "missingWithReason": 11
+    },
+    "dividendYears": {
+      "unit": "\u5e74",
+      "operator": "gte",
+      "threshold": 5,
+      "available": 43,
+      "matched": 27,
+      "missingSymbols": [
+        "000538.SZ",
+        "000568.SZ",
+        "002594.SZ",
+        "300015.SZ",
+        "300308.SZ",
+        "600036.SH",
+        "600276.SH"
+      ],
+      "missingWithReason": 7
+    },
+    "payoutRatio": {
+      "unit": "%",
+      "operator": "gt",
+      "threshold": 30,
+      "available": 40,
+      "matched": 27,
+      "missingSymbols": [
+        "002594.SZ",
+        "002714.SZ",
+        "300122.SZ",
+        "301589.SZ",
+        "600234.SH",
+        "600624.SH",
+        "601012.SH",
+        "688180.SH",
+        "920002.BJ",
+        "920047.BJ"
+      ],
+      "missingWithReason": 10
+    },
+    "capitalReturnRatio": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 1,
+      "available": 0,
+      "matched": 0,
+      "missingSymbols": [
+        "000001.SZ",
+        "000063.SZ",
+        "000333.SZ",
+        "000425.SZ",
+        "000538.SZ",
+        "000568.SZ",
+        "000792.SZ",
+        "000821.SZ",
+        "000858.SZ",
+        "002230.SZ",
+        "002415.SZ",
+        "002594.SZ",
+        "002714.SZ",
+        "300015.SZ",
+        "300059.SZ",
+        "300122.SZ",
+        "300308.SZ",
+        "300750.SZ",
+        "300760.SZ",
+        "300999.SZ",
+        "301589.SZ",
+        "600030.SH",
+        "600031.SH",
+        "600036.SH",
+        "600234.SH",
+        "600276.SH",
+        "600519.SH",
+        "600547.SH",
+        "600624.SH",
+        "601012.SH",
+        "601088.SH",
+        "601100.SH",
+        "601318.SH",
+        "601398.SH",
+        "601688.SH",
+        "601766.SH",
+        "601857.SH",
+        "601888.SH",
+        "603019.SH",
+        "603259.SH",
+        "603288.SH",
+        "603799.SH",
+        "688041.SH",
+        "688111.SH",
+        "688180.SH",
+        "688472.SH",
+        "688981.SH",
+        "920002.BJ",
+        "920047.BJ",
+        "920185.BJ"
+      ],
+      "missingWithReason": 50
+    },
+    "capitalReturnRatioCum3y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 1,
+      "available": 0,
+      "matched": 0,
+      "missingSymbols": [
+        "000001.SZ",
+        "000063.SZ",
+        "000333.SZ",
+        "000425.SZ",
+        "000538.SZ",
+        "000568.SZ",
+        "000792.SZ",
+        "000821.SZ",
+        "000858.SZ",
+        "002230.SZ",
+        "002415.SZ",
+        "002594.SZ",
+        "002714.SZ",
+        "300015.SZ",
+        "300059.SZ",
+        "300122.SZ",
+        "300308.SZ",
+        "300750.SZ",
+        "300760.SZ",
+        "300999.SZ",
+        "301589.SZ",
+        "600030.SH",
+        "600031.SH",
+        "600036.SH",
+        "600234.SH",
+        "600276.SH",
+        "600519.SH",
+        "600547.SH",
+        "600624.SH",
+        "601012.SH",
+        "601088.SH",
+        "601100.SH",
+        "601318.SH",
+        "601398.SH",
+        "601688.SH",
+        "601766.SH",
+        "601857.SH",
+        "601888.SH",
+        "603019.SH",
+        "603259.SH",
+        "603288.SH",
+        "603799.SH",
+        "688041.SH",
+        "688111.SH",
+        "688180.SH",
+        "688472.SH",
+        "688981.SH",
+        "920002.BJ",
+        "920047.BJ",
+        "920185.BJ"
+      ],
+      "missingWithReason": 50
+    },
+    "capitalReturnRatioCum5y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 1,
+      "available": 0,
+      "matched": 0,
+      "missingSymbols": [
+        "000001.SZ",
+        "000063.SZ",
+        "000333.SZ",
+        "000425.SZ",
+        "000538.SZ",
+        "000568.SZ",
+        "000792.SZ",
+        "000821.SZ",
+        "000858.SZ",
+        "002230.SZ",
+        "002415.SZ",
+        "002594.SZ",
+        "002714.SZ",
+        "300015.SZ",
+        "300059.SZ",
+        "300122.SZ",
+        "300308.SZ",
+        "300750.SZ",
+        "300760.SZ",
+        "300999.SZ",
+        "301589.SZ",
+        "600030.SH",
+        "600031.SH",
+        "600036.SH",
+        "600234.SH",
+        "600276.SH",
+        "600519.SH",
+        "600547.SH",
+        "600624.SH",
+        "601012.SH",
+        "601088.SH",
+        "601100.SH",
+        "601318.SH",
+        "601398.SH",
+        "601688.SH",
+        "601766.SH",
+        "601857.SH",
+        "601888.SH",
+        "603019.SH",
+        "603259.SH",
+        "603288.SH",
+        "603799.SH",
+        "688041.SH",
+        "688111.SH",
+        "688180.SH",
+        "688472.SH",
+        "688981.SH",
+        "920002.BJ",
+        "920047.BJ",
+        "920185.BJ"
+      ],
+      "missingWithReason": 50
+    },
+    "capitalReturnRatioCum10y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 1,
+      "available": 0,
+      "matched": 0,
+      "missingSymbols": [
+        "000001.SZ",
+        "000063.SZ",
+        "000333.SZ",
+        "000425.SZ",
+        "000538.SZ",
+        "000568.SZ",
+        "000792.SZ",
+        "000821.SZ",
+        "000858.SZ",
+        "002230.SZ",
+        "002415.SZ",
+        "002594.SZ",
+        "002714.SZ",
+        "300015.SZ",
+        "300059.SZ",
+        "300122.SZ",
+        "300308.SZ",
+        "300750.SZ",
+        "300760.SZ",
+        "300999.SZ",
+        "301589.SZ",
+        "600030.SH",
+        "600031.SH",
+        "600036.SH",
+        "600234.SH",
+        "600276.SH",
+        "600519.SH",
+        "600547.SH",
+        "600624.SH",
+        "601012.SH",
+        "601088.SH",
+        "601100.SH",
+        "601318.SH",
+        "601398.SH",
+        "601688.SH",
+        "601766.SH",
+        "601857.SH",
+        "601888.SH",
+        "603019.SH",
+        "603259.SH",
+        "603288.SH",
+        "603799.SH",
+        "688041.SH",
+        "688111.SH",
+        "688180.SH",
+        "688472.SH",
+        "688981.SH",
+        "920002.BJ",
+        "920047.BJ",
+        "920185.BJ"
+      ],
+      "missingWithReason": 50
+    },
+    "roe": {
+      "unit": "%",
+      "operator": "gt",
+      "threshold": 10,
+      "available": 50,
+      "matched": 11,
+      "missingSymbols": [],
+      "missingWithReason": 0
+    },
+    "roic": {
+      "unit": "%",
+      "operator": "gt",
+      "threshold": 10,
+      "available": 47,
+      "matched": 0,
+      "missingSymbols": [
+        "600276.SH",
+        "601318.SH",
+        "601888.SH"
+      ],
+      "missingWithReason": 0
+    },
+    "realMoneyIndex": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 1,
+      "available": 50,
+      "matched": 33,
+      "missingSymbols": [],
+      "missingWithReason": 0
+    },
+    "realMoneyIndexCum3y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 1,
+      "available": 50,
+      "matched": 35,
+      "missingSymbols": [],
+      "missingWithReason": 0
+    },
+    "realMoneyIndexCum5y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 1,
+      "available": 48,
+      "matched": 36,
+      "missingSymbols": [
+        "301589.SZ",
+        "920002.BJ"
+      ],
+      "missingWithReason": 2
+    },
+    "realMoneyIndexCum10y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 1,
+      "available": 46,
+      "matched": 32,
+      "missingSymbols": [
+        "301589.SZ",
+        "688041.SH",
+        "688472.SH",
+        "920002.BJ"
+      ],
+      "missingWithReason": 4
+    },
+    "ocfToRevenue": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 0.1,
+      "available": 50,
+      "matched": 35,
+      "missingSymbols": [],
+      "missingWithReason": 0
+    },
+    "ocfToRevenueCum3y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 0.1,
+      "available": 50,
+      "matched": 37,
+      "missingSymbols": [],
+      "missingWithReason": 0
+    },
+    "ocfToRevenueCum5y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 0.1,
+      "available": 48,
+      "matched": 35,
+      "missingSymbols": [
+        "301589.SZ",
+        "920002.BJ"
+      ],
+      "missingWithReason": 2
+    },
+    "ocfToRevenueCum10y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 0.1,
+      "available": 46,
+      "matched": 34,
+      "missingSymbols": [
+        "301589.SZ",
+        "688041.SH",
+        "688472.SH",
+        "920002.BJ"
+      ],
+      "missingWithReason": 4
+    },
+    "ocfToTotalLiab": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 0.05,
+      "available": 50,
+      "matched": 36,
+      "missingSymbols": [],
+      "missingWithReason": 0
+    },
+    "ocfToTotalLiabCum3y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 0.05,
+      "available": 50,
+      "matched": 37,
+      "missingSymbols": [],
+      "missingWithReason": 0
+    },
+    "ocfToTotalLiabCum5y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 0.05,
+      "available": 48,
+      "matched": 36,
+      "missingSymbols": [
+        "301589.SZ",
+        "920002.BJ"
+      ],
+      "missingWithReason": 2
+    },
+    "ocfToTotalLiabCum10y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 0.05,
+      "available": 46,
+      "matched": 34,
+      "missingSymbols": [
+        "301589.SZ",
+        "688041.SH",
+        "688472.SH",
+        "920002.BJ"
+      ],
+      "missingWithReason": 4
+    },
+    "capexCoverageRatio": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 1,
+      "available": 50,
+      "matched": 38,
+      "missingSymbols": [],
+      "missingWithReason": 0
+    },
+    "capexCoverageRatioCum3y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 1,
+      "available": 50,
+      "matched": 38,
+      "missingSymbols": [],
+      "missingWithReason": 0
+    },
+    "capexCoverageRatioCum5y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 1,
+      "available": 48,
+      "matched": 35,
+      "missingSymbols": [
+        "301589.SZ",
+        "920002.BJ"
+      ],
+      "missingWithReason": 2
+    },
+    "capexCoverageRatioCum10y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 1,
+      "available": 45,
+      "matched": 36,
+      "missingSymbols": [
+        "301589.SZ",
+        "688041.SH",
+        "688472.SH",
+        "688981.SH",
+        "920002.BJ"
+      ],
+      "missingWithReason": 5
+    },
+    "freeCashFlowFy": {
+      "unit": "\u4ebf",
+      "operator": "gt",
+      "threshold": 0,
+      "available": 50,
+      "matched": 38,
+      "missingSymbols": [],
+      "missingWithReason": 0
+    },
+    "freeCashFlowFyCum3y": {
+      "unit": "\u4ebf",
+      "operator": "gt",
+      "threshold": 0,
+      "available": 50,
+      "matched": 38,
+      "missingSymbols": [],
+      "missingWithReason": 0
+    },
+    "freeCashFlowFyCum5y": {
+      "unit": "\u4ebf",
+      "operator": "gt",
+      "threshold": 0,
+      "available": 48,
+      "matched": 35,
+      "missingSymbols": [
+        "301589.SZ",
+        "920002.BJ"
+      ],
+      "missingWithReason": 2
+    },
+    "freeCashFlowFyCum10y": {
+      "unit": "\u4ebf",
+      "operator": "gt",
+      "threshold": 0,
+      "available": 45,
+      "matched": 36,
+      "missingSymbols": [
+        "301589.SZ",
+        "688041.SH",
+        "688472.SH",
+        "688981.SH",
+        "920002.BJ"
+      ],
+      "missingWithReason": 5
+    },
+    "freeCashFlowMarginFy": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 0.05,
+      "available": 50,
+      "matched": 32,
+      "missingSymbols": [],
+      "missingWithReason": 0
+    },
+    "freeCashFlowMarginFyCum3y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 0.05,
+      "available": 50,
+      "matched": 33,
+      "missingSymbols": [],
+      "missingWithReason": 0
+    },
+    "freeCashFlowMarginFyCum5y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 0.05,
+      "available": 48,
+      "matched": 29,
+      "missingSymbols": [
+        "301589.SZ",
+        "920002.BJ"
+      ],
+      "missingWithReason": 2
+    },
+    "freeCashFlowMarginFyCum10y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 0.05,
+      "available": 45,
+      "matched": 27,
+      "missingSymbols": [
+        "301589.SZ",
+        "688041.SH",
+        "688472.SH",
+        "688981.SH",
+        "920002.BJ"
+      ],
+      "missingWithReason": 5
+    },
+    "cashCollectionRatio": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 1,
+      "available": 44,
+      "matched": 34,
+      "missingSymbols": [
+        "000001.SZ",
+        "600030.SH",
+        "600036.SH",
+        "601318.SH",
+        "601398.SH",
+        "601688.SH"
+      ],
+      "missingWithReason": 6
+    },
+    "cashCollectionRatioCum3y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 1,
+      "available": 44,
+      "matched": 33,
+      "missingSymbols": [
+        "000001.SZ",
+        "600030.SH",
+        "600036.SH",
+        "601318.SH",
+        "601398.SH",
+        "601688.SH"
+      ],
+      "missingWithReason": 6
+    },
+    "cashCollectionRatioCum5y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 1,
+      "available": 42,
+      "matched": 30,
+      "missingSymbols": [
+        "000001.SZ",
+        "301589.SZ",
+        "600030.SH",
+        "600036.SH",
+        "601318.SH",
+        "601398.SH",
+        "601688.SH",
+        "920002.BJ"
+      ],
+      "missingWithReason": 8
+    },
+    "cashCollectionRatioCum10y": {
+      "unit": "",
+      "operator": "gt",
+      "threshold": 1,
+      "available": 39,
+      "matched": 26,
+      "missingSymbols": [
+        "000001.SZ",
+        "301589.SZ",
+        "600030.SH",
+        "600036.SH",
+        "601318.SH",
+        "601398.SH",
+        "601688.SH",
+        "688041.SH",
+        "688472.SH",
+        "688981.SH",
+        "920002.BJ"
+      ],
+      "missingWithReason": 11
+    },
+    "cashPaymentRatio": {
+      "unit": "",
+      "operator": "lt",
+      "threshold": 1,
+      "available": 44,
+      "matched": 27,
+      "missingSymbols": [
+        "000001.SZ",
+        "600030.SH",
+        "600036.SH",
+        "601318.SH",
+        "601398.SH",
+        "601688.SH"
+      ],
+      "missingWithReason": 6
+    },
+    "cashPaymentRatioCum3y": {
+      "unit": "",
+      "operator": "lt",
+      "threshold": 1,
+      "available": 44,
+      "matched": 24,
+      "missingSymbols": [
+        "000001.SZ",
+        "600030.SH",
+        "600036.SH",
+        "601318.SH",
+        "601398.SH",
+        "601688.SH"
+      ],
+      "missingWithReason": 6
+    },
+    "cashPaymentRatioCum5y": {
+      "unit": "",
+      "operator": "lt",
+      "threshold": 1,
+      "available": 42,
+      "matched": 22,
+      "missingSymbols": [
+        "000001.SZ",
+        "301589.SZ",
+        "600030.SH",
+        "600036.SH",
+        "601318.SH",
+        "601398.SH",
+        "601688.SH",
+        "920002.BJ"
+      ],
+      "missingWithReason": 8
+    },
+    "cashPaymentRatioCum10y": {
+      "unit": "",
+      "operator": "lt",
+      "threshold": 1,
+      "available": 39,
+      "matched": 22,
+      "missingSymbols": [
+        "000001.SZ",
+        "301589.SZ",
+        "600030.SH",
+        "600036.SH",
+        "601318.SH",
+        "601398.SH",
+        "601688.SH",
+        "688041.SH",
+        "688472.SH",
+        "688981.SH",
+        "920002.BJ"
+      ],
+      "missingWithReason": 11
+    },
+    "institutionHolding": {
+      "unit": "%",
+      "operator": "gt",
+      "threshold": 5,
+      "available": 43,
+      "matched": 5,
+      "missingSymbols": [
+        "000821.SZ",
+        "002714.SZ",
+        "600030.SH",
+        "600234.SH",
+        "600624.SH",
+        "603259.SH",
+        "920047.BJ"
+      ],
+      "missingWithReason": 0
+    },
+    "institutionHoldingChange": {
+      "unit": "%",
+      "operator": "gt",
+      "threshold": 0,
+      "available": 43,
+      "matched": 10,
+      "missingSymbols": [
+        "000821.SZ",
+        "002714.SZ",
+        "600030.SH",
+        "600234.SH",
+        "600624.SH",
+        "603259.SH",
+        "920047.BJ"
+      ],
+      "missingWithReason": 0
+    },
+    "longMoneyHoldingRatio": {
+      "unit": "%",
+      "operator": "gt",
+      "threshold": 1,
+      "available": 0,
+      "matched": 0,
+      "missingSymbols": [
+        "000001.SZ",
+        "000063.SZ",
+        "000333.SZ",
+        "000425.SZ",
+        "000538.SZ",
+        "000568.SZ",
+        "000792.SZ",
+        "000821.SZ",
+        "000858.SZ",
+        "002230.SZ",
+        "002415.SZ",
+        "002594.SZ",
+        "002714.SZ",
+        "300015.SZ",
+        "300059.SZ",
+        "300122.SZ",
+        "300308.SZ",
+        "300750.SZ",
+        "300760.SZ",
+        "300999.SZ",
+        "301589.SZ",
+        "600030.SH",
+        "600031.SH",
+        "600036.SH",
+        "600234.SH",
+        "600276.SH",
+        "600519.SH",
+        "600547.SH",
+        "600624.SH",
+        "601012.SH",
+        "601088.SH",
+        "601100.SH",
+        "601318.SH",
+        "601398.SH",
+        "601688.SH",
+        "601766.SH",
+        "601857.SH",
+        "601888.SH",
+        "603019.SH",
+        "603259.SH",
+        "603288.SH",
+        "603799.SH",
+        "688041.SH",
+        "688111.SH",
+        "688180.SH",
+        "688472.SH",
+        "688981.SH",
+        "920002.BJ",
+        "920047.BJ",
+        "920185.BJ"
+      ],
+      "missingWithReason": 50
+    },
+    "fundHeavyCount": {
+      "unit": "\u6b21",
+      "operator": "gt",
+      "threshold": 5,
+      "available": 0,
+      "matched": 0,
+      "missingSymbols": [
+        "000001.SZ",
+        "000063.SZ",
+        "000333.SZ",
+        "000425.SZ",
+        "000538.SZ",
+        "000568.SZ",
+        "000792.SZ",
+        "000821.SZ",
+        "000858.SZ",
+        "002230.SZ",
+        "002415.SZ",
+        "002594.SZ",
+        "002714.SZ",
+        "300015.SZ",
+        "300059.SZ",
+        "300122.SZ",
+        "300308.SZ",
+        "300750.SZ",
+        "300760.SZ",
+        "300999.SZ",
+        "301589.SZ",
+        "600030.SH",
+        "600031.SH",
+        "600036.SH",
+        "600234.SH",
+        "600276.SH",
+        "600519.SH",
+        "600547.SH",
+        "600624.SH",
+        "601012.SH",
+        "601088.SH",
+        "601100.SH",
+        "601318.SH",
+        "601398.SH",
+        "601688.SH",
+        "601766.SH",
+        "601857.SH",
+        "601888.SH",
+        "603019.SH",
+        "603259.SH",
+        "603288.SH",
+        "603799.SH",
+        "688041.SH",
+        "688111.SH",
+        "688180.SH",
+        "688472.SH",
+        "688981.SH",
+        "920002.BJ",
+        "920047.BJ",
+        "920185.BJ"
+      ],
+      "missingWithReason": 50
+    },
+    "chipConcentrationChange": {
+      "unit": "%",
+      "operator": "gt",
+      "threshold": 0,
+      "available": 0,
+      "matched": 0,
+      "missingSymbols": [
+        "000001.SZ",
+        "000063.SZ",
+        "000333.SZ",
+        "000425.SZ",
+        "000538.SZ",
+        "000568.SZ",
+        "000792.SZ",
+        "000821.SZ",
+        "000858.SZ",
+        "002230.SZ",
+        "002415.SZ",
+        "002594.SZ",
+        "002714.SZ",
+        "300015.SZ",
+        "300059.SZ",
+        "300122.SZ",
+        "300308.SZ",
+        "300750.SZ",
+        "300760.SZ",
+        "300999.SZ",
+        "301589.SZ",
+        "600030.SH",
+        "600031.SH",
+        "600036.SH",
+        "600234.SH",
+        "600276.SH",
+        "600519.SH",
+        "600547.SH",
+        "600624.SH",
+        "601012.SH",
+        "601088.SH",
+        "601100.SH",
+        "601318.SH",
+        "601398.SH",
+        "601688.SH",
+        "601766.SH",
+        "601857.SH",
+        "601888.SH",
+        "603019.SH",
+        "603259.SH",
+        "603288.SH",
+        "603799.SH",
+        "688041.SH",
+        "688111.SH",
+        "688180.SH",
+        "688472.SH",
+        "688981.SH",
+        "920002.BJ",
+        "920047.BJ",
+        "920185.BJ"
+      ],
+      "missingWithReason": 0
+    },
+    "marketCap": {
+      "unit": "\u4ebf",
+      "operator": "gt",
+      "threshold": 100,
+      "available": 50,
+      "matched": 45,
+      "missingSymbols": [],
+      "missingWithReason": 0
+    }
+  },
+  "presets": {
+    "high-dividend-stable": {
+      "label": "\u9ad8\u80a1\u606f\u7a33\u5065",
+      "thresholds": {
+        "dividendYield": 4,
+        "dividendYears": 5,
+        "pe": 15
+      },
+      "directionOverrides": {},
+      "matched": 3
+    },
+    "cash-cow": {
+      "label": "\u73b0\u91d1\u5976\u725b",
+      "thresholds": {
+        "realMoneyIndex": 1.2,
+        "roe": 10,
+        "dividendYield": 3
+      },
+      "directionOverrides": {},
+      "matched": 3
+    },
+    "low-valuation-bluechip": {
+      "label": "\u4f4e\u4f30\u84dd\u7b79",
+      "thresholds": {
+        "pePercentile": 30,
+        "pbPercentile": 30,
+        "marketCap": 500
+      },
+      "directionOverrides": {},
+      "matched": 15
+    },
+    "quality-growth": {
+      "label": "\u4f18\u8d28\u6210\u957f",
+      "thresholds": {
+        "roe": 15,
+        "roic": 12,
+        "realMoneyIndex": 1
+      },
+      "directionOverrides": {},
+      "matched": 0
+    },
+    "deep-value": {
+      "label": "\u6df1\u5ea6\u4ef7\u503c",
+      "thresholds": {
+        "pe": 10,
+        "pb": 1.5,
+        "dividendYield": 3
+      },
+      "directionOverrides": {},
+      "matched": 5
+    },
+    "dividend-aristocrat": {
+      "label": "\u5206\u7ea2\u8d35\u65cf",
+      "thresholds": {
+        "dividendYears": 10,
+        "dividendYield": 3,
+        "roe": 8
+      },
+      "directionOverrides": {},
+      "matched": 5
+    },
+    "small-cap-value": {
+      "label": "\u5c0f\u76d8\u4ef7\u503c",
+      "thresholds": {
+        "marketCap": 200,
+        "pe": 15,
+        "pb": 2,
+        "dividendYield": 2
+      },
+      "directionOverrides": {
+        "marketCap": "lt"
+      },
+      "matched": 0
+    },
+    "high-roe-low-pe": {
+      "label": "\u9ad8ROE\u4f4ePE",
+      "thresholds": {
+        "roe": 20,
+        "pe": 20,
+        "realMoneyIndex": 0.8
+      },
+      "directionOverrides": {},
+      "matched": 0
+    },
+    "ntm-dividend-hunter": {
+      "label": "NTM\u80a1\u606f\u730e\u624b",
+      "thresholds": {
+        "expectedDividendYieldNTM": 5,
+        "pe": 20,
+        "marketCap": 100
+      },
+      "directionOverrides": {},
+      "matched": 6
+    },
+    "historical-low": {
+      "label": "\u5386\u53f2\u4f4e\u4f4d",
+      "thresholds": {
+        "pePercentile": 20,
+        "pbPercentile": 20
+      },
+      "directionOverrides": {},
+      "matched": 12
+    }
+  },
+  "quickSort": {
+    "pe": {
+      "usable": 44,
+      "orderedSymbolsHash": "7d36c4331f849310bf071999990e76e502b3cffa39deb37791c7cb66fcadd532"
+    },
+    "pb": {
+      "usable": 50,
+      "orderedSymbolsHash": "0dd56a12cad2549112ee089a1872e0c795fb5f423096ce6aa6d29d0bd6bbd6a9"
+    },
+    "pePercentile": {
+      "usable": 31,
+      "orderedSymbolsHash": "18f04a46f86847451ba15523fc22718e8d64de4a0dd1297e4eedf312634e4e46"
+    },
+    "pbPercentile": {
+      "usable": 36,
+      "orderedSymbolsHash": "29aff26974bc6338ed87343ccbb429c0d3228bfeb79d67bf661db2590547d7ff"
+    },
+    "dividendYield": {
+      "usable": 49,
+      "orderedSymbolsHash": "568b5d8867e0ad1d69e3e2893f8c5100c23295cba4066ae2765a1f4bc2d82841"
+    },
+    "expectedDividendYield": {
+      "usable": 42,
+      "orderedSymbolsHash": "d96ebfa3b747d5482722843c5a747c7cbe132a4c70beef60db5ef9409f476cbb"
+    },
+    "expectedDividendYieldNTM": {
+      "usable": 39,
+      "orderedSymbolsHash": "8e06a7f8f9da6e7ffaa3750009af0e668a719b43cd10aac79f19e5471fba5b7e"
+    },
+    "dividendYears": {
+      "usable": 43,
+      "orderedSymbolsHash": "701e55f2d28b8ece12d1a26d54fef692543f5fc0684c43a13f4103b5657b6fb2"
+    },
+    "payoutRatio": {
+      "usable": 40,
+      "orderedSymbolsHash": "d4cdee80b9c638019b99e44872ac60151c4f48d89cffdf1c41401d9546a7e360"
+    },
+    "capitalReturnRatio": {
+      "usable": 0,
+      "orderedSymbolsHash": "8a6816d25987d144ed64cbec39a7b18f7f4cc630eecdfa078310e3c6e81035e9"
+    },
+    "capitalReturnRatioCum3y": {
+      "usable": 0,
+      "orderedSymbolsHash": "8a6816d25987d144ed64cbec39a7b18f7f4cc630eecdfa078310e3c6e81035e9"
+    },
+    "capitalReturnRatioCum5y": {
+      "usable": 0,
+      "orderedSymbolsHash": "8a6816d25987d144ed64cbec39a7b18f7f4cc630eecdfa078310e3c6e81035e9"
+    },
+    "capitalReturnRatioCum10y": {
+      "usable": 0,
+      "orderedSymbolsHash": "8a6816d25987d144ed64cbec39a7b18f7f4cc630eecdfa078310e3c6e81035e9"
+    },
+    "roe": {
+      "usable": 50,
+      "orderedSymbolsHash": "c152a64759b6c239a2914515fd5008688ffd934004bc41e7a76febcce3d3624c"
+    },
+    "roic": {
+      "usable": 47,
+      "orderedSymbolsHash": "29f62502c365bec05f218dbd1137959898eb2b19681f4825ad9f24e91598e6e9"
+    },
+    "realMoneyIndex": {
+      "usable": 50,
+      "orderedSymbolsHash": "b8b05679a99768a6f269b91f5aee404943d76e790dde8450aa7a005722d8568d"
+    },
+    "realMoneyIndexCum3y": {
+      "usable": 50,
+      "orderedSymbolsHash": "24110bc8754c740060707f98dd1ec4d870a9b4a225d81aa69184f702b7a8ac03"
+    },
+    "realMoneyIndexCum5y": {
+      "usable": 48,
+      "orderedSymbolsHash": "d984b732b2c629a22ee385c7cd91ec36da6f84d925e906d3134f9d898ad33dfc"
+    },
+    "realMoneyIndexCum10y": {
+      "usable": 46,
+      "orderedSymbolsHash": "11886ca6cfea2d0863e3aa3d3a6a4c69d5438942accde56f40839ffb5fb01bb6"
+    },
+    "ocfToRevenue": {
+      "usable": 50,
+      "orderedSymbolsHash": "913994f75a80370340aad2bf86b70aeb98ba0dd8667deb2c6de137c2aa5bab14"
+    },
+    "ocfToRevenueCum3y": {
+      "usable": 50,
+      "orderedSymbolsHash": "4a6293cea0d8862015297a58457ec596432024a52c4cf9b9dfb9ee4637be5474"
+    },
+    "ocfToRevenueCum5y": {
+      "usable": 48,
+      "orderedSymbolsHash": "717026457d1ba9072e40e695327076250826bd57a88861850f3597b63591e97e"
+    },
+    "ocfToRevenueCum10y": {
+      "usable": 46,
+      "orderedSymbolsHash": "af45d5fc1ac67f933cf4340e3098bad654f906c3cca675c01d7005a5d08cd3f3"
+    },
+    "ocfToTotalLiab": {
+      "usable": 50,
+      "orderedSymbolsHash": "9e8bc11a0c69a5506a1d96e4878b407bf7d587fc5cc2076c38a2152e7fac7d13"
+    },
+    "ocfToTotalLiabCum3y": {
+      "usable": 50,
+      "orderedSymbolsHash": "5ea30d5a33aeb5f61ee82bff860c7a300984af386774b1cb8f9722377da5b24a"
+    },
+    "ocfToTotalLiabCum5y": {
+      "usable": 48,
+      "orderedSymbolsHash": "bbecb8b6ff0ef1da4e7b24e001c4ef36b1af2f2820872666b955ea536381e68f"
+    },
+    "ocfToTotalLiabCum10y": {
+      "usable": 46,
+      "orderedSymbolsHash": "561c405f1f3d2cbba0f7b8976150b36525c8d11d8c064ecb6b604396c9f308d4"
+    },
+    "capexCoverageRatio": {
+      "usable": 50,
+      "orderedSymbolsHash": "2b5e02b9a6e783bf3be0d7e790de63fdde410b8adcf27618acff4a31c85f82a2"
+    },
+    "capexCoverageRatioCum3y": {
+      "usable": 50,
+      "orderedSymbolsHash": "b567050464896ae498ce8eb5fe713b0f174ddf5810a3e328cf04bde29a507a79"
+    },
+    "capexCoverageRatioCum5y": {
+      "usable": 48,
+      "orderedSymbolsHash": "704ef03598e1691f2bd23fa42ec03537758d0df7504ce9e6b273fc6d086d4718"
+    },
+    "capexCoverageRatioCum10y": {
+      "usable": 45,
+      "orderedSymbolsHash": "2f59bc852defb6d99984e503b1f68498e86cf59fbc290e761c4e8c342e2f42af"
+    },
+    "freeCashFlowFy": {
+      "usable": 50,
+      "orderedSymbolsHash": "87711d81a249bbc8681d15c6fa47496fdf4224488f6f42a5741120c4874d6c44"
+    },
+    "freeCashFlowFyCum3y": {
+      "usable": 50,
+      "orderedSymbolsHash": "7dac90ac579e76461fb3891401ff5bf59debd77877d4f4a13a4aa04633038b9e"
+    },
+    "freeCashFlowFyCum5y": {
+      "usable": 48,
+      "orderedSymbolsHash": "7719e3a18b36ef9aa1eb98e9919f4f49ec27128592ed02b9b15c36a12b61d642"
+    },
+    "freeCashFlowFyCum10y": {
+      "usable": 45,
+      "orderedSymbolsHash": "28ff8bd9957541d367e9dc0366adabb1849a5b71e3fb9b58d8cbdd4461a8890e"
+    },
+    "freeCashFlowMarginFy": {
+      "usable": 50,
+      "orderedSymbolsHash": "2c7f3f0f28d8832f17d530099388fa7dfd82f56ba23b7153b52da3a206fb94f1"
+    },
+    "freeCashFlowMarginFyCum3y": {
+      "usable": 50,
+      "orderedSymbolsHash": "b951c25d3169e7e7a13fd3b45fc8e7511f8c29152c3e9708f6a31b39b9d0c9f3"
+    },
+    "freeCashFlowMarginFyCum5y": {
+      "usable": 48,
+      "orderedSymbolsHash": "7a4a436519e1ef28149d1130b21690f4c2837cc2ea32841817a3ee6079b6fab8"
+    },
+    "freeCashFlowMarginFyCum10y": {
+      "usable": 45,
+      "orderedSymbolsHash": "14593d317f44d4b534e2a4e1874fe737cae9499e649b1c5217a9f255918fb800"
+    },
+    "cashCollectionRatio": {
+      "usable": 44,
+      "orderedSymbolsHash": "24fc5bf7488996a2a78f6c81174d19670147886ea484783b49ad6355cc8cc135"
+    },
+    "cashCollectionRatioCum3y": {
+      "usable": 44,
+      "orderedSymbolsHash": "968c356c7b94943eeb6fe498f88092b4666605db5cc5b3962163a6196072a188"
+    },
+    "cashCollectionRatioCum5y": {
+      "usable": 42,
+      "orderedSymbolsHash": "ee4c58c5aefb2e8a1e40e2a5407913e63d77a0e5450b09a1996bf6871b56b9b8"
+    },
+    "cashCollectionRatioCum10y": {
+      "usable": 39,
+      "orderedSymbolsHash": "dc12c2c2d8514490b9c5eadcc820acfb14ac8282ec9e77b47bcd912f377af609"
+    },
+    "cashPaymentRatio": {
+      "usable": 44,
+      "orderedSymbolsHash": "03844f8c8ec61474b61bce04b1eba54f611804435b26f18efdffc1574b9ec962"
+    },
+    "cashPaymentRatioCum3y": {
+      "usable": 44,
+      "orderedSymbolsHash": "b9fb35e1401e9a693d01c25ba3946ef4a0339c847d54f59e3152c58306c8d3d8"
+    },
+    "cashPaymentRatioCum5y": {
+      "usable": 42,
+      "orderedSymbolsHash": "fd74b6211568c5db885608596f66ae92092091778adc1f0375c76e741b4f5efd"
+    },
+    "cashPaymentRatioCum10y": {
+      "usable": 39,
+      "orderedSymbolsHash": "addb0d2cc9e68c5db3c51e0901dad72a6cba0b412e6128a6ac13c43d4666147b"
+    },
+    "institutionHolding": {
+      "usable": 43,
+      "orderedSymbolsHash": "2644f362317d61d74486c7c297631c5d0f67a8c48c1cd986868d7112b5e35d0a"
+    },
+    "institutionHoldingChange": {
+      "usable": 43,
+      "orderedSymbolsHash": "56c1eede16c1087bac9f810eadc15208774a30e63050593ba920151a4d80b09f"
+    },
+    "longMoneyHoldingRatio": {
+      "usable": 0,
+      "orderedSymbolsHash": "8a6816d25987d144ed64cbec39a7b18f7f4cc630eecdfa078310e3c6e81035e9"
+    },
+    "fundHeavyCount": {
+      "usable": 0,
+      "orderedSymbolsHash": "8a6816d25987d144ed64cbec39a7b18f7f4cc630eecdfa078310e3c6e81035e9"
+    },
+    "chipConcentrationChange": {
+      "usable": 0,
+      "orderedSymbolsHash": "8a6816d25987d144ed64cbec39a7b18f7f4cc630eecdfa078310e3c6e81035e9"
+    },
+    "marketCap": {
+      "usable": 50,
+      "orderedSymbolsHash": "f96453f390da776b4f35fb7a1803c73f55c87cc76393e50c6f06b1d9496f6618"
+    },
+    "profitGrowth": {
+      "usable": 50,
+      "orderedSymbolsHash": "55efdc6b992dc9a2ea159163cef9cff4de860265fd81d206a78a3621486f7119"
+    },
+    "revenueGrowingFy": {
+      "usable": 50,
+      "orderedSymbolsHash": "8d422ab899797c70f972d1edbebe1e13e39bef8745db71015eb1d2b130fd0170"
+    },
+    "ocfGrowingFy": {
+      "usable": 50,
+      "orderedSymbolsHash": "4ed0e7764b46f8d5fe3014f443e4e1cdaf7b2544218c529955d8c455770f010f"
+    }
+  },
+  "advancedSort": {
+    "\u9ad8\u80a1\u606f": {
+      "rules": [
+        {
+          "field": "dividendYield",
+          "direction": "desc",
+          "enabled": true,
+          "weight": 70
+        },
+        {
+          "field": "expectedDividendYieldNTM",
+          "direction": "desc",
+          "enabled": true,
+          "weight": 30
+        }
+      ],
+      "orderedSymbolsHash": "8df3b0930849b4721e689c4406e68af175396974c90b293a8a27ce359d1fa6cd"
+    },
+    "\u5206\u7ea2\u7a33\u5065": {
+      "rules": [
+        {
+          "field": "dividendYield",
+          "direction": "desc",
+          "enabled": true,
+          "weight": 40
+        },
+        {
+          "field": "dividendYears",
+          "direction": "desc",
+          "enabled": true,
+          "weight": 35
+        },
+        {
+          "field": "payoutRatio",
+          "direction": "desc",
+          "enabled": true,
+          "weight": 25
+        }
+      ],
+      "orderedSymbolsHash": "175cc53ca5de1b4854263edbea57e143669f14189f5c95f036b3b76abe051302"
+    },
+    "\u8d28\u91cf\u4f18\u5148": {
+      "rules": [
+        {
+          "field": "roe",
+          "direction": "desc",
+          "enabled": true,
+          "weight": 40
+        },
+        {
+          "field": "roic",
+          "direction": "desc",
+          "enabled": true,
+          "weight": 30
+        },
+        {
+          "field": "realMoneyIndex",
+          "direction": "desc",
+          "enabled": true,
+          "weight": 30
+        }
+      ],
+      "orderedSymbolsHash": "c2b88db10f7248e224e73ce7a180573463246dcb4ba1bc9ef45c7412c21ef62f"
+    },
+    "\u4fbf\u5b9c\u597d\u516c\u53f8": {
+      "rules": [
+        {
+          "field": "pePercentile",
+          "direction": "asc",
+          "enabled": true,
+          "weight": 40
+        },
+        {
+          "field": "pbPercentile",
+          "direction": "asc",
+          "enabled": true,
+          "weight": 30
+        },
+        {
+          "field": "roe",
+          "direction": "desc",
+          "enabled": true,
+          "weight": 30
+        }
+      ],
+      "orderedSymbolsHash": "af9b68c5e7d04fb9ffe285ad7303a14e8ee0b243ac22794e1c37b8f7b48d5c18"
+    },
+    "\u771f\u94b1\uff0b\u5206\u7ea2": {
+      "rules": [
+        {
+          "field": "realMoneyIndexCum5y",
+          "direction": "desc",
+          "enabled": true,
+          "weight": 40
+        },
+        {
+          "field": "dividendYield",
+          "direction": "desc",
+          "enabled": true,
+          "weight": 30
+        },
+        {
+          "field": "expectedDividendYieldNTM",
+          "direction": "desc",
+          "enabled": true,
+          "weight": 30
+        }
+      ],
+      "orderedSymbolsHash": "795f9aa54a5a21796d68c3107f4b3a7d242603adf5e0eddf3a7c7b3947e09dcc"
+    },
+    "\u589e\u957f\u504f\u597d": {
+      "rules": [
+        {
+          "field": "revenueGrowingFy",
+          "direction": "desc",
+          "enabled": true,
+          "weight": 60
+        },
+        {
+          "field": "ocfGrowingFy",
+          "direction": "desc",
+          "enabled": true,
+          "weight": 40
+        }
+      ],
+      "orderedSymbolsHash": "a0bfe36930f3412559ce85434193504cfae1145c0443f6c6db5b8a6f573cce6c"
+    },
+    "\u5927\u76d8\u7a33\u5065": {
+      "rules": [
+        {
+          "field": "marketCap",
+          "direction": "desc",
+          "enabled": true,
+          "weight": 40
+        },
+        {
+          "field": "dividendYield",
+          "direction": "desc",
+          "enabled": true,
+          "weight": 30
+        },
+        {
+          "field": "roe",
+          "direction": "desc",
+          "enabled": true,
+          "weight": 30
+        }
+      ],
+      "orderedSymbolsHash": "e79cc58948dccead2368741a78c7349a85838c5e05226fdcfa9ef35ea6936410"
+    }
+  },
+  "exclusionPassing": {
+    "loss": 45,
+    "st": 48,
+    "inventoryRisk": 42,
+    "lowRealMoney": 37,
+    "netDebt": 48,
+    "performanceDecline": 41,
+    "noDividend": 50,
+    "revenueDecline": 38,
+    "cashflowDecline": 27
+  },
+  "boardCounts": {
+    "sh-main": 21,
+    "sz-main": 13,
+    "star": 5,
+    "chinext": 8,
+    "bse": 3,
+    "hk": 0
+  },
+  "exclusionMembers": {
+    "loss": "b39455cc2ef687bfd6dc65646f2bfb1eec0aa0e2366efb1f0cd6c4a559f036d4",
+    "st": "c6e3948641d8a6511477a6762fad06bbde5f047b7655396e1644c05f0f744669",
+    "inventoryRisk": "9237bc8b18303110e3360cd2f1792ef54cb52d8e3780d228e72efc58fe9c53b8",
+    "lowRealMoney": "5fb55b77f35cb085dd3b3b7ceabbcbcfaa858e3836ea2de99793dbb809e589a6",
+    "netDebt": "d29ecd139c6140a5470cf0a3acd8727cd55e7d52d4b5527bd8f1b35d590ec603",
+    "performanceDecline": "824ef6e168adcdb6c099e3f2b457f6b86c000dc49c3fed6cd03b6144d7b7263d",
+    "noDividend": "8a6816d25987d144ed64cbec39a7b18f7f4cc630eecdfa078310e3c6e81035e9",
+    "revenueDecline": "836e9f4dc0052bd5b5197d46cab1bdcae206fd136fad1cd7e2e56975a6522424",
+    "cashflowDecline": "dd68b0aea83521f38e90c3d1d314e390a293d49c6276e2c2c45f8a83d1d14477"
+  },
+  "boardMembers": {
+    "sh-main": "590e96af1c8d873cd5c5da370082dfbbc5c2430adb2b8110108b0e330b5ca397",
+    "sz-main": "ef04bade0bdb2bd9913cc398601512584d5c535680b5f352c8918a073c60275f",
+    "star": "c105a42c985ae832f5af95b0d1aed3ade21e3f3016f17e9f530c970e2280707b",
+    "chinext": "0b686998d8ca44368baae0bb71a8d339571585761d9bed8e7cb45fa04a8246e6",
+    "bse": "fba8095978c6f402971d2cf935d1bfc03b6313be9197e684fc0faae6c4ed09c4",
+    "hk": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "categorySamples": {
+    "majorIndustry": {
+      "value": "\u94f6\u884c",
+      "matched": 3
+    },
+    "subIndustry": {
+      "value": "\u80a1\u4efd\u5236\u94f6\u884c\u2162",
+      "matched": 2
+    },
+    "region": {
+      "value": "\u6df1\u5733",
+      "matched": 8
+    },
+    "concept": null
+  },
+  "displayFieldCoverage": {
+    "board": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "capitalReturnRatio": {
+      "present": 50,
+      "nonNull": 18
+    },
+    "cashflowGrowth": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "change": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "concepts": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "dividendYears": {
+      "present": 50,
+      "nonNull": 43
+    },
+    "dividendYield": {
+      "present": 50,
+      "nonNull": 49
+    },
+    "expectedDividendYield": {
+      "present": 50,
+      "nonNull": 42
+    },
+    "expectedDividendYieldNTM": {
+      "present": 50,
+      "nonNull": 39
+    },
+    "financialTrends": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "grossMargin": {
+      "present": 50,
+      "nonNull": 44
+    },
+    "incomeSafety": {
+      "present": 50,
+      "nonNull": 43
+    },
+    "industry": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "institutionHolding": {
+      "present": 50,
+      "nonNull": 43
+    },
+    "inventoryRisk": {
+      "present": 50,
+      "nonNull": 44
+    },
+    "isLoss": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "isST": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "listHistory": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "listMissingReasons": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "listRisks": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "listingYears": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "majorIndustry": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "marketCap": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "metricBasis": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "name": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "netDebt": {
+      "present": 50,
+      "nonNull": 47
+    },
+    "netMargin": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "payoutRatio": {
+      "present": 50,
+      "nonNull": 40
+    },
+    "pb": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "pbPercentile": {
+      "present": 50,
+      "nonNull": 36
+    },
+    "pe": {
+      "present": 50,
+      "nonNull": 44
+    },
+    "pePercentile": {
+      "present": 50,
+      "nonNull": 31
+    },
+    "price": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "profitGrowth": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "profitTrend": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "realMoneyIndex": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "region": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "researchValues": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "revenueGrowth": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "roe": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "roic": {
+      "present": 50,
+      "nonNull": 47
+    },
+    "subIndustry": {
+      "present": 50,
+      "nonNull": 50
+    },
+    "symbol": {
+      "present": 50,
+      "nonNull": 50
+    }
+  },
+  "bankPresets": {
+    "defensive": {
+      "algorithmVersion": "rea-bank-score-20261020",
+      "symbols": [
+        "000001.SZ",
+        "600036.SH",
+        "601398.SH"
+      ],
+      "nonNullScores": 0,
+      "availableFields": {
+        "pb": 3,
+        "pbPercentile10y": 0,
+        "dividendYield": 3,
+        "expectedDividendYield": 3,
+        "bankRevisedExpectedDividendYield": 0,
+        "netInterestMargin": 0,
+        "bankRevisedExpectedGrowth": 0,
+        "roe": 3,
+        "nplRatio": 0,
+        "provisionCoverage": 0,
+        "loanDepositRatio": 0,
+        "coreTier1CapitalAdequacyRatio": 0,
+        "bankDefensiveScore": 0,
+        "bankOffensiveScore": 0,
+        "dilutionEventCount3y": 0
+      }
+    },
+    "balanced": {
+      "algorithmVersion": "rea-bank-score-20261020",
+      "symbols": [
+        "000001.SZ",
+        "600036.SH",
+        "601398.SH"
+      ],
+      "nonNullScores": 0,
+      "availableFields": {
+        "pb": 3,
+        "pbPercentile10y": 0,
+        "dividendYield": 3,
+        "expectedDividendYield": 3,
+        "bankRevisedExpectedDividendYield": 0,
+        "netInterestMargin": 0,
+        "bankRevisedExpectedGrowth": 0,
+        "roe": 3,
+        "nplRatio": 0,
+        "provisionCoverage": 0,
+        "loanDepositRatio": 0,
+        "coreTier1CapitalAdequacyRatio": 0,
+        "bankDefensiveScore": 0,
+        "bankOffensiveScore": 0,
+        "dilutionEventCount3y": 0
+      }
+    },
+    "offensive": {
+      "algorithmVersion": "rea-bank-score-20261020",
+      "symbols": [
+        "000001.SZ",
+        "600036.SH",
+        "601398.SH"
+      ],
+      "nonNullScores": 0,
+      "availableFields": {
+        "pb": 3,
+        "pbPercentile10y": 0,
+        "dividendYield": 3,
+        "expectedDividendYield": 3,
+        "bankRevisedExpectedDividendYield": 0,
+        "netInterestMargin": 0,
+        "bankRevisedExpectedGrowth": 0,
+        "roe": 3,
+        "nplRatio": 0,
+        "provisionCoverage": 0,
+        "loanDepositRatio": 0,
+        "coreTier1CapitalAdequacyRatio": 0,
+        "bankDefensiveScore": 0,
+        "bankOffensiveScore": 0,
+        "dilutionEventCount3y": 0
+      }
+    },
+    "quality": {
+      "algorithmVersion": "rea-bank-score-20261020",
+      "symbols": [
+        "000001.SZ",
+        "600036.SH",
+        "601398.SH"
+      ],
+      "nonNullScores": 0,
+      "availableFields": {
+        "pb": 3,
+        "pbPercentile10y": 0,
+        "dividendYield": 3,
+        "expectedDividendYield": 3,
+        "bankRevisedExpectedDividendYield": 0,
+        "netInterestMargin": 0,
+        "bankRevisedExpectedGrowth": 0,
+        "roe": 3,
+        "nplRatio": 0,
+        "provisionCoverage": 0,
+        "loanDepositRatio": 0,
+        "coreTier1CapitalAdequacyRatio": 0,
+        "bankDefensiveScore": 0,
+        "bankOffensiveScore": 0,
+        "dilutionEventCount3y": 0
+      }
+    },
+    "dividend": {
+      "algorithmVersion": "rea-bank-score-20261020",
+      "symbols": [
+        "000001.SZ",
+        "600036.SH",
+        "601398.SH"
+      ],
+      "nonNullScores": 0,
+      "availableFields": {
+        "pb": 3,
+        "pbPercentile10y": 0,
+        "dividendYield": 3,
+        "expectedDividendYield": 3,
+        "bankRevisedExpectedDividendYield": 0,
+        "netInterestMargin": 0,
+        "bankRevisedExpectedGrowth": 0,
+        "roe": 3,
+        "nplRatio": 0,
+        "provisionCoverage": 0,
+        "loanDepositRatio": 0,
+        "coreTier1CapitalAdequacyRatio": 0,
+        "bankDefensiveScore": 0,
+        "bankOffensiveScore": 0,
+        "dilutionEventCount3y": 0
+      }
+    }
+  },
+  "bankFieldsAtLeastZero": {
+    "pb": 3,
+    "pbPercentile10y": 0,
+    "dividendYield": 3,
+    "expectedDividendYield": 3,
+    "bankRevisedExpectedDividendYield": 0,
+    "netInterestMargin": 0,
+    "bankRevisedExpectedGrowth": 0,
+    "roe": 3,
+    "nplRatio": 0,
+    "provisionCoverage": 0,
+    "loanDepositRatio": 0,
+    "coreTier1CapitalAdequacyRatio": 0,
+    "bankDefensiveScore": 0,
+    "bankOffensiveScore": 0,
+    "dilutionEventCount3y": 0
+  }
+}
