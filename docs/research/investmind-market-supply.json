@@ -1,0 +1,803 @@
+{
+  "products": {
+    "market-overview": {
+      "meta": {
+        "source": "database",
+        "asOf": "2026-10-21T00:00:00+00:00",
+        "version": "20261021-6319db232c0a22d0",
+        "stale": true,
+        "staleReason": "SNAPSHOT_BEHIND_EXPECTED_DATE"
+      },
+      "rootKeys": [
+        "breadthSnapshots",
+        "etfQuotes",
+        "fundFlowSnapshot",
+        "globalIndices",
+        "limitStats",
+        "marketSnapshot",
+        "marketStatuses",
+        "missingData",
+        "sentimentSnapshot",
+        "turnoverSnapshot",
+        "turnoverTop10"
+      ],
+      "historyByDay": {
+        "2026-08-24": 5,
+        "2026-09-18": 1,
+        "2026-10-13": 3,
+        "2026-10-16": 5,
+        "2026-10-21": 1
+      },
+      "missingData": [
+        {
+          "source": "fundFlow",
+          "reason": "尚未采集真实来源"
+        },
+        {
+          "source": "commodities:overseas",
+          "reason": "海外商品真实来源未接入"
+        },
+        {
+          "source": "commodities:intraday",
+          "reason": "日内商品真实来源未接入"
+        }
+      ]
+    },
+    "market-explorer": {
+      "meta": {
+        "source": "database",
+        "asOf": "2026-10-21T00:00:00+00:00",
+        "version": "content-40840744fde0c83ab45b3d437e27f469",
+        "stale": true,
+        "staleReason": "SNAPSHOT_BEHIND_EXPECTED_DATE"
+      },
+      "rootKeys": [
+        "aggregationLabel",
+        "amountUnit",
+        "commodityCategories",
+        "commodityData",
+        "commodityMetadata",
+        "commodityPeriods",
+        "heatmapCategories",
+        "heatmapData",
+        "marketNews",
+        "missingData",
+        "rankingDecliners",
+        "rankingLeaders",
+        "regionMetadata",
+        "scopeLabel",
+        "snapshotLabel"
+      ],
+      "historyByDay": {
+        "2026-08-24": 5,
+        "2026-09-18": 1,
+        "2026-10-13": 3,
+        "2026-10-16": 5,
+        "2026-10-21": 98
+      },
+      "missingData": [
+        {
+          "source": "fundFlow",
+          "reason": "尚未采集真实来源"
+        },
+        {
+          "source": "commodities:overseas",
+          "reason": "海外商品真实来源未接入"
+        },
+        {
+          "source": "commodities:intraday",
+          "reason": "日内商品真实来源未接入"
+        }
+      ]
+    }
+  },
+  "stockDay": {
+    "businessDay": "2026-10-21",
+    "samples": 50,
+    "poolVersion": "20261021-1c01ff6eb0b7d78a",
+    "turnoverQian": "111915637.30952000",
+    "breadth": {
+      "market": "A股",
+      "sentiment": "偏弱",
+      "rise": 15,
+      "fall": 34,
+      "averageChange": -0.9,
+      "total": 50,
+      "refreshLabel": "2026-10-21",
+      "riseWidthClass": "w-1/2"
+    },
+    "limitStats": {
+      "riseLimit": null,
+      "fallLimit": null,
+      "coverage": {
+        "valid": 0,
+        "total": 50
+      },
+      "status": "缺失",
+      "explanation": "按 Tushare daily_basic limit_status 2/3 与 5/6 聚合；有效覆盖 0/50，缺失不计作零"
+    },
+    "coreLimitStatusNonNull": 0,
+    "sentiment": {
+      "counts": {
+        "total": 50,
+        "rise": 15,
+        "thresholdRise": 0,
+        "thresholdFall": 1,
+        "touched": 0,
+        "retreat": 0
+      },
+      "status": "unobservable",
+      "score": null
+    },
+    "heatmaps": {
+      "majorIndustry": {
+        "tiles": 18,
+        "uniqueSymbols": 50,
+        "memberships": 50
+      },
+      "subIndustry": {
+        "tiles": 38,
+        "uniqueSymbols": 50,
+        "memberships": 50
+      },
+      "region": {
+        "tiles": 20,
+        "uniqueSymbols": 50,
+        "memberships": 50
+      },
+      "concept": {
+        "advertised": false,
+        "tiles": 0
+      }
+    }
+  },
+  "quotes": {
+    "globalIndices": {
+      "000001.SH": {
+        "tradeDate": "2026-10-16",
+        "source": "tushare:index_daily",
+        "sourcePayloadId": 2078,
+        "capturedAt": "2026-10-16T11:13:03.314043+00:00",
+        "intradayPoints": 0,
+        "calendarStatus": "unknown"
+      },
+      "399001.SZ": {
+        "tradeDate": "2026-10-16",
+        "source": "tushare:index_daily",
+        "sourcePayloadId": 2079,
+        "capturedAt": "2026-10-16T11:13:03.314043+00:00",
+        "intradayPoints": 0,
+        "calendarStatus": "unknown"
+      },
+      "399006.SZ": {
+        "tradeDate": "2026-10-16",
+        "source": "tushare:index_daily",
+        "sourcePayloadId": 2080,
+        "capturedAt": "2026-10-16T11:13:03.314043+00:00",
+        "intradayPoints": 0,
+        "calendarStatus": "unknown"
+      },
+      "HSI": {
+        "tradeDate": "2026-10-16",
+        "source": "tushare:index_global",
+        "sourcePayloadId": 2081,
+        "capturedAt": "2026-10-16T11:13:03.314043+00:00",
+        "intradayPoints": 0,
+        "calendarStatus": "unknown"
+      },
+      "SPX": {
+        "tradeDate": "2026-10-15",
+        "source": "tushare:index_global",
+        "sourcePayloadId": 2082,
+        "capturedAt": "2026-10-16T11:13:03.314043+00:00",
+        "intradayPoints": 0,
+        "calendarStatus": "unknown"
+      },
+      "IXIC": {
+        "tradeDate": "2026-10-15",
+        "source": "tushare:index_global",
+        "sourcePayloadId": 2083,
+        "capturedAt": "2026-10-16T11:13:03.314043+00:00",
+        "intradayPoints": 0,
+        "calendarStatus": "unknown"
+      }
+    },
+    "etfQuotes": {
+      "510050.SH": {
+        "tradeDate": "2026-10-16",
+        "source": "tushare:fund_daily",
+        "sourcePayloadId": 2084,
+        "capturedAt": "2026-10-16T11:13:03.314043+00:00",
+        "intradayPoints": 0,
+        "calendarStatus": "unknown"
+      },
+      "510300.SH": {
+        "tradeDate": "2026-10-16",
+        "source": "tushare:fund_daily",
+        "sourcePayloadId": 2085,
+        "capturedAt": "2026-10-16T11:13:03.314043+00:00",
+        "intradayPoints": 0,
+        "calendarStatus": "unknown"
+      },
+      "159338.SZ": {
+        "tradeDate": "2026-10-16",
+        "source": "tushare:fund_daily",
+        "sourcePayloadId": 2086,
+        "capturedAt": "2026-10-16T11:13:03.314043+00:00",
+        "intradayPoints": 0,
+        "calendarStatus": "unknown"
+      },
+      "510500.SH": {
+        "tradeDate": "2026-10-16",
+        "source": "tushare:fund_daily",
+        "sourcePayloadId": 2087,
+        "capturedAt": "2026-10-16T11:13:03.314043+00:00",
+        "intradayPoints": 0,
+        "calendarStatus": "unknown"
+      },
+      "512100.SH": {
+        "tradeDate": "2026-10-16",
+        "source": "tushare:fund_daily",
+        "sourcePayloadId": 2088,
+        "capturedAt": "2026-10-16T11:13:03.314043+00:00",
+        "intradayPoints": 0,
+        "calendarStatus": "unknown"
+      },
+      "588000.SH": {
+        "tradeDate": "2026-10-16",
+        "source": "tushare:fund_daily",
+        "sourcePayloadId": 2089,
+        "capturedAt": "2026-10-16T11:13:03.314043+00:00",
+        "intradayPoints": 0,
+        "calendarStatus": "unknown"
+      },
+      "588190.SH": {
+        "tradeDate": "2026-10-16",
+        "source": "tushare:fund_daily",
+        "sourcePayloadId": 2090,
+        "capturedAt": "2026-10-16T11:13:03.314043+00:00",
+        "intradayPoints": 0,
+        "calendarStatus": "unknown"
+      },
+      "510880.SH": {
+        "tradeDate": "2026-10-16",
+        "source": "tushare:fund_daily",
+        "sourcePayloadId": 2091,
+        "capturedAt": "2026-10-16T11:13:03.314043+00:00",
+        "intradayPoints": 0,
+        "calendarStatus": "unknown"
+      },
+      "512890.SH": {
+        "tradeDate": "2026-10-16",
+        "source": "tushare:fund_daily",
+        "sourcePayloadId": 2092,
+        "capturedAt": "2026-10-16T11:13:03.314043+00:00",
+        "intradayPoints": 0,
+        "calendarStatus": "unknown"
+      }
+    }
+  },
+  "marketStatuses": [],
+  "fundFlow": {
+    "status": "缺失",
+    "northbound": "--",
+    "mainForce": "--"
+  },
+  "commodityMetadata": {
+    "asOf": "2026-10-16",
+    "windowStart": "2026-06-19",
+    "instrumentCount": 10,
+    "adjustment": "unadjusted",
+    "overseasStatus": "not_connected",
+    "intradayStatus": "not_connected"
+  },
+  "commodities": {
+    "precious": {
+      "overseasInstruments": 0,
+      "instruments": {
+        "AU.SHF": {
+          "periods": {
+            "intraday": {
+              "bars": 0,
+              "from": null,
+              "to": null
+            },
+            "daily": {
+              "bars": 79,
+              "from": "2026-06-22",
+              "to": "2026-10-16"
+            },
+            "weekly": {
+              "bars": 17,
+              "from": "2026-06-26",
+              "to": "2026-10-16"
+            },
+            "monthly": {
+              "bars": 5,
+              "from": "2026-06-30",
+              "to": "2026-10-16"
+            }
+          },
+          "tradeDate": "2026-10-16",
+          "contract": "AU2612.SHF",
+          "changeBasis": "close/pre_settle-1",
+          "sources": [
+            2466,
+            2467,
+            2468,
+            2487,
+            2488,
+            2489
+          ]
+        },
+        "AG.SHF": {
+          "periods": {
+            "intraday": {
+              "bars": 0,
+              "from": null,
+              "to": null
+            },
+            "daily": {
+              "bars": 79,
+              "from": "2026-06-22",
+              "to": "2026-10-16"
+            },
+            "weekly": {
+              "bars": 17,
+              "from": "2026-06-26",
+              "to": "2026-10-16"
+            },
+            "monthly": {
+              "bars": 5,
+              "from": "2026-06-30",
+              "to": "2026-10-16"
+            }
+          },
+          "tradeDate": "2026-10-16",
+          "contract": "AG2612.SHF",
+          "changeBasis": "close/pre_settle-1",
+          "sources": [
+            2466,
+            2469,
+            2470,
+            2490,
+            2491,
+            2492
+          ]
+        }
+      }
+    },
+    "nonferrous": {
+      "overseasInstruments": 0,
+      "instruments": {
+        "CU.SHF": {
+          "periods": {
+            "intraday": {
+              "bars": 0,
+              "from": null,
+              "to": null
+            },
+            "daily": {
+              "bars": 79,
+              "from": "2026-06-22",
+              "to": "2026-10-16"
+            },
+            "weekly": {
+              "bars": 17,
+              "from": "2026-06-26",
+              "to": "2026-10-16"
+            },
+            "monthly": {
+              "bars": 5,
+              "from": "2026-06-30",
+              "to": "2026-10-16"
+            }
+          },
+          "tradeDate": "2026-10-16",
+          "contract": "CU2611.SHF",
+          "changeBasis": "close/pre_settle-1",
+          "sources": [
+            2466,
+            2471,
+            2472,
+            2493,
+            2494,
+            2495,
+            2496,
+            2497
+          ]
+        },
+        "AL.SHF": {
+          "periods": {
+            "intraday": {
+              "bars": 0,
+              "from": null,
+              "to": null
+            },
+            "daily": {
+              "bars": 79,
+              "from": "2026-06-22",
+              "to": "2026-10-16"
+            },
+            "weekly": {
+              "bars": 17,
+              "from": "2026-06-26",
+              "to": "2026-10-16"
+            },
+            "monthly": {
+              "bars": 5,
+              "from": "2026-06-30",
+              "to": "2026-10-16"
+            }
+          },
+          "tradeDate": "2026-10-16",
+          "contract": "AL2611.SHF",
+          "changeBasis": "close/pre_settle-1",
+          "sources": [
+            2466,
+            2473,
+            2474,
+            2498,
+            2499,
+            2500,
+            2501,
+            2502
+          ]
+        }
+      }
+    },
+    "ferrous": {
+      "overseasInstruments": 0,
+      "instruments": {
+        "RB.SHF": {
+          "periods": {
+            "intraday": {
+              "bars": 0,
+              "from": null,
+              "to": null
+            },
+            "daily": {
+              "bars": 79,
+              "from": "2026-06-22",
+              "to": "2026-10-16"
+            },
+            "weekly": {
+              "bars": 17,
+              "from": "2026-06-26",
+              "to": "2026-10-16"
+            },
+            "monthly": {
+              "bars": 5,
+              "from": "2026-06-30",
+              "to": "2026-10-16"
+            }
+          },
+          "tradeDate": "2026-10-16",
+          "contract": "RB2701.SHF",
+          "changeBasis": "close/pre_settle-1",
+          "sources": [
+            2466,
+            2475,
+            2476,
+            2503,
+            2504
+          ]
+        },
+        "I.DCE": {
+          "periods": {
+            "intraday": {
+              "bars": 0,
+              "from": null,
+              "to": null
+            },
+            "daily": {
+              "bars": 79,
+              "from": "2026-06-22",
+              "to": "2026-10-16"
+            },
+            "weekly": {
+              "bars": 17,
+              "from": "2026-06-26",
+              "to": "2026-10-16"
+            },
+            "monthly": {
+              "bars": 5,
+              "from": "2026-06-30",
+              "to": "2026-10-16"
+            }
+          },
+          "tradeDate": "2026-10-16",
+          "contract": "I2701.DCE",
+          "changeBasis": "close/pre_settle-1",
+          "sources": [
+            2464,
+            2477,
+            2478,
+            2506,
+            2518
+          ]
+        }
+      }
+    },
+    "energy": {
+      "overseasInstruments": 0,
+      "instruments": {
+        "SC.INE": {
+          "periods": {
+            "intraday": {
+              "bars": 0,
+              "from": null,
+              "to": null
+            },
+            "daily": {
+              "bars": 79,
+              "from": "2026-06-22",
+              "to": "2026-10-16"
+            },
+            "weekly": {
+              "bars": 17,
+              "from": "2026-06-26",
+              "to": "2026-10-16"
+            },
+            "monthly": {
+              "bars": 5,
+              "from": "2026-06-30",
+              "to": "2026-10-16"
+            }
+          },
+          "tradeDate": "2026-10-16",
+          "contract": "SC2612.INE",
+          "changeBasis": "close/pre_settle-1",
+          "sources": [
+            2465,
+            2479,
+            2480,
+            2507,
+            2508,
+            2509,
+            2510,
+            2511
+          ]
+        },
+        "TA.ZCE": {
+          "periods": {
+            "intraday": {
+              "bars": 0,
+              "from": null,
+              "to": null
+            },
+            "daily": {
+              "bars": 79,
+              "from": "2026-06-22",
+              "to": "2026-10-16"
+            },
+            "weekly": {
+              "bars": 17,
+              "from": "2026-06-26",
+              "to": "2026-10-16"
+            },
+            "monthly": {
+              "bars": 5,
+              "from": "2026-06-30",
+              "to": "2026-10-16"
+            }
+          },
+          "tradeDate": "2026-10-16",
+          "contract": "TA2701.ZCE",
+          "changeBasis": "close/pre_settle-1",
+          "sources": [
+            2463,
+            2481,
+            2482,
+            2512,
+            2513
+          ]
+        }
+      }
+    },
+    "agriculture": {
+      "overseasInstruments": 0,
+      "instruments": {
+        "M.DCE": {
+          "periods": {
+            "intraday": {
+              "bars": 0,
+              "from": null,
+              "to": null
+            },
+            "daily": {
+              "bars": 79,
+              "from": "2026-06-22",
+              "to": "2026-10-16"
+            },
+            "weekly": {
+              "bars": 17,
+              "from": "2026-06-26",
+              "to": "2026-10-16"
+            },
+            "monthly": {
+              "bars": 5,
+              "from": "2026-06-30",
+              "to": "2026-10-16"
+            }
+          },
+          "tradeDate": "2026-10-16",
+          "contract": "M2701.DCE",
+          "changeBasis": "close/pre_settle-1",
+          "sources": [
+            2464,
+            2483,
+            2484,
+            2514,
+            2515
+          ]
+        },
+        "P.DCE": {
+          "periods": {
+            "intraday": {
+              "bars": 0,
+              "from": null,
+              "to": null
+            },
+            "daily": {
+              "bars": 79,
+              "from": "2026-06-22",
+              "to": "2026-10-16"
+            },
+            "weekly": {
+              "bars": 17,
+              "from": "2026-06-26",
+              "to": "2026-10-16"
+            },
+            "monthly": {
+              "bars": 5,
+              "from": "2026-06-30",
+              "to": "2026-10-16"
+            }
+          },
+          "tradeDate": "2026-10-16",
+          "contract": "P2701.DCE",
+          "changeBasis": "close/pre_settle-1",
+          "sources": [
+            2464,
+            2485,
+            2486,
+            2517,
+            2519
+          ]
+        }
+      }
+    }
+  },
+  "etfTiles": {
+    "510050.SH": {
+      "tradeDate": "2026-10-16",
+      "sourceIds": {
+        "quote": 2445,
+        "shares": 2446
+      },
+      "marketCapYi": 255.534474488,
+      "turnoverYi": 54.01255542,
+      "holdings": 0,
+      "stockCount": null
+    },
+    "510300.SH": {
+      "tradeDate": "2026-10-16",
+      "sourceIds": {
+        "quote": 2447,
+        "shares": 2448
+      },
+      "marketCapYi": 1209.504558972,
+      "turnoverYi": 160.92791436,
+      "holdings": 0,
+      "stockCount": null
+    },
+    "159338.SZ": {
+      "tradeDate": "2026-10-16",
+      "sourceIds": {
+        "quote": 2449,
+        "shares": 2450
+      },
+      "marketCapYi": 241.06085943776,
+      "turnoverYi": 31.109837776,
+      "holdings": 0,
+      "stockCount": null
+    },
+    "510500.SH": {
+      "tradeDate": "2026-10-16",
+      "sourceIds": {
+        "quote": 2451,
+        "shares": 2452
+      },
+      "marketCapYi": 393.163139974,
+      "turnoverYi": 33.83569201,
+      "holdings": 0,
+      "stockCount": null
+    },
+    "512100.SH": {
+      "tradeDate": "2026-10-16",
+      "sourceIds": {
+        "quote": 2453,
+        "shares": 2454
+      },
+      "marketCapYi": 219.728306544,
+      "turnoverYi": 35.62754108,
+      "holdings": 0,
+      "stockCount": null
+    },
+    "588000.SH": {
+      "tradeDate": "2026-10-16",
+      "sourceIds": {
+        "quote": 2455,
+        "shares": 2456
+      },
+      "marketCapYi": 1003.81235526,
+      "turnoverYi": 89.36653036,
+      "holdings": 0,
+      "stockCount": null
+    },
+    "588190.SH": {
+      "tradeDate": "2026-10-16",
+      "sourceIds": {
+        "quote": 2457,
+        "shares": 2458
+      },
+      "marketCapYi": 20.028537873,
+      "turnoverYi": 0.88496678,
+      "holdings": 0,
+      "stockCount": null
+    },
+    "510880.SH": {
+      "tradeDate": "2026-10-16",
+      "sourceIds": {
+        "quote": 2459,
+        "shares": 2460
+      },
+      "marketCapYi": 196.45927651,
+      "turnoverYi": 4.32954874,
+      "holdings": 0,
+      "stockCount": null
+    },
+    "512890.SH": {
+      "tradeDate": "2026-10-16",
+      "sourceIds": {
+        "quote": 2461,
+        "shares": 2462
+      },
+      "marketCapYi": 314.003560652,
+      "turnoverYi": 6.2263995,
+      "holdings": 0,
+      "stockCount": null
+    }
+  },
+  "regionMetadata": {
+    "basis": "当前证券基础资料地域；供应商原标签含城市，非统一省级、非历史注册地",
+    "asOf": "2026-10-21",
+    "known": 50,
+    "unknown": 0,
+    "total": 50,
+    "capturedAtFrom": "2026-10-17T02:09:44.100064+00:00",
+    "capturedAtTo": "2026-10-17T02:11:23.615167+00:00"
+  },
+  "verifiedRawPagesByApi": {
+    "index_daily": 3,
+    "index_global": 3,
+    "fund_daily": 18,
+    "fut_trade_cal": 4,
+    "fut_basic": 10,
+    "fut_mapping": 10,
+    "fut_daily": 31,
+    "fund_share": 9
+  },
+  "news": {
+    "count": 50,
+    "publishedFrom": "2026-11-14T11:03:15+00:00",
+    "publishedThrough": "2026-11-14T14:29:46+00:00",
+    "sources": {
+      "sina-finance": 50
+    },
+    "copyright": {
+      "link_only": 50
+    }
+  }
+}
