@@ -99,7 +99,7 @@ def test_plan_separates_global_and_stock_datasets() -> None:
     )
     assert set(plan.stock_datasets) == set(BACKFILL_DATASETS) - set(
         plan.global_datasets
-    )
+    ) - {Dataset.FINANCIAL_EXPRESS}
     assert Dataset.DISCLOSURE_DATE not in plan.stock_datasets
 
 
@@ -792,7 +792,6 @@ def test_vip_aggregate_financial_datasets_run_once_across_multiple_batches() -> 
         Dataset.CASHFLOW,
         Dataset.FINANCIAL_INDICATOR,
         Dataset.FINANCIAL_FORECAST,
-        Dataset.FINANCIAL_EXPRESS,
         Dataset.BUSINESS_SEGMENT,
     )
     scheduled = [
@@ -839,7 +838,6 @@ def test_vip_resume_after_once_phase_does_not_replay_aggregate_financial_dataset
         Dataset.CASHFLOW,
         Dataset.FINANCIAL_INDICATOR,
         Dataset.FINANCIAL_FORECAST,
-        Dataset.FINANCIAL_EXPRESS,
         Dataset.BUSINESS_SEGMENT,
     }
     assert [event[1] for event in events if event[0] == "batch.run"] == [1, 2]

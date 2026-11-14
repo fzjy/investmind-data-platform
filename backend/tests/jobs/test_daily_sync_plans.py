@@ -72,14 +72,13 @@ def test_daily_plan_builder_standard_financial_plans_use_sorted_unique_symbols()
         periods=(date(2026, 6, 30),),
     )
 
-    assert len(plans) == 18
+    assert len(plans) == 16
     assert [plan.dataset for plan in plans[::2]] == [
         Dataset.INCOME,
         Dataset.BALANCE_SHEET,
         Dataset.CASHFLOW,
         Dataset.FINANCIAL_INDICATOR,
         Dataset.FINANCIAL_FORECAST,
-        Dataset.FINANCIAL_EXPRESS,
         Dataset.DIVIDEND,
         Dataset.BUSINESS_SEGMENT,
         Dataset.TOP_HOLDER,
@@ -100,7 +99,7 @@ def test_daily_plan_builder_vip_financial_plans_use_periods_except_symbol_apis()
         periods=(date(2026, 6, 30), date(2026, 3, 31), date(2026, 6, 30)),
     )
 
-    assert len(plans) == 18
+    assert len(plans) == 16
     assert [plan.dataset for plan in plans] == [
         Dataset.INCOME,
         Dataset.INCOME,
@@ -112,8 +111,6 @@ def test_daily_plan_builder_vip_financial_plans_use_periods_except_symbol_apis()
         Dataset.FINANCIAL_INDICATOR,
         Dataset.FINANCIAL_FORECAST,
         Dataset.FINANCIAL_FORECAST,
-        Dataset.FINANCIAL_EXPRESS,
-        Dataset.FINANCIAL_EXPRESS,
         Dataset.DIVIDEND,
         Dataset.DIVIDEND,
         Dataset.BUSINESS_SEGMENT,
@@ -125,11 +122,11 @@ def test_daily_plan_builder_vip_financial_plans_use_periods_except_symbol_apis()
         {"period": "20260331"},
         {"period": "20260630"},
     ]
-    assert [plan.params for plan in plans[12:14]] == [
+    assert [plan.params for plan in plans[10:12]] == [
         {"ts_code": "000001.SZ"},
         {"ts_code": "600519.SH"},
     ]
-    assert [plan.params for plan in plans[16:]] == [
+    assert [plan.params for plan in plans[14:]] == [
         {"ts_code": "000001.SZ"},
         {"ts_code": "600519.SH"},
     ]

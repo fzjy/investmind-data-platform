@@ -25,7 +25,6 @@ FINANCIAL_DATASETS = (
     Dataset.CASHFLOW,
     Dataset.FINANCIAL_INDICATOR,
     Dataset.FINANCIAL_FORECAST,
-    Dataset.FINANCIAL_EXPRESS,
     Dataset.DIVIDEND,
     Dataset.BUSINESS_SEGMENT,
     Dataset.TOP_HOLDER,

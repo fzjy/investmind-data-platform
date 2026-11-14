@@ -30,7 +30,8 @@ GLOBAL_DATASETS = (
 STOCK_DATASETS = tuple(
     dataset
     for dataset in sorted(BACKFILL_DATASETS, key=lambda item: item.value)
-    if dataset not in GLOBAL_DATASETS
+    # 业绩快报保留显式历史回填能力；日常任务与全池回填默认停采。
+    if dataset not in GLOBAL_DATASETS and dataset != Dataset.FINANCIAL_EXPRESS
 )
 VIP_AGGREGATE_DATASETS = tuple(
     dataset for dataset in STOCK_DATASETS if dataset in VIP_API_NAMES
