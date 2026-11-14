@@ -37,7 +37,7 @@ def _validation_details(exc: RequestValidationError) -> list[dict[str, str]]:
 
 
 def create_app() -> FastAPI:
-    application = FastAPI(title="DangInvest Data API", version="0.1.0")
+    application = FastAPI(title="InvestMind Data API", version="0.1.0")
     application.add_middleware(
         CORSMiddleware,
         allow_origins=list(settings.cors_origins),

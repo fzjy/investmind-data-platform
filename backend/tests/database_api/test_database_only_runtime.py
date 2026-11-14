@@ -50,7 +50,7 @@ def test_application_construction_does_not_connect(monkeypatch):
     from sqlalchemy.engine import Engine
 
     monkeypatch.setattr(Engine, 'connect', lambda *a, **k: pytest.fail('construction must not connect'))
-    assert main_module.create_app().title == 'DangInvest Data API'
+    assert main_module.create_app().title == 'InvestMind Data API'
 
 
 @pytest.mark.parametrize('error', [

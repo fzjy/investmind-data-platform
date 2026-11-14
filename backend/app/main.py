@@ -41,7 +41,7 @@ def _validation_details(exc: RequestValidationError) -> list[dict[str, str]]:
 
 
 def create_app(*, background_news: bool = True) -> FastAPI:
-    application = FastAPI(title="DangInvest Data API", version="0.1.0", lifespan=news_lifespan if background_news else None)
+    application = FastAPI(title="InvestMind Data API", version="0.1.0", lifespan=news_lifespan if background_news else None)
     if not settings.database_read_url:
         raise ValueError("DANG_DATABASE_READ_URL or DANG_DATABASE_URL is required")
     engine_options: dict[str, object] = {"pool_pre_ping": True}
