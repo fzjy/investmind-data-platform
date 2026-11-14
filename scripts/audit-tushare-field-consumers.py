@@ -250,6 +250,35 @@ def core_fields(session):
                 result[table]["data."+key]=n
     return result
 
+
+def conditional_core_paths(root,session,catalog):
+    """记录同一 API 仅在特定转换和数据集内成立的落库路径。"""
+    from app.market.data.contracts import QUOTE_FIELDS
+    for api,kind,rows in session.execute(text("""
+        select q.api_name,q.asset_type,count(*) from core.market_daily_quote q
+        join raw.source_payload p on p.id=q.source_payload_id
+        join raw.ingestion_batch b on b.id=p.batch_id
+        where q.provider='tushare' and p.api_name=q.api_name and b.source='tushare'
+        and b.dataset='market:'||q.asset_type||':'||q.asset_code
+        group by 1,2 order by 1,2""")):
+        for field in QUOTE_FIELDS:
+            column="asset_code" if field=="ts_code" else field
+            catalog[api,field].setdefault("conditionalCore",[]).append({
+                "column":"core.market_daily_quote."+column,
+                "condition":"market:"+kind+":资产代码；证券代码与配置身份校验",
+                "linkedRows":rows})
+    macro_counts=dict(session.execute(text("""select series_id,count(*) from core.macro_observation
+        where source='tushare' group by series_id""")).all())
+    for series in read_json(root/"backend/config/macro-series.json")["series"]:
+        for source in series["sources"]:
+            if source["provider"]!="tushare":
+                continue
+            for field,column in ((source["responseFields"][0],"observed_at"),(source["field"],"value")):
+                catalog[source["api"],field].setdefault("conditionalCore",[]).append({
+                    "column":"core.macro_observation."+column,
+                    "condition":"系列 "+series["id"]+" 的 Tushare 报告期或数值，经转换与去重/修订",
+                    "seriesRows":macro_counts.get(series["id"],0)})
+
 def add_consumers(root,catalog,statements):
     def record(api,fields,level,path,proof):
         for field in fields.split() if isinstance(fields,str) else fields:
@@ -359,6 +388,15 @@ def add_consumers(root,catalog,statements):
                "app/macro/target_evidence_normalize.py")
     for api in ("index_daily","index_global","fund_daily"):
         record(api,"open high low close pre_close pct_chg trade_date ts_code","间接","市场/指数或 ETF 同日行情和产品校验","M")
+    market_quote_evidence = "app/market/data/publication.py + scripts/audit-market-supply.py"
+    for api in ("index_daily","index_global"):
+        for field,target in (("trade_date","tradeDate 收盘交易日"),("pct_chg","change 涨跌幅"),
+                             ("close","value 收盘点位（两位小数）")):
+            record(api, [field], "直接", "市场总览/全球指数卡/globalIndices[]." + target,
+                   market_quote_evidence + " + src/modules/market/index-card.tsx")
+    for field,target in (("trade_date","tradeDate 收盘交易日"),("pct_chg","change 涨跌幅")):
+        record("fund_daily", [field], "直接", "市场总览/宽基 ETF 卡/etfQuotes[]." + target,
+               market_quote_evidence + " + src/modules/market/market-overview.tsx")
     for api in ("income","balancesheet","cashflow"):
         record(api,"ts_code ann_date f_ann_date end_date report_type update_flag","间接","工作台/可见报告期、证券与修订取版","L")
     record("balancesheet","comp_type","间接","工作台/适用行业 companyType","L")
@@ -394,6 +432,7 @@ def render(catalog, raw, symbols, core):
         rows.append({"api":api,"field":field,"level":level,"contracts":sorted(entry["contracts"]),
                      "rawPages":entry["pages"],"headerOnlyPages":entry["headerOnlyPages"],"rawExampleId":entry["rawExample"],
                      "datasets":sorted(entry["rawDatasets"]),"enterpriseRaw":entry.get("enterpriseRaw",{}),
+                     "conditionalCore":entry.get("conditionalCore",[]),
                      "coreDatasetTable":"core."+table if table else None,
                      "vipStandardField":base+"."+field if base!=api else None,
                      "vipPath":("按需显式回填；不参加默认计划" if api=="express_vip" else "具备权限且选择 VIP 模式时按报告期批量") if base!=api else None,
@@ -423,7 +462,9 @@ def markdown(report,project=False):
         path=path.strip(" /") or "待取得原件"
         if any(dataset=="financial-statement-evidence" for dataset in row["datasets"]):path+=" / 财报专题 Raw"
         if any(d.startswith(("macro:","macro-extension:","macro-exchange-summary:")) for d in row["datasets"]):path+=" / 宏观观测按发布合同"
-        if any(d.startswith(("market:etfs:","market:indices:")) for d in row["datasets"]):path+=" / core.market_daily_quote"
+        for branch in row["conditionalCore"]:
+            count=branch.get("seriesRows",branch.get("linkedRows"))
+            path+=f" / {branch['column']}（{branch['condition']}，{count} 行）"
         usage="；".join(u["pageOrJob"] for u in row["uses"]) or "待核"
         pages=row['rawPages']+sum(item['pages'] for item in row['enterpriseRaw'].values())
         lines.append(f"| `{row['api']}.{row['field']}` | {path} | {pages} | {row['level']} | {usage} |")
@@ -466,6 +507,7 @@ def main():
             min(ann_date)::text as first_announcement,max(ann_date)::text as last_announcement from core.financial_express""")).mappings().one())
         symbols,statements=published(session)
         core=core_fields(session)
+        conditional_core_paths(root,session,catalog)
         raw["publicationSignature"]=signature_fields(factory,session,catalog,symbols)
     add_consumers(root,catalog,statements)
     report=render(catalog,raw,symbols,core)

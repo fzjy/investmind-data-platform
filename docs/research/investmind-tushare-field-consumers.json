@@ -3,8 +3,8 @@
   "count": 565,
   "apis": 50,
   "levels": {
-    "间接": 238,
-    "直接": 171,
+    "间接": 231,
+    "直接": 178,
     "未知": 148,
     "仅历史": 8
   },
@@ -91,6 +91,7 @@
         "adj_factor"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.adjustment_factor",
       "vipStandardField": null,
       "vipPath": null,
@@ -128,6 +129,7 @@
         "adj_factor"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.adjustment_factor",
       "vipStandardField": null,
       "vipPath": null,
@@ -165,6 +167,7 @@
         "adj_factor"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.adjustment_factor",
       "vipStandardField": null,
       "vipPath": null,
@@ -208,6 +211,7 @@
           "example": "00a116ec7436f2101095098949431ce5fef4bfb29f532df1515c62388c926932"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -260,6 +264,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -305,6 +310,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -366,6 +372,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -425,6 +432,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -484,6 +492,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -517,6 +526,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -572,6 +582,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -609,6 +620,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -655,6 +667,7 @@
           "example": "003d5be9bcb374a61d8fe3a7ef9f888ec61c58f0a397e30760348d3f79390bf8"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -700,6 +713,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -733,6 +747,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -788,6 +803,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -847,6 +863,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -891,6 +908,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -952,6 +970,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -999,6 +1018,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1054,6 +1074,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1101,6 +1122,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1154,6 +1176,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1196,6 +1219,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1251,6 +1275,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1310,6 +1335,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1343,6 +1369,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1398,6 +1425,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1485,6 +1513,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1544,6 +1573,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1583,6 +1613,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1622,6 +1653,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1655,6 +1687,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1688,6 +1721,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1721,6 +1755,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1754,6 +1789,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1815,6 +1851,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1872,6 +1909,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1936,6 +1974,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -1995,6 +2034,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -2028,6 +2068,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -2083,6 +2124,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -2136,6 +2178,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -2175,6 +2218,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -2236,6 +2280,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -2277,6 +2322,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -2344,6 +2390,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -2397,6 +2444,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -2430,6 +2478,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -2485,6 +2534,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -2538,6 +2588,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -2593,6 +2644,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -2630,6 +2682,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -2685,6 +2738,7 @@
           "example": "00114b5c9d44f37fe53d73d2e8ef0a523ab0873819dd419348d9d80a7b324bc2"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": null,
       "vipPath": null,
@@ -2720,6 +2774,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.ann_date",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -2739,6 +2794,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.bond_payable",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -2758,6 +2814,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.comp_type",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -2777,6 +2834,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.end_date",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -2796,6 +2854,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.f_ann_date",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -2815,6 +2874,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.goodwill",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -2834,6 +2894,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.inventories",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -2853,6 +2914,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.lease_liab",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -2872,6 +2934,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.lt_borr",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -2891,6 +2954,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.money_cap",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -2910,6 +2974,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.non_cur_liab_due_1y",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -2929,6 +2994,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.report_type",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -2948,6 +3014,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.st_bonds_payable",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -2967,6 +3034,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.st_borr",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -2986,6 +3054,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.total_assets",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -3005,6 +3074,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.total_hldr_eqy_exc_min_int",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -3024,6 +3094,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.total_liab",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -3043,6 +3114,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.total_share",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -3062,6 +3134,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.ts_code",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -3081,6 +3154,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.balance_sheet",
       "vipStandardField": "balancesheet.update_flag",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -3102,6 +3176,7 @@
         "portfolio_dividend_evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -3130,6 +3205,7 @@
         "portfolio_dividend_evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -3167,6 +3243,7 @@
           "example": "00879070049c019e04c66427aad2edd1a3b6edc198959865abac105826b2e477"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -3216,6 +3293,7 @@
           "example": "00879070049c019e04c66427aad2edd1a3b6edc198959865abac105826b2e477"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -3255,6 +3333,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -3298,6 +3377,7 @@
           "example": "00879070049c019e04c66427aad2edd1a3b6edc198959865abac105826b2e477"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -3347,6 +3427,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -3382,6 +3463,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -3417,6 +3499,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -3464,6 +3547,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -3499,6 +3583,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -3534,6 +3619,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -3581,6 +3667,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -3623,6 +3710,7 @@
           "example": "00879070049c019e04c66427aad2edd1a3b6edc198959865abac105826b2e477"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -3672,6 +3760,7 @@
           "example": "00879070049c019e04c66427aad2edd1a3b6edc198959865abac105826b2e477"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -3733,6 +3822,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -3776,6 +3866,7 @@
           "example": "00879070049c019e04c66427aad2edd1a3b6edc198959865abac105826b2e477"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -3819,6 +3910,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -3854,6 +3946,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -3903,6 +3996,7 @@
           "example": "00879070049c019e04c66427aad2edd1a3b6edc198959865abac105826b2e477"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -3958,6 +4052,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4001,6 +4096,7 @@
           "example": "00879070049c019e04c66427aad2edd1a3b6edc198959865abac105826b2e477"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4041,6 +4137,7 @@
           "example": "00879070049c019e04c66427aad2edd1a3b6edc198959865abac105826b2e477"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4082,6 +4179,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4125,6 +4223,7 @@
           "example": "00879070049c019e04c66427aad2edd1a3b6edc198959865abac105826b2e477"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4172,6 +4271,7 @@
           "example": "00879070049c019e04c66427aad2edd1a3b6edc198959865abac105826b2e477"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4219,6 +4319,7 @@
           "example": "00879070049c019e04c66427aad2edd1a3b6edc198959865abac105826b2e477"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4262,6 +4363,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4297,6 +4399,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4332,6 +4435,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4374,6 +4478,7 @@
           "example": "00879070049c019e04c66427aad2edd1a3b6edc198959865abac105826b2e477"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4415,6 +4520,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4458,6 +4564,7 @@
           "example": "00879070049c019e04c66427aad2edd1a3b6edc198959865abac105826b2e477"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4515,6 +4622,7 @@
           "example": "00879070049c019e04c66427aad2edd1a3b6edc198959865abac105826b2e477"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4584,6 +4692,7 @@
           "example": "00879070049c019e04c66427aad2edd1a3b6edc198959865abac105826b2e477"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4633,6 +4742,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4668,6 +4778,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4703,6 +4814,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4738,6 +4850,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4779,6 +4892,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4814,6 +4928,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4849,6 +4964,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4884,6 +5000,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4919,6 +5036,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4954,6 +5072,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -4989,6 +5108,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5024,6 +5144,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5059,6 +5180,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5094,6 +5216,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5129,6 +5252,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5164,6 +5288,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5199,6 +5324,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5234,6 +5360,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5269,6 +5396,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5304,6 +5432,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5339,6 +5468,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5374,6 +5504,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5409,6 +5540,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5444,6 +5576,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5479,6 +5612,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5514,6 +5648,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5555,6 +5690,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5598,6 +5734,7 @@
           "example": "00879070049c019e04c66427aad2edd1a3b6edc198959865abac105826b2e477"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5637,6 +5774,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5672,6 +5810,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5707,6 +5846,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5742,6 +5882,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5777,6 +5918,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5820,6 +5962,7 @@
           "example": "00879070049c019e04c66427aad2edd1a3b6edc198959865abac105826b2e477"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5867,6 +6010,7 @@
           "example": "00879070049c019e04c66427aad2edd1a3b6edc198959865abac105826b2e477"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -5902,6 +6046,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.amort_intang_assets",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -5921,6 +6066,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.ann_date",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -5940,6 +6086,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.c_cash_equ_beg_period",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -5959,6 +6106,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.c_cash_equ_end_period",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -5978,6 +6126,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.c_disp_withdrwl_invest",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -5997,6 +6146,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.c_fr_oth_operate_a",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6016,6 +6166,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.c_fr_sale_sg",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6035,6 +6186,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.c_inf_fr_operate_a",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6054,6 +6206,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.c_paid_for_taxes",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6073,6 +6226,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.c_paid_goods_s",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6092,6 +6246,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.c_paid_invest",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6111,6 +6266,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.c_paid_to_for_empl",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6130,6 +6286,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.c_pay_acq_const_fiolta",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6149,6 +6306,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.c_pay_claims_orig_inco",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6168,6 +6326,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.c_pay_dist_dpcp_int_exp",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6187,6 +6346,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.c_prepay_amt_borr",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6206,6 +6366,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.c_recp_borrow",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6225,6 +6386,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.c_recp_cap_contrib",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6244,6 +6406,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.c_recp_return_invest",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6263,6 +6426,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.comp_type",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6282,6 +6446,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.depr_fa_coga_dpba",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6301,6 +6466,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.eff_fx_flu_cash",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6320,6 +6486,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.end_date",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6339,6 +6506,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.f_ann_date",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6358,6 +6526,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.free_cashflow",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6377,6 +6546,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.ifc_cash_incr",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6396,6 +6566,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.incl_cash_rec_saims",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6415,6 +6586,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.incl_dvd_profit_paid_sc_ms",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6434,6 +6606,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.lt_amort_deferred_exp",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6453,6 +6626,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.n_cap_incr_repur",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6472,6 +6646,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.n_cash_flows_fnc_act",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6491,6 +6666,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.n_cashflow_act",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6510,6 +6686,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.n_cashflow_inv_act",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6529,6 +6706,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.n_depos_incr_fi",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6548,6 +6726,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.n_disp_subs_oth_biz",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6567,6 +6746,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.n_inc_borr_oth_fi",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6586,6 +6766,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.n_incr_cash_cash_equ",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6605,6 +6786,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.n_incr_clt_loan_adv",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6624,6 +6806,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.n_incr_dep_cbob",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6643,6 +6826,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.n_incr_disp_faas",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6662,6 +6846,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.n_incr_disp_tfa",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6681,6 +6866,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.n_incr_insured_dep",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6700,6 +6886,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.n_incr_loans_cb",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6719,6 +6906,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.n_incr_loans_oth_bank",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6738,6 +6926,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.n_incr_pledge_loan",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6757,6 +6946,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.n_recp_disp_fiolta",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6776,6 +6966,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.n_recp_disp_sobu",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6795,6 +6986,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.n_reinsur_prem",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6814,6 +7006,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.net_cash_rece_sec",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6833,6 +7026,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.net_dism_capital_add",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6852,6 +7046,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.oth_cash_pay_oper_act",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6871,6 +7066,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.oth_cash_recp_ral_fnc_act",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6890,6 +7086,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.oth_cashpay_ral_fnc_act",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6909,6 +7106,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.oth_pay_ral_inv_act",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6928,6 +7126,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.oth_recp_ral_inv_act",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6947,6 +7146,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.pay_comm_insur_plcy",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6966,6 +7166,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.pay_handling_chrg",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -6985,6 +7186,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.prem_fr_orig_contr",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -7004,6 +7206,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.proc_issue_bonds",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -7023,6 +7226,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.recp_tax_rends",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -7042,6 +7246,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.report_type",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -7061,6 +7266,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.st_cash_out_act",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -7080,6 +7286,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.stot_cash_in_fnc_act",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -7099,6 +7306,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.stot_cashout_fnc_act",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -7118,6 +7326,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.stot_inflows_inv_act",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -7137,6 +7346,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.stot_out_inv_act",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -7156,6 +7366,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.ts_code",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -7175,6 +7386,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.cashflow_statement",
       "vipStandardField": "cashflow.update_flag",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -7196,6 +7408,13 @@
         "macro:cn.cpi.yoy"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.macro_observation.observed_at",
+          "condition": "系列 cn.cpi.yoy 的 Tushare 报告期或数值，经转换与去重/修订",
+          "seriesRows": 120
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -7224,6 +7443,13 @@
         "macro:cn.cpi.yoy"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.macro_observation.value",
+          "condition": "系列 cn.cpi.yoy 的 Tushare 报告期或数值，经转换与去重/修订",
+          "seriesRows": 120
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -7252,6 +7478,7 @@
         "macro-extension:nominalGdp"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -7282,6 +7509,13 @@
         "macro:cn.gdp.real_yoy"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.macro_observation.value",
+          "condition": "系列 cn.gdp.real_yoy 的 Tushare 报告期或数值，经转换与去重/修订",
+          "seriesRows": 40
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -7318,6 +7552,13 @@
         "macro:cn.gdp.real_yoy"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.macro_observation.observed_at",
+          "condition": "系列 cn.gdp.real_yoy 的 Tushare 报告期或数值，经转换与去重/修订",
+          "seriesRows": 40
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -7352,6 +7593,13 @@
         "macro:cn.money.m1_yoy"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.macro_observation.value",
+          "condition": "系列 cn.money.m1_yoy 的 Tushare 报告期或数值，经转换与去重/修订",
+          "seriesRows": 120
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -7380,6 +7628,13 @@
         "macro:cn.money.m2_yoy"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.macro_observation.value",
+          "condition": "系列 cn.money.m2_yoy 的 Tushare 报告期或数值，经转换与去重/修订",
+          "seriesRows": 120
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -7410,6 +7665,18 @@
         "macro:cn.money.m2_yoy"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.macro_observation.observed_at",
+          "condition": "系列 cn.money.m1_yoy 的 Tushare 报告期或数值，经转换与去重/修订",
+          "seriesRows": 120
+        },
+        {
+          "column": "core.macro_observation.observed_at",
+          "condition": "系列 cn.money.m2_yoy 的 Tushare 报告期或数值，经转换与去重/修订",
+          "seriesRows": 120
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -7444,6 +7711,13 @@
         "macro:cn.pmi.manufacturing"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.macro_observation.observed_at",
+          "condition": "系列 cn.pmi.manufacturing 的 Tushare 报告期或数值，经转换与去重/修订",
+          "seriesRows": 120
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -7472,6 +7746,13 @@
         "macro:cn.pmi.manufacturing"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.macro_observation.value",
+          "condition": "系列 cn.pmi.manufacturing 的 Tushare 报告期或数值，经转换与去重/修订",
+          "seriesRows": 120
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -7500,6 +7781,13 @@
         "macro:cn.ppi.yoy"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.macro_observation.observed_at",
+          "condition": "系列 cn.ppi.yoy 的 Tushare 报告期或数值，经转换与去重/修订",
+          "seriesRows": 120
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -7528,6 +7816,13 @@
         "macro:cn.ppi.yoy"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.macro_observation.value",
+          "condition": "系列 cn.ppi.yoy 的 Tushare 报告期或数值，经转换与去重/修订",
+          "seriesRows": 120
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -7557,6 +7852,7 @@
         "daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_price",
       "vipStandardField": null,
       "vipPath": null,
@@ -7595,6 +7891,7 @@
         "daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_price",
       "vipStandardField": null,
       "vipPath": null,
@@ -7627,6 +7924,7 @@
         "daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_price",
       "vipStandardField": null,
       "vipPath": null,
@@ -7671,6 +7969,7 @@
         "daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_price",
       "vipStandardField": null,
       "vipPath": null,
@@ -7709,6 +8008,7 @@
         "daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_price",
       "vipStandardField": null,
       "vipPath": null,
@@ -7747,6 +8047,7 @@
         "daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_price",
       "vipStandardField": null,
       "vipPath": null,
@@ -7785,6 +8086,7 @@
         "daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_price",
       "vipStandardField": null,
       "vipPath": null,
@@ -7823,6 +8125,7 @@
         "daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_price",
       "vipStandardField": null,
       "vipPath": null,
@@ -7861,6 +8164,7 @@
         "daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_price",
       "vipStandardField": null,
       "vipPath": null,
@@ -7899,6 +8203,7 @@
         "daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_price",
       "vipStandardField": null,
       "vipPath": null,
@@ -7937,6 +8242,7 @@
         "daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_price",
       "vipStandardField": null,
       "vipPath": null,
@@ -7975,6 +8281,7 @@
         "daily_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_basic",
       "vipStandardField": null,
       "vipPath": null,
@@ -8007,6 +8314,7 @@
         "daily_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_basic",
       "vipStandardField": null,
       "vipPath": null,
@@ -8045,6 +8353,7 @@
         "daily_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_basic",
       "vipStandardField": null,
       "vipPath": null,
@@ -8083,6 +8392,7 @@
         "daily_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_basic",
       "vipStandardField": null,
       "vipPath": null,
@@ -8120,6 +8430,7 @@
         "daily_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_basic",
       "vipStandardField": null,
       "vipPath": null,
@@ -8152,6 +8463,7 @@
         "market:pulse:limit_status"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_basic",
       "vipStandardField": null,
       "vipPath": null,
@@ -8191,6 +8503,7 @@
         "stock-valuation-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_basic",
       "vipStandardField": null,
       "vipPath": null,
@@ -8237,6 +8550,7 @@
         "stock-valuation-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_basic",
       "vipStandardField": null,
       "vipPath": null,
@@ -8281,6 +8595,7 @@
         "daily_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_basic",
       "vipStandardField": null,
       "vipPath": null,
@@ -8318,6 +8633,7 @@
         "daily_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_basic",
       "vipStandardField": null,
       "vipPath": null,
@@ -8356,6 +8672,7 @@
         "daily_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_basic",
       "vipStandardField": null,
       "vipPath": null,
@@ -8393,6 +8710,7 @@
         "daily_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_basic",
       "vipStandardField": null,
       "vipPath": null,
@@ -8431,6 +8749,7 @@
         "daily_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_basic",
       "vipStandardField": null,
       "vipPath": null,
@@ -8472,6 +8791,7 @@
         "stock-valuation-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_basic",
       "vipStandardField": null,
       "vipPath": null,
@@ -8514,6 +8834,7 @@
         "stock-valuation-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_basic",
       "vipStandardField": null,
       "vipPath": null,
@@ -8552,6 +8873,7 @@
         "daily_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.daily_basic",
       "vipStandardField": null,
       "vipPath": null,
@@ -8583,6 +8905,7 @@
         "macro-exchange-summary:aShareFloatMv"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -8611,6 +8934,7 @@
         "macro-exchange-summary:aShareFloatMv"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -8639,6 +8963,7 @@
         "macro-exchange-summary:aShareFloatMv"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -8667,6 +8992,7 @@
         "macro-exchange-summary:aShareFloatMv"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -8696,6 +9022,7 @@
         "disclosure_date"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.disclosure_schedule",
       "vipStandardField": null,
       "vipPath": null,
@@ -8728,6 +9055,7 @@
         "disclosure_date"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.disclosure_schedule",
       "vipStandardField": null,
       "vipPath": null,
@@ -8760,6 +9088,7 @@
         "disclosure_date"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.disclosure_schedule",
       "vipStandardField": null,
       "vipPath": null,
@@ -8792,6 +9121,7 @@
         "disclosure_date"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.disclosure_schedule",
       "vipStandardField": null,
       "vipPath": null,
@@ -8824,6 +9154,7 @@
         "disclosure_date"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.disclosure_schedule",
       "vipStandardField": null,
       "vipPath": null,
@@ -8856,6 +9187,7 @@
         "disclosure_date"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.disclosure_schedule",
       "vipStandardField": null,
       "vipPath": null,
@@ -8890,6 +9222,7 @@
         "portfolio_dividend_evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.dividend",
       "vipStandardField": null,
       "vipPath": null,
@@ -8927,6 +9260,7 @@
         "portfolio_dividend_evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.dividend",
       "vipStandardField": null,
       "vipPath": null,
@@ -8955,6 +9289,7 @@
         "portfolio_dividend_evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.dividend",
       "vipStandardField": null,
       "vipPath": null,
@@ -8986,6 +9321,7 @@
         "portfolio_dividend_evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.dividend",
       "vipStandardField": null,
       "vipPath": null,
@@ -9026,6 +9362,7 @@
         "portfolio_dividend_evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.dividend",
       "vipStandardField": null,
       "vipPath": null,
@@ -9063,6 +9400,7 @@
         "portfolio_dividend_evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.dividend",
       "vipStandardField": null,
       "vipPath": null,
@@ -9094,6 +9432,7 @@
         "portfolio_dividend_evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.dividend",
       "vipStandardField": null,
       "vipPath": null,
@@ -9134,6 +9473,7 @@
         "portfolio_dividend_evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.dividend",
       "vipStandardField": null,
       "vipPath": null,
@@ -9174,6 +9514,7 @@
         "portfolio_dividend_evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.dividend",
       "vipStandardField": null,
       "vipPath": null,
@@ -9213,6 +9554,7 @@
         "portfolio_dividend_evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.dividend",
       "vipStandardField": null,
       "vipPath": null,
@@ -9252,6 +9594,7 @@
         "portfolio_dividend_evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.dividend",
       "vipStandardField": null,
       "vipPath": null,
@@ -9292,6 +9635,7 @@
         "portfolio_dividend_evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.dividend",
       "vipStandardField": null,
       "vipPath": null,
@@ -9329,6 +9673,7 @@
         "portfolio_dividend_evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.dividend",
       "vipStandardField": null,
       "vipPath": null,
@@ -9357,6 +9702,7 @@
         "portfolio_dividend_evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.dividend",
       "vipStandardField": null,
       "vipPath": null,
@@ -9385,6 +9731,7 @@
         "portfolio_dividend_evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.dividend",
       "vipStandardField": null,
       "vipPath": null,
@@ -9416,6 +9763,7 @@
         "portfolio_dividend_evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.dividend",
       "vipStandardField": null,
       "vipPath": null,
@@ -9451,6 +9799,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -9477,6 +9826,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -9503,6 +9853,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -9529,6 +9880,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -9555,6 +9907,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -9581,6 +9934,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -9607,6 +9961,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -9635,6 +9990,7 @@
         "financial_express"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_express",
       "vipStandardField": null,
       "vipPath": null,
@@ -9666,6 +10022,7 @@
         "financial_express"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_express",
       "vipStandardField": null,
       "vipPath": null,
@@ -9697,6 +10054,7 @@
         "financial_express"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_express",
       "vipStandardField": null,
       "vipPath": null,
@@ -9727,6 +10085,7 @@
         "financial_express"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_express",
       "vipStandardField": null,
       "vipPath": null,
@@ -9757,6 +10116,7 @@
         "financial_express"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_express",
       "vipStandardField": null,
       "vipPath": null,
@@ -9787,6 +10147,7 @@
         "financial_express"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_express",
       "vipStandardField": null,
       "vipPath": null,
@@ -9817,6 +10178,7 @@
         "financial_express"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_express",
       "vipStandardField": null,
       "vipPath": null,
@@ -9846,6 +10208,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_express",
       "vipStandardField": "express.ann_date",
       "vipPath": "按需显式回填；不参加默认计划",
@@ -9865,6 +10228,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_express",
       "vipStandardField": "express.end_date",
       "vipPath": "按需显式回填；不参加默认计划",
@@ -9884,6 +10248,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_express",
       "vipStandardField": "express.n_income",
       "vipPath": "按需显式回填；不参加默认计划",
@@ -9903,6 +10268,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_express",
       "vipStandardField": "express.revenue",
       "vipPath": "按需显式回填；不参加默认计划",
@@ -9922,6 +10288,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_express",
       "vipStandardField": "express.total_assets",
       "vipPath": "按需显式回填；不参加默认计划",
@@ -9941,6 +10308,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_express",
       "vipStandardField": "express.total_hldr_eqy_exc_min_int",
       "vipPath": "按需显式回填；不参加默认计划",
@@ -9960,6 +10328,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_express",
       "vipStandardField": "express.ts_code",
       "vipPath": "按需显式回填；不参加默认计划",
@@ -9983,6 +10352,7 @@
         "workbench-quarter-fields-sample"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10013,6 +10383,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10042,6 +10413,7 @@
         "financial_indicator"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10074,6 +10446,7 @@
         "workbench-quarter-fields-sample"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10104,6 +10477,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10133,6 +10507,7 @@
         "financial_indicator"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10164,6 +10539,7 @@
         "financial_indicator"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10201,6 +10577,7 @@
         "financial_indicator"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10244,6 +10621,7 @@
         "financial_indicator"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10281,6 +10659,7 @@
         "financial_indicator"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10312,6 +10691,7 @@
         "financial_indicator"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10349,6 +10729,7 @@
         "financial_indicator"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10380,6 +10761,7 @@
         "financial_indicator"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10411,6 +10793,7 @@
         "financial_indicator"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10442,6 +10825,7 @@
         "workbench-quarter-fields-sample"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10479,6 +10863,7 @@
         "workbench-quarter-fields-sample"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10510,6 +10895,7 @@
         "financial_indicator"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10547,6 +10933,7 @@
         "financial_indicator"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10584,6 +10971,7 @@
         "financial_indicator"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10622,6 +11010,7 @@
         "workbench-quarter-fields-sample"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10654,6 +11043,7 @@
         "workbench-quarter-fields-sample"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": null,
       "vipPath": null,
@@ -10683,6 +11073,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.ann_date",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -10702,6 +11093,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.bps",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -10721,6 +11113,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.debt_to_eqt",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -10740,6 +11133,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.end_date",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -10759,6 +11153,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.eps",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -10778,6 +11173,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.fcff",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -10797,6 +11193,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.grossprofit_margin",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -10816,6 +11213,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.interestdebt",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -10835,6 +11233,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.invest_capital",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -10854,6 +11253,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.netdebt",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -10873,6 +11273,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.netprofit_margin",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -10892,6 +11293,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.netprofit_yoy",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -10911,6 +11313,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.ocf_to_or",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -10930,6 +11333,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.or_yoy",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -10949,6 +11353,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.q_eps",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -10968,6 +11373,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.q_roe",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -10987,6 +11393,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.roe",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -11006,6 +11413,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.roic",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -11025,6 +11433,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.tax_to_ebt",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -11044,6 +11453,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.ts_code",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -11063,6 +11473,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_indicator",
       "vipStandardField": "fina_indicator.update_flag",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -11084,6 +11495,7 @@
         "stock-business-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.business_segment",
       "vipStandardField": null,
       "vipPath": null,
@@ -11112,6 +11524,7 @@
         "stock-business-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.business_segment",
       "vipStandardField": null,
       "vipPath": null,
@@ -11140,6 +11553,7 @@
         "stock-business-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.business_segment",
       "vipStandardField": null,
       "vipPath": null,
@@ -11168,6 +11582,7 @@
         "stock-business-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.business_segment",
       "vipStandardField": null,
       "vipPath": null,
@@ -11196,6 +11611,7 @@
         "stock-business-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.business_segment",
       "vipStandardField": null,
       "vipPath": null,
@@ -11226,6 +11642,7 @@
         "stock-business-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.business_segment",
       "vipStandardField": null,
       "vipPath": null,
@@ -11261,6 +11678,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.business_segment",
       "vipStandardField": null,
       "vipPath": null,
@@ -11282,6 +11700,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.business_segment",
       "vipStandardField": null,
       "vipPath": null,
@@ -11310,6 +11729,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.business_segment",
       "vipStandardField": null,
       "vipPath": null,
@@ -11335,6 +11755,7 @@
         "stock-business-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.business_segment",
       "vipStandardField": null,
       "vipPath": null,
@@ -11372,6 +11793,7 @@
         "stock-business-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.business_segment",
       "vipStandardField": null,
       "vipPath": null,
@@ -11398,6 +11820,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.business_segment",
       "vipStandardField": "fina_mainbz.end_date",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -11417,6 +11840,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.business_segment",
       "vipStandardField": "fina_mainbz.revenue",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -11436,6 +11860,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.business_segment",
       "vipStandardField": "fina_mainbz.segment_name",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -11455,6 +11880,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.business_segment",
       "vipStandardField": "fina_mainbz.segment_type",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -11474,6 +11900,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.business_segment",
       "vipStandardField": "fina_mainbz.ts_code",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -11496,6 +11923,7 @@
         "workbench-forecast-detail-v1"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_forecast",
       "vipStandardField": null,
       "vipPath": null,
@@ -11527,6 +11955,7 @@
         "workbench-forecast-detail-v1"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_forecast",
       "vipStandardField": null,
       "vipPath": null,
@@ -11558,6 +11987,7 @@
         "workbench-forecast-detail-v1"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_forecast",
       "vipStandardField": null,
       "vipPath": null,
@@ -11589,6 +12019,7 @@
         "workbench-forecast-detail-v1"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_forecast",
       "vipStandardField": null,
       "vipPath": null,
@@ -11620,6 +12051,7 @@
         "workbench-forecast-detail-v1"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_forecast",
       "vipStandardField": null,
       "vipPath": null,
@@ -11651,6 +12083,7 @@
         "workbench-forecast-detail-v1"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_forecast",
       "vipStandardField": null,
       "vipPath": null,
@@ -11682,6 +12115,7 @@
         "workbench-forecast-detail-v1"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_forecast",
       "vipStandardField": null,
       "vipPath": null,
@@ -11713,6 +12147,7 @@
         "workbench-forecast-detail-v1"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_forecast",
       "vipStandardField": null,
       "vipPath": null,
@@ -11743,6 +12178,7 @@
         "workbench-forecast-detail-v1"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_forecast",
       "vipStandardField": null,
       "vipPath": null,
@@ -11774,6 +12210,7 @@
         "workbench-forecast-detail-v1"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_forecast",
       "vipStandardField": null,
       "vipPath": null,
@@ -11806,6 +12243,7 @@
         "workbench-forecast-detail-v1"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_forecast",
       "vipStandardField": null,
       "vipPath": null,
@@ -11834,6 +12272,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_forecast",
       "vipStandardField": "forecast.ann_date",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -11853,6 +12292,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_forecast",
       "vipStandardField": "forecast.end_date",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -11872,6 +12312,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_forecast",
       "vipStandardField": "forecast.net_profit_max",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -11891,6 +12332,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_forecast",
       "vipStandardField": "forecast.net_profit_min",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -11910,6 +12352,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_forecast",
       "vipStandardField": "forecast.p_change_max",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -11929,6 +12372,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_forecast",
       "vipStandardField": "forecast.p_change_min",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -11948,6 +12392,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_forecast",
       "vipStandardField": "forecast.ts_code",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -11967,6 +12412,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.financial_forecast",
       "vipStandardField": "forecast.type",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -11988,6 +12434,7 @@
         "market:etf:fund_daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12026,6 +12473,13 @@
         "market:etfs:588190.SH"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.close",
+          "condition": "market:etfs:资产代码；证券代码与配置身份校验",
+          "linkedRows": 63
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12068,6 +12522,13 @@
         "market:etfs:588190.SH"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.high",
+          "condition": "market:etfs:资产代码；证券代码与配置身份校验",
+          "linkedRows": 63
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12104,6 +12565,13 @@
         "market:etfs:588190.SH"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.low",
+          "condition": "market:etfs:资产代码；证券代码与配置身份校验",
+          "linkedRows": 63
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12140,6 +12608,13 @@
         "market:etfs:588190.SH"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.open",
+          "condition": "market:etfs:资产代码；证券代码与配置身份校验",
+          "linkedRows": 63
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12178,6 +12653,13 @@
         "market:etfs:588190.SH"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.pct_chg",
+          "condition": "market:etfs:资产代码；证券代码与配置身份校验",
+          "linkedRows": 63
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12189,6 +12671,12 @@
           "project": "InvestMind",
           "pageOrJob": "市场/ETF 收盘、涨跌与成交",
           "evidence": "D"
+        },
+        {
+          "level": "直接",
+          "project": "InvestMind",
+          "pageOrJob": "市场总览/宽基 ETF 卡/etfQuotes[].change 涨跌幅",
+          "evidence": "app/market/data/publication.py + scripts/audit-market-supply.py + src/modules/market/market-overview.tsx"
         },
         {
           "level": "间接",
@@ -12220,6 +12708,13 @@
         "market:etfs:588190.SH"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.pre_close",
+          "condition": "market:etfs:资产代码；证券代码与配置身份校验",
+          "linkedRows": 63
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12237,7 +12732,7 @@
     {
       "api": "fund_daily",
       "field": "trade_date",
-      "level": "间接",
+      "level": "直接",
       "contracts": [
         "market.data.contracts.QUOTE_FIELDS",
         "market.etf.repository.FIELDS"
@@ -12258,12 +12753,25 @@
         "market:etfs:588190.SH"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.trade_date",
+          "condition": "market:etfs:资产代码；证券代码与配置身份校验",
+          "linkedRows": 63
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
       "coreNonNullCounts": {},
       "publishedStatement": null,
       "uses": [
+        {
+          "level": "直接",
+          "project": "InvestMind",
+          "pageOrJob": "市场总览/宽基 ETF 卡/etfQuotes[].tradeDate 收盘交易日",
+          "evidence": "app/market/data/publication.py + scripts/audit-market-supply.py + src/modules/market/market-overview.tsx"
+        },
         {
           "level": "间接",
           "project": "InvestMind",
@@ -12296,6 +12804,13 @@
         "market:etfs:588190.SH"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.asset_code",
+          "condition": "market:etfs:资产代码；证券代码与配置身份校验",
+          "linkedRows": 63
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12324,6 +12839,7 @@
         "market:etf:fund_daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12352,6 +12868,7 @@
         "market:etf:fund_share"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12380,6 +12897,7 @@
         "market:etf:fund_share"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12408,6 +12926,7 @@
         "market:etf:fund_share"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12436,6 +12955,7 @@
         "market:commodities:fut_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12464,6 +12984,7 @@
         "market:commodities:fut_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12492,6 +13013,7 @@
         "market:commodities:fut_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12520,6 +13042,7 @@
         "market:commodities:fut_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12548,6 +13071,7 @@
         "market:commodities:fut_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12576,6 +13100,7 @@
         "market:commodities:fut_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12604,6 +13129,7 @@
         "market:commodities:fut_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12632,6 +13158,7 @@
         "market:commodities:fut_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12660,6 +13187,7 @@
         "market:commodities:fut_basic"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12688,6 +13216,7 @@
         "market:commodities:fut_daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12716,6 +13245,7 @@
         "market:commodities:fut_daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12744,6 +13274,7 @@
         "market:commodities:fut_daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12772,6 +13303,7 @@
         "market:commodities:fut_daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12800,6 +13332,7 @@
         "market:commodities:fut_daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12828,6 +13361,7 @@
         "market:commodities:fut_daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12856,6 +13390,7 @@
         "market:commodities:fut_daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12884,6 +13419,7 @@
         "market:commodities:fut_daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12912,6 +13448,7 @@
         "market:commodities:fut_daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12940,6 +13477,7 @@
         "market:commodities:fut_daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12968,6 +13506,7 @@
         "market:commodities:fut_daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -12996,6 +13535,7 @@
         "market:commodities:fut_daily"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -13024,6 +13564,7 @@
         "market:commodities:fut_mapping"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -13052,6 +13593,7 @@
         "market:commodities:fut_mapping"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -13080,6 +13622,7 @@
         "market:commodities:fut_mapping"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -13108,6 +13651,7 @@
         "market:commodities:fut_trade_cal"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -13136,6 +13680,7 @@
         "market:commodities:fut_trade_cal"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -13164,6 +13709,7 @@
         "market:commodities:fut_trade_cal"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -13192,6 +13738,7 @@
         "macro-extension:usdcnh"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -13220,6 +13767,7 @@
         "macro-extension:usdcnh"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -13248,6 +13796,7 @@
         "macro-extension:usdcnh"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -13276,6 +13825,7 @@
         "macro-extension:usdcnh"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -13304,6 +13854,7 @@
         "macro-extension:usdcnh"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -13332,6 +13883,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -13368,6 +13920,7 @@
         "income"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -13405,6 +13958,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -13446,6 +14000,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -13499,6 +14054,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -13535,6 +14091,7 @@
         "income"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -13566,6 +14123,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -13605,6 +14163,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -13641,6 +14200,7 @@
         "income"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -13694,6 +14254,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -13736,6 +14297,7 @@
         "income"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -13776,6 +14338,7 @@
         "income"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -13813,6 +14376,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -13849,6 +14413,7 @@
         "income"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -13902,6 +14467,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -13935,6 +14501,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -13977,6 +14544,7 @@
         "income"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -14018,6 +14586,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -14057,6 +14626,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -14093,6 +14663,7 @@
         "income"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -14143,6 +14714,7 @@
         "income"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -14214,6 +14786,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -14253,6 +14826,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -14295,6 +14869,7 @@
         "income"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -14348,6 +14923,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -14387,6 +14963,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -14423,6 +15000,7 @@
         "income"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -14463,6 +15041,7 @@
         "income"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -14522,6 +15101,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -14555,6 +15135,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -14594,6 +15175,7 @@
         "financial-statement-evidence"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -14630,6 +15212,7 @@
         "income"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -14680,6 +15263,7 @@
         "income"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -14730,6 +15314,7 @@
         "income"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -14770,6 +15355,7 @@
         "income"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": null,
       "vipPath": null,
@@ -14805,6 +15391,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": "income.ann_date",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -14824,6 +15411,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": "income.basic_eps",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -14843,6 +15431,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": "income.comp_type",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -14862,6 +15451,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": "income.ebit",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -14881,6 +15471,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": "income.end_date",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -14900,6 +15491,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": "income.f_ann_date",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -14919,6 +15511,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": "income.fin_exp_int_exp",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -14938,6 +15531,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": "income.income_tax",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -14957,6 +15551,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": "income.n_income",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -14976,6 +15571,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": "income.n_income_attr_p",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -14995,6 +15591,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": "income.oper_cost",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -15014,6 +15611,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": "income.report_type",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -15033,6 +15631,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": "income.revenue",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -15052,6 +15651,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": "income.total_profit",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -15071,6 +15671,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": "income.total_revenue",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -15090,6 +15691,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": "income.ts_code",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -15109,6 +15711,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.income_statement",
       "vipStandardField": "income.update_flag",
       "vipPath": "具备权限且选择 VIP 模式时按报告期批量",
@@ -15130,6 +15733,7 @@
         "portfolio-reference-catalog"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -15158,6 +15762,7 @@
         "portfolio-reference-catalog"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -15193,6 +15798,7 @@
           "example": "1dc2c7111c9240222abd53c461e985bd63a110b9d44b6494b4a71b83cc88ba99"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -15228,6 +15834,7 @@
           "example": "1dc2c7111c9240222abd53c461e985bd63a110b9d44b6494b4a71b83cc88ba99"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -15262,6 +15869,7 @@
         "portfolio-reference-catalog"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -15297,6 +15905,7 @@
           "example": "1dc2c7111c9240222abd53c461e985bd63a110b9d44b6494b4a71b83cc88ba99"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -15338,6 +15947,7 @@
           "example": "1dc2c7111c9240222abd53c461e985bd63a110b9d44b6494b4a71b83cc88ba99"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -15373,6 +15983,7 @@
           "example": "1dc2c7111c9240222abd53c461e985bd63a110b9d44b6494b4a71b83cc88ba99"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -15414,6 +16025,7 @@
           "example": "1dc2c7111c9240222abd53c461e985bd63a110b9d44b6494b4a71b83cc88ba99"
         }
       },
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -15448,6 +16060,7 @@
         "classification"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.classification",
       "vipStandardField": null,
       "vipPath": null,
@@ -15484,6 +16097,7 @@
         "classification"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.classification",
       "vipStandardField": null,
       "vipPath": null,
@@ -15520,6 +16134,7 @@
         "classification"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.classification",
       "vipStandardField": null,
       "vipPath": null,
@@ -15556,6 +16171,7 @@
         "classification"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.classification",
       "vipStandardField": null,
       "vipPath": null,
@@ -15586,6 +16202,7 @@
         "classification"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.classification",
       "vipStandardField": null,
       "vipPath": null,
@@ -15623,6 +16240,7 @@
         "classification"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.classification",
       "vipStandardField": null,
       "vipPath": null,
@@ -15659,6 +16277,7 @@
         "classification"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.classification",
       "vipStandardField": null,
       "vipPath": null,
@@ -15678,7 +16297,7 @@
     {
       "api": "index_daily",
       "field": "close",
-      "level": "间接",
+      "level": "直接",
       "contracts": [
         "market.data.contracts.QUOTE_FIELDS",
         "portfolio.reference_history.FIELDS"
@@ -15693,12 +16312,25 @@
         "portfolio-reference-history"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.close",
+          "condition": "market:indices:资产代码；证券代码与配置身份校验",
+          "linkedRows": 21
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
       "coreNonNullCounts": {},
       "publishedStatement": null,
       "uses": [
+        {
+          "level": "直接",
+          "project": "InvestMind",
+          "pageOrJob": "市场总览/全球指数卡/globalIndices[].value 收盘点位（两位小数）",
+          "evidence": "app/market/data/publication.py + scripts/audit-market-supply.py + src/modules/market/index-card.tsx"
+        },
         {
           "level": "间接",
           "project": "InvestMind",
@@ -15729,6 +16361,13 @@
         "market:indices:399006.SZ"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.high",
+          "condition": "market:indices:资产代码；证券代码与配置身份校验",
+          "linkedRows": 21
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -15759,6 +16398,13 @@
         "market:indices:399006.SZ"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.low",
+          "condition": "market:indices:资产代码；证券代码与配置身份校验",
+          "linkedRows": 21
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -15789,6 +16435,13 @@
         "market:indices:399006.SZ"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.open",
+          "condition": "market:indices:资产代码；证券代码与配置身份校验",
+          "linkedRows": 21
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -15806,7 +16459,7 @@
     {
       "api": "index_daily",
       "field": "pct_chg",
-      "level": "间接",
+      "level": "直接",
       "contracts": [
         "market.data.contracts.QUOTE_FIELDS"
       ],
@@ -15819,12 +16472,25 @@
         "market:indices:399006.SZ"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.pct_chg",
+          "condition": "market:indices:资产代码；证券代码与配置身份校验",
+          "linkedRows": 21
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
       "coreNonNullCounts": {},
       "publishedStatement": null,
       "uses": [
+        {
+          "level": "直接",
+          "project": "InvestMind",
+          "pageOrJob": "市场总览/全球指数卡/globalIndices[].change 涨跌幅",
+          "evidence": "app/market/data/publication.py + scripts/audit-market-supply.py + src/modules/market/index-card.tsx"
+        },
         {
           "level": "间接",
           "project": "InvestMind",
@@ -15849,6 +16515,13 @@
         "market:indices:399006.SZ"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.pre_close",
+          "condition": "market:indices:资产代码；证券代码与配置身份校验",
+          "linkedRows": 21
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -15866,7 +16539,7 @@
     {
       "api": "index_daily",
       "field": "trade_date",
-      "level": "间接",
+      "level": "直接",
       "contracts": [
         "market.data.contracts.QUOTE_FIELDS",
         "portfolio.reference_history.FIELDS"
@@ -15881,12 +16554,25 @@
         "portfolio-reference-history"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.trade_date",
+          "condition": "market:indices:资产代码；证券代码与配置身份校验",
+          "linkedRows": 21
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
       "coreNonNullCounts": {},
       "publishedStatement": null,
       "uses": [
+        {
+          "level": "直接",
+          "project": "InvestMind",
+          "pageOrJob": "市场总览/全球指数卡/globalIndices[].tradeDate 收盘交易日",
+          "evidence": "app/market/data/publication.py + scripts/audit-market-supply.py + src/modules/market/index-card.tsx"
+        },
         {
           "level": "间接",
           "project": "InvestMind",
@@ -15913,6 +16599,13 @@
         "portfolio-reference-history"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.asset_code",
+          "condition": "market:indices:资产代码；证券代码与配置身份校验",
+          "linkedRows": 21
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -15930,7 +16623,7 @@
     {
       "api": "index_global",
       "field": "close",
-      "level": "间接",
+      "level": "直接",
       "contracts": [
         "market.data.contracts.QUOTE_FIELDS"
       ],
@@ -15943,12 +16636,25 @@
         "market:indices:SPX"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.close",
+          "condition": "market:indices:资产代码；证券代码与配置身份校验",
+          "linkedRows": 30
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
       "coreNonNullCounts": {},
       "publishedStatement": null,
       "uses": [
+        {
+          "level": "直接",
+          "project": "InvestMind",
+          "pageOrJob": "市场总览/全球指数卡/globalIndices[].value 收盘点位（两位小数）",
+          "evidence": "app/market/data/publication.py + scripts/audit-market-supply.py + src/modules/market/index-card.tsx"
+        },
         {
           "level": "间接",
           "project": "InvestMind",
@@ -15973,6 +16679,13 @@
         "market:indices:SPX"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.high",
+          "condition": "market:indices:资产代码；证券代码与配置身份校验",
+          "linkedRows": 30
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -16003,6 +16716,13 @@
         "market:indices:SPX"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.low",
+          "condition": "market:indices:资产代码；证券代码与配置身份校验",
+          "linkedRows": 30
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -16033,6 +16753,13 @@
         "market:indices:SPX"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.open",
+          "condition": "market:indices:资产代码；证券代码与配置身份校验",
+          "linkedRows": 30
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -16050,7 +16777,7 @@
     {
       "api": "index_global",
       "field": "pct_chg",
-      "level": "间接",
+      "level": "直接",
       "contracts": [
         "market.data.contracts.QUOTE_FIELDS"
       ],
@@ -16063,12 +16790,25 @@
         "market:indices:SPX"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.pct_chg",
+          "condition": "market:indices:资产代码；证券代码与配置身份校验",
+          "linkedRows": 30
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
       "coreNonNullCounts": {},
       "publishedStatement": null,
       "uses": [
+        {
+          "level": "直接",
+          "project": "InvestMind",
+          "pageOrJob": "市场总览/全球指数卡/globalIndices[].change 涨跌幅",
+          "evidence": "app/market/data/publication.py + scripts/audit-market-supply.py + src/modules/market/index-card.tsx"
+        },
         {
           "level": "间接",
           "project": "InvestMind",
@@ -16093,6 +16833,13 @@
         "market:indices:SPX"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.pre_close",
+          "condition": "market:indices:资产代码；证券代码与配置身份校验",
+          "linkedRows": 30
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -16110,7 +16857,7 @@
     {
       "api": "index_global",
       "field": "trade_date",
-      "level": "间接",
+      "level": "直接",
       "contracts": [
         "market.data.contracts.QUOTE_FIELDS"
       ],
@@ -16123,12 +16870,25 @@
         "market:indices:SPX"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.trade_date",
+          "condition": "market:indices:资产代码；证券代码与配置身份校验",
+          "linkedRows": 30
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
       "coreNonNullCounts": {},
       "publishedStatement": null,
       "uses": [
+        {
+          "level": "直接",
+          "project": "InvestMind",
+          "pageOrJob": "市场总览/全球指数卡/globalIndices[].tradeDate 收盘交易日",
+          "evidence": "app/market/data/publication.py + scripts/audit-market-supply.py + src/modules/market/index-card.tsx"
+        },
         {
           "level": "间接",
           "project": "InvestMind",
@@ -16153,6 +16913,13 @@
         "market:indices:SPX"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.market_daily_quote.asset_code",
+          "condition": "market:indices:资产代码；证券代码与配置身份校验",
+          "linkedRows": 30
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -16181,6 +16948,7 @@
         "classification_member"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.classification_member",
       "vipStandardField": null,
       "vipPath": null,
@@ -16209,6 +16977,7 @@
         "classification_member"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.classification_member",
       "vipStandardField": null,
       "vipPath": null,
@@ -16237,6 +17006,7 @@
         "classification_member"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.classification_member",
       "vipStandardField": null,
       "vipPath": null,
@@ -16265,6 +17035,7 @@
         "classification_member"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.classification_member",
       "vipStandardField": null,
       "vipPath": null,
@@ -16293,6 +17064,7 @@
         "classification_member"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.classification_member",
       "vipStandardField": null,
       "vipPath": null,
@@ -16321,6 +17093,7 @@
         "classification_member"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.classification_member",
       "vipStandardField": null,
       "vipPath": null,
@@ -16349,6 +17122,7 @@
         "classification_member"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.classification_member",
       "vipStandardField": null,
       "vipPath": null,
@@ -16377,6 +17151,7 @@
         "classification_member"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.classification_member",
       "vipStandardField": null,
       "vipPath": null,
@@ -16405,6 +17180,7 @@
         "classification_member"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.classification_member",
       "vipStandardField": null,
       "vipPath": null,
@@ -16433,6 +17209,7 @@
         "classification_member"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.classification_member",
       "vipStandardField": null,
       "vipPath": null,
@@ -16461,6 +17238,7 @@
         "classification_member"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.classification_member",
       "vipStandardField": null,
       "vipPath": null,
@@ -16495,6 +17273,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -16521,6 +17300,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -16547,6 +17327,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -16573,6 +17354,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -16601,6 +17383,7 @@
         "macro-exchange-summary:marginBalances"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -16629,6 +17412,7 @@
         "macro-exchange-summary:marginBalances"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -16657,6 +17441,7 @@
         "macro-exchange-summary:marginBalances"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -16686,6 +17471,7 @@
         "macro:cn.rate.dr007"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -16715,6 +17501,13 @@
         "macro:cn.rate.dr007"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.macro_observation.observed_at",
+          "condition": "系列 cn.rate.dr007 的 Tushare 报告期或数值，经转换与去重/修订",
+          "seriesRows": 2504
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -16750,6 +17543,7 @@
         "macro:cn.rate.dr007"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -16779,6 +17573,13 @@
         "macro:cn.rate.dr007"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.macro_observation.value",
+          "condition": "系列 cn.rate.dr007 的 Tushare 报告期或数值，经转换与去重/修订",
+          "seriesRows": 2504
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -16813,6 +17614,7 @@
         "repurchase"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.repurchase",
       "vipStandardField": null,
       "vipPath": null,
@@ -16849,6 +17651,7 @@
         "repurchase"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.repurchase",
       "vipStandardField": null,
       "vipPath": null,
@@ -16880,6 +17683,7 @@
         "repurchase"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.repurchase",
       "vipStandardField": null,
       "vipPath": null,
@@ -16910,6 +17714,7 @@
         "repurchase"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.repurchase",
       "vipStandardField": null,
       "vipPath": null,
@@ -16947,6 +17752,7 @@
         "repurchase"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.repurchase",
       "vipStandardField": null,
       "vipPath": null,
@@ -16978,6 +17784,7 @@
         "repurchase"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.repurchase",
       "vipStandardField": null,
       "vipPath": null,
@@ -17008,6 +17815,7 @@
         "share_unlock"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.share_unlock",
       "vipStandardField": null,
       "vipPath": null,
@@ -17045,6 +17853,7 @@
         "share_unlock"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.share_unlock",
       "vipStandardField": null,
       "vipPath": null,
@@ -17082,6 +17891,7 @@
         "share_unlock"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.share_unlock",
       "vipStandardField": null,
       "vipPath": null,
@@ -17118,6 +17928,7 @@
         "share_unlock"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.share_unlock",
       "vipStandardField": null,
       "vipPath": null,
@@ -17151,6 +17962,7 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.share_unlock",
       "vipStandardField": null,
       "vipPath": null,
@@ -17179,6 +17991,7 @@
         "shareholder_count"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.shareholder_count",
       "vipStandardField": null,
       "vipPath": null,
@@ -17210,6 +18023,7 @@
         "shareholder_count"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.shareholder_count",
       "vipStandardField": null,
       "vipPath": null,
@@ -17241,6 +18055,7 @@
         "shareholder_count"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.shareholder_count",
       "vipStandardField": null,
       "vipPath": null,
@@ -17272,6 +18087,7 @@
         "shareholder_count"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.shareholder_count",
       "vipStandardField": null,
       "vipPath": null,
@@ -17303,6 +18119,7 @@
         "security:region"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.security",
       "vipStandardField": null,
       "vipPath": null,
@@ -17339,6 +18156,7 @@
         "security"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.security",
       "vipStandardField": null,
       "vipPath": null,
@@ -17376,6 +18194,7 @@
         "security"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.security",
       "vipStandardField": null,
       "vipPath": null,
@@ -17413,6 +18232,7 @@
         "security"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.security",
       "vipStandardField": null,
       "vipPath": null,
@@ -17450,6 +18270,7 @@
         "security"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.security",
       "vipStandardField": null,
       "vipPath": null,
@@ -17481,6 +18302,7 @@
         "security"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.security",
       "vipStandardField": null,
       "vipPath": null,
@@ -17518,6 +18340,7 @@
         "security"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.security",
       "vipStandardField": null,
       "vipPath": null,
@@ -17557,6 +18380,7 @@
         "security:region"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.security",
       "vipStandardField": null,
       "vipPath": null,
@@ -17594,6 +18418,7 @@
         "macro-sz-market-contract-sample-v1"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -17622,6 +18447,7 @@
         "macro-sz-market-contract-sample-v1"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -17650,6 +18476,7 @@
         "macro-sz-market-contract-sample-v1"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -17678,6 +18505,7 @@
         "macro-sz-market-contract-sample-v1"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -17706,6 +18534,7 @@
         "top_holder"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.top_holder",
       "vipStandardField": null,
       "vipPath": null,
@@ -17737,6 +18566,7 @@
         "top_holder"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.top_holder",
       "vipStandardField": null,
       "vipPath": null,
@@ -17768,6 +18598,7 @@
         "top_holder"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.top_holder",
       "vipStandardField": null,
       "vipPath": null,
@@ -17799,6 +18630,7 @@
         "top_holder"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.top_holder",
       "vipStandardField": null,
       "vipPath": null,
@@ -17830,6 +18662,7 @@
         "top_holder"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.top_holder",
       "vipStandardField": null,
       "vipPath": null,
@@ -17861,6 +18694,7 @@
         "top_holder"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.top_holder",
       "vipStandardField": null,
       "vipPath": null,
@@ -17895,6 +18729,7 @@
         "trade_calendar"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.trade_calendar",
       "vipStandardField": null,
       "vipPath": null,
@@ -17934,6 +18769,7 @@
         "trade_calendar"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.trade_calendar",
       "vipStandardField": null,
       "vipPath": null,
@@ -17973,6 +18809,7 @@
         "trade_calendar"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.trade_calendar",
       "vipStandardField": null,
       "vipPath": null,
@@ -18010,6 +18847,7 @@
         "trade_calendar"
       ],
       "enterpriseRaw": {},
+      "conditionalCore": [],
       "coreDatasetTable": "core.trade_calendar",
       "vipStandardField": null,
       "vipPath": null,
@@ -18044,6 +18882,13 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.macro_observation.observed_at",
+          "condition": "系列 us.rate.treasury_10y 的 Tushare 报告期或数值，经转换与去重/修订",
+          "seriesRows": 0
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,
@@ -18070,6 +18915,13 @@
       "rawExampleId": null,
       "datasets": [],
       "enterpriseRaw": {},
+      "conditionalCore": [
+        {
+          "column": "core.macro_observation.value",
+          "condition": "系列 us.rate.treasury_10y 的 Tushare 报告期或数值，经转换与去重/修订",
+          "seriesRows": 0
+        }
+      ],
       "coreDatasetTable": null,
       "vipStandardField": null,
       "vipPath": null,

@@ -1,10 +1,14 @@
 """统一入口仅替换外部组调用；验证真实选择/发布顺序/预算汇总行为。"""
 from dataclasses import dataclass
 
+import pytest
+
 from app.config import Settings
 from backend.tests.macro.test_extension_plan import config, payload
 from backend.tests.macro.test_extension_store import NOW
 
+
+pytestmark = pytest.mark.usefixtures("isolated_routine_groups")
 
 @dataclass
 class Published:

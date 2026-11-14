@@ -4,7 +4,7 @@
 
 [完整逐字段回执](research/investmind-tushare-field-consumers.json) · [只读重放脚本](../scripts/audit-tushare-field-consumers.py)
 
-本次 50 个端点共 565 项，其中 直接 171、间接 238、仅历史 8、未知 148。564 项存在于登记的现行或离线契约，400 项有真实返回列。50 个发布工作台中出现 131 项同名来源报表行。
+本次 50 个端点共 565 项，其中 直接 178、间接 231、仅历史 8、未知 148。564 项存在于登记的现行或离线契约，400 项有真实返回列。50 个发布工作台中出现 131 项同名来源报表行。
 
 ## 如何读表
 
@@ -237,18 +237,18 @@
 | `cashflow_vip.stot_out_inv_act` | core.cashflow_statement | 0 | 未知 | 待核 |
 | `cashflow_vip.ts_code` | core.cashflow_statement | 0 | 未知 | 待核 |
 | `cashflow_vip.update_flag` | core.cashflow_statement | 0 | 未知 | 待核 |
-| `cn_cpi.month` | raw.source_payload / 宏观观测按发布合同 | 11 | 间接 | 宏观/指标序列 cn.cpi.yoy（供应商配置，实际来源按版本） |
-| `cn_cpi.nt_yoy` | raw.source_payload / 宏观观测按发布合同 | 11 | 间接 | 宏观/指标序列 cn.cpi.yoy（供应商配置，实际来源按版本） |
+| `cn_cpi.month` | raw.source_payload / 宏观观测按发布合同 / core.macro_observation.observed_at（系列 cn.cpi.yoy 的 Tushare 报告期或数值，经转换与去重/修订，120 行） | 11 | 间接 | 宏观/指标序列 cn.cpi.yoy（供应商配置，实际来源按版本） |
+| `cn_cpi.nt_yoy` | raw.source_payload / 宏观观测按发布合同 / core.macro_observation.value（系列 cn.cpi.yoy 的 Tushare 报告期或数值，经转换与去重/修订，120 行） | 11 | 间接 | 宏观/指标序列 cn.cpi.yoy（供应商配置，实际来源按版本） |
 | `cn_gdp.gdp` | raw.source_payload / 宏观观测按发布合同 | 1 | 间接 | 宏观/名义 GDP、实际同比诊断、季度 |
-| `cn_gdp.gdp_yoy` | raw.source_payload / 宏观观测按发布合同 | 12 | 间接 | 宏观/名义 GDP、实际同比诊断、季度；宏观/指标序列 cn.gdp.real_yoy（供应商配置，实际来源按版本） |
-| `cn_gdp.quarter` | raw.source_payload / 宏观观测按发布合同 | 12 | 间接 | 宏观/名义 GDP、实际同比诊断、季度；宏观/指标序列 cn.gdp.real_yoy（供应商配置，实际来源按版本） |
-| `cn_m.m1_yoy` | raw.source_payload / 宏观观测按发布合同 | 11 | 间接 | 宏观/指标序列 cn.money.m1_yoy（供应商配置，实际来源按版本） |
-| `cn_m.m2_yoy` | raw.source_payload / 宏观观测按发布合同 | 11 | 间接 | 宏观/指标序列 cn.money.m2_yoy（供应商配置，实际来源按版本） |
-| `cn_m.month` | raw.source_payload / 宏观观测按发布合同 | 22 | 间接 | 宏观/指标序列 cn.money.m1_yoy（供应商配置，实际来源按版本）；宏观/指标序列 cn.money.m2_yoy（供应商配置，实际来源按版本） |
-| `cn_pmi.month` | raw.source_payload / 宏观观测按发布合同 | 11 | 间接 | 宏观/指标序列 cn.pmi.manufacturing（供应商配置，实际来源按版本） |
-| `cn_pmi.pmi010000` | raw.source_payload / 宏观观测按发布合同 | 11 | 间接 | 宏观/指标序列 cn.pmi.manufacturing（供应商配置，实际来源按版本） |
-| `cn_ppi.month` | raw.source_payload / 宏观观测按发布合同 | 11 | 间接 | 宏观/指标序列 cn.ppi.yoy（供应商配置，实际来源按版本） |
-| `cn_ppi.ppi_yoy` | raw.source_payload / 宏观观测按发布合同 | 11 | 间接 | 宏观/指标序列 cn.ppi.yoy（供应商配置，实际来源按版本） |
+| `cn_gdp.gdp_yoy` | raw.source_payload / 宏观观测按发布合同 / core.macro_observation.value（系列 cn.gdp.real_yoy 的 Tushare 报告期或数值，经转换与去重/修订，40 行） | 12 | 间接 | 宏观/名义 GDP、实际同比诊断、季度；宏观/指标序列 cn.gdp.real_yoy（供应商配置，实际来源按版本） |
+| `cn_gdp.quarter` | raw.source_payload / 宏观观测按发布合同 / core.macro_observation.observed_at（系列 cn.gdp.real_yoy 的 Tushare 报告期或数值，经转换与去重/修订，40 行） | 12 | 间接 | 宏观/名义 GDP、实际同比诊断、季度；宏观/指标序列 cn.gdp.real_yoy（供应商配置，实际来源按版本） |
+| `cn_m.m1_yoy` | raw.source_payload / 宏观观测按发布合同 / core.macro_observation.value（系列 cn.money.m1_yoy 的 Tushare 报告期或数值，经转换与去重/修订，120 行） | 11 | 间接 | 宏观/指标序列 cn.money.m1_yoy（供应商配置，实际来源按版本） |
+| `cn_m.m2_yoy` | raw.source_payload / 宏观观测按发布合同 / core.macro_observation.value（系列 cn.money.m2_yoy 的 Tushare 报告期或数值，经转换与去重/修订，120 行） | 11 | 间接 | 宏观/指标序列 cn.money.m2_yoy（供应商配置，实际来源按版本） |
+| `cn_m.month` | raw.source_payload / 宏观观测按发布合同 / core.macro_observation.observed_at（系列 cn.money.m1_yoy 的 Tushare 报告期或数值，经转换与去重/修订，120 行） / core.macro_observation.observed_at（系列 cn.money.m2_yoy 的 Tushare 报告期或数值，经转换与去重/修订，120 行） | 22 | 间接 | 宏观/指标序列 cn.money.m1_yoy（供应商配置，实际来源按版本）；宏观/指标序列 cn.money.m2_yoy（供应商配置，实际来源按版本） |
+| `cn_pmi.month` | raw.source_payload / 宏观观测按发布合同 / core.macro_observation.observed_at（系列 cn.pmi.manufacturing 的 Tushare 报告期或数值，经转换与去重/修订，120 行） | 11 | 间接 | 宏观/指标序列 cn.pmi.manufacturing（供应商配置，实际来源按版本） |
+| `cn_pmi.pmi010000` | raw.source_payload / 宏观观测按发布合同 / core.macro_observation.value（系列 cn.pmi.manufacturing 的 Tushare 报告期或数值，经转换与去重/修订，120 行） | 11 | 间接 | 宏观/指标序列 cn.pmi.manufacturing（供应商配置，实际来源按版本） |
+| `cn_ppi.month` | raw.source_payload / 宏观观测按发布合同 / core.macro_observation.observed_at（系列 cn.ppi.yoy 的 Tushare 报告期或数值，经转换与去重/修订，120 行） | 11 | 间接 | 宏观/指标序列 cn.ppi.yoy（供应商配置，实际来源按版本） |
+| `cn_ppi.ppi_yoy` | raw.source_payload / 宏观观测按发布合同 / core.macro_observation.value（系列 cn.ppi.yoy 的 Tushare 报告期或数值，经转换与去重/修订，120 行） | 11 | 间接 | 宏观/指标序列 cn.ppi.yoy（供应商配置，实际来源按版本） |
 | `daily.amount` | core.daily_price | 223 | 直接 | 工作台/行情与日 K；市场/成交、涨跌；股票发布/可见来源签名（真实快照内存在该字段；供构建前后冲突检查） |
 | `daily.change` | core.daily_price | 223 | 间接 | 股票发布/可见来源签名（真实快照内存在该字段；供构建前后冲突检查） |
 | `daily.close` | core.daily_price | 223 | 直接 | 工作台/行情与日 K；市场/成交、涨跌；股票发布/可见来源签名（真实快照内存在该字段；供构建前后冲突检查）；选股/预期、NTM 与财年股息率；组合/持仓行情 |
@@ -401,14 +401,14 @@
 | `forecast_vip.ts_code` | core.financial_forecast | 0 | 未知 | 待核 |
 | `forecast_vip.type` | core.financial_forecast | 0 | 未知 | 待核 |
 | `fund_daily.amount` | raw.source_payload | 9 | 直接 | 市场/ETF 收盘、涨跌与成交 |
-| `fund_daily.close` | raw.source_payload / core.market_daily_quote | 18 | 直接 | 市场/ETF 收盘、涨跌与成交；市场/指数或 ETF 同日行情和产品校验 |
-| `fund_daily.high` | raw.source_payload / core.market_daily_quote | 9 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
-| `fund_daily.low` | raw.source_payload / core.market_daily_quote | 9 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
-| `fund_daily.open` | raw.source_payload / core.market_daily_quote | 9 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
-| `fund_daily.pct_chg` | raw.source_payload / core.market_daily_quote | 18 | 直接 | 市场/ETF 收盘、涨跌与成交；市场/指数或 ETF 同日行情和产品校验 |
-| `fund_daily.pre_close` | raw.source_payload / core.market_daily_quote | 9 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
-| `fund_daily.trade_date` | raw.source_payload / core.market_daily_quote | 18 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
-| `fund_daily.ts_code` | raw.source_payload / core.market_daily_quote | 18 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
+| `fund_daily.close` | raw.source_payload / core.market_daily_quote.close（market:etfs:资产代码；证券代码与配置身份校验，63 行） | 18 | 直接 | 市场/ETF 收盘、涨跌与成交；市场/指数或 ETF 同日行情和产品校验 |
+| `fund_daily.high` | raw.source_payload / core.market_daily_quote.high（market:etfs:资产代码；证券代码与配置身份校验，63 行） | 9 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
+| `fund_daily.low` | raw.source_payload / core.market_daily_quote.low（market:etfs:资产代码；证券代码与配置身份校验，63 行） | 9 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
+| `fund_daily.open` | raw.source_payload / core.market_daily_quote.open（market:etfs:资产代码；证券代码与配置身份校验，63 行） | 9 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
+| `fund_daily.pct_chg` | raw.source_payload / core.market_daily_quote.pct_chg（market:etfs:资产代码；证券代码与配置身份校验，63 行） | 18 | 直接 | 市场/ETF 收盘、涨跌与成交；市场总览/宽基 ETF 卡/etfQuotes[].change 涨跌幅；市场/指数或 ETF 同日行情和产品校验 |
+| `fund_daily.pre_close` | raw.source_payload / core.market_daily_quote.pre_close（market:etfs:资产代码；证券代码与配置身份校验，63 行） | 9 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
+| `fund_daily.trade_date` | raw.source_payload / core.market_daily_quote.trade_date（market:etfs:资产代码；证券代码与配置身份校验，63 行） | 18 | 直接 | 市场总览/宽基 ETF 卡/etfQuotes[].tradeDate 收盘交易日；市场/指数或 ETF 同日行情和产品校验 |
+| `fund_daily.ts_code` | raw.source_payload / core.market_daily_quote.asset_code（market:etfs:资产代码；证券代码与配置身份校验，63 行） | 18 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
 | `fund_daily.vol` | raw.source_payload | 9 | 间接 | 市场/ETF 成交量非负核验 |
 | `fund_share.fd_share` | raw.source_payload | 9 | 直接 | 市场/ETF 份额；参与基金规模换算 |
 | `fund_share.trade_date` | raw.source_payload | 9 | 间接 | 市场/ETF 份额证券与行情同日核验 |
@@ -513,22 +513,22 @@
 | `index_classify.level` | core.classification | 6 | 间接 | 股票发布/可见来源签名（真实快照内存在该字段；供构建前后冲突检查）；选股、市场/分类树与行业标签 |
 | `index_classify.parent_code` | core.classification | 5 | 间接 | 股票发布/可见来源签名（真实快照内存在该字段；供构建前后冲突检查）；选股、市场/分类树与行业标签 |
 | `index_classify.src` | core.classification | 5 | 间接 | 股票发布/可见来源签名（真实快照内存在该字段；供构建前后冲突检查） |
-| `index_daily.close` | raw.source_payload / core.market_daily_quote | 5 | 间接 | 市场/指数或 ETF 同日行情和产品校验；组合/基准回报 |
-| `index_daily.high` | raw.source_payload / core.market_daily_quote | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
-| `index_daily.low` | raw.source_payload / core.market_daily_quote | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
-| `index_daily.open` | raw.source_payload / core.market_daily_quote | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
-| `index_daily.pct_chg` | raw.source_payload / core.market_daily_quote | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
-| `index_daily.pre_close` | raw.source_payload / core.market_daily_quote | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
-| `index_daily.trade_date` | raw.source_payload / core.market_daily_quote | 5 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
-| `index_daily.ts_code` | raw.source_payload / core.market_daily_quote | 5 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
-| `index_global.close` | raw.source_payload / core.market_daily_quote | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
-| `index_global.high` | raw.source_payload / core.market_daily_quote | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
-| `index_global.low` | raw.source_payload / core.market_daily_quote | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
-| `index_global.open` | raw.source_payload / core.market_daily_quote | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
-| `index_global.pct_chg` | raw.source_payload / core.market_daily_quote | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
-| `index_global.pre_close` | raw.source_payload / core.market_daily_quote | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
-| `index_global.trade_date` | raw.source_payload / core.market_daily_quote | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
-| `index_global.ts_code` | raw.source_payload / core.market_daily_quote | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
+| `index_daily.close` | raw.source_payload / core.market_daily_quote.close（market:indices:资产代码；证券代码与配置身份校验，21 行） | 5 | 直接 | 市场总览/全球指数卡/globalIndices[].value 收盘点位（两位小数）；市场/指数或 ETF 同日行情和产品校验；组合/基准回报 |
+| `index_daily.high` | raw.source_payload / core.market_daily_quote.high（market:indices:资产代码；证券代码与配置身份校验，21 行） | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
+| `index_daily.low` | raw.source_payload / core.market_daily_quote.low（market:indices:资产代码；证券代码与配置身份校验，21 行） | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
+| `index_daily.open` | raw.source_payload / core.market_daily_quote.open（market:indices:资产代码；证券代码与配置身份校验，21 行） | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
+| `index_daily.pct_chg` | raw.source_payload / core.market_daily_quote.pct_chg（market:indices:资产代码；证券代码与配置身份校验，21 行） | 3 | 直接 | 市场总览/全球指数卡/globalIndices[].change 涨跌幅；市场/指数或 ETF 同日行情和产品校验 |
+| `index_daily.pre_close` | raw.source_payload / core.market_daily_quote.pre_close（market:indices:资产代码；证券代码与配置身份校验，21 行） | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
+| `index_daily.trade_date` | raw.source_payload / core.market_daily_quote.trade_date（market:indices:资产代码；证券代码与配置身份校验，21 行） | 5 | 直接 | 市场总览/全球指数卡/globalIndices[].tradeDate 收盘交易日；市场/指数或 ETF 同日行情和产品校验 |
+| `index_daily.ts_code` | raw.source_payload / core.market_daily_quote.asset_code（market:indices:资产代码；证券代码与配置身份校验，21 行） | 5 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
+| `index_global.close` | raw.source_payload / core.market_daily_quote.close（market:indices:资产代码；证券代码与配置身份校验，30 行） | 3 | 直接 | 市场总览/全球指数卡/globalIndices[].value 收盘点位（两位小数）；市场/指数或 ETF 同日行情和产品校验 |
+| `index_global.high` | raw.source_payload / core.market_daily_quote.high（market:indices:资产代码；证券代码与配置身份校验，30 行） | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
+| `index_global.low` | raw.source_payload / core.market_daily_quote.low（market:indices:资产代码；证券代码与配置身份校验，30 行） | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
+| `index_global.open` | raw.source_payload / core.market_daily_quote.open（market:indices:资产代码；证券代码与配置身份校验，30 行） | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
+| `index_global.pct_chg` | raw.source_payload / core.market_daily_quote.pct_chg（market:indices:资产代码；证券代码与配置身份校验，30 行） | 3 | 直接 | 市场总览/全球指数卡/globalIndices[].change 涨跌幅；市场/指数或 ETF 同日行情和产品校验 |
+| `index_global.pre_close` | raw.source_payload / core.market_daily_quote.pre_close（market:indices:资产代码；证券代码与配置身份校验，30 行） | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
+| `index_global.trade_date` | raw.source_payload / core.market_daily_quote.trade_date（market:indices:资产代码；证券代码与配置身份校验，30 行） | 3 | 直接 | 市场总览/全球指数卡/globalIndices[].tradeDate 收盘交易日；市场/指数或 ETF 同日行情和产品校验 |
+| `index_global.ts_code` | raw.source_payload / core.market_daily_quote.asset_code（market:indices:资产代码；证券代码与配置身份校验，30 行） | 3 | 间接 | 市场/指数或 ETF 同日行情和产品校验 |
 | `index_member_all.in_date` | core.classification_member | 100 | 间接 | 选股、市场/证券有效行业归属与板块聚合 |
 | `index_member_all.is_new` | core.classification_member | 100 | 间接 | 选股、市场/分类数据集当前与历史有效区间 |
 | `index_member_all.l1_code` | core.classification_member | 100 | 间接 | 选股、市场/证券有效行业归属与板块聚合 |
@@ -548,9 +548,9 @@
 | `margin.rzye` | raw.source_payload / 宏观观测按发布合同 | 6 | 间接 | 宏观/融资余额分交易所核验与汇总 |
 | `margin.trade_date` | raw.source_payload / 宏观观测按发布合同 | 6 | 间接 | 宏观/融资余额分交易所核验与汇总 |
 | `repo_daily.repo_maturity` | raw.source_payload / 宏观观测按发布合同 | 124 | 间接 | 宏观/DR007 利率与品种、日期校验 |
-| `repo_daily.trade_date` | raw.source_payload / 宏观观测按发布合同 | 124 | 间接 | 宏观/DR007 利率与品种、日期校验；宏观/指标序列 cn.rate.dr007（供应商配置，实际来源按版本） |
+| `repo_daily.trade_date` | raw.source_payload / 宏观观测按发布合同 / core.macro_observation.observed_at（系列 cn.rate.dr007 的 Tushare 报告期或数值，经转换与去重/修订，2504 行） | 124 | 间接 | 宏观/DR007 利率与品种、日期校验；宏观/指标序列 cn.rate.dr007（供应商配置，实际来源按版本） |
 | `repo_daily.ts_code` | raw.source_payload / 宏观观测按发布合同 | 124 | 间接 | 宏观/DR007 利率与品种、日期校验 |
-| `repo_daily.weight` | raw.source_payload / 宏观观测按发布合同 | 124 | 间接 | 宏观/DR007 利率与品种、日期校验；宏观/指标序列 cn.rate.dr007（供应商配置，实际来源按版本） |
+| `repo_daily.weight` | raw.source_payload / 宏观观测按发布合同 / core.macro_observation.value（系列 cn.rate.dr007 的 Tushare 报告期或数值，经转换与去重/修订，2504 行） | 124 | 间接 | 宏观/DR007 利率与品种、日期校验；宏观/指标序列 cn.rate.dr007（供应商配置，实际来源按版本） |
 | `repurchase.amount` | core.repurchase | 62 | 间接 | 股票发布/可见来源签名（真实快照内存在该字段；供构建前后冲突检查）；选股/资本回报与股权筹资比 |
 | `repurchase.ann_date` | core.repurchase | 62 | 间接 | 股票发布/可见来源签名（真实快照内存在该字段；供构建前后冲突检查） |
 | `repurchase.exp_date` | core.repurchase | 62 | 间接 | 股票发布/可见来源签名（真实快照内存在该字段；供构建前后冲突检查） |
@@ -588,5 +588,5 @@
 | `trade_cal.exchange` | core.trade_calendar | 12 | 间接 | 股票与市场/发现业务日并对齐行情窗口；股票发布/可见来源签名（真实快照内存在该字段；供构建前后冲突检查） |
 | `trade_cal.is_open` | core.trade_calendar | 12 | 间接 | 股票与市场/发现业务日并对齐行情窗口；股票发布/可见来源签名（真实快照内存在该字段；供构建前后冲突检查） |
 | `trade_cal.pretrade_date` | core.trade_calendar | 11 | 间接 | 宏观/交易所汇总的前一交易日证据；股票发布/可见来源签名（真实快照内存在该字段；供构建前后冲突检查） |
-| `us_tycr.date` | 待取得原件 | 0 | 间接 | 宏观/指标序列 us.rate.treasury_10y（供应商配置，实际来源按版本） |
-| `us_tycr.y10` | 待取得原件 | 0 | 间接 | 宏观/指标序列 us.rate.treasury_10y（供应商配置，实际来源按版本） |
+| `us_tycr.date` | 待取得原件 / core.macro_observation.observed_at（系列 us.rate.treasury_10y 的 Tushare 报告期或数值，经转换与去重/修订，0 行） | 0 | 间接 | 宏观/指标序列 us.rate.treasury_10y（供应商配置，实际来源按版本） |
+| `us_tycr.y10` | 待取得原件 / core.macro_observation.value（系列 us.rate.treasury_10y 的 Tushare 报告期或数值，经转换与去重/修订，0 行） | 0 | 间接 | 宏观/指标序列 us.rate.treasury_10y（供应商配置，实际来源按版本） |

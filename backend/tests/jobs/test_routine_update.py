@@ -8,6 +8,8 @@ from app.config import Settings
 from backend.tests.stock_update.test_sync import NOW, task
 
 
+pytestmark = pytest.mark.usefixtures("isolated_routine_groups")
+
 def module():
     from app.jobs import routine_update
     return routine_update
