@@ -1,0 +1,524 @@
+{
+  "summary": {
+    "valueAndAllInputsMatch": 2368,
+    "archivedFormulaRequired": 1260
+  },
+  "metricVersionDates": [
+    {
+      "metric": "capitalReturnRatio",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-08-24",
+      "archivedFormulaRequired": 2
+    },
+    {
+      "metric": "capitalReturnRatio",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-09-18",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "capitalReturnRatio",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-13",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "capitalReturnRatio",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-16",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "capitalReturnRatio",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-21",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "cashflowGrowth",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-08-24",
+      "valueAndAllInputsMatch": 2
+    },
+    {
+      "metric": "cashflowGrowth",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-09-18",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "cashflowGrowth",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-13",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "cashflowGrowth",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-16",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "cashflowGrowth",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "dividendYears",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-08-24",
+      "archivedFormulaRequired": 2
+    },
+    {
+      "metric": "dividendYears",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-09-18",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "dividendYears",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-13",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "dividendYears",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-16",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "dividendYears",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-21",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "expectedDividendYield",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-08-24",
+      "archivedFormulaRequired": 2
+    },
+    {
+      "metric": "expectedDividendYield",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-09-18",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "expectedDividendYield",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-13",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "expectedDividendYield",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-16",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "expectedDividendYield",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-21",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "freeCashFlow",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-08-24",
+      "valueAndAllInputsMatch": 2
+    },
+    {
+      "metric": "freeCashFlow",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-09-18",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "freeCashFlow",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-13",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "freeCashFlow",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-16",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "freeCashFlow",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "institutionHolding",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-08-24",
+      "archivedFormulaRequired": 2
+    },
+    {
+      "metric": "institutionHolding",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-09-18",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "institutionHolding",
+      "formulaVersion": "2.0.0",
+      "asOf": "2026-10-13",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "institutionHolding",
+      "formulaVersion": "2.0.0",
+      "asOf": "2026-10-16",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "institutionHolding",
+      "formulaVersion": "2.0.0",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "netDebt",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-08-24",
+      "valueAndAllInputsMatch": 2
+    },
+    {
+      "metric": "netDebt",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-09-18",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "netDebt",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-13",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "netDebt",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-16",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "netDebt",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "payoutRatio",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-08-24",
+      "archivedFormulaRequired": 2
+    },
+    {
+      "metric": "payoutRatio",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-09-18",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "payoutRatio",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-13",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "payoutRatio",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-16",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "payoutRatio",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-21",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "pbPercentile",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-08-24",
+      "valueAndAllInputsMatch": 2
+    },
+    {
+      "metric": "pbPercentile",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-09-18",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "pbPercentile",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-13",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "pbPercentile",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-16",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "pbPercentile",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "pePercentile",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-08-24",
+      "valueAndAllInputsMatch": 2
+    },
+    {
+      "metric": "pePercentile",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-09-18",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "pePercentile",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-13",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "pePercentile",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-16",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "pePercentile",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "profitGrowth",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-08-24",
+      "valueAndAllInputsMatch": 2
+    },
+    {
+      "metric": "profitGrowth",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-09-18",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "profitGrowth",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-13",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "profitGrowth",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-16",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "profitGrowth",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "realMoneyIndex",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-08-24",
+      "valueAndAllInputsMatch": 2
+    },
+    {
+      "metric": "realMoneyIndex",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-09-18",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "realMoneyIndex",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-13",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "realMoneyIndex",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-16",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "realMoneyIndex",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "revenueGrowth",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-08-24",
+      "valueAndAllInputsMatch": 2
+    },
+    {
+      "metric": "revenueGrowth",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-09-18",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "revenueGrowth",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-13",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "revenueGrowth",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-16",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "revenueGrowth",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "roic",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-08-24",
+      "valueAndAllInputsMatch": 2
+    },
+    {
+      "metric": "roic",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-09-18",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "roic",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-13",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "roic",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-16",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "roic",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "workbenchAnnualDividendYield",
+      "formulaVersion": "v1",
+      "asOf": "2026-10-21",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "workbenchAnnualDividendYield",
+      "formulaVersion": "v2",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "workbenchFiscalDividendYield",
+      "formulaVersion": "v1",
+      "asOf": "2026-10-21",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "workbenchFiscalDividendYield",
+      "formulaVersion": "v2",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "workbenchFiveYearDividendCount",
+      "formulaVersion": "v1",
+      "asOf": "2026-10-21",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "workbenchFiveYearDividendCount",
+      "formulaVersion": "v2",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "workbenchMarketCap",
+      "formulaVersion": "v1",
+      "asOf": "2026-10-21",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "workbenchMarketCap",
+      "formulaVersion": "v2",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "workbenchNetCash",
+      "formulaVersion": "v1",
+      "asOf": "2026-10-21",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "workbenchNetCash",
+      "formulaVersion": "v2",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "workbenchNtmDividendYield",
+      "formulaVersion": "v1",
+      "asOf": "2026-10-21",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "workbenchNtmDividendYield",
+      "formulaVersion": "v2",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "workbenchPb",
+      "formulaVersion": "v1",
+      "asOf": "2026-10-21",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "workbenchPb",
+      "formulaVersion": "v2",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 50
+    },
+    {
+      "metric": "workbenchPeTtm",
+      "formulaVersion": "v1",
+      "asOf": "2026-10-21",
+      "archivedFormulaRequired": 50
+    },
+    {
+      "metric": "workbenchPeTtm",
+      "formulaVersion": "v2",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 50
+    }
+  ]
+}

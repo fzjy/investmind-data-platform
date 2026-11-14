@@ -1,0 +1,19 @@
+{
+  "summary": {
+    "valueAndAllInputsMatch": 52
+  },
+  "metricVersionDates": [
+    {
+      "metric": "institutionHolding",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-08-24",
+      "valueAndAllInputsMatch": 2
+    },
+    {
+      "metric": "institutionHolding",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-09-18",
+      "valueAndAllInputsMatch": 50
+    }
+  ]
+}

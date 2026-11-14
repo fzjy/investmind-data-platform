@@ -1,0 +1,55 @@
+{
+  "summary": {
+    "archivedDividendManifestRejected": 400
+  },
+  "metricVersionDates": [
+    {
+      "metric": "workbenchAnnualDividendYield",
+      "formulaVersion": "v1",
+      "asOf": "2026-10-21",
+      "archivedDividendManifestRejected": 50
+    },
+    {
+      "metric": "workbenchFiscalDividendYield",
+      "formulaVersion": "v1",
+      "asOf": "2026-10-21",
+      "archivedDividendManifestRejected": 50
+    },
+    {
+      "metric": "workbenchFiveYearDividendCount",
+      "formulaVersion": "v1",
+      "asOf": "2026-10-21",
+      "archivedDividendManifestRejected": 50
+    },
+    {
+      "metric": "workbenchMarketCap",
+      "formulaVersion": "v1",
+      "asOf": "2026-10-21",
+      "archivedDividendManifestRejected": 50
+    },
+    {
+      "metric": "workbenchNetCash",
+      "formulaVersion": "v1",
+      "asOf": "2026-10-21",
+      "archivedDividendManifestRejected": 50
+    },
+    {
+      "metric": "workbenchNtmDividendYield",
+      "formulaVersion": "v1",
+      "asOf": "2026-10-21",
+      "archivedDividendManifestRejected": 50
+    },
+    {
+      "metric": "workbenchPb",
+      "formulaVersion": "v1",
+      "asOf": "2026-10-21",
+      "archivedDividendManifestRejected": 50
+    },
+    {
+      "metric": "workbenchPeTtm",
+      "formulaVersion": "v1",
+      "asOf": "2026-10-21",
+      "archivedDividendManifestRejected": 50
+    }
+  ]
+}

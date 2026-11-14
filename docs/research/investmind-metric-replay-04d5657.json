@@ -1,0 +1,127 @@
+{
+  "summary": {
+    "valueAndInputsDiffer": 159,
+    "valueOnlyMatches": 34,
+    "valueAndAllInputsMatch": 465
+  },
+  "metricVersionDates": [
+    {
+      "metric": "capitalReturnRatio",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-08-24",
+      "valueOnlyMatches": 2
+    },
+    {
+      "metric": "capitalReturnRatio",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-09-18",
+      "valueOnlyMatches": 26,
+      "valueAndInputsDiffer": 18,
+      "valueAndAllInputsMatch": 6
+    },
+    {
+      "metric": "capitalReturnRatio",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-13",
+      "valueAndAllInputsMatch": 49,
+      "valueAndInputsDiffer": 1
+    },
+    {
+      "metric": "capitalReturnRatio",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-16",
+      "valueAndAllInputsMatch": 49,
+      "valueAndInputsDiffer": 1
+    },
+    {
+      "metric": "capitalReturnRatio",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 49,
+      "valueAndInputsDiffer": 1
+    },
+    {
+      "metric": "dividendYears",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-08-24",
+      "valueAndInputsDiffer": 2
+    },
+    {
+      "metric": "dividendYears",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-09-18",
+      "valueAndInputsDiffer": 44,
+      "valueAndAllInputsMatch": 6
+    },
+    {
+      "metric": "dividendYears",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-13",
+      "valueAndAllInputsMatch": 49,
+      "valueAndInputsDiffer": 1
+    },
+    {
+      "metric": "dividendYears",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-16",
+      "valueAndAllInputsMatch": 49,
+      "valueAndInputsDiffer": 1
+    },
+    {
+      "metric": "dividendYears",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 49,
+      "valueAndInputsDiffer": 1
+    },
+    {
+      "metric": "expectedDividendYield",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-08-24",
+      "valueAndInputsDiffer": 2
+    },
+    {
+      "metric": "expectedDividendYield",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-09-18",
+      "valueAndInputsDiffer": 41,
+      "valueAndAllInputsMatch": 6,
+      "valueOnlyMatches": 3
+    },
+    {
+      "metric": "expectedDividendYield",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-13",
+      "valueAndAllInputsMatch": 49,
+      "valueAndInputsDiffer": 1
+    },
+    {
+      "metric": "expectedDividendYield",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-16",
+      "valueAndAllInputsMatch": 49,
+      "valueAndInputsDiffer": 1
+    },
+    {
+      "metric": "expectedDividendYield",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-10-21",
+      "valueAndAllInputsMatch": 49,
+      "valueAndInputsDiffer": 1
+    },
+    {
+      "metric": "payoutRatio",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-08-24",
+      "valueAndInputsDiffer": 2
+    },
+    {
+      "metric": "payoutRatio",
+      "formulaVersion": "1.0.0",
+      "asOf": "2026-09-18",
+      "valueAndInputsDiffer": 41,
+      "valueAndAllInputsMatch": 6,
+      "valueOnlyMatches": 3
+    }
+  ]
+}
