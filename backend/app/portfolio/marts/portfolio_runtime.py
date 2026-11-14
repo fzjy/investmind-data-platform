@@ -12,6 +12,7 @@ from app.stocks.api.financial import years_before
 from app.jobs.locks import data_publication_lock_key, job_lock_for_engine
 from app.marts.contracts import QualityContext, QualityResult, release_version
 from app.portfolio.marts.portfolio import PortfolioMartBuilder
+from app.portfolio.normalizer import normalize_portfolio
 from app.marts.publication import PublicationBaseChanged, SnapshotPublisher, _utc_datetime
 from app.marts.quality import QualityGate
 
@@ -87,10 +88,7 @@ def rebuild_portfolio(factory, *, dry_run=True):
                 adjustment_factors=factors, daily_basics=(), security_inputs={}, missing_data=(),
                 financial_points=(), corporate_actions=(), classifications=(), macro_observations=(), content_documents=())
             candidate = PortfolioMartBuilder(factory).build(snapshot, 'pending')
-            payload = {**old, **candidate.payload}
-            for field in ('defaultState', 'storageKey'):
-                if field in old:
-                    payload[field] = ({**payload[field],**deepcopy(old[field])} if field=='defaultState' else deepcopy(old[field]))
+            payload = {**normalize_portfolio(old), **candidate.payload}
             candidate = replace(candidate, payload=payload, stale=base.stale, stale_reason=base.stale_reason)
         from app.portfolio.marts.portfolio_ledger import validate_dividend_ledger
         ledger = payload.get('dividendLedger')

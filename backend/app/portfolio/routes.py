@@ -20,9 +20,12 @@ def create_router(service: PortfolioService | None = None, provider: PortfolioPr
         service = PortfolioService(provider)
     active_service = service
 
-    @router.get("/api/data/portfolio")
     @router.get("/api/v1/portfolio")
     async def portfolio() -> JSONResponse:
         return _json_result(active_service.get_portfolio())
+
+    @router.get("/api/data/portfolio")
+    async def legacy_portfolio() -> JSONResponse:
+        return _json_result(active_service.get_portfolio(legacy=True))
 
     return router

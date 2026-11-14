@@ -80,11 +80,25 @@ def test_macro_transmission_requires_both_sections() -> None:
         normalize_macro_transmission({"transmission": {}})
 
 
-def test_portfolio_requires_storage_contract() -> None:
-    from app.portfolio.normalizer import normalize_portfolio
+def test_public_portfolio_needs_business_date_and_excludes_old_website_state() -> None:
+    from app.portfolio.normalizer import legacy_portfolio, normalize_portfolio
 
     with pytest.raises(DataServiceError):
         normalize_portfolio({"assets": [], "prices": {}, "defaultState": {}})
+    public = {"assets": [], "prices": {}, "snapshotLabel": "2026-10-21"}
+    old = {**public, "storageKey": "old", "defaultState": {
+        "period": "1m", "positions": [{"assetId": "A", "weight": 100}], "capital": 23,
+    }}
+    assert normalize_portfolio(old) == normalize_portfolio(public) == public
+    legacy = legacy_portfolio(old, "database")
+    assert legacy["storageKey"] == "old"
+    assert legacy["defaultState"] == {
+        "period": "1m", "positions": [], "schemaVersion": 1,
+        "strategy": "buy-and-hold", "weightMode": "manual",
+    }
+    assert old["defaultState"]["positions"]
+    assert legacy_portfolio(public, "database")["defaultState"]["period"] == "3y"
+    assert legacy_portfolio(public, "fixture")["defaultState"]["period"] == "1y"
 
 
 @pytest.mark.parametrize(

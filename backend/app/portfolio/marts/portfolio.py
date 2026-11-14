@@ -80,18 +80,10 @@ class PortfolioMartBuilder:
         prices["CNY"] = [{"date": snapshot.as_of.isoformat(), "price": 1}]
         payload = {
             "assets": assets,
-            "defaultState": {
-                "period": "3y",
-                "positions": [],
-                "schemaVersion": 1,
-                "strategy": "buy-and-hold",
-                "weightMode": "manual",
-            },
             "prices": prices,
             "factorCoverage": coverage,
             "unadjustedPrices": {**unadjusted_prices, "CNY": [{"date": snapshot.as_of.isoformat(), "price": 1}]},
             "snapshotLabel": snapshot.as_of.isoformat(),
-            "storageKey": "danginvest:portfolio-sandbox:v1",
         }
         if self._session_factory is not None:
             from app.portfolio.marts import portfolio_ledger
@@ -109,9 +101,6 @@ class PortfolioMartBuilder:
                 payload['treasuryReference'] = load_treasury_reference(self._session_factory, snapshot.as_of, min(starts.values()))
                 from app.portfolio.reference_history import load_benchmarks
                 payload['benchmarks'] = load_benchmarks(self._session_factory,snapshot.as_of,min(starts.values()))
-                refs=list(payload['benchmarks'])
-                if len(refs)==2:
-                    payload['defaultState'].update(benchmarkAssetId=refs[0],secondaryBenchmarkAssetId=refs[1])
         return MartCandidate("portfolio", _as_of_datetime(snapshot.as_of), payload)
 
 

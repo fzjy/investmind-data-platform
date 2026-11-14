@@ -6,11 +6,13 @@
 
 | 调用方与入口 | 输入和输出 | 存放位置或用途 |
 | --- | --- | --- |
-| 网站布局或私有分析服务 → 底座 `GET /api/v1/portfolio` | 固定路径，无用户参数，返回已发布的 `{data,meta}`；旧 `GET /api/data/portfolio` 返回同一内容 | `mart.published_snapshot` 的 `portfolio`；两个公开 URL 上 POST 都是 405，两者的 `/analysis` 子路径都是 404 |
+| 网站布局或私有分析服务 → 底座 `GET /api/v1/portfolio` | 固定路径，无用户参数，返回已发布的公共输入和发布元数据。旧 `GET /api/data/portfolio` 返回相同事实及版本，并附带旧版空持仓模板和存储键 | `mart.published_snapshot` 的 `portfolio`；两个公开 URL 上 POST 都是 405，两者的 `/analysis` 子路径都是 404 |
 | 项目浏览器 → 网站 `POST /api/portfolio/analysis` → 网站私有服务 `POST /analysis` | 仅提交持仓标识与非负相对权重，以及可选窗口和基准。服务校验全部输入，按公开快照在内存中计算，响应 `no-store` | 私有服务只向底座发送固定 GET，未转发正文、Cookie、Authorization 或自定义私有头。提交额外的 `trades` 字段返回 422，底座读取为零 |
 | 项目浏览器的组合配置、草稿、本金、股数和现金金额 | `portfolio-store.ts` 读写网站本域 localStorage；数量模式按共同建仓日未复权收盘价折算权重。股数、现金金额和本金不进入上述 POST | 无账户成交账本。100 股贵州茅台和 1,000 元现金在 2023-10-23 以 1,643.98 元换算为 99.395398% 和 0.604602% |
 
-快照目前还带有空持仓 `defaultState`、默认参照和网站 `storageKey`。后者包含旧品牌命名，属于应用配置残留。品牌和边界迁移须让既有本地组合仍能读取，再从底座合同退出这些应用专用字段。
+网站 `src/modules/portfolio/api.ts` 管理空持仓模板、默认参照、浏览器存储键。现有用户仍从 `danginvest:portfolio-sandbox:v1` 恢复配置，无需搬移或重写浏览器存储。只读抽查覆盖 `mart.page_snapshot` 全部 17 个历史版本及当前指针：全部同键、空持仓、3 年周期；其中 9 个历史版本无默认双基准，8 个和当前指针含 H00300.CSI 与 H00922.CSI。展示用 fixture 沿用 1 年周期。网站在两个指定全收益指数均有供给时才填入默认选择。
+
+v1 对既有快照也剔除 `defaultState` 和 `storageKey`，新建与重建不再生产或继承这些字段。历史行保持原样，底座的旧 GET 兼容适配器继续生成这两个旧字段，持仓始终为空。本次没有触发真实重建或改写数据库，实库当前指针物理去除旧字段将在常规发布时完成。
 
 ## 公开字段反查
 

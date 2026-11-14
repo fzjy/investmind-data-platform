@@ -5,21 +5,20 @@
     "version": "20261021-690705b397d4b878",
     "stale": false
   },
-  "aliasesSame": true,
+  "publicFactsAndMetaMatch": true,
   "sqlPerAlias": 1,
-  "publicTemplatePositions": 0,
+  "legacyTemplatePositions": 0,
+  "websiteTemplateMatchesLegacy": true,
   "publicFields": [
     "assets",
     "attributionInputs",
     "benchmarks",
-    "defaultState",
     "dividendLedger",
     "dividendYieldInputs",
     "factorCoverage",
     "missingData",
     "prices",
     "snapshotLabel",
-    "storageKey",
     "treasuryReference",
     "unadjustedPrices"
   ],
@@ -75,7 +74,7 @@
   "yieldAssets": 50,
   "attributionAssets": 50,
   "factorCoverageAssets": 50,
-  "publicSnapshotDigest": "46bf01f7908a2b9064097f69b9ad22d1aabd9f4438e5e81b0244a356f9d7ed88",
+  "publicSnapshotDigest": "8fdbf75226f2302c5a46a8862649eaedaa259dc524a65ff7ff5d6e8e0361da55",
   "privateServiceReads": [
     {
       "method": "GET",
@@ -1570,6 +1569,32 @@
       "privateDatesMatch": true,
       "unavailableReason": "\u951a\u70b9\u6216\u65f6\u671f\u4e4b\u540e\u5171\u540c\u53ef\u7528\u89c2\u6d4b\u5c11\u4e8e\u4e24\u4e2a",
       "return": null
+    }
+  ],
+  "historicalTemplates": [
+    {
+      "versions": 9,
+      "key": "danginvest:portfolio-sandbox:v1",
+      "template": {
+        "period": "3y",
+        "strategy": "buy-and-hold",
+        "weightMode": "manual",
+        "schemaVersion": 1
+      },
+      "positions": 0
+    },
+    {
+      "versions": 8,
+      "key": "danginvest:portfolio-sandbox:v1",
+      "template": {
+        "period": "3y",
+        "strategy": "buy-and-hold",
+        "weightMode": "manual",
+        "schemaVersion": 1,
+        "benchmarkAssetId": "H00300.CSI",
+        "secondaryBenchmarkAssetId": "H00922.CSI"
+      },
+      "positions": 0
     }
   ]
 }

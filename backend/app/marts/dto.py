@@ -14,7 +14,7 @@ _REQUIRED_PATHS: dict[str, tuple[str, ...]] = {
     "market-explorer": ("heatmapCategories", "heatmapData", "rankingLeaders", "rankingDecliners"),
     "macro-transmission": ("transmission.weather", "transmission.modes", "transmission.industries", "analysis.cards"),
     "macro-insights": ("compassPoints", "sandboxGroups", "trendDefinitions"),
-    "portfolio": ("assets", "prices", "defaultState.positions"),
+    "portfolio": ("assets", "prices", "snapshotLabel"),
 }
 
 

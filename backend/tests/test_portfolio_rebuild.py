@@ -132,18 +132,17 @@ def test_cli_explicit_publish_and_dry_run_priority(monkeypatch):
     assert calls==[True,True,False,True]
 
 
-def test_existing_history_and_saved_defaults_cannot_be_silently_lost():
+def test_rebuild_excludes_project_settings_and_protects_price_history():
     factory=source()
     with factory.begin() as s:
         p=s.get(PublishedSnapshot,'portfolio');d=deepcopy(p.payload)
-        d['defaultState']['positions']=[{'assetId':'600519.SH','weight':100}]
+        d['defaultState']={'positions':[{'assetId':'600519.SH','weight':100}]}
         d['storageKey']='user-owned-key';p.payload=d
     report=runtime()(factory,dry_run=False)
     assert report['status']=='completed'
     with factory() as s:
         payload=s.get(PublishedSnapshot,'portfolio').payload
-        assert payload['defaultState']['positions']==[{'assetId':'600519.SH','weight':100}]
-        assert payload['storageKey']=='user-owned-key'
+        assert 'defaultState' not in payload and 'storageKey' not in payload
     with factory.begin() as s:
         p=s.get(PublishedSnapshot,'portfolio');d=deepcopy(p.payload)
         d['prices']['600519.SH'].insert(0,{'date':'2026-08-21','price':1400})

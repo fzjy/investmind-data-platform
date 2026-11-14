@@ -55,7 +55,7 @@ REQUIRED_KEYS: dict[str, frozenset[str]] = {
     ),
     "screener": frozenset({"bootstrap", "stocks"}),
     "portfolio": frozenset(
-        {"assets", "defaultState", "prices", "snapshotLabel", "storageKey"}
+        {"assets", "prices", "snapshotLabel"}
     ),
     "stock-workbench": frozenset(
         {
