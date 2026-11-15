@@ -7,12 +7,13 @@ from typing import Literal
 
 from pydantic import Field, model_validator
 
+from app.config_paths import CONFIG_ROOT
 from app.macro.extensions.policy_types import StrictModel,Schedule
 from app.macro.exchange_summary_config import ExchangeSummaryPolicy,EXCHANGE_SUMMARY_GROUPS,validate_exchange_policy
 from app.macro.sz_market_sample import SzMarketSamplePolicy
 
 
-DEFAULT_EXTENSION_CONFIG_FILE = Path(__file__).resolve().parents[3] / 'config' / 'macro-extensions.json'
+DEFAULT_EXTENSION_CONFIG_FILE = CONFIG_ROOT / "macro/macro-extensions.json"
 
 
 class ExtensionError(ValueError):

@@ -1,0 +1,150 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "宏观指标目录，记录指标口径、数据来源及同步默认值。",
+  "properties": {
+    "schemaVersion": {
+      "description": "配置文件结构的版本号，供加载器识别字段格式。"
+    },
+    "catalogVersion": {
+      "description": "这份目录的内容版本，用于识别采集计划使用的目录。"
+    },
+    "defaults": {
+      "description": "各指标共享的请求、时效和增量同步设置。",
+      "properties": {
+        "requestTimeoutSeconds": {
+          "description": "单次 HTTP 请求等待响应的超时时间，单位为秒。"
+        },
+        "maxAttempts": {
+          "description": "一次请求可尝试的总次数，包含首次尝试。"
+        },
+        "retryBackoffSeconds": {
+          "description": "按重试顺序设置的等待时长，单位为秒。",
+          "items": {
+            "description": "本轮重试前等待的秒数。"
+          }
+        },
+        "freshnessDays": {
+          "description": "按观测频率登记的默认时效阈值，均按自然日计。",
+          "properties": {
+            "daily": {
+              "description": "日频观测从观测日起计算的默认有效天数。"
+            },
+            "monthly": {
+              "description": "月频观测从所属月末起计算的默认有效天数。"
+            },
+            "quarterly": {
+              "description": "季频观测从所属季末起计算的默认有效天数。"
+            }
+          }
+        },
+        "overlap": {
+          "description": "增量同步时重新抓取最近一段历史，以覆盖来源对旧观测的修订。",
+          "properties": {
+            "dailyDays": {
+              "description": "日频序列重叠抓取的天数。"
+            },
+            "monthlyMonths": {
+              "description": "月频序列重叠抓取的月数。"
+            },
+            "quarterlyQuarters": {
+              "description": "季频序列重叠抓取的季度数。"
+            }
+          }
+        }
+      }
+    },
+    "series": {
+      "description": "平台已登记的宏观指标及其来源。",
+      "items": {
+        "description": "一条宏观指标的稳定身份、观测口径和来源配置。",
+        "properties": {
+          "id": {
+            "description": "平台内部跨来源引用该指标的唯一标识。"
+          },
+          "name": {
+            "description": "界面展示的宏观指标名称。"
+          },
+          "region": {
+            "description": "指标所属经济体代码，如 CN 或 US。"
+          },
+          "category": {
+            "description": "指标所属主题，如增长、通胀、就业或利率汇率。"
+          },
+          "frequency": {
+            "description": "单条观测对应的统计周期，如日、月或季度。"
+          },
+          "unit": {
+            "description": "该指标归一化后观测值的单位，如百分比、指数点或每美元兑人民币元。"
+          },
+          "seasonalAdjustment": {
+            "description": "指标的季节调整口径，区分已季调、未季调和未知。"
+          },
+          "displayPrecision": {
+            "description": "界面显示观测值时保留的小数位数。"
+          },
+          "freshnessDays": {
+            "description": "观测的有效天数。日频从观测日算起，月频和季频从对应期末算起，超过阈值视为过期。"
+          },
+          "sources": {
+            "description": "该指标可使用的数据源及各自的取值方式。",
+            "items": {
+              "description": "一个来源的采集、转换及展示设置。",
+              "properties": {
+                "provider": {
+                  "description": "标识提供原始数据的机构或服务，用于选择采集适配器。"
+                },
+                "priority": {
+                  "description": "同一指标的数据源顺序；数值越小，优先级越高。"
+                },
+                "series": {
+                  "description": "提供方使用的序列代码或表中指标名称，用于定位原始序列。"
+                },
+                "api": {
+                  "description": "提供方的接口名称，用于定位请求端点。"
+                },
+                "field": {
+                  "description": "从响应记录或原始表格读取观测值的字段或列名。"
+                },
+                "transform": {
+                  "description": "原始观测值的转换方式，例如 identity 保留原值，pc1 计算同比百分比变化，chg 计算与前一期的差值。"
+                },
+                "sourceUrl": {
+                  "description": "原始数据、下载入口或该接口的官方说明地址。"
+                },
+                "termsUrl": {
+                  "description": "用于核对数据使用条款的来源网址。"
+                },
+                "accessMode": {
+                  "description": "获取来源数据的方式，例如接口调用、公开页面或公开下载。"
+                },
+                "displayAllowed": {
+                  "description": "是否允许展示此来源提供的观测值。"
+                },
+                "params": {
+                  "description": "传给来源接口或分页采集器的参数。",
+                  "properties": {
+                    "maxPages": {
+                      "description": "一次采集最多读取的结果页数。"
+                    },
+                    "ts_code": {
+                      "description": "传给 Tushare 的标的代码，用于筛选指定序列。"
+                    },
+                    "maxIndexPages": {
+                      "description": "查找国家统计局发布文章时最多扫描的索引页数。"
+                    }
+                  }
+                },
+                "responseFields": {
+                  "description": "采集器请求或识别的来源字段清单。",
+                  "items": {
+                    "description": "一个原始响应字段名称，例如交易日期或观测值列。"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

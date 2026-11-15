@@ -481,6 +481,7 @@ class RecordingLogger:
 def _runtime(
     events: list[object],
     *,
+    settings: Settings | None = None,
     state: RecordingState | None = None,
     coordinator: RuntimeCoordinator | None = None,
     freshness_runner: Any = None,
@@ -495,7 +496,7 @@ def _runtime(
         return active_coordinator
 
     return SchedulerRuntime(
-        settings=Settings(),
+        settings=settings or Settings(),
         state=active_state,
         universe=UNIVERSE,
         coordinator_factory=coordinator_factory,
@@ -507,6 +508,24 @@ def _runtime(
         logger_factory=logger_factory
         or (lambda instance_id: RecordingLogger(events)),
     )
+
+
+def test_announcement_only_registers_and_runs_without_stock_catchup(monkeypatch):
+    events = []
+    settings = Settings(scheduler_daily_enabled=False, scheduler_announcements_enabled=True)
+    runtime = _runtime(events, settings=settings)
+    monkeypatch.setattr(runtime, "_run_announcements", lambda: events.append("announcements"))
+
+    def invoke_registered_jobs(scheduler):
+        assert scheduler.get_job("sync-daily") is None
+        scheduler.get_job("startup-catchup").func()
+        scheduler.get_job("sync-announcements").func()
+
+    monkeypatch.setattr(BlockingScheduler, "start", invoke_registered_jobs)
+    runtime.run()
+    assert events.count("announcements") == 2
+    assert ("coordinator.startup", NOW) not in events
+    assert ("checkpoint.prepare", NOW) not in events
 
 
 def test_runtime_orders_startup_and_defers_catchup_until_scheduler_start(

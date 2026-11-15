@@ -12,6 +12,7 @@ from typing import Literal, Self
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
+from app.config_paths import CONFIG_ROOT
 from app.connectors.macro.contracts import ProviderObservation, ProviderSchemaError
 from app.connectors.macro.nbs_release_feed import (
     _PAGINATION, _ReleaseLinks, _compact, _parse, _period, _release_url_allowed, _title_match,
@@ -20,7 +21,7 @@ from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog, Ma
 
 
 SERIES_IDS = ('cn.cpi.core_yoy', 'cn.industry.value_added_yoy')
-DEFAULT_RELEASES_FILE = Path(__file__).resolve().parents[3] / 'config' / 'nbs-history-releases.json'
+DEFAULT_RELEASES_FILE = CONFIG_ROOT / "macro/nbs-history-releases.json"
 
 
 class NbsReleaseLocator(BaseModel):

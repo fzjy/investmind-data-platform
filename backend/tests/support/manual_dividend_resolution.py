@@ -6,7 +6,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 from app.ingestion.repositories import content_hash
 
-MANIFEST=Path(__file__).resolve().parents[2]/'config'/'portfolio-event-resolutions.json'
+MANIFEST=Path(__file__).resolve().parents[3]/'docs/research/evidence/portfolio'/'portfolio-event-resolutions.json'
 
 def resolve_announced_supersession(rows,source_hash,as_of,manifest=MANIFEST):
     rules=json.loads(manifest.read_text(encoding='utf-8'))

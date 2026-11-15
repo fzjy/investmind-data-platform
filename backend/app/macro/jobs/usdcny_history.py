@@ -11,6 +11,7 @@ from typing import Literal, Self
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
+from app.config_paths import CONFIG_ROOT
 from app.connectors.macro.chinamoney_usdcny import UsdcnyTransport, fetch_usdcny_history, validate_usdcny_source
 from app.connectors.macro.contracts import MacroFetchWindow, ProviderFetchResult, ProviderError
 from app.jobs.cursors import CursorStore
@@ -20,7 +21,7 @@ from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog, Ma
 
 CURSOR_KEY = 'usdcny-history-v1'
 SERIES_ID = 'cn.fx.usdcny'
-DEFAULT_HISTORY_SOURCES_FILE = Path(__file__).resolve().parents[3] / 'config' / 'macro-history-sources.json'
+DEFAULT_HISTORY_SOURCES_FILE = CONFIG_ROOT / "macro/macro-history-sources.json"
 CHINA_TIME = timezone(timedelta(hours=8))
 _PUBLIC_ERRORS = frozenset({
     'USDCNY_HISTORY_EMPTY_MONTH', 'USDCNY_HISTORY_EVIDENCE_INVALID', 'USDCNY_HISTORY_FETCH_FAILED',

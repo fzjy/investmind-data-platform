@@ -9,6 +9,7 @@ from pathlib import Path
 import re
 from typing import Any, cast
 
+from app.config_paths import CONFIG_ROOT
 from app.stocks.universes.models import (
     UniverseCoverage,
     UniverseProfile,
@@ -20,10 +21,7 @@ from app.stocks.universes.models import (
 REPRESENTATIVE_PROFILE = "representative-50"
 REPRESENTATIVE_VERSION = "2026-09-19-v2"
 DEFAULT_REPRESENTATIVE_PATH = (
-    Path(__file__).resolve().parents[3]
-    / "config"
-    / "universes"
-    / "representative-50.json"
+    CONFIG_ROOT / "stocks/universes/representative-50.json"
 )
 STOCK_SYMBOL_PATTERN = re.compile(r"^[0-9]{6}\.(?:SH|SZ|BJ)$")
 SECTOR_MINIMUMS = {

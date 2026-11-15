@@ -1,0 +1,61 @@
+[build-system]
+# 构建发行包前需要安装的构建工具及其最低版本。
+requires = ["setuptools>=75"]
+# 由 setuptools 执行可编辑安装和发行包构建。
+build-backend = "setuptools.build_meta"
+
+[project]
+# pip 用于安装与查询的发行包名称。
+name = "investmind-data-platform"
+# 当前发行包的版本号。
+version = "0.1.0"
+# 运行和安装此包所需的最低 Python 版本。
+requires-python = ">=3.12"
+# 运行依赖与兼容版本范围，覆盖 API、数据库、采集、调度、CLI 和文件解析。
+dependencies = [
+  "fastapi>=0.116,<0.141",
+  "starlette>=0.46,<1",
+  "pydantic>=2.11,<3",
+  "pydantic-settings>=2.10,<3",
+  "sqlalchemy>=2.0,<3",
+  "alembic>=1.16,<2",
+  "psycopg[binary]>=3.2,<4",
+  "httpx>=0.28,<1",
+  "apscheduler>=3.11,<4",
+  "typer>=0.16,<1",
+  "uvicorn>=0.35,<1",
+  "xlrd>=2.0.2,<3",
+  "pypdf>=6.21.2,<7",
+]
+
+[project.optional-dependencies]
+# 可选开发依赖组，安装 .[dev] 时同时提供打包、隔离数据库测试和 pytest 工具。
+dev = [
+  "setuptools>=75",
+  "testcontainers[postgres]>=4.10,<5",
+  "pytest>=8,<10",
+]
+
+[tool.pytest.ini_options]
+# pytest 默认收集测试用例的目录。
+testpaths = ["backend/tests"]
+# pytest 运行时加入模块搜索路径的目录。
+pythonpath = [".", "backend"]
+# 默认附加给 pytest 的选项；-ra 汇总通过以外的测试结果。
+addopts = "-ra"
+# 声明项目使用的测试标记；postgres 标记需要显式启用的一次性数据库。
+markers = [
+  "postgres: requires an explicitly enabled disposable PostgreSQL container",
+]
+
+[tool.setuptools.package-dir]
+# 将可导入的 app 包映射到后端源码目录。
+app = "backend/app"
+# 将数据库迁移脚本作为 migrations 包分发。
+migrations = "backend/migrations"
+# 将运行时读取的默认配置包映射到仓库的 config 目录。
+investmind_defaults = "config"
+
+[tool.setuptools.package-data]
+# 把根配置目录及下两层目录中的业务 JSON 一起装入发行包。
+investmind_defaults = ["*.json", "*/*.json", "*/*/*.json"]

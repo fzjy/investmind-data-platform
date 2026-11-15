@@ -1,142 +1,261 @@
 services:
+  # 保存业务数据、已发布快照和任务进度。
   postgres:
+    # 使用指定主版本的 PostgreSQL Alpine 镜像。
     image: postgres:17-alpine
+    # 容器异常退出或 Docker 重启后自动恢复，手动停止后保持停止。
     restart: unless-stopped
     environment:
+      # 首次初始化数据卷时创建的数据库名。
       POSTGRES_DB: ${DANG_POSTGRES_DB:-danginvest}
+      # 首次初始化数据卷时创建的数据库角色。
       POSTGRES_USER: ${DANG_POSTGRES_USER:-danginvest}
+      # 首次初始化数据库角色的密码。
       POSTGRES_PASSWORD: ${DANG_POSTGRES_PASSWORD:-danginvest-local-only}
     volumes:
+      # 将数据库文件保存在命名卷中，重建容器后可继续使用。
       - danginvest-postgres-data:/var/lib/postgresql/data
     healthcheck:
+      # 探测服务是否已就绪，供 Compose 报告健康状态。
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      # 两次健康探测之间的间隔。
       interval: 5s
+      # 单次健康探测允许的最长时间。
       timeout: 5s
+      # 连续探测失败多少次后将服务标记为不健康。
       retries: 10
 
+  # 在数据库就绪后执行 Alembic 迁移，一次运行后退出。
   migrate:
     build:
+      # 使用仓库根目录作为构建上下文，使镜像可同时复制后端、配置和新闻包。
       context: .
+      # 从构建上下文中选用后端 Dockerfile。
       dockerfile: backend/Dockerfile
+    # 在此目录执行容器命令，使应用和 Alembic 可以定位项目文件。
     working_dir: /app/backend
     command: ["alembic", "upgrade", "head"]
     environment:
+      # 使用数据库作为应用数据后端。
       DANG_DATA_BACKEND: database
+      # 本服务连接容器内 PostgreSQL 的主连接串。
       DANG_DATABASE_URL: postgresql+psycopg://${DANG_POSTGRES_USER:-danginvest}:${DANG_POSTGRES_PASSWORD:-danginvest-local-only}@postgres:5432/${DANG_POSTGRES_DB:-danginvest}
+    volumes:
+      # 将宿主机业务配置只读挂载到应用读取的位置。
+      - ./config:/app/config:ro
     depends_on:
       postgres:
+        # 等待数据库通过健康检查后再启动。
         condition: service_healthy
 
+  # 迁移成功后检查初始数据，按配置采集并发布。
   bootstrap:
     build:
+      # 使用仓库根目录作为构建上下文，使镜像可同时复制后端、配置和新闻包。
       context: .
+      # 从构建上下文中选用后端 Dockerfile。
       dockerfile: backend/Dockerfile
+    # 一次性初始化进程结束后保持退出。
     restart: "no"
+    # 在此目录执行容器命令，使应用和 Alembic 可以定位项目文件。
     working_dir: /app/backend
     command: ["python", "-m", "app.bootstrap"]
     environment:
+      # 使用数据库作为应用数据后端。
       DANG_DATA_BACKEND: database
+      # 本服务连接容器内 PostgreSQL 的主连接串。
       DANG_DATABASE_URL: postgresql+psycopg://${DANG_POSTGRES_USER:-danginvest}:${DANG_POSTGRES_PASSWORD:-danginvest-local-only}@postgres:5432/${DANG_POSTGRES_DB:-danginvest}
+      # 本服务查询已发布数据时使用的读连接。
       DANG_DATABASE_READ_URL: postgresql+psycopg://${DANG_POSTGRES_USER:-danginvest}:${DANG_POSTGRES_PASSWORD:-danginvest-local-only}@postgres:5432/${DANG_POSTGRES_DB:-danginvest}
+      # 向 Tushare 请求数据时使用的访问令牌。
       DANG_TUSHARE_TOKEN: ${DANG_TUSHARE_TOKEN:-}
+      # 选择 Tushare 的 standard 或 vip 请求模式。
       DANG_TUSHARE_MODE: ${DANG_TUSHARE_MODE:-standard}
+      # 标准模式下每分钟允许的 Tushare 请求数。
       DANG_TUSHARE_STANDARD_REQUESTS_PER_MINUTE: ${DANG_TUSHARE_STANDARD_REQUESTS_PER_MINUTE:-30}
+      # VIP 模式下每分钟允许的 Tushare 请求数。
       DANG_TUSHARE_VIP_REQUESTS_PER_MINUTE: ${DANG_TUSHARE_VIP_REQUESTS_PER_MINUTE:-120}
+      # Tushare 每页请求的记录数。
       DANG_TUSHARE_PAGE_SIZE: ${DANG_TUSHARE_PAGE_SIZE:-5000}
+      # 解释股票日程与宏观周日程所用的时区。
       DANG_SYNC_TIMEZONE: ${DANG_SYNC_TIMEZONE:-Asia/Shanghai}
+      # 首次初始化使用的证券代码列表，多个代码以逗号分隔。
       DANG_BOOTSTRAP_SYMBOLS: ${DANG_BOOTSTRAP_SYMBOLS-600519.SH}
+      # 首次初始化的目标交易日。
       DANG_BOOTSTRAP_AS_OF: ${DANG_BOOTSTRAP_AS_OF:-}
+      # 已有发布数据时是否仍强制执行初始化。
       DANG_BOOTSTRAP_FORCE: ${DANG_BOOTSTRAP_FORCE:-false}
+    volumes:
+      # 将宿主机业务配置只读挂载到应用读取的位置。
+      - ./config:/app/config:ro
     depends_on:
       migrate:
+        # 等待前置任务以退出码 0 完成后再启动。
         condition: service_completed_successfully
 
+  # 提供 HTTP 查询接口及健康检查。
   api:
     build:
+      # 使用仓库根目录作为构建上下文，使镜像可同时复制后端、配置和新闻包。
       context: .
+      # 从构建上下文中选用后端 Dockerfile。
       dockerfile: backend/Dockerfile
+    # 容器异常退出或 Docker 重启后自动恢复，手动停止后保持停止。
     restart: unless-stopped
+    # 在此目录执行容器命令，使应用和 Alembic 可以定位项目文件。
     working_dir: /app/backend
     command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    # 把宿主机 DANG_BACKEND_PORT 映射到容器内的 API 端口 8000。
     ports:
       - "${DANG_BACKEND_PORT:-8000}:8000"
     environment:
+      # 使用数据库作为应用数据后端。
       DANG_DATA_BACKEND: database
+      # 本服务连接容器内 PostgreSQL 的主连接串。
       DANG_DATABASE_URL: postgresql+psycopg://${DANG_POSTGRES_USER:-danginvest}:${DANG_POSTGRES_PASSWORD:-danginvest-local-only}@postgres:5432/${DANG_POSTGRES_DB:-danginvest}
+      # 本服务查询已发布数据时使用的读连接。
       DANG_DATABASE_READ_URL: postgresql+psycopg://${DANG_POSTGRES_USER:-danginvest}:${DANG_POSTGRES_PASSWORD:-danginvest-local-only}@postgres:5432/${DANG_POSTGRES_DB:-danginvest}
+      # 允许浏览器跨域调用 API 的来源地址，多个地址以逗号分隔。
       DANG_BACKEND_CORS_ORIGINS: ${DANG_BACKEND_CORS_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000}
+      # 解释股票日程与宏观周日程所用的时区。
       DANG_SYNC_TIMEZONE: ${DANG_SYNC_TIMEZONE:-Asia/Shanghai}
+      # 是否启用宏观周同步；项目启动器为调度进程按 macro 开关传值。
       DANG_MACRO_SYNC_ENABLED: ${DANG_MACRO_SYNC_ENABLED:-true}
+      # 执行宏观周同步的星期，如 mon 表示周一。
       DANG_MACRO_SYNC_DAY_OF_WEEK: ${DANG_MACRO_SYNC_DAY_OF_WEEK:-mon}
+      # 执行宏观周同步的本地时间，使用 HH:MM。
       DANG_MACRO_SYNC_TIME: ${DANG_MACRO_SYNC_TIME:-09:00}
+      # 调度器启动时是否检查并补跑已到期的宏观周任务。
       DANG_MACRO_SYNC_CATCHUP_ON_START: ${DANG_MACRO_SYNC_CATCHUP_ON_START:-true}
+      # 宏观任务计算历史取数范围时使用的回看年数。
       DANG_MACRO_HISTORY_YEARS: ${DANG_MACRO_HISTORY_YEARS:-10}
+    volumes:
+      # 将宿主机业务配置只读挂载到应用读取的位置。
+      - ./config:/app/config:ro
     depends_on:
       bootstrap:
+        # 等待前置任务以退出码 0 完成后再启动。
         condition: service_completed_successfully
     healthcheck:
+      # 探测服务是否已就绪，供 Compose 报告健康状态。
       test: ["CMD-SHELL", "python -c 'import urllib.request; urllib.request.urlopen(\"http://localhost:8000/health\")'"]
+      # 两次健康探测之间的间隔。
       interval: 10s
+      # 单次健康探测允许的最长时间。
       timeout: 5s
+      # 连续探测失败多少次后将服务标记为不健康。
       retries: 5
 
+  # 启用 news 任务时运行独立新闻轮询进程。
   news-worker:
+    # 由项目启动器或显式 scheduler profile 选择这个工作进程。
     profiles: ["scheduler"]
     build:
+      # 使用仓库根目录作为构建上下文，使镜像可同时复制后端、配置和新闻包。
       context: .
+      # 从构建上下文中选用后端 Dockerfile。
       dockerfile: backend/Dockerfile
+    # 容器异常退出或 Docker 重启后自动恢复，手动停止后保持停止。
     restart: unless-stopped
+    # 在此目录执行容器命令，使应用和 Alembic 可以定位项目文件。
     working_dir: /app/backend
     command: ["python", "-m", "app.cli.main", "watch-news"]
     environment:
+      # 本服务连接容器内 PostgreSQL 的主连接串。
       DANG_DATABASE_URL: postgresql+psycopg://${DANG_POSTGRES_USER:-danginvest}:${DANG_POSTGRES_PASSWORD:-danginvest-local-only}@postgres:5432/${DANG_POSTGRES_DB:-danginvest}
+      # 容器内可迁入的旧新闻 SQLite 状态文件路径。
       DANG_NEWS_STATE_PATH: /app/data/news-collector/state.sqlite
     volumes:
+      # 将宿主机业务配置只读挂载到应用读取的位置。
+      - ./config:/app/config:ro
+      # 挂载保存旧新闻状态的宿主机目录，供迁入历史断点。
       - ${INVESTMIND_NEWS_STATE_DIRECTORY:-./data/news-collector}:/app/data/news-collector
     depends_on:
       bootstrap:
+        # 等待前置任务以退出码 0 完成后再启动。
         condition: service_completed_successfully
 
+  # 为启用的日、周任务运行调度进程。
   scheduler:
     build:
+      # 使用仓库根目录作为构建上下文，使镜像可同时复制后端、配置和新闻包。
       context: .
+      # 从构建上下文中选用后端 Dockerfile。
       dockerfile: backend/Dockerfile
+    # 容器异常退出或 Docker 重启后自动恢复，手动停止后保持停止。
     restart: unless-stopped
+    # 由项目启动器或显式 scheduler profile 选择这个工作进程。
     profiles: ["scheduler"]
+    # 在此目录执行容器命令，使应用和 Alembic 可以定位项目文件。
     working_dir: /app/backend
     command: ["python", "-m", "app.jobs.scheduler"]
     environment:
+      # 使用数据库作为应用数据后端。
       DANG_DATA_BACKEND: database
+      # 本服务连接容器内 PostgreSQL 的主连接串。
       DANG_DATABASE_URL: postgresql+psycopg://${DANG_POSTGRES_USER:-danginvest}:${DANG_POSTGRES_PASSWORD:-danginvest-local-only}@postgres:5432/${DANG_POSTGRES_DB:-danginvest}
+      # 向 Tushare 请求数据时使用的访问令牌。
       DANG_TUSHARE_TOKEN: ${DANG_TUSHARE_TOKEN:-}
+      # 选择 Tushare 的 standard 或 vip 请求模式。
       DANG_TUSHARE_MODE: ${DANG_TUSHARE_MODE:-standard}
+      # 解释股票日程与宏观周日程所用的时区。
       DANG_SYNC_TIMEZONE: ${DANG_SYNC_TIMEZONE:-Asia/Shanghai}
+      # 注册股票日任务和启动补采；项目启动器按 stocks 开关传值。
+      DANG_SCHEDULER_DAILY_ENABLED: ${DANG_SCHEDULER_DAILY_ENABLED:-true}
+      # 注册公告任务；项目启动器按 announcements 开关传值，直接运行时留空则沿用原公告策略。
+      DANG_SCHEDULER_ANNOUNCEMENTS_ENABLED: ${DANG_SCHEDULER_ANNOUNCEMENTS_ENABLED:-}
+      # 股票和公告日程的本地小时，按 DANG_SYNC_TIMEZONE 解释。
       DANG_SYNC_HOUR: ${DANG_SYNC_HOUR:-19}
+      # 启用市场基础行情任务。
       DANG_ROUTINE_MARKET_ENABLED: ${DANG_ROUTINE_MARKET_ENABLED:-false}
+      # 启用市场脉搏任务。
       DANG_ROUTINE_MARKET_PULSE_ENABLED: ${DANG_ROUTINE_MARKET_PULSE_ENABLED:-false}
+      # 启用地域数据任务。
       DANG_ROUTINE_REGION_ENABLED: ${DANG_ROUTINE_REGION_ENABLED:-false}
+      # 启用 ETF 热力图任务。
       DANG_ROUTINE_ETF_HEATMAP_ENABLED: ${DANG_ROUTINE_ETF_HEATMAP_ENABLED:-false}
+      # 启用商品行情任务。
       DANG_ROUTINE_COMMODITIES_ENABLED: ${DANG_ROUTINE_COMMODITIES_ENABLED:-false}
+      # 采集 FRED 宏观数据时使用的 API 密钥。
       DANG_FRED_API_KEY: ${DANG_FRED_API_KEY:-}
+      # 是否启用宏观周同步；项目启动器为调度进程按 macro 开关传值。
       DANG_MACRO_SYNC_ENABLED: ${DANG_MACRO_SYNC_ENABLED:-true}
+      # 执行宏观周同步的星期，如 mon 表示周一。
       DANG_MACRO_SYNC_DAY_OF_WEEK: ${DANG_MACRO_SYNC_DAY_OF_WEEK:-mon}
+      # 执行宏观周同步的本地时间，使用 HH:MM。
       DANG_MACRO_SYNC_TIME: ${DANG_MACRO_SYNC_TIME:-09:00}
+      # 调度器启动时是否检查并补跑已到期的宏观周任务。
       DANG_MACRO_SYNC_CATCHUP_ON_START: ${DANG_MACRO_SYNC_CATCHUP_ON_START:-true}
+      # 宏观任务计算历史取数范围时使用的回看年数。
       DANG_MACRO_HISTORY_YEARS: ${DANG_MACRO_HISTORY_YEARS:-10}
+      # 股票和公告日程在该小时的第几分钟执行。
       DANG_SYNC_MINUTE: ${DANG_SYNC_MINUTE:-0}
+      # 股票任务处理的证券范围，例如 representative-50。
       DANG_SYNC_UNIVERSE: ${DANG_SYNC_UNIVERSE:-representative-50}
+      # 股票池选 custom 时，在容器中读取的股票清单路径。
       DANG_SYNC_UNIVERSE_FILE: ${DANG_SYNC_UNIVERSE_FILE:-}
+      # 连续同步失败达到多少次后触发告警。
       DANG_SYNC_FAILURE_ALERT_THRESHOLD: ${DANG_SYNC_FAILURE_ALERT_THRESHOLD:-3}
+      # 启动补采一次最多追补的交易日数。
       DANG_SYNC_CATCHUP_MAX_DAYS: ${DANG_SYNC_CATCHUP_MAX_DAYS:-10}
+      # 调度器心跳的上报间隔，单位为秒。
       DANG_SCHEDULER_HEARTBEAT_SECONDS: ${DANG_SCHEDULER_HEARTBEAT_SECONDS:-60}
+      # 超过多少秒未收到心跳时将其视为过期。
       DANG_SCHEDULER_HEARTBEAT_TIMEOUT_SECONDS: ${DANG_SCHEDULER_HEARTBEAT_TIMEOUT_SECONDS:-180}
+      # 检查发布数据新鲜度的间隔秒数。
       DANG_SYNC_FRESHNESS_INTERVAL_SECONDS: ${DANG_SYNC_FRESHNESS_INTERVAL_SECONDS:-300}
+      # 容器内读取外部导入文件的目录。
       DANG_EXTERNAL_IMPORT_PATH: /imports
     volumes:
+      # 将宿主机业务配置只读挂载到应用读取的位置。
+      - ./config:/app/config:ro
+      # 将宿主机导入目录只读映射到容器内的 /imports。
       - ${DANG_EXTERNAL_IMPORT_PATH:-./backend/imports}:/imports:ro
     depends_on:
       bootstrap:
+        # 等待前置任务以退出码 0 完成后再启动。
         condition: service_completed_successfully
 
 volumes:
+  # 本 Compose 项目复用的 PostgreSQL 命名数据卷。
   danginvest-postgres-data:

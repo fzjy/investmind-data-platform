@@ -1,0 +1,250 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "市场行情的标的目录、采集计划和情绪评分参数。",
+  "properties": {
+    "schemaVersion": {
+      "description": "市场行情目录的配置格式版本。"
+    },
+    "enabled": {
+      "description": "是否启用市场行情同步。"
+    },
+    "sentiment": {
+      "description": "按上涨、达到涨幅阈值和盘中触及后回落的情况计算市场情绪分数。",
+      "properties": {
+        "threshold": {
+          "description": "相对前收盘价的涨跌幅阈值，按小数填写，0.098 表示 9.8%。"
+        },
+        "riseWeight": {
+          "description": "收盘上涨证券占比在总分中的权重，0.60 表示 60%。"
+        },
+        "thresholdWeight": {
+          "description": "收盘涨幅达到阈值的证券占比在归一化后所占的权重。"
+        },
+        "retreatWeight": {
+          "description": "盘中触及上涨阈值后仍维持到收盘这一项的权重，回落率越高，该项得分越低。"
+        },
+        "riseNormalization": {
+          "description": "收盘涨幅达到阈值的证券占有效样本的比例达到此值时，该项取得满分。0.05 表示 5%。"
+        },
+        "retreatNormalization": {
+          "description": "盘中触及上涨阈值的证券中，收盘回落至阈值以下的比例达到此值时，该项得分为零。0.50 表示 50%。"
+        },
+        "levels": {
+          "description": "按总分从低到高排列的情绪等级。",
+          "items": {
+            "description": "一个分数档位。",
+            "properties": {
+              "minimum": {
+                "description": "本档最低分，含边界。取总分达到的最高档。"
+              },
+              "label": {
+                "description": "展示给用户的情绪等级名称。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "pulse": {
+      "description": "市场脉搏数据采集设置。",
+      "properties": {
+        "enabled": {
+          "description": "是否启用市场脉搏数据采集。"
+        },
+        "maxRequestsPerRun": {
+          "description": "该任务每次运行可使用的请求数上限。"
+        },
+        "maxRetries": {
+          "description": "单次请求失败后允许重试的次数，当前实现要求为 0。"
+        },
+        "timeoutSeconds": {
+          "description": "单次请求超时秒数。"
+        }
+      }
+    },
+    "region": {
+      "description": "市场地域分布所需的个股地区资料采集设置。",
+      "properties": {
+        "enabled": {
+          "description": "是否启用个股地区资料采集。"
+        },
+        "refreshIntervalDays": {
+          "description": "已核查地区资料可复用的天数。"
+        },
+        "maxRequestsPerRun": {
+          "description": "该任务每次运行可使用的请求数上限。"
+        },
+        "maxRetries": {
+          "description": "单次请求失败后允许重试的次数，当前实现要求为 0。"
+        },
+        "timeoutSeconds": {
+          "description": "单次请求超时秒数。"
+        }
+      }
+    },
+    "etfHeatmap": {
+      "description": "ETF 热力图数据采集设置。",
+      "properties": {
+        "enabled": {
+          "description": "是否启用 ETF 热力图采集。"
+        },
+        "maxRequestsPerRun": {
+          "description": "该任务每次运行可使用的请求数上限。"
+        },
+        "maxRetries": {
+          "description": "单次请求失败后允许重试的次数，当前实现要求为 0。"
+        },
+        "timeoutSeconds": {
+          "description": "单次请求超时秒数。"
+        }
+      }
+    },
+    "commodities": {
+      "description": "大宗商品期货行情采集设置。",
+      "properties": {
+        "enabled": {
+          "description": "是否启用商品期货行情采集。"
+        },
+        "historyDays": {
+          "description": "从目标日期向前取数的自然日数，含目标日。"
+        },
+        "maxRequestsPerRun": {
+          "description": "该任务每次运行可使用的请求数上限。"
+        },
+        "maxRetries": {
+          "description": "单次请求失败后允许重试的次数，当前实现要求为 0。"
+        },
+        "timeoutSeconds": {
+          "description": "单次请求超时秒数。"
+        },
+        "assets": {
+          "description": "需要采集的商品期货品种。",
+          "items": {
+            "description": "一个商品期货品种。",
+            "properties": {
+              "code": {
+                "description": "行情源中的品种代码，含交易所后缀，如 AU.SHF。"
+              },
+              "exchange": {
+                "description": "期货交易所标识，如 SHFE 表示上海期货交易所。"
+              },
+              "category": {
+                "description": "商品分组，如 precious 表示贵金属，energy 表示能源。"
+              },
+              "name": {
+                "description": "展示的商品名称。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "sync": {
+      "description": "指数和 ETF 日行情的取数与校验参数。",
+      "properties": {
+        "lookbackDays": {
+          "description": "每日同步的回看自然日数，包含目标截止日。"
+        },
+        "maxRequestsPerRun": {
+          "description": "该任务每次运行可使用的请求数上限。"
+        },
+        "maxRetries": {
+          "description": "单次请求失败后允许重试的次数，当前实现要求为 0。"
+        },
+        "timeoutSeconds": {
+          "description": "单次请求超时秒数。"
+        },
+        "pctChangeTolerancePercentPoints": {
+          "description": "用收盘价和前收盘价算出的涨跌幅与来源涨跌幅之间允许的最大差值，单位为百分点。"
+        }
+      }
+    },
+    "schedule": {
+      "description": "市场同步任务的日常触发时刻。",
+      "properties": {
+        "frequency": {
+          "description": "计划频率，daily 表示每日。"
+        },
+        "time": {
+          "description": "在配置时区内运行任务的时间，采用 24 小时制 HH:mm。"
+        },
+        "timezone": {
+          "description": "解释计划运行时间时使用的 IANA 时区。"
+        },
+        "catchupOnStart": {
+          "description": "服务启动时是否补跑已到期的计划。"
+        }
+      }
+    },
+    "markets": {
+      "description": "各市场用于推算可获取行情截止日的当地时间设置。",
+      "properties": {
+        "cn": {
+          "description": "中国内地市场的收盘和数据发布时间设置。",
+          "properties": {
+            "timezone": {
+              "description": "解释该市场收盘时间时使用的 IANA 时区。"
+            },
+            "closeTime": {
+              "description": "当地收盘时间，采用 24 小时制 HH:mm。"
+            },
+            "publishDelayMinutes": {
+              "description": "收盘后需等待多少分钟，才能将当日纳入行情同步窗口。"
+            }
+          }
+        },
+        "hk": {
+          "description": "香港市场的收盘和数据发布时间设置。",
+          "properties": {
+            "timezone": {
+              "description": "解释该市场收盘时间时使用的 IANA 时区。"
+            },
+            "closeTime": {
+              "description": "当地收盘时间，采用 24 小时制 HH:mm。"
+            },
+            "publishDelayMinutes": {
+              "description": "收盘后需等待多少分钟，才能将当日纳入行情同步窗口。"
+            }
+          }
+        },
+        "us": {
+          "description": "美国市场的收盘和数据发布时间设置。",
+          "properties": {
+            "timezone": {
+              "description": "解释该市场收盘时间时使用的 IANA 时区。"
+            },
+            "closeTime": {
+              "description": "当地收盘时间，采用 24 小时制 HH:mm。"
+            },
+            "publishDelayMinutes": {
+              "description": "收盘后需等待多少分钟，才能将当日纳入行情同步窗口。"
+            }
+          }
+        }
+      }
+    },
+    "assets": {
+      "description": "需要同步指数或 ETF 日行情的标的清单。",
+      "items": {
+        "description": "一项指数或 ETF 行情标的。",
+        "properties": {
+          "assetType": {
+            "description": "行情类别，indices 表示指数，etfs 表示交易型开放式指数基金。"
+          },
+          "assetCode": {
+            "description": "用于上游行情查询的标的代码，如 000001.SH 或 HSI。"
+          },
+          "name": {
+            "description": "行情标的的展示名称。"
+          },
+          "market": {
+            "description": "所属市场，引用 markets 中的键以确定收盘时间。"
+          },
+          "apiName": {
+            "description": "采集该标的日行情所调用的 Tushare 接口名。"
+          }
+        }
+      }
+    }
+  }
+}

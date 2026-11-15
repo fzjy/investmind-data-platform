@@ -29,7 +29,7 @@ def test_alembic_config_resolves_paths_from_project_root() -> None:
 
 def test_documented_python_migration_commands_use_the_packaged_configuration() -> None:
     root = Path(__file__).resolve().parents[2]
-    guide = (root/"backend/README.md").read_text(encoding="utf-8")
+    guide = (root/"docs/local-operations.md").read_text(encoding="utf-8")
     for command in ("current", "upgrade head"):
         assert "python -m alembic -c backend/alembic.ini " + command in guide
     assert "python -m app.cli.main" in guide

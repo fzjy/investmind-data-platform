@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "组合基准与分红数据的更新策略和请求预算。",
+  "properties": {
+    "routine": {
+      "description": "例行更新中组合数据步骤的开关和刷新周期。",
+      "properties": {
+        "enabled": {
+          "description": "是否运行组合例行更新步骤。"
+        },
+        "referenceEnabled": {
+          "description": "是否更新组合参考基准的指数目录与历史行情。"
+        },
+        "dividendsEnabled": {
+          "description": "是否更新组合相关股票的分红资料。"
+        },
+        "referenceIntervalDays": {
+          "description": "基准行情覆盖截止日落后于目标日时，至少落后多少个自然日才触发更新。"
+        },
+        "dividendRevisionDays": {
+          "description": "已核查的分红资料经过多少天需要再次检查修订。"
+        }
+      }
+    },
+    "dividendEvidence": {
+      "description": "采集股票分红原始资料的请求设置。",
+      "properties": {
+        "maxHttpPerRun": {
+          "description": "每次执行该采集任务的 HTTP 请求数上限。"
+        },
+        "timeoutSeconds": {
+          "description": "单次 HTTP 请求超时秒数。"
+        }
+      }
+    },
+    "referenceEvidence": {
+      "description": "采集组合参考基准资料的请求设置。",
+      "properties": {
+        "maxHttpPerRun": {
+          "description": "每次执行该采集任务的 HTTP 请求数上限。"
+        },
+        "timeoutSeconds": {
+          "description": "单次 HTTP 请求超时秒数。"
+        }
+      }
+    }
+  }
+}

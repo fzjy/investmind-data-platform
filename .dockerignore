@@ -1,10 +1,10 @@
-# Dependencies (reinstalled inside Docker)
+# 排除本机 JavaScript 依赖与包管理器日志。
 node_modules
 pnpm-debug.log*
 npm-debug.log*
 yarn-debug.log*
 
-# Build output
+# 排除前端构建结果、临时目录与本机 Python 环境。
 .next
 .tmp
 temp
@@ -13,26 +13,29 @@ backend/.tmp-*
 **/__pycache__
 **/*.pyc
 backend/*.egg-info
+# 测试源码、Python 打包产物、数据库备份和本机导入文件不进入构建上下文。
 backend/tests
 backend/build
 backend/dist
 backend/backups
 backend/imports
+# 文件型密钥和数据库归档保留在宿主机。
 .secrets
 **/*.dump
+# 排除导出、分发和测试缓存目录。
 out
 build
 dist
 **/.pytest_cache
 
-# Git
+# 排除 Git 工作历史和 Git 忽略规则。
 .git
 .gitignore
 
-# Environment files (pass via docker-compose env_file or runtime env vars)
+# 本机环境变量由部署时提供，镜像构建排除所有 .env 变体。
 .env*
 
-# Editor / OS
+# 排除编辑器设置、交换文件和操作系统缓存。
 .vscode
 .idea
 .DS_Store
@@ -40,7 +43,7 @@ Thumbs.db
 *.swp
 *.swo
 
-# Agent / AI tool configs (not needed at runtime)
+# 排除开发助手配置、本地工作树和代理指令。
 .claude
 .codex
 .superpowers
@@ -61,19 +64,16 @@ AGENTS.md
 CLAUDE.md
 GEMINI.md
 
-# Docs / research (large, not needed at runtime)
+# 运行镜像排除手册、研究资料和宿主机管理脚本。
 docs
 scripts
 
-# Docker files themselves (no need to copy into image)
+# 排除根目录的 Docker 辅助文件。
 Dockerfile
 docker-compose.yml
 .dockerignore
 
-# Misc
-# 单公司人工公告裁决仅保留研究证据，不进入正式镜像。
-backend/config/portfolio-evidence
-backend/config/portfolio-event-resolutions.json
+# 排除 TypeScript 编译缓存及项目说明与许可文件。
 *.tsbuildinfo
 README.md
 CHANGELOG.md

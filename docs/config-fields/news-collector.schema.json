@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "新闻采集与保留策略",
+  "description": "控制每轮快讯采集、过期清理和数据库等待时间。项目是否启动工作进程另由 scheduled-tasks.json 的 news 控制。",
+  "properties": {
+    "enabled": {
+      "description": "允许采集及清理新闻。设为 false 时，独立运行的 watch-news 在下一轮读取配置时退出。"
+    },
+    "page_size": {
+      "description": "每次向新闻源请求的快讯条数，用于分页。"
+    },
+    "max_pages": {
+      "description": "每轮最多抓取的页数。达到上限时保存游标，后续轮次接续抓取。"
+    },
+    "interval_seconds": {
+      "description": "距上次尝试至少隔多少秒才能再次采集，也是 watch-news 两轮之间的等待时间。"
+    },
+    "request_interval_seconds": {
+      "description": "每次向来源发起请求前等待的秒数，包括翻页和重试。"
+    },
+    "timeout_seconds": {
+      "description": "单次新闻源 HTTP 请求的超时秒数。"
+    },
+    "retry_count": {
+      "description": "单次请求遇到可重试错误时允许的额外尝试次数。0 表示仅尝试一次。"
+    },
+    "backoff_seconds": {
+      "description": "首次重试前额外等待的秒数；同一请求之后每次重试将这段等待时间加倍。"
+    },
+    "overlap_hours": {
+      "description": "有成功断点时，从上轮成功时刻再向前回看多少小时，覆盖交叠时段的快讯修订。"
+    },
+    "lookback_hours": {
+      "description": "没有成功断点时，从本轮开始时刻向前抓取的小时数。"
+    },
+    "stale_hours": {
+      "description": "来源中最新快讯距当前时间超过多少小时后，将其标记为滞后。"
+    },
+    "failure_threshold": {
+      "description": "连续采集失败达到多少次后触发运行告警。"
+    },
+    "retention_days": {
+      "description": "按新闻发布时间计算的保留天数，早于截止时间且符合清理条件的新闻可被移除。"
+    },
+    "log_retention_days": {
+      "description": "保留已恢复的相关运行事件和告警的天数。"
+    },
+    "cleanup_interval_seconds": {
+      "description": "两次到期清理检查之间的最短间隔，单位为秒。"
+    },
+    "cleanup_batch_size": {
+      "description": "每个清理批次扫描的最大记录数。"
+    },
+    "cleanup_max_batches": {
+      "description": "一次清理最多处理多少批，剩余记录按保存的检查点继续处理。"
+    },
+    "worker_retry_seconds": {
+      "description": "生命周期托管的新闻循环在出错后等待多少秒再检查；独立 watch-news 使用 interval_seconds。"
+    },
+    "database_connect_timeout_seconds": {
+      "description": "新闻采集建立 PostgreSQL 连接时最多等待的秒数。"
+    },
+    "database_statement_timeout_seconds": {
+      "description": "新闻采集连接中单条 PostgreSQL 语句允许执行的最长秒数。"
+    },
+    "database_lock_timeout_seconds": {
+      "description": "新闻采集连接中单条 PostgreSQL 语句等待数据库锁的最长秒数。"
+    }
+  }
+}

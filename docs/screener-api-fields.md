@@ -37,7 +37,7 @@ InvestMind 的普通筛选、散点和银行模式均消费 `POST /api/v1/stocks
 
 十个预设逐只核过启用的门槛交集。快速排序逐项核过 56 个字段的降序，缺值放末位、相同值按证券代码排序。七个高级模板独立用样本标准差标准化后按权重、方向求和，再乘有效指标数占启用数的比例，所有证券的顺序一致。预设和模板具体键、阈值、权重及结果指纹均写入 JSON。九个排除项和六个板块均按证券集合复核，五页合计 50 个不重复代码，所得成员摘要和分页结果见证据，定义见 `backend/app/stocks/service.py`。普通散点 20 条候选轴复用上述研究字段和行情值，同一证券任一轴缺值便无该点；图表还过滤 PE > 100 或 PB > 20 的对应轴；轴配对与图表交互由网站侧核验。
 
-银行模式限制 `majorIndustry=银行`。本业务日为平安银行、招商银行、工商银行。五个配置分别为 `defensive,balanced,offensive,quality,dividend`，版本 `rea-bank-score-20261020`。配置及展示字段来自 `config/financial-indicators.json`，逐证券输出 `bankEvaluation.inputs/fields/sources/scores/weighted/total/reasons`。15 个银行字段各用一次 ≥0 条件核对证券成员；五个配置都核了全池、可用字段数及总分是否可用。
+银行模式限制 `majorIndustry=银行`。本业务日为平安银行、招商银行、工商银行。五个配置分别为 `defensive,balanced,offensive,quality,dividend`，版本 `rea-bank-score-20261020`。配置及展示字段来自 `config/stocks/financial-indicators.json`，逐证券输出 `bankEvaluation.inputs/fields/sources/scores/weighted/total/reasons`。15 个银行字段各用一次 ≥0 条件核对证券成员；五个配置都核了全池、可用字段数及总分是否可用。
 
 | 银行字段 | 实际供给与口径 |
 |---|---|

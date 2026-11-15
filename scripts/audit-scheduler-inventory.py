@@ -26,11 +26,11 @@ def safe_config(root):
     def policy(data, keys):
         return {k: data[k] for k in keys if k in data}
 
-    fin = read("config/financial-indicators.json")
-    market = read("backend/config/market-data.json")
-    extensions = read("backend/config/macro-extensions.json")["groups"]
-    portfolio = read("config/portfolio.json")["routine"]
-    news = read("backend/config/news-collector.json")
+    fin = read("config/stocks/financial-indicators.json")
+    market = read("config/market/market-data.json")
+    extensions = read("config/macro/macro-extensions.json")["groups"]
+    portfolio = read("config/portfolio/portfolio.json")["routine"]
+    news = read("config/news/news-collector.json")
     allowed = ("enabled", "maxRequestsPerRun", "maxRetries", "timeoutSeconds", "refreshIntervalDays",
                "historyDays", "maxPagesPerRun", "revisitDays", "maxChecks", "retryDays", "backoffMinutes",
                "maxHttpPerRun", "historyYears", "refreshDays")

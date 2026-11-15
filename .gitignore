@@ -1,48 +1,51 @@
-# Dependencies
+# JavaScript 包管理器生成的依赖目录与本机解析索引。
 node_modules/
 .pnp
 .pnp.js
 
-# Build
+# 前端与通用构建产物。
 .next/
 out/
 build/
 dist/
 
-# Environment
+# 忽略本地环境变量及其变体，只跟踪可分发的示例模板。
 .env*
 !.env.example
 
-# Debug
+# npm 和 Yarn 的本机调试日志。
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# IDE
+# 编辑器私有设置与交换文件。根目录共享 JSON 字段提示的映射。
 .idea/
 .vscode/
+!/.vscode/
+/.vscode/*
+!/.vscode/settings.json
 *.swp
 *.swo
 
-# OS
+# 操作系统生成的桌面元数据。
 .DS_Store
 Thumbs.db
 
-# TypeScript
+# TypeScript 增量编译缓存与 Next.js 自动生成的类型声明。
 *.tsbuildinfo
 next-env.d.ts
 
-# Vercel
+# Vercel 的本地部署绑定信息。
 .vercel
 
-# Local settings (not project config)
+# 本机 Claude 工具偏好。
 .claude/settings.local.json
 
-# User-specific skills (not part of the template)
+# 用户定制的发布与个性化技能。
 .claude/skills/customize/
 .claude/skills/release/
 
-# Local temp files
+# 临时输出与本机任务归档。
 temp/
 .tmp/
 .superpowers/archive/
@@ -53,22 +56,29 @@ temp/
 .worktrees/
 .superpowers/worktrees/
 
-# Python backend
+# Python 虚拟环境、安装元数据、临时测试目录和覆盖率数据。
 backend/.venv/
 backend/.tmp-*/
 backend/*.egg-info/
 backend/.pytest_cache/
 **/.pytest_cache/
 backend/.coverage
+# 本机导入文件、数据库备份及文件型密钥。
 backend/imports/
 backend/backups/
 .secrets/
-# custom backup roots inside this repository must ignore their ENTIRE directory.
-# Additional safety net for custom-format PostgreSQL archives, not just default root.
+# 仓库内自定义备份目录也应整体排除；此规则另外覆盖任意目录中的 PostgreSQL 归档。
 *.dump
+# 覆盖率报告、字节码缓存与新闻包安装元数据。
 backend/htmlcov/
 **/__pycache__/
 *.py[cod]
 packages/news-collector/src/*.egg-info/
+# 新闻采集本地状态及待迁入文件。
 data/news-collector/
 imports/news-collector/
+
+# 根 Python 项目打包时生成的元数据、构建目录和分发包。
+/*.egg-info/
+/build/
+/dist/

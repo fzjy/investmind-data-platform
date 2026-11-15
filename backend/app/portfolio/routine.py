@@ -1,9 +1,9 @@
 """统一日常入口的独立组合组；映射与逐代码分红共享持久请求预算。"""
+from app.config_paths import CONFIG_ROOT
 from app.portfolio.evidence import JOB, _get, _save, _seal, _verify, _signatures, _valid_unit, validate_manifest, _query_units, _query_end
 from copy import deepcopy
 from datetime import datetime, timedelta, timezone, date
 import json
-from pathlib import Path
 
 from sqlalchemy import text
 
@@ -12,7 +12,7 @@ from app.ingestion.repositories import content_hash
 from app.jobs.locks import job_lock_for_engine
 from app.portfolio.dividend_capture import _base, _cursor, capture_dividend_evidence, capture_config
 
-CONFIG_FILE = Path(__file__).resolve().parents[3] / 'config' / 'portfolio.json'
+CONFIG_FILE = CONFIG_ROOT / "portfolio/portfolio.json"
 
 
 def portfolio_routine_config():

@@ -71,8 +71,8 @@ def test_duplicate_missing_or_unbound_source_rejected(tmp_path):
 
 
 def test_xls_reader_is_declared_runtime_dependency():
-    file=Path(__file__).resolve().parents[2]/'pyproject.toml'
-    dependencies=tomllib.loads(file.read_text())['project']['dependencies']
+    file=Path(__file__).resolve().parents[3]/'pyproject.toml'
+    dependencies=tomllib.loads(file.read_text(encoding='utf-8'))['project']['dependencies']
     assert 'xlrd>=2.0.2,<3' in dependencies
 
 

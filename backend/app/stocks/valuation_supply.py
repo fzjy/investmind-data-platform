@@ -6,11 +6,11 @@ from contextlib import ExitStack
 from datetime import date, datetime, timedelta, timezone
 from decimal import Decimal
 import json
-from pathlib import Path
 import re
 from types import SimpleNamespace
 
 from sqlalchemy import select, text
+from app.config_paths import CONFIG_ROOT
 from app.connectors.tushare.contracts import request_hash
 from app.db.models import IngestionBatch, JobCursor, PublishedSnapshot, SourcePayload
 from app.ingestion.repositories import content_hash
@@ -18,7 +18,7 @@ from app.jobs.locks import job_lock_for_engine
 from app.portfolio.api.dividends import original_dividend_rows
 from app.portfolio.api.reference import capture_catalog
 
-CONFIG_FILE = Path(__file__).resolve().parents[3] / 'config' / 'financial-indicators.json'
+CONFIG_FILE = CONFIG_ROOT / "stocks/financial-indicators.json"
 JOB = 'stock-valuation-evidence'
 FIELDS = ('ts_code', 'trade_date', 'pe', 'pb')
 

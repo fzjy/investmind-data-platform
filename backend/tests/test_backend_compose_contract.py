@@ -192,3 +192,11 @@ def test_backend_compose_preserves_explicit_empty_bootstrap_symbols() -> None:
     services = config["services"]
     assert isinstance(services, dict)
     assert services["bootstrap"]["environment"]["DANG_BOOTSTRAP_SYMBOLS"] == ""
+
+def test_application_containers_mount_the_same_readonly_configuration():
+    services = _render_compose_config(project_name="config-mount", profiles=("scheduler",))["services"]
+    for name in ("migrate", "bootstrap", "api", "news-worker", "scheduler"):
+        mounts = [v for v in services[name]["volumes"] if v["target"] == "/app/config"]
+        assert len(mounts) == 1
+        assert mounts[0]["type"] == "bind" and mounts[0]["read_only"]
+        assert Path(mounts[0]["source"]).resolve() == PROJECT_ROOT / "config"

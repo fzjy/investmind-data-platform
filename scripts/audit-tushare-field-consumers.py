@@ -63,8 +63,8 @@ def configured(root, catalog):
             add(api, plan_for(dataset, {}).fields, "stocks.update.plan_for/" + dataset.value)
         if dataset in VIP_API_NAMES:
             add(VIP_API_NAMES[dataset], fields, "strategies.VIP_API_NAMES/按报告期批量")
-    for row in read_json(root/"config/financial-indicators.json")["dataSupply"]["tables"].values():
-        add(row["api"],row["fields"],"config/financial-indicators.json#dataSupply")
+    for row in read_json(root/"config/stocks/financial-indicators.json")["dataSupply"]["tables"].values():
+        add(row["api"],row["fields"],"config/stocks/financial-indicators.json#dataSupply")
     for target in BalanceSupplementTarget:
         add("balancesheet",(*FIELD_REGISTRY[Dataset.BALANCE_SHEET],target.field),"macro.balance_supplement/"+target.value)
     for kind,fields in SOURCE_FIELDS.items():
@@ -83,9 +83,9 @@ def configured(root, catalog):
         for endpoint, fields in ({api:values} if api else values).items():
             add(endpoint,fields,path+"."+key)
     from app.market.data.contracts import QUOTE_FIELDS
-    for row in read_json(root/"backend/config/market-data.json")["assets"]:
+    for row in read_json(root/"config/market/market-data.json")["assets"]:
         add(row["apiName"],QUOTE_FIELDS,"market.data.contracts.QUOTE_FIELDS")
-    macro = read_json(root/"backend/config/macro-series.json")["series"]
+    macro = read_json(root/"config/macro/macro-series.json")["series"]
     for series in macro:
         for source in series["sources"]:
             if source["provider"]=="tushare":
@@ -93,7 +93,7 @@ def configured(root, catalog):
                 for key in source["responseFields"]:
                     if key in {source.get("field"),"trade_date","month","quarter","date"}:
                         catalog[source["api"],key]["uses"].add(("间接","宏观/指标序列 "+series["id"]+"（供应商配置，实际来源按版本）","G"))
-    extra=read_json(root/"backend/config/macro-extensions.json")
+    extra=read_json(root/"config/macro/macro-extensions.json")
     for group in ("contractSamples","groups"):
         for name,row in extra[group].items():
             if "apiName" in row:
@@ -269,7 +269,7 @@ def conditional_core_paths(root,session,catalog):
                 "linkedRows":rows})
     macro_counts=dict(session.execute(text("""select series_id,count(*) from core.macro_observation
         where source='tushare' group by series_id""")).all())
-    for series in read_json(root/"backend/config/macro-series.json")["series"]:
+    for series in read_json(root/"config/macro/macro-series.json")["series"]:
         for source in series["sources"]:
             if source["provider"]!="tushare":
                 continue
@@ -291,7 +291,7 @@ def add_consumers(root,catalog,statements):
         catalog[api,field]["publishedStatement"]={
             "symbols":len(witness),"nonNullSymbols":sum(n>0 for n in witness.values()),"nonNullCells":sum(witness.values()),
             "example":next((s for s,n in sorted(witness.items()) if n),min(witness))}
-    for spec in read_json(root/"config/stock-ratio-catalog.json")["fields"]:
+    for spec in read_json(root/"config/stocks/stock-ratio-catalog.json")["fields"]:
         if spec.get("table") not in KIND_API: continue
         record(KIND_API[spec["table"]],spec["keys"],"间接","工作台/比率分析/metrics.fields["+spec["id"]+"]（按别名顺序取首个有效值）","R")
     from app.stocks.derived.inputs import CARD_REPORT_FIELDS

@@ -1,6 +1,6 @@
 # 离线测试归属
 
-独立底座通过 `python -I backend/tests/run_isolated.py pytest backend/tests -q` 验证发布与采集代码。安装步骤见[底座运行手册](../../backend/README.md)。运行器从本仓读取 app、测试模块和 packages/news-collector/src，隔离业务数据库、真实供应商 HTTP、个人 .env 与默认 PostgreSQL 容器。Compose 合同使用受控示例配置执行 config 解析。
+独立底座通过 `python -I backend/tests/run_isolated.py pytest backend/tests -q` 验证发布与采集代码。安装步骤见[本机手册](../local-operations.md)。运行器从本仓读取 app、测试模块和 packages/news-collector/src，隔离业务数据库、真实供应商 HTTP、个人 .env 与默认 PostgreSQL 容器。Compose 合同使用受控示例配置执行 config 解析。
 
 2026-11-15 对原五组拆分测试实跑，23 项失败、6 项通过。以下变更将仍适用于底座的断言绑定至可执行入口。原测试在网站仓库提交 `701befd78024c6957dd38dde4a5bcb016f8b259e` 的 `backend/tests/` 下完整保存。保留该代码版本只为回溯，独立测试不读取网站仓库或其 Git 历史。
 

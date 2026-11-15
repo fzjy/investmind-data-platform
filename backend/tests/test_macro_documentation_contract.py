@@ -25,7 +25,7 @@ FRED_NOTICE = (
 
 
 def test_macro_documentation_uses_the_installed_cli() -> None:
-    guide = (PROJECT_ROOT/"backend/README.md").read_text(encoding="utf-8")
+    guide = (PROJECT_ROOT/"docs/local-operations.md").read_text(encoding="utf-8")
     for cmd in ("sync-macro --help", "smoke-macro --provider fred", "rebuild-external-marts --product macro"):
         assert "python -m app.cli.main " + cmd in guide
     assert "--as-of" in guide and "--force" in guide
@@ -41,12 +41,12 @@ def test_macro_example_exposes_documented_defaults_without_credentials() -> None
 
 
 def test_macro_docs_disclose_source_gaps_and_verification_boundaries() -> None:
-    text = (PROJECT_ROOT / "backend/README.md").read_text(encoding="utf-8")
+    text = (PROJECT_ROOT / "docs/local-operations.md").read_text(encoding="utf-8")
     for required in (
         FRED_NOTICE, "https://fred.stlouisfed.org/docs/api/terms_of_use.html",
         "cn.cpi.core_yoy", "cn.rate.dr007", "20", "representative-50",
         "受控", "真实 smoke", "未执行", "partial", "stale", "fallback",
-        "backend/config/macro-series.json",
+        "config/macro/macro-series.json",
     ):
         assert required in text, required
 

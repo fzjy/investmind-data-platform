@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "个股机构持股与行业分类使用的映射规则。",
+  "properties": {
+    "schemaVersion": {
+      "description": "映射配置格式版本。"
+    },
+    "policyVersion": {
+      "description": "标识本套映射规则，用于追溯分类结果。"
+    },
+    "institution": {
+      "description": "按原始股东类型识别机构，并规定持股比例分母的取数时限。",
+      "properties": {
+        "includedTypes": {
+          "description": "计入机构持股的股东类型。",
+          "items": {
+            "description": "原始股东类型名称，匹配时忽略首尾空格和大小写。"
+          }
+        },
+        "excludedTypes": {
+          "description": "明确排除出机构持股统计的股东类型。",
+          "items": {
+            "description": "原始股东类型名称，匹配时忽略首尾空格和大小写。"
+          }
+        },
+        "maxDenominatorLagDays": {
+          "description": "持股报告期末与用于计算分母的当日或此前股本数据之间允许相差的最大自然日数。"
+        }
+      }
+    },
+    "classification": {
+      "description": "选择行业分类体系、输出层级及同步范围。",
+      "properties": {
+        "provider": {
+          "description": "行业分类数据的提供方，当前为 Tushare。"
+        },
+        "source": {
+          "description": "采用的分类体系，SW2021 表示申万行业分类 2021 版。"
+        },
+        "majorLevel": {
+          "description": "用作所属大行业的分类层级，1 表示一级行业。"
+        },
+        "subLevel": {
+          "description": "用作所属细分行业的分类层级，3 表示三级行业。"
+        },
+        "sync": {
+          "description": "同步行业分类目录和成份关系的参数。",
+          "properties": {
+            "asOf": {
+              "description": "分类历史窗口的截止日期（YYYY-MM-DD）。null 表示读取已发布筛选器快照的基准日。"
+            },
+            "maxRequestsPerRun": {
+              "description": "单次分类同步可发起的请求数上限。"
+            },
+            "pageSize": {
+              "description": "同步分类成份关系时每页请求的记录数。"
+            }
+          }
+        }
+      }
+    }
+  }
+}

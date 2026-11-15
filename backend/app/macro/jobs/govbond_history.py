@@ -11,6 +11,7 @@ from typing import Literal, Self
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
+from app.config_paths import CONFIG_ROOT
 from app.connectors.macro.chinamoney_govbond import GovbondTransport, fetch_govbond_history
 from app.connectors.macro.contracts import MacroFetchWindow, ProviderFetchResult
 from app.jobs.cursors import CursorStore
@@ -20,7 +21,7 @@ from app.macro.catalog import MacroSeriesCatalog, MacroSourceDefinition, catalog
 
 CURSOR_KEY = 'govbond-history-v1'
 SERIES_ID = 'cn.rate.govbond_10y'
-DEFAULT_HISTORY_SOURCES_FILE = Path(__file__).resolve().parents[3] / 'config' / 'macro-history-sources.json'
+DEFAULT_HISTORY_SOURCES_FILE = CONFIG_ROOT / "macro/macro-history-sources.json"
 CHINA_TIME = timezone(timedelta(hours=8))
 _PUBLIC_ERRORS = frozenset({
     'GOVBOND_HISTORY_EMPTY_MONTH', 'GOVBOND_HISTORY_EVIDENCE_INVALID', 'GOVBOND_HISTORY_FETCH_FAILED',

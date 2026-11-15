@@ -35,7 +35,7 @@ InvestMind 当前发布版本 `20261108-366f83bfc727036c`。本索引从原生�
 
 ## 扩展与专题
 
-配置 `backend/config/macro-extensions.json` 的 10 组均启用计划。表中定时指上海时间的计划。发布扩展组读取自身作业、原件及允许使用的 Core 绑定；部分政府债券值由原始表重解析，回执中的首份文件 `coreCount=0`。保留修订/出处及旧发布快照；失败的尝试记录状态，缺历史点继续为空。公式、具体原件、日期和最近失败按组可查。[专题源表重算](macro-specialties.md) · [逐组原件及缺口](research/investmind-macro-specialties.json)
+配置 `config/macro/macro-extensions.json` 的 10 组均启用计划。表中定时指上海时间的计划。发布扩展组读取自身作业、原件及允许使用的 Core 绑定；部分政府债券值由原始表重解析，回执中的首份文件 `coreCount=0`。保留修订/出处及旧发布快照；失败的尝试记录状态，缺历史点继续为空。公式、具体原件、日期和最近失败按组可查。[专题源表重算](macro-specialties.md) · [逐组原件及缺口](research/investmind-macro-specialties.json)
 
 | 配置组 | 原字段 → 发布字段 | InvestMind 宏观页面用途、采集状态与缺口 |
 | --- | --- | --- |

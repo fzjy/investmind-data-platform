@@ -1,0 +1,246 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "企业关联预览的指数、ETF 目标目录和成份证据采集策略。",
+  "properties": {
+    "schemaVersion": {
+      "description": "配置文件结构的版本号，供加载器识别字段格式。"
+    },
+    "catalogVersion": {
+      "description": "这份目录的内容版本，用于识别采集计划使用的目录。"
+    },
+    "mode": {
+      "description": "目标关联模式。tracking-index-proxy 表示通过跟踪指数关联成份企业。"
+    },
+    "maxTargetsPerPreview": {
+      "description": "单次预览最多纳入的指数和 ETF 目标数量。"
+    },
+    "officialEvidence": {
+      "description": "初始目标的官方证据文档、采集开关和请求预算。",
+      "properties": {
+        "collectionEnabled": {
+          "description": "是否启用该范围的采集任务。"
+        },
+        "dailyBudgetEnabled": {
+          "description": "是否执行 maxHttpPerDay 设置的每日请求总量限制。"
+        },
+        "useScope": {
+          "description": "登记的数据使用范围，用于限定采集结果的使用场景。"
+        },
+        "bootstrapTargetCodes": {
+          "description": "启用初始采集的目录目标代码。",
+          "items": {
+            "description": "带交易所后缀的目录目标代码，用于关联目标及其证据。"
+          }
+        },
+        "maxHttpPerRun": {
+          "description": "一次任务运行最多可发出的 HTTP 请求数。"
+        },
+        "requestsPerMinute": {
+          "description": "每分钟最多可发出的 HTTP 请求数。"
+        },
+        "requestTimeoutSeconds": {
+          "description": "单次 HTTP 请求等待响应的超时时间，单位为秒。"
+        },
+        "maxRetries": {
+          "description": "单个请求失败后可重试的次数，0 表示关闭重试。"
+        },
+        "maxResponseBytes": {
+          "description": "单次响应允许读取的最大字节数。"
+        },
+        "maxHttpPerDay": {
+          "description": "启用每日预算时，当日最多可使用的 HTTP 请求数。"
+        },
+        "maxSnapshotMembers": {
+          "description": "一份成份快照可包含的最大成员数。"
+        },
+        "documents": {
+          "description": "为目标登记的官方成份、跟踪关系或申赎清单文档。",
+          "items": {
+            "$ref": "#/definitions/document"
+          }
+        }
+      }
+    },
+    "catalogEvidence": {
+      "description": "扩展目录目标的官方证据登记与采集开关。",
+      "properties": {
+        "collectionEnabled": {
+          "description": "是否启用该范围的采集任务。"
+        },
+        "limitsReference": {
+          "description": "引用官方证据的限制配置，当前复用 officialEvidence 的预算和请求参数。"
+        },
+        "discoveryEnabled": {
+          "description": "是否启用基金跟踪关系等官方来源的发现任务。"
+        },
+        "sampleEnabled": {
+          "description": "是否允许从登记的基金发行人文档采集样本。"
+        },
+        "sampleRecoveries": {
+          "description": "样本恢复任务可读取的基金发行人文档。",
+          "items": {
+            "$ref": "#/definitions/sample"
+          }
+        },
+        "sampleDocuments": {
+          "description": "样本采集任务使用的基金发行人文档。",
+          "items": {
+            "$ref": "#/definitions/sample"
+          }
+        },
+        "memberGraphEnabled": {
+          "description": "是否启用基金、跟踪指数和成份企业关系的采集。"
+        },
+        "memberGraphs": {
+          "description": "需要采集成份关系的基金及对应的发现文档。",
+          "items": {
+            "description": "关联一个基金目标和一份已登记的来源文档。",
+            "properties": {
+              "code": {
+                "description": "带交易所后缀的目录目标代码，用于关联目标及其证据。"
+              },
+              "discoveryDocumentId": {
+                "description": "引用 discoveryDocuments 中用于发现该基金跟踪关系的文档 ID。"
+              }
+            }
+          }
+        },
+        "discoveryDocuments": {
+          "description": "发现基金跟踪关系所用的官方文档。",
+          "items": {
+            "$ref": "#/definitions/document"
+          }
+        },
+        "targets": {
+          "description": "扩展证据采集覆盖的目录目标。",
+          "items": {
+            "description": "目标代码及其直接登记的来源文档。",
+            "properties": {
+              "code": {
+                "description": "带交易所后缀的目录目标代码，用于关联目标及其证据。"
+              },
+              "documents": {
+                "description": "为目标登记的官方成份、跟踪关系或申赎清单文档。",
+                "items": {
+                  "$ref": "#/definitions/document"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "evidencePolicy": {
+      "description": "按计划采集目标成份证据所用的访问范围和限额。",
+      "properties": {
+        "collectionEnabled": {
+          "description": "是否启用该范围的采集任务。"
+        },
+        "useScope": {
+          "description": "登记的数据使用范围，用于限定采集结果的使用场景。"
+        },
+        "bootstrapTargetCodes": {
+          "description": "启用初始采集的目录目标代码。",
+          "items": {
+            "description": "带交易所后缀的目录目标代码，用于关联目标及其证据。"
+          }
+        },
+        "maxTargetsPerPlan": {
+          "description": "一个证据采集计划最多纳入的目标数。"
+        },
+        "maxHttpPerRun": {
+          "description": "一次任务运行最多可发出的 HTTP 请求数。"
+        },
+        "requestsPerMinute": {
+          "description": "每分钟最多可发出的 HTTP 请求数。"
+        },
+        "requestTimeoutSeconds": {
+          "description": "单次 HTTP 请求等待响应的超时时间，单位为秒。"
+        },
+        "maxRetries": {
+          "description": "单个请求失败后可重试的次数，0 表示关闭重试。"
+        },
+        "maxResponseBytes": {
+          "description": "单次响应允许读取的最大字节数。"
+        },
+        "maxResponseRows": {
+          "description": "单次响应可接收的数据行数上限。"
+        },
+        "maxHttpPerPlan": {
+          "description": "一个计划内累计允许的 HTTP 请求数。"
+        },
+        "lookbackMonths": {
+          "description": "检索历史成份证据时向前回看的月数。"
+        },
+        "indexMetadataMarket": {
+          "description": "查询指数元数据时使用的市场参数，如 CSI 表示中证指数。"
+        },
+        "maxSnapshotMembers": {
+          "description": "一份成份快照可包含的最大成员数。"
+        }
+      }
+    },
+    "targets": {
+      "description": "企业关联预览可选的指数和 ETF 清单。",
+      "items": {
+        "description": "一个预览目标的身份和跟踪指数线索。",
+        "properties": {
+          "kind": {
+            "description": "目标类别，index 代表指数，etf 代表交易型开放式指数基金。"
+          },
+          "code": {
+            "description": "带交易所后缀的目录目标代码，用于关联目标及其证据。"
+          },
+          "label": {
+            "description": "预览界面中显示的目标名称。"
+          },
+          "sourceIndexNameHint": {
+            "description": "帮助识别 ETF 所跟踪指数的名称线索；空值表示未指定。"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "document": {
+      "description": "一个官方证据来源，记录采集入口和识别文档所需的代码。",
+      "properties": {
+        "id": {
+          "description": "目录内引用这份官方文档的标识。"
+        },
+        "kind": {
+          "description": "证据种类，如中证指数成份表、基金跟踪关系或 ETF 申赎清单。"
+        },
+        "indexCode": {
+          "description": "该证据关联的来源指数代码，保留前导零。"
+        },
+        "fundCode": {
+          "description": "不带交易所后缀的基金代码，用于关联基金产品。"
+        },
+        "subscriptionCode": {
+          "description": "用于定位 ETF 申购赎回清单的申赎代码。"
+        },
+        "tradingDate": {
+          "description": "该文档关联的交易日期，按年-月-日填写；未指定时为空。"
+        },
+        "url": {
+          "description": "采集器读取的官方来源地址。"
+        }
+      }
+    },
+    "sample": {
+      "description": "一个基金样本文档及其读取方式。",
+      "properties": {
+        "fundCode": {
+          "description": "不带交易所后缀的基金代码，用于关联基金产品。"
+        },
+        "mediaType": {
+          "description": "样本文档的媒体类型，用于选择 HTML 或 PDF 解析方式。"
+        },
+        "url": {
+          "description": "采集器读取的官方来源地址。"
+        }
+      }
+    }
+  }
+}

@@ -4,23 +4,26 @@
 
 ## 部署与现场
 
+下表的入口按 2026-11-15 独立底座配置说明，现场核验结果保留 11 月 14 日的历史证据。当前启动步骤见[本机手册](local-operations.md#scheduled)、[服务器手册](server-operations.md#scheduled)，历史计数不代表当前部署状态。
+
 | 底座单元 | 生命周期与入口 | 核验结果 |
 | --- | --- | --- |
-| PostgreSQL | `docker-compose.local-db.yml` 只部署数据库。`docker-compose.backend.yml` 的 postgres 使用 PostgreSQL 17 并配置健康检查 | 本机 Docker 在 11 月 14 日仅列出运行中的 `danginvest-postgres`。保留原容器名以便识别本次取证对象 |
+| PostgreSQL | 本机数据库用基础 Compose 文件叠加 `docker-compose.local-db.yml`，单独启动 `postgres` 服务。`docker-compose.backend.yml` 的 postgres 使用 PostgreSQL 17 并配置健康检查 | 本机 Docker 在 11 月 14 日仅列出运行中的 `danginvest-postgres`。保留原容器名以便识别本次取证对象 |
 | migrate / bootstrap | 前者等数据库健康后运行 `alembic upgrade head`。后者等迁移成功后运行 `python -m app.bootstrap`，检查已发布数据，需要初始化时可采集并发布。显式 `--force` 才强制重建 | 两者均为一次性进程。任务日志中的历史构建不能证明它由 Compose 初始化调用 |
-| api | bootstrap 成功后启动 Uvicorn，容器重启策略为 unless-stopped。默认 FastAPI 生命周期会运行新闻采集 | Windows Python 进程中有 4 个命令行匹配 `app.main:app`，可能包含启动器及子进程。没有 API 容器。这一计数不能确定实例所属仓库、生产上线或新闻的具体触发器 |
-| scheduler | 仅在显式选择 Compose 的 `scheduler` profile 时启动，依赖 bootstrap 成功。命令为 `python -m app.jobs.scheduler`，重启策略为 unless-stopped | Docker 无 scheduler 容器，Windows Python 无匹配 scheduler、watch-news 或 update-routine 的进程。任务计划程序按项目名和相关入口匹配为 0。数据库心跳及调度检查点均 0 行。此次未启停服务，也未验证其他主机、包装脚本、生产环境或下次触发 |
-| 配置与凭据 | `backend/app/config.py` 读取底座根目录的 `.env`、进程环境和支持的文件型密钥；`docker-compose.secrets.yml` 提供文件型密钥覆盖。Dockerfile 将 backend/config、金融指标、资产组合、股票比率目录和新闻包置入镜像 | 只核验版本库声明和本机无敏感值的少量配置。仅修改宿主 `.env` 不会自动把所有变量传入容器。仓库中的 `.env.example` 属模板；真实凭据不在交接表或审计结果中 |
+| api | bootstrap 成功后启动 Uvicorn，容器重启策略为 unless-stopped。默认 API 只读，不启用新闻采集生命周期 | Windows Python 进程中有 4 个命令行匹配 `app.main:app`，可能包含启动器及子进程。没有 API 容器。这一计数不能确定实例所属仓库、生产上线或新闻的具体触发器 |
+| news-worker | 项目启动器按 `news` 开关选择该服务，运行 `python -m app.cli.main watch-news`，依赖 bootstrap 成功；新闻状态保存在 PostgreSQL | 11 月 15 日仅核验配置与受控生命周期，未启用真实采集 |
+| scheduler | 项目启动器在至少一项日、周任务启用时选择该服务，首次部署依赖 bootstrap 成功。命令为 `python -m app.jobs.scheduler`，重启策略为 unless-stopped | Docker 无 scheduler 容器，Windows Python 无匹配 scheduler、watch-news 或 update-routine 的进程。任务计划程序按项目名和相关入口匹配为 0。数据库心跳及调度检查点均 0 行。此次未启停服务，也未验证其他主机、包装脚本、生产环境或下次触发 |
+| 配置与凭据 | `backend/app/config.py` 读取底座根目录的 `.env`、进程环境和支持的文件型密钥；`docker-compose.secrets.yml` 提供文件型密钥覆盖。当前 Dockerfile 将统一业务配置和新闻包置入镜像，Compose 将宿主机 config/ 只读挂载至 /app/config | 只核验版本库声明和本机无敏感值的少量配置。仅修改宿主 `.env` 不会自动把所有变量传入容器。仓库中的 `.env.example` 属模板；真实凭据不在交接表或审计结果中 |
 
 ## 调度注册与最后执行
 
-`backend/app/jobs/scheduler.py` 有 11 个候选作业 ID。每个作业最多同时启动 1 个实例并合并错过的触发。证券日任务和公告跟随 `DANG_SYNC_TIMEZONE`、小时和分钟，宏观核心周任务跟随同一时区。五项市场任务跟随 `backend/config/market-data.json` 独立的时间和时区。下表按仓库默认配置，市场五项共用每日上海 19:00、启动回补开启、HTTP 超时 20 秒、同轮重试 0 次。
+`backend/app/jobs/scheduler.py` 有 11 个候选作业 ID。每个作业最多同时启动 1 个实例并合并错过的触发。证券日任务和公告跟随 `DANG_SYNC_TIMEZONE`、小时和分钟，宏观核心周任务跟随同一时区。五项市场任务跟随 `config/market/market-data.json` 独立的时间和时区。通过项目启动器运行时，[定时采集配置](../config/scheduled-tasks.json) 的九项开关默认全部关闭。下表列出启用后各作业的调度规则。按[市场配置](../config/market/market-data.json)，市场五项共用每日上海 19:00、启动回补开启、HTTP 超时 20 秒、同轮重试 0 次。
 
 | 作业 | 注册条件与触发 | 游标、去重与恢复 | 最近证据 |
 | --- | --- | --- | --- |
-| sync-daily | scheduler 启动即注册，每日上海 19:00，以交易日历判断是否执行 | 按业务日加锁，依据证券池版本、交易日和已完成作业补洞；默认披露回看 7 天、失败告警阈值 3。支持 retry-failures 处理可重试项 | 本库无同名 job_run；另一路径 sync-stock-data 有 15 次，不能据此认定日调度已跑 |
-| sync-announcements | 股票常规开关且 announcementIndex.enabled 开启时，同股票时钟；启动也补。当前公告开关 false | 配置池与已发布 K 线范围决定证券与日期窗，按窗口和页续跑；每轮 2 页，回看 7 天，使用公告任务锁 | cninfo 原件批次 2，最近 11-11 13:06:58；对应 2 条窗口游标。缺少定时触发记录 |
-| sync-macro | MACRO_SYNC_ENABLED 默认 true，每周一上海 09:00 | 启动时可补最近一次时间槽。槽位、目录版本及哈希核验已完成任务；同进程同槽跳过，CLI/定时共用发布锁。失败或部分完成产生告警 | 96 次均显式标为 CLI，89 成功、4 部分、3 失败。最近 11-08 22:58:10 开始、23:01:52 完成 |
+| sync-daily | 启用 `stocks` 后注册，默认每日上海 19:00，以交易日历判断是否执行 | 按业务日加锁，依据证券池版本、交易日和已完成作业补洞；默认披露回看 7 天、失败告警阈值 3。支持 retry-failures 处理可重试项 | 本库无同名 job_run；另一路径 sync-stock-data 有 15 次，不能据此认定日调度已跑 |
+| sync-announcements | 启用 `announcements` 后注册，沿用股票日程，启动时也检查补采 | 配置池与已发布 K 线范围决定证券与日期窗，按窗口和页续跑；每轮 2 页，回看 7 天，使用公告任务锁 | cninfo 原件批次 2，最近 11-11 13:06:58；对应 2 条窗口游标。缺少定时触发记录 |
+| sync-macro | 启用 `macro` 后注册，默认每周一上海 09:00 | 启动时可补最近一次时间槽。槽位、目录版本及哈希核验已完成任务；同进程同槽跳过，CLI/定时共用发布锁。失败或部分完成产生告警 | 96 次均显式标为 CLI，89 成功、4 部分、3 失败。最近 11-08 22:58:10 开始、23:01:52 完成 |
 | sync-market-data | ROUTINE_MARKET_ENABLED；默认 false；目录 enabled 为 true | 槽位与目录指纹记录计划/采集/发布，按目标标识记录游标，单轮最多 20 次 | 1 次，10-16 19:13:03 完成；15 个目标游标 |
 | sync-market-pulse | ROUTINE_MARKET_PULSE_ENABLED，目录 pulse.enabled；前者默认 false | 固定证券池逐目标游标，单轮最多 60 次 | 1 次，10-17 00:13:53 完成；50 个游标 |
 | sync-security-region | ROUTINE_REGION_ENABLED，目录 region.enabled；前者默认 false | 逐证券游标，默认 30 天才须刷新，单轮最多 60 次 | 1 次，10-17 10:11:24 完成；50 个游标 |
@@ -47,7 +50,7 @@
 | 估值与业务分部 | valuationSupply / businessSupply 已开。各自 10 年窗、20 HTTP/轮、20 秒超时，业务分部 7 天刷新。估值使用单独交易日历和证券进度 | 估值证据 101 批，最近 11-11 22:21:42；日历 1 批。主营证据 384 批，最近 11-06 19:05:20 |
 | 组合参考数据与分红 | portfolio.json 的 routine.enabled、referenceEnabled、dividendsEnabled 都开启。参考价格每 1 天检查，分红 7 天复查；参考证据、分红证据单轮上限分别 2、20 次 | 参考目录/历史最近 11-04 22:19:31 / 11-05 08:19:26；分红原件 103 批，最近 11-14 12:47:33，分红 routine 游标 62 个，最近更新 13:45:07 |
 | 宏观扩展 | 10 个启用组均在调用时检查到期槽。usdcnh、vix、marginBalances、aShareFloatMv 每日上海 19:00，其余六组每周一上海 09:00；组级预算不同、同轮重试均 0。历史专项配置单列，不单独创建常驻任务 | macro-extension-v1 最近 11-07 20:02:46。专项记录包含 householdCredit 最近失败、specialBonds 和 tier1Housing 最近成功等；逐任务见 JSON |
-| 快讯 | 正常 API 默认 lifespan 开启后在后台运行；`sync-news` 仅一次，`watch-news` 为显式独立循环。API 循环成功后间隔 300 秒，失败后 30 秒再尝试，watch-news 每轮间隔 300 秒。采集配置每页 20 项、最多 3 页、HTTP 超时 15 秒、重试 1 次、回退 2 秒、重叠 6 小时 | 共 10,797 条已交付队列记录，最近 fetched_at 为 11-14 23:08:13。库内任务锁防止并发写，未确认交付保留待处理。相同记录可能来自 3 种入口，不能由入库时间反推使用了哪种入口 |
+| 快讯 | 默认 API 不运行采集；`sync-news` 仅一次，`watch-news` / `news-worker` 为显式独立循环，每轮间隔 300 秒。采集配置每页 20 项、最多 3 页、HTTP 超时 15 秒、重试 1 次、回退 2 秒、重叠 6 小时 | 共 10,797 条已交付队列记录，最近 fetched_at 为 11-14 23:08:13。库内任务锁防止并发写，未确认交付保留待处理。相同记录可能来自 3 种入口，不能由入库时间反推使用了哪种入口 |
 
 ## 运维与恢复
 
@@ -66,4 +69,4 @@ python -I scripts/audit-scheduler-inventory.py --output scheduler-inventory.loca
 
 检查脚本从底座 CLI 注册表读取命令，从 scheduler 语法树读取作业 ID，从版本库读非敏感配置，再在同一 PostgreSQL REPEATABLE READ、READ ONLY 事务汇总日志、原件、失败、游标、心跳、检查点及新闻投递。证据覆盖 72 组作业、68 组游标、97 个来源/数据集组合。它不读取原文、连接值、游标内容或错误正文。部署现场另通过只读的 Docker 运行容器列表、Windows 进程及计划任务匹配盘点，时间为 11 月 14 日晚；不能用历史入库或注册时刻代替持续运行的验收。[逐项证据](research/investmind-scheduler-inventory.json) · [重放脚本](../scripts/audit-scheduler-inventory.py)
 
-2026-11-15 离线交接后，默认 API 只提供读取服务。部署时在 `scheduler` profile 中由单个 `news-worker` 运行 `python -m app.cli.main watch-news`，当前队列、游标和交付状态持久化在 PostgreSQL；兼容迁入旧 SQLite 的目录默认为底座的 `data/news-collector/`。本机纯 Python 部署使用同一命令。启用这一常驻进程时保留同一状态目录和数据库，避免同时运行另一个 watch-news。日、周调度仍由独立 scheduler 负责。本次仅验证配置与受控生命周期，未启用真实采集。
+使用项目启动器后，同一数据库的新闻队列由一个工作进程消费。切换前先停止手动启动的 `watch-news`，沿用原 PostgreSQL 数据库和已有的旧 SQLite 迁入目录 `data/news-collector/`。

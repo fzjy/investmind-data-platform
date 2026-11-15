@@ -51,7 +51,7 @@ def _root_path(root: Path) -> Path:
         raise _error()
     protected = (
         ".git", ".codex", ".agents", ".claude", "src", "node_modules", "scripts", "public", "docs",
-        "backend/app", "backend/tests", "backend/migrations", "backend/config", "backend/.venv",
+        "backend/app", "backend/tests", "backend/migrations", "config", "backend/config", "backend/.venv",
     )
     if absolute == project / "backend" or any(absolute.is_relative_to(project / name) for name in protected):
         raise _error()

@@ -1,9 +1,9 @@
 """宏观历史桥接沿用现有财务配置，不新增环境变量或预算。"""
 import json
 from pathlib import Path
-from app.config import PROJECT_ROOT
+from app.config_paths import CONFIG_ROOT
 
-CONFIG_FILE = PROJECT_ROOT / 'config' / 'financial-indicators.json'
+CONFIG_FILE = CONFIG_ROOT / "stocks/financial-indicators.json"
 
 
 def load_stock_history_policy(path: Path | None = None) -> bool:

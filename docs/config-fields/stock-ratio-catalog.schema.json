@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "个股财务比率工具可选的年报科目，用于按期提取金额并换算为亿元。",
+  "properties": {
+    "fields": {
+      "description": "可作为比率分子或分母的财报科目。",
+      "items": {
+        "description": "一个科目的展示信息及取数位置。",
+        "properties": {
+          "id": {
+            "description": "工具引用该科目时使用的标识。"
+          },
+          "label": {
+            "description": "供用户选择科目时显示的名称。"
+          },
+          "category": {
+            "description": "科目的展示分组，例如 profit 为利润类，working-capital 为营运资金类。"
+          },
+          "table": {
+            "description": "取数报表。income、balance、cashflow 分别对应利润表、资产负债表、现金流量表。"
+          },
+          "keys": {
+            "description": "按优先级排列的原始字段名，取该期第一个有效数值。",
+            "items": {
+              "description": "原始财报中的列名。"
+            }
+          }
+        }
+      }
+    }
+  }
+}

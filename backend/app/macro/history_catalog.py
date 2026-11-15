@@ -4,10 +4,10 @@ from collections.abc import Mapping
 from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog, catalog_hashes_match
 
 
-ARCHIVED_V7_FILE = DEFAULT_MACRO_CATALOG_FILE.with_name('macro-series-v7.json')
+ARCHIVED_V7_FILE = DEFAULT_MACRO_CATALOG_FILE.parent / 'archive/macro-series-v7.json'
 V7_VERSION = '2026-09-30-v7'
 V7_HASH = '0840df6a99c8b7f197557dce1a68fe3afe5ae1f30c042541dcd24949b3147e9a'
-ARCHIVED_V8_FILE = DEFAULT_MACRO_CATALOG_FILE.with_name('macro-series-v8.json')
+ARCHIVED_V8_FILE = DEFAULT_MACRO_CATALOG_FILE.parent / 'archive/macro-series-v8.json'
 V8_VERSION = '2026-10-07-v8'
 V8_HASH = '5779a4153377655b54f6e2206ad01bcc909d4788421784a8a9016ffc82567713'
 

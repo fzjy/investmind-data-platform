@@ -1,0 +1,583 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "扩展宏观指标的采集日程、来源、请求限额和历史回补配置。",
+  "properties": {
+    "schemaVersion": {
+      "description": "配置文件结构的版本号，供加载器识别字段格式。"
+    },
+    "contractSamples": {
+      "description": "用于核对提供方实际返回字段及单位的接口样本。",
+      "properties": {
+        "szMarket": {
+          "description": "深市每日交易概况接口的样本采集配置。",
+          "properties": {
+            "enabled": {
+              "description": "是否允许执行该接口的样本采集。"
+            },
+            "parentRunId": {
+              "description": "样本关联的父任务运行 ID，用于追溯样本来源。"
+            },
+            "providerUrl": {
+              "description": "提供方接收数据请求的接口地址。"
+            },
+            "documentationUrl": {
+              "description": "对应接口的官方文档地址，用于核对字段和口径。"
+            },
+            "apiName": {
+              "description": "向数据服务调用的接口名称。"
+            },
+            "fields": {
+              "description": "请求中指定的返回字段列表。",
+              "items": {
+                "description": "一个来源接口返回的字段名。"
+              }
+            },
+            "useScope": {
+              "description": "登记的数据使用范围，用于限定采集结果的使用场景。"
+            },
+            "unitStatus": {
+              "description": "返回数值单位的核实状态，unverified 表示尚未核实。"
+            },
+            "limits": {
+              "description": "样本采集的请求预算与响应上限。",
+              "properties": {
+                "maxHttpPerRun": {
+                  "description": "一次任务运行最多可发出的 HTTP 请求数。"
+                },
+                "requestsPerMinute": {
+                  "description": "每分钟最多可发出的 HTTP 请求数。"
+                },
+                "requestTimeoutSeconds": {
+                  "description": "单次 HTTP 请求等待响应的超时时间，单位为秒。"
+                },
+                "maxRetries": {
+                  "description": "单个请求失败后可重试的次数，0 表示关闭重试。"
+                },
+                "maxResponseBytes": {
+                  "description": "单次响应允许读取的最大字节数。"
+                },
+                "maxResponseRows": {
+                  "description": "单次响应可接收的数据行数上限。"
+                },
+                "maxTotalHttp": {
+                  "description": "该样本采集累计最多可使用的 HTTP 请求数。"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "groups": {
+      "description": "按指标组指定调度、查询范围和数据来源。",
+      "properties": {
+        "usdcnh": {
+          "description": "美元兑离岸人民币收盘汇率采集配置。",
+          "properties": {
+            "collectionEnabled": {
+              "description": "是否启用该范围的采集任务。"
+            },
+            "schedule": {
+              "$ref": "#/definitions/schedule"
+            },
+            "lookbackPeriods": {
+              "description": "采集计划覆盖的历史窗口长度，单位为自然日。"
+            },
+            "quoteSide": {
+              "description": "外汇报价方向及取值时点。bid_close 表示买方收盘报价，其他指标组为空。"
+            },
+            "limits": {
+              "$ref": "#/definitions/limits"
+            }
+          }
+        },
+        "vix": {
+          "description": "VIX 波动率指数采集配置。",
+          "properties": {
+            "collectionEnabled": {
+              "description": "是否启用该范围的采集任务。"
+            },
+            "schedule": {
+              "$ref": "#/definitions/schedule"
+            },
+            "lookbackPeriods": {
+              "description": "采集计划覆盖的历史窗口长度，单位为自然日。"
+            },
+            "quoteSide": {
+              "description": "外汇报价方向及取值时点。bid_close 表示买方收盘报价，其他指标组为空。"
+            },
+            "limits": {
+              "$ref": "#/definitions/limits"
+            }
+          }
+        },
+        "governmentBonds": {
+          "description": "政府债券净融资额的年度来源文档和采集设置。",
+          "properties": {
+            "collectionEnabled": {
+              "description": "是否启用该范围的采集任务。"
+            },
+            "schedule": {
+              "$ref": "#/definitions/schedule"
+            },
+            "lookbackPeriods": {
+              "description": "采集计划覆盖的历史窗口长度，单位为月。"
+            },
+            "quoteSide": {
+              "description": "外汇报价方向及取值时点。bid_close 表示买方收盘报价，其他指标组为空。"
+            },
+            "limits": {
+              "$ref": "#/definitions/limits"
+            },
+            "documents": {
+              "description": "按统计年份登记的政府债券融资来源表。",
+              "items": {
+                "description": "一个统计年份及其对应的官方表格。",
+                "properties": {
+                  "year": {
+                    "description": "表格涵盖的统计年份。"
+                  },
+                  "url": {
+                    "description": "该年度数据表在中国人民银行网站的地址。"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "householdCredit": {
+          "description": "住户信贷数据的目录发现和采集设置。",
+          "properties": {
+            "collectionEnabled": {
+              "description": "是否启用该范围的采集任务。"
+            },
+            "schedule": {
+              "$ref": "#/definitions/schedule"
+            },
+            "lookbackPeriods": {
+              "description": "采集计划覆盖的历史窗口长度，单位为月。"
+            },
+            "quoteSide": {
+              "description": "外汇报价方向及取值时点。bid_close 表示买方收盘报价，其他指标组为空。"
+            },
+            "limits": {
+              "$ref": "#/definitions/officialLimits"
+            },
+            "quarterFallbacks": {
+              "description": "选择季度报告时允许向前回退的季度数，0 表示只接受目标季度。"
+            },
+            "documents": {
+              "description": "采集计划依次定位的官方目录、报告或数据表。",
+              "items": {
+                "$ref": "#/definitions/officialDocument"
+              }
+            }
+          }
+        },
+        "tier1Housing": {
+          "description": "一线城市住宅价格数据的目录发现和采集设置。",
+          "properties": {
+            "collectionEnabled": {
+              "description": "是否启用该范围的采集任务。"
+            },
+            "schedule": {
+              "$ref": "#/definitions/schedule"
+            },
+            "lookbackPeriods": {
+              "description": "采集计划覆盖的历史窗口长度，单位为月。"
+            },
+            "quoteSide": {
+              "description": "外汇报价方向及取值时点。bid_close 表示买方收盘报价，其他指标组为空。"
+            },
+            "limits": {
+              "$ref": "#/definitions/officialLimits"
+            },
+            "quarterFallbacks": {
+              "description": "选择季度报告时允许向前回退的季度数，0 表示只接受目标季度。"
+            },
+            "documents": {
+              "description": "采集计划依次定位的官方目录、报告或数据表。",
+              "items": {
+                "$ref": "#/definitions/officialDocument"
+              }
+            }
+          }
+        },
+        "specialBonds": {
+          "description": "地方政府专项债务限额和发行数据的采集设置。",
+          "properties": {
+            "collectionEnabled": {
+              "description": "是否启用该范围的采集任务。"
+            },
+            "schedule": {
+              "$ref": "#/definitions/schedule"
+            },
+            "lookbackPeriods": {
+              "description": "采集计划覆盖的历史窗口长度，单位为月。"
+            },
+            "quoteSide": {
+              "description": "外汇报价方向及取值时点。bid_close 表示买方收盘报价，其他指标组为空。"
+            },
+            "limits": {
+              "$ref": "#/definitions/officialLimits"
+            },
+            "quarterFallbacks": {
+              "description": "选择季度报告时允许向前回退的季度数，0 表示只接受目标季度。"
+            },
+            "documents": {
+              "description": "采集计划依次定位的官方目录、报告或数据表。",
+              "items": {
+                "$ref": "#/definitions/officialDocument"
+              }
+            }
+          }
+        },
+        "propertyLoans": {
+          "description": "房地产贷款数据的报告发现和采集设置。",
+          "properties": {
+            "collectionEnabled": {
+              "description": "是否启用该范围的采集任务。"
+            },
+            "schedule": {
+              "$ref": "#/definitions/schedule"
+            },
+            "lookbackPeriods": {
+              "description": "采集计划覆盖的历史窗口长度，单位为月。"
+            },
+            "quoteSide": {
+              "description": "外汇报价方向及取值时点。bid_close 表示买方收盘报价，其他指标组为空。"
+            },
+            "limits": {
+              "$ref": "#/definitions/officialLimits"
+            },
+            "quarterFallbacks": {
+              "description": "选择季度报告时允许向前回退的季度数，0 表示只接受目标季度。"
+            },
+            "documents": {
+              "description": "采集计划依次定位的官方目录、报告或数据表。",
+              "items": {
+                "$ref": "#/definitions/officialDocument"
+              }
+            }
+          }
+        },
+        "marginBalances": {
+          "description": "分交易所采集融资融券余额的设置。",
+          "properties": {
+            "collectionEnabled": {
+              "description": "是否启用该范围的采集任务。"
+            },
+            "schedule": {
+              "$ref": "#/definitions/schedule"
+            },
+            "lookbackPeriods": {
+              "description": "采集计划覆盖的历史窗口长度，单位为月。"
+            },
+            "quoteSide": {
+              "description": "外汇报价方向及取值时点。bid_close 表示买方收盘报价，其他指标组为空。"
+            },
+            "limits": {
+              "$ref": "#/definitions/limits"
+            },
+            "publicationLagTradingDays": {
+              "description": "从目标交易日到预计发布日间隔的交易日数。"
+            },
+            "publicationTime": {
+              "description": "预计发布日的本地发布时间，格式为 HH:mm。"
+            },
+            "publicationTimezone": {
+              "description": "解释 publicationTime 使用的时区。"
+            },
+            "calendarLookbackDays": {
+              "description": "以调度日期为基准，交易日历向过去查询的自然日数。"
+            },
+            "calendarLookaheadDays": {
+              "description": "以调度日期为基准，交易日历向未来查询的自然日数。"
+            },
+            "calendarExchanges": {
+              "description": "用于交叉确认交易日和休市日的交易所。",
+              "items": {
+                "description": "交易日历中的交易所代码，如 SSE、SZSE。"
+              }
+            },
+            "providerUrl": {
+              "description": "提供方接收数据请求的接口地址。"
+            },
+            "documentationUrl": {
+              "description": "对应接口的官方文档地址，用于核对字段和口径。"
+            },
+            "apiName": {
+              "description": "向数据服务调用的接口名称。"
+            },
+            "fields": {
+              "description": "请求中指定的返回字段列表。",
+              "items": {
+                "description": "一个来源接口返回的字段名。"
+              }
+            },
+            "useScope": {
+              "description": "登记的数据使用范围，用于限定采集结果的使用场景。"
+            },
+            "unit": {
+              "description": "该接口返回金额的单位，供标准化时解释原数值。"
+            },
+            "requests": {
+              "description": "在同一目标交易日执行的分市场查询。",
+              "items": {
+                "description": "一次查询的标识和固定筛选条件，交易日期由计划补充。",
+                "properties": {
+                  "id": {
+                    "description": "标识本组请求中的一个市场或交易所。"
+                  },
+                  "params": {
+                    "description": "传给该来源接口的固定市场筛选条件。",
+                    "properties": {
+                      "exchange_id": {
+                        "description": "margin 接口使用的交易所代码，如 SSE、SZSE、BSE。"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "aShareFloatMv": {
+          "description": "沪深 A 股流通市值采集设置。",
+          "properties": {
+            "collectionEnabled": {
+              "description": "是否启用该范围的采集任务。"
+            },
+            "schedule": {
+              "$ref": "#/definitions/schedule"
+            },
+            "lookbackPeriods": {
+              "description": "采集计划覆盖的历史窗口长度，单位为月。"
+            },
+            "quoteSide": {
+              "description": "外汇报价方向及取值时点。bid_close 表示买方收盘报价，其他指标组为空。"
+            },
+            "limits": {
+              "$ref": "#/definitions/limits"
+            },
+            "publicationLagTradingDays": {
+              "description": "从目标交易日到预计发布日间隔的交易日数。"
+            },
+            "publicationTime": {
+              "description": "预计发布日的本地发布时间，格式为 HH:mm。"
+            },
+            "publicationTimezone": {
+              "description": "解释 publicationTime 使用的时区。"
+            },
+            "calendarLookbackDays": {
+              "description": "以调度日期为基准，交易日历向过去查询的自然日数。"
+            },
+            "calendarLookaheadDays": {
+              "description": "以调度日期为基准，交易日历向未来查询的自然日数。"
+            },
+            "calendarExchanges": {
+              "description": "用于交叉确认交易日和休市日的交易所。",
+              "items": {
+                "description": "交易日历中的交易所代码，如 SSE、SZSE。"
+              }
+            },
+            "providerUrl": {
+              "description": "提供方接收数据请求的接口地址。"
+            },
+            "documentationUrl": {
+              "description": "对应接口的官方文档地址，用于核对字段和口径。"
+            },
+            "apiName": {
+              "description": "向数据服务调用的接口名称。"
+            },
+            "fields": {
+              "description": "请求中指定的返回字段列表。",
+              "items": {
+                "description": "一个来源接口返回的字段名。"
+              }
+            },
+            "useScope": {
+              "description": "登记的数据使用范围，用于限定采集结果的使用场景。"
+            },
+            "unit": {
+              "description": "该接口返回金额的单位，供标准化时解释原数值。"
+            },
+            "requests": {
+              "description": "在同一目标交易日执行的分市场查询。",
+              "items": {
+                "description": "一次查询的标识和固定筛选条件，交易日期由计划补充。",
+                "properties": {
+                  "id": {
+                    "description": "标识本组请求中的一个市场或交易所。"
+                  },
+                  "params": {
+                    "description": "传给该来源接口的固定市场筛选条件。",
+                    "properties": {
+                      "ts_code": {
+                        "description": "daily_info 接口中的市场板块代码，如 SH_A。"
+                      },
+                      "exchange": {
+                        "description": "daily_info 接口的交易所筛选值，如 SH 或 SZ。"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "nominalGdp": {
+          "description": "名义 GDP 季度数据的采集设置。",
+          "properties": {
+            "collectionEnabled": {
+              "description": "是否启用该范围的采集任务。"
+            },
+            "schedule": {
+              "$ref": "#/definitions/schedule"
+            },
+            "lookbackPeriods": {
+              "description": "采集计划覆盖的历史窗口长度，单位为季度。"
+            },
+            "quoteSide": {
+              "description": "外汇报价方向及取值时点。bid_close 表示买方收盘报价，其他指标组为空。"
+            },
+            "limits": {
+              "$ref": "#/definitions/limits"
+            }
+          }
+        }
+      }
+    },
+    "historyBackfills": {
+      "description": "按指标组单独控制历史回补的翻页范围和请求预算。",
+      "properties": {
+        "tier1Housing": {
+          "description": "一线城市住宅价格历史发布页的扫描与回补设置。",
+          "properties": {
+            "collectionEnabled": {
+              "description": "是否启用该范围的采集任务。"
+            },
+            "maxDirectoryPages": {
+              "description": "检索历史发布文档时最多扫描的目录页数。"
+            },
+            "maxHttpTotal": {
+              "description": "整个回补过程累计可发出的 HTTP 请求总数。"
+            },
+            "maxHttpPerRun": {
+              "description": "一次任务运行最多可发出的 HTTP 请求数。"
+            },
+            "requestsPerMinute": {
+              "description": "每分钟最多可发出的 HTTP 请求数。"
+            },
+            "requestTimeoutSeconds": {
+              "description": "单次 HTTP 请求等待响应的超时时间，单位为秒。"
+            },
+            "maxRetries": {
+              "description": "单个请求失败后可重试的次数，0 表示关闭重试。"
+            },
+            "maxResponseBytes": {
+              "description": "单次响应允许读取的最大字节数。"
+            },
+            "maxResponseRows": {
+              "description": "单次响应可接收的数据行数上限。"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "schedule": {
+      "description": "在指定时区执行的日程。",
+      "properties": {
+        "frequency": {
+          "description": "调度频率，daily 表示每日，weekly 表示每周。"
+        },
+        "weekday": {
+          "description": "每周调度执行的星期，0 为周一，6 为周日。"
+        },
+        "time": {
+          "description": "任务在配置时区内的触发时刻，格式为 HH:mm。"
+        },
+        "timezone": {
+          "description": "调度时钟采用的 IANA 时区，如 Asia/Shanghai。"
+        }
+      }
+    },
+    "limits": {
+      "description": "该指标组的请求预算与响应上限。",
+      "properties": {
+        "maxHttpPerRun": {
+          "description": "一次任务运行最多可发出的 HTTP 请求数。"
+        },
+        "requestsPerMinute": {
+          "description": "每分钟最多可发出的 HTTP 请求数。"
+        },
+        "requestTimeoutSeconds": {
+          "description": "单次 HTTP 请求等待响应的超时时间，单位为秒。"
+        },
+        "maxRetries": {
+          "description": "单个请求失败后可重试的次数，0 表示关闭重试。"
+        },
+        "maxResponseBytes": {
+          "description": "单次响应允许读取的最大字节数。"
+        },
+        "maxResponseRows": {
+          "description": "单次响应可接收的数据行数上限。"
+        },
+        "maxHttpPerPeriod": {
+          "description": "同一预算周期内累计可发出的 HTTP 请求数。"
+        }
+      }
+    },
+    "officialLimits": {
+      "description": "官方目录与报告的请求预算、解析行数和候选数量。",
+      "properties": {
+        "maxHttpPerRun": {
+          "description": "一次任务运行最多可发出的 HTTP 请求数。"
+        },
+        "requestsPerMinute": {
+          "description": "每分钟最多可发出的 HTTP 请求数。"
+        },
+        "requestTimeoutSeconds": {
+          "description": "单次 HTTP 请求等待响应的超时时间，单位为秒。"
+        },
+        "maxRetries": {
+          "description": "单个请求失败后可重试的次数，0 表示关闭重试。"
+        },
+        "maxResponseBytes": {
+          "description": "单次响应允许读取的最大字节数。"
+        },
+        "maxResponseRows": {
+          "description": "单次响应可接收的数据行数上限。"
+        },
+        "maxHttpPerPeriod": {
+          "description": "同一预算周期内累计可发出的 HTTP 请求数。"
+        },
+        "maxDirectoryCandidates": {
+          "description": "解析目录页时最多考虑的候选报告数。"
+        }
+      }
+    },
+    "officialDocument": {
+      "description": "采集链中的一个来源节点，可直接访问或从上游文档定位。",
+      "properties": {
+        "id": {
+          "description": "同组其他文档可通过 derivedFrom 引用的标识。"
+        },
+        "role": {
+          "description": "该文档在采集中的用途，决定采用目录、报告或数据表的解析规则。"
+        },
+        "period": {
+          "description": "所需文档对应的期间，例如最近完整月、最近完整季度或目标年度。"
+        },
+        "url": {
+          "description": "已登记的官方文档地址。由上游发现的文档可留空。"
+        },
+        "derivedFrom": {
+          "description": "提供该文档链接的上游文档 ID；直接访问的入口为空。"
+        }
+      }
+    }
+  }
+}

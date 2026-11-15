@@ -5,12 +5,12 @@ from datetime import date, datetime, time, timezone
 from decimal import Decimal
 from functools import lru_cache
 import json
-from pathlib import Path
 from typing import Any, Iterable, Mapping
 
 from sqlalchemy import and_, or_, select
 from sqlalchemy.orm import Session, sessionmaker
 
+from app.config_paths import CONFIG_ROOT
 from app.content.api.read_models import WorkbenchContent, load_workbench_content
 from app.shared.trading_days import load_trading_days
 from app.db.models import DailyBasic, DailyPrice, MetricValue, PublishedSnapshot, RiskResult, Security, StockDailyChart
@@ -280,7 +280,7 @@ def _quote(
 
 @lru_cache(maxsize=1)
 def _ratio_field_specs():
-    path = Path(__file__).resolve().parents[4] / "config" / "stock-ratio-catalog.json"
+    path = CONFIG_ROOT / "stocks/stock-ratio-catalog.json"
     return json.loads(path.read_text(encoding="utf-8"))["fields"]
 
 

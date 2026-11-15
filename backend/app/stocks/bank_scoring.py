@@ -2,9 +2,9 @@
 from decimal import Decimal,DecimalException,ROUND_HALF_UP
 import json
 from math import isfinite
-from app.config import PROJECT_ROOT
+from app.config_paths import CONFIG_ROOT
 
-CONFIG_FILE=PROJECT_ROOT/'config'/'financial-indicators.json'
+CONFIG_FILE=CONFIG_ROOT / "stocks/financial-indicators.json"
 COMPONENTS=('yield','pb','large','nim','provision')
 
 def rules():

@@ -1,0 +1,413 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "个股财务数据补采、研究指标和银行评分的配置。",
+  "properties": {
+    "announcementIndex": {
+      "description": "公告索引的分页回补与近期复查。",
+      "properties": {
+        "enabled": {
+          "description": "是否在例行任务中更新公告索引。"
+        },
+        "maxPagesPerRun": {
+          "description": "一次运行最多请求的公告列表页数。"
+        },
+        "revisitDays": {
+          "description": "对截止日前最近多少个自然日内的公告窗口再次核查，以覆盖晚到公告。"
+        }
+      }
+    },
+    "forecastDetail": {
+      "description": "补齐业绩预告明细的检查与重试策略。",
+      "properties": {
+        "enabled": {
+          "description": "是否补采业绩预告明细。"
+        },
+        "maxChecks": {
+          "description": "同一批未匹配明细在内容未变时可累计核查的次数上限。"
+        },
+        "retryDays": {
+          "description": "本次核查后，再次检查仍缺失的明细前等待的自然日数。"
+        },
+        "backoffMinutes": {
+          "description": "上游发生暂时性错误后，恢复请求前等待的分钟数。"
+        }
+      }
+    },
+    "dataSupply": {
+      "description": "三大财务报表的历史补采配置。",
+      "properties": {
+        "enabled": {
+          "description": "是否启用财务报表补采。"
+        },
+        "maxHttpPerRun": {
+          "description": "该补采任务单次运行可发起的 HTTP 请求数上限。"
+        },
+        "timeoutSeconds": {
+          "description": "单次 HTTP 请求超时秒数。"
+        },
+        "historyYears": {
+          "description": "从数据截止日向前覆盖的历史年数。"
+        },
+        "refreshDays": {
+          "description": "已完成的历史报表可复用的天数，超过后需刷新。"
+        },
+        "tables": {
+          "description": "按报表配置取数接口和列。",
+          "properties": {
+            "income": {
+              "description": "利润表的取数接口与列。",
+              "properties": {
+                "api": {
+                  "description": "请求利润表所使用的 Tushare 接口名。"
+                },
+                "fields": {
+                  "description": "向上游请求的利润表原始列名列表，包含标识、日期和财务科目。",
+                  "items": {
+                    "description": "Tushare 在该报表中定义的字段名。"
+                  }
+                }
+              }
+            },
+            "balance": {
+              "description": "资产负债表的取数接口与列。",
+              "properties": {
+                "api": {
+                  "description": "请求资产负债表所使用的 Tushare 接口名。"
+                },
+                "fields": {
+                  "description": "向上游请求的资产负债表原始列名列表，包含标识、日期和财务科目。",
+                  "items": {
+                    "description": "Tushare 在该报表中定义的字段名。"
+                  }
+                }
+              }
+            },
+            "cashflow": {
+              "description": "现金流量表的取数接口与列。",
+              "properties": {
+                "api": {
+                  "description": "请求现金流量表所使用的 Tushare 接口名。"
+                },
+                "fields": {
+                  "description": "向上游请求的现金流量表原始列名列表，包含标识、日期和财务科目。",
+                  "items": {
+                    "description": "Tushare 在该报表中定义的字段名。"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "businessSupply": {
+      "description": "主营业务构成的历史补采配置。",
+      "properties": {
+        "enabled": {
+          "description": "是否启用主营业务构成补采。"
+        },
+        "maxHttpPerRun": {
+          "description": "该补采任务单次运行可发起的 HTTP 请求数上限。"
+        },
+        "timeoutSeconds": {
+          "description": "单次 HTTP 请求超时秒数。"
+        },
+        "historyYears": {
+          "description": "从数据截止日向前覆盖的历史年数。"
+        },
+        "refreshDays": {
+          "description": "已完成的主营构成资料可复用的天数，超过后需刷新。"
+        }
+      }
+    },
+    "valuationSupply": {
+      "description": "股票历史估值数据补采配置。",
+      "properties": {
+        "enabled": {
+          "description": "是否启用历史估值补采。"
+        },
+        "maxHttpPerRun": {
+          "description": "该补采任务单次运行可发起的 HTTP 请求数上限。"
+        },
+        "timeoutSeconds": {
+          "description": "单次 HTTP 请求超时秒数。"
+        },
+        "historyYears": {
+          "description": "从数据截止日向前覆盖的历史年数。"
+        },
+        "revisionDays": {
+          "description": "已完成的历史估值数据可复用的天数，超过后重新采集以核查修订。"
+        }
+      }
+    },
+    "macroHistoryBridge": {
+      "description": "宏观企业指标读取股票历史财报原件的设置。",
+      "properties": {
+        "enabled": {
+          "description": "是否允许宏观企业指标使用已经验证的股票历史财报原件。"
+        },
+        "contractVersion": {
+          "description": "宏观模块与股票历史财报原件之间的数据契约版本。"
+        }
+      }
+    },
+    "researchTools": {
+      "description": "基于已发布股票池计算同行指标的规则。",
+      "properties": {
+        "algorithmVersion": {
+          "description": "标记个股研究计算结果所用的算法版本。"
+        },
+        "minimumSampleCount": {
+          "description": "计算样本分位和标准分所需的最少有效样本数。"
+        },
+        "currencyByBoard": {
+          "description": "当证券自身未提供币种时，按上市板块选择默认货币代码。",
+          "properties": {
+            "sh-main": {
+              "description": "沪市主板证券缺少币种时采用的货币代码。"
+            },
+            "sz-main": {
+              "description": "深市主板证券缺少币种时采用的货币代码。"
+            },
+            "star": {
+              "description": "科创板证券缺少币种时采用的货币代码。"
+            },
+            "chinext": {
+              "description": "创业板证券缺少币种时采用的货币代码。"
+            },
+            "bse": {
+              "description": "北交所证券缺少币种时采用的货币代码。"
+            },
+            "hk": {
+              "description": "港股证券缺少币种时采用的货币代码。"
+            }
+          }
+        },
+        "metrics": {
+          "description": "参与研究比较的指标及取值规则。",
+          "items": {
+            "description": "一个研究指标。",
+            "properties": {
+              "key": {
+                "description": "从股票记录或其 researchValues 中读取指标值的键。"
+              },
+              "label": {
+                "description": "该指标在研究工具中的展示名称。"
+              },
+              "unit": {
+                "description": "研究指标的展示单位，例如倍、亿元、% 或次。"
+              },
+              "direction": {
+                "description": "指标的解释方向，lower 表示偏好低值，higher 表示偏好高值，neutral 表示无优劣方向。"
+              },
+              "qualified": {
+                "description": "为 true 时从 researchValues 中读取经核准的指标，为 false 时从股票记录顶层读取。"
+              },
+              "positive": {
+                "description": "为 true 时仅将严格大于零的数值纳入计算。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "bankScoring": {
+      "description": "银行股经验分、权重预设和筛选参数。",
+      "properties": {
+        "algorithmVersion": {
+          "description": "银行股经验评分规则的版本标识。"
+        },
+        "divisor": {
+          "description": "收益项中用于折算修正预期增速的除数范围。",
+          "properties": {
+            "min": {
+              "description": "允许的最小除数。"
+            },
+            "max": {
+              "description": "允许的最大除数。"
+            },
+            "step": {
+              "description": "从最小除数起每次调节的间隔。"
+            }
+          }
+        },
+        "weight": {
+          "description": "银行评分各组成项权重的取值范围和取整规则。",
+          "properties": {
+            "min": {
+              "description": "允许的最低权重百分数。"
+            },
+            "max": {
+              "description": "允许的最高权重百分数，200 表示双倍原分。"
+            },
+            "normalizationStep": {
+              "description": "将权重百分数四舍五入到该步长的整数倍。"
+            }
+          }
+        },
+        "presets": {
+          "description": "按投资风格保存的银行评分预设。",
+          "properties": {
+            "defensive": {
+              "description": "防守预设的计算参数。",
+              "properties": {
+                "divisor": {
+                  "description": "修正预期增速计入收益项前使用的除数。取 3 时还会优先使用进攻型市净率得分。"
+                },
+                "weights": {
+                  "description": "各项原始分的权重百分数，0 表示该项权重为零。",
+                  "properties": {
+                    "yield": {
+                      "description": "修正预期股息率与折算增速之和的权重百分数，100 表示按原分计入。"
+                    },
+                    "pb": {
+                      "description": "市净率估值得分的权重百分数，100 表示按原分计入。"
+                    },
+                    "large": {
+                      "description": "大银行得分的权重百分数，100 表示按原分计入。"
+                    },
+                    "nim": {
+                      "description": "净息差变动得分的权重百分数，100 表示按原分计入。"
+                    },
+                    "provision": {
+                      "description": "拨备覆盖率变动得分的权重百分数，100 表示按原分计入。"
+                    }
+                  }
+                }
+              }
+            },
+            "balanced": {
+              "description": "均衡预设的计算参数。",
+              "properties": {
+                "divisor": {
+                  "description": "修正预期增速计入收益项前使用的除数。取 3 时还会优先使用进攻型市净率得分。"
+                },
+                "weights": {
+                  "description": "各项原始分的权重百分数，0 表示该项权重为零。",
+                  "properties": {
+                    "yield": {
+                      "description": "修正预期股息率与折算增速之和的权重百分数，100 表示按原分计入。"
+                    },
+                    "pb": {
+                      "description": "市净率估值得分的权重百分数，100 表示按原分计入。"
+                    },
+                    "large": {
+                      "description": "大银行得分的权重百分数，100 表示按原分计入。"
+                    },
+                    "nim": {
+                      "description": "净息差变动得分的权重百分数，100 表示按原分计入。"
+                    },
+                    "provision": {
+                      "description": "拨备覆盖率变动得分的权重百分数，100 表示按原分计入。"
+                    }
+                  }
+                }
+              }
+            },
+            "offensive": {
+              "description": "进攻预设的计算参数。",
+              "properties": {
+                "divisor": {
+                  "description": "修正预期增速计入收益项前使用的除数。取 3 时还会优先使用进攻型市净率得分。"
+                },
+                "weights": {
+                  "description": "各项原始分的权重百分数，0 表示该项权重为零。",
+                  "properties": {
+                    "yield": {
+                      "description": "修正预期股息率与折算增速之和的权重百分数，100 表示按原分计入。"
+                    },
+                    "pb": {
+                      "description": "市净率估值得分的权重百分数，100 表示按原分计入。"
+                    },
+                    "large": {
+                      "description": "大银行得分的权重百分数，100 表示按原分计入。"
+                    },
+                    "nim": {
+                      "description": "净息差变动得分的权重百分数，100 表示按原分计入。"
+                    },
+                    "provision": {
+                      "description": "拨备覆盖率变动得分的权重百分数，100 表示按原分计入。"
+                    }
+                  }
+                }
+              }
+            },
+            "quality": {
+              "description": "质量预设的计算参数。",
+              "properties": {
+                "divisor": {
+                  "description": "修正预期增速计入收益项前使用的除数。取 3 时还会优先使用进攻型市净率得分。"
+                },
+                "weights": {
+                  "description": "各项原始分的权重百分数，0 表示该项权重为零。",
+                  "properties": {
+                    "yield": {
+                      "description": "修正预期股息率与折算增速之和的权重百分数，100 表示按原分计入。"
+                    },
+                    "pb": {
+                      "description": "市净率估值得分的权重百分数，100 表示按原分计入。"
+                    },
+                    "large": {
+                      "description": "大银行得分的权重百分数，100 表示按原分计入。"
+                    },
+                    "nim": {
+                      "description": "净息差变动得分的权重百分数，100 表示按原分计入。"
+                    },
+                    "provision": {
+                      "description": "拨备覆盖率变动得分的权重百分数，100 表示按原分计入。"
+                    }
+                  }
+                }
+              }
+            },
+            "dividend": {
+              "description": "红利预设的计算参数。",
+              "properties": {
+                "divisor": {
+                  "description": "修正预期增速计入收益项前使用的除数。取 3 时还会优先使用进攻型市净率得分。"
+                },
+                "weights": {
+                  "description": "各项原始分的权重百分数，0 表示该项权重为零。",
+                  "properties": {
+                    "yield": {
+                      "description": "修正预期股息率与折算增速之和的权重百分数，100 表示按原分计入。"
+                    },
+                    "pb": {
+                      "description": "市净率估值得分的权重百分数，100 表示按原分计入。"
+                    },
+                    "large": {
+                      "description": "大银行得分的权重百分数，100 表示按原分计入。"
+                    },
+                    "nim": {
+                      "description": "净息差变动得分的权重百分数，100 表示按原分计入。"
+                    },
+                    "provision": {
+                      "description": "拨备覆盖率变动得分的权重百分数，100 表示按原分计入。"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "fields": {
+          "description": "银行筛选器可用的指标及其预设比较条件。",
+          "items": {
+            "description": "一个银行指标的默认筛选条件。",
+            "properties": {
+              "field": {
+                "description": "筛选使用的银行指标键，如 pb 表示市净率。"
+              },
+              "operator": {
+                "description": "与阈值比较的方式，lt 表示小于，gt 表示大于，lte 表示小于等于。"
+              },
+              "value": {
+                "description": "筛选阈值，单位随指标而定。例如股息率 4 表示 4%，市净率 1.2 表示 1.2 倍。"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

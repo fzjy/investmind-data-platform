@@ -1,0 +1,11 @@
+{
+  "news": false,
+  "stocks": false,
+  "announcements": false,
+  "macro": false,
+  "market": false,
+  "marketPulse": false,
+  "regions": false,
+  "etfHeatmap": false,
+  "commodities": false
+}

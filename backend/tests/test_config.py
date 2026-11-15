@@ -388,3 +388,13 @@ def test_scheduler_timeout_must_exceed_heartbeat_interval() -> None:
             scheduler_heartbeat_seconds=60,
             scheduler_heartbeat_timeout_seconds=60,
         )
+
+def test_legacy_news_catalog_and_custom_path(tmp_path):
+    from app.config_paths import CONFIG_ROOT
+
+    for path in ("backend/config/news-collector.json", "config/news/news-collector.json"):
+        settings = Settings(news_config_path=path)
+        assert settings.news_config_path == CONFIG_ROOT / "news/news-collector.json"
+        assert settings.news_config_path.is_file()
+    custom = tmp_path / "own-news.json"
+    assert Settings(news_config_path=custom).news_config_path == custom

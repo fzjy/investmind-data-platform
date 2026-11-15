@@ -9,7 +9,7 @@
 
 ## 查询合同
 
-选股查询 `POST /api/v1/stocks/screener` 与兼容入口 `POST /api/data/screener`（`backend/app/stocks/routes.py`），网页入口 `src/modules/stocks/api.ts`。请求含 filters、sortMode、sortRules、page、pageSize；准确约束以 `backend/app/stocks/models.py` 为准。响应含数据与快照 asOf/version；路径中的 v1 标记接口协议，快照版本标记本次查询所用的数据。筛选、排序、分页通过 ScreenerService 和 database_provider 完成。
+选股查询 `POST /api/v1/stocks/screener` 与兼容入口 `POST /api/data/screener`（`backend/app/stocks/routes.py`），外部消费项目 InvestMind 的网页入口为 `src/modules/stocks/api.ts`（不在本仓库）。请求含 filters、sortMode、sortRules、page、pageSize；准确约束以 `backend/app/stocks/models.py` 为准。响应含数据与快照 asOf/version；路径中的 v1 标记接口协议，快照版本标记本次查询所用的数据。筛选、排序、分页通过 ScreenerService 和 database_provider 完成。
 
 | 稳定字段标识 | 计算卡 | 公式（百分点） |
 | --- | --- | --- |

@@ -5,7 +5,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
-from app.config import PROJECT_ROOT
+from app.config_paths import CONFIG_ROOT
 from app.shared.contracts import success_result
 from app.shared.errors import DataServiceError
 from app.shared.validation import normalize_stock_symbol
@@ -13,7 +13,7 @@ from app.stocks.bank_scoring import number
 from app.stocks.normalizer import normalize_screener_universe
 
 
-CONFIG_FILE = PROJECT_ROOT / 'config' / 'financial-indicators.json'
+CONFIG_FILE = CONFIG_ROOT / "stocks/financial-indicators.json"
 
 
 class ResearchRequest(BaseModel):

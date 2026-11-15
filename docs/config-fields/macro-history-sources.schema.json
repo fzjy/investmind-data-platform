@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "宏观指标历史回补所用的独立数据源登记表。",
+  "properties": {
+    "schemaVersion": {
+      "description": "配置文件结构的版本号，供加载器识别字段格式。"
+    },
+    "sources": {
+      "description": "按平台指标 ID 查找用于历史回补的数据源。",
+      "additionalProperties": {
+        "description": "该指标历史回补时使用的来源、字段和访问参数。",
+        "properties": {
+          "provider": {
+            "description": "标识提供原始数据的机构或服务，用于选择采集适配器。"
+          },
+          "priority": {
+            "description": "同一指标的数据源顺序；数值越小，优先级越高。"
+          },
+          "series": {
+            "description": "提供方使用的序列代码或表中指标名称，用于定位原始序列。"
+          },
+          "api": {
+            "description": "提供方的接口名称，用于定位请求端点。"
+          },
+          "field": {
+            "description": "从响应记录或原始表格读取观测值的字段或列名。"
+          },
+          "transform": {
+            "description": "原始观测值的转换方式，例如 identity 保留原值，pc1 计算同比百分比变化，chg 计算与前一期的差值。"
+          },
+          "sourceUrl": {
+            "description": "原始数据、下载入口或该接口的官方说明地址。"
+          },
+          "termsUrl": {
+            "description": "用于核对数据使用条款的来源网址。"
+          },
+          "accessMode": {
+            "description": "获取来源数据的方式，例如接口调用、公开页面或公开下载。"
+          },
+          "displayAllowed": {
+            "description": "是否允许展示此来源提供的观测值。"
+          },
+          "params": {
+            "description": "传给来源接口或分页采集器的参数。",
+            "properties": {
+              "maxPages": {
+                "description": "一次采集最多读取的结果页数。"
+              },
+              "ts_code": {
+                "description": "传给 Tushare 的标的代码，用于筛选指定序列。"
+              }
+            }
+          },
+          "responseFields": {
+            "description": "采集器请求或识别的来源字段清单。",
+            "items": {
+              "description": "一个原始响应字段名称，例如交易日期或观测值列。"
+            }
+          }
+        }
+      }
+    }
+  }
+}

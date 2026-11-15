@@ -1,15 +1,23 @@
 [build-system]
+# 构建发行包前需要安装的构建工具及其最低版本。
 requires = ["setuptools>=75"]
+# 由 setuptools 执行可编辑安装和发行包构建。
 build-backend = "setuptools.build_meta"
 
 [project]
+# pip 用于安装与查询的发行包名称。
 name = "smartparse-news-collector"
+# 当前发行包的版本号。
 version = "0.1.0"
+# 运行和安装此包所需的最低 Python 版本。
 requires-python = ">=3.12"
+# 发行包元数据中的简短用途说明。
 description = "Independent bounded financial news collector"
 
 [project.scripts]
+# 安装后生成的新闻命令行入口，指向实现模块中的 main 函数。
 smartparse-news = "smartparse_news.__main__:main"
 
 [tool.setuptools.packages.find]
+# 从此目录发现需要打包的 Python 模块。
 where = ["src"]

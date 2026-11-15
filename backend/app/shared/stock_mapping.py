@@ -9,11 +9,13 @@ from typing import Literal, TYPE_CHECKING
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
+from app.config_paths import CONFIG_ROOT
+
 if TYPE_CHECKING:
     from app.db.models import Security
     from app.stocks.derived.inputs import CoreSnapshot
 
-DEFAULT_STOCK_MAPPING_FILE = Path(__file__).resolve().parents[2] / "config" / "stock-mapping.json"
+DEFAULT_STOCK_MAPPING_FILE = CONFIG_ROOT / "stocks/stock-mapping.json"
 
 
 class InstitutionMapping(BaseModel):

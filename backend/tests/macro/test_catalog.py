@@ -278,7 +278,7 @@ def test_catalog_identity_is_stable_across_platform_line_endings(tmp_path: Path,
 
 def test_verified_v7_legacy_identity_has_reproducible_original_bytes() -> None:
     # 旧 worktree 的 9 行 LF，其他行 CRLF；无需依赖那份机器专属目录。
-    source = DEFAULT_MACRO_CATALOG_FILE.with_name('macro-series-v7.json').read_bytes().replace(b"\r\n", b"\n")
+    source = (DEFAULT_MACRO_CATALOG_FILE.parent / 'archive/macro-series-v7.json').read_bytes().replace(b"\r\n", b"\n")
     lf_lines = {3, 49, 58, 59, 60, 91, 100, 101, 102}
     mixed = b"".join(line if index in lf_lines else line.replace(b"\n", b"\r\n")
                      for index, line in enumerate(source.splitlines(keepends=True), start=1))

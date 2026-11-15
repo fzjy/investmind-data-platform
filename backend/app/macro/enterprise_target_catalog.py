@@ -5,13 +5,14 @@ import json
 from pathlib import Path
 import re
 
+from app.config_paths import CONFIG_ROOT
 from app.macro.target_evidence_policy import TargetEvidencePolicy, load_target_evidence_policy
 from app.macro.official_member_policy import OfficialMemberPolicy, load_official_policy
 from app.macro.catalog_member_policy import CatalogMemberPolicy,load_catalog_member_policy
 
 
 DEFAULT_ENTERPRISE_TARGET_CATALOG_FILE = (
-    Path(__file__).resolve().parents[2] / 'config' / 'enterprise-targets.json'
+    CONFIG_ROOT / "macro/enterprise-targets.json"
 )
 
 

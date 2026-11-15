@@ -11,6 +11,7 @@ from pydantic import AliasChoices, Field, ModelWrapValidatorHandler, SecretStr, 
 from pydantic_core import InitErrorDetails
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from app.config_paths import CONFIG_ROOT, resolve_catalog_path
 from app.ops.secrets import file_secret_overrides
 
 
@@ -103,6 +104,8 @@ class Settings(BaseSettings):
     stock_update_as_of: date | None = None
     stock_update_max_requests_per_run: int = Field(default=512, ge=1, le=10000)
     stock_update_calendar_lookahead_days: int = Field(default=31, ge=1, le=366)
+    scheduler_daily_enabled: bool = True
+    scheduler_announcements_enabled: bool | None = None
     routine_stocks_enabled: bool = True
     routine_macro_enabled: bool = True
     routine_market_enabled: bool = False
@@ -145,7 +148,7 @@ class Settings(BaseSettings):
     bootstrap_as_of: date | None = None
     bootstrap_force: bool = False
     external_import_path: Path = Path("./imports")
-    news_config_path: Path = PROJECT_ROOT / "backend/config/news-collector.json"
+    news_config_path: Path = CONFIG_ROOT / "news/news-collector.json"
     news_state_path: Path = PROJECT_ROOT / "data/news-collector/state.sqlite"
     backup_tool_mode: Literal["native", "docker"] = "docker"
     backup_path: str = "./backend/backups"
@@ -159,6 +162,19 @@ class Settings(BaseSettings):
         default=DEFAULT_CORS_ORIGINS,
         validation_alias=AliasChoices("BACKEND_CORS_ORIGINS", "CORS_ORIGINS"),
     )
+
+    @field_validator("news_config_path", "sync_universe_file", "macro_enterprise_universe_file", "macro_backfill_releases_file")
+    @classmethod
+    def resolve_configured_catalog(cls, value: Path | None, info: ValidationInfo) -> Path | None:
+        if value is None:
+            return None
+        catalogs = {
+            "news_config_path": ("news/news-collector.json", "news-collector.json"),
+            "sync_universe_file": ("stocks/universes/representative-50.json", "universes/representative-50.json"),
+            "macro_enterprise_universe_file": ("stocks/universes/representative-50.json", "universes/representative-50.json"),
+            "macro_backfill_releases_file": ("macro/nbs-history-releases.json", "nbs-history-releases.json"),
+        }
+        return resolve_catalog_path(value, *catalogs[info.field_name])
 
     @field_validator("backup_path", "backup_native_bin", "backup_docker_image")
     @classmethod

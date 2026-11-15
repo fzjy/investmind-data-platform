@@ -97,7 +97,7 @@ def audit(session, client):
                           'generalPbPercentile10y': banks[code]['researchValues'].get('pbPercentile10y'),
                           'generalPbWindowGap': banks[code]['listMissingReasons'].get('pbPercentile10y')}
     assert sorted(fields) == codes
-    rules = json.loads((ROOT / 'config/financial-indicators.json').read_text(encoding='utf-8'))['bankScoring']
+    rules = json.loads((ROOT / 'config/stocks/financial-indicators.json').read_text(encoding='utf-8'))['bankScoring']
     categories = {key: [] for key in ('majorIndustry', 'subIndustry', 'region', 'concept')}
     body = {'filters': {'boards': list(get_args(BoardId)), 'categories': categories, 'exclusions': [], 'preset': None,
                         'thresholds': {}, 'enabledThresholds': []}, 'pageSize': 200, 'page': 1, 'sortRules': []}

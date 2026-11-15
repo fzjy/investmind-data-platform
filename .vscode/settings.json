@@ -1,0 +1,84 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "/config/macro/enterprise-targets.json"
+      ],
+      "url": "./docs/config-fields/enterprise-targets.schema.json"
+    },
+    {
+      "fileMatch": [
+        "/config/stocks/financial-indicators.json"
+      ],
+      "url": "./docs/config-fields/financial-indicators.schema.json"
+    },
+    {
+      "fileMatch": [
+        "/config/macro/macro-extensions.json"
+      ],
+      "url": "./docs/config-fields/macro-extensions.schema.json"
+    },
+    {
+      "fileMatch": [
+        "/config/macro/macro-history-sources.json"
+      ],
+      "url": "./docs/config-fields/macro-history-sources.schema.json"
+    },
+    {
+      "fileMatch": [
+        "/config/macro/archive/macro-series-v7.json",
+        "/config/macro/archive/macro-series-v8.json",
+        "/config/macro/macro-series.json"
+      ],
+      "url": "./docs/config-fields/macro-series.schema.json"
+    },
+    {
+      "fileMatch": [
+        "/config/market/market-data.json"
+      ],
+      "url": "./docs/config-fields/market-data.schema.json"
+    },
+    {
+      "fileMatch": [
+        "/config/macro/nbs-history-releases.json"
+      ],
+      "url": "./docs/config-fields/nbs-history-releases.schema.json"
+    },
+    {
+      "fileMatch": [
+        "/config/news/news-collector.json"
+      ],
+      "url": "./docs/config-fields/news-collector.schema.json"
+    },
+    {
+      "fileMatch": [
+        "/config/portfolio/portfolio.json"
+      ],
+      "url": "./docs/config-fields/portfolio.schema.json"
+    },
+    {
+      "fileMatch": [
+        "/config/stocks/universes/representative-50.json"
+      ],
+      "url": "./docs/config-fields/representative-50.schema.json"
+    },
+    {
+      "fileMatch": [
+        "/config/scheduled-tasks.json"
+      ],
+      "url": "./docs/config-fields/scheduled-tasks.schema.json"
+    },
+    {
+      "fileMatch": [
+        "/config/stocks/stock-mapping.json"
+      ],
+      "url": "./docs/config-fields/stock-mapping.schema.json"
+    },
+    {
+      "fileMatch": [
+        "/config/stocks/stock-ratio-catalog.json"
+      ],
+      "url": "./docs/config-fields/stock-ratio-catalog.schema.json"
+    }
+  ]
+}

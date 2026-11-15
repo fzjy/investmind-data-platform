@@ -9,10 +9,10 @@
 | 翻页按钮及采集状态：nextCursor、health.status/code、lastSuccessAt、latestPublishedAt、catchingUp、retention | 读当前新闻、ops.job_cursor 的采集与保留状态及 ops.operational_alert 的清理告警。health 是运行状态，不是新闻本身的历史字段 |
 | 市场页初始列表：GET /api/v1/market/explorer?news=latest 的 data.marketNews、data.liveNewsPage | 浏览产品按需带当前第一页、游标与健康状态，网站水合后直接复用。手动刷新及翻页才调新闻接口。缺最新页时沿用快照作初始列表并从新闻接口重试。未指定 news 参数时仍返回该浏览版本原有的新闻列表 |
 
-底座的 backend/config/news-collector.json 配置轮询间隔 300 秒、重叠 6 小时、回看 24 小时、12 小时无更新标为滞后。新闻保留 365 天，日志 90 天，清理间隔一天。2026-11-14 的实际清理回执完成，cutoff 为 2025-11-14；这一策略与全项目确认无用后停采保留历史的策略分别登记。后台由新闻生命周期工作线程启动，迁移部署须在 4.1–4.2 清点唯一运行方及运行心跳。
+底座的[新闻配置](../config/news/news-collector.json)设置轮询间隔 300 秒、重叠 6 小时、回看 24 小时、12 小时无更新标为滞后。新闻保留 365 天，日志 90 天，清理间隔一天。2026-11-14 的实际清理回执完成，cutoff 为 2025-11-14；这一策略与全项目确认无用后停采保留历史的策略分别登记。当前持续采集由独立 `watch-news` / `news-worker` 进程负责，默认 API 不启动后台采集；部署入口见[本机手册](local-operations.md#news)、[服务器手册](server-operations.md#scheduled)。历史采集和清理结果不能证明当前工作进程仍在运行。
 
 本次在同一个只读事务内遍历 216 页，10,766 条新闻的去重 ID、顺序、标题/链接、发布时间、展示时钟、证券及权限状态均与可交付行一致。样本全部为 link_only。核验时最新页 20 个 ID 全在市场浏览快照的 50 条记录中；保留完整历史浏览产品和独立的最新新闻 API，网站按上表选其一。实时新闻继续更新，复跑时样本数可以变化。[逐页对账摘要](research/investmind-news-contract.json)
 
 股票工作台将同一内容库的证券关联用于提及次数，将巨潮公告元数据用于日线标点。50 只工作台已逐只复核，当前普通公告的历史查核只覆盖金山办公两天，结构化业绩预告及报表披露日各有独立来源。[公告、提及与披露逐项溯源](workbench-announcements.md)
 
-2026-11-15 离线交接后，默认 API 只提供读取服务。部署时在 `scheduler` profile 中由单个 `news-worker` 运行 `python -m app.cli.main watch-news`，当前队列、游标和交付状态持久化在 PostgreSQL；兼容迁入旧 SQLite 的目录默认为底座的 `data/news-collector/`。本机纯 Python 部署使用同一命令。启用这一常驻进程时保留同一状态目录和数据库，避免同时运行另一个 watch-news。日、周调度仍由独立 scheduler 负责。本次仅验证配置与受控生命周期，未启用真实采集。
+在[定时采集配置](../config/scheduled-tasks.json)中启用 `news` 后，项目启动器会运行一个 `watch-news` 进程，Compose 中对应 `news-worker` 服务。新闻队列、游标和交付状态保存在 PostgreSQL，`data/news-collector/` 用于迁入已有的旧 SQLite 状态。

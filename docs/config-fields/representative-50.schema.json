@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "代表性股票样本池的选样清单和版本信息。",
+  "properties": {
+    "schemaVersion": {
+      "description": "样本池配置格式版本。"
+    },
+    "profile": {
+      "description": "供任务选择此股票池时使用的名称。"
+    },
+    "version": {
+      "description": "这次选样清单的版本标识，和 profile 一起标识具体股票池。"
+    },
+    "selectedAt": {
+      "description": "确定本版样本的日期，格式为 YYYY-MM-DD。"
+    },
+    "coverage": {
+      "description": "样本的覆盖范围，representative 表示代表性样本。"
+    },
+    "symbols": {
+      "description": "入选的证券及各自代表的情形。",
+      "items": {
+        "description": "一只入选证券。",
+        "properties": {
+          "tsCode": {
+            "description": "带交易所后缀的 Tushare 证券代码。"
+          },
+          "tags": {
+            "description": "描述行业、上市板块、市值或公司行为等样本特征的标签。",
+            "items": {
+              "description": "一个选样特征标签。"
+            }
+          },
+          "reason": {
+            "description": "这只证券入选的原因。"
+          }
+        }
+      }
+    }
+  }
+}

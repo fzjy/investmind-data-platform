@@ -9,6 +9,8 @@ from typing import Literal, Self
 from pydantic import AnyHttpUrl, BaseModel, ConfigDict, Field, ValidationError, model_validator
 
 
+from app.config_paths import CONFIG_ROOT
+
 MacroFrequency = Literal["daily", "monthly", "quarterly"]
 MacroRegion = Literal["CN", "US"]
 MacroCategory = Literal["growth", "inflation", "money_credit", "labor", "rates_fx"]
@@ -21,7 +23,7 @@ MacroSeasonalAdjustment = Literal[
 ]
 
 DEFAULT_MACRO_CATALOG_FILE = (
-    Path(__file__).resolve().parents[2] / "config" / "macro-series.json"
+    CONFIG_ROOT / "macro/macro-series.json"
 )
 EXPECTED_SERIES_IDS = (
     "cn.gdp.real_yoy",

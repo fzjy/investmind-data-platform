@@ -6,7 +6,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def test_backup_guide_identifies_readonly_status_and_isolated_restore():
-    guide = (ROOT/"backend/README.md").read_text(encoding="utf-8")
+    guide = (ROOT/"docs/local-operations.md").read_text(encoding="utf-8")
     for command in ("backup-status", "verify-database-backup --backup-id BACKUP_ID"):
         assert "python -m app.cli.main " + command in guide
     for required in ("database.dump", "manifest.json", "verification.json", "restore_verified", "pg_restore", "--single-transaction"):

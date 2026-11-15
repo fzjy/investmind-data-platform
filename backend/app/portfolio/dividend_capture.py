@@ -3,12 +3,12 @@ from copy import deepcopy
 from datetime import date, datetime, timezone
 from decimal import Decimal, InvalidOperation
 import json
-from pathlib import Path
 import re
 from uuid import uuid4
 
 from sqlalchemy import select, text
 
+from app.config_paths import CONFIG_ROOT
 from app.connectors.tushare.contracts import TushareResponse, request_hash
 from app.db.models import IngestionBatch, JobCursor, PublishedSnapshot, SourcePayload
 from app.ingestion.repositories import IngestionRepository, content_hash
@@ -18,7 +18,7 @@ from app.portfolio.dividend_report import DIVIDEND_FIELDS
 JOB_NAME = 'portfolio-dividend-capture'
 DATASET = 'portfolio_dividend_evidence'
 ROW_CAP = 2000  # 供应商合同上限，不是可放宽的本地预算。
-CONFIG_FILE = Path(__file__).resolve().parents[3] / 'config' / 'portfolio.json'
+CONFIG_FILE = CONFIG_ROOT / "portfolio/portfolio.json"
 
 
 def capture_config(config=None):

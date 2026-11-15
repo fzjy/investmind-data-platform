@@ -134,16 +134,17 @@ def configure_scheduler(
             ),
             id="sync-macro", replace_existing=True, max_instances=1, coalesce=True,
         )
-    scheduler.add_job(
-        daily_job or (lambda: coordinator.run_scheduled(clock())),
-        trigger="cron",
-        hour=settings.sync_hour,
-        minute=settings.sync_minute,
-        id="sync-daily",
-        replace_existing=True,
-        max_instances=1,
-        coalesce=True,
-    )
+    if settings.scheduler_daily_enabled:
+        scheduler.add_job(
+            daily_job or (lambda: coordinator.run_scheduled(clock())),
+            trigger="cron",
+            hour=settings.sync_hour,
+            minute=settings.sync_minute,
+            id="sync-daily",
+            replace_existing=True,
+            max_instances=1,
+            coalesce=True,
+        )
     scheduler.add_job(
         heartbeat_job or _noop_job,
         trigger="interval",
@@ -164,8 +165,10 @@ def configure_scheduler(
         next_run_time=clock(),
         misfire_grace_time=None,
     )
+    if startup_job is None:
+        startup_job = (lambda: coordinator.run_startup(clock())) if settings.scheduler_daily_enabled else _noop_job
     scheduler.add_job(
-        startup_job or (lambda: coordinator.run_startup(clock())),
+        startup_job,
         trigger="date",
         run_date=clock(),
         id="startup-catchup",
@@ -245,15 +248,14 @@ class SchedulerRuntime:
             )
             coordinator = self._coordinator_factory(instance_id)
             self._coordinator = coordinator
-            recovered = coordinator.recover_interrupted(self._now())
+            recovered = coordinator.recover_interrupted(self._now()) if self._settings.scheduler_daily_enabled else ()
             for run_id in recovered:
                 logger.emit(
                     "scheduler.interrupted-run.recovered",
                     "warning",
                     job_run_id=run_id,
                 )
-            checkpoint_ready = self._prepare_checkpoint(self._now())
-            if checkpoint_ready is False:
+            if self._settings.scheduler_daily_enabled and self._prepare_checkpoint(self._now()) is False:
                 self._degraded_reasons.add("calendar")
             initial_state = self._operational_state
             scheduler = create_scheduler(self._settings)
@@ -264,7 +266,7 @@ class SchedulerRuntime:
                 coordinator,
                 clock=self._now,
                 announcement_job=(self._guard_job(self._run_announcements, "announcements")
-                                  if self._settings.routine_stocks_enabled and announcement_policy()["enabled"] else None),
+                                  if self._announcements_enabled() else None),
                 heartbeat_job=self._guard_job(self._run_heartbeat, "heartbeat"),
                 freshness_job=self._guard_job(self._run_freshness, "freshness"),
                 daily_job=self._guard_job(self._run_daily, "daily"),
@@ -420,9 +422,11 @@ class SchedulerRuntime:
     def _run_startup_jobs(self) -> object:
         primary = None
         report = None
-        operations = [self._run_startup, self._run_market_startup, self._run_pulse_startup, self._run_region_startup,
+        operations = [self._run_market_startup, self._run_pulse_startup, self._run_region_startup,
                       self._run_etf_startup, self._run_commodity_startup, self._run_macro_startup]
-        if self._settings.routine_stocks_enabled and announcement_policy()["enabled"]:
+        if self._settings.scheduler_daily_enabled:
+            operations.insert(0, self._run_startup)
+        if self._announcements_enabled():
             operations.append(self._run_announcements)
         for operation in operations:
             try:
@@ -458,9 +462,15 @@ class SchedulerRuntime:
         if self._commodity_coordinator is not None:
             return self._guard_job(lambda:self._run_commodity(startup=True),'commodities')()
 
+    def _announcements_enabled(self):
+        configured = self._settings.scheduler_announcements_enabled
+        if configured is not None:
+            return configured
+        return self._settings.routine_stocks_enabled and announcement_policy()["enabled"]
+
     def _run_announcements(self):
         policy = announcement_policy()
-        if not policy["enabled"]:
+        if not self._announcements_enabled():
             return
         result = run_announcements(self._settings, page_budget=policy["maxPagesPerRun"], revisit_days=policy["revisitDays"], publish=True)
         failed = result["status"] == "failed"

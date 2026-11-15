@@ -11,11 +11,12 @@ from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from pydantic import BeforeValidator, Field, PlainSerializer, field_validator, model_validator
 
+from app.config_paths import CONFIG_ROOT
 from app.market.data.contracts import MarketAsset, MarketTarget, StrictModel
 from app.market.commodities.contracts import CommodityOptions
 from app.market.sentiment import SentimentOptions
 
-DEFAULT_MARKET_CATALOG_FILE = Path(__file__).resolve().parents[3] / 'config' / 'market-data.json'
+DEFAULT_MARKET_CATALOG_FILE = CONFIG_ROOT / "market/market-data.json"
 ASSET_IDENTITIES = (
     ('indices', '000001.SH', 'cn', 'index_daily'), ('indices', '399001.SZ', 'cn', 'index_daily'),
     ('indices', '399006.SZ', 'cn', 'index_daily'), ('indices', 'HSI', 'hk', 'index_global'),

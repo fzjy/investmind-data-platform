@@ -4,8 +4,8 @@ from datetime import date,datetime,timezone,timedelta
 from decimal import Decimal,InvalidOperation
 import json
 import base64
-from pathlib import Path
 from sqlalchemy import select,text
+from app.config_paths import CONFIG_ROOT
 from app.db.models import PublishedSnapshot,JobCursor,SourcePayload,IngestionBatch,IncomeStatement,BalanceSheet,CashflowStatement
 from app.stocks.derived.inputs import FinancialPoint
 from app.ingestion.repositories import content_hash
@@ -14,7 +14,7 @@ from app.portfolio.api.dividends import original_dividend_rows
 from app.portfolio.api.reference import capture_catalog
 from app.connectors.tushare.contracts import request_hash
 
-CONFIG_FILE=Path(__file__).resolve().parents[3]/'config'/'financial-indicators.json'
+CONFIG_FILE=CONFIG_ROOT / "stocks/financial-indicators.json"
 JOB='financial-statement-evidence'
 KINDS={'income':('income','core.income_statement','利润表'),'balance':('balancesheet','core.balance_sheet','资产负债表'),'cashflow':('cashflow','core.cashflow_statement','现金流量表')}
 META={'ts_code','ann_date','f_ann_date','end_date','report_type','comp_type','update_flag'}

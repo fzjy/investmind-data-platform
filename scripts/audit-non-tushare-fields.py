@@ -27,8 +27,8 @@ def write(obj):
     )
 
 
-c = load("backend/config/macro-series.json")
-e = load("backend/config/macro-extensions.json")
+c = load("config/macro/macro-series.json")
+e = load("config/macro/macro-extensions.json")
 orig = load("docs/research/investmind-macro-supply.json")
 sp = load("docs/research/investmind-macro-specialties.json")
 assert {row["id"] for row in c["series"]} == set(orig["series"])

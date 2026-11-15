@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "为国家统计局历史数据回补登记可追溯的新闻发布页面。",
+  "properties": {
+    "schemaVersion": {
+      "description": "配置文件结构的版本号，供加载器识别字段格式。"
+    },
+    "releases": {
+      "description": "回补时读取的国家统计局历史发布记录。",
+      "items": {
+        "description": "一个发布页面及其对应的平台指标。",
+        "properties": {
+          "seriesId": {
+            "description": "该页面用于回补的平台宏观指标 ID。"
+          },
+          "url": {
+            "description": "历史发布正文在国家统计局网站的地址。"
+          },
+          "title": {
+            "description": "登记的原始发布标题，用于识别历史文章。"
+          }
+        }
+      }
+    }
+  }
+}
