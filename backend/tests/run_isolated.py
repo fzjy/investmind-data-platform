@@ -63,6 +63,10 @@ def isolate_official_member_config(directory: Path) -> None:
 
 def main() -> None:
     args = sys.argv[1:]
+    child_url = None
+    if args and args[0] == "--registered-child":
+        args.pop(0)
+        child_url = json.loads(sys.stdin.readline())["url"]
     postgres = bool(args and args[0] == "--postgres")
     if postgres:
         args.pop(0)
@@ -90,6 +94,10 @@ def main() -> None:
     allowed_databases: set[tuple[object, ...]] = set()
     pg_support.allowed_databases = allowed_databases
     pg_support.enabled = postgres
+    if child_url:
+        child = make_url(child_url)
+        allowed_databases.add((child.host, child.port, child.database, child.username, child.password))
+        pg_support.child_url = child_url
     sqlite_engines: WeakSet[Engine] = WeakSet()
     sqlite_connections: WeakSet[Connection] = WeakSet()
 
@@ -133,7 +141,7 @@ def main() -> None:
         if dialect.name == "sqlite":
             return
         identity = (params.get("host"), params.get("port"), params.get("dbname"), params.get("user"), params.get("password"))
-        if postgres and dialect.name == "postgresql" and identity in allowed_databases:
+        if (postgres or child_url) and dialect.name == "postgresql" and identity in allowed_databases:
             return
         violations.append("unregistered database")
         raise AssertionError("Offline tests forbid unregistered databases")

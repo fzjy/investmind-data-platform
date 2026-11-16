@@ -11,7 +11,16 @@ import app.config as config
 
 if __name__ == "__main__":
     mode = sys.argv[1]
-    if mode == "allowed":
+    if mode == "postgres":
+        from backend.tests.support.postgres import child_url
+        engine = create_engine(child_url)
+        with engine.connect() as connection:
+            value = connection.scalar(text('select 1'))
+            shared = connection.scalar(text('select id from child_probe'))
+        engine.dispose()
+        print(json.dumps({'postgres': value, 'shared': shared,
+                          'dotenvDisabled': config.PROJECT_ENV_FILE.name == 'missing.env'}))
+    elif mode == "allowed":
         engine = create_engine("sqlite://")
         with engine.connect() as connection:
             sqlite = connection.scalar(text("select 1"))
