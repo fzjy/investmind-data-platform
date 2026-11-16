@@ -7,11 +7,10 @@ from app.connectors.tushare.contracts import TushareResponse
 from app.connectors.tushare.strategies import Dataset, SyncScope, TushareMode, build_request_plans
 from app.db.models import Security, ShareUnlock, SourcePayload
 from app.ingestion.pipeline import IngestionPipeline
-from backend.tests.ingestion.test_pipeline import session_factory
 
 
-def test_share_float_narrow_contract_preserves_legacy_history_and_raw():
-    engine, factory = session_factory()
+def test_share_float_narrow_contract_preserves_legacy_history_and_raw(pg_factory):
+    factory = pg_factory
     plan, = build_request_plans(Dataset.SHARE_UNLOCK, TushareMode.STANDARD,
         SyncScope(start_date=date(2026, 9, 1), end_date=date(2026, 9, 5)))
     expected = ("ts_code", "ann_date", "float_date", "float_share")
@@ -41,4 +40,3 @@ def test_share_float_narrow_contract_preserves_legacy_history_and_raw():
     with factory() as session:
         new = session.scalars(select(ShareUnlock).where(ShareUnlock.ann_date==date(2026,9,3))).one()
         assert "unlock_date" not in new.data and new.data["float_share"] == 11
-    engine.dispose()

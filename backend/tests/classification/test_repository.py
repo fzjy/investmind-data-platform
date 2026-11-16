@@ -7,15 +7,13 @@ from app.stocks.classification import repository
 from app.stocks.classification.contracts import Catalog, MEMBER_FIELDS
 from app.connectors.tushare.contracts import TushareResponse
 from app.db.models import Classification, ClassificationMember, IngestionBatch, JobCursor, RejectedRecord, Security, SourcePayload
-from backend.tests.ingestion.test_pipeline import session_factory
 from backend.tests.classification.test_contracts import catalog_rows, member_row
 
 NOW = datetime(2026, 10, 14, tzinfo=timezone.utc)
 IDENTITY = "a" * 64
 
 
-def setup_repository():
-    engine, factory = session_factory()
+def setup_repository(factory):
     with factory.begin() as session:
         session.add(Security(ts_code="600519.SH", symbol="600519", name="样本"))
     repo = repository.ClassificationRepository(factory)
@@ -24,7 +22,7 @@ def setup_repository():
         repo.record_response(IDENTITY, f"catalog:L{index}", TushareResponse(fields=fields, items=(tuple(row.values()),)),
             {"level": f"L{index}", "src": "SW2021"}, fields, page_size=2000, observed_at=NOW)
     catalog = repo.commit_catalog(IDENTITY)
-    return engine, factory, repo, catalog
+    return factory, repo, catalog
 
 
 def save(repo, rows, flag="Y", identity=IDENTITY, page_size=2000):
@@ -37,8 +35,8 @@ def commit(repo, catalog, identity=IDENTITY, refresh=False):
     return repo.commit_stock(identity, "600519.SH", catalog, date(2023, 9, 18), date(2026, 9, 18), refresh=refresh)
 
 
-def test_two_units_required_before_stock_completion():
-    _, factory, repo, catalog = setup_repository()
+def test_two_units_required_before_stock_completion(pg_factory):
+    factory, repo, catalog = setup_repository(pg_factory)
     save(repo, [member_row()])
     assert commit(repo, catalog)["status"] == "not_assessed"
     with factory() as session:
@@ -53,8 +51,8 @@ def test_two_units_required_before_stock_completion():
         assert len(rows[0].data["evidence"]) == 1
 
 
-def test_outside_pool_is_rejected_without_partial_member_writes():
-    _, factory, repo, catalog = setup_repository()
+def test_outside_pool_is_rejected_without_partial_member_writes(pg_factory):
+    factory, repo, catalog = setup_repository(pg_factory)
     save(repo, [member_row(), member_row(ts_code="000001.SZ")])
     save(repo, [], "N")
     assert commit(repo, catalog)["status"] == "failed"
@@ -63,8 +61,8 @@ def test_outside_pool_is_rejected_without_partial_member_writes():
         assert session.scalar(select(func.count()).select_from(SourcePayload)) == 5
 
 
-def test_full_response_is_incomplete_and_not_committed_as_member():
-    _, factory, repo, catalog = setup_repository()
+def test_full_response_is_incomplete_and_not_committed_as_member(pg_factory):
+    factory, repo, catalog = setup_repository(pg_factory)
     assert save(repo, [member_row()], page_size=1)["status"] == "incomplete"
     save(repo, [], "N")
     assert commit(repo, catalog)["status"] == "not_assessed"
@@ -72,8 +70,8 @@ def test_full_response_is_incomplete_and_not_committed_as_member():
         assert session.scalar(select(func.count()).select_from(ClassificationMember)) == 0
 
 
-def test_failed_commit_preserves_pending_unit():
-    _, factory, repo, _ = setup_repository()
+def test_failed_commit_preserves_pending_unit(pg_factory):
+    factory, repo, _ = setup_repository(pg_factory)
     def fail(session):
         raise RuntimeError("simulated commit failure")
     event.listen(factory, "before_commit", fail)
@@ -87,8 +85,8 @@ def test_failed_commit_preserves_pending_unit():
         assert session.scalar(select(func.count()).select_from(SourcePayload)) == 3
 
 
-def test_refresh_closes_open_interval_with_evidence():
-    _, factory, repo, catalog = setup_repository()
+def test_refresh_closes_open_interval_with_evidence(pg_factory):
+    factory, repo, catalog = setup_repository(pg_factory)
     save(repo, [member_row()]); save(repo, [], "N"); commit(repo, catalog)
     new_identity = "b" * 64
     save(repo, [], "Y", new_identity)
@@ -101,8 +99,8 @@ def test_refresh_closes_open_interval_with_evidence():
         assert row.data["changes"][0]["from"] is None
 
 
-def test_conflicting_refresh_is_atomic():
-    _, factory, repo, catalog = setup_repository()
+def test_conflicting_refresh_is_atomic(pg_factory):
+    factory, repo, catalog = setup_repository(pg_factory)
     save(repo, [member_row()]); save(repo, [], "N"); commit(repo, catalog)
     new_identity = "b" * 64
     save(repo, [member_row(in_date="20260902")], "Y", new_identity); save(repo, [], "N", new_identity)
@@ -113,16 +111,16 @@ def test_conflicting_refresh_is_atomic():
         assert len(row.data["evidence"]) == 1
 
 
-def test_conflicting_current_and_history_reject_entire_stock():
-    _, factory, repo, catalog = setup_repository()
+def test_conflicting_current_and_history_reject_entire_stock(pg_factory):
+    factory, repo, catalog = setup_repository(pg_factory)
     save(repo, [member_row()]); save(repo, [member_row(out_date="20260918", is_new="N")], "N")
     assert commit(repo, catalog)["status"] == "failed"
     with factory() as session:
         assert session.scalar(select(func.count()).select_from(ClassificationMember)) == 0
 
 
-def test_catalog_refresh_cannot_change_existing_member_parent_path():
-    _, factory, repo, catalog = setup_repository()
+def test_catalog_refresh_cannot_change_existing_member_parent_path(pg_factory):
+    factory, repo, catalog = setup_repository(pg_factory)
     save(repo, [member_row()]); save(repo, [], "N"); commit(repo, catalog)
     rows = catalog_rows()
     rows.append(rows[0] | {"index_code": "801020.SI", "industry_code": "120000", "industry_name": "其他"})
@@ -141,8 +139,8 @@ def test_catalog_refresh_cannot_change_existing_member_parent_path():
         assert middle.parent_id == "801010.SI"
 
 
-def test_refresh_uses_window_external_closing_evidence_for_existing_open_member():
-    _, factory, repo, catalog = setup_repository()
+def test_refresh_uses_window_external_closing_evidence_for_existing_open_member(pg_factory):
+    factory, repo, catalog = setup_repository(pg_factory)
     save(repo, [member_row(in_date="20200101")]); save(repo, [], "N"); commit(repo, catalog)
     identity = "d" * 64
     save(repo, [member_row(in_date="20260901")], "Y", identity)
@@ -155,8 +153,8 @@ def test_refresh_uses_window_external_closing_evidence_for_existing_open_member(
         assert len(rows[0].data["evidence"]) == 2
 
 
-def test_rejection_is_attached_to_actual_response_and_row():
-    _, factory, repo, catalog = setup_repository()
+def test_rejection_is_attached_to_actual_response_and_row(pg_factory):
+    factory, repo, catalog = setup_repository(pg_factory)
     y = save(repo, [member_row(), member_row(ts_code="000001.SZ")]); n = save(repo, [], "N")
     result = commit(repo, catalog)
     assert result["status"] == "failed" and result["rejected"] == 1

@@ -5,12 +5,9 @@ from datetime import date
 from decimal import Decimal
 
 import httpx
-from sqlalchemy import create_engine, func, select, text
-from sqlalchemy.pool import StaticPool
-from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy import func, select
 
 from app.connectors.tushare.client import TushareClient
-from app.db.base import Base
 from app.db.models import (
     BalanceSheet,
     BusinessSegment,
@@ -39,16 +36,6 @@ from app.stocks.universes.filter import UniverseRowFilter
 from app.stocks.universes.models import UniverseSelection
 
 
-def session_factory():
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:",
-        poolclass=StaticPool,
-        execution_options={"schema_translate_map": {"raw": None, "core": None, "ops": None}},
-    )
-    Base.metadata.create_all(engine)
-    return engine, sessionmaker(engine, expire_on_commit=False)
-
-
 def test_batch_result_defaults_retained_count_to_provider_count() -> None:
     result = BatchResult("batch-1", Dataset.DAILY, 3, 3, 0)
 
@@ -56,8 +43,8 @@ def test_batch_result_defaults_retained_count_to_provider_count() -> None:
     assert result.filtered_count == 0
 
 
-def test_pipeline_saves_raw_and_upserts_daily_price() -> None:
-    engine, factory = session_factory()
+def test_pipeline_saves_raw_and_upserts_daily_price(pg_factory) -> None:
+    factory = pg_factory
     transport = httpx.MockTransport(
         lambda request: httpx.Response(
             200,
@@ -96,11 +83,12 @@ def test_pipeline_saves_raw_and_upserts_daily_price() -> None:
     assert second.received_count == 1
     assert second.row_count == 1
     assert second.rejected_count == 0
-    engine.dispose()
 
 
-def test_pipeline_is_idempotent_and_keeps_revised_raw_payload() -> None:
-    engine, factory = session_factory()
+def test_pipeline_is_idempotent_and_keeps_revised_raw_payload(pg_factory) -> None:
+    factory = pg_factory
+    with factory.begin() as session:
+        session.add(Security(ts_code="600519.SH", symbol="600519", name="贵州茅台"))
     responses = ["10.00", "10.00", "11.00"]
 
     def handler(_request: httpx.Request) -> httpx.Response:
@@ -187,11 +175,10 @@ def test_pipeline_is_idempotent_and_keeps_revised_raw_payload() -> None:
     assert price.close == Decimal("11.00")
     assert revised.row_count == 1
     assert revised.rejected_count == 0
-    engine.dispose()
 
 
-def test_pipeline_records_invalid_row_as_rejected() -> None:
-    engine, factory = session_factory()
+def test_pipeline_records_invalid_row_as_rejected(pg_factory) -> None:
+    factory = pg_factory
     transport = httpx.MockTransport(
         lambda _request: httpx.Response(
             200,
@@ -232,11 +219,10 @@ def test_pipeline_records_invalid_row_as_rejected() -> None:
         "trade_date": "not-a-date",
         "close": "10.00",
     }
-    engine.dispose()
 
 
-def test_pipeline_normalizes_official_index_classification() -> None:
-    engine, factory = session_factory()
+def test_pipeline_normalizes_official_index_classification(pg_factory) -> None:
+    factory = pg_factory
     transport = httpx.MockTransport(
         lambda _request: httpx.Response(
             200,
@@ -304,13 +290,10 @@ def test_pipeline_normalizes_official_index_classification() -> None:
         "is_pub": 1,
         "src": "SW2021",
     }
-    engine.dispose()
 
 
-def test_pipeline_uses_savepoint_for_database_rejected_row() -> None:
-    engine, factory = session_factory()
-    with engine.begin() as connection:
-        connection.execute(text("PRAGMA foreign_keys=ON"))
+def test_pipeline_uses_savepoint_for_database_rejected_row(pg_factory) -> None:
+    factory = pg_factory
     with factory.begin() as session:
         session.add(Security(ts_code="600519.SH", symbol="600519", name="贵州茅台"))
 
@@ -353,14 +336,13 @@ def test_pipeline_uses_savepoint_for_database_rejected_row() -> None:
     assert batch is not None
     assert batch.status == "partial"
     assert rejected is not None
-    assert "FOREIGN KEY constraint failed" in rejected.reason
+    assert "psycopg.errors.ForeignKeyViolation" in rejected.reason
     assert rejected.raw_record is not None
     assert rejected.raw_record["ts_code"] == "999999.SH"
-    engine.dispose()
 
 
-def test_pipeline_tracks_empty_response_counts_and_completed_batch() -> None:
-    engine, factory = session_factory()
+def test_pipeline_tracks_empty_response_counts_and_completed_batch(pg_factory) -> None:
+    factory = pg_factory
     transport = httpx.MockTransport(
         lambda _request: httpx.Response(
             200,
@@ -397,13 +379,10 @@ def test_pipeline_tracks_empty_response_counts_and_completed_batch() -> None:
     assert batch.status == "completed"
     assert payload_count == 1
     assert batch_count == 1
-    engine.dispose()
 
 
-def test_pipeline_filters_before_raw_and_core_persistence() -> None:
-    engine, factory = session_factory()
-    with engine.begin() as connection:
-        connection.execute(text("PRAGMA foreign_keys=ON"))
+def test_pipeline_filters_before_raw_and_core_persistence(pg_factory) -> None:
+    factory = pg_factory
     with factory.begin() as session:
         session.add(Security(ts_code="600519.SH", symbol="600519", name="贵州茅台"))
 
@@ -465,7 +444,6 @@ def test_pipeline_filters_before_raw_and_core_persistence() -> None:
     assert rejected is not None
     assert rejected.raw_record is not None
     assert rejected.raw_record["ts_code"] is None
-    engine.dispose()
 
 
 def test_daily_sync_models_register_expected_metadata() -> None:
@@ -484,8 +462,8 @@ def test_daily_sync_models_register_expected_metadata() -> None:
     assert JobRun.__table__.c.details.server_default is not None
 
 
-def test_pipeline_upserts_revised_disclosure_schedule_by_period() -> None:
-    engine, factory = session_factory()
+def test_pipeline_upserts_revised_disclosure_schedule_by_period(pg_factory) -> None:
+    factory = pg_factory
     with factory.begin() as session:
         session.add(Security(ts_code="600519.SH", symbol="600519", name="贵州茅台"))
 
@@ -553,11 +531,10 @@ def test_pipeline_upserts_revised_disclosure_schedule_by_period() -> None:
     assert disclosure.actual_date == date(2026, 9, 2)
     assert disclosure.modify_date == date(2026, 8, 31)
     assert disclosure.data["actual_date"] == "20260902"
-    engine.dispose()
 
 
-def test_pipeline_upserts_financial_and_corporate_action_rows_with_revisions() -> None:
-    engine, factory = session_factory()
+def test_pipeline_upserts_financial_and_corporate_action_rows_with_revisions(pg_factory) -> None:
+    factory = pg_factory
     with factory.begin() as session:
         session.add(Security(ts_code="600519.SH", symbol="600519", name="贵州茅台"))
 
@@ -650,4 +627,3 @@ def test_pipeline_upserts_financial_and_corporate_action_rows_with_revisions() -
     assert income.data["revenue"] == 200
     assert shareholder_count is not None
     assert shareholder_count.ann_date == date(2024, 8, 1)
-    engine.dispose()
