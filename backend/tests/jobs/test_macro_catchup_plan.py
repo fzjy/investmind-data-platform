@@ -11,7 +11,6 @@ from typer.testing import CliRunner
 from app.config import Settings
 from app.db.base import ALL_BASES
 from app.db.models import JobRun, MacroObservation, MacroSeriesState, PublishedSnapshot
-from app.db.session import create_engine_and_session
 from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
 
 NOW = datetime(2026, 10, 11, 2, tzinfo=UTC)
@@ -63,11 +62,11 @@ def freeze_clock(monkeypatch):
 
 
 @pytest.fixture
-def database(tmp_path):
-    engine,factory = create_engine_and_session(f'sqlite+pysqlite:///{tmp_path / "catchup.sqlite"}')
-    for base in ALL_BASES: base.metadata.create_all(engine)
+def database(pg_factory):
+    engine, factory = pg_factory.kw["bind"], pg_factory
+
     seed(factory)
-    yield Settings(database_url=str(engine.url),fred_api_key='controlled-key',tushare_token='controlled-token'),factory,engine
+    yield Settings(database_url=engine.url.render_as_string(hide_password=False),fred_api_key='controlled-key',tushare_token='controlled-token'),factory,engine
     engine.dispose()
 
 
@@ -178,10 +177,16 @@ def test_cli_does_not_expose_config_failure_secrets(monkeypatch):
     assert 'private-config' not in result.output
 
 
-def test_nonexistent_sqlite_is_not_created(tmp_path):
-    target=tmp_path/'must-not-create.sqlite'
-    with pytest.raises(ValueError): module().read_macro_catchup_plan(Settings(database_url=f'sqlite:///{target}'),now=NOW)
-    assert not target.exists()
+def test_preflight_reports_missing_schema_without_creating_it(pg_url):
+    from sqlalchemy import create_engine, inspect
+    from sqlalchemy.exc import ProgrammingError
+    engine = create_engine(pg_url)
+    try:
+        with pytest.raises(ProgrammingError):
+            module().read_macro_catchup_plan(Settings(database_url=pg_url), now=NOW)
+        assert "ops" not in inspect(engine).get_schema_names()
+    finally:
+        engine.dispose()
 
 
 def test_catalog_hash_mismatch_is_not_accepted_or_repaired(database):
@@ -194,21 +199,24 @@ def test_catalog_hash_mismatch_is_not_accepted_or_repaired(database):
     assert snapshot(factory)==before
 
 
-@pytest.mark.parametrize('filename',['catchup#prod.sqlite','literal%23.sqlite','有空 格.sqlite'])
-def test_sqlite_uri_preserves_exact_special_filename_without_creating_another(tmp_path,filename):
-    target=tmp_path/filename
-    engine,factory=create_engine_and_session(f'sqlite+pysqlite:///{target}')
-    try:
-        for base in ALL_BASES: base.metadata.create_all(engine)
-        seed(factory)
-        before=snapshot(factory)
-        files=set(tmp_path.iterdir())
-        try:
-            report=module().read_macro_catchup_plan(Settings(database_url=str(engine.url),
-                fred_api_key='controlled-key',tushare_token='controlled-token'),now=NOW)
-        finally: assert set(tmp_path.iterdir())==files, 'preflight created a wrong-path database'
-        assert report['activeCount']==18 and snapshot(factory)==before
-    finally: engine.dispose()
+@pytest.mark.parametrize('app_name', ['catchup#prod', 'literal%23', 'with space'])
+def test_readonly_url_preserves_connection_options(database, monkeypatch, app_name):
+    from sqlalchemy import text
+    settings, factory, engine = database
+    before = snapshot(factory)
+    url = engine.url.update_query_dict({'application_name': app_name})
+    read_plan = module()._read_plan
+
+    def verify_target(settings, now, read_factory):
+        with read_factory() as session:
+            assert session.scalar(text('SELECT current_database()')) == engine.url.database
+            assert session.scalar(text('SHOW application_name')) == app_name
+        return read_plan(settings, now, read_factory)
+
+    monkeypatch.setattr(module(), '_read_plan', verify_target)
+    report = module().read_macro_catchup_plan(
+        settings.model_copy(update={'database_url': url.render_as_string(hide_password=False)}), now=NOW)
+    assert report['activeCount'] == 18 and snapshot(factory) == before
 
 
 def test_missing_state_scoped_window_still_uses_visible_core(database):
@@ -221,11 +229,9 @@ def test_missing_state_scoped_window_still_uses_visible_core(database):
     assert 'MACRO_STATE_UNINITIALIZED' in row['blockingReasons']
 
 
-def test_sqlite_plan_uses_one_read_snapshot_during_external_update(database,monkeypatch):
-    from sqlalchemy import text
+def test_postgres_plan_uses_one_read_snapshot_during_external_update(database,monkeypatch):
     from app.macro.jobs.macro_sync_history import SqlMacroSyncHistory
     settings,factory,engine=database
-    with engine.connect() as c: c.execute(text('PRAGMA journal_mode=WAL')).scalar()
     original=SqlMacroSyncHistory.inspect
     def interleaved(self,*args):
         result=original(self,*args)
@@ -253,7 +259,7 @@ def test_reader_never_constructs_http_clients_or_executes_job(database,monkeypat
     assert report['readOnly'] and snapshot(factory)==before
 
 
-def test_sqlite_rejects_accidental_writer_in_preflight(database,monkeypatch):
+def test_postgres_rejects_accidental_writer_in_preflight(database,monkeypatch):
     from sqlalchemy.exc import DBAPIError
     settings,factory,_=database
     before=snapshot(factory)
@@ -262,7 +268,9 @@ def test_sqlite_rejects_accidental_writer_in_preflight(database,monkeypatch):
             s.add(JobRun(id='must-not-write',job_name='sync-macro',business_key='forbidden',status='completed'))
             s.flush()
     monkeypatch.setattr(module(),'_read_plan',write)
-    with pytest.raises(DBAPIError): module().read_macro_catchup_plan(settings,now=NOW)
+    with pytest.raises(DBAPIError) as failure:
+        module().read_macro_catchup_plan(settings, now=NOW)
+    assert failure.value.orig.sqlstate == '25006'
     assert snapshot(factory)==before
 
 

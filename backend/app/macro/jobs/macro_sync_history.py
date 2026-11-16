@@ -109,7 +109,7 @@ class SqlMacroSyncHistory:
         with self._session_factory() as session:
             runs = session.scalars(
                 select(JobRun).where(JobRun.job_name == self._job_name)
-                .order_by(JobRun.finished_at.desc())
+                .order_by(JobRun.finished_at.desc().nulls_last())
             ).all()
         for run in runs:
             details = run.details
