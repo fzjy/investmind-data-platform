@@ -13,10 +13,8 @@ from app.connectors.macro.contracts import (
     ProviderTransientError,
 )
 from app.connectors.macro.registry import MacroProviderRegistry
-from app.db.base import Base
 from app.db.models import JobFailure, JobRun
-from app.db.session import create_engine_and_session
-from app.jobs.locks import ProcessLocalJobLock
+from app.jobs.locks import PostgresAdvisoryJobLock
 from app.macro.jobs.macro_series_state import MacroSeriesStateView
 from app.macro.jobs.macro_sync import MacroPublishReport, MacroSyncJob
 from app.macro.jobs.macro_sync_history import MacroCatalogVersionHashMismatch, SqlMacroSyncHistory
@@ -176,16 +174,16 @@ def old_state(series_id: str, observed_at: date, source: str = "fred") -> MacroS
 
 
 def setup_job(
+    pg_factory,
     providers: tuple[FakeProvider, ...], *, states: tuple[MacroSeriesStateView, ...] = (),
     catalog: MacroSeriesCatalog = CATALOG, blocked: bool = False,
 ):
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
-    Base.metadata.create_all(engine)
+    engine, factory = pg_factory.kw["bind"], pg_factory
     observations = FakeObservationRepository()
     state_repository = FakeStates(states)
     publisher = FakePublisher(blocked)
     history = SqlMacroSyncHistory(factory)
-    lock = ProcessLocalJobLock()
+    lock = PostgresAdvisoryJobLock(engine)
     job = MacroSyncJob(
         catalog=catalog, registry=MacroProviderRegistry(providers),
         observation_repository=observations, state_repository=state_repository,
@@ -196,10 +194,10 @@ def setup_job(
     return engine, job, opts, observations, state_repository, publisher, history, lock
 
 
-def test_official_success_never_calls_fallback() -> None:
+def test_official_success_never_calls_fallback(pg_factory) -> None:
     official = FakeProvider("fred", result("fred"))
     fallback = FakeProvider("us_treasury", AssertionError("fallback called"))
-    engine, job, opts, observations, states, _, _, _ = setup_job((official, fallback))
+    engine, job, opts, observations, states, _, _, _ = setup_job(pg_factory, (official, fallback))
     try:
         report = job.run(opts)
         target = next(item for item in report.outcomes if item.series_id == TARGET)
@@ -212,12 +210,12 @@ def test_official_success_never_calls_fallback() -> None:
 
 
 @pytest.mark.parametrize("has_gap", [False, True])
-def test_online_primary_replaces_offline_fallback_flag_even_with_history_gap(has_gap):
+def test_online_primary_replaces_offline_fallback_flag_even_with_history_gap(pg_factory, has_gap):
     from dataclasses import replace
     catalog = CATALOG.model_copy(update={"series": (CATALOG.require(TARGET).model_copy(update={"sources": CATALOG.require(TARGET).sources[:1]}),)})
     official = FakeProvider("fred", result("fred", gap=("2026-08-22", "2026-08-23") if has_gap else None))
     prior = replace(old_state(TARGET, date(2026, 9, 18), "controlled-offline"), fallback_used=True)
-    engine, job, opts, observations, states, _, _, _ = setup_job((official,), catalog=catalog, states=(prior,))
+    engine, job, opts, observations, states, _, _, _ = setup_job(pg_factory, (official,), catalog=catalog, states=(prior,))
     observations.visible[TARGET] = ("controlled-offline", date(2026, 9, 18), AS_OF - timedelta(days=1))
     try:
         outcome = job.run(opts).outcomes[0]
@@ -231,10 +229,10 @@ def test_online_primary_replaces_offline_fallback_flag_even_with_history_gap(has
         engine.dispose()
 
 
-def test_no_change_with_declared_unscanned_history_does_not_claim_coverage_or_recovery():
+def test_no_change_with_declared_unscanned_history_does_not_claim_coverage_or_recovery(pg_factory):
     catalog = CATALOG.model_copy(update={"series": (CATALOG.require(TARGET).model_copy(update={"sources": CATALOG.require(TARGET).sources[:1]}),)})
     official = FakeProvider("fred", result("fred", "no_change", gap=("2026-08-22", "2026-08-23")))
-    engine, job, opts, observations, _, _, _, _ = setup_job((official,), catalog=catalog, states=(old_state(TARGET, date(2026, 9, 18)),))
+    engine, job, opts, observations, _, _, _, _ = setup_job(pg_factory, (official,), catalog=catalog, states=(old_state(TARGET, date(2026, 9, 18)),))
     observations.visible[TARGET] = ("fred", date(2026, 9, 18), AS_OF - timedelta(days=1))
     try:
         outcome = job.run(opts).outcomes[0]
@@ -248,11 +246,11 @@ def test_no_change_with_declared_unscanned_history_does_not_claim_coverage_or_re
 @pytest.mark.parametrize("series_id,provider", [
     ("cn.gdp.real_yoy", "tushare"), ("us.gdp.real_qoq_annualized", "fred"),
 ])
-def test_quarterly_sync_keeps_q2_fresh_in_late_september(series_id, provider):
+def test_quarterly_sync_keeps_q2_fresh_in_late_september(pg_factory, series_id, provider):
     definition = CATALOG.require(series_id)
     catalog = CATALOG.model_copy(update={"series": (definition,)})
     engine, job, opts, _, states, _, _, _ = setup_job(
-        (FakeProvider(provider, result(provider, observed_at=date(2026, 4, 1))),), catalog=catalog)
+        pg_factory, (FakeProvider(provider, result(provider, observed_at=date(2026, 4, 1))),), catalog=catalog)
     try:
         report = job.run(opts)
         assert report.outcomes[0].status == "fresh"
@@ -262,10 +260,10 @@ def test_quarterly_sync_keeps_q2_fresh_in_late_september(series_id, provider):
         engine.dispose()
 
 
-def test_sync_older_official_period_does_not_replace_newer_visible_fallback() -> None:
+def test_sync_older_official_period_does_not_replace_newer_visible_fallback(pg_factory) -> None:
     official = FakeProvider("fred", result("fred", observed_at=date(2026, 9, 16)))
     fallback = FakeProvider("us_treasury", AssertionError("unnecessary fallback request"))
-    engine, job, opts, observations, states, _, _, _ = setup_job((official, fallback),
+    engine, job, opts, observations, states, _, _, _ = setup_job(pg_factory, (official, fallback),
         states=(old_state(TARGET, date(2026, 9, 18), "us_treasury"),))
     observations.visible[TARGET] = ("us_treasury", date(2026, 9, 18), AS_OF - timedelta(days=1))
     try:
@@ -279,11 +277,11 @@ def test_sync_older_official_period_does_not_replace_newer_visible_fallback() ->
         engine.dispose()
 
 
-def test_manual_sync_conflicts_with_shared_publication_lock_across_week_keys() -> None:
+def test_manual_sync_conflicts_with_shared_publication_lock_across_week_keys(pg_factory) -> None:
     from app.jobs.locks import data_publication_lock_key
     official = FakeProvider("fred", result("fred"))
-    engine, job, opts, observations, _, publisher, _, lock = setup_job((official,))
-    contender = ProcessLocalJobLock()
+    engine, job, opts, observations, _, publisher, _, lock = setup_job(pg_factory, (official,))
+    contender = PostgresAdvisoryJobLock(engine)
     assert contender.try_acquire(data_publication_lock_key())
     try:
         for offset in (0, 7):
@@ -296,9 +294,9 @@ def test_manual_sync_conflicts_with_shared_publication_lock_across_week_keys() -
         engine.dispose()
 
 
-def test_job_uses_configured_local_day_for_iso_week_key_and_window_end() -> None:
+def test_job_uses_configured_local_day_for_iso_week_key_and_window_end(pg_factory) -> None:
     official = FakeProvider("fred", result("fred"))
-    engine, job, opts, _, _, _, _, _ = setup_job((official,))
+    engine, job, opts, _, _, _, _, _ = setup_job(pg_factory, (official,))
     utc_sunday = datetime(2026, 12, 27, 16, 30, tzinfo=UTC)
     opts = MacroSyncOptions(
         utc_sunday, opts.history_years, opts.catalog_version, opts.catalog_hash,
@@ -313,10 +311,10 @@ def test_job_uses_configured_local_day_for_iso_week_key_and_window_end() -> None
         engine.dispose()
 
 
-def test_explicit_gap_requests_only_missing_subwindow() -> None:
+def test_explicit_gap_requests_only_missing_subwindow(pg_factory) -> None:
     official = FakeProvider("fred", result("fred", gap=("2026-09-01", "2026-09-03")))
     fallback = FakeProvider("us_treasury", result("us_treasury", observed_at=date(2026, 9, 2), complete=True))
-    engine, job, opts, observations, _, _, _, _ = setup_job((official, fallback))
+    engine, job, opts, observations, _, _, _, _ = setup_job(pg_factory, (official, fallback))
     try:
         report = job.run(opts)
         assert fallback.calls == [(TARGET, MacroFetchWindow(date(2026, 9, 1), date(2026, 9, 3), AS_OF))]
@@ -328,10 +326,10 @@ def test_explicit_gap_requests_only_missing_subwindow() -> None:
         engine.dispose()
 
 
-def test_historical_fallback_counts_when_official_remains_latest() -> None:
+def test_historical_fallback_counts_when_official_remains_latest(pg_factory) -> None:
     official = FakeProvider("fred", result("fred", gap=("2020-01-01", "2020-01-03")))
     fallback = FakeProvider("us_treasury", result("us_treasury", observed_at=date(2020, 1, 2), complete=True))
-    engine, job, opts, _, states, _, history, _ = setup_job((official, fallback))
+    engine, job, opts, _, states, _, history, _ = setup_job(pg_factory, (official, fallback))
     try:
         report = job.run(opts)
         target = next(item for item in report.outcomes if item.series_id == TARGET)
@@ -348,10 +346,10 @@ def test_historical_fallback_counts_when_official_remains_latest() -> None:
         engine.dispose()
 
 
-def test_out_of_window_fallback_observation_does_not_clear_historical_gap() -> None:
+def test_out_of_window_fallback_observation_does_not_clear_historical_gap(pg_factory) -> None:
     official = FakeProvider("fred", result("fred", gap=("2020-01-01", "2020-01-03")))
     fallback = FakeProvider("us_treasury", result("us_treasury"))
-    engine, job, opts, _, states, _, history, _ = setup_job((official, fallback))
+    engine, job, opts, _, states, _, history, _ = setup_job(pg_factory, (official, fallback))
     try:
         report = job.run(opts)
         target = next(item for item in report.outcomes if item.series_id == TARGET)
@@ -366,10 +364,10 @@ def test_out_of_window_fallback_observation_does_not_clear_historical_gap() -> N
         engine.dispose()
 
 
-def test_one_in_window_fallback_row_without_completeness_declaration_keeps_gap() -> None:
+def test_one_in_window_fallback_row_without_completeness_declaration_keeps_gap(pg_factory) -> None:
     official = FakeProvider("fred", result("fred", gap=("2020-01-01", "2020-01-03")))
     fallback = FakeProvider("us_treasury", result("us_treasury", observed_at=date(2020, 1, 2)))
-    engine, job, opts, _, _, _, history, _ = setup_job((official, fallback))
+    engine, job, opts, _, _, _, history, _ = setup_job(pg_factory, (official, fallback))
     try:
         report = job.run(opts)
         target = next(item for item in report.outcomes if item.series_id == TARGET)
@@ -384,12 +382,12 @@ def test_one_in_window_fallback_row_without_completeness_declaration_keeps_gap()
         engine.dispose()
 
 
-def test_fallback_declared_remaining_subwindow_is_preserved() -> None:
+def test_fallback_declared_remaining_subwindow_is_preserved(pg_factory) -> None:
     official = FakeProvider("fred", result("fred", gap=("2020-01-01", "2020-01-03")))
     fallback = FakeProvider("us_treasury", result(
         "us_treasury", gap=("2020-01-03", "2020-01-03"), observed_at=date(2020, 1, 2),
     ))
-    engine, job, opts, _, _, _, _, _ = setup_job((official, fallback))
+    engine, job, opts, _, _, _, _, _ = setup_job(pg_factory, (official, fallback))
     try:
         report = job.run(opts)
         target = next(item for item in report.outcomes if item.series_id == TARGET)
@@ -400,11 +398,11 @@ def test_fallback_declared_remaining_subwindow_is_preserved() -> None:
         engine.dispose()
 
 
-def test_unresolved_historical_gap_survives_into_next_week_and_clears_after_fill() -> None:
+def test_unresolved_historical_gap_survives_into_next_week_and_clears_after_fill(pg_factory) -> None:
     old_gap = MacroFetchWindow(date(2020, 1, 1), date(2020, 1, 3), AS_OF)
     official = FakeProvider("fred", result("fred", gap=("2020-01-01", "2020-01-03")))
     fallback = FakeProvider("us_treasury", result("us_treasury", "failed"))
-    engine, job, opts, _, states, _, history, _ = setup_job((official, fallback))
+    engine, job, opts, _, states, _, history, _ = setup_job(pg_factory, (official, fallback))
     try:
         first = job.run(opts)
         target = next(item for item in first.outcomes if item.series_id == TARGET)
@@ -439,10 +437,10 @@ def test_unresolved_historical_gap_survives_into_next_week_and_clears_after_fill
         engine.dispose()
 
 
-def test_earlier_as_of_replay_preserves_future_gap_for_next_current_run() -> None:
+def test_earlier_as_of_replay_preserves_future_gap_for_next_current_run(pg_factory) -> None:
     official = FakeProvider("fred", result("fred", gap=("2026-09-01", "2026-09-03")))
     fallback = FakeProvider("us_treasury", result("us_treasury", "failed"))
-    engine, job, opts, _, states, _, history, _ = setup_job((official, fallback))
+    engine, job, opts, _, states, _, history, _ = setup_job(pg_factory, (official, fallback))
     try:
         first = job.run(opts)
         assert first.status == "partial"
@@ -468,10 +466,10 @@ def test_earlier_as_of_replay_preserves_future_gap_for_next_current_run() -> Non
         engine.dispose()
 
 
-def test_interrupted_retry_preserves_previously_unresolved_gap() -> None:
+def test_interrupted_retry_preserves_previously_unresolved_gap(pg_factory) -> None:
     official = FakeProvider("fred", result("fred", gap=("2020-01-01", "2020-01-03")))
     fallback = FakeProvider("us_treasury", result("us_treasury", "failed"))
-    engine, job, opts, _, states, _, history, _ = setup_job((official, fallback))
+    engine, job, opts, _, states, _, history, _ = setup_job(pg_factory, (official, fallback))
     try:
         first = job.run(opts)
         assert TARGET in history.unresolved_gaps(CATALOG.catalog_version, CATALOG.catalog_hash)
@@ -485,10 +483,10 @@ def test_interrupted_retry_preserves_previously_unresolved_gap() -> None:
         engine.dispose()
 
 
-def test_official_failure_uses_fallback_as_fresh_source() -> None:
+def test_official_failure_uses_fallback_as_fresh_source(pg_factory) -> None:
     official = FakeProvider("fred", result("fred", "failed"))
     fallback = FakeProvider("us_treasury", result("us_treasury"))
-    engine, job, opts, _, states, _, _, _ = setup_job((official, fallback))
+    engine, job, opts, _, states, _, _, _ = setup_job(pg_factory, (official, fallback))
     try:
         report = job.run(opts)
         target = next(item for item in report.outcomes if item.series_id == TARGET)
@@ -499,11 +497,11 @@ def test_official_failure_uses_fallback_as_fresh_source() -> None:
         engine.dispose()
 
 
-def test_existing_official_same_period_outweighs_new_fallback_response() -> None:
+def test_existing_official_same_period_outweighs_new_fallback_response(pg_factory) -> None:
     official = FakeProvider("fred", result("fred", "failed"))
     fallback = FakeProvider("us_treasury", result("us_treasury"))
     prior = old_state(TARGET, date(2026, 9, 18), source="fred")
-    engine, job, opts, observations, states, _, _, _ = setup_job((official, fallback), states=(prior,))
+    engine, job, opts, observations, states, _, _, _ = setup_job(pg_factory, (official, fallback), states=(prior,))
     observations.visible[TARGET] = ("fred", date(2026, 9, 18), AS_OF - timedelta(days=7))
     try:
         report = job.run(opts)
@@ -518,13 +516,14 @@ def test_existing_official_same_period_outweighs_new_fallback_response() -> None
 
 @pytest.mark.parametrize("mode", ["live", "replay"])
 def test_visible_official_same_period_outweighs_current_fallback_state(
+    pg_factory,
     mode: Literal["live", "replay"],
 ) -> None:
     official = FakeProvider("fred", result("fred", "failed"))
     fallback = FakeProvider("us_treasury", result("us_treasury"))
     prior = old_state(TARGET, date(2026, 9, 18), source="us_treasury")
     engine, job, opts, observations, states, _, _, _ = setup_job(
-        (official, fallback), states=(prior,),
+        pg_factory, (official, fallback), states=(prior,),
     )
     observations.visible[TARGET] = (
         "fred", date(2026, 9, 18), AS_OF - timedelta(days=1),
@@ -550,10 +549,10 @@ def test_visible_official_same_period_outweighs_current_fallback_state(
         engine.dispose()
 
 
-def test_existing_fallback_same_period_is_upgraded_by_official_response() -> None:
+def test_existing_fallback_same_period_is_upgraded_by_official_response(pg_factory) -> None:
     official = FakeProvider("fred", result("fred"))
     prior = old_state(TARGET, date(2026, 9, 18), source="us_treasury")
-    engine, job, opts, _, _, _, _, _ = setup_job((official,), states=(prior,))
+    engine, job, opts, _, _, _, _, _ = setup_job(pg_factory, (official,), states=(prior,))
     try:
         report = job.run(opts)
         target = next(item for item in report.outcomes if item.series_id == TARGET)
@@ -564,7 +563,7 @@ def test_existing_fallback_same_period_is_upgraded_by_official_response() -> Non
         engine.dispose()
 
 
-def test_replay_keeps_historically_visible_official_source_on_fallback_tie() -> None:
+def test_replay_keeps_historically_visible_official_source_on_fallback_tie(pg_factory) -> None:
     official = FakeProvider("fred", result("fred", "failed"))
     fallback = FakeProvider("us_treasury", result(
         "us_treasury", observed_at=date(2019, 9, 18),
@@ -572,7 +571,7 @@ def test_replay_keeps_historically_visible_official_source_on_fallback_tie() -> 
     ))
     future = old_state(TARGET, date(2026, 9, 18), source="us_treasury")
     engine, job, opts, observations, states, _, _, _ = setup_job(
-        (official, fallback), states=(future,),
+        pg_factory, (official, fallback), states=(future,),
     )
     observations.visible[TARGET] = (
         "fred", date(2019, 9, 18), datetime(2019, 9, 19, tzinfo=UTC),
@@ -592,10 +591,10 @@ def test_replay_keeps_historically_visible_official_source_on_fallback_tie() -> 
         engine.dispose()
 
 
-def test_rejected_official_rows_trigger_series_fallback() -> None:
+def test_rejected_official_rows_trigger_series_fallback(pg_factory) -> None:
     official = FakeProvider("fred", result("fred"))
     fallback = FakeProvider("us_treasury", result("us_treasury"))
-    engine, job, opts, observations, _, _, _, _ = setup_job((official, fallback))
+    engine, job, opts, observations, _, _, _, _ = setup_job(pg_factory, (official, fallback))
     observations.reject_provider = "fred"
     try:
         report = job.run(opts)
@@ -608,10 +607,10 @@ def test_rejected_official_rows_trigger_series_fallback() -> None:
 
 
 @pytest.mark.parametrize("has_old,expected", [(True, "stale"), (False, "missing")])
-def test_all_sources_fail_retains_or_marks_missing_and_still_publishes(has_old: bool, expected: str) -> None:
+def test_all_sources_fail_retains_or_marks_missing_and_still_publishes(pg_factory, has_old: bool, expected: str) -> None:
     providers = tuple(FakeProvider(name, result(name, "failed")) for name in ("fred", "us_treasury", "tushare"))
     initial = (old_state(TARGET, date(2026, 9, 18)),) if has_old else ()
-    engine, job, opts, _, states, publisher, _, _ = setup_job(providers, states=initial)
+    engine, job, opts, _, states, publisher, _, _ = setup_job(pg_factory, providers, states=initial)
     try:
         report = job.run(opts)
         assert next(item for item in report.outcomes if item.series_id == TARGET).status == expected
@@ -621,9 +620,9 @@ def test_all_sources_fail_retains_or_marks_missing_and_still_publishes(has_old: 
         engine.dispose()
 
 
-def test_no_change_with_expired_old_value_is_stale() -> None:
+def test_no_change_with_expired_old_value_is_stale(pg_factory) -> None:
     provider = FakeProvider("fred", result("fred", "no_change"))
-    engine, job, opts, _, states, _, _, _ = setup_job((provider,), states=(old_state(TARGET, date(2026, 8, 1)),))
+    engine, job, opts, _, states, _, _, _ = setup_job(pg_factory, (provider,), states=(old_state(TARGET, date(2026, 8, 1)),))
     try:
         report = job.run(opts)
         assert next(item for item in report.outcomes if item.series_id == TARGET).status == "stale"
@@ -633,10 +632,10 @@ def test_no_change_with_expired_old_value_is_stale() -> None:
         engine.dispose()
 
 
-def test_replay_no_change_never_uses_future_series_state_or_mutates_it() -> None:
+def test_replay_no_change_never_uses_future_series_state_or_mutates_it(pg_factory) -> None:
     provider = FakeProvider("fred", result("fred", "no_change"))
     future = old_state(TARGET, date(2026, 9, 18))
-    engine, job, opts, _, states, _, _, _ = setup_job((provider,), states=(future,))
+    engine, job, opts, _, states, _, _, _ = setup_job(pg_factory, (provider,), states=(future,))
     try:
         replay = job.run(MacroSyncOptions(
             datetime(2019, 9, 20, 9, tzinfo=UTC), 10,
@@ -658,11 +657,12 @@ def test_replay_no_change_never_uses_future_series_state_or_mutates_it() -> None
     (result("fred", "failed"), "stale"),
 ])
 def test_strict_replay_never_updates_even_older_current_state(
+    pg_factory,
     response: ProviderFetchResult, expected: str,
 ) -> None:
     provider = FakeProvider("fred", response)
     prior = old_state(TARGET, date(2026, 9, 18))
-    engine, job, opts, observations, states, _, _, _ = setup_job((provider,), states=(prior,))
+    engine, job, opts, observations, states, _, _, _ = setup_job(pg_factory, (provider,), states=(prior,))
     observations.visible[TARGET] = ("fred", date(2026, 9, 18), AS_OF - timedelta(days=7))
     try:
         report = job.run(MacroSyncOptions(
@@ -677,10 +677,10 @@ def test_strict_replay_never_updates_even_older_current_state(
         engine.dispose()
 
 
-def test_replay_no_change_uses_only_historically_visible_observation() -> None:
+def test_replay_no_change_uses_only_historically_visible_observation(pg_factory) -> None:
     provider = FakeProvider("fred", result("fred", "no_change"))
     future = old_state(TARGET, date(2026, 9, 18), source="us_treasury")
-    engine, job, opts, observations, states, _, _, _ = setup_job((provider,), states=(future,))
+    engine, job, opts, observations, states, _, _, _ = setup_job(pg_factory, (provider,), states=(future,))
     observations.visible[TARGET] = (
         "fred", date(2019, 9, 18), datetime(2019, 9, 19, tzinfo=UTC),
     )
@@ -696,13 +696,13 @@ def test_replay_no_change_uses_only_historically_visible_observation() -> None:
         engine.dispose()
 
 
-def test_replay_provider_success_does_not_write_over_future_state() -> None:
+def test_replay_provider_success_does_not_write_over_future_state(pg_factory) -> None:
     provider = FakeProvider("fred", result(
         "fred", observed_at=date(2019, 9, 18),
         released_at=datetime(2019, 9, 19, tzinfo=UTC),
     ))
     future = old_state(TARGET, date(2026, 9, 18), source="us_treasury")
-    engine, job, opts, observations, states, _, _, _ = setup_job((provider,), states=(future,))
+    engine, job, opts, observations, states, _, _, _ = setup_job(pg_factory, (provider,), states=(future,))
     try:
         replay = job.run(MacroSyncOptions(
             datetime(2019, 9, 20, 9, tzinfo=UTC), 10,
@@ -717,12 +717,12 @@ def test_replay_provider_success_does_not_write_over_future_state() -> None:
         engine.dispose()
 
 
-def test_replay_excludes_provider_observation_released_after_as_of() -> None:
+def test_replay_excludes_provider_observation_released_after_as_of(pg_factory) -> None:
     provider = FakeProvider("fred", result(
         "fred", observed_at=date(2019, 9, 18),
         released_at=datetime(2026, 9, 19, tzinfo=UTC),
     ))
-    engine, job, opts, observations, states, _, _, _ = setup_job((provider,))
+    engine, job, opts, observations, states, _, _, _ = setup_job(pg_factory, (provider,))
     try:
         replay = job.run(MacroSyncOptions(
             datetime(2019, 9, 20, 9, tzinfo=UTC), 10,
@@ -739,9 +739,9 @@ def test_replay_excludes_provider_observation_released_after_as_of() -> None:
         engine.dispose()
 
 
-def test_current_run_persists_unknown_release_with_actual_capture_time() -> None:
+def test_current_run_persists_unknown_release_with_actual_capture_time(pg_factory) -> None:
     provider = FakeProvider("fred", result("fred", released_at=None))
-    engine, job, opts, observations, states, _, _, _ = setup_job((provider,))
+    engine, job, opts, observations, states, _, _, _ = setup_job(pg_factory, (provider,))
     captured_at = AS_OF - timedelta(minutes=5)
     job._clock = lambda: captured_at
     try:
@@ -758,9 +758,9 @@ def test_current_run_persists_unknown_release_with_actual_capture_time() -> None
         engine.dispose()
 
 
-def test_live_run_started_before_capture_can_publish_unknown_release() -> None:
+def test_live_run_started_before_capture_can_publish_unknown_release(pg_factory) -> None:
     provider = FakeProvider("fred", result("fred", released_at=None))
-    engine, job, opts, observations, states, publisher, _, _ = setup_job((provider,))
+    engine, job, opts, observations, states, publisher, _, _ = setup_job(pg_factory, (provider,))
     captured_at = AS_OF + timedelta(minutes=5)
     job._clock = lambda: captured_at
     try:
@@ -780,11 +780,11 @@ def test_live_run_started_before_capture_can_publish_unknown_release() -> None:
         engine.dispose()
 
 
-def test_same_local_day_default_is_strict_replay_not_implicit_live() -> None:
+def test_same_local_day_default_is_strict_replay_not_implicit_live(pg_factory) -> None:
     provider = FakeProvider("fred", result(
         "fred", released_at=AS_OF + timedelta(hours=1),
     ))
-    engine, job, opts, observations, states, publisher, _, _ = setup_job((provider,))
+    engine, job, opts, observations, states, publisher, _, _ = setup_job(pg_factory, (provider,))
     job._clock = lambda: AS_OF + timedelta(hours=2)
     try:
         report = job.run(MacroSyncOptions(
@@ -801,9 +801,9 @@ def test_same_local_day_default_is_strict_replay_not_implicit_live() -> None:
         engine.dispose()
 
 
-def test_explicit_live_mode_uses_capture_cutoff_even_on_a_later_day() -> None:
+def test_explicit_live_mode_uses_capture_cutoff_even_on_a_later_day(pg_factory) -> None:
     provider = FakeProvider("fred", result("fred", released_at=None))
-    engine, job, opts, _, states, publisher, _, _ = setup_job((provider,))
+    engine, job, opts, _, states, publisher, _, _ = setup_job(pg_factory, (provider,))
     captured_at = AS_OF + timedelta(days=3)
     job._clock = lambda: captured_at
     try:
@@ -818,9 +818,9 @@ def test_explicit_live_mode_uses_capture_cutoff_even_on_a_later_day() -> None:
         engine.dispose()
 
 
-def test_next_run_can_recover_capture_only_observation_after_cutoff() -> None:
+def test_next_run_can_recover_capture_only_observation_after_cutoff(pg_factory) -> None:
     provider = FakeProvider("fred", result("fred", released_at=None))
-    engine, job, opts, observations, states, _, _, _ = setup_job((provider,))
+    engine, job, opts, observations, states, _, _, _ = setup_job(pg_factory, (provider,))
     captured_at = AS_OF + timedelta(days=3, hours=1)
     job._clock = lambda: captured_at
     try:
@@ -845,12 +845,12 @@ def test_next_run_can_recover_capture_only_observation_after_cutoff() -> None:
         engine.dispose()
 
 
-def test_replay_uses_real_capture_time_and_does_not_backdate_unknown_release() -> None:
+def test_replay_uses_real_capture_time_and_does_not_backdate_unknown_release(pg_factory) -> None:
     provider = FakeProvider("fred", result(
         "fred", observed_at=date(2019, 9, 18),
         released_at=datetime(2019, 9, 19, tzinfo=UTC),
     ))
-    engine, job, opts, observations, _, _, _, _ = setup_job((provider,))
+    engine, job, opts, observations, _, _, _, _ = setup_job(pg_factory, (provider,))
     captured_at = datetime(2026, 9, 23, 10, tzinfo=UTC)
     job._clock = lambda: captured_at
     try:
@@ -883,9 +883,9 @@ def test_replay_uses_real_capture_time_and_does_not_backdate_unknown_release() -
         engine.dispose()
 
 
-def test_publication_blocked_reports_failed_without_success_version() -> None:
+def test_publication_blocked_reports_failed_without_success_version(pg_factory) -> None:
     provider = FakeProvider("fred", result("fred"))
-    engine, job, opts, _, _, publisher, _, _ = setup_job((provider,), blocked=True)
+    engine, job, opts, _, _, publisher, _, _ = setup_job(pg_factory, (provider,), blocked=True)
     try:
         report = job.run(opts)
         assert report.status == "failed" and report.publication_version is None
@@ -898,9 +898,9 @@ def test_publication_blocked_reports_failed_without_success_version() -> None:
         engine.dispose()
 
 
-def test_publication_exception_is_reported_without_secret_or_version() -> None:
+def test_publication_exception_is_reported_without_secret_or_version(pg_factory) -> None:
     provider = FakeProvider("fred", result("fred"))
-    engine, job, opts, _, _, _, _, _ = setup_job((provider,))
+    engine, job, opts, _, _, _, _, _ = setup_job(pg_factory, (provider,))
     job._publisher = FailingPublisher()
     try:
         report = job.run(opts)
@@ -912,9 +912,9 @@ def test_publication_exception_is_reported_without_secret_or_version() -> None:
         engine.dispose()
 
 
-def test_publisher_owns_quality_recording_after_publication(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_publisher_owns_quality_recording_after_publication(pg_factory, monkeypatch: pytest.MonkeyPatch) -> None:
     provider = FakeProvider("fred", result("fred"))
-    engine, job, opts, _, _, _, history, _ = setup_job((provider,))
+    engine, job, opts, _, _, _, history, _ = setup_job(pg_factory, (provider,))
 
     def unavailable_quality_recorder(*_args: object) -> None:
         raise RuntimeError("quality recorder unavailable after publication")
@@ -928,9 +928,9 @@ def test_publisher_owns_quality_recording_after_publication(monkeypatch: pytest.
         engine.dispose()
 
 
-def test_completed_business_key_skips_provider_and_force_retries() -> None:
+def test_completed_business_key_skips_provider_and_force_retries(pg_factory) -> None:
     provider = FakeProvider("fred", result("fred"))
-    engine, job, opts, _, _, _, history, _ = setup_job((provider,))
+    engine, job, opts, _, _, _, history, _ = setup_job(pg_factory, (provider,))
     try:
         key = "2026-W38:" + CATALOG.catalog_version
         run_id = history.start(key, AS_OF, CATALOG.catalog_version, CATALOG.catalog_hash, "cli", 1)
@@ -943,9 +943,9 @@ def test_completed_business_key_skips_provider_and_force_retries() -> None:
         engine.dispose()
 
 
-def test_held_lock_returns_locked_without_provider_calls() -> None:
+def test_held_lock_returns_locked_without_provider_calls(pg_factory) -> None:
     provider = FakeProvider("fred", result("fred"))
-    engine, job, opts, _, _, _, _, lock = setup_job((provider,))
+    engine, job, opts, _, _, _, _, lock = setup_job(pg_factory, (provider,))
     key = "sync-macro:2026-W38:" + CATALOG.catalog_version
     assert lock.try_acquire(key)
     try:
@@ -956,9 +956,9 @@ def test_held_lock_returns_locked_without_provider_calls() -> None:
         engine.dispose()
 
 
-def test_catalog_hash_conflict_is_rejected_before_lock_and_provider() -> None:
+def test_catalog_hash_conflict_is_rejected_before_lock_and_provider(pg_factory) -> None:
     provider = FakeProvider("fred", result("fred"))
-    engine, job, opts, _, _, _, history, lock = setup_job((provider,))
+    engine, job, opts, _, _, _, history, lock = setup_job(pg_factory, (provider,))
     business_key = "2026-W38:" + CATALOG.catalog_version
     lock_key = "sync-macro:" + business_key
     history.start(business_key, AS_OF, CATALOG.catalog_version, "b" * 64, "cli", 1)
@@ -972,9 +972,9 @@ def test_catalog_hash_conflict_is_rejected_before_lock_and_provider() -> None:
         engine.dispose()
 
 
-def test_series_exception_does_not_stop_other_nineteen() -> None:
+def test_series_exception_does_not_stop_other_nineteen(pg_factory) -> None:
     provider = FakeProvider("fred", RuntimeError("secret_key=private-value"))
-    engine, job, opts, _, states, publisher, _, _ = setup_job((provider,))
+    engine, job, opts, _, states, publisher, _, _ = setup_job(pg_factory, (provider,))
     try:
         report = job.run(opts)
         assert len(report.outcomes) == 20
@@ -986,11 +986,11 @@ def test_series_exception_does_not_stop_other_nineteen() -> None:
         engine.dispose()
 
 
-def test_provider_supplied_error_code_cannot_expose_secret_in_report_or_history() -> None:
+def test_provider_supplied_error_code_cannot_expose_secret_in_report_or_history(pg_factory) -> None:
     provider = FakeProvider(
         "fred", ProviderError("bare-secret-value", "credential bare-secret-value", retryable=False),
     )
-    engine, job, opts, _, _, _, history, _ = setup_job((provider,))
+    engine, job, opts, _, _, _, history, _ = setup_job(pg_factory, (provider,))
     try:
         report = job.run(opts)
         assert len(report.outcomes) == 20
@@ -1002,10 +1002,10 @@ def test_provider_supplied_error_code_cannot_expose_secret_in_report_or_history(
         engine.dispose()
 
 
-def test_uppercase_provider_error_code_is_never_trusted_as_a_safe_code() -> None:
+def test_uppercase_provider_error_code_is_never_trusted_as_a_safe_code(pg_factory) -> None:
     token = "FREDTOKENSHOULDNEVERLEAVE"
     provider = FakeProvider("fred", ProviderError(token, token, retryable=False))
-    engine, job, opts, _, _, _, history, _ = setup_job((provider,))
+    engine, job, opts, _, _, _, history, _ = setup_job(pg_factory, (provider,))
     try:
         report = job.run(opts)
         with history._session_factory() as session:
@@ -1018,10 +1018,10 @@ def test_uppercase_provider_error_code_is_never_trusted_as_a_safe_code() -> None
         engine.dispose()
 
 
-def test_history_keeps_actual_source_and_run_counts() -> None:
+def test_history_keeps_actual_source_and_run_counts(pg_factory) -> None:
     official = FakeProvider("fred", result("fred", "failed"))
     fallback = FakeProvider("us_treasury", result("us_treasury"))
-    engine, job, opts, _, _, _, history, _ = setup_job((official, fallback))
+    engine, job, opts, _, _, _, history, _ = setup_job(pg_factory, (official, fallback))
     try:
         report = job.run(opts)
         with history._session_factory() as session:
@@ -1040,13 +1040,13 @@ def test_history_keeps_actual_source_and_run_counts() -> None:
         engine.dispose()
 
 
-def test_every_item_fresh_completes() -> None:
+def test_every_item_fresh_completes(pg_factory) -> None:
     source = CATALOG.require(TARGET).sources[0]
     catalog = CATALOG.model_copy(update={
         "series": tuple(series.model_copy(update={"sources": (source,)}) for series in CATALOG.series)
     })
     provider = FakeProvider("fred", result("fred"))
-    engine, job, opts, _, _, _, _, _ = setup_job((provider,), catalog=catalog)
+    engine, job, opts, _, _, _, _, _ = setup_job(pg_factory, (provider,), catalog=catalog)
     try:
         report = job.run(opts)
         assert report.status == "completed" and report.completed == 20
@@ -1056,13 +1056,13 @@ def test_every_item_fresh_completes() -> None:
         engine.dispose()
 
 
-def test_collection_failure_with_usable_old_value_never_marks_success():
+def test_collection_failure_with_usable_old_value_never_marks_success(pg_factory):
     from dataclasses import replace
     definition = CATALOG.require(TARGET)
     catalog = CATALOG.model_copy(update={'series': (definition,)})
     providers = tuple(FakeProvider(s.provider, result(s.provider, 'failed')) for s in definition.sources)
     prior = old_state(TARGET, date(2026, 9, 18))
-    engine, job, opts, observations, states, _, _, _ = setup_job(providers, states=(prior,), catalog=catalog)
+    engine, job, opts, observations, states, _, _, _ = setup_job(pg_factory, providers, states=(prior,), catalog=catalog)
     observations.visible[TARGET] = (prior.active_source, prior.latest_observed_at, prior.latest_released_at)
     try:
         job.run(replace(opts, publish=False))
@@ -1072,12 +1072,12 @@ def test_collection_failure_with_usable_old_value_never_marks_success():
         engine.dispose()
 
 
-def test_collection_success_is_not_rejected_just_because_observation_is_old():
+def test_collection_success_is_not_rejected_just_because_observation_is_old(pg_factory):
     from dataclasses import replace
     definition = CATALOG.require(TARGET)
     catalog = CATALOG.model_copy(update={'series': (definition,)})
     providers = tuple(FakeProvider(s.provider, result(s.provider, observed_at=date(2026, 1, 5))) for s in definition.sources)
-    engine, job, opts, _, states, _, _, _ = setup_job(providers, catalog=catalog)
+    engine, job, opts, _, states, _, _, _ = setup_job(pg_factory, providers, catalog=catalog)
     try:
         job.run(replace(opts, publish=False))
         assert states.successes
@@ -1086,13 +1086,13 @@ def test_collection_success_is_not_rejected_just_because_observation_is_old():
         engine.dispose()
 
 
-def test_no_request_no_change_does_not_overwrite_collection_state():
+def test_no_request_no_change_does_not_overwrite_collection_state(pg_factory):
     from dataclasses import replace
     definition = CATALOG.require(TARGET)
     catalog = CATALOG.model_copy(update={'series': (definition,)})
     providers = tuple(FakeProvider(s.provider, replace(result(s.provider, 'no_change'), request_count=0)) for s in definition.sources)
     prior = old_state(TARGET, date(2026, 9, 18))
-    engine, job, opts, observations, states, _, _, _ = setup_job(providers, states=(prior,), catalog=catalog)
+    engine, job, opts, observations, states, _, _, _ = setup_job(pg_factory, providers, states=(prior,), catalog=catalog)
     observations.visible[TARGET] = (prior.active_source, prior.latest_observed_at, prior.latest_released_at)
     try:
         job.run(replace(opts, publish=False))
@@ -1104,7 +1104,7 @@ def test_no_request_no_change_does_not_overwrite_collection_state():
 @pytest.mark.parametrize('raised', [False, True])
 @pytest.mark.parametrize('previous_failed', [False, True])
 @pytest.mark.parametrize('has_gap', [False, True])
-def test_zero_request_budget_preserves_persisted_collection_times(raised, previous_failed, has_gap):
+def test_zero_request_budget_preserves_persisted_collection_times(pg_factory, raised, previous_failed, has_gap):
     from dataclasses import replace
     from app.macro.jobs.macro_series_state import MacroSeriesStateRepository
 
@@ -1113,7 +1113,7 @@ def test_zero_request_budget_preserves_persisted_collection_times(raised, previo
         definition.model_copy(update={'sources': definition.sources[:1]}),)})
     error = ProviderTransientError('FRED_MACRO_REQUEST_BUDGET_EXHAUSTED', request_count=0)
     response = error if raised else replace(result('fred', 'failed'), error=error, request_count=0)
-    engine, job, opts, observations, _, _, history, _ = setup_job((FakeProvider('fred', response),), catalog=catalog)
+    engine, job, opts, observations, _, _, history, _ = setup_job(pg_factory, (FakeProvider('fred', response),), catalog=catalog)
     states = MacroSeriesStateRepository(history._session_factory, catalog.catalog_version)
     states.mark_success(TARGET, checked_at=AS_OF-timedelta(days=7), active_source='fred',
         latest_observed_at=date(2026, 9, 18), latest_released_at=AS_OF-timedelta(days=7), fallback_used=False)
@@ -1134,14 +1134,14 @@ def test_zero_request_budget_preserves_persisted_collection_times(raised, previo
         engine.dispose()
 
 
-def test_real_request_failure_survives_zero_request_fallback_and_history_gap():
+def test_real_request_failure_survives_zero_request_fallback_and_history_gap(pg_factory):
     from dataclasses import replace
     from app.macro.jobs.macro_series_state import MacroSeriesStateRepository
 
     catalog = CATALOG.model_copy(update={'series': (CATALOG.require(TARGET),)})
     actual = FakeProvider('fred', ProviderTransientError('MACRO_SOURCE_ERROR', request_count=1))
     skipped = FakeProvider('us_treasury', ProviderTransientError('US_RATES_REQUEST_BUDGET_EXHAUSTED'))
-    engine, job, opts, observations, _, _, history, _ = setup_job((actual, skipped), catalog=catalog)
+    engine, job, opts, observations, _, _, history, _ = setup_job(pg_factory, (actual, skipped), catalog=catalog)
     states = MacroSeriesStateRepository(history._session_factory, catalog.catalog_version)
     states.mark_success(TARGET, checked_at=AS_OF-timedelta(days=7), active_source='fred',
         latest_observed_at=date(2026, 9, 18), latest_released_at=AS_OF-timedelta(days=7), fallback_used=False)
@@ -1162,14 +1162,14 @@ def test_real_request_failure_survives_zero_request_fallback_and_history_gap():
         engine.dispose()
 
 
-def test_collection_success_with_history_gap_keeps_business_quality_stale():
+def test_collection_success_with_history_gap_keeps_business_quality_stale(pg_factory):
     from app.macro.jobs.macro_series_state import MacroSeriesStateRepository
 
     definition = CATALOG.require(TARGET)
     catalog = CATALOG.model_copy(update={'series': (
         definition.model_copy(update={'sources': definition.sources[:1]}),)})
     provider = FakeProvider('fred', result('fred', gap=('2020-01-01', '2020-01-03')))
-    engine, job, opts, _, _, publisher, history, _ = setup_job((provider,), catalog=catalog)
+    engine, job, opts, _, _, publisher, history, _ = setup_job(pg_factory, (provider,), catalog=catalog)
     states = MacroSeriesStateRepository(history._session_factory, catalog.catalog_version)
     job._states = states
     try:

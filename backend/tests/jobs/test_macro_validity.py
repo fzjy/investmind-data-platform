@@ -9,9 +9,7 @@ from app.config import Settings
 from app.connectors.macro.contracts import MacroFetchWindow, ProviderFetchResult, ProviderObservation, ProviderTransientError
 from app.connectors.macro.fred import FredMacroProvider
 from app.connectors.macro.transport import MacroHttpTransport
-from app.db.base import Base, ExternalBase, MartBase
 from app.db.models import MacroObservation
-from app.db.session import create_engine_and_session
 from app.macro.jobs.macro_series_state import MacroSeriesStateRepository
 from app.macro.jobs.macro_sync_repository import MacroObservationRepository
 from app.jobs.sync_status import MacroStatusReader
@@ -28,11 +26,8 @@ SERIES = CATALOG.require("us.cpi.yoy")
 
 
 @pytest.fixture
-def storage():
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
-    Base.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
+def storage(pg_factory):
+    engine, factory = pg_factory.kw["bind"], pg_factory
     yield factory, MacroObservationRepository(factory), MacroRepository(factory)
     engine.dispose()
 
@@ -84,7 +79,7 @@ def test_replay_can_close_open_validity_but_old_response_cannot_reopen_it(storag
     assert reader.visible_observations([SERIES.id], AS_OF) == ()
     with factory() as session:
         row = session.scalar(select(MacroObservation))
-        assert getattr(row, "valid_until", None) == CLOSED.replace(tzinfo=None)
+        assert getattr(row, "valid_until", None) == CLOSED
     assert len(reader.visible_observations([SERIES.id], BEFORE)) == 1
 
 
@@ -121,7 +116,7 @@ def test_readonly_status_does_not_trust_old_fresh_state_after_dependency_invalid
 @pytest.mark.parametrize("provider_status", ["success", "no_change", "failed"])
 def test_sync_does_not_recover_invalidated_value_from_prior_state(storage, provider_status):
     from app.connectors.macro.registry import MacroProviderRegistry
-    from app.jobs.locks import ProcessLocalJobLock
+    from app.jobs.locks import PostgresAdvisoryJobLock
     from app.macro.jobs.macro_sync import MacroSyncJob
     from app.macro.jobs.macro_sync_history import SqlMacroSyncHistory
     from app.macro.jobs.macro_sync_planning import MacroSyncOptions
@@ -139,7 +134,7 @@ def test_sync_does_not_recover_invalidated_value_from_prior_state(storage, provi
     catalog = CATALOG.model_copy(update={"series": (SERIES.model_copy(update={"sources": SERIES.sources[:1]}),)})
     job = MacroSyncJob(catalog=catalog, registry=MacroProviderRegistry((FakeProvider("fred", fetched),)),
         observation_repository=repository, state_repository=states, history=SqlMacroSyncHistory(factory),
-        lock=ProcessLocalJobLock(), publisher=FakePublisher(), timezone="Asia/Shanghai", clock=lambda: AS_OF)
+        lock=PostgresAdvisoryJobLock(factory.kw["bind"]), publisher=FakePublisher(), timezone="Asia/Shanghai", clock=lambda: AS_OF)
     report = job.run(MacroSyncOptions(AS_OF, 10, catalog.catalog_version, catalog.catalog_hash, mode="live"))
     assert report.outcomes[0].status in {"stale", "missing"}
     current = states.get_all()[0]
@@ -158,7 +153,7 @@ def test_sync_does_not_recover_invalidated_value_from_prior_state(storage, provi
 def test_invalidated_primary_allows_a_valid_fallback(storage):
     from decimal import Decimal
     from app.connectors.macro.registry import MacroProviderRegistry
-    from app.jobs.locks import ProcessLocalJobLock
+    from app.jobs.locks import PostgresAdvisoryJobLock
     from app.macro.jobs.macro_sync import MacroSyncJob
     from app.macro.jobs.macro_sync_history import SqlMacroSyncHistory
     from app.macro.jobs.macro_sync_planning import MacroSyncOptions
@@ -173,7 +168,7 @@ def test_invalidated_primary_allows_a_valid_fallback(storage):
     states = MacroSeriesStateRepository(factory, CATALOG.catalog_version)
     job = MacroSyncJob(catalog=catalog, registry=MacroProviderRegistry((FakeProvider("fred", fetch_levels()), fallback)),
         observation_repository=repository, state_repository=states, history=SqlMacroSyncHistory(factory),
-        lock=ProcessLocalJobLock(), publisher=FakePublisher(), timezone="Asia/Shanghai", clock=lambda: AS_OF)
+        lock=PostgresAdvisoryJobLock(factory.kw["bind"]), publisher=FakePublisher(), timezone="Asia/Shanghai", clock=lambda: AS_OF)
     report = job.run(MacroSyncOptions(AS_OF, 10, catalog.catalog_version, catalog.catalog_hash, mode="live"))
     assert report.outcomes[0].status == "fallback" and report.outcomes[0].actual_source == "bls"
     assert reader.visible_observations([SERIES.id], AS_OF)[0].source == "bls"
@@ -199,7 +194,7 @@ def test_existing_valid_fallback_does_not_resolve_invalid_primary_failure(storag
     from decimal import Decimal
     from app.db.models import JobFailure
     from app.connectors.macro.registry import MacroProviderRegistry
-    from app.jobs.locks import ProcessLocalJobLock
+    from app.jobs.locks import PostgresAdvisoryJobLock
     from app.macro.jobs.macro_sync import MacroSyncJob
     from app.macro.jobs.macro_sync_history import SqlMacroSyncHistory
     from app.macro.jobs.macro_sync_planning import MacroSyncOptions
@@ -221,7 +216,7 @@ def test_existing_valid_fallback_does_not_resolve_invalid_primary_failure(storag
     history.record_failure(prior_run, SERIES.id, "fred", "TIMEOUT", "TIMEOUT", True)
     fallback = FakeProvider("bls", AssertionError("must not refetch valid stored fallback"))
     job = MacroSyncJob(catalog=catalog, registry=MacroProviderRegistry((FakeProvider("fred", fetch_levels()), fallback)),
-        observation_repository=repository, state_repository=states, history=history, lock=ProcessLocalJobLock(),
+        observation_repository=repository, state_repository=states, history=history, lock=PostgresAdvisoryJobLock(factory.kw["bind"]),
         publisher=FakePublisher(), timezone="Asia/Shanghai", clock=lambda: AS_OF)
     report = job.run(MacroSyncOptions(AS_OF, 10, catalog.catalog_version, catalog.catalog_hash, mode="live"))
     outcome = report.outcomes[0]

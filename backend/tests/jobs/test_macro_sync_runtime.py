@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import httpx
 import pytest
+from sqlalchemy import event
 
 from app.config import Settings
 from app.connectors.macro.contracts import UnavailableMacroProvider
@@ -10,10 +11,10 @@ from app.jobs.locks import PostgresAdvisoryJobLock
 from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
 
 
-def test_fred_only_credentials_leave_tushare_unavailable(monkeypatch) -> None:
+def test_fred_only_credentials_leave_tushare_unavailable(pg_schema_url) -> None:
     from app.macro.jobs import macro_sync_runtime as runtime_module
 
-    settings = Settings(database_url="sqlite://", fred_api_key="fred-secret")
+    settings = Settings(database_url=pg_schema_url, fred_api_key="fred-secret")
     catalog = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE)
     with runtime_module.open_macro_sync_runtime(settings, transport=httpx.MockTransport(
         lambda request: httpx.Response(200, json={})
@@ -23,17 +24,17 @@ def test_fred_only_credentials_leave_tushare_unavailable(monkeypatch) -> None:
         assert runtime.job._registry.require("fred").provider_id == "fred"
 
 
-def test_missing_fred_key_registers_unavailable_provider() -> None:
+def test_missing_fred_key_registers_unavailable_provider(pg_schema_url) -> None:
     from app.macro.jobs.macro_sync_runtime import open_macro_sync_runtime
 
-    with open_macro_sync_runtime(Settings(database_url="sqlite://"), transport=httpx.MockTransport(
+    with open_macro_sync_runtime(Settings(database_url=pg_schema_url), transport=httpx.MockTransport(
         lambda request: httpx.Response(200, json={})
     )) as runtime:
         assert isinstance(runtime.job._registry.require("fred"), UnavailableMacroProvider)
         assert runtime.job._registry.require("bls").provider_id == "bls"
 
 
-def test_runtime_closes_engine_and_transport_after_success(monkeypatch) -> None:
+def test_runtime_closes_engine_and_transport_after_success(pg_schema_url, monkeypatch) -> None:
     from app.macro.jobs import macro_sync_runtime as runtime_module
 
     disposed = []
@@ -60,13 +61,13 @@ def test_runtime_closes_engine_and_transport_after_success(monkeypatch) -> None:
         real_close()
 
     monkeypatch.setattr(transport, "close", close)
-    with runtime_module.open_macro_sync_runtime(Settings(database_url="sqlite://"), transport=transport):
+    with runtime_module.open_macro_sync_runtime(Settings(database_url=pg_schema_url), transport=transport):
         pass
     assert disposed == [True]
     assert closed == [True]
 
 
-def test_provider_construction_failure_disposes_engine(monkeypatch) -> None:
+def test_provider_construction_failure_disposes_engine(pg_schema_url, monkeypatch) -> None:
     from app.macro.jobs import macro_sync_runtime as runtime_module
 
     disposed = []
@@ -74,33 +75,23 @@ def test_provider_construction_failure_disposes_engine(monkeypatch) -> None:
 
     def create(url):
         engine, factory = real_create(url)
-        monkeypatch.setattr(engine, "dispose", lambda: disposed.append(True))
+        event.listen(engine, "engine_disposed", lambda _: disposed.append(True))
         return engine, factory
 
     monkeypatch.setattr(runtime_module, "create_engine_and_session", create)
     monkeypatch.setattr(runtime_module, "BlsMacroProvider", lambda transport: (_ for _ in ()).throw(ValueError("boom")))
     with pytest.raises(runtime_module.MacroSyncRuntimeError, match="provider construction failed"):
-        with runtime_module.open_macro_sync_runtime(Settings(database_url="sqlite://"), transport=httpx.MockTransport(
+        with runtime_module.open_macro_sync_runtime(Settings(database_url=pg_schema_url), transport=httpx.MockTransport(
             lambda request: httpx.Response(200, json={})
         )):
             pass
     assert disposed == [True]
 
 
-def test_postgres_engine_selects_advisory_lock(monkeypatch) -> None:
+def test_postgres_engine_selects_advisory_lock(pg_schema_url) -> None:
     from app.macro.jobs import macro_sync_runtime as runtime_module
 
-    class Dialect:
-        name = "postgresql"
-
-    class Engine:
-        dialect = Dialect()
-
-        def dispose(self):
-            pass
-
-    monkeypatch.setattr(runtime_module, "create_engine_and_session", lambda url: (Engine(), object()))
-    with runtime_module.open_macro_sync_runtime(Settings(database_url="postgresql://user:secret@host/db"), transport=httpx.MockTransport(
+    with runtime_module.open_macro_sync_runtime(Settings(database_url=pg_schema_url), transport=httpx.MockTransport(
         lambda request: httpx.Response(200, json={})
     )) as runtime:
         assert isinstance(runtime.job._lock, PostgresAdvisoryJobLock)

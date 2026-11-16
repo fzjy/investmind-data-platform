@@ -4,10 +4,8 @@ from datetime import UTC, datetime, time
 import pytest
 
 from app.config import Settings
-from app.db.base import Base
-from app.db.session import create_engine_and_session
 from app.macro.jobs import macro_scheduler
-from app.jobs.locks import ProcessLocalJobLock, data_publication_lock_key
+from app.jobs.locks import PostgresAdvisoryJobLock, data_publication_lock_key
 from app.macro.jobs.macro_sync import MacroSyncReport
 from app.macro.jobs.macro_sync_history import MacroCatalogVersionHashMismatch, SqlMacroSyncHistory
 from app.macro.jobs.macro_sync_runtime import MacroSyncRuntime
@@ -40,9 +38,8 @@ def test_latest_slot_requires_aware_now():
 
 
 @pytest.fixture
-def harness():
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
-    Base.metadata.create_all(engine)
+def harness(pg_factory):
+    engine, factory = pg_factory.kw["bind"], pg_factory
     catalog = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE)
     history = SqlMacroSyncHistory(factory)
     state = SchedulerStateRepository(factory)
@@ -52,7 +49,7 @@ def harness():
 
     class Job:
         def run(self, options, *, on_completed):
-            lock = ProcessLocalJobLock()
+            lock = PostgresAdvisoryJobLock(engine)
             if not lock.try_acquire(data_publication_lock_key()):
                 return MacroSyncReport("locked", "run-1", "key", 1, options.as_of, catalog.catalog_version)
             try:
@@ -68,7 +65,7 @@ def harness():
     def coordinator(**overrides):
         return macro_scheduler.MacroScheduledCoordinator(
             settings=Settings(**overrides), catalog=catalog, history=history,
-            state=state, runtime_factory=runtime, publication_lock=ProcessLocalJobLock(),
+            state=state, runtime_factory=runtime, publication_lock=PostgresAdvisoryJobLock(engine),
             clock=lambda: now,
         )
 
@@ -137,9 +134,9 @@ def test_health_alert_transitions_and_scheduled_live_options(harness):
     assert all(item.trigger == "scheduler" and item.mode == "live" for item in calls)
 
 
-def test_publication_contention_skips_runtime_and_preserves_alert(harness):
+def test_publication_contention_skips_runtime_and_preserves_alert(pg_factory, harness):
     make, calls, _, state, _, now, _ = harness
-    lock = ProcessLocalJobLock()
+    lock = PostgresAdvisoryJobLock(pg_factory.kw["bind"])
     assert lock.try_acquire(data_publication_lock_key())
     try:
         assert make().run_startup(now).status == "locked"
@@ -149,11 +146,11 @@ def test_publication_contention_skips_runtime_and_preserves_alert(harness):
     assert make().run_startup(now).status == "partial"
 
 
-def test_health_is_recorded_before_releasing_cross_process_lock(harness, monkeypatch):
+def test_health_is_recorded_before_releasing_cross_process_lock(pg_factory, harness, monkeypatch):
     make, _, _, state, _, now, _ = harness
     original = state.open_alert
     def record(*args, **kwargs):
-        contender = ProcessLocalJobLock()
+        contender = PostgresAdvisoryJobLock(pg_factory.kw["bind"])
         acquired = contender.try_acquire(data_publication_lock_key())
         if acquired:
             contender.release(data_publication_lock_key())
@@ -179,7 +176,7 @@ def test_duplicate_fold_fire_does_not_retry_in_same_process(harness, status):
 
 
 @pytest.mark.parametrize("status", ["partial", "failed", "completed"])
-def test_runtime_close_failure_still_records_health_under_lock(harness, monkeypatch, status):
+def test_runtime_close_failure_still_records_health_under_lock(pg_factory, harness, monkeypatch, status):
     make, _, history, state, catalog, now, _ = harness
     state.open_alert("macro-sync:degraded", "macro_sync", "error", now, {})
     state.resolve_alert("macro-sync:degraded", now)
@@ -190,7 +187,7 @@ def test_runtime_close_failure_still_records_health_under_lock(harness, monkeypa
     failure = RuntimeError("controlled close failure")
     class Job:
         def run(self, options, *, on_completed):
-            lock = ProcessLocalJobLock()
+            lock = PostgresAdvisoryJobLock(pg_factory.kw["bind"])
             assert lock.try_acquire(data_publication_lock_key())
             try:
                 key = "2026-W39:" + catalog.catalog_version
@@ -209,7 +206,7 @@ def test_runtime_close_failure_still_records_health_under_lock(harness, monkeypa
     method = "resolve_alert" if status == "completed" else "open_alert"
     original = getattr(state, method)
     def record(*args, **kwargs):
-        contender = ProcessLocalJobLock()
+        contender = PostgresAdvisoryJobLock(pg_factory.kw["bind"])
         acquired = contender.try_acquire(data_publication_lock_key())
         if acquired:
             contender.release(data_publication_lock_key())
@@ -222,7 +219,7 @@ def test_runtime_close_failure_still_records_health_under_lock(harness, monkeypa
     assert caught.value is failure
     assert state.alert("macro-sync:degraded").status == expected
     assert events == ["health", "closing"]
-    contender = ProcessLocalJobLock()
+    contender = PostgresAdvisoryJobLock(pg_factory.kw["bind"])
     assert contender.try_acquire(data_publication_lock_key())
     contender.release(data_publication_lock_key())
     if status == "completed":

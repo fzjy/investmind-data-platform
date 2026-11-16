@@ -16,7 +16,7 @@ def test_failed_no_change_and_empty_actual_requests_are_audited_without_core_row
     fetched = replace(result("fred", status), observations=(), raw_payload={"token": "canary-secret", "response": "controlled"})
     provider = FakeProvider("fred", fetched)
     catalog = CATALOG.model_copy(update={"series": tuple(item if item.id == TARGET else item.model_copy(update={"sources": ()}) for item in CATALOG.series)})
-    engine, job, opts, _, _, _, _, _ = setup_job((provider,), catalog=catalog, states=(old_state(TARGET, AS_OF.date() - timedelta(days=2)),))
+    engine, job, opts, _, _, _, _, _ = setup_job(pg_factory, (provider,), catalog=catalog, states=(old_state(TARGET, AS_OF.date() - timedelta(days=2)),))
     factory = pg_factory
     job._observations = MacroObservationRepository(factory)
     try:
@@ -32,7 +32,6 @@ def test_failed_no_change_and_empty_actual_requests_are_audited_without_core_row
             assert session.scalars(select(MacroObservation)).all() == []
     finally:
         engine.dispose()
-        factory.kw["bind"].dispose()
 
 
 def test_visible_and_deferred_rows_share_one_request_batch_and_window_hash(pg_factory) -> None:
@@ -40,7 +39,7 @@ def test_visible_and_deferred_rows_share_one_request_batch_and_window_hash(pg_fa
     fetched = replace(fetched, observations=(*fetched.observations, replace(fetched.observations[0], released_at=AS_OF + timedelta(days=1), revision="future")))
     provider = FakeProvider("fred", fetched)
     catalog = CATALOG.model_copy(update={"series": tuple(item if item.id == TARGET else item.model_copy(update={"sources": ()}) for item in CATALOG.series)})
-    engine, job, opts, _, _, _, _, _ = setup_job((provider,), catalog=catalog)
+    engine, job, opts, _, _, _, _, _ = setup_job(pg_factory, (provider,), catalog=catalog)
     factory = pg_factory
     job._observations = MacroObservationRepository(factory)
     try:
@@ -56,7 +55,6 @@ def test_visible_and_deferred_rows_share_one_request_batch_and_window_hash(pg_fa
             assert len(set(session.scalars(select(SourcePayload.request_hash)))) == 2
     finally:
         engine.dispose()
-        factory.kw["bind"].dispose()
 
 
 def test_request_retry_identity_is_idempotent_and_raw_survives_core_failure(pg_factory, monkeypatch) -> None:

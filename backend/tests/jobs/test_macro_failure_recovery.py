@@ -5,8 +5,7 @@ import pytest
 from sqlalchemy import select
 
 from app.config import Settings
-from app.db.base import ExternalBase
-from app.db.models import JobFailure, PublishedSnapshot
+from app.db.models import JobFailure
 from app.jobs.sync_status import MacroStatusReader
 from backend.tests.jobs.test_macro_sync import AS_OF, CATALOG, TARGET, FakeProvider, old_state, result, setup_job
 
@@ -15,7 +14,7 @@ from backend.tests.jobs.test_macro_sync import AS_OF, CATALOG, TARGET, FakeProvi
     ("success", "live", True), ("success", "replay", False),
     ("no_change", "live", False), ("empty", "live", False),
 ])
-def test_source_recovery_resolves_only_its_prior_failure_and_not_replay(status, mode, want_resolved) -> None:
+def test_source_recovery_resolves_only_its_prior_failure_and_not_replay(pg_factory, status, mode, want_resolved) -> None:
     catalog = CATALOG.model_copy(update={"series": tuple(
         item if item.id == TARGET else item.model_copy(update={"sources": ()}) for item in CATALOG.series
     )})
@@ -23,10 +22,8 @@ def test_source_recovery_resolves_only_its_prior_failure_and_not_replay(status, 
     if status == "empty":
         fetched = replace(fetched, observations=())
     provider = FakeProvider("fred", fetched)
-    engine, job, opts, _, _, _, history, _ = setup_job((provider,), catalog=catalog)
+    engine, job, opts, _, _, _, history, _ = setup_job(pg_factory, (provider,), catalog=catalog)
     factory = history._session_factory
-    ExternalBase.metadata.create_all(engine)
-    PublishedSnapshot.__table__.create(engine, checkfirst=True)
     earlier = AS_OF - timedelta(days=7)
     run_id = history.start("prior", earlier, catalog.catalog_version, catalog.catalog_hash, "test", 1)
     history.record_failure(run_id, TARGET, "fred", "TIMEOUT", "TIMEOUT", True)
@@ -48,9 +45,9 @@ def test_source_recovery_resolves_only_its_prior_failure_and_not_replay(status, 
         engine.dispose()
 
 
-def test_confirmed_no_change_with_existing_source_value_can_resolve_timeout() -> None:
+def test_confirmed_no_change_with_existing_source_value_can_resolve_timeout(pg_factory) -> None:
     provider = FakeProvider("fred", result("fred", "no_change"))
-    engine, job, opts, observations, _, _, history, _ = setup_job((provider,), states=(old_state(TARGET, AS_OF.date()),))
+    engine, job, opts, observations, _, _, history, _ = setup_job(pg_factory, (provider,), states=(old_state(TARGET, AS_OF.date()),))
     observations.visible[TARGET] = ("fred", AS_OF.date(), AS_OF - timedelta(days=1))
     run_id = history.start("prior", AS_OF - timedelta(days=7), CATALOG.catalog_version, CATALOG.catalog_hash, "test", 1)
     history.record_failure(run_id, TARGET, "fred", "TIMEOUT", "TIMEOUT", True)
@@ -63,14 +60,12 @@ def test_confirmed_no_change_with_existing_source_value_can_resolve_timeout() ->
         engine.dispose()
 
 
-def test_successful_retry_removes_open_failure_from_status_but_keeps_history() -> None:
+def test_successful_retry_removes_open_failure_from_status_but_keeps_history(pg_factory) -> None:
     catalog = CATALOG.model_copy(update={"series": tuple(
         item.model_copy(update={"sources": item.sources[:1]}) for item in CATALOG.series if item.id == TARGET
     )})
     provider = FakeProvider("fred", result("fred", "failed"))
-    engine, job, opts, _, _, _, history, _ = setup_job((provider,), catalog=catalog)
-    ExternalBase.metadata.create_all(engine)
-    PublishedSnapshot.__table__.create(engine, checkfirst=True)
+    engine, job, opts, _, _, _, history, _ = setup_job(pg_factory, (provider,), catalog=catalog)
     try:
         job.run(opts)
         reader = MacroStatusReader(history._session_factory, Settings(macro_sync_enabled=True), catalog=catalog)
@@ -86,9 +81,9 @@ def test_successful_retry_removes_open_failure_from_status_but_keeps_history() -
         engine.dispose()
 
 
-def test_no_change_cannot_resolve_using_only_operational_state_without_visible_core() -> None:
+def test_no_change_cannot_resolve_using_only_operational_state_without_visible_core(pg_factory) -> None:
     provider = FakeProvider("fred", result("fred", "no_change"))
-    engine, job, opts, _, _, _, history, _ = setup_job((provider,), states=(old_state(TARGET, AS_OF.date()),))
+    engine, job, opts, _, _, _, history, _ = setup_job(pg_factory, (provider,), states=(old_state(TARGET, AS_OF.date()),))
     run_id = history.start("prior", AS_OF - timedelta(days=7), CATALOG.catalog_version, CATALOG.catalog_hash, "test", 1)
     history.record_failure(run_id, TARGET, "fred", "TIMEOUT", "TIMEOUT", True)
     try:
@@ -99,11 +94,11 @@ def test_no_change_cannot_resolve_using_only_operational_state_without_visible_c
         engine.dispose()
 
 
-def test_trusted_offline_restoration_resolves_only_no_source_not_other_unavailable_errors() -> None:
+def test_trusted_offline_restoration_resolves_only_no_source_not_other_unavailable_errors(pg_factory) -> None:
     catalog = CATALOG.model_copy(update={"series": tuple(
         item.model_copy(update={"sources": ()}) for item in CATALOG.series if item.id == TARGET
     )})
-    engine, job, opts, observations, _, _, history, _ = setup_job((), catalog=catalog)
+    engine, job, opts, observations, _, _, history, _ = setup_job(pg_factory, (), catalog=catalog)
     prior = history.start("prior", AS_OF - timedelta(days=7), catalog.catalog_version, catalog.catalog_hash, "test", 1)
     history.record_failure(prior, TARGET, "unavailable", "MACRO_NO_SOURCE", "MACRO_NO_SOURCE", False)
     history.record_failure(prior, TARGET, "unavailable", "MACRO_SERIES_ERROR", "MACRO_SERIES_ERROR", False)

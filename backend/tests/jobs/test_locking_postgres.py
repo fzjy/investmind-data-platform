@@ -2,12 +2,10 @@ from __future__ import annotations
 
 from collections.abc import Iterator
 from datetime import date
-import os
 
 import pytest
 from sqlalchemy import Engine, create_engine, text
 from sqlalchemy.pool import NullPool
-from testcontainers.community.postgres import PostgresContainer
 
 from app.jobs.locks import (
     PostgresAdvisoryJobLock,
@@ -17,26 +15,13 @@ from app.jobs.locks import (
 )
 
 
-pytestmark = [
-    pytest.mark.postgres,
-    pytest.mark.skipif(
-        os.environ.get("DANG_RUN_POSTGRES_TESTS") != "1",
-        reason="set DANG_RUN_POSTGRES_TESTS=1 to run disposable PostgreSQL lock tests",
-    ),
-]
-
-
-@pytest.fixture(scope="module")
-def postgres_engine() -> Iterator[Engine]:
-    with PostgresContainer("postgres:17-alpine", driver="psycopg") as postgres:
-        engine = create_engine(
-            postgres.get_connection_url(driver="psycopg"),
-            poolclass=NullPool,
-        )
-        try:
-            yield engine
-        finally:
-            engine.dispose()
+@pytest.fixture
+def postgres_engine(pg_schema_url) -> Iterator[Engine]:
+    engine = create_engine(pg_schema_url, poolclass=NullPool)
+    try:
+        yield engine
+    finally:
+        engine.dispose()
 
 
 def test_same_key_is_exclusive_across_lock_instances(postgres_engine: Engine) -> None:
@@ -140,7 +125,7 @@ def test_repeated_release_never_raises(postgres_engine: Engine) -> None:
     lock.release(value)
 
 
-def test_actual_macro_job_cli_and_scheduler_share_publication_lock_without_reentry(postgres_engine: Engine) -> None:
+def test_actual_macro_job_cli_and_scheduler_share_publication_lock_without_reentry(pg_factory, postgres_engine: Engine) -> None:
     from contextlib import contextmanager
     from dataclasses import replace
     from datetime import timedelta
@@ -150,7 +135,7 @@ def test_actual_macro_job_cli_and_scheduler_share_publication_lock_without_reent
     from app.jobs.scheduler_state import SchedulerStateRepository
     from backend.tests.jobs.test_macro_sync import FakeProvider, result, setup_job
     provider = FakeProvider("fred", result("fred"))
-    sqlite_engine, job, opts, observations, _, publisher, history, _ = setup_job((provider,))
+    job_engine, job, opts, observations, _, publisher, history, _ = setup_job(pg_factory, (provider,))
     job._lock = PostgresAdvisoryJobLock(postgres_engine)
     contender = PostgresAdvisoryJobLock(postgres_engine)
     @contextmanager
@@ -173,4 +158,4 @@ def test_actual_macro_job_cli_and_scheduler_share_publication_lock_without_reent
         assert contender.try_acquire(data_publication_lock_key())
     finally:
         contender.release(data_publication_lock_key())
-        sqlite_engine.dispose()
+        job_engine.dispose()

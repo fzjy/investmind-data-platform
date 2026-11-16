@@ -11,9 +11,7 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, sessionmaker
 
 from app.connectors.macro.contracts import ProviderFetchResult, ProviderObservation
-from app.db.base import Base, ExternalBase
 from app.db.models import IngestionBatch, MacroObservation, RejectedRecord, SourcePayload
-from app.db.session import create_engine_and_session
 from app.macro.jobs.macro_sync_repository import MacroObservationRepository
 from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog, MacroSeriesDefinition
 
@@ -23,12 +21,10 @@ DAY = timedelta(days=1)
 
 
 @pytest.fixture
-def repository_fixture() -> Iterator[
+def repository_fixture(pg_factory) -> Iterator[
     tuple[MacroObservationRepository, sessionmaker[Session], Engine]
 ]:
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
-    Base.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
+    engine, factory = pg_factory.kw["bind"], pg_factory
     yield MacroObservationRepository(factory), factory, engine
     engine.dispose()
 
@@ -90,7 +86,7 @@ def test_known_provider_revision_is_idempotent(
         rows = session.scalars(select(MacroObservation)).all()
     assert len(rows) == 1
     assert rows[0].revision == "provider-v1"
-    assert rows[0].released_at == datetime(2026, 9, 15)
+    assert rows[0].released_at == datetime(2026, 9, 15, tzinfo=UTC)
 
 
 @pytest.mark.parametrize("release_failure", [False, True])
@@ -228,9 +224,9 @@ def test_unknown_release_date_is_stable_until_value_changes(
         ).all()
     assert len(rows) == 2
     assert rows[0].revision.startswith("initial-import:")
-    assert rows[0].released_at == CAPTURED_AT.replace(tzinfo=None)
+    assert rows[0].released_at == CAPTURED_AT
     assert rows[1].revision.startswith("detected:")
-    assert rows[1].released_at == (CAPTURED_AT + 2 * DAY).replace(tzinfo=None)
+    assert rows[1].released_at == (CAPTURED_AT + 2 * DAY)
 
 
 def test_same_observation_from_different_sources_is_preserved(
@@ -301,7 +297,7 @@ def test_unknown_release_uses_actual_capture_not_historical_as_of(
     with factory() as session:
         row = session.scalar(select(MacroObservation).where(MacroObservation.series_id == series.id))
     assert row is not None
-    assert row.released_at == captured_at.replace(tzinfo=None)
+    assert row.released_at == captured_at
     assert row.revision.startswith("initial-import:")
     assert repository.latest_visible(
         series, datetime(2019, 9, 20, 9, tzinfo=UTC), date(2019, 9, 20),
@@ -333,7 +329,7 @@ def test_json_payload_is_saved_as_a_json_audit_envelope(
         "requestCount": 1,
         "data": raw,
     }
-    assert payload.captured_at == CAPTURED_AT.replace(tzinfo=None)
+    assert payload.captured_at == CAPTURED_AT
     assert batch is not None
     assert (batch.source, batch.dataset, batch.status) == (
         "fred",

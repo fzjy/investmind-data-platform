@@ -3,9 +3,7 @@ from datetime import UTC, date, datetime
 import pytest
 from sqlalchemy import select
 
-from app.db.base import Base
 from app.db.models import JobFailure, JobRun
-from app.db.session import create_engine_and_session
 from app.jobs.locks import macro_sync_lock_key
 from app.macro.jobs.macro_sync_history import (
     MacroCatalogVersionHashMismatch,
@@ -25,9 +23,8 @@ V7_LEGACY_HASHES = (
 )
 
 
-def make_history():
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
-    Base.metadata.create_all(engine)
+def make_history(pg_factory):
+    engine, factory = pg_factory.kw["bind"], pg_factory
     return engine, factory, SqlMacroSyncHistory(factory)
 
 
@@ -37,8 +34,8 @@ def test_business_and_lock_keys_are_stable() -> None:
     assert macro_sync_lock_key(key) == "sync-macro:2026-W38:2026-09-20-v1"
 
 
-def test_completed_skip_partial_retry_and_force_attempt_numbers() -> None:
-    engine, factory, history = make_history()
+def test_completed_skip_partial_retry_and_force_attempt_numbers(pg_factory) -> None:
+    engine, factory, history = make_history(pg_factory)
     try:
         key = macro_sync_business_key(AS_OF, VERSION, "Asia/Shanghai")
         assert history.inspect(key, VERSION, HASH) == (False, 1)
@@ -58,8 +55,8 @@ def test_completed_skip_partial_retry_and_force_attempt_numbers() -> None:
         engine.dispose()
 
 
-def test_version_hash_conflict_is_rejected_before_new_run() -> None:
-    engine, factory, history = make_history()
+def test_version_hash_conflict_is_rejected_before_new_run(pg_factory) -> None:
+    engine, factory, history = make_history(pg_factory)
     try:
         key = macro_sync_business_key(AS_OF, VERSION, "Asia/Shanghai")
         history.start(key, AS_OF, VERSION, HASH, "cli", 1)
@@ -71,8 +68,8 @@ def test_version_hash_conflict_is_rejected_before_new_run() -> None:
         engine.dispose()
 
 
-def test_terminal_lock_and_failure_are_redacted() -> None:
-    engine, factory, history = make_history()
+def test_terminal_lock_and_failure_are_redacted(pg_factory) -> None:
+    engine, factory, history = make_history(pg_factory)
     try:
         key = macro_sync_business_key(AS_OF, VERSION, "Asia/Shanghai")
         run_id = history.record_terminal(key, AS_OF, VERSION, HASH, "cli", 1, "locked")
@@ -87,8 +84,8 @@ def test_terminal_lock_and_failure_are_redacted() -> None:
         engine.dispose()
 
 
-def test_direct_history_failure_rejects_uppercase_secret_shaped_code() -> None:
-    engine, factory, history = make_history()
+def test_direct_history_failure_rejects_uppercase_secret_shaped_code(pg_factory) -> None:
+    engine, factory, history = make_history(pg_factory)
     try:
         key = macro_sync_business_key(AS_OF, VERSION, "Asia/Shanghai")
         run_id = history.start(key, AS_OF, VERSION, HASH, "cli", 1)
@@ -105,8 +102,8 @@ def test_direct_history_failure_rejects_uppercase_secret_shaped_code() -> None:
         engine.dispose()
 
 
-def test_failure_without_gap_snapshot_keeps_last_explicit_snapshot() -> None:
-    engine, _, history = make_history()
+def test_failure_without_gap_snapshot_keeps_last_explicit_snapshot(pg_factory) -> None:
+    engine, _, history = make_history(pg_factory)
     try:
         first = history.start("2026-W38:" + VERSION, AS_OF, VERSION, HASH, "cli", 1)
         history.finish(first, "partial", {
@@ -124,8 +121,8 @@ def test_failure_without_gap_snapshot_keeps_last_explicit_snapshot() -> None:
 
 
 @pytest.mark.parametrize("legacy_hash", V7_LEGACY_HASHES)
-def test_verified_newline_legacy_identity_preserves_runs_and_gap_snapshot(legacy_hash):
-    engine, factory, history = make_history()
+def test_verified_newline_legacy_identity_preserves_runs_and_gap_snapshot(pg_factory, legacy_hash):
+    engine, factory, history = make_history(pg_factory)
     try:
         key = macro_sync_business_key(AS_OF, V7_VERSION, "Asia/Shanghai")
         run_id = history.start(key, AS_OF, V7_VERSION, legacy_hash, "cli", 1)
@@ -146,8 +143,8 @@ def test_verified_newline_legacy_identity_preserves_runs_and_gap_snapshot(legacy
 
 
 @pytest.mark.parametrize("expected_hash", (HASH, "b" * 64))
-def test_legacy_identity_is_not_a_bypass_for_changed_content(expected_hash):
-    engine, factory, history = make_history()
+def test_legacy_identity_is_not_a_bypass_for_changed_content(pg_factory, expected_hash):
+    engine, factory, history = make_history(pg_factory)
     try:
         run_id = history.start("prior", AS_OF, V7_VERSION, V7_LEGACY_HASHES[1], "cli", 1)
         history.finish(run_id, "partial", {"unresolvedGaps": {
@@ -163,8 +160,8 @@ def test_legacy_identity_is_not_a_bypass_for_changed_content(expected_hash):
 
 
 @pytest.mark.parametrize("recorded_hash", (None, {}, HASH, V7_LEGACY_HASHES[1].upper()))
-def test_unknown_or_malformed_legacy_hash_fails_closed(recorded_hash):
-    engine, factory, history = make_history()
+def test_unknown_or_malformed_legacy_hash_fails_closed(pg_factory, recorded_hash):
+    engine, factory, history = make_history(pg_factory)
     try:
         with factory.begin() as session:
             session.add(JobRun(id="bad-hash", job_name="sync-macro", business_key="prior", status="partial",
@@ -179,10 +176,10 @@ def test_unknown_or_malformed_legacy_hash_fails_closed(recorded_hash):
 
 
 @pytest.mark.parametrize('legacy_hash', (V7_LF_HASH, *V7_LEGACY_HASHES))
-def test_v8_inherits_only_unchanged_series_gaps_without_inheriting_completed(legacy_hash):
+def test_v8_inherits_only_unchanged_series_gaps_without_inheriting_completed(pg_factory, legacy_hash):
     from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
     active = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE)
-    engine, factory, history = make_history()
+    engine, factory, history = make_history(pg_factory)
     try:
         run_id = history.start('old-week', AS_OF, V7_VERSION, legacy_hash, 'cli', 1)
         history.finish(run_id, 'completed', {'unresolvedGaps': {
@@ -208,8 +205,8 @@ def test_v8_inherits_only_unchanged_series_gaps_without_inheriting_completed(leg
         engine.dispose()
 
 
-def test_verified_hash_does_not_carry_completed_or_gaps_across_catalog_versions():
-    engine, _, history = make_history()
+def test_verified_hash_does_not_carry_completed_or_gaps_across_catalog_versions(pg_factory):
+    engine, _, history = make_history(pg_factory)
     try:
         run_id = history.start("prior", AS_OF, "older-version", V7_LEGACY_HASHES[1], "cli", 1)
         history.finish(run_id, "completed", {"unresolvedGaps": {
@@ -222,11 +219,11 @@ def test_verified_hash_does_not_carry_completed_or_gaps_across_catalog_versions(
 
 
 @pytest.mark.parametrize('snapshot', ['none','empty','gaps'])
-def test_v9_prefers_v8_explicit_snapshot_then_v7_without_reviving_changed_contract(snapshot):
+def test_v9_prefers_v8_explicit_snapshot_then_v7_without_reviving_changed_contract(pg_factory, snapshot):
     from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
     from app.macro.history_catalog import V8_HASH, V8_VERSION
     active=MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE)
-    engine,factory,history=make_history()
+    engine,factory,history=make_history(pg_factory)
     try:
         old=history.start('v7-old',AS_OF,V7_VERSION,V7_LF_HASH,'cli',1)
         history.finish(old,'completed',{'unresolvedGaps':{'cn.cpi.core_yoy':[{'start':'2020-01-01','end':'2020-02-01'}]}})

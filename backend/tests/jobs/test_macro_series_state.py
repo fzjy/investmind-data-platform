@@ -8,9 +8,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session, sessionmaker
 
 from app.connectors.macro.contracts import ProviderTransientError
-from app.db.base import Base
 from app.db.models import MacroSeriesState
-from app.db.session import create_engine_and_session
 from app.stocks.jobs.daily_sync_runtime import redact_sensitive_values
 from app.macro.jobs.macro_series_state import (
     MacroSeriesStateRepository,
@@ -25,11 +23,10 @@ OBSERVED_AT = date(2026, 8, 1)
 
 
 @pytest.fixture
-def state_fixture() -> Iterator[
+def state_fixture(pg_factory) -> Iterator[
     tuple[MacroSeriesStateRepository, sessionmaker[Session]]
 ]:
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
-    Base.metadata.create_all(engine)
+    engine, factory = pg_factory.kw["bind"], pg_factory
     repository = MacroSeriesStateRepository(factory, CATALOG_VERSION)
     yield repository, factory
     engine.dispose()
@@ -58,8 +55,8 @@ def test_success_clears_errors_and_resets_failure_count(
         state = session.get(MacroSeriesState, "us.cpi.yoy")
     assert state is not None
     assert state.catalog_version == CATALOG_VERSION
-    assert state.last_checked_at == CHECKED_AT.replace(tzinfo=None)
-    assert state.last_success_at == CHECKED_AT.replace(tzinfo=None)
+    assert state.last_checked_at == CHECKED_AT
+    assert state.last_success_at == CHECKED_AT
     assert state.active_source == "fred"
     assert state.fallback_used is False
     assert state.stale is False
@@ -174,9 +171,8 @@ def test_missing_state_has_no_source_or_value(
     assert state.consecutive_failures == 1
 
 
-def test_every_error_message_passes_through_shared_redactor() -> None:
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
-    Base.metadata.create_all(engine)
+def test_every_error_message_passes_through_shared_redactor(pg_factory) -> None:
+    engine, factory = pg_factory.kw["bind"], pg_factory
     secret = "provider-secret-value"
     messages: list[str] = []
 
@@ -220,9 +216,8 @@ def test_every_error_message_passes_through_shared_redactor() -> None:
         engine.dispose()
 
 
-def test_default_redactor_sanitizes_macro_secret_patterns() -> None:
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
-    Base.metadata.create_all(engine)
+def test_default_redactor_sanitizes_macro_secret_patterns(pg_factory) -> None:
+    engine, factory = pg_factory.kw["bind"], pg_factory
     repository = MacroSeriesStateRepository(factory, CATALOG_VERSION)
     secrets = (
         "token-secret",
