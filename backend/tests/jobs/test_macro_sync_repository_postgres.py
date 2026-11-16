@@ -3,7 +3,7 @@ from __future__ import annotations
 from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, date, datetime, timedelta
 from decimal import Decimal
-from threading import Barrier, BrokenBarrierError
+from threading import Barrier
 
 import pytest
 from sqlalchemy import create_engine, event, func, select
@@ -29,7 +29,7 @@ def test_concurrent_persistence_is_idempotent_for_known_and_unknown_revisions(pg
     )
     known_results = _persist_concurrently(
         pg_schema_url,
-        known,
+        ((known,), (known,)),
         (CAPTURED_AT, CAPTURED_AT),
     )
     assert sorted((result.inserted, result.unchanged) for result in known_results) == [
@@ -45,7 +45,7 @@ def test_concurrent_persistence_is_idempotent_for_known_and_unknown_revisions(pg
     )
     unknown_results = _persist_concurrently(
         pg_schema_url,
-        unknown,
+        ((unknown,), (unknown,)),
         (CAPTURED_AT, CAPTURED_AT + timedelta(seconds=1)),
     )
     assert sorted((result.inserted, result.unchanged) for result in unknown_results) == [
@@ -67,9 +67,10 @@ def test_concurrent_reversed_batches_acquire_observation_locks_in_stable_order(p
         revision="provider-v1",
     )
 
-    results = _persist_batches_concurrently(
+    results = _persist_concurrently(
         pg_schema_url,
         ((first, second), (second, first)),
+        (CAPTURED_AT, CAPTURED_AT),
     )
 
     assert sorted((result.inserted, result.unchanged) for result in results) == [
@@ -82,106 +83,40 @@ def test_concurrent_reversed_batches_acquire_observation_locks_in_stable_order(p
 
 def _persist_concurrently(
     database_url: str,
-    observation: ProviderObservation,
+    batches: tuple[tuple[ProviderObservation, ...], tuple[ProviderObservation, ...]],
     captured_at: tuple[datetime, datetime],
 ) -> tuple[MacroPersistResult, MacroPersistResult]:
-    engines = (_engine(database_url), _engine(database_url))
-    factories = tuple(
-        sessionmaker(engine, expire_on_commit=False) for engine in engines
-    )
     barrier = Barrier(2)
+    series = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE).require("us.cpi.yoy")
 
-    def pause_after_identity_query(
-        _connection: object,
-        _cursor: object,
-        statement: str,
-        _parameters: object,
-        _context: object,
-        _executemany: bool,
-    ) -> None:
-        if "SELECT" not in statement or "macro_observation" not in statement:
-            return
+    def persist(observations, captured):
+        engine = _engine(database_url)
+        keys = []
+
+        @event.listens_for(engine, "before_cursor_execute")
+        def before_lock(_connection, _cursor, statement, parameters, _context, _executemany):
+            if "pg_advisory_xact_lock(" in statement:
+                keys.append(parameters["lock_key"])
+                if len(keys) == 1:
+                    barrier.wait(timeout=5)
+
         try:
-            barrier.wait(timeout=1.5)
-        except BrokenBarrierError:
-            pass
-
-    for engine in engines:
-        event.listen(engine, "before_cursor_execute", pause_after_identity_query)
-    try:
-        with ThreadPoolExecutor(max_workers=2) as executor:
-            futures = tuple(
-                executor.submit(
-                    MacroObservationRepository(factory).persist,
-                    MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE).require(
-                        "us.cpi.yoy"
-                    ),
-                    _result(observation),
-                    captured,
-                )
-                for factory, captured in zip(factories, captured_at, strict=True)
-            )
-            results = tuple(future.result(timeout=8) for future in futures)
-            return results[0], results[1]
-    finally:
-        for engine in engines:
-            event.remove(engine, "before_cursor_execute", pause_after_identity_query)
+            repository = MacroObservationRepository(sessionmaker(engine, expire_on_commit=False))
+            return repository.persist(series, _result(*observations), captured), keys
+        finally:
             engine.dispose()
 
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        first, second = [
+            executor.submit(persist, observations, captured)
+            for observations, captured in zip(batches, captured_at, strict=True)
+        ]
+        first_result, first_keys = first.result(timeout=12)
+        second_result, second_keys = second.result(timeout=12)
 
-def _persist_batches_concurrently(
-    database_url: str,
-    batches: tuple[
-        tuple[ProviderObservation, ProviderObservation],
-        tuple[ProviderObservation, ProviderObservation],
-    ],
-) -> tuple[MacroPersistResult, MacroPersistResult]:
-    engines = (_engine(database_url), _engine(database_url))
-    factories = tuple(
-        sessionmaker(engine, expire_on_commit=False) for engine in engines
-    )
-    identity_barrier = Barrier(2)
-
-    def synchronize_after_first_lock(
-        _connection: object,
-        _cursor: object,
-        statement: str,
-        _parameters: object,
-        _context: object,
-        _executemany: bool,
-    ) -> None:
-        if "SELECT" not in statement or "macro_observation" not in statement:
-            return
-        try:
-            identity_barrier.wait(timeout=1.5)
-        except BrokenBarrierError:
-            pass
-
-    for engine in engines:
-        event.listen(engine, "before_cursor_execute", synchronize_after_first_lock)
-    try:
-        with ThreadPoolExecutor(max_workers=2) as executor:
-            futures = tuple(
-                executor.submit(
-                    MacroObservationRepository(factory).persist,
-                    MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE).require(
-                        "us.cpi.yoy"
-                    ),
-                    _result(*observations),
-                    CAPTURED_AT,
-                )
-                for factory, observations in zip(factories, batches, strict=True)
-            )
-            results = tuple(future.result(timeout=8) for future in futures)
-            return results[0], results[1]
-    finally:
-        for engine in engines:
-            event.remove(
-                engine,
-                "before_cursor_execute",
-                synchronize_after_first_lock,
-            )
-            engine.dispose()
+    assert len(first_keys) == len(set(first_keys)) == len(batches[0])
+    assert first_keys == second_keys
+    return first_result, second_result
 
 
 def _engine(database_url: str) -> Engine:
