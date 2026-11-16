@@ -9,9 +9,7 @@ from typer.testing import CliRunner
 
 from app.cli import main as cli
 from app.config import Settings
-from app.db.base import Base, ExternalBase
 from app.db.models import JobCursor, MacroObservation
-from app.db.session import create_engine_and_session
 
 
 @pytest.mark.parametrize('status,code', [('completed', 0), ('partial', 4), ('failed', 4), ('locked', 5)])
@@ -24,7 +22,7 @@ def test_cli_status_and_file_configuration(monkeypatch, status, code):
     @contextmanager
     def runtime(settings):
         yield type('Runtime', (), {'job': Job()})()
-    monkeypatch.setattr(cli.Settings, 'from_env', lambda: Settings(database_url='sqlite://',
+    monkeypatch.setattr(cli.Settings, 'from_env', lambda: Settings(database_url='postgresql+psycopg://controlled.invalid/test',
         macro_history_years=10, macro_backfill_end=date(2026, 9, 30), macro_backfill_request_limit=12))
     monkeypatch.setattr(cli, 'open_govbond_history_runtime', runtime, raising=False)
     result = CliRunner().invoke(cli.app, ['backfill-govbond-history'])
@@ -70,10 +68,9 @@ def test_stable_recovery_errors_are_preserved(monkeypatch, code):
     assert json.loads(result.stdout) == {'status': 'failed', 'error': {'code': code}}
 
 
-def test_read_only_status_does_not_construct_http_or_write(monkeypatch, tmp_path):
-    url = f'sqlite+pysqlite:///{tmp_path / "status.sqlite"}'
-    engine, factory = create_engine_and_session(url)
-    Base.metadata.create_all(engine)
+def test_read_only_status_does_not_construct_http_or_write(monkeypatch, pg_schema_url, pg_factory):
+    url = pg_schema_url
+    factory = pg_factory
     monkeypatch.setattr(cli.Settings, 'from_env', lambda: Settings(database_url=url))
     monkeypatch.setattr(httpx, 'Client', lambda *a, **k: pytest.fail('status constructed HTTP'))
     result = CliRunner().invoke(cli.app, ['govbond-history-status'])
@@ -81,18 +78,15 @@ def test_read_only_status_does_not_construct_http_or_write(monkeypatch, tmp_path
     assert json.loads(result.stdout)['status'] == 'not_started'
     with factory() as session:
         assert session.scalars(select(JobCursor)).all() == []
-    engine.dispose()
 
 
-def test_runtime_503_has_single_attempt(tmp_path):
+def test_runtime_503_has_single_attempt(pg_schema_url, pg_factory):
     import importlib.util
     assert importlib.util.find_spec('app.macro.jobs.govbond_history_runtime') is not None
     from app.macro.jobs.govbond_history_runtime import open_govbond_history_runtime, read_govbond_history_status
     from backend.tests.jobs.test_govbond_history import NOW
-    url = f'sqlite+pysqlite:///{tmp_path / "runtime.sqlite"}'
-    engine, factory = create_engine_and_session(url)
-    Base.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
+    url = pg_schema_url
+    factory = pg_factory
     settings = Settings(database_url=url)
     calls = []
     def handler(request):
@@ -106,4 +100,3 @@ def test_runtime_503_has_single_attempt(tmp_path):
     assert read_govbond_history_status(settings)['pendingMonths'] == 12
     with factory() as session:
         assert session.scalars(select(MacroObservation)).all() == []
-    engine.dispose()

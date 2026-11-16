@@ -13,7 +13,7 @@ def test_only_valuation_group_is_paced_counted_and_never_starts_scheduler(monkey
         calls.append(kwargs)
         return {'status':'completed','requestCount':7,'publishReady':True,'publication':{'status':'no_change'}}
     monkeypatch.setattr(routine,'run_valuation_step',step,raising=False)
-    settings=Settings(data_backend='database',database_url='sqlite://',routine_stocks_enabled=False,routine_macro_enabled=False)
+    settings=Settings(data_backend='database',database_url='postgresql+psycopg://controlled.invalid/test',routine_stocks_enabled=False,routine_macro_enabled=False)
     result=routine.run_routine_update(settings,macro_rebuild=lambda *_:None,now=datetime(2026,11,6,tzinfo=timezone.utc),publish=True)
     assert len(calls)==1 and calls[0]['publish_requested'] is True
     assert result['valuation']['requestCount']==7

@@ -224,6 +224,7 @@ def test_risk_identity_migration_downgrade_preserves_existing_constraint(
 def test_foundation_tables_exist_in_postgres(pg_factory) -> None:
     engine = pg_factory.kw["bind"]
 
+    assert {"local_admin_task", "local_admin_execution"} <= set(inspect(engine).get_table_names(schema="ops"))
     assert all(inspect(engine).has_table(t.name, schema=t.schema) for t in Base.metadata.tables.values())
     assert set(Base.metadata.tables) <= {
         "ops.local_admin_task",

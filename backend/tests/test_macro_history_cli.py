@@ -9,9 +9,7 @@ from typer.testing import CliRunner
 
 from app.cli import main as cli
 from app.config import Settings
-from app.db.base import Base, ExternalBase
 from app.db.models import JobCursor, MacroObservation
-from app.db.session import create_engine_and_session
 
 
 @pytest.mark.parametrize('status,code', [('completed', 0), ('partial', 4), ('failed', 4), ('locked', 5)])
@@ -24,7 +22,7 @@ def test_cli_maps_batch_status_and_consumes_settings(monkeypatch, status, code):
     @contextmanager
     def runtime(settings):
         yield type('Runtime', (), {'job': Job(), 'releases': ()})()
-    monkeypatch.setattr(cli.Settings, 'from_env', lambda: Settings(database_url='sqlite://', macro_backfill_request_limit=7, macro_backfill_end=date(2026, 8, 31)))
+    monkeypatch.setattr(cli.Settings, 'from_env', lambda: Settings(database_url='postgresql+psycopg://controlled.invalid/test', macro_backfill_request_limit=7, macro_backfill_end=date(2026, 8, 31)))
     monkeypatch.setattr(cli, 'open_macro_history_runtime', runtime, raising=False)
     result = CliRunner().invoke(cli.app, ['backfill-macro-history'])
     assert result.exit_code == code, result.output
@@ -58,7 +56,7 @@ def test_cli_preserves_allowlisted_recovery_error_code(monkeypatch, command, cod
     @contextmanager
     def runtime(settings):
         yield type('Runtime', (), {'job': type('Job', (), {'run': fail})(), 'releases': ()})()
-    monkeypatch.setattr(cli.Settings, 'from_env', lambda: Settings(database_url='sqlite://'))
+    monkeypatch.setattr(cli.Settings, 'from_env', lambda: Settings(database_url='postgresql+psycopg://controlled.invalid/test'))
     monkeypatch.setattr(cli, 'open_macro_history_runtime', runtime)
     monkeypatch.setattr(cli, 'read_macro_history_status', fail)
     result = CliRunner().invoke(cli.app, [command])
@@ -81,10 +79,9 @@ def test_unknown_exception_cannot_leak_or_spoof_recovery_code(monkeypatch, comma
     assert 'private-user' not in result.output and 'private-password' not in result.output
 
 
-def test_status_command_does_not_construct_network_and_does_not_write_cursor(monkeypatch, tmp_path):
-    url = f'sqlite+pysqlite:///{tmp_path / "status.sqlite"}'
-    engine, factory = create_engine_and_session(url)
-    Base.metadata.create_all(engine)
+def test_status_command_does_not_construct_network_and_does_not_write_cursor(monkeypatch, pg_schema_url, pg_factory):
+    url = pg_schema_url
+    factory = pg_factory
     monkeypatch.setattr(cli.Settings, 'from_env', lambda: Settings(database_url=url))
     monkeypatch.setattr(cli.httpx, 'Client', lambda *a, **k: pytest.fail('HTTP constructed by status'))
     result = CliRunner().invoke(cli.app, ['macro-history-status'])
@@ -92,15 +89,12 @@ def test_status_command_does_not_construct_network_and_does_not_write_cursor(mon
     assert json.loads(result.stdout)['status'] == 'not_started'
     with factory() as session:
         assert session.scalars(select(JobCursor)).all() == []
-    engine.dispose()
 
 
-def test_runtime_single_attempt_is_bounded_and_restores_cursor(tmp_path):
+def test_runtime_single_attempt_is_bounded_and_restores_cursor(pg_schema_url, pg_factory, tmp_path):
     from app.macro.jobs.macro_history_runtime import open_macro_history_runtime
-    url = f'sqlite+pysqlite:///{tmp_path / "runtime.sqlite"}'
-    engine, factory = create_engine_and_session(url)
-    Base.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
+    url = pg_schema_url
+    factory = pg_factory
     manifest = tmp_path / 'empty.json'
     manifest.write_text('{"schemaVersion":"1.0","releases":[]}', encoding='utf-8')
     settings = Settings(database_url=url, macro_backfill_releases_file=manifest)
@@ -116,4 +110,3 @@ def test_runtime_single_attempt_is_bounded_and_restores_cursor(tmp_path):
     with factory() as session:
         assert len(session.scalars(select(JobCursor)).all()) == 1
         assert session.scalars(select(MacroObservation)).all() == []
-    engine.dispose()

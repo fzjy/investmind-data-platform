@@ -2,11 +2,7 @@ from datetime import datetime, timezone
 
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
-from sqlalchemy.orm import Session, sessionmaker
-from sqlalchemy.pool import StaticPool
 
-from app.db.base import Base, DerivedBase, MartBase
 from app.db.models import PublishedSnapshot
 from backend.tests.support.application import create_app
 from app.shared.contracts import DataMeta, success_result

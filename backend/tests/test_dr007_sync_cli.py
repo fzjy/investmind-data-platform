@@ -22,7 +22,7 @@ def test_scoped_command_uses_root_configuration_and_never_publishes(monkeypatch,
     def runtime(settings):
         assert settings.macro_history_years == 10
         yield type('Runtime', (), {'job': Job(), 'catalog': catalog})()
-    monkeypatch.setattr(cli.Settings, 'from_env', lambda: Settings(database_url='sqlite://', macro_history_years=10))
+    monkeypatch.setattr(cli.Settings, 'from_env', lambda: Settings(database_url='postgresql+psycopg://controlled.invalid/test', macro_history_years=10))
     monkeypatch.setattr(cli, 'open_dr007_sync_runtime', runtime, raising=False)
     result = CliRunner().invoke(cli.app, ['sync-dr007'])
     assert result.exit_code == code, result.output

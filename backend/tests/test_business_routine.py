@@ -18,7 +18,7 @@ def test_business_group_is_paced_counted_published_and_never_starts_scheduler(mo
         calls.append(kwargs)
         return {'status':'completed','requestCount':7,'publishReady':True,'publication':{'status':'no_change'}}
     monkeypatch.setattr(routine,'run_business_step',step,raising=False)
-    settings=Settings(data_backend='database',database_url='sqlite://',routine_stocks_enabled=False,routine_macro_enabled=False)
+    settings=Settings(data_backend='database',database_url='postgresql+psycopg://controlled.invalid/test',routine_stocks_enabled=False,routine_macro_enabled=False)
     report=routine.run_routine_update(settings,macro_rebuild=lambda *_:None,now=datetime(2026,11,6,tzinfo=timezone.utc),publish=True)
     assert report['status']=='completed' and report['business']['requestCount']==7
     assert report['httpCounts']['total']==7 and report['schedulerStarted'] is False
@@ -31,7 +31,7 @@ def test_only_portfolio_does_not_select_business_even_when_config_enabled(monkey
     monkeypatch.setattr(routine,'run_portfolio_step',lambda *a,**kw:dict(status='completed',requestCount=0,publishReady=True,publication={'status':'no_change'}))
     def forbidden(*a,**kw):raise AssertionError('only-portfolio不能调用主营组')
     monkeypatch.setattr(routine,'run_business_step',forbidden,raising=False)
-    settings=Settings(data_backend='database',database_url='sqlite://',routine_stocks_enabled=False,routine_macro_enabled=False)
+    settings=Settings(data_backend='database',database_url='postgresql+psycopg://controlled.invalid/test',routine_stocks_enabled=False,routine_macro_enabled=False)
     report=routine.run_routine_update(settings,macro_rebuild=lambda *_:None,only_portfolio=True,publish=True)
     assert report['status']=='completed' and 'business' not in report
     assert report['httpCounts']['total']==0
