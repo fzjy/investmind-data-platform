@@ -15,13 +15,11 @@ from sqlalchemy import select
 from app.config import Settings
 from app.connectors.tushare.contracts import TushareResponse
 from pydantic import SecretStr
-from app.db.base import Base, ExternalBase, MartBase
 from app.db.models import JobCursor, JobFailure, JobRun, MacroObservation, MacroSeriesState, PublishedSnapshot, SourcePayload
-from app.db.session import create_engine_and_session
 from app.jobs.cursors import SqlJobCursorRepository
 from app.macro.jobs.dr007_history import Dr007HistoryJob, load_dr007_source
 from app.macro.jobs.dr007_history_repository import Dr007HistoryRepository
-from app.jobs.locks import ProcessLocalJobLock, data_publication_lock_key
+from app.jobs.locks import PostgresAdvisoryJobLock, data_publication_lock_key
 from app.macro.jobs.macro_sync_history import SqlMacroSyncHistory, macro_sync_business_key
 from app.macro.jobs.macro_sync_planning import MacroSyncOptions
 from app.macro.catalog import MacroSeriesCatalog
@@ -73,15 +71,12 @@ def test_scoped_runtime_entry_exists():
 
 
 @pytest.fixture
-def database(tmp_path):
+def database(pg_factory):
     if importlib.util.find_spec('app.macro.jobs.dr007_sync_runtime') is None:
         pytest.skip('scoped runtime not implemented yet')
-    engine, factory = create_engine_and_session(f'sqlite+pysqlite:///{tmp_path / "sync.sqlite"}')
-    Base.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
-    old = seed(factory, ProcessLocalJobLock())
-    yield Settings(database_url=str(engine.url), macro_history_years=1, tushare_token=SecretStr('controlled-token'), tushare_standard_requests_per_minute=100000), factory, old
+    engine, factory = pg_factory.kw["bind"], pg_factory
+    old = seed(factory, PostgresAdvisoryJobLock(factory.kw["bind"]))
+    yield Settings(database_url=engine.url.render_as_string(hide_password=False), macro_history_years=1, tushare_token=SecretStr('controlled-token'), tushare_standard_requests_per_minute=100000), factory, old
     engine.dispose()
 
 
@@ -297,12 +292,12 @@ def test_repeat_and_interrupt_after_core_are_idempotent(database, monkeypatch):
 def test_shared_lock_has_no_http_or_state_mutation(database):
     settings, factory, _ = database
     source = CurrentSource()
-    def block(runtime):
-        assert runtime.job._lock.try_acquire(data_publication_lock_key())
+    lock = PostgresAdvisoryJobLock(factory.kw["bind"])
+    assert lock.try_acquire(data_publication_lock_key())
     try:
-        report = execute(settings, source, before=block)
+        report = execute(settings, source)
     finally:
-        ProcessLocalJobLock().release(data_publication_lock_key())
+        lock.release(data_publication_lock_key())
     assert report.status == 'locked' and source.calls == []
     with factory() as session:
         assert session.get(MacroSeriesState, SID).active_source is None
@@ -326,14 +321,11 @@ def test_shutdown_current_slices_beyond_one_month_and_can_become_fresh(database)
         assert session.scalar(select(JobCursor)).cursor_value==old
 
 
-def test_cleared_explicit_cutoff_fails_before_any_http_or_audit(tmp_path):
-    engine,factory=create_engine_and_session(f'sqlite+pysqlite:///{tmp_path / "cutoff.sqlite"}')
-    Base.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
+def test_cleared_explicit_cutoff_fails_before_any_http_or_audit(pg_factory):
+    engine, factory = pg_factory.kw["bind"], pg_factory
     try:
-        old=seed(factory,ProcessLocalJobLock(),end=date(2026,8,31))
-        settings=Settings(database_url=str(engine.url),macro_history_years=1,
+        old=seed(factory,PostgresAdvisoryJobLock(factory.kw["bind"]),end=date(2026,8,31))
+        settings=Settings(database_url=engine.url.render_as_string(hide_password=False),macro_history_years=1,
             tushare_token=SecretStr('controlled-token'),tushare_standard_requests_per_minute=100000)
         source=CurrentSource()
         with factory() as session: count=len(session.scalars(select(JobRun)).all())

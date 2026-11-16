@@ -249,13 +249,17 @@ def test_stock_quality_failure_is_blocked_not_runtime_error(monkeypatch):
     assert m.routine_exit_code(report) == 4
 
 
-def test_sqlite_preflight_does_not_create_missing_file(tmp_path):
+def test_preflight_does_not_initialize_missing_schema(pg_url):
+    from sqlalchemy import create_engine, inspect
     m = module()
-    target = tmp_path / 'not-created.sqlite'
-    report = m.run_routine_update(Settings(data_backend='database', database_url='sqlite:///'+target.as_posix(),
+    report = m.run_routine_update(Settings(data_backend='database', database_url=pg_url,
         routine_macro_enabled=False), now=NOW, dry_run=True, macro_rebuild=lambda s: None)
     assert report['status'] != 'planned'
-    assert not target.exists()
+    engine = create_engine(pg_url)
+    try:
+        assert 'ops' not in inspect(engine).get_schema_names()
+    finally:
+        engine.dispose()
 
 
 def test_real_postgres_readonly_preflight_preserves_state_and_rejects_writes(pg_schema_url, monkeypatch):

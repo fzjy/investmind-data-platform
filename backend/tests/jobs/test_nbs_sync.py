@@ -12,10 +12,8 @@ from sqlalchemy import select
 from typer.testing import CliRunner
 
 from app.config import Settings
-from app.db.base import Base, ExternalBase, MartBase
 from app.db.models import JobCursor, JobFailure, JobRun, MacroObservation, MacroSeriesState, PublishedSnapshot, SourcePayload
-from app.db.session import create_engine_and_session
-from app.jobs.locks import ProcessLocalJobLock, data_publication_lock_key
+from app.jobs.locks import PostgresAdvisoryJobLock, data_publication_lock_key
 from app.macro.jobs.macro_sync_planning import MacroSyncOptions
 from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
 from backend.tests.connectors.macro.test_nbs_feed import INDEX, CPI, CPI_TITLE, CPI_URL, INDUSTRY, INDUSTRY_TITLE, INDUSTRY_URL, index
@@ -61,13 +59,10 @@ def seed(factory):
 
 
 @pytest.fixture
-def database(tmp_path):
-    engine, factory = create_engine_and_session(f'sqlite+pysqlite:///{tmp_path / "nbs.sqlite"}')
-    Base.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
+def database(pg_factory):
+    engine, factory = pg_factory.kw["bind"], pg_factory
     seed(factory)
-    yield Settings(database_url=str(engine.url)), factory, engine
+    yield Settings(database_url=engine.url.render_as_string(hide_password=False)), factory, engine
     engine.dispose()
 
 
@@ -224,7 +219,7 @@ def test_changed_metric_contract_is_rejected_before_http(database, monkeypatch, 
 def test_shared_lock_blocks_all_http(database):
     settings, factory, _ = database
     before = preserved(factory)
-    lock = ProcessLocalJobLock()
+    lock = PostgresAdvisoryJobLock(factory.kw["bind"])
     assert lock.try_acquire(data_publication_lock_key())
     source = ResponseSource()
     try: assert execute(settings, source).status == 'locked'

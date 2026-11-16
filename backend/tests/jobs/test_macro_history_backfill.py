@@ -8,11 +8,9 @@ from app.connectors.macro.contracts import ProviderFetchResult, ProviderObservat
 from app.connectors.macro.nbs_history import NbsReleaseLocator
 from app.connectors.macro.nbs_release_feed import INDEX
 from app.connectors.macro.transport import TextTransportResponse
-from app.db.base import Base, ExternalBase
 from app.db.models import JobRun, MacroObservation, SourcePayload
-from app.db.session import create_engine_and_session
 from app.jobs.cursors import SqlJobCursorRepository
-from app.jobs.locks import ProcessLocalJobLock, data_publication_lock_key
+from app.jobs.locks import PostgresAdvisoryJobLock, data_publication_lock_key
 from app.macro.jobs.macro_sync_repository import MacroObservationRepository
 from app.macro.jobs import macro_history_backfill as backfill
 from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
@@ -47,17 +45,15 @@ class Transport:
 
 
 @pytest.fixture
-def setup():
-    engine, factory = create_engine_and_session('sqlite+pysqlite:///:memory:')
-    Base.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
+def setup(pg_factory):
+    engine, factory = pg_factory.kw["bind"], pg_factory
     cursors = SqlJobCursorRepository(factory, job_name='backfill-macro-history')
     catalog = MacroSeriesCatalog.load(ARCHIVED_V7_FILE)
     def job(transport, observations=None):
         return backfill.MacroHistoryBackfillJob(
             catalog=catalog, transport=transport, cursors=cursors,
             observations=observations or MacroObservationRepository(factory),
-            history=backfill.SqlMacroHistoryRuns(factory), lock=ProcessLocalJobLock(), clock=lambda: AS_OF,
+            history=backfill.SqlMacroHistoryRuns(factory), lock=PostgresAdvisoryJobLock(factory.kw["bind"]), clock=lambda: AS_OF,
         )
     yield factory, cursors, job
     engine.dispose()
@@ -205,7 +201,7 @@ def test_malformed_cursor_is_rejected_before_network(setup):
 
 def test_locked_run_has_no_network_or_cursor_side_effect(setup):
     factory, cursors, job = setup
-    lock = ProcessLocalJobLock()
+    lock = PostgresAdvisoryJobLock(factory.kw["bind"])
     key = data_publication_lock_key()
     assert lock.try_acquire(key)
     try:

@@ -1,4 +1,4 @@
-"""真实SQLite证明对账的原子性、来源边界和零网络CLI。"""
+"""真实 PostgreSQL证明对账的原子性、来源边界和零网络CLI。"""
 from datetime import UTC, date, datetime, timedelta
 from decimal import Decimal
 import json
@@ -12,10 +12,8 @@ from app.cli import main as cli
 from app.config import Settings
 from app.connectors.macro.nbs_history import NbsReleaseLocator
 from app.connectors.macro.nbs_release_feed import INDEX
-from app.db.base import Base, ExternalBase, MartBase
 from app.db.models import JobCursor, JobFailure, JobRun, MacroObservation, MacroSeriesState, PublishedSnapshot
-from app.db.session import create_engine_and_session
-from app.jobs.locks import ProcessLocalJobLock, data_publication_lock_key
+from app.jobs.locks import PostgresAdvisoryJobLock, data_publication_lock_key
 from app.macro.jobs.macro_history_backfill import CURSOR_KEY, _Checkpoint, _Entry
 from app.macro.jobs.macro_sync_history import SqlMacroSyncHistory
 from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
@@ -75,12 +73,9 @@ def seed_complete_history(factory):
 
 
 @pytest.fixture
-def storage(tmp_path, monkeypatch):
-    url = f'sqlite+pysqlite:///{tmp_path / "reconcile.sqlite"}'
-    engine, factory = create_engine_and_session(url)
-    Base.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
+def storage(pg_factory, pg_schema_url, monkeypatch):
+    url = pg_schema_url
+    engine, factory = pg_factory.kw["bind"], pg_factory
     saved = seed_complete_history(factory)
     monkeypatch.setattr(cli.Settings, 'from_env', lambda: Settings(database_url=url,
         macro_history_years=1, macro_backfill_end=date(2026, 8, 31)))
@@ -177,7 +172,7 @@ def test_incomplete_or_untrusted_proof_cannot_change_either_state_or_audit(stora
 
 def test_lock_conflict_has_no_mutation(storage):
     engine, factory, saved = storage
-    lock = ProcessLocalJobLock()
+    lock = PostgresAdvisoryJobLock(engine)
     assert lock.try_acquire(data_publication_lock_key())
     try:
         result = invoke()
@@ -245,6 +240,7 @@ def test_failure_resolution_requires_its_own_proven_months(storage, evidence):
                 '2020-01-01' if evidence == 'outside' else '2025-09-30', 'end': '2026-08-31'}]}
         session.add(JobRun(id='other-gap', job_name='sync-macro', business_key='other-gap', status='partial',
             started_at=AS_OF - timedelta(days=8), finished_at=AS_OF - timedelta(days=8), details=details))
+        session.flush()
         session.add(JobFailure(job_run_id='other-gap', dataset=f'macro:{IDS[0]}', request_key='nbs',
             error_code='MACRO_HISTORY_GAP', message='gap', request_payload={}, retryable=False))
     result = invoke()

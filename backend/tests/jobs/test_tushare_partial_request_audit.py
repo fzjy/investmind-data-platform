@@ -10,9 +10,7 @@ from sqlalchemy import select
 from app.connectors.macro.contracts import MacroFetchWindow
 from app.connectors.macro.tushare import TushareMacroProvider
 from app.connectors.tushare.client import TushareClient
-from app.db.base import Base, ExternalBase
 from app.db.models import IngestionBatch, MacroObservation, SourcePayload
-from app.db.session import create_engine_and_session
 from app.macro.jobs.macro_sync_repository import MacroObservationRepository
 from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
 
@@ -27,7 +25,8 @@ from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
     ("date", "TUSHARE_DATE_INVALID", False),
     ("conflict", "TUSHARE_MIXED_SERIES", False),
 ])
-def test_later_window_failure_retains_sanitized_prior_response_in_real_sqlite_audit(
+def test_later_window_failure_retains_sanitized_prior_response_in_real_postgres_audit(
+    pg_factory,
     failure: str, error_code: str, retryable: bool, max_retries: int,
 ) -> None:
     # 捕获的错误：后片失败清空前片raw，或解析失败清空已取得的分片身份。
@@ -79,10 +78,8 @@ def test_later_window_failure_retains_sanitized_prior_response_in_real_sqlite_au
     ]
     assert all(body["api_name"] == "us_tycr" and body["fields"] == "date,y10" for body in sent)
 
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
+    engine, factory = pg_factory.kw["bind"], pg_factory
     try:
-        Base.metadata.create_all(engine)
-        ExternalBase.metadata.create_all(engine)
         repository = MacroObservationRepository(factory)
         batch_id = repository.audit_request(series, source, window, result, window.as_of, "residual-raw-run")
         assert repository.audit_request(series, source, window, result, window.as_of, "residual-raw-run") == batch_id

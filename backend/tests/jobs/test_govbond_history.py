@@ -8,11 +8,9 @@ from sqlalchemy import select
 
 from app.connectors.macro.contracts import ProviderTransientError
 from app.connectors.macro.transport import JsonTransportResponse
-from app.db.base import Base, ExternalBase
 from app.db.models import JobRun, MacroObservation, SourcePayload
-from app.db.session import create_engine_and_session
 from app.jobs.cursors import SqlJobCursorRepository
-from app.jobs.locks import ProcessLocalJobLock, data_publication_lock_key
+from app.jobs.locks import PostgresAdvisoryJobLock, data_publication_lock_key
 from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog, MacroSourceDefinition
 
 NOW = datetime(2026, 10, 7, 15, tzinfo=UTC)
@@ -50,17 +48,15 @@ class Transport:
 
 
 @pytest.fixture
-def setup():
+def setup(pg_factory):
     if util.find_spec('app.macro.jobs.govbond_history') is None:
         pytest.skip('首个 RED 检查确认月度回填入口尚未实现')
     module = import_module('app.macro.jobs.govbond_history')
     repo = import_module('app.macro.jobs.govbond_history_repository')
-    engine, factory = create_engine_and_session('sqlite+pysqlite:///:memory:')
-    Base.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
+    engine, factory = pg_factory.kw["bind"], pg_factory
     cursors = SqlJobCursorRepository(factory, job_name='backfill-govbond-history')
     catalog = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE)
-    lock = ProcessLocalJobLock()
+    lock = PostgresAdvisoryJobLock(engine)
     def job(transport, *, clock=lambda: NOW, source=None):
         return module.GovbondHistoryJob(catalog=catalog, source=source or MacroSourceDefinition.model_validate(SOURCE),
             transport=transport, cursors=cursors, repository=repo.GovbondHistoryRepository(factory),

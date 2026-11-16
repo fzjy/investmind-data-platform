@@ -11,10 +11,8 @@ from sqlalchemy import select
 from app.config import Settings
 from app.connectors.macro.contracts import ProviderFetchResult, ProviderObservation, ProviderTransientError
 from app.connectors.macro.registry import MacroProviderRegistry
-from app.db.base import ALL_BASES
 from app.db.models import JobRun, MacroObservation, PublishedSnapshot
-from app.db.session import create_engine_and_session
-from app.jobs.locks import ProcessLocalJobLock
+from app.jobs.locks import PostgresAdvisoryJobLock
 from app.macro.jobs.macro_sync_history import SqlMacroSyncHistory
 from app.macro.jobs.macro_sync_runtime import MacroSyncRuntime, _build_macro_job
 from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
@@ -30,11 +28,11 @@ def module():
 
 
 @pytest.fixture
-def database(tmp_path):
-    engine,factory=create_engine_and_session(f'sqlite+pysqlite:///{tmp_path / "catchup.sqlite"}')
-    for base in ALL_BASES: base.metadata.create_all(engine)
+def database(pg_factory):
+    engine, factory = pg_factory.kw["bind"], pg_factory
+
     seed(factory)
-    yield Settings(database_url=str(engine.url),fred_api_key='controlled-key',tushare_token='controlled-token'),factory,engine
+    yield Settings(database_url=engine.url.render_as_string(hide_password=False),fred_api_key='controlled-key',tushare_token='controlled-token'),factory,engine
     engine.dispose()
 
 
@@ -169,7 +167,7 @@ def test_disabled_has_zero_http_and_zero_writes(database,monkeypatch,field):
 def test_week_lock_conflict_does_not_create_audit_or_send_http(database,monkeypatch):
     settings,factory,engine=database
     controlled_groups(settings,factory,engine,monkeypatch)
-    lock=ProcessLocalJobLock()
+    lock=PostgresAdvisoryJobLock(engine)
     assert lock.try_acquire('catchup-macro:'+KEY)
     before=snapshot(factory)
     try:
@@ -218,7 +216,7 @@ def test_runtime_contract_preflight_does_not_write_or_send_http(database,monkeyp
     options=MacroSyncOptions(NOW,settings.macro_history_years,catalog.catalog_version,catalog.catalog_hash,
         force=True,mode='live',series_ids=group.series_ids,publish=False)
     before=snapshot(factory)
-    lock=ProcessLocalJobLock()
+    lock=PostgresAdvisoryJobLock(engine)
     seen=[]
     with group.opener(settings,transport=httpx.MockTransport(lambda r:pytest.fail('preflight sent HTTP'))) as runtime:
         def verify(opts):

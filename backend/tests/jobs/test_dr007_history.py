@@ -1,4 +1,4 @@
-"""真实 SQLite raw/core 与游标；仅供应商调用受控。"""
+"""真实 PostgreSQL raw/core 与游标；仅供应商调用受控。"""
 from datetime import UTC, date, datetime
 from importlib import import_module, util
 
@@ -7,11 +7,9 @@ from sqlalchemy import select
 
 from app.connectors.tushare.contracts import TushareResponse
 from app.connectors.tushare.errors import TusharePermissionError
-from app.db.base import Base, ExternalBase, MartBase
 from app.db.models import JobRun, MacroObservation, MacroSeriesState, PublishedSnapshot, SourcePayload
-from app.db.session import create_engine_and_session
 from app.jobs.cursors import SqlJobCursorRepository
-from app.jobs.locks import ProcessLocalJobLock, data_publication_lock_key
+from app.jobs.locks import PostgresAdvisoryJobLock, data_publication_lock_key
 from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog, MacroSourceDefinition
 from backend.tests.connectors.macro.test_tushare_dr007 import SOURCE
 
@@ -36,17 +34,14 @@ def test_dr007_monthly_queue_is_available():
 
 
 @pytest.fixture
-def setup():
+def setup(pg_factory):
     if util.find_spec('app.macro.jobs.dr007_history') is None:
         pytest.skip('entry RED covers missing queue')
     module=import_module('app.macro.jobs.dr007_history')
     repository=import_module('app.macro.jobs.dr007_history_repository')
-    engine,factory=create_engine_and_session('sqlite+pysqlite:///:memory:')
-    Base.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
+    engine, factory = pg_factory.kw["bind"], pg_factory
     cursors=SqlJobCursorRepository(factory,job_name='backfill-dr007-history')
-    lock=ProcessLocalJobLock()
+    lock=PostgresAdvisoryJobLock(engine)
     def job(client, *,clock=lambda:NOW,source=None):
         return module.Dr007HistoryJob(catalog=MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE),
             source=source or MacroSourceDefinition.model_validate(SOURCE),transport=client,

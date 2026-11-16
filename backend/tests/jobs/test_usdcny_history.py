@@ -8,11 +8,9 @@ from sqlalchemy import select
 
 from app.connectors.macro.contracts import ProviderTransientError
 from app.connectors.macro.transport import JsonTransportResponse
-from app.db.base import Base, ExternalBase, MartBase
 from app.db.models import JobRun, MacroObservation, SourcePayload, MacroSeriesState, PublishedSnapshot, JobFailure
-from app.db.session import create_engine_and_session
 from app.jobs.cursors import SqlJobCursorRepository
-from app.jobs.locks import ProcessLocalJobLock, data_publication_lock_key
+from app.jobs.locks import PostgresAdvisoryJobLock, data_publication_lock_key
 from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog, MacroSourceDefinition
 
 NOW = datetime(2026, 10, 9, 15, tzinfo=UTC)
@@ -56,20 +54,17 @@ class Transport:
 
 
 @pytest.fixture
-def setup():
+def setup(pg_factory):
     # RED阶段使用现有真实月度engine展示不支持USD合同；独立入口assert保证fallback不能冒充完成。
     has_usdcny = util.find_spec('app.macro.jobs.usdcny_history') is not None
     module = import_module('app.macro.jobs.usdcny_history' if has_usdcny else 'app.macro.jobs.govbond_history')
     repo = import_module('app.macro.jobs.usdcny_history_repository' if has_usdcny else 'app.macro.jobs.govbond_history_repository')
     job_type = module.UsdcnyHistoryJob if has_usdcny else module.GovbondHistoryJob
     repo_type = repo.UsdcnyHistoryRepository if has_usdcny else repo.GovbondHistoryRepository
-    engine, factory = create_engine_and_session('sqlite+pysqlite:///:memory:')
-    Base.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
+    engine, factory = pg_factory.kw["bind"], pg_factory
     cursors = SqlJobCursorRepository(factory, job_name='backfill-usdcny-history')
     catalog = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE)
-    lock = ProcessLocalJobLock()
+    lock = PostgresAdvisoryJobLock(engine)
     def job(transport, *, clock=lambda: NOW, source=None):
         return job_type(catalog=catalog, source=source or MacroSourceDefinition.model_validate(SOURCE),
             transport=transport, cursors=cursors, repository=repo_type(factory),
