@@ -40,7 +40,8 @@ def member_reader(session,context):
         table_ids = {'income':'stock-income','balance':'stock-balance','cashflow':'stock-cashflow','daily_basic':'stock-daily-basic'}
         cards = (target.get('analysis') or {}).get('cards',[])
         periods = {p['period'] for c in cards for p in c.get('points',[]) if p.get('period')}
-        selected = context.period or max(periods,default=None)
+        from app.acquisition.periods import contains
+        selected = max((day for day in periods if not context.period or contains(context.period,day)),default=None)
         for card in cards:
             quality = next((q for q in card.get('quality',[]) if q.get('period')==selected),{})
             fields = CARD_QUALITY_FIELDS.get(card.get('id'),())

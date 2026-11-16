@@ -37,8 +37,13 @@ def contains(period, value):
 def covers(scope, observed, period):
     params = scope.get('params',{})
     point = params.get('trade_date') or params.get('period') or scope.get('observedAt')
-    if point and contains(period,point):
-        return True
+    if point:
+        try:
+            p_start,p_end = bounds(str(point))
+            low,high = bounds(str(observed) if observed else period)
+            return p_start <= low and high <= p_end
+        except ValueError:
+            return False
     start = params.get('start_date') or scope.get('start')
     end = params.get('end_date') or scope.get('end')
     if not start or not end:

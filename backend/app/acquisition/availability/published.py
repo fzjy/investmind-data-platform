@@ -1,5 +1,5 @@
 from dataclasses import replace
-from app.acquisition.periods import contains
+from app.acquisition.periods import bounds, contains
 from sqlalchemy import select
 from app.acquisition.availability.stored import finite, MISSING, UNKNOWN
 from app.acquisition.contracts import Availability, UnknownResource
@@ -23,17 +23,38 @@ def snapshot(session, context):
     raise UnknownResource('发布产品或版本不存在')
 
 
+def empty_announcement_window(coverage,period):
+    from datetime import date, timedelta
+    try:
+        start, end = date.fromisoformat(coverage['start']), date.fromisoformat(coverage['end'])
+        first, last = bounds(period) if period else (start,end)
+        if not start <= first <= last <= end:
+            return False
+        through = first
+        windows = sorted(coverage['windows'],key=lambda w:w['start'])
+        for item in windows:
+            left, right = date.fromisoformat(item['start']), date.fromisoformat(item['end'])
+            if right < first or left > last:
+                continue
+            if item['status']!='completed' or type(item['count']) is not int or item['count'] != 0 or left>through:
+                return False
+            through = max(through,right+timedelta(days=1))
+        return through > last
+    except (KeyError,TypeError,ValueError,OverflowError):
+        return False
+
+
 def _item(key, product, payload, period):
     if product == 'stock-workbench:'+key.subject_key and key.entry_id == 'stock-daily':
         for candle in reversed((payload.get('dailyChart') or {}).get('candles',[])):
             day = candle.get('date')
-            if (not period or day == period) and finite(candle.get('close')):
+            if (not period or contains(period,day)) and finite(candle.get('close')):
                 return Availability('available',day,'该版本中存在日行情')
         return MISSING
     if product == 'macro-insights' and key.subject_kind == 'series':
         series = next((s for s in payload.get('sandboxIndicators',[]) if s.get('id')==key.subject_key),None)
         if series is not None:
-            points = [p for p in series.get('values',[]) if finite(p.get('value')) and (not period or p.get('month')==period)]
+            points = [p for p in series.get('values',[]) if finite(p.get('value')) and (not period or contains(period,p.get('month')))]
             if not points:
                 return MISSING
             latest = max(points,key=lambda p:p.get('month',''))
@@ -44,7 +65,7 @@ def _item(key, product, payload, period):
         derived = next((s for s in (payload.get('derivedInsights') or {}).get('series',[])
                         if s.get('id')==key.subject_key),None)
         if derived is not None:
-            points = [p for p in derived.get('points',[]) if finite(p.get('value')) and (not period or p.get('month')==period)]
+            points = [p for p in derived.get('points',[]) if finite(p.get('value')) and (not period or contains(period,p.get('month')))]
             return Availability('available',points[-1].get('month'),'快照中的计算结果可用') if points else MISSING
         return UNKNOWN if key.entry_id.startswith('macro-extension-') else MISSING
     if product == 'stock-workbench:'+key.subject_key:
@@ -53,15 +74,12 @@ def _item(key, product, payload, period):
         if key.entry_id == 'stock-announcements':
             chart = payload.get('dailyChart') or {}
             events = chart.get('announcements',[])
-            for event in reversed(events):
-                day = str(event.get('publishedAt') or event.get('date') or '')[:10]
+            for event in events:
+                day = str(event.get('disclosedOn') or event.get('publishedAt') or event.get('date') or '')[:10]
                 if not period or contains(period,day):
-                    return Availability('available',day or None,'该证券的快照内有公告','cninfo')
+                    return Availability('available',day or None,'该证券的快照内有公告',event.get('source'))
             coverage = chart.get('announcementCoverage') or {}
-            from app.acquisition.periods import covers
-            window = {'start':coverage.get('from'),'end':coverage.get('to')}
-            if (coverage.get('pendingDays') == 0 and coverage.get('checkedDays',0)>0
-                    and (not period or covers(window,None,period))):
+            if empty_announcement_window(coverage,period):
                 return Availability('confirmed_empty',period,'该范围已逐日检查，无公告','cninfo')
             return Availability('unknown',reason='快照没有公告，该范围尚未核全')
         if key.entry_id == 'stock-research':
@@ -72,7 +90,7 @@ def _item(key, product, payload, period):
             metrics = payload.get('metrics') or {}
             field = next((f for f in metrics.get('fields',[]) if f['id']==key.item_id),{})
             points = [(p,v) for p,v in zip(metrics.get('years',[]),field.get('values',[]))
-                      if finite(v) and (not period or p==period)]
+                      if finite(v) and (not period or contains(period,p))]
             return Availability('available',points[-1][0],'指定年报字段可用') if points else MISSING
         if key.entry_id == 'stock-dividend-yield' or key.entry_id.startswith(('metric-','card-')):
             from app.stocks.marts.screener_list import YIELD_CARDS
@@ -95,7 +113,7 @@ def _item(key, product, payload, period):
         if target.get('status') != 'available' or not cards or not target.get('poolMembers'):
             return MISSING
         dates = {p['period'] for card in cards for p in card.get('points',[]) if p.get('period')}
-        selected = period or max(dates,default=None)
+        selected = max((day for day in dates if not period or contains(period,day)),default=None)
         if not selected:
             return MISSING
         for card in cards:

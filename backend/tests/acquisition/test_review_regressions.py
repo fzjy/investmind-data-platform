@@ -28,11 +28,12 @@ def test_all_entries_for_one_security_can_page(factory):
 def test_announcement_empty_depends_on_covered_window():
     key = StateKey('stock-announcements','','security','600519.SH','historical')
     product = 'stock-workbench:600519.SH'
-    coverage = {'from':'2026-01-01','to':'2026-01-31','checkedDays':31,'pendingDays':0}
+    window = {'start':'2026-01-01','end':'2026-01-31','status':'completed','count':0}
+    coverage = {'start':window['start'],'end':window['end'],'windows':[window]}
     payload = {'dailyChart':{'announcements':[],'announcementCoverage':coverage}}
     assert _item(key,product,payload,'2026-01-13').kind=='confirmed_empty'
     assert _item(key,product,payload,'2026-02-10').kind=='unknown'
-    coverage['pendingDays']=1
+    window['status']='partial'
     assert _item(key,product,payload,None).kind=='unknown'
 
 

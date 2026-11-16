@@ -31,3 +31,12 @@ def test_selected_period_requires_matching_proof(factory):
     assert item('2026-01-10').assessment.status == 'excluded'
     assert item('2026-05-10').assessment.status == 'normal'
     assert item('2026-05-11').assessment.status == 'missing'
+
+
+def test_month_filters_values_and_requires_proof_for_selected_day():
+    from app.acquisition.periods import covers
+    from app.acquisition.availability.published import _item
+    assert not covers({'params':{'trade_date':'20260102'}},'2026-01-30','2026-01')
+    key = StateKey('stock-daily','','security','600519.SH')
+    data = {'dailyChart':{'candles':[{'date':'2026-01-13','close':10}]}}
+    assert _item(key,'stock-workbench:600519.SH',data,'2026-01').period == '2026-01-13'
