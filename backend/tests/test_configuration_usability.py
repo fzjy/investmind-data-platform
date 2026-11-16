@@ -24,7 +24,7 @@ def root_config(monkeypatch, tmp_path, *, profile="custom", extra=""):
     pool.write_text('["600519.SH"]', encoding="utf8")
     config = tmp_path / ".env"
     config.write_text(
-        "DANG_DATA_BACKEND=database\nDANG_DATABASE_URL=sqlite+pysqlite:///:memory:\n"
+        "DANG_DATA_BACKEND=database\nDANG_DATABASE_URL=postgresql+psycopg://controlled.invalid/test\n"
         "DANG_TUSHARE_TOKEN=controlled-token\nDANG_TUSHARE_MODE=vip\n"
         "DANG_SYNC_DISCLOSURE_LOOKBACK_DAYS=11\n"
         f"DANG_SYNC_UNIVERSE={profile}\n"

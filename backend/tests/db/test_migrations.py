@@ -221,20 +221,13 @@ def test_risk_identity_migration_downgrade_preserves_existing_constraint(
     assert dropped == []
 
 
-def test_foundation_tables_can_be_created_for_sqlite_tests() -> None:
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:",
-        execution_options={
-            "schema_translate_map": {
-                "raw": None,
-                "core": None,
-                "ops": None,
-            }
-        },
-    )
-    Base.metadata.create_all(engine)
+def test_foundation_tables_exist_in_postgres(pg_factory) -> None:
+    engine = pg_factory.kw["bind"]
 
+    assert all(inspect(engine).has_table(t.name, schema=t.schema) for t in Base.metadata.tables.values())
     assert set(Base.metadata.tables) <= {
+        "ops.local_admin_task",
+        "ops.local_admin_execution",
         "ops.data_acquisition_state",
         "raw.ingestion_batch",
         "raw.source_payload",
@@ -287,7 +280,7 @@ def test_foundation_tables_can_be_created_for_sqlite_tests() -> None:
     }
 
 
-def test_scheduler_operations_tables_can_be_created_for_sqlite_tests() -> None:
+def test_scheduler_operations_tables_exist_in_postgres(pg_factory) -> None:
     assert {
         SchedulerHeartbeat.__table__.fullname,
         SchedulerCheckpoint.__table__.fullname,
@@ -303,21 +296,9 @@ def test_scheduler_operations_tables_can_be_created_for_sqlite_tests() -> None:
         PublishedSnapshot.__table__.c.keys()
     )
 
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:",
-        execution_options={
-            "schema_translate_map": {
-                "core": None,
-                "mart": None,
-                "ops": None,
-                "raw": None,
-            }
-        },
-    )
-    Base.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
+    engine = pg_factory.kw["bind"]
 
-    names = set(inspect(engine).get_table_names())
+    names = set(inspect(engine).get_table_names(schema="ops"))
 
     assert {
         "scheduler_heartbeat",

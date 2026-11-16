@@ -184,9 +184,9 @@ def test_no_file_keeps_process_plaintext_priority(monkeypatch: pytest.MonkeyPatc
 
 
 def test_constructor_still_accepts_database_strings_and_secret_tokens() -> None:
-    settings = Settings(_env_file=None, data_backend="database", database_url="sqlite:///local.db", tushare_token="local-token")
-    assert settings.database_url == "sqlite:///local.db"
-    assert settings.database_read_url == "sqlite:///local.db"
+    settings = Settings(_env_file=None, data_backend="database", database_url="postgresql+psycopg://controlled.invalid/test", tushare_token="local-token")
+    assert settings.database_url == "postgresql+psycopg://controlled.invalid/test"
+    assert settings.database_read_url == "postgresql+psycopg://controlled.invalid/test"
     assert settings.tushare_token.get_secret_value() == "local-token"
 
 

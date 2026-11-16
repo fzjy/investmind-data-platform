@@ -11,7 +11,7 @@ from app.shared.errors import DataServiceError
 
 def test_production_requires_database_url_before_engine_creation(monkeypatch):
     monkeypatch.setattr(main_module, 'settings', Settings(_env_file=None, database_url=None, database_read_url=None))
-    monkeypatch.setattr(main_module, 'create_engine', lambda *a, **k: pytest.fail('must reject before engine creation'))
+    monkeypatch.setattr('app.db.session.create_engine', lambda *a, **k: pytest.fail('must reject before engine creation'))
     with pytest.raises(ValueError, match='DANG_DATABASE'):
         main_module.create_app()
 
@@ -32,7 +32,7 @@ def test_routes_require_explicit_dependencies(domain):
 def test_database_outage_returns_503_without_fixture_fallback(monkeypatch, path):
     from sqlalchemy.engine import Engine
 
-    monkeypatch.setattr(main_module, 'settings', Settings(_env_file=None, database_url='sqlite+pysqlite:///:memory:'))
+    monkeypatch.setattr(main_module, 'settings', Settings(_env_file=None, database_url='postgresql+psycopg://controlled.invalid/test'))
     def unavailable(*args, **kwargs):
         raise OperationalError('private query', {}, Exception('private credentials'))
     monkeypatch.setattr(Engine, 'connect', unavailable)

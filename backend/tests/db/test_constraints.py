@@ -3,28 +3,17 @@ from __future__ import annotations
 from datetime import date
 
 import pytest
-from sqlalchemy import create_engine
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from app.db.base import Base
-from app.db.models import DailyPrice
+from app.db.models import DailyPrice, Security
 
 
 @pytest.fixture
-def session() -> Session:
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:",
-        execution_options={
-            "schema_translate_map": {
-                "raw": None,
-                "core": None,
-                "ops": None,
-            }
-        },
-    )
-    Base.metadata.create_all(engine)
-    with Session(engine) as value:
+def session(pg_factory):
+    with pg_factory() as value:
+        value.add(Security(ts_code="600519.SH", symbol="600519", name="贵州茅台"))
+        value.flush()
         yield value
 
 

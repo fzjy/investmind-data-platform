@@ -14,27 +14,6 @@ from app.shared.errors import DataServiceError, error_payload
 from app.shared.repository import SnapshotRepository
 
 
-@pytest.fixture
-def factory() -> sessionmaker[Session]:
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:",
-        poolclass=StaticPool,
-        execution_options={
-            "schema_translate_map": {
-                "raw": None,
-                "core": None,
-                "ops": None,
-                "derived": None,
-                "mart": None,
-            }
-        },
-    )
-    Base.metadata.create_all(engine)
-    DerivedBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
-    return sessionmaker(engine, expire_on_commit=False)
-
-
 def test_success_result_preserves_stable_meta_keys() -> None:
     meta = DataMeta(
         source="fixture",
@@ -68,8 +47,8 @@ def test_data_meta_exposes_optional_stale_reason_alias() -> None:
     )
 
 
-def test_snapshot_repository_exposes_stale_reason(factory) -> None:
-    with factory.begin() as session:
+def test_snapshot_repository_exposes_stale_reason(pg_factory) -> None:
+    with pg_factory.begin() as session:
         session.add(
             PublishedSnapshot(
                 product="market-overview",
@@ -85,7 +64,7 @@ def test_snapshot_repository_exposes_stale_reason(factory) -> None:
             )
         )
 
-    snapshot = SnapshotRepository(factory).read("market-overview")
+    snapshot = SnapshotRepository(pg_factory).read("market-overview")
 
     assert snapshot.meta.stale_reason == "SNAPSHOT_BEHIND_EXPECTED_DATE"
     assert snapshot.meta.model_dump(by_alias=True)["staleReason"] == (

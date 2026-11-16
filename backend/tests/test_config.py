@@ -97,7 +97,7 @@ def test_settings_load_project_env_file_from_any_working_directory(
     env_file = tmp_path / ".env"
     env_file.write_text(
         "DANG_DATA_BACKEND=database\n"
-        "DANG_DATABASE_URL=sqlite+pysqlite:///configured.db\n"
+        "DANG_DATABASE_URL=postgresql+psycopg://controlled.invalid/configured\n"
         "DANG_SYNC_TIMEZONE=UTC\n",
         encoding="utf-8",
     )
@@ -113,7 +113,7 @@ def test_settings_load_project_env_file_from_any_working_directory(
     settings = Settings.from_env()
 
     assert settings.data_backend == "database"
-    assert settings.database_url == "sqlite+pysqlite:///configured.db"
+    assert settings.database_url == "postgresql+psycopg://controlled.invalid/configured"
     assert settings.database_read_url == settings.database_url
     assert settings.sync_timezone == "UTC"
 
@@ -255,12 +255,12 @@ def test_process_environment_overrides_project_env_file(
     env_file.write_text("DANG_DATA_BACKEND=database\n", encoding="utf-8")
     monkeypatch.setattr(config_module, "PROJECT_ENV_FILE", env_file)
     monkeypatch.setenv("DANG_DATA_BACKEND", "database")
-    monkeypatch.setenv("DANG_DATABASE_URL", "sqlite+pysqlite:///override.db")
+    monkeypatch.setenv("DANG_DATABASE_URL", "postgresql+psycopg://controlled.invalid/override")
 
     settings = Settings.from_env()
 
     assert settings.data_backend == "database"
-    assert settings.database_url == "sqlite+pysqlite:///override.db"
+    assert settings.database_url == "postgresql+psycopg://controlled.invalid/override"
 
 
 def test_settings_loads_tushare_pagination_and_rate_limits_from_env_file(

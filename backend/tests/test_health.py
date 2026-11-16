@@ -13,12 +13,11 @@ def test_fixture_health_keeps_existing_contract() -> None:
     assert client.get("/health").json() == {"status": "ok"}
 
 
-def test_database_health_reports_readiness(monkeypatch, tmp_path) -> None:
-    database_url = f"sqlite+pysqlite:///{tmp_path / 'health.sqlite3'}"
+def test_database_health_reports_readiness(monkeypatch, pg_url) -> None:
     monkeypatch.setattr(
         main_module,
         "settings",
-        Settings(data_backend="database", database_url=database_url),
+        Settings(data_backend="database", database_url=pg_url),
     )
 
     client = TestClient(main_module.create_app())
