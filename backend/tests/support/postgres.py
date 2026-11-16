@@ -11,13 +11,20 @@ enabled = False
 
 
 @contextmanager
-def database(instance_url):
+def database(instance_url, *, template=None):
     name = 'test_' + uuid4().hex
     admin = create_engine(instance_url, isolation_level='AUTOCOMMIT')
     url = make_url(instance_url).set(database=name)
     identity = (url.host, url.port, url.database, url.username, url.password)
+    source = ""
+    if template:
+        template_url = make_url(template)
+        if template_url.set(database=name) != url or not template_url.database.startswith("test_"):
+            raise ValueError("expected a template from this disposable instance")
+        source = " TEMPLATE " + admin.dialect.identifier_preparer.quote_identifier(template_url.database)
     with admin.connect() as connection:
-        connection.execute(text(f'CREATE DATABASE "{name}"'))
+        connection.execute(text(f'CREATE DATABASE "{name}"{source}'))
+
     allowed_databases.add(identity)
     try:
         yield url.render_as_string(hide_password=False)

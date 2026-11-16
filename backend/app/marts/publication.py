@@ -71,8 +71,6 @@ SHARED_HISTORY_PRODUCTS = frozenset(("screener", "portfolio", "market-overview",
 def shared_history_digest(session: Session, candidate: MartCandidate, version: str) -> str | None:
     if candidate.product not in SHARED_HISTORY_PRODUCTS or "marketNews" in candidate.payload or "dailyChart" in candidate.payload:
         return None
-    if session.get_bind().dialect.name != "postgresql":
-        return None
     # 兼容尚未执行 0021 的底座。迁移用生成列及外键同时保护产品与版本。
     key = "has_referenced_snapshot_history"
     if key not in session.info:

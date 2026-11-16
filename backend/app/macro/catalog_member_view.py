@@ -80,7 +80,7 @@ def load_official_source_states(factory,as_of,catalog,witnesses=None):
     registered={s.code for s in catalog.catalog_member_policy.targets if s.documents} if catalog.catalog_member_policy else set()
     groups={}
     with factory() as session:
-        bind=session.get_bind();schema=bind.get_execution_options().get('schema_translate_map',{}).get('ops','ops')
+        bind=session.get_bind();schema='ops'
         if not inspect(bind).has_table('job_run',schema=schema):return states
         rows=session.scalars(select(JobRun).where(or_(JobRun.job_name==JOB,JobRun.job_name.like(CATALOG_JOB_PREFIX+'%')),
             JobRun.started_at<=cutoff).order_by(JobRun.started_at,JobRun.id)).all()

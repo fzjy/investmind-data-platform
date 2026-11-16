@@ -239,8 +239,7 @@ class StatusService:
         after = _cursor(request)
         now = self.clock()
         with self.factory() as session, session.begin():
-            if session.get_bind().dialect.name == 'postgresql':
-                session.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
+            session.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
             candidates = set()
             for b in allowed:
                 subjects = request.subject_keys or configured(self.root,b)

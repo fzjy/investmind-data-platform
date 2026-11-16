@@ -41,8 +41,7 @@ def preview_portfolio_dividends(factory):
     report = {'status': 'blocked', 'requestCount': 0, 'writes': 0, 'economicsReady': False}
     engine = factory.kw['bind']
     with factory() as session:
-        if engine.dialect.name == 'postgresql':
-            session.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
+        session.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
         base = session.get(PublishedSnapshot, 'screener')
         if base is None:
             return {**report, 'code': 'SCREENER_BASE_REQUIRED'}

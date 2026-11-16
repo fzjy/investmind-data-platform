@@ -3,10 +3,9 @@ from __future__ import annotations
 
 from dataclasses import replace
 from datetime import UTC, datetime
-from pathlib import Path
+from app.shared.readonly_database import open_readonly_factory
 
-from sqlalchemy import create_engine, event, select
-from sqlalchemy.engine import make_url
+from sqlalchemy import select
 from sqlalchemy.orm import sessionmaker
 
 from app.config import Settings
@@ -33,35 +32,8 @@ def read_macro_catchup_plan(settings: Settings, *, now: datetime | None = None) 
     instant = instant.astimezone(UTC)
     if not settings.database_url:
         raise ValueError('MACRO_CATCHUP_DATABASE_REQUIRED')
-    url = make_url(settings.database_url)
-    if url.get_backend_name() == 'sqlite':
-        if not url.database or url.database == ':memory:' or not Path(url.database).is_file():
-            raise ValueError('MACRO_CATCHUP_EXISTING_DATABASE_REQUIRED')
-        url = url.set(database=Path(url.database).resolve().as_uri(),
-            query={**url.query, 'uri':'true', 'mode':'ro'})
-        engine = create_engine(url, execution_options={'schema_translate_map':{
-            'raw':None,'core':None,'ops':None,'derived':None,'mart':None}})
-        @event.listens_for(engine, 'connect')
-        def read_only(dbapi_connection, _record):
-            # sqlite3 legacy模式不为SELECT开启事务；由begin事件显式建立读快照。
-            dbapi_connection.isolation_level = None
-            cursor = dbapi_connection.cursor()
-            try: cursor.execute('PRAGMA query_only=ON')
-            finally: cursor.close()
-        @event.listens_for(engine, 'begin')
-        def read_snapshot(connection):
-            connection.exec_driver_sql('BEGIN')
-    elif url.get_backend_name() == 'postgresql' and url.get_driver_name() == 'psycopg':
-        engine = create_engine(url, isolation_level='REPEATABLE READ', connect_args={
-            'options':'-c default_transaction_read_only=on -c statement_timeout=30000'})
-    else:
-        raise ValueError('MACRO_CATCHUP_DATABASE_DRIVER_UNSUPPORTED')
-    try:
-        with engine.connect() as connection, connection.begin():
-            factory = sessionmaker(bind=connection, expire_on_commit=False)
-            return _read_plan(settings, instant, factory)
-    finally:
-        engine.dispose()
+    with open_readonly_factory(settings.database_url) as factory:
+        return _read_plan(settings, instant, factory)
 
 
 def _read_plan(settings: Settings, now: datetime, factory: sessionmaker) -> dict[str, object]:

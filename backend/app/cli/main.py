@@ -12,9 +12,8 @@ from zoneinfo import ZoneInfo
 
 import httpx
 import typer
-from sqlalchemy import Engine, create_engine
+from sqlalchemy import Engine
 from sqlalchemy.engine import make_url
-from sqlalchemy.orm import sessionmaker
 
 from app.config import Settings, configured_tushare_token
 from app.shared.cli import SafeTyperGroup
@@ -32,7 +31,7 @@ from app.connectors.tushare.strategies import (
 )
 from app.connectors.external_files.reader import ExternalFileReader, ImportValidationFailed
 from app.db.session import create_engine_and_session
-from app.ingestion.external_import import ExternalImporter
+from app.ingestion.external_import import ExternalImporter, validate_file
 from app.ingestion.pagination import PaginatedPlanRunner, PaginatedResult
 from app.ingestion.pipeline import BatchResult, IngestionPipeline
 from app.stocks.jobs.backfill import BackfillJob, BackfillOptions
@@ -492,6 +491,7 @@ def backfill(
             )
             job = BackfillJob(
                 page_runner,
+                lock=job_lock_for_engine(engine),
                 history=SqlBackfillHistory(factory),
                 sanitize_error=lambda message: _redact(message, token),
             )
@@ -1421,8 +1421,8 @@ def _external_importer() -> ExternalImporter:
     if not settings.database_url:
         _echo("外部导入需要配置 DANG_DATABASE_URL", err=True)
         raise typer.Exit(code=3)
-    engine = create_engine(settings.database_url, pool_pre_ping=True)
-    return ExternalImporter(sessionmaker(engine, expire_on_commit=False), ExternalFileReader(settings.external_import_path))
+    _, factory = create_engine_and_session(settings.database_url)
+    return ExternalImporter(factory, ExternalFileReader(settings.external_import_path))
 
 
 @app.command("validate-import")
@@ -1430,7 +1430,7 @@ def validate_import(path: Path) -> None:
     """只校验外部 JSON/JSONL，不写数据库。"""
     try:
         settings = Settings.from_env()
-        preview = ExternalImporter(sessionmaker(create_engine("sqlite://")), ExternalFileReader(settings.external_import_path)).validate(path)
+        preview = validate_file(ExternalFileReader(settings.external_import_path), path)
     except (OSError, ValueError) as exc:
         _echo(str(exc), err=True)
         raise typer.Exit(code=2) from exc

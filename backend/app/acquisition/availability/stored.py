@@ -1,6 +1,6 @@
 from decimal import Decimal, InvalidOperation
 
-from sqlalchemy import select, or_, cast, func
+from sqlalchemy import select, or_, cast
 from sqlalchemy.dialects.postgresql import JSONB
 from app.acquisition.periods import bounds
 
@@ -106,11 +106,7 @@ def _stored(session, key, now, selected=None):
         return _available(row.trade_date,'tushare') if row and finite(row.close) else MISSING
     if entry == 'stock-announcements':
         model = db.ContentDocument
-        if session.get_bind().dialect.name == 'postgresql':
-            linked = cast(model.securities,JSONB).contains([code])
-        else:
-            symbols = func.json_each(model.securities).table_valued('value')
-            linked = select(1).select_from(symbols).where(symbols.c.value == code).exists()
+        linked = cast(model.securities,JSONB).contains([code])
         q = select(model.published_at).where(linked,model.content_type=='announcement',
             model.source=='cninfo',model.published_at <= now)
         if selected:

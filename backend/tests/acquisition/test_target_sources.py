@@ -3,14 +3,12 @@ from app.acquisition.service import StatusService
 from app.acquisition.adapters.targets import target_status
 from backend.tests.macro.test_target_evidence_normalize import CAPTURED,AS_OF
 from backend.tests.macro.test_target_evidence_policy import policy
-from backend.tests.macro.test_target_evidence_store import database,seed
+from backend.tests.macro.test_target_evidence_store import seed
 
 
-def test_etf_candidate_uses_its_own_observation(database):
-    from app.db.models.enterprise_target_execution import TargetExecutionPlan,TargetExecutionAttempt
-    store,_,_,engine,factory = database
-    for model in (TargetExecutionPlan,TargetExecutionAttempt):
-        model.__table__.create(engine)
+def test_etf_candidate_uses_its_own_observation(factory):
+    from app.macro.target_evidence_store import TargetEvidenceStore
+    store = TargetEvidenceStore(factory)
     oid=seed(store)
     store.normalize(oid,policy(),AS_OF,'Asia/Shanghai',persist=True)
     with factory() as session:

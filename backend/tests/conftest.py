@@ -22,6 +22,35 @@ def pg_database(pg_instance_url):
 def pg_url(pg_database):
     return pg_database()
 
+@pytest.fixture(scope="session")
+def pg_template(pg_instance_url):
+    """只迁移一次，随后每个用例克隆完整 schema、约束及触发器。"""
+    from alembic import command
+    from alembic.config import Config
+    from app.config import PROJECT_ROOT
+    with postgres.database(pg_instance_url) as template:
+        with pytest.MonkeyPatch.context() as patch:
+            patch.setenv("DANG_DATABASE_URL", template)
+            command.upgrade(Config(str(PROJECT_ROOT / "backend/alembic.ini")), "head")
+        yield template
+
+
+@pytest.fixture
+def pg_schema_url(pg_instance_url, pg_template):
+    with postgres.database(pg_instance_url, template=pg_template) as url:
+        yield url
+
+
+@pytest.fixture
+def pg_factory(pg_schema_url):
+    from app.db.session import create_engine_and_session
+    engine, factory = create_engine_and_session(pg_schema_url)
+    try:
+        yield factory
+    finally:
+        engine.dispose()
+
+
 @pytest.fixture
 def control_store(pg_url):
     from app.db.models.local_admin import LocalAdminTask, LocalAdminExecution

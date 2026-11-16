@@ -108,24 +108,12 @@ def _utc_naive(value: datetime) -> datetime:
 
 def _is_expected_duplicate_key(
     error: IntegrityError,
-    session: Session,
     *,
-    sqlite_target: str,
     postgresql_constraints: frozenset[str],
 ) -> bool:
-    dialect_name = session.get_bind().dialect.name
-    if dialect_name == "sqlite":
-        return str(error.orig) == f"UNIQUE constraint failed: {sqlite_target}"
-    if dialect_name == "postgresql":
-        sqlstate = getattr(error.orig, "sqlstate", None) or getattr(
-            error.orig,
-            "pgcode",
-            None,
-        )
-        diagnostic = getattr(error.orig, "diag", None)
-        constraint_name = getattr(diagnostic, "constraint_name", None)
-        return sqlstate == "23505" and constraint_name in postgresql_constraints
-    return False
+    diagnostic = getattr(error.orig, "diag", None)
+    return (getattr(error.orig, "sqlstate", None) == "23505"
+            and getattr(diagnostic, "constraint_name", None) in postgresql_constraints)
 
 
 class SchedulerStateRepository:
@@ -234,8 +222,6 @@ class SchedulerStateRepository:
                 except IntegrityError as error:
                     if not _is_expected_duplicate_key(
                         error,
-                        session,
-                        sqlite_target="scheduler_checkpoint.checkpoint_key",
                         postgresql_constraints=frozenset(
                             {
                                 "pk_scheduler_checkpoint",
@@ -448,8 +434,6 @@ class SchedulerStateRepository:
                 except IntegrityError as error:
                     if not _is_expected_duplicate_key(
                         error,
-                        session,
-                        sqlite_target="operational_alert.alert_key",
                         postgresql_constraints=frozenset(
                             {"uq_operational_alert_alert_key"}
                         ),

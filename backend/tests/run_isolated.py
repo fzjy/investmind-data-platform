@@ -10,7 +10,6 @@ import subprocess
 import json
 from contextvars import ContextVar
 from functools import wraps
-from weakref import WeakSet
 
 
 def isolate_extension_config(directory: Path) -> None:
@@ -74,14 +73,13 @@ def main(*, child_url: str | None = None) -> None:
         if name.upper().startswith(("DANG_", "COMPOSE_")):
             del os.environ[name]
     os.environ["DANG_RUN_POSTGRES_TESTS"] = "1" if postgres else "0"
-    # 测试应用只允许内存SQLite；绝不继承业务数据库连接或演示运行模式。
-    os.environ["DANG_DATABASE_URL"] = "sqlite+pysqlite:///:memory:"
+    os.environ["DANG_DATABASE_URL"] = child_url or "postgresql+psycopg://invalid.invalid/unregistered"
 
     import app.config as config
     import httpx
     import requests
     from sqlalchemy import event
-    from sqlalchemy.engine import Connection, Dialect, Engine, make_url
+    from sqlalchemy.engine import Dialect, make_url
     from testcontainers.community.postgres import PostgresContainer
 
     from backend.tests.support import postgres as pg_support
@@ -94,14 +92,6 @@ def main(*, child_url: str | None = None) -> None:
         child = make_url(child_url)
         allowed_databases.add((child.host, child.port, child.database, child.username, child.password))
         pg_support.child_url = child_url
-    sqlite_engines: WeakSet[Engine] = WeakSet()
-    sqlite_connections: WeakSet[Connection] = WeakSet()
-
-    def remember_sqlite_connection(connection: Connection) -> None:
-        if connection.dialect.name == "sqlite":
-            sqlite_connections.add(connection)
-            sqlite_engines.add(connection.engine)
-
     def deny_http(*args: object, **kwargs: object) -> object:
         violations.append("real HTTP")
         raise AssertionError("Offline tests forbid real HTTP")
@@ -134,8 +124,6 @@ def main(*, child_url: str | None = None) -> None:
         return value
 
     def controlled_database(dialect: Dialect, record: object, args: object, params: dict[str, object]) -> None:
-        if dialect.name == "sqlite":
-            return
         identity = (params.get("host"), params.get("port"), params.get("dbname"), params.get("user"), params.get("password"))
         if (postgres or child_url) and dialect.name == "postgresql" and identity in allowed_databases:
             return
@@ -148,7 +136,6 @@ def main(*, child_url: str | None = None) -> None:
     requests.Session.send = controlled_send
     PostgresContainer.get_connection_url = disposable_url
     event.listen(Dialect, "do_connect", controlled_database)
-    event.listen(Engine, "engine_connect", remember_sqlite_connection)
 
     # 备份多了一条不经过 SQLAlchemy 的 libpq 子进程通路，必须在执行前审计。
     import app.ops.backup.process as backup_process
@@ -243,19 +230,9 @@ def main(*, child_url: str | None = None) -> None:
         try:
             runpy.run_module(args[0], run_name="__main__", alter_sys=True)
         finally:
-            try:
-                # Windows不能删除仍被测试池持有的SQLite文件；只释放本进程已跟踪的测试资源。
-                try:
-                    for connection in tuple(sqlite_connections):
-                        if not connection.closed:
-                            connection.close()
-                finally:
-                    for engine in tuple(sqlite_engines):
-                        engine.dispose()
-            finally:
-                print(f"Offline test isolation: user dotenv disabled; real HTTP/business DB violations={len(violations)}; disposable PG identities={len(allowed_databases)}", file=sys.stderr, flush=True)
-                if violations:
-                    raise SystemExit(97)
+            print(f"Offline test isolation: user dotenv disabled; real HTTP/business DB violations={len(violations)}; disposable PG identities={len(allowed_databases)}", file=sys.stderr, flush=True)
+            if violations:
+                raise SystemExit(97)
 
 
 if __name__ == "__main__":

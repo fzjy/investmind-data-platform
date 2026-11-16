@@ -26,7 +26,7 @@ def target_status(session,key,now):
         scope = {'source':'tushare','api':api,'params':raw.params}
         refs = ({'observationId':raw.observation_id},)
         try:
-            decoded = _decode_raw(raw,session.get_bind().dialect.name=='sqlite')
+            decoded = _decode_raw(raw)
             if candidate is None:
                 raise ValueError
             _check_candidate(candidate,{raw.observation_id:decoded})

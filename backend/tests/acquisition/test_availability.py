@@ -11,7 +11,8 @@ def test_finite_numbers(value, expected):
     assert finite(value) is expected
 
 
-def test_stored_row_does_not_prove_published_value(factory):
+def test_stored_row_does_not_prove_published_value(stock_factory):
+    factory = stock_factory
     key = StateKey('stock-daily','','security','600519.SH')
     now = datetime.now(UTC)
     with factory.begin() as s:

@@ -5,8 +5,7 @@ from dataclasses import asdict
 from datetime import datetime
 
 from sqlalchemy import select, tuple_
-from sqlalchemy.dialects.postgresql import insert as pg_insert
-from sqlalchemy.dialects.sqlite import insert as sqlite_insert
+from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session
 
 from app.acquisition.contracts import Attempt, Evidence, StateKey, utc
@@ -61,7 +60,6 @@ class StateRepository:
         validate_metadata(attempt.scope)
         if attempt.started_at.utcoffset() is None:
             raise ValueError('尝试开始时间缺少时区')
-        insert = pg_insert if self.session.get_bind().dialect.name == 'postgresql' else sqlite_insert
         values = dict(attempt_id=attempt.attempt_id, started_at=utc(attempt.started_at), scope=attempt.scope,
                       active=True, trigger=attempt.trigger)
         self.session.execute(insert(State).values(**asdict(attempt.key), **values, terminal={},

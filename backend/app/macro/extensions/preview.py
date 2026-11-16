@@ -13,8 +13,10 @@ from app.shared.readonly_database import open_readonly_factory
 
 
 def _utc(value: datetime) -> datetime:
-    # SQLite不保留时区；项目Core时间按UTC存储，不能解释成机器本地时区。
-    return value.replace(tzinfo=timezone.utc) if value.tzinfo is None else value.astimezone(timezone.utc)
+
+    if value.utcoffset() is None:
+        raise ValueError("timestamp requires a timezone")
+    return value.astimezone(timezone.utc)
 
 
 def _inventory(session, plan: dict, now: datetime) -> dict:

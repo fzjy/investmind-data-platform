@@ -174,8 +174,7 @@ def capture_dividend_evidence(factory, client=None, *, execute=False, config=Non
         return {**report, 'code':'CAPTURE_LOCK_BUSY'}
     try:
         with factory() as s:
-            if engine.dialect.name == 'postgresql':
-                s.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
+            s.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
             try:
                 proposed = base_reader(s)
             except ValueError as exc:

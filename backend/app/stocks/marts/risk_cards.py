@@ -49,16 +49,15 @@ def verify_risk_sources(session, candidates):
     builds = [candidate for candidate in candidates if candidate.risk_input_signature]
     if not builds:
         return
-    if session.get_bind().dialect.name == "postgresql":
-        try:
-            session.execute(text("LOCK TABLE core.income_statement, core.balance_sheet, core.cashflow_statement, "
-                                 "core.financial_indicator, core.dividend, core.daily_basic, core.daily_price, raw.source_payload, "
-                                 "raw.ingestion_batch, ops.job_cursor IN SHARE MODE NOWAIT"))
-        except DBAPIError as exc:
-            if getattr(exc.orig, "sqlstate", None) == "55P03":
-                from app.stocks.marts.metric_cards import MetricCardSourceBusy
-                raise MetricCardSourceBusy("WORKBENCH_RISK_SOURCE_BUSY") from exc
-            raise
+    try:
+        session.execute(text("LOCK TABLE core.income_statement, core.balance_sheet, core.cashflow_statement, "
+                             "core.financial_indicator, core.dividend, core.daily_basic, core.daily_price, raw.source_payload, "
+                             "raw.ingestion_batch, ops.job_cursor IN SHARE MODE NOWAIT"))
+    except DBAPIError as exc:
+        if getattr(exc.orig, "sqlstate", None) == "55P03":
+            from app.stocks.marts.metric_cards import MetricCardSourceBusy
+            raise MetricCardSourceBusy("WORKBENCH_RISK_SOURCE_BUSY") from exc
+        raise
     for candidate, verified in zip(sorted(builds, key=lambda c: c.product),
                                    sorted(project_risks(session, builds), key=lambda c: c.product), strict=True):
         parent = session.get(PublishedSnapshot, candidate.product, with_for_update=True)

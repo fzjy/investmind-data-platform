@@ -60,7 +60,7 @@ def publish(factory,*,dry_run=False):
     if not dry_run and not acquired:return report|{'code':'FINANCIAL_PUBLICATION_LOCK_BUSY'}
     try:
         with factory() as s:
-            if factory.kw['bind'].dialect.name=='postgresql':s.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
+            s.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
             base=_base(s);as_of=datetime.fromisoformat(base['asOf']).date()
             screen=s.get(PublishedSnapshot,'screener');previous={'screener':screen.version};freshness={'screener':(screen.stale,screen.stale_reason)}
             old={symbol:s.get(PublishedSnapshot,'stock-workbench:'+symbol) for symbol in base['symbols']}

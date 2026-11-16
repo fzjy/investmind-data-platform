@@ -13,7 +13,7 @@ def read_compatible_macro_audit(factory, legacy_reader, *, now):
     keys = {r['id']:StateKey(r['id'],'','series',r['id']) for r in entries if not r['id'].startswith('collection:')}
     with factory() as session:
         connection = session.connection()
-        schema = connection.get_execution_options().get('schema_translate_map',{}).get('ops','ops')
+        schema = 'ops'
         if not inspect(connection).has_table('data_acquisition_state',schema=schema):
             return report
         states = StateRepository(session).read(tuple(keys.values()))

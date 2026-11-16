@@ -9,7 +9,7 @@ depends_on = None
 
 
 def upgrade():
-    schema = "derived" if op.get_bind().dialect.name == "postgresql" else None
+    schema = "derived"
     inspector = sa.inspect(op.get_bind())
     columns = {col["name"] for col in inspector.get_columns("risk_result", schema=schema)}
     for name in ("snapshot_version", "rule_version"):
@@ -18,12 +18,11 @@ def upgrade():
     if "uq_current_risk_security_rule" in {i["name"] for i in inspector.get_indexes("risk_result", schema=schema)}:
         return
     op.create_index("uq_current_risk_security_rule", "risk_result", ["ts_code", "risk_id"],
-                    unique=True, schema=schema, postgresql_where=sa.text("snapshot_version IS NOT NULL"),
-                    sqlite_where=sa.text("snapshot_version IS NOT NULL"))
+                    unique=True, schema=schema, postgresql_where=sa.text("snapshot_version IS NOT NULL"))
 
 
 def downgrade():
-    schema = "derived" if op.get_bind().dialect.name == "postgresql" else None
+    schema = "derived"
     op.drop_index("uq_current_risk_security_rule", table_name="risk_result", schema=schema)
     for name in ("rule_version", "snapshot_version"):
         op.drop_column("risk_result", name, schema=schema)

@@ -16,7 +16,8 @@ def test_explicit_more_rejects_short_stock_response():
         validate_response(plan, response, date(2026,10,13), date(2026,10,13))
 
 
-def test_selected_period_requires_matching_proof(factory):
+def test_selected_period_requires_matching_proof(stock_factory):
+    factory = stock_factory
     now = datetime.now(UTC)
     key = StateKey('stock-daily','','security','600519.SH')
     with factory.begin() as session:

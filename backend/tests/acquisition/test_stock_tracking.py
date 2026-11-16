@@ -5,7 +5,8 @@ from app.stocks.update.repository import StockUpdateRepository
 from backend.tests.stock_update.test_repository import sample
 
 
-def test_scoped_stock_response(factory):
+def test_scoped_stock_response(stock_factory):
+    factory = stock_factory
     repo = StockUpdateRepository(factory)
     day = date(2026,10,13)
     plan, response = sample()

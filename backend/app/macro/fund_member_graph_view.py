@@ -20,7 +20,7 @@ def load_fund_graph_view(factory,as_of,catalog):
     if policy is None or not policy.memberGraphs:return [],{}
     cutoff=_cutoff(as_of);witnesses=[];states={g.code:{'status':'not-collected','errorCode':None} for g in policy.memberGraphs};store=FundMemberGraphStore(factory)
     with factory() as session:
-        bind=session.get_bind();schema=bind.get_execution_options().get('schema_translate_map',{}).get('ops','ops')
+        bind=session.get_bind();schema='ops'
         if any(not inspect(bind).has_table(name,schema=schema) for name in ('job_cursor','job_run')):return [],states
         for scope in policy.memberGraphs:
             code=scope.code;states[code]={'status':'not-collected','errorCode':None}

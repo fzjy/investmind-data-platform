@@ -187,7 +187,7 @@ class CalibrationStore:
     def replay(self, now, *, dry_run=False, clock=None):
         now = instant(now)
         with self.factory.begin() as session:
-            if not dry_run and session.bind.dialect.name == 'postgresql':
+            if not dry_run:
                 key = int.from_bytes(sha256(VERSION.encode()).digest()[:8], 'big', signed=True)
                 session.execute(sql_text('SELECT pg_advisory_xact_lock(:key)'), {'key': key})
             if clock is not None:

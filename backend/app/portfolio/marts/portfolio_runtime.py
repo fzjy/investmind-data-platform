@@ -36,8 +36,7 @@ def rebuild_portfolio(factory, *, dry_run=True):
         return {**report, 'code': 'PORTFOLIO_PUBLICATION_LOCK_BUSY'}
     try:
         with factory(autoflush=False) as session:
-            if engine.dialect.name == 'postgresql':
-                session.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
+            session.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
             screen = session.get(PublishedSnapshot, 'screener')
             base = session.get(PublishedSnapshot, 'portfolio')
             if screen is None or base is None:

@@ -44,7 +44,7 @@ class DatabaseNewsStore:
     @contextmanager
     def transaction(self):
         with self.factory.begin() as session:
-            if session.bind.dialect.name == 'postgresql' and not session.scalar(
+            if not session.scalar(
                 text('SELECT pg_try_advisory_xact_lock(:key)'), {'key': lock_key(JOB)}):
                 raise StoreLocked()
             yield DatabaseTransaction(session)

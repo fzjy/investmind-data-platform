@@ -91,9 +91,8 @@ class SzMarketSampleStore:
     def reserve(self, plan, now):
         now = instant(now)
         with self.factory.begin() as session:
-            if session.bind.dialect.name == 'postgresql':
-                lock = int.from_bytes(sha256(JOB.encode()).digest()[:8], 'big', signed=True)
-                session.execute(text('SELECT pg_advisory_xact_lock(:key)'), {'key': lock})
+            lock = int.from_bytes(sha256(JOB.encode()).digest()[:8], 'big', signed=True)
+            session.execute(text('SELECT pg_advisory_xact_lock(:key)'), {'key': lock})
             if self._state(session, plan, now)['status'] != 'new':
                 raise ValueError('SZ_SAMPLE_RESERVATION_BLOCKED')
             session.add(JobCursor(job_name=JOB, cursor_key=KEY, cursor_value={'plan': plan}, updated_at=now))

@@ -36,6 +36,22 @@ class ImportSummary:
     affected_products: tuple[str, ...]
 
 
+def _parse(reader: ExternalFileReader, path: Path) -> tuple[list[MacroImportRecord | ContentImportRecord], list[dict[str, Any]]]:
+    try:
+        return list(reader.read(path)), []
+    except ImportValidationFailed as exc:
+        return [], list(exc.errors)
+
+
+def validate_file(reader: ExternalFileReader, path: Path) -> ImportPreview:
+    records, errors = _parse(reader, path)
+    return ImportPreview(
+        ExternalImporter.file_hash(path), len(records),
+        sum(isinstance(row, MacroImportRecord) for row in records),
+        sum(isinstance(row, ContentImportRecord) for row in records), tuple(errors),
+    )
+
+
 class ExternalImporter:
     def __init__(self, session_factory: sessionmaker[Session], reader: ExternalFileReader) -> None:
         self._session_factory = session_factory
@@ -45,15 +61,8 @@ class ExternalImporter:
     def file_hash(path: Path) -> str:
         return hashlib.sha256(path.read_bytes()).hexdigest()
 
-    def _parse(self, path: Path) -> tuple[list[MacroImportRecord | ContentImportRecord], list[dict[str, Any]]]:
-        try:
-            return list(self._reader.read(path)), []
-        except ImportValidationFailed as exc:
-            return [], list(exc.errors)
-
     def validate(self, path: Path) -> ImportPreview:
-        records, errors = self._parse(path)
-        return ImportPreview(self.file_hash(path), len(records), sum(isinstance(row, MacroImportRecord) for row in records), sum(isinstance(row, ContentImportRecord) for row in records), tuple(errors))
+        return validate_file(self._reader, path)
 
     def _security_errors(self, session: Session, records: list[MacroImportRecord | ContentImportRecord]) -> list[dict[str, Any]]:
         content = [(index, row) for index, row in enumerate(records, 1) if isinstance(row, ContentImportRecord)]
@@ -81,7 +90,7 @@ class ExternalImporter:
                 stored = session.scalars(select(ExternalRecord).where(ExternalRecord.external_file_id == existing.id)).all()
                 previous = [MacroImportRecord.model_validate(row.payload) if row.record_type == "macro" else ContentImportRecord.model_validate(row.payload) for row in stored]
                 return ImportSummary("already_imported", existing.id, file_hash, existing.row_count, existing.valid_count, existing.rejected_count, self._affected_products(previous))
-        records, errors = self._parse(path)
+        records, errors = _parse(self._reader, path)
         rejected_file_id: int | None = None
         if errors:
             with self._session_factory.begin() as session:

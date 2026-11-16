@@ -26,21 +26,18 @@ def rea_input_schema(factory):
     with factory() as session:
         connection = session.connection()
         inspector = inspect(connection)
-        is_postgres = connection.dialect.name == 'postgresql'
         for model in MODELS:
             table = model.__table__
-            schema = table.schema if is_postgres else None
+            schema = table.schema
             if not inspector.has_table(table.name, schema=schema):
                 problems.append(table.fullname)
-            elif is_postgres:
+            else:
                 problems.extend(_structure_errors(inspector, table))
                 if model is ReaInputPlan and not any(
                         item['column_names'] == ['sequence_number']
                         for item in inspector.get_unique_constraints(table.name, schema=schema)):
                     problems.append(table.fullname + ':sequence-unique')
-            elif not set(table.c.keys()) <= {col['name'] for col in inspector.get_columns(table.name, schema=schema)}:
-                problems.append(table.fullname + ':columns')
-        if is_postgres and not problems:
+        if not problems:
             rows = session.execute(text("""SELECT n.nspname || '.' || c.relname,p.prosrc
                 FROM pg_trigger t JOIN pg_class c ON c.oid=t.tgrelid JOIN pg_namespace n ON n.oid=c.relnamespace
                 JOIN pg_proc p ON p.oid=t.tgfoid JOIN pg_namespace pn ON pn.oid=p.pronamespace

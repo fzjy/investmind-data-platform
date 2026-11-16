@@ -65,7 +65,7 @@ class UsdcnyHistoryRepository:
         if progress:
             result = replace(result, raw_payload={**result.raw_payload, 'historyStage': 'in_progress'})
         batch_id = self.observations.audit_request(series, source, window, result, captured_at, run_id)
-        # audit_request已校验aware；数据库写入与查询统一UTC，SQLite不会保留offset。
+
         captured_at = utc(captured_at)
         with self.factory.begin() as session:
             batch = session.get(IngestionBatch, batch_id)

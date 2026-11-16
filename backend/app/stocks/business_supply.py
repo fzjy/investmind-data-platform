@@ -186,7 +186,7 @@ def capture(factory,client=None,*,execute=False,now=None,max_http=None):
         if type(budget) is not int or not 1<=budget<=policy['maxHttpPerRun']:raise ValueError('BUSINESS_BUDGET_INVALID')
         if execute:_acknowledge_split_parents(factory,policy)
         with factory() as s:
-            if factory.kw['bind'].dialect.name=='postgresql':s.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
+            s.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
             source=_scope(s)
             if source['asOf']>now.date().isoformat():raise ValueError('BUSINESS_FUTURE_BASE')
             pending=reusable=None

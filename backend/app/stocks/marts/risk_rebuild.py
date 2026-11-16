@@ -14,22 +14,13 @@ def clean_history(session, symbol, execute):
     counts = []
     for model, key, value in ((PageSnapshot, "product", "stock-workbench:" + symbol),
                               (StockWorkbenchSnapshot, "ts_code", symbol)):
-        if session.get_bind().dialect.name == "postgresql":
-            table = model.__table__.fullname
-            where = f" WHERE {key} = :value AND payload -> 'risks' IS NOT NULL"
-            if execute:
-                count = session.execute(text(f"UPDATE {table} SET payload = (payload::jsonb - 'risks')::json" + where),
-                                        {"value": value}).rowcount
-            else:
-                count = session.scalar(text(f"SELECT count(*) FROM {table}" + where), {"value": value})
+        table = model.__table__.fullname
+        where = f" WHERE {key} = :value AND payload -> 'risks' IS NOT NULL"
+        if execute:
+            count = session.execute(text(f"UPDATE {table} SET payload = (payload::jsonb - 'risks')::json" + where),
+                                    {"value": value}).rowcount
         else:
-            rows = session.scalars(select(model).where(getattr(model, key) == value))
-            count = 0
-            for row in rows:
-                if "risks" in row.payload:
-                    count += 1
-                    if execute:
-                        row.payload = {k: v for k, v in row.payload.items() if k != "risks"}
+            count = session.scalar(text(f"SELECT count(*) FROM {table}" + where), {"value": value})
         counts.append(count)
     return counts
 

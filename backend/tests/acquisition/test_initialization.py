@@ -6,7 +6,8 @@ from app.acquisition.repository import StateRepository
 from app.db.models import DailyPrice
 
 
-def test_no_evidence_from_existing_values(factory):
+def test_no_evidence_from_existing_values(stock_factory):
+    factory = stock_factory
     now = datetime.now(UTC)
     with factory.begin() as s:
         s.add(DailyPrice(ts_code='600519.SH',trade_date=now.date(),close=20))

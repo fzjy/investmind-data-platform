@@ -48,8 +48,7 @@ def build_treasury_reference(rows, as_of: date, start: str):
 
 def load_treasury_reference(factory, as_of, start):
     with factory(autoflush=False) as session:
-        if factory.kw['bind'].dialect.name == 'postgresql':
-            session.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
+        session.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
         # 最近已公开的观测可能早于证券价格窗口。基准 points 仍沿用原窗口。
         rows = session.scalars(select(MacroObservation).where(
             MacroObservation.series_id == SERIES, MacroObservation.source == SOURCE,

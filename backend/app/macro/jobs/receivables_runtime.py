@@ -57,14 +57,14 @@ def _schema(factory, *, target=RECEIVABLES) -> list[str]:
         inspector = inspect(connection)
         for model in target.models:
             table = model.__table__
-            schema = None if connection.dialect.name == 'sqlite' else table.schema
+            schema = table.schema
             if not inspector.has_table(table.name, schema=schema):
                 missing.append(table.fullname)
             elif not set(table.c.keys()) <= {col['name'] for col in inspector.get_columns(table.name, schema=schema)}:
                 missing.append(table.fullname + ':columns')
-            elif connection.dialect.name=='postgresql':
+            else:
                 missing.extend(_structure_errors(inspector,table))
-        if not missing and connection.dialect.name == 'postgresql':
+        if not missing:
             # 同名空表或metadata.create_all不是正式迁移，缺少不可变保护则拒绝执行。
             guards = set()
             rows=session.execute(text("""SELECT n.nspname || '.' || c.relname,p.prosrc

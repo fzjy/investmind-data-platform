@@ -103,8 +103,7 @@ def refresh_dividends(factory, client=None, *, now, execute=False, config=None, 
                 return report | dict(status='pending', pendingCount=len(base['symbols']), code='DIVIDEND_MAPPING_CAPTURED')
         capture_budget = config | dict(maxHttpPerRun=remaining)
         with factory() as s:
-            if factory.kw['bind'].dialect.name=='postgresql':
-                s.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
+            s.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
             base = _base(s)
             aliases, mapping_value = security_aliases(s, base['symbols'])
             query_symbols = sorted({code for codes in aliases.values() for code in codes})

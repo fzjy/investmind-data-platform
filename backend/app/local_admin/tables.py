@@ -13,9 +13,8 @@ PAGE = 25
 @contextmanager
 def reading(engine):
     with engine.begin() as conn:
-        if conn.dialect.name == "postgresql":
-            conn.exec_driver_sql("SET TRANSACTION READ ONLY")
-            conn.exec_driver_sql("SET LOCAL statement_timeout = '5s'")
+        conn.exec_driver_sql("SET TRANSACTION READ ONLY")
+        conn.exec_driver_sql("SET LOCAL statement_timeout = '5s'")
         yield conn
 
 

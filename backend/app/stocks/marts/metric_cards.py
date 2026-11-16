@@ -67,15 +67,14 @@ def persist_projected_cards(session, candidates):
     if not builds:
         return
     # PostgreSQL 默认 READ COMMITTED。冻结这些来源直到指针提交，亦覆盖新增行/首次覆盖记录。
-    if session.get_bind().dialect.name == "postgresql":
-        try:
-            session.execute(text("LOCK TABLE core.daily_price, core.daily_basic, core.income_statement, "
-                                 "core.balance_sheet, core.financial_indicator, core.dividend, raw.ingestion_batch, "
-                                 "raw.source_payload, ops.job_cursor IN SHARE MODE NOWAIT"))
-        except DBAPIError as exc:
-            if getattr(exc.orig, "sqlstate", None) == "55P03":
-                raise MetricCardSourceBusy("WORKBENCH_CARD_SOURCE_BUSY_RETRY") from exc
-            raise
+    try:
+        session.execute(text("LOCK TABLE core.daily_price, core.daily_basic, core.income_statement, "
+                             "core.balance_sheet, core.financial_indicator, core.dividend, raw.ingestion_batch, "
+                             "raw.source_payload, ops.job_cursor IN SHARE MODE NOWAIT"))
+    except DBAPIError as exc:
+        if getattr(exc.orig, "sqlstate", None) == "55P03":
+            raise MetricCardSourceBusy("WORKBENCH_CARD_SOURCE_BUSY_RETRY") from exc
+        raise
     groups = defaultdict(list)
     for c in builds:
         groups[c.as_of.date()].append(c)

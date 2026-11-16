@@ -10,8 +10,6 @@ PRODUCTS = "'macro-insights','macro-transmission','market-overview','portfolio',
 
 
 def upgrade():
-    if op.get_bind().dialect.name != "postgresql":
-        return
     # 两张表的读写方在事务提交前不能观察到中间形态。
     op.execute("LOCK TABLE mart.published_snapshot, mart.page_snapshot IN SHARE ROW EXCLUSIVE MODE")
     if op.get_bind().exec_driver_sql("SELECT EXISTS (SELECT 1 FROM mart.published_snapshot WHERE json_typeof(payload) <> 'object')").scalar():
@@ -36,8 +34,6 @@ def upgrade():
 
 
 def downgrade():
-    if op.get_bind().dialect.name != "postgresql":
-        return
     op.execute("LOCK TABLE mart.published_snapshot, mart.page_snapshot IN SHARE ROW EXCLUSIVE MODE")
     op.execute("""UPDATE mart.published_snapshot p SET payload=h.payload FROM mart.page_snapshot h
         WHERE p.history_generation IS NOT NULL AND h.product=p.product AND h.snapshot_version=p.version""")

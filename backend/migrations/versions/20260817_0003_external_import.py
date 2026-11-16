@@ -17,18 +17,11 @@ depends_on = None
 
 def upgrade() -> None:
     bind = op.get_bind()
-    if bind.dialect.name == "postgresql":
-        for schema in ("raw", "core"):
-            bind.execute(text(f"CREATE SCHEMA IF NOT EXISTS {schema}"))
-    else:
-        bind = bind.execution_options(schema_translate_map={"raw": None, "core": None})
+    for schema in ("raw", "core"):
+        bind.execute(text(f"CREATE SCHEMA IF NOT EXISTS {schema}"))
     ExternalBase.metadata.create_all(bind)
 
 
 def downgrade() -> None:
     bind = op.get_bind()
-    if bind.dialect.name == "postgresql":
-        ExternalBase.metadata.drop_all(bind)
-    else:
-        bind = bind.execution_options(schema_translate_map={"raw": None, "core": None})
-        ExternalBase.metadata.drop_all(bind)
+    ExternalBase.metadata.drop_all(bind)

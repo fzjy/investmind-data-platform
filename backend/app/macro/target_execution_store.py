@@ -89,7 +89,7 @@ class TargetExecutionStore:
                     continue
                 if row.error_code is not None or row.finished_at is None or row.observation_id is None:
                     raise ValueError('TARGET_EXECUTION_INVALID')
-                decoded=_decode_raw(session.get(TargetObservation,row.observation_id),session.get_bind().dialect.name=='sqlite')
+                decoded=_decode_raw(session.get(TargetObservation,row.observation_id))
                 if target_request_payload(decoded[0])!=target_request_payload(request): raise ValueError('TARGET_EXECUTION_INVALID')
                 payload=evidence.normalize(row.observation_id,policy,date.fromisoformat(root['snapshot']['frozenAsOfDate']),root['snapshot']['timezone'])
                 outcomes[row.request_key]={'observationId':row.observation_id,'payload':payload}
@@ -125,7 +125,7 @@ class TargetExecutionStore:
                 attempts=session.scalars(select(Attempt).where(Attempt.plan_fingerprint==root['fingerprint'])).all()
                 if len(attempts)>=policy.max_http_per_plan: raise ValueError('TARGET_ROOT_BUDGET_EXHAUSTED')
                 if sum(a.run_id==run_id for a in attempts)>=policy.max_http_per_run: raise ValueError('TARGET_RUN_BUDGET_EXHAUSTED')
-                timestamps=[_instant(a.created_at,sqlite=session.get_bind().dialect.name=='sqlite') for a in attempts]
+                timestamps=[_instant(a.created_at) for a in attempts]
                 if any(value>now for value in timestamps): raise ValueError('TARGET_CLOCK_REGRESSION')
                 if sum(value>now-timedelta(seconds=60) for value in timestamps)>=policy.requests_per_minute:
                     raise ValueError('TARGET_RATE_LIMITED')
@@ -150,13 +150,13 @@ class TargetExecutionStore:
             key=evidence_hash(value)
             if row.state=='received':
                 old=session.get(TargetObservation,row.observation_id)
-                if row.observation_id!=key or _decode_raw(old,session.get_bind().dialect.name=='sqlite')[3]!=value:
+                if row.observation_id!=key or _decode_raw(old)[3]!=value:
                     raise ValueError('TARGET_EXECUTION_INVALID')
                 return
             if row.state!='reserved' or row.observation_id is not None: raise ValueError('TARGET_EXECUTION_INVALID')
             old=session.get(TargetObservation,key)
             if old is not None:
-                if _decode_raw(old,session.get_bind().dialect.name=='sqlite')[3]!=value: raise ValueError('TARGET_EXECUTION_INVALID')
+                if _decode_raw(old)[3]!=value: raise ValueError('TARGET_EXECUTION_INVALID')
             else:
                 session.add(TargetObservation(observation_id=key,provider='tushare',target_code=request.target_code,
                     target_kind=request.target_kind,api_name=request.api_name,params=dict(request.params),requested_fields=list(request.fields),

@@ -22,15 +22,11 @@ if __name__ == "__main__":
                           'pgEnvironment': [key for key in __import__('os').environ if key.upper().startswith('PG')],
                           'dotenvDisabled': config.PROJECT_ENV_FILE.name == 'missing.env'}))
     elif mode == "allowed":
-        engine = create_engine("sqlite://")
-        with engine.connect() as connection:
-            sqlite = connection.scalar(text("select 1"))
-        engine.dispose()
         with httpx.Client(transport=httpx.MockTransport(lambda request: httpx.Response(200))) as client:
             status = client.get("https://example.invalid").status_code
         print(json.dumps({"backend": config.Settings.from_env().data_backend,
                           "dotenvDisabled": config.PROJECT_ENV_FILE.name == "missing.env" and not config.PROJECT_ENV_FILE.exists(),
-                          "sqlite": sqlite, "mockHttp": status}))
+                          "mockHttp": status}))
     elif mode in {"requests-send", "docker-send"}:
         adapter_reached = False
 

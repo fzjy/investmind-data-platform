@@ -19,9 +19,8 @@ LOCK_NAME='enterprise-official-member-family-budget-v1'
 
 
 def family_lock(session):
-    if session.get_bind().dialect.name=='postgresql':
-        key=int.from_bytes(sha256(LOCK_NAME.encode()).digest()[:8],'big',signed=True)
-        session.execute(text('SELECT pg_advisory_xact_lock(:key)'),{'key':key})
+    key=int.from_bytes(sha256(LOCK_NAME.encode()).digest()[:8],'big',signed=True)
+    session.execute(text('SELECT pg_advisory_xact_lock(:key)'),{'key':key})
 
 
 def daily_budget(session,now,limit):

@@ -15,9 +15,8 @@ from app.macro.target_evidence_policy import TargetEvidencePolicy, target_eviden
 from app.macro.target_evidence_schema import target_evidence_schema
 
 
-def _instant(value, *, sqlite=False):
+def _instant(value):
     if not isinstance(value, datetime): raise ValueError('TARGET_EVIDENCE_INVALID')
-    if sqlite and value.utcoffset() is None: value = value.replace(tzinfo=UTC)
     if value.utcoffset() is None: raise ValueError('TARGET_EVIDENCE_INVALID')
     return value.astimezone(UTC)
 
@@ -36,7 +35,7 @@ def _context(observation_id, version, policy_hash, as_of, timezone):
         'policyHash': policy_hash, 'asOf': as_of.isoformat(), 'timezone': timezone}
 
 
-def _decode_raw(row, sqlite=False):
+def _decode_raw(row):
     try:
         if row is None or row.provider != 'tushare' or set(row.response) != {'fields', 'items'}:
             raise ValueError
@@ -51,7 +50,7 @@ def _decode_raw(row, sqlite=False):
         if (len(set(response.fields)) != len(response.fields) or set(response.fields) != set(request.fields)
             or any(len(item) != len(response.fields) for item in response.items)):
             raise ValueError
-        captured = _instant(row.captured_at, sqlite=sqlite)
+        captured = _instant(row.captured_at)
         value = _observation(request, response, captured)
         if (row.request_hash != value['requestHash'] or row.response_hash != value['responseHash']
             or row.observation_id != evidence_hash(value)):
@@ -98,7 +97,7 @@ class TargetEvidenceStore:
             with self.factory() as session:
                 row = session.get(TargetObservation, key)
                 if row is None: return False
-                decoded = _decode_raw(row, session.get_bind().dialect.name == 'sqlite')
+                decoded = _decode_raw(row)
                 if decoded[3] != value: raise ValueError('TARGET_EVIDENCE_CONFLICT')
                 return True
         if existing(): return key
@@ -121,7 +120,7 @@ class TargetEvidenceStore:
         # 未完成/孤儿/身份篡改不通过另写一条候选来掩盖。
         self.inventory()
         with self.factory() as session:
-            decoded = _decode_raw(session.get(TargetObservation, observation_id), session.get_bind().dialect.name == 'sqlite')
+            decoded = _decode_raw(session.get(TargetObservation, observation_id))
             request, response, captured, raw = decoded
             normalizer.validate_outer(request, response, p)
             if len(canonical_json(raw['response'])) > p.max_response_bytes: raise ValueError('TARGET_EVIDENCE_INVALID')
@@ -150,7 +149,7 @@ class TargetEvidenceStore:
     def inventory(self) -> dict[str, object]:
         self._gate()
         with self.factory() as session:
-            observations = {r.observation_id: _decode_raw(r, session.get_bind().dialect.name == 'sqlite')
+            observations = {r.observation_id: _decode_raw(r)
                 for r in session.scalars(select(TargetObservation))}
             candidates = list(session.scalars(select(TargetCandidate)))
             for row in candidates: _check_candidate(row, observations)

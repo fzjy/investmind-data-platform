@@ -6,9 +6,9 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from sqlalchemy import create_engine, text
+from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.orm import sessionmaker
+from app.db.session import create_engine_and_session
 
 from app.config import settings
 from app.macro.database_provider import MacroDatabaseProvider
@@ -44,10 +44,7 @@ def create_app(*, background_news: bool = False) -> FastAPI:
     application = FastAPI(title="InvestMind Data API", version="0.1.0", lifespan=news_lifespan if background_news else None)
     if not settings.database_read_url:
         raise ValueError("DANG_DATABASE_READ_URL or DANG_DATABASE_URL is required")
-    engine_options: dict[str, object] = {"pool_pre_ping": True}
-    if settings.database_read_url.startswith("sqlite"):
-        engine_options["execution_options"] = {"schema_translate_map": {"raw": None, "core": None, "ops": None, "derived": None, "mart": None}}
-    database_engine = create_engine(settings.database_read_url, **engine_options)
+    database_engine, session_factory = create_engine_and_session(settings.database_read_url)
     application.state.read_engine = database_engine
     application.add_middleware(
         CORSMiddleware,
@@ -69,7 +66,6 @@ def create_app(*, background_news: bool = False) -> FastAPI:
             )
         return {"status": "ok", "database": "ready"}
 
-    session_factory = sessionmaker(database_engine, expire_on_commit=False)
     from app.acquisition.routes import create_router as create_status_router
     from app.acquisition.service import StatusService
     application.state.acquisition_status = StatusService(session_factory)

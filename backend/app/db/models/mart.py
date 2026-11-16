@@ -7,8 +7,6 @@ from typing import Any
 from sqlalchemy import select, case, null, Date, DateTime, JSON, Numeric, String, Text, UniqueConstraint, func
 from sqlalchemy.orm import Mapped, mapped_column, column_property, attributes
 from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.ext.compiler import compiles
-from sqlalchemy.sql.functions import FunctionElement
 
 from app.db.base import MartBase
 
@@ -26,22 +24,6 @@ class PageSnapshot(MartBase):
     payload: Mapped[dict[str, Any]] = mapped_column(JSON, nullable=False)
 
 
-# SQLite 的局部测试库可以只建当前表；只有 PostgreSQL 0021 会出现历史引用。
-class ReferencedHistory(FunctionElement):
-    type = JSON()
-    inherit_cache = True
-
-
-@compiles(ReferencedHistory)
-def _inline_database(element, compiler, **kwargs):
-    return "NULL"
-
-
-@compiles(ReferencedHistory, "postgresql")
-def _postgres_history(element, compiler, **kwargs):
-    return compiler.process(next(iter(element.clauses)), **kwargs)
-
-
 class PublishedSnapshot(MartBase):
     __tablename__ = "published_snapshot"
     __table_args__ = {"schema": "mart"}
@@ -50,11 +32,11 @@ class PublishedSnapshot(MartBase):
     version: Mapped[str] = mapped_column(String(64), nullable=False)
     as_of: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     _inline_payload: Mapped[dict[str, Any] | str] = mapped_column("payload", JSON, nullable=False)
-    _history_payload = column_property(ReferencedHistory(case((
+    _history_payload = column_property(case((
         func.json_typeof(_inline_payload) == "string",
         select(PageSnapshot.payload).where(PageSnapshot.product == product,
             PageSnapshot.snapshot_version == version).correlate_except(PageSnapshot).scalar_subquery()
-    ), else_=null())), expire_on_flush=False)
+    ), else_=null()), expire_on_flush=False)
 
     @hybrid_property
     def payload(self) -> dict[str, Any]:

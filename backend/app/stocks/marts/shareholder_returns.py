@@ -41,14 +41,13 @@ def verify_returns(session, candidates):
     builds = [c for c in candidates if c.shareholder_return_signature]
     if not builds:
         return
-    if session.get_bind().dialect.name == "postgresql":
-        from sqlalchemy.exc import DBAPIError
-        try:
-            session.execute(text("LOCK TABLE core.shareholder_count, core.daily_basic, core.income_statement, core.dividend, raw.source_payload, raw.ingestion_batch, ops.job_cursor IN SHARE MODE NOWAIT"))
-        except DBAPIError as exc:
-            if getattr(exc.orig, "sqlstate", None) == "55P03":
-                raise MetricCardSourceBusy("SHAREHOLDER_SOURCE_BUSY") from exc
-            raise
+    from sqlalchemy.exc import DBAPIError
+    try:
+        session.execute(text("LOCK TABLE core.shareholder_count, core.daily_basic, core.income_statement, core.dividend, raw.source_payload, raw.ingestion_batch, ops.job_cursor IN SHARE MODE NOWAIT"))
+    except DBAPIError as exc:
+        if getattr(exc.orig, "sqlstate", None) == "55P03":
+            raise MetricCardSourceBusy("SHAREHOLDER_SOURCE_BUSY") from exc
+        raise
     fresh = {c.product: c for c in project_returns(session, builds)}
     for c in builds:
         parent = session.get(PublishedSnapshot, c.product, with_for_update=True)

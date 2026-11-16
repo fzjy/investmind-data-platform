@@ -54,7 +54,7 @@ def run_news(settings, *, publish=False, dry_run=False, stopped=lambda: False, s
     if not settings.database_url:
         return {'status': 'blocked', 'code': 'DATABASE_REQUIRED', 'requestCount': 0}
     database_options = {'connect_timeout': config.database_connect_timeout_seconds,
-        'options': f'-c statement_timeout={config.database_statement_timeout_seconds*1000} -c lock_timeout={config.database_lock_timeout_seconds*1000}'} if settings.database_url.startswith('postgresql') else {}
+        'options': f'-c statement_timeout={config.database_statement_timeout_seconds*1000} -c lock_timeout={config.database_lock_timeout_seconds*1000}'}
     engine, factory = create_engine_and_session(settings.database_url, connection_options=database_options)
     lock = job_lock_for_engine(engine)
     acquired = lock.try_acquire(JOB)
@@ -70,7 +70,7 @@ def run_news(settings, *, publish=False, dry_run=False, stopped=lambda: False, s
         collector = Collector(config, store=store, stopped=stopped, **options)
         report = collector.run(now)
         report['retention'] = retention
-        report['storage'] = 'postgresql' if engine.dialect.name == 'postgresql' else 'test-database'
+        report['storage'] = 'postgresql'
         state = collector.status()
         save_health(factory, state, config, now)
         if publish and not stopped():

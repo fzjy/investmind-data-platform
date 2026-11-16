@@ -241,7 +241,7 @@ def capture(factory,client=None,*,execute=False,max_http=None,now=None):
     if execute and not acquired:return dict(status='locked',requestCount=0)
     try:
         with factory() as s:
-            if factory.kw['bind'].dialect.name=='postgresql':s.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
+            s.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
             base=_base(s);pending=None;reusable=None;complete_contracts=[]
             signature=_core_signature(s,base['symbols'],date.fromisoformat(base['asOf']))
             frozen_policy={k:v for k,v in policy.items() if k not in ('enabled','maxHttpPerRun','timeoutSeconds')}

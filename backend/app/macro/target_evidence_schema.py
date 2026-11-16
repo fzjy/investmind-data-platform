@@ -82,9 +82,8 @@ def _evidence_schema(factory,models,guarded_models,trigger_name,function_name,gu
     with factory() as session:
         connection = session.connection()
         inspector = inspect(connection)
-        pg = connection.dialect.name == 'postgresql'
         for model in models:
-            table = model.__table__; schema = table.schema if pg else None
+            table = model.__table__; schema = table.schema
             if not inspector.has_table(table.name, schema=schema):
                 problems.append(table.fullname + ':missing')
                 continue
@@ -93,14 +92,14 @@ def _evidence_schema(factory,models,guarded_models,trigger_name,function_name,gu
                 c.name not in columns or columns[c.name]['nullable'] != c.nullable
                 or not isinstance(columns[c.name]['type'], type(c.type))
                 or getattr(columns[c.name]['type'], 'length', None) != getattr(c.type, 'length', None)
-                or (pg and getattr(columns[c.name]['type'], 'timezone', None) != getattr(c.type, 'timezone', None))
+                or (getattr(columns[c.name]['type'], 'timezone', None) != getattr(c.type, 'timezone', None))
                 for c in table.c):
                 problems.append(table.fullname + ':columns')
             if inspector.get_pk_constraint(table.name, schema=schema)['constrained_columns'] != [c.name for c in table.primary_key]:
                 problems.append(table.fullname + ':primary-key')
             actual = {(tuple(f['constrained_columns']), f['referred_schema'], f['referred_table'], tuple(f['referred_columns']))
                 for f in inspector.get_foreign_keys(table.name, schema=schema)}
-            expected = {(tuple(e.parent.name for e in f.elements), f.elements[0].column.table.schema if pg else None,
+            expected = {(tuple(e.parent.name for e in f.elements), f.elements[0].column.table.schema,
                 f.elements[0].column.table.name, tuple(e.column.name for e in f.elements)) for f in table.foreign_key_constraints}
             if actual != expected: problems.append(table.fullname + ':foreign-key')
             actual_unique = {tuple(u['column_names']) for u in inspector.get_unique_constraints(table.name, schema=schema)}
@@ -110,7 +109,7 @@ def _evidence_schema(factory,models,guarded_models,trigger_name,function_name,gu
             expected_checks = {_sql(str(c.sqltext)) for c in table.constraints if isinstance(c, CheckConstraint)}
             if None in actual_checks or None in expected_checks or actual_checks != expected_checks:
                 problems.append(table.fullname + ':check')
-        if pg and not problems:
+        if not problems:
             rows = session.execute(text("""SELECT n.nspname || '.' || c.relname,p.prosrc
                 FROM pg_trigger t JOIN pg_class c ON c.oid=t.tgrelid JOIN pg_namespace n ON n.oid=c.relnamespace
                 JOIN pg_proc p ON p.oid=t.tgfoid JOIN pg_namespace pn ON pn.oid=p.pronamespace

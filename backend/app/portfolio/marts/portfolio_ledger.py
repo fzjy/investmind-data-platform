@@ -16,8 +16,7 @@ def missing_ledger(symbols, as_of, price_starts, *, source_status='not_captured'
 
 def load_portfolio_dividend_ledger(factory, symbols, as_of, price_starts):
     with factory(autoflush=False) as session:
-        if factory.kw['bind'].dialect.name == 'postgresql':
-            session.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
+        session.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
         base = session.get(PublishedSnapshot, 'screener')
         if base is None:
             return missing_ledger(symbols, as_of, price_starts)

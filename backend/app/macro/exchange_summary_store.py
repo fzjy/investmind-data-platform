@@ -173,9 +173,8 @@ class ExchangeSummaryStore:
         now=instant(now);validate_exchange_plan(plan)
         with self.factory.begin() as session:
             # 所有目标日共享组级事务锁；防止不同 D 并发绕过旧未完成根。
-            if session.bind.dialect.name=='postgresql':
-                lock=int.from_bytes(sha256((JOB+plan['groupId']).encode()).digest()[:8],'big',signed=True)
-                session.execute(text('SELECT pg_advisory_xact_lock(:key)'),{'key':lock})
+            lock=int.from_bytes(sha256((JOB+plan['groupId']).encode()).digest()[:8],'big',signed=True)
+            session.execute(text('SELECT pg_advisory_xact_lock(:key)'),{'key':lock})
             state=self.inspect(plan,now)
             if state['plan']!=plan or state['status']=='blocked' or doc not in plan['documents']:
                 raise ValueError('EXCHANGE_RESERVATION_BLOCKED')

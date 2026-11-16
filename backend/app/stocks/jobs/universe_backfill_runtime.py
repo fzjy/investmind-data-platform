@@ -131,6 +131,7 @@ def open_universe_backfill_runtime(
                 )
                 return BackfillJob(
                     runner,
+                    lock=job_lock_for_engine(engine),
                     sanitize_error=sanitize_error,
                 )
 

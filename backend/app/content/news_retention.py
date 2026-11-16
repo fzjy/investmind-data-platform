@@ -47,11 +47,7 @@ def _snapshot(session, row, cutoff, as_of):
     product = getattr(row, 'product', '')
     symbol = row.ts_code if isinstance(row, StockWorkbenchSnapshot) else product.split(':', 1)[1] if product.startswith('stock-workbench:') else None
     if symbol and isinstance(payload.get('quote'), dict):
-        if session.bind.dialect.name == 'postgresql':
-            linked = cast(ContentDocument.securities, JSONB).contains([symbol])
-        else:
-            values = func.json_each(ContentDocument.securities).table_valued('value')
-            linked = select(1).select_from(values).where(values.c.value == symbol).exists()
+        linked = cast(ContentDocument.securities, JSONB).contains([symbol])
         count, latest = session.execute(select(func.count(ContentDocument.id), func.max(ContentDocument.published_at))
             .where(linked, ContentDocument.copyright_status.in_(DISPLAY_STATUSES), ContentDocument.published_at <= as_of)).one()
         payload['quote']['mentions'] = count
@@ -124,10 +120,9 @@ def cleanup_news(factory, config, now, *, stopped=lambda: False):
     for _ in range(config.cleanup_max_batches):
         if stopped(): return {'status': 'stopped'}
         with factory.begin() as session:
-            if session.bind.dialect.name == 'postgresql':
-                for key in (data_publication_lock_key(), JOB):
-                    if not session.scalar(text('SELECT pg_try_advisory_xact_lock(:key)'), {'key': lock_key(key)}):
-                        return {'status': 'locked'}
+            for key in (data_publication_lock_key(), JOB):
+                if not session.scalar(text('SELECT pg_try_advisory_xact_lock(:key)'), {'key': lock_key(key)}):
+                    return {'status': 'locked'}
             record = cursor(session, 'retention', {})
             state = dict(record.cursor_value)
             if state.get('status') != 'running':

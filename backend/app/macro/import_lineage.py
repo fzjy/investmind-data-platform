@@ -6,7 +6,6 @@ from decimal import Decimal, DecimalException, ROUND_HALF_UP, localcontext
 
 from pydantic import ValidationError
 from sqlalchemy import select
-from sqlalchemy.engine import Dialect
 from sqlalchemy.orm import Session
 
 from app.connectors.external_files.contracts import MacroImportRecord
@@ -23,22 +22,12 @@ def _signature(row: MacroObservation | MacroImportRecord, value: Decimal) -> tup
             row.revision, value, str(row.source_url))
 
 
-def _stored_import_value(value: Decimal, dialect: Dialect) -> Decimal:
-    """Compare the ledger with what the core column actually stores/reads.
-
-    SQLite's Numeric path converts through float; PostgreSQL keeps Decimal
-    and rounds numeric ties away from zero. Do not round the observed core
-    value again: a change to any representable stored digit must still fail.
-    """
+def _stored_import_value(value: Decimal) -> Decimal:
+    """按核心字段精度复现 PostgreSQL 的 numeric 舍入。"""
     column_type = MacroObservation.__table__.c.value.type
-    if dialect.name == "postgresql":
-        with localcontext() as context:
-            context.prec = max(column_type.precision, len(value.as_tuple().digits) + column_type.scale)
-            return value.quantize(Decimal(1).scaleb(-column_type.scale), rounding=ROUND_HALF_UP)
-    bind = column_type.bind_processor(dialect)
-    result = column_type.result_processor(dialect, None)
-    bound = bind(value) if bind else value
-    return result(bound) if result else bound
+    with localcontext() as context:
+        context.prec = max(column_type.precision, len(value.as_tuple().digits) + column_type.scale)
+        return value.quantize(Decimal(1).scaleb(-column_type.scale), rounding=ROUND_HALF_UP)
 
 
 def is_verified_import(row: MacroObservation) -> bool:
@@ -58,11 +47,10 @@ def verify_import_lineage(session: Session, rows: Sequence[MacroObservation]) ->
     ).where(ExternalFile.status == "imported", ExternalFile.imported_at.is_not(None),
             ExternalRecord.record_type == "macro")).all()
     signatures: set[tuple[object, ...]] = set()
-    dialect = session.get_bind(mapper=MacroObservation).dialect
     for payload in payloads:
         try:
             record = MacroImportRecord.model_validate(payload)
-            signatures.add(_signature(record, _stored_import_value(record.value, dialect)))
+            signatures.add(_signature(record, _stored_import_value(record.value)))
         except (ValidationError, DecimalException, ValueError, OverflowError):
             continue
     for row in rows:

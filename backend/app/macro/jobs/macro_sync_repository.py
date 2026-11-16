@@ -444,8 +444,6 @@ def _acquire_observation_locks(
     series: MacroSeriesDefinition,
     result: ProviderFetchResult,
 ) -> None:
-    if session.get_bind().dialect.name != "postgresql":
-        return
     lock_keys = sorted(
         {
             _observation_lock_key(series, observation)

@@ -54,7 +54,7 @@ def execution_schema(factory) -> list[str]:
         problems = []
         for model in (JobCursor, JobRun, IngestionBatch, SourcePayload, MacroObservation):
             table = model.__table__
-            schema = None if connection.dialect.name == 'sqlite' else table.schema
+            schema = table.schema
             if not inspector.has_table(table.name, schema=schema):
                 problems.append(f'{table.schema}.{table.name}')
             elif not set(table.columns.keys()) <= {column['name'] for column in inspector.get_columns(table.name, schema=schema)}:

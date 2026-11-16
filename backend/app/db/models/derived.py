@@ -49,7 +49,7 @@ class RiskResult(DerivedBase):
             name="uq_risk_result_security_rule_date",
         ),
         Index("uq_current_risk_security_rule", "ts_code", "risk_id", unique=True,
-              postgresql_where=text("snapshot_version IS NOT NULL"), sqlite_where=text("snapshot_version IS NOT NULL")),
+              postgresql_where=text("snapshot_version IS NOT NULL")),
         {"schema": "derived"},
     )
 

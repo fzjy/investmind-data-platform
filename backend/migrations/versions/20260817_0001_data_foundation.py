@@ -21,25 +21,14 @@ OWNED_LATER = {'ops.local_admin_task', 'ops.local_admin_execution', 'ops.data_ac
 
 def upgrade() -> None:
     bind = op.get_bind()
-    if bind.dialect.name == "postgresql":
-        for schema in ("raw", "core", "ops"):
-            bind.execute(text(f"CREATE SCHEMA IF NOT EXISTS {schema}"))
-    else:
-        bind = bind.execution_options(
-            schema_translate_map={"raw": None, "core": None, "ops": None}
-        )
+    for schema in ("raw", "core", "ops"):
+        bind.execute(text(f"CREATE SCHEMA IF NOT EXISTS {schema}"))
     tables = [table for table in Base.metadata.sorted_tables if table.fullname not in OWNED_LATER]
     Base.metadata.create_all(bind, tables=tables)
 
 
 def downgrade() -> None:
     bind = op.get_bind()
-    if bind.dialect.name == "postgresql":
-        Base.metadata.drop_all(bind, tables=[table for table in Base.metadata.sorted_tables if table.fullname not in OWNED_LATER])
-        for schema in ("ops", "core", "raw"):
-            bind.execute(text(f"DROP SCHEMA IF EXISTS {schema} CASCADE"))
-    else:
-        bind = bind.execution_options(
-            schema_translate_map={"raw": None, "core": None, "ops": None}
-        )
-        Base.metadata.drop_all(bind, tables=[table for table in Base.metadata.sorted_tables if table.fullname not in OWNED_LATER])
+    Base.metadata.drop_all(bind, tables=[table for table in Base.metadata.sorted_tables if table.fullname not in OWNED_LATER])
+    for schema in ("ops", "core", "raw"):
+        bind.execute(text(f"DROP SCHEMA IF EXISTS {schema} CASCADE"))

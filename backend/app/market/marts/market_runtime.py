@@ -36,7 +36,7 @@ def rebuild_market_marts(factory, selection, *, checked_at: datetime, dry_run: b
         return {**report, "code": "MARKET_LOCK_BUSY"}
     try:
         with factory.begin() as session:
-            if dry_run and engine.dialect.name == "postgresql":
+            if dry_run:
                 session.execute(text("SET TRANSACTION READ ONLY"))
             statement = select(PublishedSnapshot).where(PublishedSnapshot.product.in_(MARKET_PRODUCTS))
             bases = {row.product: row for row in session.scalars(statement if dry_run else statement.with_for_update())}

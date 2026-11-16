@@ -1,3 +1,4 @@
+import hashlib
 import json
 from dataclasses import replace
 from datetime import UTC, date, datetime, timedelta
@@ -43,7 +44,18 @@ def test_validate_import_does_not_require_database(tmp_path: Path, monkeypatch) 
     path.write_text(json.dumps({"schemaVersion": "1.0", "recordType": "content", "source": "x", "contentType": "news", "title": "t", "publishedAt": "2026-08-17T00:00:00Z", "sourceUrl": "https://example.com", "securities": [], "copyrightStatus": "link_only"}), encoding="utf-8")
     result = CliRunner().invoke(app, ["validate-import", str(path)])
     assert result.exit_code == 0
-    assert "rowCount" in result.output
+    assert json.loads(result.stdout) == {
+        "fileHash": hashlib.sha256(path.read_bytes()).hexdigest(), "rowCount": 1,
+        "macroCount": 0, "contentCount": 1, "errors": [],
+    }
+    path.write_text("{", encoding="utf-8")
+    result = CliRunner().invoke(app, ["validate-import", str(path)])
+    assert result.exit_code == 2
+    assert json.loads(result.stdout) == {
+        "fileHash": hashlib.sha256(path.read_bytes()).hexdigest(), "rowCount": 0,
+        "macroCount": 0, "contentCount": 0,
+        "errors": [{"row": 1, "errors": [{"message": "JSON 无效"}]}],
+    }
 
 
 def test_rebuild_external_marts_rejects_unknown_product() -> None:

@@ -111,7 +111,7 @@ def _load_official_job_witnesses(factory,as_of,catalog,job_name=JOB,store_type=O
     cutoff=instant(as_of) if isinstance(as_of,datetime) else datetime.combine(as_of,time.max,ZoneInfo('Asia/Shanghai')).astimezone(timezone.utc)
     targets={t.code:t for t in catalog.targets};result={}
     with factory() as session:
-        bind=session.get_bind();schema=bind.get_execution_options().get('schema_translate_map',{}).get('ops','ops')
+        bind=session.get_bind();schema='ops'
         if not inspect(bind).has_table('job_run',schema=schema):return []
         store=store_type(factory)
         roots=session.scalars(select(JobCursor).where(JobCursor.job_name==job_name).order_by(JobCursor.cursor_key)).all()

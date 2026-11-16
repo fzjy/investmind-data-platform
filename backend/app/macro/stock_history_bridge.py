@@ -36,8 +36,10 @@ class StockHistoryRecord(FinancialRecord):
 def _stamp(value):
     if not isinstance(value, datetime):
         raise ValueError('STOCK_HISTORY_TIMESTAMP_INVALID')
-    # 数据库SQLite测试返回无时区；生产PostgreSQL时间戳为UTC aware。
-    return value.replace(tzinfo=timezone.utc) if value.tzinfo is None else value.astimezone(timezone.utc)
+
+    if value.utcoffset() is None:
+        raise ValueError("timestamp requires a timezone")
+    return value.astimezone(timezone.utc)
 
 
 def _day(value):
@@ -61,8 +63,7 @@ def audit_stock_history_bridge(factory, inputs: EnterpriseInputs, as_of, *, enab
         raise ValueError('STOCK_HISTORY_SWITCH_INVALID')
     cutoff = _stamp(as_of) if isinstance(as_of, datetime) else datetime.combine(as_of, time.min, timezone.utc)
     with factory() as session:
-        if session.get_bind().dialect.name == 'postgresql':
-            session.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
+        session.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
         base = session.get(PublishedSnapshot, 'screener')
         if base is None:
             return inputs, audit | dict(status='no-stock-publication')

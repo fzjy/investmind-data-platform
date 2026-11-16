@@ -8,7 +8,8 @@ from app.stocks.update.repository import StockUpdateRepository
 from backend.tests.stock_update.test_repository import sample
 
 
-def test_source_to_api_and_repaired_audit(factory):
+def test_source_to_api_and_repaired_audit(stock_factory):
+    factory = stock_factory
     service = StatusService(factory,root=Path(__file__).resolve().parents[3],clock=lambda:datetime.now(UTC))
     query = StatusQuery(('stock-daily',),subject_keys=('600519.SH',))
     store = StockUpdateRepository(factory)

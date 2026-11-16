@@ -61,7 +61,7 @@ def rebuild_stock_research(factory,*,dry_run=True,business_only=False):
     if not dry_run and not acquired:return {**report,'code':'STOCK_PUBLICATION_LOCK_BUSY'}
     try:
         with factory() as session:
-            if engine.dialect.name=='postgresql':session.execute(text('SET TRANSACTION READ ONLY'))
+            session.execute(text('SET TRANSACTION READ ONLY'))
             base=session.get(PublishedSnapshot,'screener')
             if base is None:return {**report,'code':'STOCK_BASE_REQUIRED'}
             symbols=tuple(s['symbol'] for s in base.payload.get('stocks',[]))

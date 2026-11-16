@@ -95,6 +95,4 @@ class PostgresAdvisoryJobLock:
 
 
 def job_lock_for_engine(engine: Engine) -> JobLock:
-    if engine.dialect.name == "postgresql":
-        return PostgresAdvisoryJobLock(engine)
-    return ProcessLocalJobLock()
+    return PostgresAdvisoryJobLock(engine)

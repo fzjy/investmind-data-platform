@@ -18,8 +18,10 @@ PRICE_FIELDS = QUOTE_FIELDS[2:]
 
 
 def aware(value: datetime) -> datetime:
-    # SQLite omits timezone on read; production PG returns timezone-aware UTC.
-    return value.replace(tzinfo=UTC) if value.tzinfo is None else value.astimezone(UTC)
+
+    if value.utcoffset() is None:
+        raise ValueError("timestamp requires a timezone")
+    return value.astimezone(UTC)
 
 
 def quote_values(quote) -> dict[str, str]:

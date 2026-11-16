@@ -131,7 +131,7 @@ def capture_history(factory,client=None,*,execute=False):
 
 def _capture_history(factory,client=None,*,execute=False):
     with factory(autoflush=False) as s:
-        if factory.kw['bind'].dialect.name=='postgresql':s.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
+        s.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
         pending=None
         try:
             # 不以新基版/日期绕过失败或未知预留；优先完成最早冻结批次。
@@ -167,7 +167,7 @@ def _capture_history(factory,client=None,*,execute=False):
 
 def load_benchmarks(factory,as_of,start):
     with factory(autoflush=False) as s:
-        if factory.kw['bind'].dialect.name=='postgresql':s.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
+        s.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
         try:current,requests,calendar=history_plan(s,as_of=as_of,start=start)
         except ValueError:return {}
         contract = _history_evidence_contract(s, current, requests, calendar)
