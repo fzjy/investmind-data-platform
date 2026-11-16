@@ -32,6 +32,10 @@ child_url = None
 
 
 def _child_worker(url, module, args, output):
+    import os
+    for name in tuple(os.environ):
+        if name.upper().startswith("PG"):
+            del os.environ[name]
     import contextlib
     import io
     import sys

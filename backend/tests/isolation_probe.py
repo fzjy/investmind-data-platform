@@ -19,6 +19,7 @@ if __name__ == "__main__":
             shared = connection.scalar(text('select id from child_probe'))
         engine.dispose()
         print(json.dumps({'postgres': value, 'shared': shared,
+                          'pgEnvironment': [key for key in __import__('os').environ if key.upper().startswith('PG')],
                           'dotenvDisabled': config.PROJECT_ENV_FILE.name == 'missing.env'}))
     elif mode == "allowed":
         engine = create_engine("sqlite://")
