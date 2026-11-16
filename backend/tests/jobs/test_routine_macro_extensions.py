@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 import pytest
 
-from app.config import Settings
+from backend.tests.jobs.test_routine_update import settings as routine_settings
 from backend.tests.macro.test_extension_plan import config, payload
 from backend.tests.macro.test_extension_store import NOW
 
@@ -15,7 +15,7 @@ class Published:
     status: str = 'completed'
 
 
-def test_extensions_alone_are_selected_and_published_after_execution(pg_schema_url, monkeypatch, tmp_path):
+def test_extensions_alone_are_selected_and_published_after_execution(monkeypatch, tmp_path):
     from app.jobs import routine_update as module
     raw = payload()
     raw['groups']['usdcnh']['collectionEnabled'] = True
@@ -26,8 +26,7 @@ def test_extensions_alone_are_selected_and_published_after_execution(pg_schema_u
         calls.append('preview' if dry_run else 'collect')
         return {'status': 'preview' if dry_run else 'completed', 'supplierHttp': 0 if dry_run else 1}
     monkeypatch.setattr(module, 'run_macro_extensions', execute, raising=False)
-    settings = Settings(data_backend='database', database_url=pg_schema_url,
-        routine_stocks_enabled=False, routine_macro_enabled=False)
+    settings = routine_settings(routine_stocks_enabled=False, routine_macro_enabled=False)
     def rebuild(settings):
         calls.append('publish')
         return Published()
@@ -41,7 +40,7 @@ def test_extensions_alone_are_selected_and_published_after_execution(pg_schema_u
     assert calls == ['collect', 'publish']
 
 
-def test_failed_extension_stays_partial_and_keeps_independent_counter(pg_schema_url, monkeypatch, tmp_path):
+def test_failed_extension_stays_partial_and_keeps_independent_counter(monkeypatch, tmp_path):
     from app.jobs import routine_update as module
     raw = payload()
     raw['groups']['usdcnh']['collectionEnabled'] = True
@@ -50,13 +49,12 @@ def test_failed_extension_stays_partial_and_keeps_independent_counter(pg_schema_
         {'status': 'blocked', 'supplierHttp': 1}, raising=False)
     monkeypatch.setattr(module, 'run_macro_catchup', lambda *args, **kwargs:
         {'status': 'completed', 'activeCoverageCompleted': True, 'requestCount': 3})
-    result = module.run_routine_update(Settings(data_backend='database', database_url=pg_schema_url,
-        routine_stocks_enabled=False), now=NOW, macro_rebuild=lambda _: Published())
+    result = module.run_routine_update(routine_settings(routine_stocks_enabled=False), now=NOW, macro_rebuild=lambda _: Published())
     assert result['status'] == 'partial'
     assert result['httpCounts'] == {'stocks': 0, 'macro': 3, 'extensions': 1, 'total': 4}
 
 
-def test_zero_http_extension_reentry_does_not_wait_for_previous_zero_http_group(pg_schema_url, monkeypatch, tmp_path):
+def test_zero_http_extension_reentry_does_not_wait_for_previous_zero_http_group(monkeypatch, tmp_path):
     from app.jobs import routine_update as module
     from app.jobs.supplier_job_pacing import SupplierJobPacer
     raw = payload()
@@ -72,13 +70,12 @@ def test_zero_http_extension_reentry_does_not_wait_for_previous_zero_http_group(
         {'status': 'completed', 'publishReady': True, 'requests': 0})
     monkeypatch.setattr(module, 'run_macro_extensions', lambda *a, **k:
         {'status': 'completed', 'supplierHttp': 0})
-    report = module.run_routine_update(Settings(data_backend='database', database_url=pg_schema_url,
-        routine_macro_enabled=False), now=NOW, macro_rebuild=lambda _: Published())
+    report = module.run_routine_update(routine_settings(routine_macro_enabled=False), now=NOW, macro_rebuild=lambda _: Published())
     assert report['httpCounts']['total'] == 0
     assert waits == []
 
 
-def test_real_new_extension_send_still_paces_after_previous_group(pg_schema_url, monkeypatch, tmp_path):
+def test_real_new_extension_send_still_paces_after_previous_group(monkeypatch, tmp_path):
     from app.jobs import routine_update as module
     from app.jobs.supplier_job_pacing import SupplierJobPacer
     raw = payload()
@@ -95,6 +92,5 @@ def test_real_new_extension_send_still_paces_after_previous_group(pg_schema_url,
         kwargs['before_send']()
         return {'status': 'completed', 'supplierHttp': 1}
     monkeypatch.setattr(module, 'run_macro_extensions', send)
-    report = module.run_routine_update(Settings(data_backend='database', database_url=pg_schema_url,
-        routine_macro_enabled=False), now=NOW, macro_rebuild=lambda _: Published())
+    report = module.run_routine_update(routine_settings(routine_macro_enabled=False), now=NOW, macro_rebuild=lambda _: Published())
     assert report['httpCounts']['total'] == 3 and waits == [2.0]

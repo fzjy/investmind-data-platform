@@ -250,14 +250,26 @@ def test_stock_quality_failure_is_blocked_not_runtime_error(monkeypatch):
 
 
 def test_preflight_does_not_initialize_missing_schema(pg_url):
-    from sqlalchemy import create_engine, inspect
-    m = module()
-    report = m.run_routine_update(Settings(data_backend='database', database_url=pg_url,
-        routine_macro_enabled=False), now=NOW, dry_run=True, macro_rebuild=lambda s: None)
-    assert report['status'] != 'planned'
+    from sqlalchemy import create_engine, text
+
+    catalog = text("""
+        SELECT n.nspname, c.relname, c.relkind
+        FROM pg_catalog.pg_namespace AS n
+        LEFT JOIN pg_catalog.pg_class AS c ON c.relnamespace = n.oid
+        WHERE n.nspname !~ '^pg_' AND n.nspname <> 'information_schema'
+        ORDER BY n.nspname, c.relname
+    """)
     engine = create_engine(pg_url)
     try:
-        assert 'ops' not in inspect(engine).get_schema_names()
+        with engine.connect() as connection:
+            before = connection.execute(catalog).all()
+        report = module().run_routine_update(settings(database_url=pg_url, routine_macro_enabled=False),
+            now=NOW, dry_run=True, macro_rebuild=lambda _: None)
+        assert report['status'] == 'failed'
+        assert report['stocks'] == {'status': 'failed', 'errorCode': 'ROUTINE_STOCKS_FAILED', 'requests': 0}
+        assert report['httpCounts'] == {'stocks': 0, 'macro': 0, 'total': 0}
+        with engine.connect() as connection:
+            assert connection.execute(catalog).all() == before
     finally:
         engine.dispose()
 
