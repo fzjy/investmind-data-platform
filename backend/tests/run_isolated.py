@@ -84,8 +84,12 @@ def main() -> None:
     from sqlalchemy.engine import Connection, Dialect, Engine, make_url
     from testcontainers.community.postgres import PostgresContainer
 
+    from backend.tests.support import postgres as pg_support
+
     violations: list[str] = []
     allowed_databases: set[tuple[object, ...]] = set()
+    pg_support.allowed_databases = allowed_databases
+    pg_support.enabled = postgres
     sqlite_engines: WeakSet[Engine] = WeakSet()
     sqlite_connections: WeakSet[Connection] = WeakSet()
 
