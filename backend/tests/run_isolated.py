@@ -61,12 +61,8 @@ def isolate_official_member_config(directory: Path) -> None:
     catalog.DEFAULT_ENTERPRISE_TARGET_CATALOG_FILE = path
 
 
-def main() -> None:
+def main(*, child_url: str | None = None) -> None:
     args = sys.argv[1:]
-    child_url = None
-    if args and args[0] == "--registered-child":
-        args.pop(0)
-        child_url = json.loads(sys.stdin.readline())["url"]
     postgres = bool(args and args[0] == "--postgres")
     if postgres:
         args.pop(0)

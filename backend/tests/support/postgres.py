@@ -31,23 +31,48 @@ def database(instance_url):
 child_url = None
 
 
-def run_child(url, module, *args):
-    """仅传递已登记用例库，凭据通过 stdin 进入隔离入口。"""
-    import json
-    import os
-    from pathlib import Path
-    import subprocess
+def _child_worker(url, module, args, output):
+    import contextlib
+    import io
     import sys
+    from backend.tests.run_isolated import main
+    stdout, stderr = io.StringIO(), io.StringIO()
+    sys.argv = ['run_isolated.py', module, *args]
+    code = 0
+    with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+        try:
+            main(child_url=url)
+        except SystemExit as error:
+            code = error.code or 0
+        except BaseException:
+            import traceback
+            traceback.print_exc()
+            code = 1
+    output.send((code, stdout.getvalue(), stderr.getvalue()))
+    output.close()
+
+
+def run_child(url, module, *args):
+    """独立解释器只从已验证父进程接收用例身份，无公共 URL 输入入口。"""
+    import multiprocessing
+    from types import SimpleNamespace
     parsed = make_url(url)
     identity = (parsed.host, parsed.port, parsed.database, parsed.username, parsed.password)
     if not enabled or identity not in allowed_databases or not parsed.database.startswith('test_'):
         raise AssertionError('Only registered case databases may be passed to children')
-    root = Path(__file__).resolve().parents[3]
-    env = {key: value for key, value in os.environ.items()
-           if not key.upper().startswith(('DANG_', 'COMPOSE_', 'PG'))}
-    return subprocess.run(
-        [sys.executable, '-I', str(root / 'backend/tests/run_isolated.py'),
-         '--registered-child', module, *args],
-        input=json.dumps({'url': url}) + '\n', text=True, capture_output=True,
-        cwd=root, env=env, timeout=60,
-    )
+    context = multiprocessing.get_context('spawn')
+    receive, send = context.Pipe(duplex=False)
+    process = context.Process(target=_child_worker, args=(url, module, args, send))
+    process.start()
+    send.close()
+    try:
+        if not receive.poll(60):
+            raise TimeoutError('Isolated child timed out')
+        code, stdout, stderr = receive.recv()
+        process.join(10)
+        return SimpleNamespace(returncode=code, stdout=stdout, stderr=stderr)
+    finally:
+        if process.is_alive():
+            process.terminate()
+        process.join()
+        receive.close()

@@ -35,3 +35,19 @@ def test_child_shares_only_case_database(pg_url):
                       'backend.tests.isolation_probe', 'postgres')
     finally:
         engine.dispose()
+
+
+def test_public_entry_rejects_child_url_before_database_access():
+    import json
+    from pathlib import Path
+    import subprocess
+    import sys
+    root = Path(__file__).resolve().parents[3]
+    result = subprocess.run(
+        [sys.executable, '-I', str(root / 'backend/tests/run_isolated.py'),
+         '--registered-child', 'backend.tests.isolation_probe', 'postgres'],
+        input=json.dumps({'url': 'postgresql+psycopg://canary:canary@127.0.0.1:1/business'}),
+        text=True, capture_output=True, timeout=15, cwd=root,
+    )
+    assert result.returncode != 0
+    assert result.stderr.strip() == 'Only pytest or backend.tests modules are allowed'
