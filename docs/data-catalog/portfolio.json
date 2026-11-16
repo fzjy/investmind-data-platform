@@ -1,0 +1,224 @@
+[
+  {
+    "id": "portfolio-inputs",
+    "name": "组合公共参考与分红",
+    "category": "portfolio",
+    "description": "提供组合所需的公共参考行情、基准和分红输入；用户持仓及试算参数由消费项目管理。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": null
+      }
+    ],
+    "tables": [
+      {
+        "schema": "mart",
+        "table": "published_snapshot",
+        "name": "当前发布指针",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "发布历史",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "data.assets",
+        "name": "可选资产",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "可选资产",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.prices",
+        "name": "复权价格",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "复权价格",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.unadjustedPrices",
+        "name": "未复权价格",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "未复权价格",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.factorCoverage",
+        "name": "复权覆盖",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "复权覆盖",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.dividendLedger",
+        "name": "分红账本",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "分红账本",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.dividendYieldInputs",
+        "name": "股息率输入",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "股息率输入",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.attributionInputs",
+        "name": "收益归因输入",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "收益归因输入",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.benchmarks",
+        "name": "全收益基准",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "全收益基准",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.treasuryReference",
+        "name": "国债参考",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "国债参考",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/portfolio",
+        "method": "GET",
+        "responsePaths": [
+          "data.assets（可选资产）",
+          "data.prices（复权价格）",
+          "data.unadjustedPrices（未复权价格）",
+          "data.factorCoverage（复权覆盖）",
+          "data.dividendLedger（分红账本）",
+          "data.dividendYieldInputs（股息率输入）",
+          "data.attributionInputs（收益归因输入）",
+          "data.benchmarks（全收益基准）",
+          "data.treasuryReference（国债参考）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "docs/portfolio-split-lineage.md"
+    ]
+  }
+]

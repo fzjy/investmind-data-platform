@@ -1,0 +1,3507 @@
+[
+  {
+    "id": "market-daily-summary",
+    "name": "市场每日统计",
+    "category": "markets",
+    "description": "来自 Tushare daily_info 的市场每日统计。标准与批量模式按各自合同、采集记录核对。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "daily_info",
+        "kind": "采集渠道",
+        "description": "原始发布方及实际使用来源以数据主题和已留存原件为准"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": "market"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "供应商原始响应",
+        "fieldPath": "payload"
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "exchange",
+        "name": "交易所",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "交易所；上游 daily_info.exchange",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "float_mv",
+        "name": "流通市值",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "流通市值；上游 daily_info.float_mv",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "trade_date",
+        "name": "交易日期",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "交易日期；上游 daily_info.trade_date",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "ts_code",
+        "name": "证券代码",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "证券代码；上游 daily_info.ts_code",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/market/explorer",
+        "method": "GET",
+        "responsePaths": [
+          "data（市场浏览，具体字段需按来源合同核验）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "docs/tushare-field-consumers.md"
+    ]
+  },
+  {
+    "id": "etf-basic",
+    "name": "ETF 基础资料",
+    "category": "markets",
+    "description": "来自 Tushare etf_basic 的ETF 基础资料。标准与批量模式按各自合同、采集记录核对。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "etf_basic",
+        "kind": "采集渠道",
+        "description": "原始发布方及实际使用来源以数据主题和已留存原件为准"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": "market"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "供应商原始响应",
+        "fieldPath": "payload"
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "csname",
+        "name": "中文简称",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "中文简称；上游 etf_basic.csname",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "etf_type",
+        "name": "ETF类别",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "ETF类别；上游 etf_basic.etf_type",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "exchange",
+        "name": "交易所",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "交易所；上游 etf_basic.exchange",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "index_code",
+        "name": "指数代码",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "指数代码；上游 etf_basic.index_code",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "index_name",
+        "name": "指数名称",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "指数名称；上游 etf_basic.index_name",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "list_status",
+        "name": "上市状态",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "上市状态；上游 etf_basic.list_status",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "ts_code",
+        "name": "证券代码",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "证券代码；上游 etf_basic.ts_code",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "table",
+        "description": "已接入底座，按所列原件或核心表查看；未核准为公开接口输出。"
+      }
+    ],
+    "evidence": [
+      "docs/tushare-field-consumers.md"
+    ]
+  },
+  {
+    "id": "etf-daily",
+    "name": "ETF 日行情",
+    "category": "markets",
+    "description": "来自 Tushare fund_daily 的ETF 日行情。标准与批量模式按各自合同、采集记录核对。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "fund_daily",
+        "kind": "采集渠道",
+        "description": "原始发布方及实际使用来源以数据主题和已留存原件为准"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": "market"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "market_daily_quote",
+        "name": "ETF 日行情",
+        "fieldPath": ""
+      },
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "供应商原始响应",
+        "fieldPath": "payload"
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已经入库的业务日期或报告期记录；实际覆盖日期依留存记录。",
+        "evidence": []
+      },
+      "revisions": {
+        "value": false,
+        "explanation": "Core 相同业务键可能更新原值，原件留存与每次修订的完整覆盖另行核验。",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "amount",
+        "name": "成交额",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "成交额；上游 fund_daily.amount",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "来源原件",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "close",
+        "name": "收盘价",
+        "role": "source",
+        "type": "存储类型 NUMERIC(20, 8)",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "收盘价；上游 fund_daily.close",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "ETF 日行情",
+            "fieldPath": "close"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "high",
+        "name": "最高价",
+        "role": "source",
+        "type": "存储类型 NUMERIC(20, 8)",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "最高价；上游 fund_daily.high",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "ETF 日行情",
+            "fieldPath": "high"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "low",
+        "name": "最低价",
+        "role": "source",
+        "type": "存储类型 NUMERIC(20, 8)",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "最低价；上游 fund_daily.low",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "ETF 日行情",
+            "fieldPath": "low"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "open",
+        "name": "开盘价",
+        "role": "source",
+        "type": "存储类型 NUMERIC(20, 8)",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "开盘价；上游 fund_daily.open",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "ETF 日行情",
+            "fieldPath": "open"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "pct_chg",
+        "name": "涨跌幅",
+        "role": "source",
+        "type": "存储类型 NUMERIC(20, 8)",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "涨跌幅；上游 fund_daily.pct_chg",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "ETF 日行情",
+            "fieldPath": "pct_chg"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "pre_close",
+        "name": "前收盘价",
+        "role": "source",
+        "type": "存储类型 NUMERIC(20, 8)",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "前收盘价；上游 fund_daily.pre_close",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "ETF 日行情",
+            "fieldPath": "pre_close"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "trade_date",
+        "name": "交易日期",
+        "role": "source",
+        "type": "存储类型 DATE",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "交易日期；上游 fund_daily.trade_date",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "ETF 日行情",
+            "fieldPath": "trade_date"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "ts_code",
+        "name": "证券代码",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "证券代码；上游 fund_daily.ts_code",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "来源原件",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "vol",
+        "name": "成交量",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "成交量；上游 fund_daily.vol",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "来源原件",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/market/explorer",
+        "method": "GET",
+        "responsePaths": [
+          "data（市场浏览，具体字段需按来源合同核验）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "docs/tushare-field-consumers.md"
+    ]
+  },
+  {
+    "id": "etf-shares",
+    "name": "基金份额与规模",
+    "category": "markets",
+    "description": "来自 Tushare fund_share 的基金份额与规模。标准与批量模式按各自合同、采集记录核对。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "fund_share",
+        "kind": "采集渠道",
+        "description": "原始发布方及实际使用来源以数据主题和已留存原件为准"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": "market"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "供应商原始响应",
+        "fieldPath": "payload"
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "fd_share",
+        "name": "基金份额",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "基金份额；上游 fund_share.fd_share",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "trade_date",
+        "name": "交易日期",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "交易日期；上游 fund_share.trade_date",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "ts_code",
+        "name": "证券代码",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "证券代码；上游 fund_share.ts_code",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/market/explorer",
+        "method": "GET",
+        "responsePaths": [
+          "data（市场浏览，具体字段需按来源合同核验）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "docs/tushare-field-consumers.md"
+    ]
+  },
+  {
+    "id": "commodity-contracts",
+    "name": "期货合约资料",
+    "category": "markets",
+    "description": "来自 Tushare fut_basic 的期货合约资料。标准与批量模式按各自合同、采集记录核对。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "fut_basic",
+        "kind": "采集渠道",
+        "description": "原始发布方及实际使用来源以数据主题和已留存原件为准"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": "commodities"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "供应商原始响应",
+        "fieldPath": "payload"
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "delist_date",
+        "name": "退市日期",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "退市日期；上游 fut_basic.delist_date",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "exchange",
+        "name": "交易所",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "交易所；上游 fut_basic.exchange",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "fut_code",
+        "name": "期货品种代码",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "期货品种代码；上游 fut_basic.fut_code",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "list_date",
+        "name": "上市日期",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "上市日期；上游 fut_basic.list_date",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "name",
+        "name": "名称",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "名称；上游 fut_basic.name",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "per_unit",
+        "name": "每手单位",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "每手单位；上游 fut_basic.per_unit",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "quote_unit",
+        "name": "报价单位",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "报价单位；上游 fut_basic.quote_unit",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "trade_unit",
+        "name": "交易单位",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "交易单位；上游 fut_basic.trade_unit",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "ts_code",
+        "name": "证券代码",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "证券代码；上游 fut_basic.ts_code",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "table",
+        "description": "已接入底座，按所列原件或核心表查看；未核准为公开接口输出。"
+      }
+    ],
+    "evidence": [
+      "docs/tushare-field-consumers.md"
+    ]
+  },
+  {
+    "id": "commodity-daily",
+    "name": "商品期货日行情",
+    "category": "markets",
+    "description": "来自 Tushare fut_daily 的商品期货日行情。标准与批量模式按各自合同、采集记录核对。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "fut_daily",
+        "kind": "采集渠道",
+        "description": "原始发布方及实际使用来源以数据主题和已留存原件为准"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": "commodities"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "供应商原始响应",
+        "fieldPath": "payload"
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "amount",
+        "name": "成交额",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "成交额；上游 fut_daily.amount",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "close",
+        "name": "收盘价",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "收盘价；上游 fut_daily.close",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "high",
+        "name": "最高价",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "最高价；上游 fut_daily.high",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "low",
+        "name": "最低价",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "最低价；上游 fut_daily.low",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "oi",
+        "name": "持仓量",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "持仓量；上游 fut_daily.oi",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "open",
+        "name": "开盘价",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "开盘价；上游 fut_daily.open",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "pre_close",
+        "name": "前收盘价",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "前收盘价；上游 fut_daily.pre_close",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "pre_settle",
+        "name": "昨结算价",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "昨结算价；上游 fut_daily.pre_settle",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "settle",
+        "name": "结算价",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "结算价；上游 fut_daily.settle",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "trade_date",
+        "name": "交易日期",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "交易日期；上游 fut_daily.trade_date",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "ts_code",
+        "name": "证券代码",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "证券代码；上游 fut_daily.ts_code",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "vol",
+        "name": "成交量",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "成交量；上游 fut_daily.vol",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/market/explorer",
+        "method": "GET",
+        "responsePaths": [
+          "data（市场浏览，具体字段需按来源合同核验）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "docs/tushare-field-consumers.md"
+    ]
+  },
+  {
+    "id": "commodity-mapping",
+    "name": "期货主力合约映射",
+    "category": "markets",
+    "description": "来自 Tushare fut_mapping 的期货主力合约映射。标准与批量模式按各自合同、采集记录核对。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "fut_mapping",
+        "kind": "采集渠道",
+        "description": "原始发布方及实际使用来源以数据主题和已留存原件为准"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": "commodities"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "供应商原始响应",
+        "fieldPath": "payload"
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "mapping_ts_code",
+        "name": "对应合约代码",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "对应合约代码；上游 fut_mapping.mapping_ts_code",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "trade_date",
+        "name": "交易日期",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "交易日期；上游 fut_mapping.trade_date",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "ts_code",
+        "name": "证券代码",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "证券代码；上游 fut_mapping.ts_code",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "table",
+        "description": "已接入底座，按所列原件或核心表查看；未核准为公开接口输出。"
+      }
+    ],
+    "evidence": [
+      "docs/tushare-field-consumers.md"
+    ]
+  },
+  {
+    "id": "commodity-calendar",
+    "name": "期货交易日历",
+    "category": "markets",
+    "description": "来自 Tushare fut_trade_cal 的期货交易日历。标准与批量模式按各自合同、采集记录核对。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "fut_trade_cal",
+        "kind": "采集渠道",
+        "description": "原始发布方及实际使用来源以数据主题和已留存原件为准"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": "commodities"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "供应商原始响应",
+        "fieldPath": "payload"
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "cal_date",
+        "name": "日历日期",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "日历日期；上游 fut_trade_cal.cal_date",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "exchange",
+        "name": "交易所",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "交易所；上游 fut_trade_cal.exchange",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "is_open",
+        "name": "是否开市",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "是否开市；上游 fut_trade_cal.is_open",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "table",
+        "description": "已接入底座，按所列原件或核心表查看；未核准为公开接口输出。"
+      }
+    ],
+    "evidence": [
+      "docs/tushare-field-consumers.md"
+    ]
+  },
+  {
+    "id": "fx-daily",
+    "name": "外汇日行情",
+    "category": "markets",
+    "description": "来自 Tushare fx_daily 的外汇日行情。标准与批量模式按各自合同、采集记录核对。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "fx_daily",
+        "kind": "采集渠道",
+        "description": "原始发布方及实际使用来源以数据主题和已留存原件为准"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": "market"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "供应商原始响应",
+        "fieldPath": "payload"
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "ask_close",
+        "name": "卖出收盘价",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "卖出收盘价；上游 fx_daily.ask_close",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "bid_close",
+        "name": "买入收盘价",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "买入收盘价；上游 fx_daily.bid_close",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "exchange",
+        "name": "交易所",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "交易所；上游 fx_daily.exchange",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "trade_date",
+        "name": "交易日期",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "交易日期；上游 fx_daily.trade_date",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "ts_code",
+        "name": "证券代码",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "证券代码；上游 fx_daily.ts_code",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/market/explorer",
+        "method": "GET",
+        "responsePaths": [
+          "data（市场浏览，具体字段需按来源合同核验）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "docs/tushare-field-consumers.md"
+    ]
+  },
+  {
+    "id": "index-basic",
+    "name": "指数基础资料",
+    "category": "markets",
+    "description": "来自 Tushare index_basic 的指数基础资料。标准与批量模式按各自合同、采集记录核对。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "index_basic",
+        "kind": "采集渠道",
+        "description": "原始发布方及实际使用来源以数据主题和已留存原件为准"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": "market"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "供应商原始响应",
+        "fieldPath": "payload"
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "base_date",
+        "name": "基日",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "基日；上游 index_basic.base_date",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "desc",
+        "name": "描述",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "描述；上游 index_basic.desc",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "exp_date",
+        "name": "计划截止日期",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "计划截止日期；上游 index_basic.exp_date",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "fullname",
+        "name": "公司全称",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "公司全称；上游 index_basic.fullname",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "list_date",
+        "name": "上市日期",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "上市日期；上游 index_basic.list_date",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "market",
+        "name": "市场",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "市场；上游 index_basic.market",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "name",
+        "name": "名称",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "名称；上游 index_basic.name",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "publisher",
+        "name": "发布机构",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "发布机构；上游 index_basic.publisher",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "ts_code",
+        "name": "证券代码",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "证券代码；上游 index_basic.ts_code",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "table",
+        "description": "已接入底座，按所列原件或核心表查看；未核准为公开接口输出。"
+      }
+    ],
+    "evidence": [
+      "docs/tushare-field-consumers.md"
+    ]
+  },
+  {
+    "id": "index-daily",
+    "name": "国内指数日行情",
+    "category": "markets",
+    "description": "来自 Tushare index_daily 的国内指数日行情。标准与批量模式按各自合同、采集记录核对。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "index_daily",
+        "kind": "采集渠道",
+        "description": "原始发布方及实际使用来源以数据主题和已留存原件为准"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": "market"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "market_daily_quote",
+        "name": "国内指数日行情",
+        "fieldPath": ""
+      },
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "供应商原始响应",
+        "fieldPath": "payload"
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已经入库的业务日期或报告期记录；实际覆盖日期依留存记录。",
+        "evidence": []
+      },
+      "revisions": {
+        "value": false,
+        "explanation": "Core 相同业务键可能更新原值，原件留存与每次修订的完整覆盖另行核验。",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "close",
+        "name": "收盘价",
+        "role": "source",
+        "type": "存储类型 NUMERIC(20, 8)",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "收盘价；上游 index_daily.close",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "国内指数日行情",
+            "fieldPath": "close"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "high",
+        "name": "最高价",
+        "role": "source",
+        "type": "存储类型 NUMERIC(20, 8)",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "最高价；上游 index_daily.high",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "国内指数日行情",
+            "fieldPath": "high"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "low",
+        "name": "最低价",
+        "role": "source",
+        "type": "存储类型 NUMERIC(20, 8)",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "最低价；上游 index_daily.low",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "国内指数日行情",
+            "fieldPath": "low"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "open",
+        "name": "开盘价",
+        "role": "source",
+        "type": "存储类型 NUMERIC(20, 8)",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "开盘价；上游 index_daily.open",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "国内指数日行情",
+            "fieldPath": "open"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "pct_chg",
+        "name": "涨跌幅",
+        "role": "source",
+        "type": "存储类型 NUMERIC(20, 8)",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "涨跌幅；上游 index_daily.pct_chg",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "国内指数日行情",
+            "fieldPath": "pct_chg"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "pre_close",
+        "name": "前收盘价",
+        "role": "source",
+        "type": "存储类型 NUMERIC(20, 8)",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "前收盘价；上游 index_daily.pre_close",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "国内指数日行情",
+            "fieldPath": "pre_close"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "trade_date",
+        "name": "交易日期",
+        "role": "source",
+        "type": "存储类型 DATE",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "交易日期；上游 index_daily.trade_date",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "国内指数日行情",
+            "fieldPath": "trade_date"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "ts_code",
+        "name": "证券代码",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "证券代码；上游 index_daily.ts_code",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "来源原件",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/market/explorer",
+        "method": "GET",
+        "responsePaths": [
+          "data（市场浏览，具体字段需按来源合同核验）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "docs/tushare-field-consumers.md"
+    ]
+  },
+  {
+    "id": "index-global",
+    "name": "全球指数日行情",
+    "category": "markets",
+    "description": "来自 Tushare index_global 的全球指数日行情。标准与批量模式按各自合同、采集记录核对。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "index_global",
+        "kind": "采集渠道",
+        "description": "原始发布方及实际使用来源以数据主题和已留存原件为准"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": "market"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "market_daily_quote",
+        "name": "全球指数日行情",
+        "fieldPath": ""
+      },
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "供应商原始响应",
+        "fieldPath": "payload"
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已经入库的业务日期或报告期记录；实际覆盖日期依留存记录。",
+        "evidence": []
+      },
+      "revisions": {
+        "value": false,
+        "explanation": "Core 相同业务键可能更新原值，原件留存与每次修订的完整覆盖另行核验。",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "close",
+        "name": "收盘价",
+        "role": "source",
+        "type": "存储类型 NUMERIC(20, 8)",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "收盘价；上游 index_global.close",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "全球指数日行情",
+            "fieldPath": "close"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "high",
+        "name": "最高价",
+        "role": "source",
+        "type": "存储类型 NUMERIC(20, 8)",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "最高价；上游 index_global.high",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "全球指数日行情",
+            "fieldPath": "high"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "low",
+        "name": "最低价",
+        "role": "source",
+        "type": "存储类型 NUMERIC(20, 8)",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "最低价；上游 index_global.low",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "全球指数日行情",
+            "fieldPath": "low"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "open",
+        "name": "开盘价",
+        "role": "source",
+        "type": "存储类型 NUMERIC(20, 8)",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "开盘价；上游 index_global.open",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "全球指数日行情",
+            "fieldPath": "open"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "pct_chg",
+        "name": "涨跌幅",
+        "role": "source",
+        "type": "存储类型 NUMERIC(20, 8)",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "涨跌幅；上游 index_global.pct_chg",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "全球指数日行情",
+            "fieldPath": "pct_chg"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "pre_close",
+        "name": "前收盘价",
+        "role": "source",
+        "type": "存储类型 NUMERIC(20, 8)",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "前收盘价；上游 index_global.pre_close",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "全球指数日行情",
+            "fieldPath": "pre_close"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "trade_date",
+        "name": "交易日期",
+        "role": "source",
+        "type": "存储类型 DATE",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "交易日期；上游 index_global.trade_date",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "全球指数日行情",
+            "fieldPath": "trade_date"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "ts_code",
+        "name": "证券代码",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "证券代码；上游 index_global.ts_code",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "来源原件",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/market/explorer",
+        "method": "GET",
+        "responsePaths": [
+          "data（市场浏览，具体字段需按来源合同核验）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "docs/tushare-field-consumers.md"
+    ]
+  },
+  {
+    "id": "index-weights",
+    "name": "指数成分与权重",
+    "category": "markets",
+    "description": "来自 Tushare index_weight 的指数成分与权重。标准与批量模式按各自合同、采集记录核对。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "index_weight",
+        "kind": "采集渠道",
+        "description": "原始发布方及实际使用来源以数据主题和已留存原件为准"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": "market"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "供应商原始响应",
+        "fieldPath": "payload"
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "con_code",
+        "name": "成分证券代码",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "成分证券代码；上游 index_weight.con_code",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "index_code",
+        "name": "指数代码",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "指数代码；上游 index_weight.index_code",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "trade_date",
+        "name": "交易日期",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "交易日期；上游 index_weight.trade_date",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "weight",
+        "name": "权重或加权利率",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "权重或加权利率；上游 index_weight.weight",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "table",
+        "description": "已接入底座，按所列原件或核心表查看；未核准为公开接口输出。"
+      }
+    ],
+    "evidence": [
+      "docs/tushare-field-consumers.md"
+    ]
+  },
+  {
+    "id": "market-margin",
+    "name": "融资融券余额",
+    "category": "markets",
+    "description": "来自 Tushare margin 的融资融券余额。标准与批量模式按各自合同、采集记录核对。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "margin",
+        "kind": "采集渠道",
+        "description": "原始发布方及实际使用来源以数据主题和已留存原件为准"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": "market"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "供应商原始响应",
+        "fieldPath": "payload"
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "exchange_id",
+        "name": "交易所标识",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "交易所标识；上游 margin.exchange_id",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "rzye",
+        "name": "融资余额",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "融资余额；上游 margin.rzye",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "trade_date",
+        "name": "交易日期",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "交易日期；上游 margin.trade_date",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/market/explorer",
+        "method": "GET",
+        "responsePaths": [
+          "data（市场浏览，具体字段需按来源合同核验）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "docs/tushare-field-consumers.md"
+    ]
+  },
+  {
+    "id": "market-sz-summary",
+    "name": "深圳市场每日统计",
+    "category": "markets",
+    "description": "来自 Tushare sz_daily_info 的深圳市场每日统计。标准与批量模式按各自合同、采集记录核对。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "sz_daily_info",
+        "kind": "采集渠道",
+        "description": "原始发布方及实际使用来源以数据主题和已留存原件为准"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": "market"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "供应商原始响应",
+        "fieldPath": "payload"
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "count",
+        "name": "数量",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "数量；上游 sz_daily_info.count",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "float_mv",
+        "name": "流通市值",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "流通市值；上游 sz_daily_info.float_mv",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "trade_date",
+        "name": "交易日期",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "交易日期；上游 sz_daily_info.trade_date",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "ts_code",
+        "name": "证券代码",
+        "role": "source",
+        "type": "存储类型 JSON",
+        "unit": "待核验",
+        "nullable": "存储列非空",
+        "description": "证券代码；上游 sz_daily_info.ts_code",
+        "sourceRefs": [],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "原始响应",
+            "fieldPath": "payload"
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/market/explorer",
+        "method": "GET",
+        "responsePaths": [
+          "data（市场浏览，具体字段需按来源合同核验）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "docs/tushare-field-consumers.md"
+    ]
+  },
+  {
+    "id": "market-overview",
+    "name": "市场统计与情绪",
+    "category": "markets",
+    "description": "按已发布证券池汇总市场成交、涨跌分布与情绪。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": null
+      }
+    ],
+    "tables": [
+      {
+        "schema": "mart",
+        "table": "published_snapshot",
+        "name": "当前发布指针",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "发布历史",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "data.marketSnapshot",
+        "name": "行情概览",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "行情概览",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.turnoverSnapshot",
+        "name": "成交统计",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "成交统计",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.breadthSnapshots",
+        "name": "涨跌宽度",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "涨跌宽度",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.sentimentSnapshot",
+        "name": "情绪指标",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "情绪指标",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.globalIndices",
+        "name": "全球指数",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "全球指数",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.etfQuotes",
+        "name": "ETF 报价",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "ETF 报价",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/market/overview",
+        "method": "GET",
+        "responsePaths": [
+          "data.marketSnapshot（行情概览）",
+          "data.turnoverSnapshot（成交统计）",
+          "data.breadthSnapshots（涨跌宽度）",
+          "data.sentimentSnapshot（情绪指标）",
+          "data.globalIndices（全球指数）",
+          "data.etfQuotes（ETF 报价）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "docs/market-supply.md"
+    ]
+  },
+  {
+    "id": "market-explorer",
+    "name": "市场浏览与热力图",
+    "category": "markets",
+    "description": "汇集行业、地域、ETF、商品与新闻的已发布产品。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": null
+      }
+    ],
+    "tables": [
+      {
+        "schema": "mart",
+        "table": "published_snapshot",
+        "name": "当前发布指针",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "发布历史",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "data.heatmapData",
+        "name": "热力图分组",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "热力图分组",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.regionMetadata",
+        "name": "地域覆盖说明",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "地域覆盖说明",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.rankingLeaders",
+        "name": "涨幅排行",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "涨幅排行",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.rankingDecliners",
+        "name": "跌幅排行",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "跌幅排行",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.commodityData",
+        "name": "商品行情",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "商品行情",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.marketNews",
+        "name": "市场快讯",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "市场快讯",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/market/explorer",
+        "method": "GET",
+        "responsePaths": [
+          "data.heatmapData（热力图分组）",
+          "data.regionMetadata（地域覆盖说明）",
+          "data.rankingLeaders（涨幅排行）",
+          "data.rankingDecliners（跌幅排行）",
+          "data.commodityData（商品行情）",
+          "data.marketNews（市场快讯）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "docs/market-supply.md"
+    ]
+  }
+]

@@ -1,0 +1,4772 @@
+[
+  {
+    "id": "cn.gdp.real_yoy",
+    "name": "中国实际 GDP 同比",
+    "category": "macro",
+    "description": "中国实际 GDP 同比。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "tushare",
+        "api": "cn_gdp",
+        "kind": "候选来源",
+        "description": "优先级 1；转换 identity"
+      },
+      {
+        "name": "tushare",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "季频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "cn.gdp.real_yoy",
+        "name": "中国实际 GDP 同比",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "%",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "中国实际 GDP 同比",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 cn.gdp.real_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 cn.gdp.real_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 cn.gdp.real_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.gdp.real_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.statusCards[].id（按系列标识 cn.gdp.real_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 cn.gdp.real_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 cn.gdp.real_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 cn.gdp.real_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 cn.gdp.real_yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.seriesStatus[].id（按系列标识 cn.gdp.real_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].mainNodes[].id（按系列标识 cn.gdp.real_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].targets[].value（按系列标识 cn.gdp.real_yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "cn.cpi.yoy",
+    "name": "中国 CPI 同比",
+    "category": "macro",
+    "description": "中国 CPI 同比。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "tushare",
+        "api": "cn_cpi",
+        "kind": "候选来源",
+        "description": "优先级 1；转换 identity"
+      },
+      {
+        "name": "tushare",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "月频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "cn.cpi.yoy",
+        "name": "中国 CPI 同比",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "%",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "中国 CPI 同比",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.derivedInsights.series[].inputIds[]（按系列标识 cn.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.derivedInsights.series[].inputLatestPeriods.{seriesId}（按系列标识 cn.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 cn.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 cn.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 cn.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.statusCards[].id（按系列标识 cn.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 cn.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 cn.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 cn.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 cn.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.analysis.cards[].meta.second（按系列标识 cn.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].mainNodes[].id（按系列标识 cn.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].targets[].value（按系列标识 cn.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "cn.cpi.core_yoy",
+    "name": "中国核心 CPI 同比",
+    "category": "macro",
+    "description": "中国核心 CPI 同比。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "nbs",
+        "api": "",
+        "kind": "候选来源",
+        "description": "优先级 1；转换 identity"
+      },
+      {
+        "name": "nbs",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "月频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "cn.cpi.core_yoy",
+        "name": "中国核心 CPI 同比",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "%",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "中国核心 CPI 同比",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 cn.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 cn.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 cn.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.statusCards[].id（按系列标识 cn.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 cn.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 cn.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 cn.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 cn.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.seriesStatus[].id（按系列标识 cn.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].mainNodes[].id（按系列标识 cn.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].targets[].value（按系列标识 cn.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "cn.ppi.yoy",
+    "name": "中国 PPI 同比",
+    "category": "macro",
+    "description": "中国 PPI 同比。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "tushare",
+        "api": "cn_ppi",
+        "kind": "候选来源",
+        "description": "优先级 1；转换 identity"
+      },
+      {
+        "name": "tushare",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "月频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "cn.ppi.yoy",
+        "name": "中国 PPI 同比",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "%",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "中国 PPI 同比",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.derivedInsights.compass.inputIds[]（按系列标识 cn.ppi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.derivedInsights.compass.inputLatestPeriods.{seriesId}（按系列标识 cn.ppi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.derivedInsights.series[].inputIds[]（按系列标识 cn.ppi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.derivedInsights.series[].inputLatestPeriods.{seriesId}（按系列标识 cn.ppi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 cn.ppi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 cn.ppi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 cn.ppi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.ppi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.stateInsights.signals.price.inputIds[]（按系列标识 cn.ppi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.stateInsights.signals.price.inputLatestPeriods.{seriesId}（按系列标识 cn.ppi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.statusCards[].id（按系列标识 cn.ppi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 cn.ppi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 cn.ppi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 cn.ppi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 cn.ppi.yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.analysis.cards[].meta.first（按系列标识 cn.ppi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.ppi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].mainNodes[].id（按系列标识 cn.ppi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].targets[].value（按系列标识 cn.ppi.yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "cn.pmi.manufacturing",
+    "name": "中国制造业 PMI",
+    "category": "macro",
+    "description": "中国制造业 PMI。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "tushare",
+        "api": "cn_pmi",
+        "kind": "候选来源",
+        "description": "优先级 1；转换 identity"
+      },
+      {
+        "name": "tushare",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "月频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "cn.pmi.manufacturing",
+        "name": "中国制造业 PMI",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "index",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "中国制造业 PMI",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 cn.pmi.manufacturing 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 cn.pmi.manufacturing 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 cn.pmi.manufacturing 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.pmi.manufacturing 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.statusCards[].id（按系列标识 cn.pmi.manufacturing 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 cn.pmi.manufacturing 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 cn.pmi.manufacturing 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 cn.pmi.manufacturing 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 cn.pmi.manufacturing 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.seriesStatus[].id（按系列标识 cn.pmi.manufacturing 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].mainNodes[].id（按系列标识 cn.pmi.manufacturing 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].targets[].value（按系列标识 cn.pmi.manufacturing 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "cn.industry.value_added_yoy",
+    "name": "中国规模以上工业增加值同比",
+    "category": "macro",
+    "description": "中国规模以上工业增加值同比。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "nbs",
+        "api": "",
+        "kind": "候选来源",
+        "description": "优先级 1；转换 identity"
+      },
+      {
+        "name": "nbs",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "月频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "cn.industry.value_added_yoy",
+        "name": "中国规模以上工业增加值同比",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "%",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "中国规模以上工业增加值同比",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.derivedInsights.compass.inputIds[]（按系列标识 cn.industry.value_added_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.derivedInsights.compass.inputLatestPeriods.{seriesId}（按系列标识 cn.industry.value_added_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 cn.industry.value_added_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 cn.industry.value_added_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 cn.industry.value_added_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.industry.value_added_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.statusCards[].id（按系列标识 cn.industry.value_added_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 cn.industry.value_added_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 cn.industry.value_added_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 cn.industry.value_added_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 cn.industry.value_added_yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.seriesStatus[].id（按系列标识 cn.industry.value_added_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].mainNodes[].id（按系列标识 cn.industry.value_added_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].targets[].value（按系列标识 cn.industry.value_added_yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "cn.money.m1_yoy",
+    "name": "中国 M1 同比",
+    "category": "macro",
+    "description": "中国 M1 同比。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "tushare",
+        "api": "cn_m",
+        "kind": "候选来源",
+        "description": "优先级 1；转换 identity"
+      },
+      {
+        "name": "tushare",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "月频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "cn.money.m1_yoy",
+        "name": "中国 M1 同比",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "%",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "中国 M1 同比",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.derivedInsights.series[].inputIds[]（按系列标识 cn.money.m1_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.derivedInsights.series[].inputLatestPeriods.{seriesId}（按系列标识 cn.money.m1_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 cn.money.m1_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 cn.money.m1_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 cn.money.m1_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.money.m1_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.stateInsights.signals.scissors.inputIds[]（按系列标识 cn.money.m1_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.stateInsights.signals.scissors.inputLatestPeriods.{seriesId}（按系列标识 cn.money.m1_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.statusCards[].id（按系列标识 cn.money.m1_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 cn.money.m1_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 cn.money.m1_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 cn.money.m1_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 cn.money.m1_yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.analysis.cards[].meta.second（按系列标识 cn.money.m1_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.money.m1_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].mainNodes[].id（按系列标识 cn.money.m1_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].targets[].value（按系列标识 cn.money.m1_yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "cn.money.m2_yoy",
+    "name": "中国 M2 同比",
+    "category": "macro",
+    "description": "中国 M2 同比。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "tushare",
+        "api": "cn_m",
+        "kind": "候选来源",
+        "description": "优先级 1；转换 identity"
+      },
+      {
+        "name": "tushare",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "月频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "cn.money.m2_yoy",
+        "name": "中国 M2 同比",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "%",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "中国 M2 同比",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.derivedInsights.series[].inputIds[]（按系列标识 cn.money.m2_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.derivedInsights.series[].inputLatestPeriods.{seriesId}（按系列标识 cn.money.m2_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 cn.money.m2_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 cn.money.m2_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 cn.money.m2_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.money.m2_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.stateInsights.signals.scissors.inputIds[]（按系列标识 cn.money.m2_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.stateInsights.signals.scissors.inputLatestPeriods.{seriesId}（按系列标识 cn.money.m2_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.statusCards[].id（按系列标识 cn.money.m2_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 cn.money.m2_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 cn.money.m2_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 cn.money.m2_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 cn.money.m2_yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.analysis.cards[].meta.first（按系列标识 cn.money.m2_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.money.m2_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].mainNodes[].id（按系列标识 cn.money.m2_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].targets[].value（按系列标识 cn.money.m2_yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "cn.credit.tsf_stock_yoy",
+    "name": "中国社会融资规模存量同比",
+    "category": "macro",
+    "description": "中国社会融资规模存量同比。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "暂无来源",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "未供给",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "月频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "cn.credit.tsf_stock_yoy",
+        "name": "中国社会融资规模存量同比",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "%",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "中国社会融资规模存量同比",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.missingData[].source（按系列标识 cn.credit.tsf_stock_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.missingSeries[]（按系列标识 cn.credit.tsf_stock_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 cn.credit.tsf_stock_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 cn.credit.tsf_stock_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 cn.credit.tsf_stock_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.credit.tsf_stock_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.stateInsights.signals.credit.inputIds[]（按系列标识 cn.credit.tsf_stock_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.stateInsights.signals.credit.inputLatestPeriods.{seriesId}（按系列标识 cn.credit.tsf_stock_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 cn.credit.tsf_stock_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 cn.credit.tsf_stock_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 cn.credit.tsf_stock_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 cn.credit.tsf_stock_yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.missingData[].source（按系列标识 cn.credit.tsf_stock_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.credit.tsf_stock_yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "cn.rate.dr007",
+    "name": "中国 DR007",
+    "category": "macro",
+    "description": "中国 DR007。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "tushare",
+        "api": "repo_daily",
+        "kind": "候选来源",
+        "description": "优先级 1；转换 identity"
+      },
+      {
+        "name": "tushare",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "日频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "cn.rate.dr007",
+        "name": "中国 DR007",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "%",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "中国 DR007",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.derivedInsights.series[].inputIds[]（按系列标识 cn.rate.dr007 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.derivedInsights.series[].inputLatestPeriods.{seriesId}（按系列标识 cn.rate.dr007 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 cn.rate.dr007 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 cn.rate.dr007 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 cn.rate.dr007 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.rate.dr007 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.stateInsights.signals.money.inputIds[]（按系列标识 cn.rate.dr007 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.stateInsights.signals.money.inputLatestPeriods.{seriesId}（按系列标识 cn.rate.dr007 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.statusCards[].id（按系列标识 cn.rate.dr007 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 cn.rate.dr007 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 cn.rate.dr007 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 cn.rate.dr007 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 cn.rate.dr007 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.analysis.cards[].meta.second（按系列标识 cn.rate.dr007 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.rate.dr007 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].mainNodes[].id（按系列标识 cn.rate.dr007 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].targets[].value（按系列标识 cn.rate.dr007 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.weather[].code（按系列标识 cn.rate.dr007 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "cn.rate.govbond_10y",
+    "name": "中国 10 年期国债收益率",
+    "category": "macro",
+    "description": "中国 10 年期国债收益率。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "chinamoney",
+        "api": "SddsIntrRateGovYldHis",
+        "kind": "候选来源",
+        "description": "优先级 1；转换 identity"
+      },
+      {
+        "name": "chinamoney",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "日频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "cn.rate.govbond_10y",
+        "name": "中国 10 年期国债收益率",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "%",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "中国 10 年期国债收益率",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.derivedInsights.series[].inputIds[]（按系列标识 cn.rate.govbond_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.derivedInsights.series[].inputLatestPeriods.{seriesId}（按系列标识 cn.rate.govbond_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 cn.rate.govbond_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 cn.rate.govbond_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 cn.rate.govbond_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.rate.govbond_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.stateInsights.signals.stockBondSpread.inputIds[]（按系列标识 cn.rate.govbond_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.stateInsights.signals.stockBondSpread.inputLatestPeriods.{seriesId}（按系列标识 cn.rate.govbond_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.statusCards[].id（按系列标识 cn.rate.govbond_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 cn.rate.govbond_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 cn.rate.govbond_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 cn.rate.govbond_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 cn.rate.govbond_10y 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.analysis.cards[].meta.first（按系列标识 cn.rate.govbond_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.rate.govbond_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].mainNodes[].id（按系列标识 cn.rate.govbond_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].targets[].value（按系列标识 cn.rate.govbond_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.weather[].code（按系列标识 cn.rate.govbond_10y 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "cn.fx.usdcny",
+    "name": "美元兑人民币汇率",
+    "category": "macro",
+    "description": "美元兑人民币汇率。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "暂无来源",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "未供给",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "日频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "cn.fx.usdcny",
+        "name": "美元兑人民币汇率",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "CNY per USD",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "美元兑人民币汇率",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.missingData[].source（按系列标识 cn.fx.usdcny 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.missingSeries[]（按系列标识 cn.fx.usdcny 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 cn.fx.usdcny 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 cn.fx.usdcny 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 cn.fx.usdcny 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.fx.usdcny 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 cn.fx.usdcny 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 cn.fx.usdcny 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 cn.fx.usdcny 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 cn.fx.usdcny 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.missingData[].source（按系列标识 cn.fx.usdcny 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 cn.fx.usdcny 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "us.gdp.real_qoq_annualized",
+    "name": "美国实际 GDP 环比折年率",
+    "category": "macro",
+    "description": "美国实际 GDP 环比折年率。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "fred",
+        "api": "series_observations",
+        "kind": "候选来源",
+        "description": "优先级 1；转换 identity"
+      },
+      {
+        "name": "fred",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "季频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "us.gdp.real_qoq_annualized",
+        "name": "美国实际 GDP 环比折年率",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "%",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "美国实际 GDP 环比折年率",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 us.gdp.real_qoq_annualized 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 us.gdp.real_qoq_annualized 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 us.gdp.real_qoq_annualized 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 us.gdp.real_qoq_annualized 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.statusCards[].id（按系列标识 us.gdp.real_qoq_annualized 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 us.gdp.real_qoq_annualized 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 us.gdp.real_qoq_annualized 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 us.gdp.real_qoq_annualized 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 us.gdp.real_qoq_annualized 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.seriesStatus[].id（按系列标识 us.gdp.real_qoq_annualized 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].mainNodes[].id（按系列标识 us.gdp.real_qoq_annualized 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].targets[].value（按系列标识 us.gdp.real_qoq_annualized 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "us.cpi.yoy",
+    "name": "美国 CPI 同比",
+    "category": "macro",
+    "description": "美国 CPI 同比。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "fred",
+        "api": "series_observations",
+        "kind": "候选来源",
+        "description": "优先级 1；转换 pc1"
+      },
+      {
+        "name": "bls",
+        "api": "publicAPI/v1/timeseries/data",
+        "kind": "候选来源",
+        "description": "优先级 2；转换 pc1"
+      },
+      {
+        "name": "fred",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "月频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": true,
+      "explanation": "该系列存在供应商数值转换，取决于实际使用来源。",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "us.cpi.yoy",
+        "name": "美国 CPI 同比",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "%",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "美国 CPI 同比",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [
+      {
+        "id": "pc1",
+        "name": "来源转换 pc1",
+        "formula": "（当期值 ÷ 上年同期值 − 1）× 100",
+        "inputs": [
+          {
+            "id": "source_value",
+            "name": "来源观测值"
+          }
+        ],
+        "window": "按观测频率对齐同期",
+        "version": "macro-series 目录版本",
+        "missing": "来源缺失或不可比时留空",
+        "evidence": [
+          "config/macro/macro-series.json"
+        ]
+      },
+      {
+        "id": "pc1",
+        "name": "来源转换 pc1",
+        "formula": "（当期值 ÷ 上年同期值 − 1）× 100",
+        "inputs": [
+          {
+            "id": "source_value",
+            "name": "来源观测值"
+          }
+        ],
+        "window": "按观测频率对齐同期",
+        "version": "macro-series 目录版本",
+        "missing": "来源缺失或不可比时留空",
+        "evidence": [
+          "config/macro/macro-series.json"
+        ]
+      }
+    ],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 us.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 us.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 us.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 us.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.statusCards[].id（按系列标识 us.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 us.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 us.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 us.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 us.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.seriesStatus[].id（按系列标识 us.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].mainNodes[].id（按系列标识 us.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].targets[].value（按系列标识 us.cpi.yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "us.cpi.core_yoy",
+    "name": "美国核心 CPI 同比",
+    "category": "macro",
+    "description": "美国核心 CPI 同比。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "fred",
+        "api": "series_observations",
+        "kind": "候选来源",
+        "description": "优先级 1；转换 pc1"
+      },
+      {
+        "name": "bls",
+        "api": "publicAPI/v1/timeseries/data",
+        "kind": "候选来源",
+        "description": "优先级 2；转换 pc1"
+      },
+      {
+        "name": "fred",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "月频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": true,
+      "explanation": "该系列存在供应商数值转换，取决于实际使用来源。",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "us.cpi.core_yoy",
+        "name": "美国核心 CPI 同比",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "%",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "美国核心 CPI 同比",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [
+      {
+        "id": "pc1",
+        "name": "来源转换 pc1",
+        "formula": "（当期值 ÷ 上年同期值 − 1）× 100",
+        "inputs": [
+          {
+            "id": "source_value",
+            "name": "来源观测值"
+          }
+        ],
+        "window": "按观测频率对齐同期",
+        "version": "macro-series 目录版本",
+        "missing": "来源缺失或不可比时留空",
+        "evidence": [
+          "config/macro/macro-series.json"
+        ]
+      },
+      {
+        "id": "pc1",
+        "name": "来源转换 pc1",
+        "formula": "（当期值 ÷ 上年同期值 − 1）× 100",
+        "inputs": [
+          {
+            "id": "source_value",
+            "name": "来源观测值"
+          }
+        ],
+        "window": "按观测频率对齐同期",
+        "version": "macro-series 目录版本",
+        "missing": "来源缺失或不可比时留空",
+        "evidence": [
+          "config/macro/macro-series.json"
+        ]
+      }
+    ],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 us.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 us.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 us.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 us.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.statusCards[].id（按系列标识 us.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 us.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 us.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 us.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 us.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.seriesStatus[].id（按系列标识 us.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].mainNodes[].id（按系列标识 us.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].targets[].value（按系列标识 us.cpi.core_yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "us.pce.core_yoy",
+    "name": "美国核心 PCE 同比",
+    "category": "macro",
+    "description": "美国核心 PCE 同比。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "fred",
+        "api": "series_observations",
+        "kind": "候选来源",
+        "description": "优先级 1；转换 pc1"
+      },
+      {
+        "name": "fred",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "月频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": true,
+      "explanation": "该系列存在供应商数值转换，取决于实际使用来源。",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "us.pce.core_yoy",
+        "name": "美国核心 PCE 同比",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "%",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "美国核心 PCE 同比",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [
+      {
+        "id": "pc1",
+        "name": "来源转换 pc1",
+        "formula": "（当期值 ÷ 上年同期值 − 1）× 100",
+        "inputs": [
+          {
+            "id": "source_value",
+            "name": "来源观测值"
+          }
+        ],
+        "window": "按观测频率对齐同期",
+        "version": "macro-series 目录版本",
+        "missing": "来源缺失或不可比时留空",
+        "evidence": [
+          "config/macro/macro-series.json"
+        ]
+      }
+    ],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 us.pce.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 us.pce.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 us.pce.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 us.pce.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.statusCards[].id（按系列标识 us.pce.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 us.pce.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 us.pce.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 us.pce.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 us.pce.core_yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.seriesStatus[].id（按系列标识 us.pce.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].mainNodes[].id（按系列标识 us.pce.core_yoy 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].targets[].value（按系列标识 us.pce.core_yoy 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "us.labor.unemployment_rate",
+    "name": "美国失业率",
+    "category": "macro",
+    "description": "美国失业率。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "fred",
+        "api": "series_observations",
+        "kind": "候选来源",
+        "description": "优先级 1；转换 identity"
+      },
+      {
+        "name": "bls",
+        "api": "publicAPI/v1/timeseries/data",
+        "kind": "候选来源",
+        "description": "优先级 2；转换 identity"
+      },
+      {
+        "name": "fred",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "月频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "us.labor.unemployment_rate",
+        "name": "美国失业率",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "%",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "美国失业率",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 us.labor.unemployment_rate 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 us.labor.unemployment_rate 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 us.labor.unemployment_rate 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 us.labor.unemployment_rate 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.statusCards[].id（按系列标识 us.labor.unemployment_rate 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 us.labor.unemployment_rate 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 us.labor.unemployment_rate 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 us.labor.unemployment_rate 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 us.labor.unemployment_rate 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.seriesStatus[].id（按系列标识 us.labor.unemployment_rate 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].mainNodes[].id（按系列标识 us.labor.unemployment_rate 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].targets[].value（按系列标识 us.labor.unemployment_rate 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "us.labor.nonfarm_payroll_change",
+    "name": "美国非农就业月增量",
+    "category": "macro",
+    "description": "美国非农就业月增量。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "fred",
+        "api": "series_observations",
+        "kind": "候选来源",
+        "description": "优先级 1；转换 chg"
+      },
+      {
+        "name": "bls",
+        "api": "publicAPI/v1/timeseries/data",
+        "kind": "候选来源",
+        "description": "优先级 2；转换 chg"
+      },
+      {
+        "name": "fred",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "月频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": true,
+      "explanation": "该系列存在供应商数值转换，取决于实际使用来源。",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "us.labor.nonfarm_payroll_change",
+        "name": "美国非农就业月增量",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "thousand persons",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "美国非农就业月增量",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [
+      {
+        "id": "chg",
+        "name": "来源转换 chg",
+        "formula": "当期值 − 前期值",
+        "inputs": [
+          {
+            "id": "source_value",
+            "name": "来源观测值"
+          }
+        ],
+        "window": "按观测频率对齐同期",
+        "version": "macro-series 目录版本",
+        "missing": "来源缺失或不可比时留空",
+        "evidence": [
+          "config/macro/macro-series.json"
+        ]
+      },
+      {
+        "id": "chg",
+        "name": "来源转换 chg",
+        "formula": "当期值 − 前期值",
+        "inputs": [
+          {
+            "id": "source_value",
+            "name": "来源观测值"
+          }
+        ],
+        "window": "按观测频率对齐同期",
+        "version": "macro-series 目录版本",
+        "missing": "来源缺失或不可比时留空",
+        "evidence": [
+          "config/macro/macro-series.json"
+        ]
+      }
+    ],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 us.labor.nonfarm_payroll_change 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 us.labor.nonfarm_payroll_change 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 us.labor.nonfarm_payroll_change 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 us.labor.nonfarm_payroll_change 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.statusCards[].id（按系列标识 us.labor.nonfarm_payroll_change 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 us.labor.nonfarm_payroll_change 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 us.labor.nonfarm_payroll_change 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 us.labor.nonfarm_payroll_change 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 us.labor.nonfarm_payroll_change 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.seriesStatus[].id（按系列标识 us.labor.nonfarm_payroll_change 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].mainNodes[].id（按系列标识 us.labor.nonfarm_payroll_change 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].targets[].value（按系列标识 us.labor.nonfarm_payroll_change 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "us.rate.effective_fed_funds",
+    "name": "美国有效联邦基金利率",
+    "category": "macro",
+    "description": "美国有效联邦基金利率。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "fred",
+        "api": "series_observations",
+        "kind": "候选来源",
+        "description": "优先级 1；转换 identity"
+      },
+      {
+        "name": "nyfed",
+        "api": "rates/unsecured/effr/search",
+        "kind": "候选来源",
+        "description": "优先级 2；转换 identity"
+      },
+      {
+        "name": "fred",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "日频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "us.rate.effective_fed_funds",
+        "name": "美国有效联邦基金利率",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "%",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "美国有效联邦基金利率",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.derivedInsights.series[].inputIds[]（按系列标识 us.rate.effective_fed_funds 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.derivedInsights.series[].inputLatestPeriods.{seriesId}（按系列标识 us.rate.effective_fed_funds 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 us.rate.effective_fed_funds 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 us.rate.effective_fed_funds 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 us.rate.effective_fed_funds 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 us.rate.effective_fed_funds 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.statusCards[].id（按系列标识 us.rate.effective_fed_funds 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 us.rate.effective_fed_funds 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 us.rate.effective_fed_funds 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 us.rate.effective_fed_funds 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 us.rate.effective_fed_funds 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.analysis.cards[].meta.second（按系列标识 us.rate.effective_fed_funds 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 us.rate.effective_fed_funds 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].mainNodes[].id（按系列标识 us.rate.effective_fed_funds 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].targets[].value（按系列标识 us.rate.effective_fed_funds 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.weather[].code（按系列标识 us.rate.effective_fed_funds 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "us.rate.treasury_10y",
+    "name": "美国 10 年期国债收益率",
+    "category": "macro",
+    "description": "美国 10 年期国债收益率。按观测期和实际公开时点取可见版本，来源按配置优先级选择。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "fred",
+        "api": "series_observations",
+        "kind": "候选来源",
+        "description": "优先级 1；转换 identity"
+      },
+      {
+        "name": "us_treasury",
+        "api": "daily_treasury_yield_curve",
+        "kind": "候选来源",
+        "description": "优先级 2；转换 identity"
+      },
+      {
+        "name": "tushare",
+        "api": "us_tycr",
+        "kind": "候选来源",
+        "description": "优先级 3；转换 identity"
+      },
+      {
+        "name": "fred",
+        "kind": "历史实供来源",
+        "description": "核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "日频"
+      },
+      {
+        "name": "采集规则",
+        "description": "基础宏观周任务，默认每周一 09:00；来源发布节奏与观测频率分别计量",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存已采集的历期观测及页面版本",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "宏观观测保留版本及来源时点；实际覆盖按观测记录",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "us.rate.treasury_10y",
+        "name": "美国 10 年期国债收益率",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "%",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "美国 10 年期国债收益率",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.derivedInsights.series[].inputIds[]（按系列标识 us.rate.treasury_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.derivedInsights.series[].inputLatestPeriods.{seriesId}（按系列标识 us.rate.treasury_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxGroups[].indicatorIds[]（按系列标识 us.rate.treasury_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxIndicators[].id（按系列标识 us.rate.treasury_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.sandboxPresets[].indicatorIds[]（按系列标识 us.rate.treasury_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 us.rate.treasury_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.statusCards[].id（按系列标识 us.rate.treasury_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].code（按系列标识 us.rate.treasury_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].id（按系列标识 us.rate.treasury_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].primarySeriesIds[]（按系列标识 us.rate.treasury_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.trendDefinitions[].series[].id（按系列标识 us.rate.treasury_10y 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      },
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data.analysis.cards[].meta.first（按系列标识 us.rate.treasury_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.seriesStatus[].id（按系列标识 us.rate.treasury_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].mainNodes[].id（按系列标识 us.rate.treasury_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.modes[].targets[].value（按系列标识 us.rate.treasury_10y 定位；核验版本 20261108-366f83bfc727036c）",
+          "data.transmission.weather[].code（按系列标识 us.rate.treasury_10y 定位；核验版本 20261108-366f83bfc727036c）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-series.json",
+      "docs/macro-supply.md",
+      "docs/official-source-fields.md",
+      "docs/research/investmind-non-tushare-field-usage.json"
+    ]
+  },
+  {
+    "id": "source-cn_gdp",
+    "name": "国内生产总值原始数据",
+    "category": "macro",
+    "description": "Tushare cn_gdp 的原始合同字段；供宏观系列或扩展专题取数。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "cn_gdp",
+        "kind": "采集渠道",
+        "description": "具体实际来源按使用系列核验"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": "macro"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "原始宏观响应",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "gdp",
+        "name": "累计名义国内生产总值",
+        "role": "source",
+        "type": "来源合同字段（类型待核验）",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "累计名义国内生产总值",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [],
+    "evidence": [
+      "docs/tushare-field-consumers.md"
+    ]
+  },
+  {
+    "id": "macro-extension-usdcnh",
+    "name": "离岸人民币汇率",
+    "category": "macro",
+    "description": "离岸人民币汇率扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "专题来源",
+        "kind": "配置来源",
+        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "专题采集规则",
+        "description": "{\"frequency\": \"daily\", \"weekday\": 0, \"time\": \"19:00\", \"timezone\": \"Asia/Shanghai\"}",
+        "config": "config/macro/macro-extensions.json#groups.usdcnh"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "专题原件",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "usdcnh",
+        "name": "离岸人民币汇率",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "离岸人民币汇率",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.extensionInsights（专项发布结果）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-extensions.json",
+      "docs/macro-specialties.md",
+      "docs/official-source-fields.md"
+    ]
+  },
+  {
+    "id": "macro-extension-vix",
+    "name": "美国波动率指数",
+    "category": "macro",
+    "description": "美国波动率指数扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "专题来源",
+        "kind": "配置来源",
+        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "专题采集规则",
+        "description": "{\"frequency\": \"daily\", \"weekday\": 0, \"time\": \"19:00\", \"timezone\": \"Asia/Shanghai\"}",
+        "config": "config/macro/macro-extensions.json#groups.vix"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "专题原件",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "vix",
+        "name": "美国波动率指数",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "美国波动率指数",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.extensionInsights（专项发布结果）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-extensions.json",
+      "docs/macro-specialties.md",
+      "docs/official-source-fields.md"
+    ]
+  },
+  {
+    "id": "macro-extension-governmentBonds",
+    "name": "政府债券融资",
+    "category": "macro",
+    "description": "政府债券融资扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "专题来源",
+        "kind": "配置来源",
+        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "专题采集规则",
+        "description": "{\"frequency\": \"weekly\", \"weekday\": 0, \"time\": \"09:00\", \"timezone\": \"Asia/Shanghai\"}",
+        "config": "config/macro/macro-extensions.json#groups.governmentBonds"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "专题原件",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "governmentBonds",
+        "name": "政府债券融资",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "政府债券融资",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.extensionInsights（专项发布结果）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-extensions.json",
+      "docs/macro-specialties.md",
+      "docs/official-source-fields.md"
+    ]
+  },
+  {
+    "id": "macro-extension-householdCredit",
+    "name": "住户中长期贷款",
+    "category": "macro",
+    "description": "住户中长期贷款扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "专题来源",
+        "kind": "配置来源",
+        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "专题采集规则",
+        "description": "{\"frequency\": \"weekly\", \"weekday\": 0, \"time\": \"09:00\", \"timezone\": \"Asia/Shanghai\"}",
+        "config": "config/macro/macro-extensions.json#groups.householdCredit"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "专题原件",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "householdCredit",
+        "name": "住户中长期贷款",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "住户中长期贷款",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.extensionInsights（专项发布结果）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-extensions.json",
+      "docs/macro-specialties.md",
+      "docs/official-source-fields.md"
+    ]
+  },
+  {
+    "id": "macro-extension-tier1Housing",
+    "name": "一线城市住宅价格",
+    "category": "macro",
+    "description": "一线城市住宅价格扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "专题来源",
+        "kind": "配置来源",
+        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "专题采集规则",
+        "description": "{\"frequency\": \"weekly\", \"weekday\": 0, \"time\": \"09:00\", \"timezone\": \"Asia/Shanghai\"}",
+        "config": "config/macro/macro-extensions.json#groups.tier1Housing"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "专题原件",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "tier1Housing",
+        "name": "一线城市住宅价格",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "一线城市住宅价格",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.extensionInsights（专项发布结果）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-extensions.json",
+      "docs/macro-specialties.md",
+      "docs/official-source-fields.md"
+    ]
+  },
+  {
+    "id": "macro-extension-specialBonds",
+    "name": "地方政府专项债",
+    "category": "macro",
+    "description": "地方政府专项债扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "专题来源",
+        "kind": "配置来源",
+        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "专题采集规则",
+        "description": "{\"frequency\": \"weekly\", \"weekday\": 0, \"time\": \"09:00\", \"timezone\": \"Asia/Shanghai\"}",
+        "config": "config/macro/macro-extensions.json#groups.specialBonds"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "专题原件",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "specialBonds",
+        "name": "地方政府专项债",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "地方政府专项债",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.extensionInsights（专项发布结果）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-extensions.json",
+      "docs/macro-specialties.md",
+      "docs/official-source-fields.md"
+    ]
+  },
+  {
+    "id": "macro-extension-propertyLoans",
+    "name": "房地产贷款",
+    "category": "macro",
+    "description": "房地产贷款扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "专题来源",
+        "kind": "配置来源",
+        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "专题采集规则",
+        "description": "{\"frequency\": \"weekly\", \"weekday\": 0, \"time\": \"09:00\", \"timezone\": \"Asia/Shanghai\"}",
+        "config": "config/macro/macro-extensions.json#groups.propertyLoans"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "专题原件",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "propertyLoans",
+        "name": "房地产贷款",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "房地产贷款",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.extensionInsights（专项发布结果）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-extensions.json",
+      "docs/macro-specialties.md",
+      "docs/official-source-fields.md"
+    ]
+  },
+  {
+    "id": "macro-extension-marginBalances",
+    "name": "融资余额",
+    "category": "macro",
+    "description": "融资余额扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "专题来源",
+        "kind": "配置来源",
+        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "专题采集规则",
+        "description": "{\"frequency\": \"daily\", \"weekday\": 0, \"time\": \"19:00\", \"timezone\": \"Asia/Shanghai\"}",
+        "config": "config/macro/macro-extensions.json#groups.marginBalances"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "专题原件",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "marginBalances",
+        "name": "融资余额",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "融资余额",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.extensionInsights（专项发布结果）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-extensions.json",
+      "docs/macro-specialties.md",
+      "docs/official-source-fields.md"
+    ]
+  },
+  {
+    "id": "macro-extension-aShareFloatMv",
+    "name": "A 股流通市值",
+    "category": "macro",
+    "description": "A 股流通市值扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "专题来源",
+        "kind": "配置来源",
+        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "专题采集规则",
+        "description": "{\"frequency\": \"daily\", \"weekday\": 0, \"time\": \"19:00\", \"timezone\": \"Asia/Shanghai\"}",
+        "config": "config/macro/macro-extensions.json#groups.aShareFloatMv"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "专题原件",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "aShareFloatMv",
+        "name": "A 股流通市值",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "A 股流通市值",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.extensionInsights（专项发布结果）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-extensions.json",
+      "docs/macro-specialties.md",
+      "docs/official-source-fields.md"
+    ]
+  },
+  {
+    "id": "macro-extension-nominalGdp",
+    "name": "名义 GDP 与平减指标",
+    "category": "macro",
+    "description": "名义 GDP 与平减指标扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "专题来源",
+        "kind": "配置来源",
+        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "专题采集规则",
+        "description": "{\"frequency\": \"weekly\", \"weekday\": 0, \"time\": \"09:00\", \"timezone\": \"Asia/Shanghai\"}",
+        "config": "config/macro/macro-extensions.json#groups.nominalGdp"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "专题原件",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布快照",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "nominalGdp",
+        "name": "名义 GDP 与平减指标",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "名义 GDP 与平减指标",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data.extensionInsights（专项发布结果）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "config/macro/macro-extensions.json",
+      "docs/macro-specialties.md",
+      "docs/official-source-fields.md"
+    ]
+  },
+  {
+    "id": "macro-enterprise",
+    "name": "企业范围与官方目标",
+    "category": "macro",
+    "description": "将企业财报与行业及官方目标按同版范围对照。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": null
+      }
+    ],
+    "tables": [
+      {
+        "schema": "mart",
+        "table": "published_snapshot",
+        "name": "当前发布指针",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "发布历史",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "000300.SH",
+        "name": "沪深300",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "官方目标，类型 index；与数据池交集及实际成分证据分别核验",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "000905.SH",
+        "name": "中证500",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "官方目标，类型 index；与数据池交集及实际成分证据分别核验",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "000510.SH",
+        "name": "中证A500",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "官方目标，类型 index；与数据池交集及实际成分证据分别核验",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "512880.SH",
+        "name": "证券ETF",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "512800.SH",
+        "name": "银行ETF",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "159928.SZ",
+        "name": "消费ETF",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "512010.SH",
+        "name": "医药ETF",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "512400.SH",
+        "name": "有色金属ETF",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "512660.SH",
+        "name": "军工ETF",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "515220.SH",
+        "name": "煤炭ETF",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "512980.SH",
+        "name": "传媒ETF",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "515030.SH",
+        "name": "新能源车ETF",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "512200.SH",
+        "name": "房地产ETF",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "588200.SH",
+        "name": "科创芯片ETF",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/transmission",
+        "method": "GET",
+        "responsePaths": [
+          "data（企业范围与官方目标发布对象）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "docs/macro-supply.md",
+      "config/macro/enterprise-targets.json"
+    ]
+  },
+  {
+    "id": "macro-spreads",
+    "name": "宏观利差与剪刀差",
+    "category": "macro",
+    "description": "按两条基础系列的真实共同日期生成差值。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": null
+      }
+    ],
+    "tables": [
+      {
+        "schema": "mart",
+        "table": "published_snapshot",
+        "name": "当前发布指针",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "发布历史",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": true,
+      "explanation": "按共同可见日期对齐基础系列后计算差值",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "macro-spreads",
+        "name": "宏观利差与剪刀差",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "宏观利差与剪刀差",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": true,
+          "explanation": "底座计算或转换",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [
+      {
+        "id": "paired-spread",
+        "name": "同日差值",
+        "formula": "左侧序列数值 − 右侧序列数值",
+        "inputs": [
+          {
+            "id": "left",
+            "name": "左侧同日观测"
+          },
+          {
+            "id": "right",
+            "name": "右侧同日观测"
+          }
+        ],
+        "window": "两侧真实共同日期",
+        "version": "随宏观目录和发布版本",
+        "missing": "缺任意一侧时留空",
+        "evidence": [
+          "docs/macro-supply.md"
+        ]
+      }
+    ],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data（宏观利差与剪刀差发布对象）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "docs/macro-supply.md"
+    ]
+  },
+  {
+    "id": "cn.ppi_cpi_spread",
+    "name": "PPI-CPI 剪刀差",
+    "category": "macro",
+    "description": "按两侧真实共同日期计算的宏观差值，缺期不向前填充。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": null
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观输入观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布结果",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "历史派生点随页面快照保存，基础观测各自保留",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "保留已发布页面版本；同版本内部重算记录不单列",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "宏观聚合接口支持 version（发布版本）查询",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": true,
+      "explanation": "两条基础系列对齐后相减",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "cn.ppi_cpi_spread",
+        "name": "PPI-CPI 剪刀差",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "百分点",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "PPI-CPI 剪刀差",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": true,
+          "explanation": "底座计算或转换",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [
+      {
+        "id": "cn.ppi_cpi_spread",
+        "name": "PPI-CPI 剪刀差",
+        "formula": "（中国 PPI 同比 − 中国 CPI 同比）× 1",
+        "inputs": [
+          {
+            "id": "cn.ppi.yoy",
+            "name": "中国 PPI 同比"
+          },
+          {
+            "id": "cn.cpi.yoy",
+            "name": "中国 CPI 同比"
+          }
+        ],
+        "window": "仅使用两侧共同日期，月频",
+        "version": "当前 SPREADS 定义",
+        "missing": "任意一侧缺值、最新日期不一致或输入滞后时显示原因",
+        "evidence": [
+          "backend/app/macro/derivations.py"
+        ]
+      }
+    ],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data（按宏观派生项 id 定位）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "backend/app/macro/derivations.py",
+      "docs/macro-supply.md"
+    ]
+  },
+  {
+    "id": "cn.m2_m1_spread",
+    "name": "M2-M1 剪刀差",
+    "category": "macro",
+    "description": "按两侧真实共同日期计算的宏观差值，缺期不向前填充。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": null
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观输入观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布结果",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "历史派生点随页面快照保存，基础观测各自保留",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "保留已发布页面版本；同版本内部重算记录不单列",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "宏观聚合接口支持 version（发布版本）查询",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": true,
+      "explanation": "两条基础系列对齐后相减",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "cn.m2_m1_spread",
+        "name": "M2-M1 剪刀差",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "百分点",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "M2-M1 剪刀差",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": true,
+          "explanation": "底座计算或转换",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [
+      {
+        "id": "cn.m2_m1_spread",
+        "name": "M2-M1 剪刀差",
+        "formula": "（中国 M2 同比 − 中国 M1 同比）× 1",
+        "inputs": [
+          {
+            "id": "cn.money.m2_yoy",
+            "name": "中国 M2 同比"
+          },
+          {
+            "id": "cn.money.m1_yoy",
+            "name": "中国 M1 同比"
+          }
+        ],
+        "window": "仅使用两侧共同日期，月频",
+        "version": "当前 SPREADS 定义",
+        "missing": "任意一侧缺值、最新日期不一致或输入滞后时显示原因",
+        "evidence": [
+          "backend/app/macro/derivations.py"
+        ]
+      }
+    ],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data（按宏观派生项 id 定位）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "backend/app/macro/derivations.py",
+      "docs/macro-supply.md"
+    ]
+  },
+  {
+    "id": "cn.money.m1_minus_m2_yoy",
+    "name": "M1-M2 差值",
+    "category": "macro",
+    "description": "按两侧真实共同日期计算的宏观差值，缺期不向前填充。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": null
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观输入观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布结果",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "历史派生点随页面快照保存，基础观测各自保留",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "保留已发布页面版本；同版本内部重算记录不单列",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "宏观聚合接口支持 version（发布版本）查询",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": true,
+      "explanation": "两条基础系列对齐后相减",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "cn.money.m1_minus_m2_yoy",
+        "name": "M1-M2 差值",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "百分点",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "M1-M2 差值",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": true,
+          "explanation": "底座计算或转换",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [
+      {
+        "id": "cn.money.m1_minus_m2_yoy",
+        "name": "M1-M2 差值",
+        "formula": "（中国 M1 同比 − 中国 M2 同比）× 1",
+        "inputs": [
+          {
+            "id": "cn.money.m1_yoy",
+            "name": "中国 M1 同比"
+          },
+          {
+            "id": "cn.money.m2_yoy",
+            "name": "中国 M2 同比"
+          }
+        ],
+        "window": "仅使用两侧共同日期，月频",
+        "version": "当前 SPREADS 定义",
+        "missing": "任意一侧缺值、最新日期不一致或输入滞后时显示原因",
+        "evidence": [
+          "backend/app/macro/derivations.py"
+        ]
+      }
+    ],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data（按宏观派生项 id 定位）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "backend/app/macro/derivations.py",
+      "docs/macro-supply.md"
+    ]
+  },
+  {
+    "id": "cn.govbond_dr007_spread",
+    "name": "国债-DR007 利差",
+    "category": "macro",
+    "description": "按两侧真实共同日期计算的宏观差值，缺期不向前填充。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": null
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观输入观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布结果",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "历史派生点随页面快照保存，基础观测各自保留",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "保留已发布页面版本；同版本内部重算记录不单列",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "宏观聚合接口支持 version（发布版本）查询",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": true,
+      "explanation": "两条基础系列对齐后相减",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "cn.govbond_dr007_spread",
+        "name": "国债-DR007 利差",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "百分点",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "国债-DR007 利差",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": true,
+          "explanation": "底座计算或转换",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [
+      {
+        "id": "cn.govbond_dr007_spread",
+        "name": "国债-DR007 利差",
+        "formula": "（中国 10 年期国债收益率 − 中国 DR007）× 1",
+        "inputs": [
+          {
+            "id": "cn.rate.govbond_10y",
+            "name": "中国 10 年期国债收益率"
+          },
+          {
+            "id": "cn.rate.dr007",
+            "name": "中国 DR007"
+          }
+        ],
+        "window": "仅使用两侧共同日期，日频",
+        "version": "当前 SPREADS 定义",
+        "missing": "任意一侧缺值、最新日期不一致或输入滞后时显示原因",
+        "evidence": [
+          "backend/app/macro/derivations.py"
+        ]
+      }
+    ],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data（按宏观派生项 id 定位）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "backend/app/macro/derivations.py",
+      "docs/macro-supply.md"
+    ]
+  },
+  {
+    "id": "us.treasury_fed_funds_spread",
+    "name": "美债-联邦基金利差",
+    "category": "macro",
+    "description": "按两侧真实共同日期计算的宏观差值，缺期不向前填充。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": null
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观输入观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布结果",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "历史派生点随页面快照保存，基础观测各自保留",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "保留已发布页面版本；同版本内部重算记录不单列",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "宏观聚合接口支持 version（发布版本）查询",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": true,
+      "explanation": "两条基础系列对齐后相减",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "us.treasury_fed_funds_spread",
+        "name": "美债-联邦基金利差",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "百分点",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "美债-联邦基金利差",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": true,
+          "explanation": "底座计算或转换",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [
+      {
+        "id": "us.treasury_fed_funds_spread",
+        "name": "美债-联邦基金利差",
+        "formula": "（美国 10 年期国债收益率 − 美国有效联邦基金利率）× 1",
+        "inputs": [
+          {
+            "id": "us.rate.treasury_10y",
+            "name": "美国 10 年期国债收益率"
+          },
+          {
+            "id": "us.rate.effective_fed_funds",
+            "name": "美国有效联邦基金利率"
+          }
+        ],
+        "window": "仅使用两侧共同日期，日频",
+        "version": "当前 SPREADS 定义",
+        "missing": "任意一侧缺值、最新日期不一致或输入滞后时显示原因",
+        "evidence": [
+          "backend/app/macro/derivations.py"
+        ]
+      }
+    ],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data（按宏观派生项 id 定位）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "backend/app/macro/derivations.py",
+      "docs/macro-supply.md"
+    ]
+  },
+  {
+    "id": "cn.us.rate_spread",
+    "name": "中美利差",
+    "category": "macro",
+    "description": "按两侧真实共同日期计算的宏观差值，缺期不向前填充。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": null
+      }
+    ],
+    "tables": [
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观输入观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "mart",
+        "table": "page_snapshot",
+        "name": "历史发布结果",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "历史派生点随页面快照保存，基础观测各自保留",
+        "evidence": []
+      },
+      "revisions": {
+        "value": true,
+        "explanation": "保留已发布页面版本；同版本内部重算记录不单列",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "宏观聚合接口支持 version（发布版本）查询",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": true,
+      "explanation": "两条基础系列对齐后相减",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "cn.us.rate_spread",
+        "name": "中美利差",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "bp",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "中美利差",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": true,
+          "explanation": "底座计算或转换",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [
+      {
+        "id": "cn.us.rate_spread",
+        "name": "中美利差",
+        "formula": "（中国 10 年期国债收益率 − 美国 10 年期国债收益率）× 100",
+        "inputs": [
+          {
+            "id": "cn.rate.govbond_10y",
+            "name": "中国 10 年期国债收益率"
+          },
+          {
+            "id": "us.rate.treasury_10y",
+            "name": "美国 10 年期国债收益率"
+          }
+        ],
+        "window": "仅使用两侧共同日期，日频",
+        "version": "当前 SPREADS 定义",
+        "missing": "任意一侧缺值、最新日期不一致或输入滞后时显示原因",
+        "evidence": [
+          "backend/app/macro/derivations.py"
+        ]
+      }
+    ],
+    "access": [
+      {
+        "kind": "aggregate",
+        "path": "/api/v1/macro/insights",
+        "method": "GET",
+        "responsePaths": [
+          "data（按宏观派生项 id 定位）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "backend/app/macro/derivations.py",
+      "docs/macro-supply.md"
+    ]
+  }
+]

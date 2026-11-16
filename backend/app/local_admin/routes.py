@@ -12,6 +12,9 @@ from pydantic import BaseModel
 from sqlalchemy.exc import SQLAlchemyError
 from app.local_admin import status, tables
 from app.local_admin.configuration import Configuration, Conflict
+from app.local_admin.catalog import load_catalog, validate_catalog
+from app.local_admin.catalog_contracts import describe_operation
+from app.local_admin.catalog_runtime import runtime_context
 from fastapi.staticfiles import StaticFiles
 
 STATIC = Path(__file__).with_name("static")
@@ -84,6 +87,33 @@ def mount_admin(app: FastAPI, *, project_root: Path, manager=None):
     @admin.get("/api/tables")
     def catalog():
         return tables.list_tables(engine)
+
+    @admin.get("/api/catalog")
+    def data_catalog():
+        catalog = load_catalog(project_root)
+        return {"version": catalog.version, "categories": catalog.categories,
+                "entries": [{"id":e.id, "name":e.name, "category":e.category, "status":e.status,
+                    "fields":[{"id":f.id,"name":f.name} for f in e.fields],
+                    "search":" ".join([e.id,e.name,*[s.get("name","") for s in e.sources],
+                        *[s.get("api","") for s in e.sources],*[t.schema_+"."+t.table for t in e.tables],
+                        *[f.id+" "+f.name for f in e.fields]])} for e in catalog.entries]}
+
+    @admin.get("/api/catalog-runtime")
+    def data_catalog_runtime():
+        return runtime_context(manager, lambda: tables.list_tables(engine))
+
+    @admin.get("/api/catalog/{entry_id}")
+    def data_catalog_entry(entry_id: str):
+        catalog = load_catalog(project_root)
+        entry = next((e for e in catalog.entries if e.id == entry_id),None)
+        if entry is None:
+            raise KeyError(entry_id)
+        spec = app.openapi()
+        operations = [{**access, **describe_operation(spec,access["method"],access["path"])}
+                      for access in entry.access if access.get("path")]
+        return {"entry":entry.model_dump(by_alias=True), "operations":operations,
+                "issues":[i for i in validate_catalog(catalog,project_root=project_root,openapi=spec)
+                          if i["entryId"] in {"",entry_id}]}
 
     @admin.get("/api/tables/{schema}/{name}")
     def records(schema: str, name: str, cursor: int = Query(0, ge=0), run: str | None = None, batch: str | None = None):

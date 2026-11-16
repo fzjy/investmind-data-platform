@@ -1,0 +1,2485 @@
+{
+  "version": "2026-11-16-v1",
+  "categories": [
+    {
+      "id": "stocks",
+      "name": "股票数据"
+    },
+    {
+      "id": "markets",
+      "name": "指数、ETF 与商品"
+    },
+    {
+      "id": "macro",
+      "name": "宏观经济"
+    },
+    {
+      "id": "content",
+      "name": "财经内容"
+    },
+    {
+      "id": "portfolio",
+      "name": "组合公共数据"
+    }
+  ],
+  "files": [
+    "data-catalog/stocks.json",
+    "data-catalog/markets.json",
+    "data-catalog/macro.json",
+    "data-catalog/content.json",
+    "data-catalog/portfolio.json"
+  ],
+  "ownership": {
+    "card:workbenchAnnualDividendYield@v2": [
+      "stock-dividend-yield"
+    ],
+    "card:workbenchFiscalDividendYield@v2": [
+      "stock-dividend-yield"
+    ],
+    "card:workbenchFiveYearDividendCount@v2": [
+      "card-workbenchFiveYearDividendCount"
+    ],
+    "card:workbenchMarketCap@v2": [
+      "card-workbenchMarketCap"
+    ],
+    "card:workbenchNetCash@v2": [
+      "card-workbenchNetCash"
+    ],
+    "card:workbenchNtmDividendYield@v2": [
+      "stock-dividend-yield"
+    ],
+    "card:workbenchPb@v2": [
+      "card-workbenchPb"
+    ],
+    "card:workbenchPeTtm@v2": [
+      "card-workbenchPeTtm"
+    ],
+    "extension:aShareFloatMv": [
+      "macro-extension-aShareFloatMv"
+    ],
+    "extension:governmentBonds": [
+      "macro-extension-governmentBonds"
+    ],
+    "extension:householdCredit": [
+      "macro-extension-householdCredit"
+    ],
+    "extension:marginBalances": [
+      "macro-extension-marginBalances"
+    ],
+    "extension:nominalGdp": [
+      "macro-extension-nominalGdp"
+    ],
+    "extension:propertyLoans": [
+      "macro-extension-propertyLoans"
+    ],
+    "extension:specialBonds": [
+      "macro-extension-specialBonds"
+    ],
+    "extension:tier1Housing": [
+      "macro-extension-tier1Housing"
+    ],
+    "extension:usdcnh": [
+      "macro-extension-usdcnh"
+    ],
+    "extension:vix": [
+      "macro-extension-vix"
+    ],
+    "formula:capitalReturnRatio@2.0.0": [
+      "metric-capitalReturnRatio"
+    ],
+    "formula:cashflowGrowth@1.0.0": [
+      "metric-cashflowGrowth"
+    ],
+    "formula:dividendYears@2.0.0": [
+      "metric-dividendYears"
+    ],
+    "formula:expectedDividendYield@2.0.0": [
+      "metric-expectedDividendYield"
+    ],
+    "formula:freeCashFlow@1.0.0": [
+      "metric-freeCashFlow"
+    ],
+    "formula:institutionHolding@2.0.0": [
+      "metric-institutionHolding"
+    ],
+    "formula:netDebt@1.0.0": [
+      "metric-netDebt"
+    ],
+    "formula:payoutRatio@2.0.0": [
+      "metric-payoutRatio"
+    ],
+    "formula:pbPercentile@1.0.0": [
+      "metric-pbPercentile"
+    ],
+    "formula:pePercentile@1.0.0": [
+      "metric-pePercentile"
+    ],
+    "formula:profitGrowth@1.0.0": [
+      "metric-profitGrowth"
+    ],
+    "formula:realMoneyIndex@1.0.0": [
+      "metric-realMoneyIndex"
+    ],
+    "formula:revenueGrowth@1.0.0": [
+      "metric-revenueGrowth"
+    ],
+    "formula:roic@1.0.0": [
+      "metric-roic"
+    ],
+    "import:content.body": [
+      "external-content"
+    ],
+    "import:content.contentType": [
+      "external-content"
+    ],
+    "import:content.copyrightStatus": [
+      "external-content"
+    ],
+    "import:content.externalId": [
+      "external-content"
+    ],
+    "import:content.ingestionRevision": [
+      "external-content"
+    ],
+    "import:content.publishedAt": [
+      "external-content"
+    ],
+    "import:content.recordType": [
+      "external-content"
+    ],
+    "import:content.schemaVersion": [
+      "external-content"
+    ],
+    "import:content.securities": [
+      "external-content"
+    ],
+    "import:content.securityNames": [
+      "external-content"
+    ],
+    "import:content.source": [
+      "external-content"
+    ],
+    "import:content.sourceUrl": [
+      "external-content"
+    ],
+    "import:content.summary": [
+      "external-content"
+    ],
+    "import:content.title": [
+      "external-content"
+    ],
+    "import:macro.frequency": [
+      "external-macro"
+    ],
+    "import:macro.name": [
+      "external-macro"
+    ],
+    "import:macro.observedAt": [
+      "external-macro"
+    ],
+    "import:macro.recordType": [
+      "external-macro"
+    ],
+    "import:macro.region": [
+      "external-macro"
+    ],
+    "import:macro.releasedAt": [
+      "external-macro"
+    ],
+    "import:macro.revision": [
+      "external-macro"
+    ],
+    "import:macro.schemaVersion": [
+      "external-macro"
+    ],
+    "import:macro.seasonalAdjustment": [
+      "external-macro"
+    ],
+    "import:macro.seriesId": [
+      "external-macro"
+    ],
+    "import:macro.source": [
+      "external-macro"
+    ],
+    "import:macro.sourceUrl": [
+      "external-macro"
+    ],
+    "import:macro.unit": [
+      "external-macro"
+    ],
+    "import:macro.value": [
+      "external-macro"
+    ],
+    "macro:cn.cpi.core_yoy": [
+      "cn.cpi.core_yoy"
+    ],
+    "macro:cn.cpi.yoy": [
+      "cn.cpi.yoy"
+    ],
+    "macro:cn.credit.tsf_stock_yoy": [
+      "cn.credit.tsf_stock_yoy"
+    ],
+    "macro:cn.fx.usdcny": [
+      "cn.fx.usdcny"
+    ],
+    "macro:cn.gdp.real_yoy": [
+      "cn.gdp.real_yoy"
+    ],
+    "macro:cn.industry.value_added_yoy": [
+      "cn.industry.value_added_yoy"
+    ],
+    "macro:cn.money.m1_yoy": [
+      "cn.money.m1_yoy"
+    ],
+    "macro:cn.money.m2_yoy": [
+      "cn.money.m2_yoy"
+    ],
+    "macro:cn.pmi.manufacturing": [
+      "cn.pmi.manufacturing"
+    ],
+    "macro:cn.ppi.yoy": [
+      "cn.ppi.yoy"
+    ],
+    "macro:cn.rate.dr007": [
+      "cn.rate.dr007"
+    ],
+    "macro:cn.rate.govbond_10y": [
+      "cn.rate.govbond_10y"
+    ],
+    "macro:us.cpi.core_yoy": [
+      "us.cpi.core_yoy"
+    ],
+    "macro:us.cpi.yoy": [
+      "us.cpi.yoy"
+    ],
+    "macro:us.gdp.real_qoq_annualized": [
+      "us.gdp.real_qoq_annualized"
+    ],
+    "macro:us.labor.nonfarm_payroll_change": [
+      "us.labor.nonfarm_payroll_change"
+    ],
+    "macro:us.labor.unemployment_rate": [
+      "us.labor.unemployment_rate"
+    ],
+    "macro:us.pce.core_yoy": [
+      "us.pce.core_yoy"
+    ],
+    "macro:us.rate.effective_fed_funds": [
+      "us.rate.effective_fed_funds"
+    ],
+    "macro:us.rate.treasury_10y": [
+      "us.rate.treasury_10y"
+    ],
+    "operation:GET /api/v1/macro/insights": [
+      "cn.gdp.real_yoy",
+      "cn.cpi.yoy",
+      "cn.cpi.core_yoy",
+      "cn.ppi.yoy",
+      "cn.pmi.manufacturing",
+      "cn.industry.value_added_yoy",
+      "cn.money.m1_yoy",
+      "cn.money.m2_yoy",
+      "cn.credit.tsf_stock_yoy",
+      "cn.rate.dr007",
+      "cn.rate.govbond_10y",
+      "cn.fx.usdcny",
+      "us.gdp.real_qoq_annualized",
+      "us.cpi.yoy",
+      "us.cpi.core_yoy",
+      "us.pce.core_yoy",
+      "us.labor.unemployment_rate",
+      "us.labor.nonfarm_payroll_change",
+      "us.rate.effective_fed_funds",
+      "us.rate.treasury_10y",
+      "macro-extension-usdcnh",
+      "macro-extension-vix",
+      "macro-extension-governmentBonds",
+      "macro-extension-householdCredit",
+      "macro-extension-tier1Housing",
+      "macro-extension-specialBonds",
+      "macro-extension-propertyLoans",
+      "macro-extension-marginBalances",
+      "macro-extension-aShareFloatMv",
+      "macro-extension-nominalGdp",
+      "macro-spreads",
+      "cn.ppi_cpi_spread",
+      "cn.m2_m1_spread",
+      "cn.money.m1_minus_m2_yoy",
+      "cn.govbond_dr007_spread",
+      "us.treasury_fed_funds_spread",
+      "cn.us.rate_spread"
+    ],
+    "operation:GET /api/v1/macro/transmission": [
+      "cn.gdp.real_yoy",
+      "cn.cpi.yoy",
+      "cn.cpi.core_yoy",
+      "cn.ppi.yoy",
+      "cn.pmi.manufacturing",
+      "cn.industry.value_added_yoy",
+      "cn.money.m1_yoy",
+      "cn.money.m2_yoy",
+      "cn.credit.tsf_stock_yoy",
+      "cn.rate.dr007",
+      "cn.rate.govbond_10y",
+      "cn.fx.usdcny",
+      "us.gdp.real_qoq_annualized",
+      "us.cpi.yoy",
+      "us.cpi.core_yoy",
+      "us.pce.core_yoy",
+      "us.labor.unemployment_rate",
+      "us.labor.nonfarm_payroll_change",
+      "us.rate.effective_fed_funds",
+      "us.rate.treasury_10y",
+      "macro-enterprise"
+    ],
+    "operation:GET /api/v1/market/explorer": [
+      "market-daily-summary",
+      "etf-daily",
+      "etf-shares",
+      "commodity-daily",
+      "fx-daily",
+      "index-daily",
+      "index-global",
+      "market-margin",
+      "market-sz-summary",
+      "market-explorer",
+      "security-region"
+    ],
+    "operation:GET /api/v1/market/overview": [
+      "market-overview"
+    ],
+    "operation:GET /api/v1/news": [
+      "news"
+    ],
+    "operation:GET /api/v1/portfolio": [
+      "portfolio-inputs"
+    ],
+    "operation:GET /api/v1/search": [
+      "security-search"
+    ],
+    "operation:GET /api/v1/stocks/{symbol}": [
+      "stock-adjustment",
+      "stock-balance",
+      "stock-cashflow",
+      "stock-daily",
+      "stock-daily-basic",
+      "stock-dividend",
+      "stock-express",
+      "stock-financial-indicator",
+      "stock-business",
+      "stock-forecast",
+      "stock-income",
+      "stock-classification",
+      "stock-classification-members",
+      "stock-repurchase",
+      "stock-unlock",
+      "stock-holder-count",
+      "stock-basic",
+      "stock-top-holders",
+      "card-workbenchPeTtm",
+      "card-workbenchPb",
+      "card-workbenchMarketCap",
+      "card-workbenchNetCash",
+      "stock-dividend-yield",
+      "card-workbenchFiveYearDividendCount",
+      "risk-high_cash_high_debt",
+      "risk-goodwill_risk",
+      "risk-profit_structure_non_operating_dependency",
+      "risk-impairment_pressure",
+      "risk-comprehensive_income_gap",
+      "risk-eps_quality_gap",
+      "risk-equity_cash_support",
+      "risk-valuation_band",
+      "risk-interest_debt_burden",
+      "risk-dividend_vs_financing",
+      "risk-dividend_sustainability",
+      "risk-earnings_quality_non_recurring",
+      "stock-ratio-inputs",
+      "stock-announcements"
+    ],
+    "operation:POST /api/v1/stocks/research": [
+      "stock-research"
+    ],
+    "operation:POST /api/v1/stocks/screener": [
+      "card-workbenchPeTtm",
+      "card-workbenchPb",
+      "card-workbenchMarketCap",
+      "card-workbenchNetCash",
+      "stock-dividend-yield",
+      "card-workbenchFiveYearDividendCount",
+      "screener-pe",
+      "screener-pb",
+      "screener-pePercentile",
+      "screener-pbPercentile",
+      "screener-dividendYears",
+      "screener-payoutRatio",
+      "screener-capitalReturnRatio",
+      "screener-roe",
+      "screener-roic",
+      "screener-realMoneyIndex",
+      "screener-ocfToRevenue",
+      "screener-ocfToTotalLiab",
+      "screener-capexCoverageRatio",
+      "screener-freeCashFlowFy",
+      "screener-freeCashFlowMarginFy",
+      "screener-cashCollectionRatio",
+      "screener-cashPaymentRatio",
+      "screener-institutionHolding",
+      "screener-institutionHoldingChange",
+      "screener-longMoneyHoldingRatio",
+      "screener-fundHeavyCount",
+      "screener-chipConcentrationChange",
+      "screener-marketCap"
+    ],
+    "ratio:accountsReceiv": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:acctPayable": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:advReceipts": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:capex": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:cash": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:cashEnding": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:contractAssets": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:contractLiab": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:cost": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:currentAssets": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:currentLiab": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:ebit": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:ebitda": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:financingCashFlow": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:interestExpense": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:inventory": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:investingCashFlow": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:netCashChange": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:netProfit": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:notesPayable": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:notesReceiv": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:operatingCashFlow": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:operatingProfit": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:parentNetProfit": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:prepayment": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:purchaseCash": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:revenue": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:salesCash": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:totalAssets": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:totalEquity": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:totalLiabilities": [
+      "stock-ratio-inputs"
+    ],
+    "ratio:totalProfit": [
+      "stock-ratio-inputs"
+    ],
+    "risk:comprehensive_income_gap@workbench-risk-v3": [
+      "risk-comprehensive_income_gap"
+    ],
+    "risk:dividend_sustainability@workbench-risk-v3": [
+      "risk-dividend_sustainability"
+    ],
+    "risk:dividend_vs_financing@workbench-risk-v3": [
+      "risk-dividend_vs_financing"
+    ],
+    "risk:earnings_quality_non_recurring@workbench-risk-v3": [
+      "risk-earnings_quality_non_recurring"
+    ],
+    "risk:eps_quality_gap@workbench-risk-v3": [
+      "risk-eps_quality_gap"
+    ],
+    "risk:equity_cash_support@workbench-risk-v3": [
+      "risk-equity_cash_support"
+    ],
+    "risk:goodwill_risk@workbench-risk-v3": [
+      "risk-goodwill_risk"
+    ],
+    "risk:high_cash_high_debt@workbench-risk-v3": [
+      "risk-high_cash_high_debt"
+    ],
+    "risk:impairment_pressure@workbench-risk-v3": [
+      "risk-impairment_pressure"
+    ],
+    "risk:interest_debt_burden@workbench-risk-v3": [
+      "risk-interest_debt_burden"
+    ],
+    "risk:profit_structure_non_operating_dependency@workbench-risk-v3": [
+      "risk-profit_structure_non_operating_dependency"
+    ],
+    "risk:valuation_band@workbench-risk-v3": [
+      "risk-valuation_band"
+    ],
+    "screener:capexCoverageRatio": [
+      "screener-capexCoverageRatio"
+    ],
+    "screener:capexCoverageRatioCum10y": [
+      "screener-capexCoverageRatio"
+    ],
+    "screener:capexCoverageRatioCum3y": [
+      "screener-capexCoverageRatio"
+    ],
+    "screener:capexCoverageRatioCum5y": [
+      "screener-capexCoverageRatio"
+    ],
+    "screener:capitalReturnRatio": [
+      "screener-capitalReturnRatio"
+    ],
+    "screener:capitalReturnRatioCum10y": [
+      "screener-capitalReturnRatio"
+    ],
+    "screener:capitalReturnRatioCum3y": [
+      "screener-capitalReturnRatio"
+    ],
+    "screener:capitalReturnRatioCum5y": [
+      "screener-capitalReturnRatio"
+    ],
+    "screener:cashCollectionRatio": [
+      "screener-cashCollectionRatio"
+    ],
+    "screener:cashCollectionRatioCum10y": [
+      "screener-cashCollectionRatio"
+    ],
+    "screener:cashCollectionRatioCum3y": [
+      "screener-cashCollectionRatio"
+    ],
+    "screener:cashCollectionRatioCum5y": [
+      "screener-cashCollectionRatio"
+    ],
+    "screener:cashPaymentRatio": [
+      "screener-cashPaymentRatio"
+    ],
+    "screener:cashPaymentRatioCum10y": [
+      "screener-cashPaymentRatio"
+    ],
+    "screener:cashPaymentRatioCum3y": [
+      "screener-cashPaymentRatio"
+    ],
+    "screener:cashPaymentRatioCum5y": [
+      "screener-cashPaymentRatio"
+    ],
+    "screener:chipConcentrationChange": [
+      "screener-chipConcentrationChange"
+    ],
+    "screener:dividendYears": [
+      "screener-dividendYears"
+    ],
+    "screener:dividendYield": [
+      "stock-dividend-yield"
+    ],
+    "screener:expectedDividendYield": [
+      "stock-dividend-yield"
+    ],
+    "screener:expectedDividendYieldNTM": [
+      "stock-dividend-yield"
+    ],
+    "screener:freeCashFlowFy": [
+      "screener-freeCashFlowFy"
+    ],
+    "screener:freeCashFlowFyCum10y": [
+      "screener-freeCashFlowFy"
+    ],
+    "screener:freeCashFlowFyCum3y": [
+      "screener-freeCashFlowFy"
+    ],
+    "screener:freeCashFlowFyCum5y": [
+      "screener-freeCashFlowFy"
+    ],
+    "screener:freeCashFlowMarginFy": [
+      "screener-freeCashFlowMarginFy"
+    ],
+    "screener:freeCashFlowMarginFyCum10y": [
+      "screener-freeCashFlowMarginFy"
+    ],
+    "screener:freeCashFlowMarginFyCum3y": [
+      "screener-freeCashFlowMarginFy"
+    ],
+    "screener:freeCashFlowMarginFyCum5y": [
+      "screener-freeCashFlowMarginFy"
+    ],
+    "screener:fundHeavyCount": [
+      "screener-fundHeavyCount"
+    ],
+    "screener:institutionHolding": [
+      "screener-institutionHolding"
+    ],
+    "screener:institutionHoldingChange": [
+      "screener-institutionHoldingChange"
+    ],
+    "screener:longMoneyHoldingRatio": [
+      "screener-longMoneyHoldingRatio"
+    ],
+    "screener:marketCap": [
+      "screener-marketCap"
+    ],
+    "screener:ocfToRevenue": [
+      "screener-ocfToRevenue"
+    ],
+    "screener:ocfToRevenueCum10y": [
+      "screener-ocfToRevenue"
+    ],
+    "screener:ocfToRevenueCum3y": [
+      "screener-ocfToRevenue"
+    ],
+    "screener:ocfToRevenueCum5y": [
+      "screener-ocfToRevenue"
+    ],
+    "screener:ocfToTotalLiab": [
+      "screener-ocfToTotalLiab"
+    ],
+    "screener:ocfToTotalLiabCum10y": [
+      "screener-ocfToTotalLiab"
+    ],
+    "screener:ocfToTotalLiabCum3y": [
+      "screener-ocfToTotalLiab"
+    ],
+    "screener:ocfToTotalLiabCum5y": [
+      "screener-ocfToTotalLiab"
+    ],
+    "screener:payoutRatio": [
+      "screener-payoutRatio"
+    ],
+    "screener:pb": [
+      "screener-pb"
+    ],
+    "screener:pbPercentile": [
+      "screener-pbPercentile"
+    ],
+    "screener:pe": [
+      "screener-pe"
+    ],
+    "screener:pePercentile": [
+      "screener-pePercentile"
+    ],
+    "screener:realMoneyIndex": [
+      "screener-realMoneyIndex"
+    ],
+    "screener:realMoneyIndexCum10y": [
+      "screener-realMoneyIndex"
+    ],
+    "screener:realMoneyIndexCum3y": [
+      "screener-realMoneyIndex"
+    ],
+    "screener:realMoneyIndexCum5y": [
+      "screener-realMoneyIndex"
+    ],
+    "screener:roe": [
+      "screener-roe"
+    ],
+    "screener:roic": [
+      "screener-roic"
+    ],
+    "source:cninfo-announcements": [
+      "stock-announcements"
+    ],
+    "spread:cn.govbond_dr007_spread": [
+      "cn.govbond_dr007_spread"
+    ],
+    "spread:cn.m2_m1_spread": [
+      "cn.m2_m1_spread"
+    ],
+    "spread:cn.money.m1_minus_m2_yoy": [
+      "cn.money.m1_minus_m2_yoy"
+    ],
+    "spread:cn.ppi_cpi_spread": [
+      "cn.ppi_cpi_spread"
+    ],
+    "spread:cn.us.rate_spread": [
+      "cn.us.rate_spread"
+    ],
+    "spread:us.treasury_fed_funds_spread": [
+      "us.treasury_fed_funds_spread"
+    ],
+    "target:000300.SH": [
+      "macro-enterprise"
+    ],
+    "target:000510.SH": [
+      "macro-enterprise"
+    ],
+    "target:000905.SH": [
+      "macro-enterprise"
+    ],
+    "target:159928.SZ": [
+      "macro-enterprise"
+    ],
+    "target:512010.SH": [
+      "macro-enterprise"
+    ],
+    "target:512200.SH": [
+      "macro-enterprise"
+    ],
+    "target:512400.SH": [
+      "macro-enterprise"
+    ],
+    "target:512660.SH": [
+      "macro-enterprise"
+    ],
+    "target:512800.SH": [
+      "macro-enterprise"
+    ],
+    "target:512880.SH": [
+      "macro-enterprise"
+    ],
+    "target:512980.SH": [
+      "macro-enterprise"
+    ],
+    "target:515030.SH": [
+      "macro-enterprise"
+    ],
+    "target:515220.SH": [
+      "macro-enterprise"
+    ],
+    "target:588200.SH": [
+      "macro-enterprise"
+    ],
+    "tushare:adj_factor.adj_factor": [
+      "stock-adjustment"
+    ],
+    "tushare:adj_factor.trade_date": [
+      "stock-adjustment"
+    ],
+    "tushare:adj_factor.ts_code": [
+      "stock-adjustment"
+    ],
+    "tushare:balancesheet.accounts_receiv": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.acct_payable": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.adv_receipts": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.ann_date": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.bond_payable": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.cap_rese": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.cip": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.comp_type": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.contract_assets": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.contract_liab": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.defer_tax_assets": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.defer_tax_liab": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.end_date": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.f_ann_date": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.fix_assets": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.goodwill": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.intan_assets": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.inventories": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.invest_real_estate": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.lease_liab": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.lt_amor_exp": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.lt_borr": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.lt_eqt_invest": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.minority_int": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.money_cap": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.non_cur_liab_due_1y": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.notes_payable": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.notes_receiv": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.oth_cur_assets": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.oth_cur_liab": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.oth_nca": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.payroll_payable": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.prepayment": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.report_type": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.st_bonds_payable": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.st_borr": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.surplus_rese": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.taxes_payable": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.total_assets": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.total_cur_assets": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.total_cur_liab": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.total_hldr_eqy_exc_min_int": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.total_hldr_eqy_inc_min_int": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.total_liab": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.total_nca": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.total_ncl": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.total_share": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.trad_asset": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.ts_code": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.undistr_porfit": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet.update_flag": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.ann_date": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.bond_payable": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.comp_type": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.end_date": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.f_ann_date": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.goodwill": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.inventories": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.lease_liab": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.lt_borr": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.money_cap": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.non_cur_liab_due_1y": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.report_type": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.st_bonds_payable": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.st_borr": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.total_assets": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.total_hldr_eqy_exc_min_int": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.total_liab": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.total_share": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.ts_code": [
+      "stock-balance"
+    ],
+    "tushare:balancesheet_vip.update_flag": [
+      "stock-balance"
+    ],
+    "tushare:bse_mapping.n_code": [
+      "stock-bse-mapping"
+    ],
+    "tushare:bse_mapping.o_code": [
+      "stock-bse-mapping"
+    ],
+    "tushare:cashflow.amort_intang_assets": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.ann_date": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.c_cash_equ_beg_period": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.c_cash_equ_end_period": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.c_disp_withdrwl_invest": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.c_fr_oth_operate_a": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.c_fr_sale_sg": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.c_inf_fr_operate_a": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.c_paid_for_taxes": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.c_paid_goods_s": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.c_paid_invest": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.c_paid_to_for_empl": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.c_pay_acq_const_fiolta": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.c_pay_claims_orig_inco": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.c_pay_dist_dpcp_int_exp": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.c_prepay_amt_borr": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.c_recp_borrow": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.c_recp_cap_contrib": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.c_recp_return_invest": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.comp_type": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.depr_fa_coga_dpba": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.eff_fx_flu_cash": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.end_date": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.f_ann_date": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.free_cashflow": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.ifc_cash_incr": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.incl_cash_rec_saims": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.incl_dvd_profit_paid_sc_ms": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.lt_amort_deferred_exp": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.n_cap_incr_repur": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.n_cash_flows_fnc_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.n_cashflow_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.n_cashflow_inv_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.n_depos_incr_fi": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.n_disp_subs_oth_biz": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.n_inc_borr_oth_fi": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.n_incr_cash_cash_equ": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.n_incr_clt_loan_adv": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.n_incr_dep_cbob": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.n_incr_disp_faas": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.n_incr_disp_tfa": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.n_incr_insured_dep": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.n_incr_loans_cb": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.n_incr_loans_oth_bank": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.n_incr_pledge_loan": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.n_recp_disp_fiolta": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.n_recp_disp_sobu": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.n_reinsur_prem": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.net_cash_rece_sec": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.net_dism_capital_add": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.oth_cash_pay_oper_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.oth_cash_recp_ral_fnc_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.oth_cashpay_ral_fnc_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.oth_pay_ral_inv_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.oth_recp_ral_inv_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.pay_comm_insur_plcy": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.pay_handling_chrg": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.prem_fr_orig_contr": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.proc_issue_bonds": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.recp_tax_rends": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.report_type": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.st_cash_out_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.stot_cash_in_fnc_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.stot_cashout_fnc_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.stot_inflows_inv_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.stot_out_inv_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.ts_code": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow.update_flag": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.amort_intang_assets": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.ann_date": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.c_cash_equ_beg_period": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.c_cash_equ_end_period": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.c_disp_withdrwl_invest": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.c_fr_oth_operate_a": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.c_fr_sale_sg": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.c_inf_fr_operate_a": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.c_paid_for_taxes": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.c_paid_goods_s": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.c_paid_invest": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.c_paid_to_for_empl": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.c_pay_acq_const_fiolta": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.c_pay_claims_orig_inco": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.c_pay_dist_dpcp_int_exp": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.c_prepay_amt_borr": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.c_recp_borrow": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.c_recp_cap_contrib": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.c_recp_return_invest": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.comp_type": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.depr_fa_coga_dpba": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.eff_fx_flu_cash": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.end_date": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.f_ann_date": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.free_cashflow": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.ifc_cash_incr": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.incl_cash_rec_saims": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.incl_dvd_profit_paid_sc_ms": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.lt_amort_deferred_exp": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.n_cap_incr_repur": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.n_cash_flows_fnc_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.n_cashflow_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.n_cashflow_inv_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.n_depos_incr_fi": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.n_disp_subs_oth_biz": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.n_inc_borr_oth_fi": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.n_incr_cash_cash_equ": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.n_incr_clt_loan_adv": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.n_incr_dep_cbob": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.n_incr_disp_faas": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.n_incr_disp_tfa": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.n_incr_insured_dep": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.n_incr_loans_cb": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.n_incr_loans_oth_bank": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.n_incr_pledge_loan": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.n_recp_disp_fiolta": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.n_recp_disp_sobu": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.n_reinsur_prem": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.net_cash_rece_sec": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.net_dism_capital_add": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.oth_cash_pay_oper_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.oth_cash_recp_ral_fnc_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.oth_cashpay_ral_fnc_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.oth_pay_ral_inv_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.oth_recp_ral_inv_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.pay_comm_insur_plcy": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.pay_handling_chrg": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.prem_fr_orig_contr": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.proc_issue_bonds": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.recp_tax_rends": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.report_type": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.st_cash_out_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.stot_cash_in_fnc_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.stot_cashout_fnc_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.stot_inflows_inv_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.stot_out_inv_act": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.ts_code": [
+      "stock-cashflow"
+    ],
+    "tushare:cashflow_vip.update_flag": [
+      "stock-cashflow"
+    ],
+    "tushare:cn_cpi.month": [
+      "cn.cpi.yoy"
+    ],
+    "tushare:cn_cpi.nt_yoy": [
+      "cn.cpi.yoy"
+    ],
+    "tushare:cn_gdp.gdp": [
+      "source-cn_gdp"
+    ],
+    "tushare:cn_gdp.gdp_yoy": [
+      "cn.gdp.real_yoy"
+    ],
+    "tushare:cn_gdp.quarter": [
+      "cn.gdp.real_yoy"
+    ],
+    "tushare:cn_m.m1_yoy": [
+      "cn.money.m1_yoy"
+    ],
+    "tushare:cn_m.m2_yoy": [
+      "cn.money.m2_yoy"
+    ],
+    "tushare:cn_m.month": [
+      "cn.money.m1_yoy",
+      "cn.money.m2_yoy"
+    ],
+    "tushare:cn_pmi.month": [
+      "cn.pmi.manufacturing"
+    ],
+    "tushare:cn_pmi.pmi010000": [
+      "cn.pmi.manufacturing"
+    ],
+    "tushare:cn_ppi.month": [
+      "cn.ppi.yoy"
+    ],
+    "tushare:cn_ppi.ppi_yoy": [
+      "cn.ppi.yoy"
+    ],
+    "tushare:daily.amount": [
+      "stock-daily"
+    ],
+    "tushare:daily.change": [
+      "stock-daily"
+    ],
+    "tushare:daily.close": [
+      "stock-daily"
+    ],
+    "tushare:daily.high": [
+      "stock-daily"
+    ],
+    "tushare:daily.low": [
+      "stock-daily"
+    ],
+    "tushare:daily.open": [
+      "stock-daily"
+    ],
+    "tushare:daily.pct_chg": [
+      "stock-daily"
+    ],
+    "tushare:daily.pre_close": [
+      "stock-daily"
+    ],
+    "tushare:daily.trade_date": [
+      "stock-daily"
+    ],
+    "tushare:daily.ts_code": [
+      "stock-daily"
+    ],
+    "tushare:daily.vol": [
+      "stock-daily"
+    ],
+    "tushare:daily_basic.circ_mv": [
+      "stock-daily-basic"
+    ],
+    "tushare:daily_basic.dv_ratio": [
+      "stock-daily-basic"
+    ],
+    "tushare:daily_basic.dv_ttm": [
+      "stock-daily-basic"
+    ],
+    "tushare:daily_basic.float_share": [
+      "stock-daily-basic"
+    ],
+    "tushare:daily_basic.free_share": [
+      "stock-daily-basic"
+    ],
+    "tushare:daily_basic.limit_status": [
+      "stock-daily-basic"
+    ],
+    "tushare:daily_basic.pb": [
+      "stock-daily-basic"
+    ],
+    "tushare:daily_basic.pe": [
+      "stock-daily-basic"
+    ],
+    "tushare:daily_basic.pe_ttm": [
+      "stock-daily-basic"
+    ],
+    "tushare:daily_basic.ps": [
+      "stock-daily-basic"
+    ],
+    "tushare:daily_basic.ps_ttm": [
+      "stock-daily-basic"
+    ],
+    "tushare:daily_basic.total_mv": [
+      "stock-daily-basic"
+    ],
+    "tushare:daily_basic.total_share": [
+      "stock-daily-basic"
+    ],
+    "tushare:daily_basic.trade_date": [
+      "stock-daily-basic"
+    ],
+    "tushare:daily_basic.ts_code": [
+      "stock-daily-basic"
+    ],
+    "tushare:daily_basic.turnover_rate": [
+      "stock-daily-basic"
+    ],
+    "tushare:daily_info.exchange": [
+      "market-daily-summary"
+    ],
+    "tushare:daily_info.float_mv": [
+      "market-daily-summary"
+    ],
+    "tushare:daily_info.trade_date": [
+      "market-daily-summary"
+    ],
+    "tushare:daily_info.ts_code": [
+      "market-daily-summary"
+    ],
+    "tushare:disclosure_date.actual_date": [
+      "stock-disclosure"
+    ],
+    "tushare:disclosure_date.ann_date": [
+      "stock-disclosure"
+    ],
+    "tushare:disclosure_date.end_date": [
+      "stock-disclosure"
+    ],
+    "tushare:disclosure_date.modify_date": [
+      "stock-disclosure"
+    ],
+    "tushare:disclosure_date.pre_date": [
+      "stock-disclosure"
+    ],
+    "tushare:disclosure_date.ts_code": [
+      "stock-disclosure"
+    ],
+    "tushare:dividend.ann_date": [
+      "stock-dividend"
+    ],
+    "tushare:dividend.base_date": [
+      "stock-dividend"
+    ],
+    "tushare:dividend.base_share": [
+      "stock-dividend"
+    ],
+    "tushare:dividend.cash_div": [
+      "stock-dividend"
+    ],
+    "tushare:dividend.cash_div_tax": [
+      "stock-dividend"
+    ],
+    "tushare:dividend.div_listdate": [
+      "stock-dividend"
+    ],
+    "tushare:dividend.div_proc": [
+      "stock-dividend"
+    ],
+    "tushare:dividend.end_date": [
+      "stock-dividend"
+    ],
+    "tushare:dividend.ex_date": [
+      "stock-dividend"
+    ],
+    "tushare:dividend.imp_ann_date": [
+      "stock-dividend"
+    ],
+    "tushare:dividend.pay_date": [
+      "stock-dividend"
+    ],
+    "tushare:dividend.record_date": [
+      "stock-dividend"
+    ],
+    "tushare:dividend.stk_bo_rate": [
+      "stock-dividend"
+    ],
+    "tushare:dividend.stk_co_rate": [
+      "stock-dividend"
+    ],
+    "tushare:dividend.stk_div": [
+      "stock-dividend"
+    ],
+    "tushare:dividend.ts_code": [
+      "stock-dividend"
+    ],
+    "tushare:etf_basic.csname": [
+      "etf-basic"
+    ],
+    "tushare:etf_basic.etf_type": [
+      "etf-basic"
+    ],
+    "tushare:etf_basic.exchange": [
+      "etf-basic"
+    ],
+    "tushare:etf_basic.index_code": [
+      "etf-basic"
+    ],
+    "tushare:etf_basic.index_name": [
+      "etf-basic"
+    ],
+    "tushare:etf_basic.list_status": [
+      "etf-basic"
+    ],
+    "tushare:etf_basic.ts_code": [
+      "etf-basic"
+    ],
+    "tushare:express.ann_date": [
+      "stock-express"
+    ],
+    "tushare:express.end_date": [
+      "stock-express"
+    ],
+    "tushare:express.n_income": [
+      "stock-express"
+    ],
+    "tushare:express.revenue": [
+      "stock-express"
+    ],
+    "tushare:express.total_assets": [
+      "stock-express"
+    ],
+    "tushare:express.total_hldr_eqy_exc_min_int": [
+      "stock-express"
+    ],
+    "tushare:express.ts_code": [
+      "stock-express"
+    ],
+    "tushare:express_vip.ann_date": [
+      "stock-express"
+    ],
+    "tushare:express_vip.end_date": [
+      "stock-express"
+    ],
+    "tushare:express_vip.n_income": [
+      "stock-express"
+    ],
+    "tushare:express_vip.revenue": [
+      "stock-express"
+    ],
+    "tushare:express_vip.total_assets": [
+      "stock-express"
+    ],
+    "tushare:express_vip.total_hldr_eqy_exc_min_int": [
+      "stock-express"
+    ],
+    "tushare:express_vip.ts_code": [
+      "stock-express"
+    ],
+    "tushare:fina_indicator.ann_date": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.bps": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.debt_to_eqt": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.end_date": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.eps": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.fcff": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.grossprofit_margin": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.interestdebt": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.invest_capital": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.netdebt": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.netprofit_margin": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.netprofit_yoy": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.ocf_to_or": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.or_yoy": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.q_eps": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.q_roe": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.roe": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.roic": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.tax_to_ebt": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.ts_code": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator.update_flag": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.ann_date": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.bps": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.debt_to_eqt": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.end_date": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.eps": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.fcff": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.grossprofit_margin": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.interestdebt": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.invest_capital": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.netdebt": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.netprofit_margin": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.netprofit_yoy": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.ocf_to_or": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.or_yoy": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.q_eps": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.q_roe": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.roe": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.roic": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.tax_to_ebt": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.ts_code": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_indicator_vip.update_flag": [
+      "stock-financial-indicator"
+    ],
+    "tushare:fina_mainbz.bz_cost": [
+      "stock-business"
+    ],
+    "tushare:fina_mainbz.bz_item": [
+      "stock-business"
+    ],
+    "tushare:fina_mainbz.bz_profit": [
+      "stock-business"
+    ],
+    "tushare:fina_mainbz.bz_sales": [
+      "stock-business"
+    ],
+    "tushare:fina_mainbz.curr_type": [
+      "stock-business"
+    ],
+    "tushare:fina_mainbz.end_date": [
+      "stock-business"
+    ],
+    "tushare:fina_mainbz.revenue": [
+      "stock-business"
+    ],
+    "tushare:fina_mainbz.segment_name": [
+      "stock-business"
+    ],
+    "tushare:fina_mainbz.segment_type": [
+      "stock-business"
+    ],
+    "tushare:fina_mainbz.ts_code": [
+      "stock-business"
+    ],
+    "tushare:fina_mainbz.update_flag": [
+      "stock-business"
+    ],
+    "tushare:fina_mainbz_vip.end_date": [
+      "stock-business"
+    ],
+    "tushare:fina_mainbz_vip.revenue": [
+      "stock-business"
+    ],
+    "tushare:fina_mainbz_vip.segment_name": [
+      "stock-business"
+    ],
+    "tushare:fina_mainbz_vip.segment_type": [
+      "stock-business"
+    ],
+    "tushare:fina_mainbz_vip.ts_code": [
+      "stock-business"
+    ],
+    "tushare:forecast.ann_date": [
+      "stock-forecast"
+    ],
+    "tushare:forecast.change_reason": [
+      "stock-forecast"
+    ],
+    "tushare:forecast.end_date": [
+      "stock-forecast"
+    ],
+    "tushare:forecast.first_ann_date": [
+      "stock-forecast"
+    ],
+    "tushare:forecast.net_profit_max": [
+      "stock-forecast"
+    ],
+    "tushare:forecast.net_profit_min": [
+      "stock-forecast"
+    ],
+    "tushare:forecast.p_change_max": [
+      "stock-forecast"
+    ],
+    "tushare:forecast.p_change_min": [
+      "stock-forecast"
+    ],
+    "tushare:forecast.summary": [
+      "stock-forecast"
+    ],
+    "tushare:forecast.ts_code": [
+      "stock-forecast"
+    ],
+    "tushare:forecast.type": [
+      "stock-forecast"
+    ],
+    "tushare:forecast_vip.ann_date": [
+      "stock-forecast"
+    ],
+    "tushare:forecast_vip.end_date": [
+      "stock-forecast"
+    ],
+    "tushare:forecast_vip.net_profit_max": [
+      "stock-forecast"
+    ],
+    "tushare:forecast_vip.net_profit_min": [
+      "stock-forecast"
+    ],
+    "tushare:forecast_vip.p_change_max": [
+      "stock-forecast"
+    ],
+    "tushare:forecast_vip.p_change_min": [
+      "stock-forecast"
+    ],
+    "tushare:forecast_vip.ts_code": [
+      "stock-forecast"
+    ],
+    "tushare:forecast_vip.type": [
+      "stock-forecast"
+    ],
+    "tushare:fund_daily.amount": [
+      "etf-daily"
+    ],
+    "tushare:fund_daily.close": [
+      "etf-daily"
+    ],
+    "tushare:fund_daily.high": [
+      "etf-daily"
+    ],
+    "tushare:fund_daily.low": [
+      "etf-daily"
+    ],
+    "tushare:fund_daily.open": [
+      "etf-daily"
+    ],
+    "tushare:fund_daily.pct_chg": [
+      "etf-daily"
+    ],
+    "tushare:fund_daily.pre_close": [
+      "etf-daily"
+    ],
+    "tushare:fund_daily.trade_date": [
+      "etf-daily"
+    ],
+    "tushare:fund_daily.ts_code": [
+      "etf-daily"
+    ],
+    "tushare:fund_daily.vol": [
+      "etf-daily"
+    ],
+    "tushare:fund_share.fd_share": [
+      "etf-shares"
+    ],
+    "tushare:fund_share.trade_date": [
+      "etf-shares"
+    ],
+    "tushare:fund_share.ts_code": [
+      "etf-shares"
+    ],
+    "tushare:fut_basic.delist_date": [
+      "commodity-contracts"
+    ],
+    "tushare:fut_basic.exchange": [
+      "commodity-contracts"
+    ],
+    "tushare:fut_basic.fut_code": [
+      "commodity-contracts"
+    ],
+    "tushare:fut_basic.list_date": [
+      "commodity-contracts"
+    ],
+    "tushare:fut_basic.name": [
+      "commodity-contracts"
+    ],
+    "tushare:fut_basic.per_unit": [
+      "commodity-contracts"
+    ],
+    "tushare:fut_basic.quote_unit": [
+      "commodity-contracts"
+    ],
+    "tushare:fut_basic.trade_unit": [
+      "commodity-contracts"
+    ],
+    "tushare:fut_basic.ts_code": [
+      "commodity-contracts"
+    ],
+    "tushare:fut_daily.amount": [
+      "commodity-daily"
+    ],
+    "tushare:fut_daily.close": [
+      "commodity-daily"
+    ],
+    "tushare:fut_daily.high": [
+      "commodity-daily"
+    ],
+    "tushare:fut_daily.low": [
+      "commodity-daily"
+    ],
+    "tushare:fut_daily.oi": [
+      "commodity-daily"
+    ],
+    "tushare:fut_daily.open": [
+      "commodity-daily"
+    ],
+    "tushare:fut_daily.pre_close": [
+      "commodity-daily"
+    ],
+    "tushare:fut_daily.pre_settle": [
+      "commodity-daily"
+    ],
+    "tushare:fut_daily.settle": [
+      "commodity-daily"
+    ],
+    "tushare:fut_daily.trade_date": [
+      "commodity-daily"
+    ],
+    "tushare:fut_daily.ts_code": [
+      "commodity-daily"
+    ],
+    "tushare:fut_daily.vol": [
+      "commodity-daily"
+    ],
+    "tushare:fut_mapping.mapping_ts_code": [
+      "commodity-mapping"
+    ],
+    "tushare:fut_mapping.trade_date": [
+      "commodity-mapping"
+    ],
+    "tushare:fut_mapping.ts_code": [
+      "commodity-mapping"
+    ],
+    "tushare:fut_trade_cal.cal_date": [
+      "commodity-calendar"
+    ],
+    "tushare:fut_trade_cal.exchange": [
+      "commodity-calendar"
+    ],
+    "tushare:fut_trade_cal.is_open": [
+      "commodity-calendar"
+    ],
+    "tushare:fx_daily.ask_close": [
+      "fx-daily"
+    ],
+    "tushare:fx_daily.bid_close": [
+      "fx-daily"
+    ],
+    "tushare:fx_daily.exchange": [
+      "fx-daily"
+    ],
+    "tushare:fx_daily.trade_date": [
+      "fx-daily"
+    ],
+    "tushare:fx_daily.ts_code": [
+      "fx-daily"
+    ],
+    "tushare:income.admin_exp": [
+      "stock-income"
+    ],
+    "tushare:income.ann_date": [
+      "stock-income"
+    ],
+    "tushare:income.assets_impair_loss": [
+      "stock-income"
+    ],
+    "tushare:income.basic_eps": [
+      "stock-income"
+    ],
+    "tushare:income.biz_tax_surchg": [
+      "stock-income"
+    ],
+    "tushare:income.comp_type": [
+      "stock-income"
+    ],
+    "tushare:income.credit_impa_loss": [
+      "stock-income"
+    ],
+    "tushare:income.diluted_eps": [
+      "stock-income"
+    ],
+    "tushare:income.ebit": [
+      "stock-income"
+    ],
+    "tushare:income.ebitda": [
+      "stock-income"
+    ],
+    "tushare:income.end_date": [
+      "stock-income"
+    ],
+    "tushare:income.f_ann_date": [
+      "stock-income"
+    ],
+    "tushare:income.fin_exp": [
+      "stock-income"
+    ],
+    "tushare:income.fin_exp_int_exp": [
+      "stock-income"
+    ],
+    "tushare:income.fin_exp_int_inc": [
+      "stock-income"
+    ],
+    "tushare:income.fv_value_chg_gain": [
+      "stock-income"
+    ],
+    "tushare:income.income_tax": [
+      "stock-income"
+    ],
+    "tushare:income.invest_income": [
+      "stock-income"
+    ],
+    "tushare:income.minority_gain": [
+      "stock-income"
+    ],
+    "tushare:income.n_income": [
+      "stock-income"
+    ],
+    "tushare:income.n_income_attr_p": [
+      "stock-income"
+    ],
+    "tushare:income.non_oper_exp": [
+      "stock-income"
+    ],
+    "tushare:income.non_oper_income": [
+      "stock-income"
+    ],
+    "tushare:income.oper_cost": [
+      "stock-income"
+    ],
+    "tushare:income.operate_profit": [
+      "stock-income"
+    ],
+    "tushare:income.rd_exp": [
+      "stock-income"
+    ],
+    "tushare:income.report_type": [
+      "stock-income"
+    ],
+    "tushare:income.revenue": [
+      "stock-income"
+    ],
+    "tushare:income.sell_exp": [
+      "stock-income"
+    ],
+    "tushare:income.t_compr_income": [
+      "stock-income"
+    ],
+    "tushare:income.total_cogs": [
+      "stock-income"
+    ],
+    "tushare:income.total_profit": [
+      "stock-income"
+    ],
+    "tushare:income.total_revenue": [
+      "stock-income"
+    ],
+    "tushare:income.ts_code": [
+      "stock-income"
+    ],
+    "tushare:income.update_flag": [
+      "stock-income"
+    ],
+    "tushare:income_vip.ann_date": [
+      "stock-income"
+    ],
+    "tushare:income_vip.basic_eps": [
+      "stock-income"
+    ],
+    "tushare:income_vip.comp_type": [
+      "stock-income"
+    ],
+    "tushare:income_vip.ebit": [
+      "stock-income"
+    ],
+    "tushare:income_vip.end_date": [
+      "stock-income"
+    ],
+    "tushare:income_vip.f_ann_date": [
+      "stock-income"
+    ],
+    "tushare:income_vip.fin_exp_int_exp": [
+      "stock-income"
+    ],
+    "tushare:income_vip.income_tax": [
+      "stock-income"
+    ],
+    "tushare:income_vip.n_income": [
+      "stock-income"
+    ],
+    "tushare:income_vip.n_income_attr_p": [
+      "stock-income"
+    ],
+    "tushare:income_vip.oper_cost": [
+      "stock-income"
+    ],
+    "tushare:income_vip.report_type": [
+      "stock-income"
+    ],
+    "tushare:income_vip.revenue": [
+      "stock-income"
+    ],
+    "tushare:income_vip.total_profit": [
+      "stock-income"
+    ],
+    "tushare:income_vip.total_revenue": [
+      "stock-income"
+    ],
+    "tushare:income_vip.ts_code": [
+      "stock-income"
+    ],
+    "tushare:income_vip.update_flag": [
+      "stock-income"
+    ],
+    "tushare:index_basic.base_date": [
+      "index-basic"
+    ],
+    "tushare:index_basic.desc": [
+      "index-basic"
+    ],
+    "tushare:index_basic.exp_date": [
+      "index-basic"
+    ],
+    "tushare:index_basic.fullname": [
+      "index-basic"
+    ],
+    "tushare:index_basic.list_date": [
+      "index-basic"
+    ],
+    "tushare:index_basic.market": [
+      "index-basic"
+    ],
+    "tushare:index_basic.name": [
+      "index-basic"
+    ],
+    "tushare:index_basic.publisher": [
+      "index-basic"
+    ],
+    "tushare:index_basic.ts_code": [
+      "index-basic"
+    ],
+    "tushare:index_classify.index_code": [
+      "stock-classification"
+    ],
+    "tushare:index_classify.industry_code": [
+      "stock-classification"
+    ],
+    "tushare:index_classify.industry_name": [
+      "stock-classification"
+    ],
+    "tushare:index_classify.is_pub": [
+      "stock-classification"
+    ],
+    "tushare:index_classify.level": [
+      "stock-classification"
+    ],
+    "tushare:index_classify.parent_code": [
+      "stock-classification"
+    ],
+    "tushare:index_classify.src": [
+      "stock-classification"
+    ],
+    "tushare:index_daily.close": [
+      "index-daily"
+    ],
+    "tushare:index_daily.high": [
+      "index-daily"
+    ],
+    "tushare:index_daily.low": [
+      "index-daily"
+    ],
+    "tushare:index_daily.open": [
+      "index-daily"
+    ],
+    "tushare:index_daily.pct_chg": [
+      "index-daily"
+    ],
+    "tushare:index_daily.pre_close": [
+      "index-daily"
+    ],
+    "tushare:index_daily.trade_date": [
+      "index-daily"
+    ],
+    "tushare:index_daily.ts_code": [
+      "index-daily"
+    ],
+    "tushare:index_global.close": [
+      "index-global"
+    ],
+    "tushare:index_global.high": [
+      "index-global"
+    ],
+    "tushare:index_global.low": [
+      "index-global"
+    ],
+    "tushare:index_global.open": [
+      "index-global"
+    ],
+    "tushare:index_global.pct_chg": [
+      "index-global"
+    ],
+    "tushare:index_global.pre_close": [
+      "index-global"
+    ],
+    "tushare:index_global.trade_date": [
+      "index-global"
+    ],
+    "tushare:index_global.ts_code": [
+      "index-global"
+    ],
+    "tushare:index_member_all.in_date": [
+      "stock-classification-members"
+    ],
+    "tushare:index_member_all.is_new": [
+      "stock-classification-members"
+    ],
+    "tushare:index_member_all.l1_code": [
+      "stock-classification-members"
+    ],
+    "tushare:index_member_all.l1_name": [
+      "stock-classification-members"
+    ],
+    "tushare:index_member_all.l2_code": [
+      "stock-classification-members"
+    ],
+    "tushare:index_member_all.l2_name": [
+      "stock-classification-members"
+    ],
+    "tushare:index_member_all.l3_code": [
+      "stock-classification-members"
+    ],
+    "tushare:index_member_all.l3_name": [
+      "stock-classification-members"
+    ],
+    "tushare:index_member_all.name": [
+      "stock-classification-members"
+    ],
+    "tushare:index_member_all.out_date": [
+      "stock-classification-members"
+    ],
+    "tushare:index_member_all.ts_code": [
+      "stock-classification-members"
+    ],
+    "tushare:index_weight.con_code": [
+      "index-weights"
+    ],
+    "tushare:index_weight.index_code": [
+      "index-weights"
+    ],
+    "tushare:index_weight.trade_date": [
+      "index-weights"
+    ],
+    "tushare:index_weight.weight": [
+      "index-weights"
+    ],
+    "tushare:margin.exchange_id": [
+      "market-margin"
+    ],
+    "tushare:margin.rzye": [
+      "market-margin"
+    ],
+    "tushare:margin.trade_date": [
+      "market-margin"
+    ],
+    "tushare:repo_daily.repo_maturity": [
+      "cn.rate.dr007"
+    ],
+    "tushare:repo_daily.trade_date": [
+      "cn.rate.dr007"
+    ],
+    "tushare:repo_daily.ts_code": [
+      "cn.rate.dr007"
+    ],
+    "tushare:repo_daily.weight": [
+      "cn.rate.dr007"
+    ],
+    "tushare:repurchase.amount": [
+      "stock-repurchase"
+    ],
+    "tushare:repurchase.ann_date": [
+      "stock-repurchase"
+    ],
+    "tushare:repurchase.exp_date": [
+      "stock-repurchase"
+    ],
+    "tushare:repurchase.proc": [
+      "stock-repurchase"
+    ],
+    "tushare:repurchase.ts_code": [
+      "stock-repurchase"
+    ],
+    "tushare:repurchase.vol": [
+      "stock-repurchase"
+    ],
+    "tushare:share_float.ann_date": [
+      "stock-unlock"
+    ],
+    "tushare:share_float.float_date": [
+      "stock-unlock"
+    ],
+    "tushare:share_float.float_share": [
+      "stock-unlock"
+    ],
+    "tushare:share_float.ts_code": [
+      "stock-unlock"
+    ],
+    "tushare:share_float.unlock_date": [
+      "stock-unlock"
+    ],
+    "tushare:stk_holdernumber.ann_date": [
+      "stock-holder-count"
+    ],
+    "tushare:stk_holdernumber.end_date": [
+      "stock-holder-count"
+    ],
+    "tushare:stk_holdernumber.holder_num": [
+      "stock-holder-count"
+    ],
+    "tushare:stk_holdernumber.ts_code": [
+      "stock-holder-count"
+    ],
+    "tushare:stock_basic.area": [
+      "stock-basic"
+    ],
+    "tushare:stock_basic.exchange": [
+      "stock-basic"
+    ],
+    "tushare:stock_basic.list_date": [
+      "stock-basic"
+    ],
+    "tushare:stock_basic.list_status": [
+      "stock-basic"
+    ],
+    "tushare:stock_basic.market": [
+      "stock-basic"
+    ],
+    "tushare:stock_basic.name": [
+      "stock-basic"
+    ],
+    "tushare:stock_basic.symbol": [
+      "stock-basic"
+    ],
+    "tushare:stock_basic.ts_code": [
+      "stock-basic"
+    ],
+    "tushare:sz_daily_info.count": [
+      "market-sz-summary"
+    ],
+    "tushare:sz_daily_info.float_mv": [
+      "market-sz-summary"
+    ],
+    "tushare:sz_daily_info.trade_date": [
+      "market-sz-summary"
+    ],
+    "tushare:sz_daily_info.ts_code": [
+      "market-sz-summary"
+    ],
+    "tushare:top10_holders.ann_date": [
+      "stock-top-holders"
+    ],
+    "tushare:top10_holders.end_date": [
+      "stock-top-holders"
+    ],
+    "tushare:top10_holders.hold_amount": [
+      "stock-top-holders"
+    ],
+    "tushare:top10_holders.holder_name": [
+      "stock-top-holders"
+    ],
+    "tushare:top10_holders.holder_type": [
+      "stock-top-holders"
+    ],
+    "tushare:top10_holders.ts_code": [
+      "stock-top-holders"
+    ],
+    "tushare:trade_cal.cal_date": [
+      "trade-calendar"
+    ],
+    "tushare:trade_cal.exchange": [
+      "trade-calendar"
+    ],
+    "tushare:trade_cal.is_open": [
+      "trade-calendar"
+    ],
+    "tushare:trade_cal.pretrade_date": [
+      "trade-calendar"
+    ],
+    "tushare:us_tycr.date": [
+      "us.rate.treasury_10y"
+    ],
+    "tushare:us_tycr.y10": [
+      "us.rate.treasury_10y"
+    ]
+  }
+}

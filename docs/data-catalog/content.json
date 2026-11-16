@@ -1,0 +1,808 @@
+[
+  {
+    "id": "news",
+    "name": "财经快讯",
+    "category": "content",
+    "description": "新浪财经快讯，按版权状态提供标题、链接以及允许展示的摘要或正文。",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [
+      {
+        "name": "新浪财经",
+        "kind": "原始发布与采集渠道",
+        "description": "按新闻配置分页采集"
+      }
+    ],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": "news"
+      }
+    ],
+    "tables": [
+      {
+        "schema": "ops",
+        "table": "news_delivery",
+        "name": "采集交付队列",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "content_document",
+        "name": "公开内容",
+        "fieldPath": ""
+      },
+      {
+        "schema": "ops",
+        "table": "job_cursor",
+        "name": "采集游标",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": true,
+        "explanation": "保存新闻记录，默认保留365天；具体保留配置及实际清理记录另查",
+        "evidence": []
+      },
+      "revisions": {
+        "value": false,
+        "explanation": "相同来源身份可更新；未承诺每次修改前正文留存",
+        "evidence": []
+      },
+      "query": {
+        "value": true,
+        "explanation": "新闻接口可按游标翻阅已留存记录，尚无任意起止日期参数",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "id",
+        "name": "记录编号",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "记录编号",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "title",
+        "name": "标题",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "标题",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "source",
+        "name": "来源",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "来源",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "sourceUrl",
+        "name": "原文链接",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "原文链接",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "publishedAt",
+        "name": "发布时间",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "发布时间",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "summary",
+        "name": "摘要",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "摘要",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "body",
+        "name": "正文",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "正文",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "copyrightStatus",
+        "name": "版权状态",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "版权状态",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "nextCursor",
+        "name": "下一页游标",
+        "role": "response",
+        "type": "数值或对象，依具体响应合同",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "下一页游标",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "independent",
+        "path": "/api/v1/news",
+        "method": "GET",
+        "responsePaths": [
+          "items[]（快讯）",
+          "health（采集状态）"
+        ],
+        "parameterNames": {},
+        "example": null
+      }
+    ],
+    "evidence": [
+      "docs/news-api.md",
+      "backend/app/content/routes.py"
+    ]
+  },
+  {
+    "id": "external-macro",
+    "name": "宏观文件导入",
+    "category": "content",
+    "description": "按外部文件合同导入宏观观测",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": null
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "external_file",
+        "name": "导入文件",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观文件导入",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "schemaVersion",
+        "name": "合同版本",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "合同版本",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "recordType",
+        "name": "记录类型",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "记录类型",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "source",
+        "name": "来源",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "来源",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "seriesId",
+        "name": "宏观系列标识",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "宏观系列标识",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "name",
+        "name": "名称",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "名称",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "region",
+        "name": "地区",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "地区",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "frequency",
+        "name": "观测频率",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "观测频率",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "unit",
+        "name": "单位",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "单位",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "seasonalAdjustment",
+        "name": "季节调整方式",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "季节调整方式",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "observedAt",
+        "name": "观测日期",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "观测日期",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "releasedAt",
+        "name": "公开时刻",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "公开时刻",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "revision",
+        "name": "修订版本",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "修订版本",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "value",
+        "name": "观测数值",
+        "role": "input",
+        "type": "可空联合类型",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "观测数值",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "sourceUrl",
+        "name": "原文链接",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "原文链接",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "table",
+        "description": "通过现有 CLI 导入，查询已入库记录；导入不由文档页触发。"
+      }
+    ],
+    "evidence": [
+      "backend/app/connectors/external_files/contracts.py",
+      "docs/official-source-fields.md"
+    ]
+  },
+  {
+    "id": "external-content",
+    "name": "公开内容文件导入",
+    "category": "content",
+    "description": "按外部文件合同导入公开内容",
+    "status": "已接入，实际覆盖按留存证据核对",
+    "scope": "按现有数据池、日期及采集合同覆盖",
+    "sources": [],
+    "frequencies": [
+      {
+        "name": "采集规则",
+        "description": "按所属任务和来源配置执行",
+        "task": null
+      }
+    ],
+    "tables": [
+      {
+        "schema": "raw",
+        "table": "external_file",
+        "name": "导入文件",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "content_document",
+        "name": "公开内容文件导入",
+        "fieldPath": ""
+      }
+    ],
+    "history": {
+      "records": {
+        "value": null,
+        "explanation": "实际历期留存需按来源记录核验",
+        "evidence": []
+      },
+      "revisions": {
+        "value": null,
+        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "evidence": []
+      },
+      "query": {
+        "value": false,
+        "explanation": "当前无此内容的独立历史日期查询合同",
+        "evidence": []
+      }
+    },
+    "derived": {
+      "value": false,
+      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "evidence": []
+    },
+    "fields": [
+      {
+        "id": "schemaVersion",
+        "name": "合同版本",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "合同版本",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "recordType",
+        "name": "记录类型",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "记录类型",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "source",
+        "name": "来源",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "来源",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "externalId",
+        "name": "外部编号",
+        "role": "input",
+        "type": "可空联合类型",
+        "unit": "待核验",
+        "nullable": "可省略",
+        "description": "外部编号",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "contentType",
+        "name": "内容类型",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "内容类型",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "title",
+        "name": "标题",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "标题",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "summary",
+        "name": "摘要",
+        "role": "input",
+        "type": "可空联合类型",
+        "unit": "待核验",
+        "nullable": "可省略",
+        "description": "摘要",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "body",
+        "name": "正文",
+        "role": "input",
+        "type": "可空联合类型",
+        "unit": "待核验",
+        "nullable": "可省略",
+        "description": "正文",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "publishedAt",
+        "name": "发布时间",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "发布时间",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "sourceUrl",
+        "name": "原文链接",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "原文链接",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "securities",
+        "name": "证券代码列表",
+        "role": "input",
+        "type": "array",
+        "unit": "待核验",
+        "nullable": "可省略",
+        "description": "证券代码列表",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "securityNames",
+        "name": "证券名称列表",
+        "role": "input",
+        "type": "array",
+        "unit": "待核验",
+        "nullable": "可省略",
+        "description": "证券名称列表",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "copyrightStatus",
+        "name": "版权状态",
+        "role": "input",
+        "type": "string",
+        "unit": "待核验",
+        "nullable": "必填",
+        "description": "版权状态",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      },
+      {
+        "id": "ingestionRevision",
+        "name": "导入修订版本",
+        "role": "input",
+        "type": "可空联合类型",
+        "unit": "待核验",
+        "nullable": "可省略",
+        "description": "导入修订版本",
+        "sourceRefs": [],
+        "tableRefs": [],
+        "derived": {
+          "value": false,
+          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "evidence": []
+        }
+      }
+    ],
+    "calculations": [],
+    "access": [
+      {
+        "kind": "table",
+        "description": "通过现有 CLI 导入，查询已入库记录；导入不由文档页触发。"
+      }
+    ],
+    "evidence": [
+      "backend/app/connectors/external_files/contracts.py",
+      "docs/official-source-fields.md"
+    ]
+  }
+]
