@@ -7,7 +7,7 @@ from pathlib import Path
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path[:0] = [str(ROOT/"backend"), str(ROOT/"packages/news-collector/src")]
+sys.path[:0] = [str(ROOT/"backend"), str(ROOT/"packages/news-collector/src"), str(ROOT/"scripts")]
 from app.local_admin.catalog_inventory import identities, read_json, source_contracts
 from app.connectors.tushare.strategies import FIELD_REGISTRY, STANDARD_API_NAMES, VIP_API_NAMES
 from app.stocks.derived.registry import FORMULAS
@@ -312,6 +312,8 @@ def main():
     for r in ratios:own("ratio:"+r["id"],ratio_entry)
     extra_content()
     enrich()
+    from data_catalog_semantics import audit_semantics
+    audit_semantics(entries, ROOT, table, judge, field)
     # 机器回执中同一接口的元字段可能服务多个宏观系列，未命中时不隐式丢失。
     required=identities(ROOT)
     missing=required-set(ownership)
@@ -327,12 +329,12 @@ def main():
     out=ROOT/"docs/data-catalog"
     out.mkdir(exist_ok=True)
     files=[]
-    groups=[("stocks","股票数据"),("markets","指数、ETF 与商品"),("macro","宏观经济"),("content","财经内容"),("portfolio","组合公共数据")]
+    groups=[("stocks","股票数据"),("markets","指数、ETF 与商品"),("macro","宏观经济"),("content","财经内容"),("portfolio","公共参考数据")]
     for group,_ in groups:
         filename=group+".json"
         files.append("data-catalog/"+filename)
         (out/filename).write_text(json.dumps([e for e in entries if e["category"]==group],ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    index=dict(version="2026-11-16-v1",categories=[dict(id=id,name=name) for id,name in groups],files=files,ownership=dict(sorted(ownership.items())))
+    index=dict(version="2026-11-16-v2",categories=[dict(id=id,name=name) for id,name in groups],files=files,ownership=dict(sorted(ownership.items())))
     (ROOT/"docs/data-catalog.json").write_text(json.dumps(index,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print(f"{len(entries)} entries, {len(ownership)} covered identities")
 

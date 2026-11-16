@@ -1,17 +1,84 @@
 [
   {
     "id": "portfolio-inputs",
-    "name": "组合公共参考与分红",
+    "name": "资产价格、分红与基准公共输入",
     "category": "portfolio",
-    "description": "提供组合所需的公共参考行情、基准和分红输入；用户持仓及试算参数由消费项目管理。",
+    "description": "供消费项目进行组合研究的公共输入包，包含逐证券价格、分红、股息率模型输入、归因输入、全收益基准和国债参考。个人持仓、权重、交易及试算参数和结果由消费项目管理，底座不接受或保存这些私有数据。",
     "status": "已接入，实际覆盖按留存证据核对",
-    "scope": "按现有数据池、日期及采集合同覆盖",
-    "sources": [],
+    "scope": "已发布证券池及其可见历史，另含 CNY 业务日面值 1、已配置全收益基准和十年国债参考；输入包按证券组织，不按用户或持仓组织。",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "stock_basic",
+        "kind": "采集渠道",
+        "description": "输入条目：证券基础资料。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "daily",
+        "kind": "采集渠道",
+        "description": "输入条目：股票日行情。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "adj_factor",
+        "kind": "采集渠道",
+        "description": "输入条目：复权因子。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "daily_basic",
+        "kind": "采集渠道",
+        "description": "输入条目：每日估值与股本。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "dividend",
+        "kind": "采集渠道",
+        "description": "输入条目：分红送转记录。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "income",
+        "kind": "采集渠道",
+        "description": "输入条目：利润表。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "fina_indicator",
+        "kind": "采集渠道",
+        "description": "输入条目：财务指标。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "index_basic",
+        "kind": "采集渠道",
+        "description": "输入条目：指数基础资料。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "index_daily",
+        "kind": "采集渠道",
+        "description": "输入条目：国内指数日行情。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "trade_cal",
+        "kind": "采集渠道",
+        "description": "输入条目：股票交易日历。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "中国货币网",
+        "api": "cn.rate.govbond_10y · chinamoney",
+        "kind": "国债参考观测",
+        "description": "仅采用该来源已公开的十年国债收益率，按可见时点选版。"
+      }
+    ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
-        "task": null
+        "name": "更新规则",
+        "description": "公共包随股票流水线发布，基准和国债分别按各自来源更新；查询不触发采集或重建。",
+        "task": "stocks"
       }
     ],
     "tables": [
@@ -26,28 +93,94 @@
         "table": "page_snapshot",
         "name": "发布历史",
         "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "security",
+        "name": "证券基础资料",
+        "fieldPath": ""
+      },
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "供应商原始响应",
+        "fieldPath": "payload"
+      },
+      {
+        "schema": "core",
+        "table": "daily_price",
+        "name": "股票日行情",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "adjustment_factor",
+        "name": "复权因子",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "daily_basic",
+        "name": "每日估值与股本",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "dividend",
+        "name": "分红送转记录",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "income_statement",
+        "name": "利润表",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "financial_indicator",
+        "name": "财务指标",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "market_daily_quote",
+        "name": "国内指数日行情",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "trade_calendar",
+        "name": "股票交易日历",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
       }
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "已采集历期输入及已发布公共快照版本留存，窗口依真实记录。",
         "evidence": []
       },
       "revisions": {
-        "value": null,
-        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "value": true,
+        "explanation": "保存不同发布版本；同业务键的每次原始修订或中间计算并不保证逐次留存。",
         "evidence": []
       },
       "query": {
         "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "explanation": "公共 GET 仅返回当前输入包，载荷含历史点；未提供任意日期或发布版本查询参数。",
         "evidence": []
       }
     },
     "derived": {
-      "value": false,
-      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "value": true,
+      "explanation": "包含底座计算的结果，原始输入、计算窗口和缺值条件见下方。",
       "evidence": []
     },
     "fields": [
@@ -55,15 +188,34 @@
         "id": "data.assets",
         "name": "可选资产",
         "role": "response",
-        "type": "数值或对象，依具体响应合同",
-        "unit": "待核验",
-        "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "可选资产",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "type": "对象或数组，子字段依响应合同",
+        "unit": "不适用（对象或记录集合）",
+        "nullable": "可包含空值和覆盖状态，空值不表示零",
+        "description": "逐证券公共输入及覆盖凭证；不包含个人持仓或组合结果。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-daily",
+          "stock-adjustment",
+          "stock-daily-basic",
+          "stock-dividend",
+          "stock-income",
+          "stock-financial-indicator",
+          "index-basic",
+          "index-daily",
+          "trade-calendar",
+          "cn.rate.govbond_10y"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "security",
+            "name": "公共输入",
+            "fieldPath": ""
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按已发布输入选取、组织或映射，未增加指标计算",
           "evidence": []
         }
       },
@@ -71,15 +223,40 @@
         "id": "data.prices",
         "name": "复权价格",
         "role": "response",
-        "type": "数值或对象，依具体响应合同",
-        "unit": "待核验",
-        "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "复权价格",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "type": "对象或数组，子字段依响应合同",
+        "unit": "不适用（对象或记录集合）",
+        "nullable": "可包含空值和覆盖状态，空值不表示零",
+        "description": "按业务日可用因子及窗口最后因子生成价格；可能回退，须结合 factorCoverage 判断实际复权完整性。CNY 为业务日面值 1。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-daily",
+          "stock-adjustment",
+          "stock-daily-basic",
+          "stock-dividend",
+          "stock-income",
+          "stock-financial-indicator",
+          "index-basic",
+          "index-daily",
+          "trade-calendar",
+          "cn.rate.govbond_10y"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "daily_price",
+            "name": "未复权收盘价",
+            "fieldPath": "close"
+          },
+          {
+            "schema": "core",
+            "table": "adjustment_factor",
+            "name": "复权因子",
+            "fieldPath": "adj_factor"
+          }
+        ],
         "derived": {
-          "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "value": true,
+          "explanation": "含底座计算结果，见计算口径",
           "evidence": []
         }
       },
@@ -87,15 +264,34 @@
         "id": "data.unadjustedPrices",
         "name": "未复权价格",
         "role": "response",
-        "type": "数值或对象，依具体响应合同",
-        "unit": "待核验",
-        "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "未复权价格",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "type": "对象或数组，子字段依响应合同",
+        "unit": "不适用（对象或记录集合）",
+        "nullable": "可包含空值和覆盖状态，空值不表示零",
+        "description": "逐证券公共输入及覆盖凭证；不包含个人持仓或组合结果。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-daily",
+          "stock-adjustment",
+          "stock-daily-basic",
+          "stock-dividend",
+          "stock-income",
+          "stock-financial-indicator",
+          "index-basic",
+          "index-daily",
+          "trade-calendar",
+          "cn.rate.govbond_10y"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "daily_price",
+            "name": "公共输入",
+            "fieldPath": ""
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按已发布输入选取、组织或映射，未增加指标计算",
           "evidence": []
         }
       },
@@ -103,15 +299,40 @@
         "id": "data.factorCoverage",
         "name": "复权覆盖",
         "role": "response",
-        "type": "数值或对象，依具体响应合同",
-        "unit": "待核验",
-        "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "复权覆盖",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "type": "对象或数组，子字段依响应合同",
+        "unit": "不适用（对象或记录集合）",
+        "nullable": "可包含空值和覆盖状态，空值不表示零",
+        "description": "逐证券公共输入及覆盖凭证；不包含个人持仓或组合结果。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-daily",
+          "stock-adjustment",
+          "stock-daily-basic",
+          "stock-dividend",
+          "stock-income",
+          "stock-financial-indicator",
+          "index-basic",
+          "index-daily",
+          "trade-calendar",
+          "cn.rate.govbond_10y"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "adjustment_factor",
+            "name": "公共输入",
+            "fieldPath": ""
+          },
+          {
+            "schema": "core",
+            "table": "daily_price",
+            "name": "公共输入",
+            "fieldPath": ""
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按已发布输入选取、组织或映射，未增加指标计算",
           "evidence": []
         }
       },
@@ -119,15 +340,34 @@
         "id": "data.dividendLedger",
         "name": "分红账本",
         "role": "response",
-        "type": "数值或对象，依具体响应合同",
-        "unit": "待核验",
-        "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "分红账本",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "type": "对象或数组，子字段依响应合同",
+        "unit": "不适用（对象或记录集合）",
+        "nullable": "可包含空值和覆盖状态，空值不表示零",
+        "description": "逐证券公共输入及覆盖凭证；不包含个人持仓或组合结果。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-daily",
+          "stock-adjustment",
+          "stock-daily-basic",
+          "stock-dividend",
+          "stock-income",
+          "stock-financial-indicator",
+          "index-basic",
+          "index-daily",
+          "trade-calendar",
+          "cn.rate.govbond_10y"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "dividend",
+            "name": "公共输入",
+            "fieldPath": ""
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按已发布输入选取、组织或映射，未增加指标计算",
           "evidence": []
         }
       },
@@ -135,15 +375,40 @@
         "id": "data.dividendYieldInputs",
         "name": "股息率输入",
         "role": "response",
-        "type": "数值或对象，依具体响应合同",
-        "unit": "待核验",
-        "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "股息率输入",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "type": "对象或数组，子字段依响应合同",
+        "unit": "不适用（对象或记录集合）",
+        "nullable": "可包含空值和覆盖状态，空值不表示零",
+        "description": "复用逐股分红查询凭证及工作台同日 NTM 估算。模型率以小数提供；历史记录须当时已经留存，不能使用事后重算倒灌的结果。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-daily",
+          "stock-adjustment",
+          "stock-daily-basic",
+          "stock-dividend",
+          "stock-income",
+          "stock-financial-indicator",
+          "index-basic",
+          "index-daily",
+          "trade-calendar",
+          "cn.rate.govbond_10y"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "dividend",
+            "name": "财年分红及查询覆盖",
+            "fieldPath": ""
+          },
+          {
+            "schema": "derived",
+            "table": "metric_value",
+            "name": "历史同日 NTM 估算",
+            "fieldPath": ""
+          }
+        ],
         "derived": {
-          "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "value": true,
+          "explanation": "含底座计算结果，见计算口径",
           "evidence": []
         }
       },
@@ -151,15 +416,40 @@
         "id": "data.attributionInputs",
         "name": "收益归因输入",
         "role": "response",
-        "type": "数值或对象，依具体响应合同",
-        "unit": "待核验",
-        "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "收益归因输入",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "type": "对象或数组，子字段依响应合同",
+        "unit": "不适用（对象或记录集合）",
+        "nullable": "可包含空值和覆盖状态，空值不表示零",
+        "description": "逐证券 TTM 利润与股本等公共输入，附来源身份。用户组合收益归因由消费项目计算。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-daily",
+          "stock-adjustment",
+          "stock-daily-basic",
+          "stock-dividend",
+          "stock-income",
+          "stock-financial-indicator",
+          "index-basic",
+          "index-daily",
+          "trade-calendar",
+          "cn.rate.govbond_10y"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "income_statement",
+            "name": "归母净利润",
+            "fieldPath": ""
+          },
+          {
+            "schema": "core",
+            "table": "daily_basic",
+            "name": "同日股本",
+            "fieldPath": ""
+          }
+        ],
         "derived": {
-          "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "value": true,
+          "explanation": "含底座计算结果，见计算口径",
           "evidence": []
         }
       },
@@ -167,15 +457,34 @@
         "id": "data.benchmarks",
         "name": "全收益基准",
         "role": "response",
-        "type": "数值或对象，依具体响应合同",
-        "unit": "待核验",
-        "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "全收益基准",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "type": "对象或数组，子字段依响应合同",
+        "unit": "不适用（对象或记录集合）",
+        "nullable": "可包含空值和覆盖状态，空值不表示零",
+        "description": "配置的 H00300.CSI、H00922.CSI 全收益指数真实日线及覆盖凭证。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-daily",
+          "stock-adjustment",
+          "stock-daily-basic",
+          "stock-dividend",
+          "stock-income",
+          "stock-financial-indicator",
+          "index-basic",
+          "index-daily",
+          "trade-calendar",
+          "cn.rate.govbond_10y"
+        ],
+        "tableRefs": [
+          {
+            "schema": "raw",
+            "table": "source_payload",
+            "name": "全收益指数日线及日历凭证",
+            "fieldPath": ""
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按已发布输入选取、组织或映射，未增加指标计算",
           "evidence": []
         }
       },
@@ -183,20 +492,107 @@
         "id": "data.treasuryReference",
         "name": "国债参考",
         "role": "response",
-        "type": "数值或对象，依具体响应合同",
-        "unit": "待核验",
-        "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "国债参考",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "type": "对象或数组，子字段依响应合同",
+        "unit": "不适用（对象或记录集合）",
+        "nullable": "可包含空值和覆盖状态，空值不表示零",
+        "description": "cn.rate.govbond_10y，按公开时点选版并将百分数转换为小数年利率。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-daily",
+          "stock-adjustment",
+          "stock-daily-basic",
+          "stock-dividend",
+          "stock-income",
+          "stock-financial-indicator",
+          "index-basic",
+          "index-daily",
+          "trade-calendar",
+          "cn.rate.govbond_10y"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "十年国债观测",
+            "fieldPath": ""
+          }
+        ],
         "derived": {
-          "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "value": true,
+          "explanation": "含底座计算结果，见计算口径",
           "evidence": []
         }
       }
     ],
-    "calculations": [],
+    "calculations": [
+      {
+        "id": "public-input-transforms",
+        "name": "公共价格及归因输入转换",
+        "formula": "复权收盘价 = 未复权收盘价 × 业务日当天或之前最近可用的有效复权因子 ÷ 已装载窗口最后有效因子；归因归母净利润 TTM 按可见报表转单季后取连续四季合计；总股本（万股）× 10000 转为股；十年国债利率（%）÷ 100 转年度小数利率。全收益基准使用供应商全收益指数点位，不由底座混入用户持仓计算。",
+        "inputs": [
+          {
+            "id": "daily_price.close",
+            "name": "未复权收盘价"
+          },
+          {
+            "id": "adjustment_factor.adj_factor",
+            "name": "业务日可用及窗口末日复权因子"
+          },
+          {
+            "id": "income_statement.n_income_attr_p",
+            "name": "已披露归母净利润"
+          },
+          {
+            "id": "daily_basic.total_share",
+            "name": "同日总股本（万股）"
+          },
+          {
+            "id": "macro_observation.value",
+            "name": "中国货币网十年国债收益率（%）"
+          }
+        ],
+        "window": "输入包实际留存窗口，报表及利率按业务日可见时点取版",
+        "version": "当前构建口径",
+        "missing": "原价格转换可沿用之前的有效因子，无可用因子时系数回退为 1；factorCoverage 独立核对每日因子完整性，回退价格不能视为已核验复权。行情、基准和分红缺口保留原因，不能据空事件列表判断零分红。",
+        "evidence": [
+          "backend/app/portfolio/marts/portfolio.py"
+        ]
+      },
+      {
+        "id": "workbenchNtmDividendYield",
+        "name": "预期股息率(未来12月·NTM)",
+        "formula": "四季预测归母净利之和 ÷ 总股本 × 加权派息率 ÷ 收盘价 × 100%；每季预测 = 2 × 上年同季 − 前年同季；加权派息率 =（较早财年派息率 × 3＋较近财年派息率 × 5）÷ 8，财年派息率为每股分红 ÷ 正年度基本每股收益；累计报表先转单季，再按上年同季 × 2 − 前年同季预测；公共模型 rate（估算率）= 已核准 NTM 股息率（%）÷ 100。",
+        "inputs": [
+          {
+            "id": "n_income_attr_p",
+            "name": "已披露归母净利润"
+          },
+          {
+            "id": "total_share",
+            "name": "同日总股本"
+          },
+          {
+            "id": "cash_div_tax",
+            "name": "历史税前每股分红"
+          },
+          {
+            "id": "basic_eps",
+            "name": "正年度基本每股收益"
+          },
+          {
+            "id": "close",
+            "name": "估值日收盘价"
+          }
+        ],
+        "window": "本年采用最新中期利润与前五年同期占比合格样本；未来十二个月采用最新已披露季度之后四季",
+        "version": "v2",
+        "missing": "分母非正、输入缺失、修订冲突、分红覆盖或送转基准未证实时为空；完整证据后才能确认零值",
+        "evidence": [
+          "docs/platform-api.md",
+          "backend/app/stocks/derived/workbench_cards.py"
+        ]
+      }
+    ],
     "access": [
       {
         "kind": "aggregate",
@@ -218,7 +614,12 @@
       }
     ],
     "evidence": [
-      "docs/portfolio-split-lineage.md"
+      "docs/portfolio-split-lineage.md",
+      "backend/app/portfolio/marts/portfolio.py",
+      "backend/app/portfolio/attribution_inputs.py",
+      "backend/app/portfolio/treasury.py",
+      "backend/app/portfolio/dividend_yield_inputs.py",
+      "backend/app/portfolio/marts/factor_coverage.py"
     ]
   }
 ]

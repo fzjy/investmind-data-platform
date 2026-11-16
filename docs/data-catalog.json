@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-16-v1",
+  "version": "2026-11-16-v2",
   "categories": [
     {
       "id": "stocks",
@@ -19,7 +19,7 @@
     },
     {
       "id": "portfolio",
-      "name": "组合公共数据"
+      "name": "公共参考数据"
     }
   ],
   "files": [
@@ -271,6 +271,10 @@
       "us.rate.treasury_10y"
     ],
     "operation:GET /api/v1/macro/insights": [
+      "market-daily-summary",
+      "fx-daily",
+      "market-margin",
+      "market-sz-summary",
       "cn.gdp.real_yoy",
       "cn.cpi.yoy",
       "cn.cpi.core_yoy",
@@ -333,15 +337,13 @@
       "macro-enterprise"
     ],
     "operation:GET /api/v1/market/explorer": [
-      "market-daily-summary",
       "etf-daily",
       "etf-shares",
       "commodity-daily",
-      "fx-daily",
+      "stock-classification",
       "index-daily",
       "index-global",
-      "market-margin",
-      "market-sz-summary",
+      "stock-classification-members",
       "market-explorer",
       "security-region"
     ],
@@ -364,15 +366,11 @@
       "stock-daily",
       "stock-daily-basic",
       "stock-dividend",
-      "stock-express",
       "stock-financial-indicator",
       "stock-business",
       "stock-forecast",
       "stock-income",
-      "stock-classification",
-      "stock-classification-members",
       "stock-repurchase",
-      "stock-unlock",
       "stock-holder-count",
       "stock-basic",
       "stock-top-holders",

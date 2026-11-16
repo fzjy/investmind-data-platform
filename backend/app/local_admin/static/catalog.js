@@ -143,7 +143,7 @@ export async function renderCatalog(container,params,{api,origin}){
     node("h2",e.name,"catalog-title"),node("p",e.description),node("p",e.status,"muted"));
   addMeta("内容标识",e.id);
   addMeta("覆盖范围",e.scope);
-  addMeta("数据来源",e.sources.length?e.sources.map(s=>s.name+" · "+(s.api||"")+" · "+s.kind+" · "+s.description).join("\n"):"来源见输入表与下方依据，具体发布方待逐项核验");
+  addMeta("数据来源",e.sources.length?e.sources.map(s=>s.name+" · "+(s.api||"")+" · "+s.kind+" · "+s.description).join("\n"):"来源说明缺失，目录需要补充核对。");
   const frequency=node("div");
   for(const f of e.frequencies){
     frequency.append(node("p",f.name+" · "+f.description));
