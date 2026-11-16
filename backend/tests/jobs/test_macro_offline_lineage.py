@@ -1,11 +1,10 @@
 from datetime import UTC, date, datetime
 from decimal import Decimal
 import json
-import os
 from pathlib import Path
 
 import pytest
-from sqlalchemy import create_engine, select
+from sqlalchemy import select
 from sqlalchemy.orm import Session, sessionmaker
 
 from app.connectors.external_files.reader import ExternalFileReader
@@ -75,38 +74,25 @@ def test_rounded_import_still_rejects_value_and_metadata_tampering(pg_factory, t
 
 
 @pytest.mark.postgres
-@pytest.mark.skipif(os.environ.get("DANG_RUN_POSTGRES_TESTS") != "1", reason="requires explicitly enabled disposable PostgreSQL 17")
-def test_postgres_real_import_rounding_matches_stored_precision_without_trusting_tampering(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    from backend.tests.e2e.test_daily_sync_postgres import Config, PostgresContainer, command
-    import app.config as config
-
-    with PostgresContainer("postgres:17-alpine", driver="psycopg") as postgres:
-        database_url = postgres.get_connection_url(driver="psycopg")
-        monkeypatch.setenv("DANG_DATABASE_URL", database_url)
-        monkeypatch.setattr(config, "PROJECT_ENV_FILE", tmp_path / "missing.env")
-        command.upgrade(Config(str(Path(__file__).resolve().parents[2] / "alembic.ini")), "head")
-        engine = create_engine(database_url)
-        factory = sessionmaker(engine, expire_on_commit=False)
-        try:
-            for index, (value, stored) in enumerate([
-                ("1.1234567890123", "1.1234567890"),
-                ("1.12345678905", "1.1234567891"),
-                ("-1.12345678905", "-1.1234567891"),
-                ("123456789012345678.1234567890123", "123456789012345678.1234567890"),
-            ]):
-                directory = tmp_path / str(index)
-                directory.mkdir()
-                import_controlled_macro(factory, directory, value=value)
-                with factory() as session:
-                    assert session.scalar(select(MacroObservation.value)) == Decimal(stored)
-                assert len(MacroRepository(factory).visible_observations(tuple(item.id for item in CATALOG.series), AS_OF)) == 20
-                item = CATALOG.series[0]
-                with factory.begin() as session:
-                    row = session.scalar(select(MacroObservation).where(MacroObservation.series_id == item.id))
-                    row.value = Decimal(stored) + Decimal("0.0000000001")
-                assert MacroRepository(factory).visible_observations((item.id,), AS_OF) == ()
-        finally:
-            engine.dispose()
+def test_postgres_real_import_rounding_matches_stored_precision_without_trusting_tampering(pg_factory, tmp_path: Path) -> None:
+    factory = pg_factory
+    for index, (value, stored) in enumerate([
+        ("1.1234567890123", "1.1234567890"),
+        ("1.12345678905", "1.1234567891"),
+        ("-1.12345678905", "-1.1234567891"),
+        ("123456789012345678.1234567890123", "123456789012345678.1234567890"),
+    ]):
+        directory = tmp_path / str(index)
+        directory.mkdir()
+        import_controlled_macro(factory, directory, value=value)
+        with factory() as session:
+            assert session.scalar(select(MacroObservation.value)) == Decimal(stored)
+        assert len(MacroRepository(factory).visible_observations(tuple(item.id for item in CATALOG.series), AS_OF)) == 20
+        item = CATALOG.series[0]
+        with factory.begin() as session:
+            row = session.scalar(select(MacroObservation).where(MacroObservation.series_id == item.id))
+            row.value = Decimal(stored) + Decimal("0.0000000001")
+        assert MacroRepository(factory).visible_observations((item.id,), AS_OF) == ()
 
 
 def test_real_import_entry_publishes_all_twenty_with_original_sources(pg_factory, tmp_path: Path) -> None:
@@ -138,7 +124,7 @@ def test_sync_baseline_accepts_traced_offline_for_disabled_online_series(pg_fact
 
 def test_sync_uses_verified_offline_without_provider_or_faked_identity(pg_factory, tmp_path: Path) -> None:
     from app.connectors.macro.registry import MacroProviderRegistry
-    from app.jobs.locks import ProcessLocalJobLock
+    from app.jobs.locks import PostgresAdvisoryJobLock
     from app.macro.jobs.macro_series_state import MacroSeriesStateRepository
     from app.macro.jobs.macro_sync import MacroSyncJob
     from app.macro.jobs.macro_sync_history import SqlMacroSyncHistory
@@ -150,7 +136,7 @@ def test_sync_uses_verified_offline_without_provider_or_faked_identity(pg_factor
     job = MacroSyncJob(catalog=CATALOG, registry=MacroProviderRegistry(()),
         observation_repository=MacroObservationRepository(factory),
         state_repository=MacroSeriesStateRepository(factory, CATALOG.catalog_version),
-        history=history, lock=ProcessLocalJobLock(),
+        history=history, lock=PostgresAdvisoryJobLock(factory.kw["bind"]),
         publisher=MacroPublishJob(MacroMartBuilder(MacroRepository(factory)), publisher, history),
         clock=lambda: AS_OF, timezone="Asia/Shanghai")
     result = job.run(MacroSyncOptions(AS_OF, 10, CATALOG.catalog_version, CATALOG.catalog_hash, mode="live"))

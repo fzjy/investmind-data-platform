@@ -5,6 +5,7 @@ from datetime import UTC, date, datetime, timedelta
 from decimal import Decimal
 from threading import Barrier, BrokenBarrierError
 
+import pytest
 from sqlalchemy import create_engine, event, func, select
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, sessionmaker
@@ -14,6 +15,8 @@ from app.db.models import MacroObservation
 from app.macro.jobs.macro_sync_repository import MacroObservationRepository, MacroPersistResult
 from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
 
+
+pytestmark = pytest.mark.postgres
 
 CAPTURED_AT = datetime(2026, 9, 20, 8, 30, tzinfo=UTC)
 

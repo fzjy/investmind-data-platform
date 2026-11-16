@@ -199,18 +199,22 @@ def test_catalog_hash_mismatch_is_not_accepted_or_repaired(database):
     assert snapshot(factory)==before
 
 
-@pytest.mark.parametrize('app_name', ['catchup#prod', 'literal%23', 'with space'])
+@pytest.mark.parametrize('app_name', ['catchup#prod', 'literal%23', '有空 格'])
 def test_readonly_url_preserves_connection_options(database, monkeypatch, app_name):
     from sqlalchemy import text
     settings, factory, engine = database
     before = snapshot(factory)
     url = engine.url.update_query_dict({'application_name': app_name})
+    # PostgreSQL 会编码 application_name 中的非 ASCII 字符。用参数绑定独立获得预期值。
+    with factory.begin() as session:
+        session.execute(text("SELECT set_config('application_name', :name, true)"), {'name': app_name})
+        expected_name = session.scalar(text('SHOW application_name'))
     read_plan = module()._read_plan
 
     def verify_target(settings, now, read_factory):
         with read_factory() as session:
             assert session.scalar(text('SELECT current_database()')) == engine.url.database
-            assert session.scalar(text('SHOW application_name')) == app_name
+            assert session.scalar(text('SHOW application_name')) == expected_name
         return read_plan(settings, now, read_factory)
 
     monkeypatch.setattr(module(), '_read_plan', verify_target)

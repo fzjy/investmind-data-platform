@@ -15,6 +15,9 @@ from app.jobs.locks import (
 )
 
 
+pytestmark = pytest.mark.postgres
+
+
 @pytest.fixture
 def postgres_engine(pg_schema_url) -> Iterator[Engine]:
     engine = create_engine(pg_schema_url, poolclass=NullPool)
