@@ -31,10 +31,10 @@ class Conflict(ValueError):
 
 
 class Configuration:
-    def __init__(self, root: Path, *, news_path: Path | None = None):
+    def __init__(self, root: Path, *, news_path: Path | None = None, market_path: Path | None = None):
         self.paths = {
             "tasks": root / "config/scheduled-tasks.json",
-            "market": root / "config/market/market-data.json",
+            "market": market_path or root / "config/market/market-data.json",
             "news": news_path or root / "config/news/news-collector.json",
         }
         self.lock = RLock()

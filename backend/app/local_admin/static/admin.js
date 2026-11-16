@@ -65,7 +65,8 @@ function pager(prev,next,go) {
 async function taskPage(box, p) {
   const tasks = await api("/admin/api/tasks");
   box.append(grid(["采集任务","调度规则","当前状态","配置应用","下次触发","运行记录"], tasks.map(t=>[
-    link(t.title,query("tasks",{task:t.name})), t.rule, el("span",t.activity,"pill " + (t.active?"active":"")),
+    link(t.title,query("tasks",{task:t.name})), t.applyState==="已生效"?t.rule:"目标 "+t.rule+" · 已确认 "+(t.effective||"待确认"),
+    el("span",t.activity+(!t.enabled && t.active && t.activity==="执行中"?"，后续轮次已关闭":""),"pill " + (t.active?"active":"")),
     t.applyState, date(t.next_run), t.result || "暂无回执"
   ])));
   if (!p.has("task")) return;
@@ -79,6 +80,10 @@ async function taskPage(box, p) {
   const offset = Number(p.get("offset") || 0);
   const base = "/admin/api/tasks/" + t.name + "/runs";
   const history = await api(base + "?offset=" + offset);
+  if(history.localRuns?.length){
+    panel.append(el("h3","本机执行回执"),grid(["开始","结束","类型","进展或结果"],history.localRuns.map(r=>[
+      date(r.started),date(r.finished),r.recovery?"恢复检查":"定时执行",r.result || t.activity])));
+  }
   panel.append(link("浏览相关表 " + history.related.join("."),query("tables",{s:history.related[0],t:history.related[1]})));
   if (history.heartbeat && t.name!=="news") panel.append(el("p","数据库最近一次调度心跳 " + date(history.heartbeat.last_heartbeat_at)));
   if (history.cursor) panel.append(el("p","最近游标 " + history.cursor.cursor_key + " · " + date(history.cursor.updated_at)));
@@ -87,9 +92,9 @@ async function taskPage(box, p) {
     panel.append(grid(["开始时间","来源","处理行","请求数","耗时","结果","关联记录"],history.runs.map(r=>[
       date(r.started_at),r.trigger||"未登记",r.row_count,r.request_count,r.duration==null?"—":r.duration.toFixed(1)+" 秒",r.displayStatus,
       link("查看",query("tasks",{task:t.name,offset,run:r.id}))])));
-    panel.append(pager(offset?Math.max(0,offset-20):null,history.more?offset+20:null,
-      n=>location.hash=query("tasks",{task:t.name,offset:n})));
   } else panel.append(el("p","暂无同名作业历史，可查看上方进程回执与相关表。","muted"));
+  if(offset || history.more) panel.append(pager(offset?Math.max(0,offset-20):null,history.more?offset+20:null,
+      n=>location.hash=query("tasks",{task:t.name,offset:n})));
   if (p.has("run")) {
     const detail = await api(base + "/" + encodeURIComponent(p.get("run")));
     const links = el("div",null,"toolbar");
@@ -187,7 +192,7 @@ async function configPage(box) {
       }
       const response=await api("/admin/api/config/"+id+"/apply",{version:saved.version,changes});
       saved.version=response.version;
-      feedback.textContent="配置已保存。请在任务状态中查看运行方回执。";
+      feedback.textContent=response.applyError || "配置已保存。请在任务状态中查看运行方回执。";
     },"primary");
     if(id==="market") group.append(el("p","同时影响基础行情、市场脉搏、地域、ETF 热力图和商品行情。","muted"));
     group.append(el("br"),apply,feedback);box.append(group);

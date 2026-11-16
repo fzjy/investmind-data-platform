@@ -31,6 +31,8 @@ def summarize(name, result, recovery):
             return f"部分交易日需核对，本轮尝试 {attempted} 日"
         return f"检查点范围内已补齐，本轮尝试 {attempted} 个交易日"
     status = result.get("status") if isinstance(result, dict) else getattr(result, "status", None)
+    if isinstance(result, dict) and type(result.get("pendingCount")) is int and result["pendingCount"] > 0:
+        return f"{result.get('asOf') or '本轮'} 仍有积压：{result['pendingCount']} 项（{status}），按检查点续采"
     if status in {"failed", "partial", "blocked", "locked", "delivery_failed"}:
         return f"本轮结果：{status}，请核对处理记录"
     if recovery and name != "stocks":
@@ -41,11 +43,12 @@ def summarize(name, result, recovery):
 
 
 class ManagedSchedule:
-    def __init__(self, store, runtime, make_macro):
+    def __init__(self, store, runtime, make_macro, *, stop_requested=lambda: False):
         self.store = store
         self.runtime = runtime
         self.scheduler = runtime._scheduler
         self.make_macro = make_macro
+        self.stop_requested = stop_requested
         self.registered = {}
 
     def install(self):
@@ -53,7 +56,9 @@ class ManagedSchedule:
         for job in self.scheduler.get_jobs():
             if job.id not in {"scheduler-heartbeat", "snapshot-freshness"}:
                 self.scheduler.remove_job(job.id)
-        self.scheduler.add_job(self.tick, "interval", seconds=1, id="local-admin-control",
+        # 与心跳相同，控制回调独立于采集锁，但参与退出时的在途回调计数。
+        control_tick = self.runtime._guard_job(self.tick, "heartbeat")
+        self.scheduler.add_job(control_tick, "interval", seconds=1, id="local-admin-control",
                                next_run_time=self.runtime._now(), max_instances=1, coalesce=True,
                                executor="control")
 
@@ -70,6 +75,8 @@ class ManagedSchedule:
             active = settings.model_copy(update={flag: True})
             coordinator = constructor(active)
             catalog = coordinator.catalog
+            if row["rule"] != f"每天 {catalog.schedule.time:%H:%M} · {catalog.schedule.timezone}":
+                raise ValueError("市场调度配置与应用版本不符")
             if not catalog.enabled or (group and not getattr(catalog, group).enabled):
                 raise ValueError("来源配置已关闭")
             setattr(rt, "_" + alias + "_coordinator", coordinator)
@@ -89,9 +96,11 @@ class ManagedSchedule:
             return report
         return trigger, "daily", rt._run_daily, restore_stocks
 
-    def _call(self, name, generation, work, reason, recovery):
+    def _call(self, row, work, reason, recovery):
+        name = row["name"]
         def admitted():
-            if not self.store.admit(name, generation, recovery=recovery):
+            if not self.store.admit(name, row["generation"], recovery=recovery,
+                                    revision=None if recovery else row["revision"]):
                 return
             try:
                 result = work()
@@ -103,6 +112,12 @@ class ManagedSchedule:
         return self.runtime._guard_job(admitted, reason)
 
     def tick(self):
+        if self.stop_requested():
+            # 控制线程不能 join 自己。唤醒 BlockingScheduler，由 run() 的 finally 等在途作业。
+            with self.runtime._jobs_condition:
+                self.runtime._jobs_stopping = True
+            self.scheduler.shutdown(wait=False)
+            return
         rows = self.store.rows()
         rt = self.runtime
         flags = {flag: bool(rows[name]["enabled"]) for name, (_, flag, _, _) in MARKET.items()}
@@ -111,7 +126,7 @@ class ManagedSchedule:
         for name, row in rows.items():
             if name == "news":
                 continue
-            version = (row["generation"], row["rule"])
+            version = (row["generation"], row["revision"])
             job_id = TASKS[name][2]
             if self.registered.get(name) != version:
                 for obsolete in (job_id, "restore-" + name):
@@ -120,10 +135,10 @@ class ManagedSchedule:
                 try:
                     if row["enabled"]:
                         trigger, reason, work, recover = self._configure(row)
-                        regular = self._call(name, row["generation"], work, reason, False)
+                        regular = self._call(row, work, reason, False)
                         self.scheduler.add_job(regular, trigger, id=job_id, max_instances=1, coalesce=True)
                         if row["recovered"] != row["generation"]:
-                            recovery = self._call(name, row["generation"], recover, reason, True)
+                            recovery = self._call(row, recover, reason, True)
                             self.scheduler.add_job(recovery, "date", run_date=rt._now(), id="restore-" + name,
                                                    misfire_grace_time=None)
                     self.registered[name] = version

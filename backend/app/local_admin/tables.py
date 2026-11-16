@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from contextlib import contextmanager
-from sqlalchemy import MetaData, Table, Text, cast, func, inspect, literal_column, select
+import re
+from sqlalchemy import MetaData, Table, Text, cast, func, inspect, literal_column, select, text
 
 SCHEMAS = ("raw", "core", "derived", "mart", "ops")
 RUN_RELATIONS = {("ops", "job_failure"): "job_run_id", ("ops", "quality_check_result"): "job_run_id"}
@@ -34,7 +35,7 @@ def _table(conn, schema, name):
 
 def _row_token():
     # ctid 可复用，同时匹配 xmin。记录已变动时由界面重新加载。
-    return literal_column("ctid::text || '/' || xmin::text")
+    return literal_column("tableoid::text || '/' || ctid::text || '/' || xmin::text")
 
 
 def preview(engine, schema, name, offset=0, run=None, batch=None):
@@ -84,12 +85,17 @@ def preview(engine, schema, name, offset=0, run=None, batch=None):
 
 
 def cell(engine, schema, name, column, row, start):
+    token = re.fullmatch(r"(\d{1,10})/(\(\d{1,10},\d{1,5}\))/(\d{1,10})", row)
+    if not token:
+        raise KeyError("记录标识无效")
     with reading(engine) as conn:
         table = _table(conn, schema, name)
         if column not in table.c:
             raise KeyError(column)
-        value = conn.execute(select(func.substr(cast(table.c[column], Text), start + 1, 8193))
-                             .where(_row_token() == row)).scalar_one_or_none()
+        oid, tid, version = token.groups()
+        position = text("ctid = CAST(:tid AS tid) AND tableoid = CAST(:oid AS oid) AND xmin::text = :version")
+        value = conn.execute(select(func.substr(cast(table.c[column], Text), start + 1, 8193)).where(position),
+                             dict(tid=tid, oid=oid, version=version)).scalar_one_or_none()
         if value is None:
             raise KeyError(row)
         return {"value": value[:8192], "next": start + 8192 if len(value) > 8192 else None}

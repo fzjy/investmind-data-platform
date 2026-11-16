@@ -32,6 +32,7 @@ def test_local_entry_apply_and_run_links(tmp_path):
             for model in (JobRun,JobCursor,SchedulerHeartbeat,JobFailure,QualityCheckResult):
                 model.__table__.create(conn)
             conn.execute(JobRun.__table__.insert(),dict(id="example",job_name="sync-daily",business_key="today"))
+            conn.execute(JobCursor.__table__.insert(), dict(job_name="news-collector",cursor_key="sina-finance"))
         app = create_app()
         app.state.read_engine = engine
         mount_admin(app, project_root=root, manager=manager)
@@ -48,6 +49,7 @@ def test_local_entry_apply_and_run_links(tmp_path):
             tasks = client.get("/admin/api/tasks").json()
             assert next(t for t in tasks if t["name"]=="stocks")["applyState"]=="已保存，待应用"
             run = client.get("/admin/api/tasks/stocks/runs/example").json()
+            assert client.get("/admin/api/tasks/news/runs").json()["cursor"]["cursor_key"]=="sina-finance"
             assert "待确认" in run["runs"][0]["displayStatus"]
             assert client.get("/admin/api/tasks/macro/runs/example").status_code==404
             assert client.get("/admin/api/tables/ops/job_failure?run=example").json()["rows"] == []

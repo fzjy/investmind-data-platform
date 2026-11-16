@@ -56,10 +56,12 @@ def test_only_enabled_generation_admitted(tmp_path):
         assert calls == [True,True] and len(made)==2
     finally:
         release.set()
-        scheduler.shutdown()
+        scheduler.shutdown(wait=False)
 
 
 def test_recovery_reports_gaps_and_limited_sources():
     result = SimpleNamespace(remaining_dates=("2026-11-12",), attempted_dates=("2026-11-11",))
     assert "仍有积压" in summarize("stocks", result, True)
     assert "覆盖待核对" in summarize("market", {"status": "completed"}, True)
+    result = summarize("commodities", {"status":"partial", "asOf":"2026-11-15", "pendingCount":12}, True)
+    assert "12" in result and "2026-11-15" in result

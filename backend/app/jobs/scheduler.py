@@ -920,7 +920,7 @@ def _validate_startup_settings(settings: Settings, *, confirm_full_market: bool 
         raise RuntimeError("DANG_SYNC_UNIVERSE_FILE is only valid for custom universe")
 
 
-def main(argv: list[str] | None = None, *, control_store=None) -> int:
+def main(argv: list[str] | None = None, *, control_store=None, stop_requested=lambda: False) -> int:
     parser = SafeArgumentParser(prog="app.jobs.scheduler", description="显式启动配置驱动的常驻调度；关机期间不运行。")
     parser.add_argument("--confirm-full-market", action="store_true", help="本次明确授权all股票池自动同步")
     arguments = parser.parse_args([] if argv is None else argv)
@@ -974,7 +974,8 @@ def main(argv: list[str] | None = None, *, control_store=None) -> int:
                 scheduler_runtime.run()
             else:
                 from app.jobs.scheduler_control import ManagedSchedule
-                scheduler_runtime.run(local_control=lambda rt: ManagedSchedule(control_store, rt, rt.make_macro).install())
+                scheduler_runtime.run(local_control=lambda rt: ManagedSchedule(
+                    control_store, rt, rt.make_macro, stop_requested=stop_requested).install())
         except BaseException as primary_error:
             try:
                 manager.__exit__(

@@ -74,11 +74,12 @@ async def serve_local(tasks, port):
     # 先占用监听端口，避免重复启动项目时先触发一轮采集。
     from app.local_admin.routes import mount_admin
     from app.local_admin.workers import LocalManager
+    from app.market.data.catalog import DEFAULT_MARKET_CATALOG_FILE
     application = create_app()
     config = uvicorn.Config(application, host="127.0.0.1", port=port)
     server = uvicorn.Server(config)
     with config.bind_socket() as sock:
-        manager = LocalManager(ROOT)
+        manager = LocalManager(ROOT, market_path=DEFAULT_MARKET_CATALOG_FILE)
         mount_admin(application, project_root=ROOT, manager=manager)
         watcher = None
         try:
@@ -95,9 +96,14 @@ async def serve_local(tasks, port):
 def run_child(name):
     # 父进程退出（含终端被关闭）时管道关闭，子进程收到与 Ctrl+C 相同的停止请求。
     import threading
+    control_path = os.environ.get("INVESTMIND_LOCAL_CONTROL")
+    parent_closed = threading.Event()
 
     def stop_on_eof():
         os.read(sys.stdin.fileno(), 1)
+        if control_path:
+            parent_closed.set()
+            return
         if os.name == "nt":
             # Windows 控制台事件能唤醒正在 sleep/wait 的主线程。
             try:
@@ -112,15 +118,15 @@ def run_child(name):
         signal.signal(signal.SIGBREAK, signal.default_int_handler)
     threading.Thread(target=stop_on_eof, daemon=True).start()
     control = None
-    if os.environ.get("INVESTMIND_LOCAL_CONTROL"):
+    if control_path:
         from app.local_admin.control import ControlStore
-        control = ControlStore(Path(os.environ["INVESTMIND_LOCAL_CONTROL"]))
+        control = ControlStore(Path(control_path))
     if name == "scheduler":
         from app.jobs.scheduler import main as run_scheduler
-        return run_scheduler(control_store=control)
+        return run_scheduler(control_store=control, stop_requested=parent_closed.is_set)
     if control is not None:
         from app.local_admin.workers import managed_news
-        return managed_news(control)
+        return managed_news(control, stop_requested=parent_closed.is_set)
     from app.cli.main import app
     app(args=["watch-news"])
 

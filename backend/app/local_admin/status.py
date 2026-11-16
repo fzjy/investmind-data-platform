@@ -20,7 +20,7 @@ def task_rows(manager):
         alive = bool(process and process.poll() is None)
         fresh = row["seen"] and datetime.now(UTC) - datetime.fromisoformat(row["seen"]) < timedelta(seconds=15)
         actual = "执行中" if row["active"] and alive else "空闲"
-        if row["active"] and not alive:
+        if (row["active"] or row["enabled"]) and (not alive or (name != "news" and not fresh)):
             actual = "状态待确认"
         elif not row["enabled"] and not row["active"]:
             actual = "已停用"
@@ -47,8 +47,14 @@ def run_history(engine, name, run_id=None, offset=0):
         runs = conn.execute(stmt.order_by(JobRun.started_at.desc(), JobRun.id.desc()).offset(offset).limit(21)).mappings().all()
         if run_id and not runs:
             raise KeyError(run_id)
-        cursor = conn.execute(select(JobCursor.cursor_key, JobCursor.updated_at).where(JobCursor.job_name == job_id)
-                              .order_by(JobCursor.updated_at.desc()).limit(1)).mappings().first()
+        cursor_stmt = select(JobCursor.cursor_key, JobCursor.updated_at)
+        if name == "news":
+            cursor_stmt = cursor_stmt.where(JobCursor.job_name == "news-collector", JobCursor.cursor_key == "sina-finance")
+        elif name == "announcements":
+            cursor_stmt = cursor_stmt.where(JobCursor.job_name == "workbench-cninfo-history-v1")
+        else:
+            cursor_stmt = cursor_stmt.where(JobCursor.job_name == job_id)
+        cursor = conn.execute(cursor_stmt.order_by(JobCursor.updated_at.desc()).limit(1)).mappings().first()
         beat = conn.execute(select(SchedulerHeartbeat.state, SchedulerHeartbeat.last_heartbeat_at)
                             .order_by(SchedulerHeartbeat.last_heartbeat_at.desc()).limit(1)).mappings().first()
     records = []

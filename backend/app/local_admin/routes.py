@@ -120,7 +120,10 @@ def mount_admin(app: FastAPI, *, project_root: Path, manager=None):
 
     @admin.get("/api/tasks/{name}/runs")
     def runs(name: str, offset: int = Query(0, ge=0)):
-        return status.run_history(engine, name, offset=offset)
+        result = status.run_history(engine, name, offset=offset)
+        recent = manager.store.recent(name, offset) if manager else []
+        result.update(localRuns=recent[:20], more=result["more"] or len(recent) > 20)
+        return result
 
     @admin.get("/api/tasks/{name}/runs/{run_id}")
     def run(name: str, run_id: str):

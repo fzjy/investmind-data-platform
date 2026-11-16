@@ -2,6 +2,7 @@
 from __future__ import annotations
 import asyncio
 import os
+import sqlite3
 from pathlib import Path
 import subprocess
 import sys
@@ -15,10 +16,10 @@ from app.market.data.catalog import MarketDataCatalog
 
 
 class LocalManager:
-    def __init__(self, root, launch=None):
+    def __init__(self, root, launch=None, *, market_path=None):
         self.root = root
         self.settings = Settings.from_env()
-        self.config = Configuration(root, news_path=self.settings.news_config_path)
+        self.config = Configuration(root, news_path=self.settings.news_config_path, market_path=market_path)
         self.store = ControlStore(root / "data/local-admin/control.sqlite3")
         self.launch = launch or self._spawn
         self.workers = {}
@@ -31,23 +32,27 @@ class LocalManager:
             stdin=subprocess.PIPE, creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0,
             start_new_session=os.name != "nt")
 
-    def sync_files(self):
-        enabled = self.config.read("tasks")["fields"]
-        market = MarketDataCatalog.load(self.config.paths["market"]).schedule
-        interval = self.config.read("news")["fields"]["interval_seconds"]
+    def sync_files(self, file_id=None):
+        previous = self.store.rows()
+        read_tasks = file_id in {None, "tasks"}
+        enabled = self.config.read("tasks")["fields"] if read_tasks else {}
+        market = MarketDataCatalog.load(self.config.paths["market"]).schedule if file_id in {None, "market"} else None
+        interval = self.config.read("news")["fields"]["interval_seconds"] if file_id in {None, "news"} else None
         s = self.settings
         targets = []
         for name in TASKS:
-            if name == "news":
+            rule = previous.get(name, {}).get("rule")
+            if name == "news" and interval is not None:
                 rule = f"每 {interval} 秒"
-            elif name == "macro":
+            elif name == "macro" and file_id is None:
                 day = dict(mon="一", tue="二", wed="三", thu="四", fri="五", sat="六", sun="日")[s.macro_sync_day_of_week]
                 rule = f"每周{day} {s.macro_sync_time:%H:%M} · {s.sync_timezone}"
-            elif name in MARKET_TASKS:
+            elif name in MARKET_TASKS and market is not None:
                 rule = f"每天 {market.time:%H:%M} · {market.timezone}"
-            else:
+            elif name in {"stocks", "announcements"} and file_id is None:
                 rule = f"每天 {s.sync_hour:02}:{s.sync_minute:02} · {s.sync_timezone}"
-            targets.append((name, enabled[name], rule))
+            target = enabled[name] if read_tasks else previous[name]["enabled"]
+            targets.append((name, target, rule))
         self.store.targets(targets)
 
     def start(self):
@@ -59,9 +64,15 @@ class LocalManager:
     def apply(self, name, version, changes):
         with self.lock:
             saved = self.config.save(name, version, changes)
-            self.sync_files()
-            self.failed.clear()
-            self.reconcile()
+            try:
+                self.sync_files(name)
+                workers = {"news-worker", "scheduler"} if name == "tasks" else {
+                    "news-worker" if name == "news" else "scheduler"}
+                for worker in workers:
+                    self.failed.pop(worker, None)
+                self.reconcile()
+            except (OSError, ValueError, sqlite3.Error) as error:
+                saved["applyError"] = f"文件已保存，运行配置待应用（{type(error).__name__}）。请重试。"
             return saved
 
     def reconcile(self):
@@ -73,6 +84,7 @@ class LocalManager:
                     if process.returncode:
                         self.failed[worker] = f"进程退出（{process.returncode}），可重新应用"
                     self.store.reset_instance(names)
+                    rows.update(self.store.rows())
                     process.stdin.close()
                     del self.workers[worker]
                     process = None
@@ -88,9 +100,11 @@ class LocalManager:
                     process.stdin.close()
                 elif not process:
                     for n in names:
-                        row = self.store.get(n)
-                        if row["enabled"] or row["applied"] != row["generation"] or row["rule"] != row["effective"]:
-                            self.store.acknowledge(row, error=self.failed.get(worker))
+                        row = rows[n]
+                        error = self.failed.get(worker) if row["enabled"] else None
+                        if (row["applied"] != row["generation"] or row["rule"] != row["effective"]
+                                or row["error"] != error):
+                            self.store.acknowledge(row, error=error)
 
     async def monitor(self):
         while True:
@@ -104,14 +118,14 @@ class LocalManager:
             worker.wait()
 
 
-def managed_news(store, *, runner=None, settings_loader=Settings.from_env, sleep=time.sleep):
+def managed_news(store, *, runner=None, settings_loader=Settings.from_env, sleep=time.sleep, stop_requested=lambda: False):
     from smartparse_news import Config
     from app.content.news_runtime import run_news
     from app.jobs.scheduler_control import summarize
     from datetime import UTC, datetime, timedelta
     due = 0
     last_generation = None
-    while True:
+    while not stop_requested():
         row = store.get("news")
         if not row["enabled"]:
             store.acknowledge(row)
@@ -119,6 +133,17 @@ def managed_news(store, *, runner=None, settings_loader=Settings.from_env, sleep
         generation = row["generation"]
         if last_generation != generation:
             due = 0
+            if last_generation is None and row["recovered"] == generation:
+                # 父进程重试或冷启动时，已领取的本轮不能降格为立即轮询。
+                config = Config.read(settings_loader().news_config_path)
+                if row["next_run"]:
+                    scheduled = datetime.fromisoformat(row["next_run"])
+                elif row["finished"]:
+                    scheduled = datetime.fromisoformat(row["finished"]) + timedelta(seconds=config.interval_seconds)
+                else:
+                    scheduled = datetime.now(UTC) + timedelta(seconds=config.interval_seconds)
+                due = time.monotonic() + max(0, (scheduled - datetime.now(UTC)).total_seconds())
+                store.acknowledge(row, scheduled.isoformat())
         last_generation = generation
         if time.monotonic() < due:
             sleep(min(0.5, due - time.monotonic()))
@@ -141,3 +166,4 @@ def managed_news(store, *, runner=None, settings_loader=Settings.from_env, sleep
         due = time.monotonic() + config.interval_seconds
         when = datetime.now(UTC) + timedelta(seconds=config.interval_seconds)
         store.acknowledge(applied, when.isoformat())
+    return 0
