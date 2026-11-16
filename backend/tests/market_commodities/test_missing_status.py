@@ -32,8 +32,8 @@ def seed_missing(factory):
             pointer.payload = {**pointer.payload, 'missingData': [OTHER, GENERIC, FAULT]}
 
 
-def test_direct_publication_replaces_only_generic_marker_in_both_products():
-    sync, factory, _, calls = setup()
+def test_direct_publication_replaces_only_generic_marker_in_both_products(new_pg_factory):
+    sync, factory, _, calls = setup(new_pg_factory)
     complete(factory, sync.catalog)
     seed_missing(factory)
     before = state(factory)
@@ -52,8 +52,8 @@ def test_direct_publication_replaces_only_generic_marker_in_both_products():
     assert state(factory) == after and calls == []
 
 
-def test_builder_reports_domestic_resolved_and_remaining_subscopes():
-    sync, factory, _, _ = setup()
+def test_builder_reports_domestic_resolved_and_remaining_subscopes(new_pg_factory):
+    sync, factory, _, _ = setup(new_pg_factory)
     complete(factory, sync.catalog)
     with factory() as session:
         verified = package(session, sync.catalog, DAY, NOW)
@@ -66,8 +66,8 @@ def test_builder_reports_domestic_resolved_and_remaining_subscopes():
         assert tuple(candidate.payload['missingData']) == candidate.missing_data
 
 
-def test_rebuild_cannot_reintroduce_generic_marker_or_drop_concrete_fault():
-    sync, factory, _, calls = setup()
+def test_rebuild_cannot_reintroduce_generic_marker_or_drop_concrete_fault(new_pg_factory):
+    sync, factory, _, calls = setup(new_pg_factory)
     complete(factory, sync.catalog)
     seed_missing(factory)
     with patch.object(MarketDataCatalog, 'load', return_value=sync.catalog):
@@ -82,8 +82,8 @@ def test_rebuild_cannot_reintroduce_generic_marker_or_drop_concrete_fault():
 
 
 @pytest.mark.parametrize('damage', ['none', 'empty', 'count', 'bar', 'identity'])
-def test_unverified_or_invalid_package_never_clears_missing_or_adds_success(damage):
-    sync, factory, _, _ = setup()
+def test_unverified_or_invalid_package_never_clears_missing_or_adds_success(new_pg_factory, damage):
+    sync, factory, _, _ = setup(new_pg_factory)
     complete(factory, sync.catalog)
     with factory() as session:
         verified = package(session, sync.catalog, DAY, NOW)
@@ -98,8 +98,8 @@ def test_unverified_or_invalid_package_never_clears_missing_or_adds_success(dama
     assert original == before
 
 
-def test_specific_same_reason_fault_and_existing_subscope_fault_are_preserved():
-    sync, factory, _, _ = setup()
+def test_specific_same_reason_fault_and_existing_subscope_fault_are_preserved(new_pg_factory):
+    sync, factory, _, _ = setup(new_pg_factory)
     complete(factory, sync.catalog)
     with factory() as session:
         verified = package(session, sync.catalog, DAY, NOW)

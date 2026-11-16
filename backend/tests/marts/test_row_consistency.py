@@ -14,7 +14,7 @@ from app.jobs.build_history import SqlBuildHistory
 from app.marts.contracts import MartRows, QualityContext
 from app.marts.publication import QualityCheckFailed, SnapshotPublisher
 from app.marts.quality import QualityGate
-from backend.tests.jobs.test_build_and_publish_integration import _factory
+
 from backend.tests.marts.test_finite_quality import candidates, checks
 
 
@@ -184,8 +184,8 @@ def test_empty_eligible_range_without_requested_workbenches_remains_valid():
 
 
 @pytest.mark.parametrize("failure", ["screener", "workbench", "chart"])
-def test_quality_history_and_old_published_snapshots_survive_consistency_failure(failure):
-    factory = _factory()
+def test_quality_history_and_old_published_snapshots_survive_consistency_failure(pg_factory, failure):
+    factory = pg_factory
     publisher = SnapshotPublisher(factory)
     original = candidates()
     publisher.publish_many(original, "consistent-old", checks(original))

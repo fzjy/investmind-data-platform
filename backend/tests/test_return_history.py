@@ -72,13 +72,13 @@ def test_old_invalid_disclosure_cannot_erase_latest_valid_record():
     assert row['roe']==20 and row['roic']==12 and row['announcedAt']=='2026-04-01'
 
 
-def test_real_repository_omitted_missing_disclosure_reaches_workbench_as_diagnostic():
+def test_real_repository_omitted_missing_disclosure_reaches_workbench_as_diagnostic(pg_factory):
     from app.db.models import FinancialIndicator
     from backend.tests.marts.test_content_runtime import prepare
-    from backend.tests.jobs.test_build_and_publish_integration import _factory
+
     from app.stocks.derived.inputs import CoreSnapshotRepository
     from app.stocks.marts.stocks import prepare_workbench_inputs
-    f=_factory();prepare(f)
+    f=pg_factory;prepare(f)
     with f.begin() as s:
         s.add(FinancialIndicator(ts_code='600519.SH',end_date=date(2024,12,31),ann_date=None,data={'roe':99,'roic':88}))
     snapshot=CoreSnapshotRepository(f).load(AS_OF,('600519.SH',))
@@ -97,13 +97,13 @@ def test_quarter_reports_remain_cumulative_and_decimal_duplicates_do_not_conflic
     assert result['reports'][0]['roe']==8
 
 
-def test_builder_uses_raw_versions_for_return_history_before_shared_dedup():
+def test_builder_uses_raw_versions_for_return_history_before_shared_dedup(pg_factory):
     from dataclasses import replace
     from backend.tests.marts.test_content_runtime import prepare
-    from backend.tests.jobs.test_build_and_publish_integration import _factory
+
     from app.stocks.derived.inputs import CoreSnapshotRepository
     from app.stocks.marts.stocks import prepare_workbench_inputs,StockWorkbenchMartBuilder
-    f=_factory();prepare(f)
+    f=pg_factory;prepare(f)
     snapshot=CoreSnapshotRepository(f).load(AS_OF,('600519.SH',))
     snapshot=replace(snapshot,financial_points=(*snapshot.financial_points,point(roe=20,roic=12),point(roe=21,roic=12)))
     prepared=prepare_workbench_inputs(snapshot,f)

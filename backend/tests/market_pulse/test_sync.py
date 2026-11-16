@@ -11,18 +11,19 @@ from app.db.models import DailyBasic, DailyPrice, Security, PublishedSnapshot, J
 from app.jobs.locks import ProcessLocalJobLock
 from app.market.data.catalog import MarketDataCatalog
 from app.stocks.universes.models import UniverseSelection
-from backend.tests.market_pulse.test_repository import DAY, NOW, CODE, _factory
+from backend.tests.market_pulse.test_repository import DAY, NOW, CODE
 
 OTHER = '920185.BJ'
 POOL = UniverseSelection('representative-50', 'controlled', 'representative', (CODE, OTHER), 'controlled')
 
 
-def setup(budget=1, handler=None):
+def setup(new_pg_factory, budget=1, handler=None):
     assert importlib.util.find_spec('app.market.pulse.sync') is not None, 'pulse sync missing'
-    factory = _factory()
+    factory = new_pg_factory()
     with factory.begin() as session:
         for code in POOL.symbols:
             session.add(Security(ts_code=code, symbol=code[:6], name=code))
+            session.flush()
             session.add(DailyPrice(ts_code=code, trade_date=DAY, close=10, pct_chg=0, data={}))
             session.add(DailyBasic(ts_code=code, trade_date=DAY, data={'other': 'keep'}))
         session.add(PublishedSnapshot(product='screener', version='old', as_of=NOW, payload={}))
@@ -41,8 +42,8 @@ def setup(budget=1, handler=None):
     return sync, factory, client, requests
 
 
-def test_budget_resume_and_same_target_zero_http():
-    sync, factory, client, requests = setup()
+def test_budget_resume_and_same_target_zero_http(new_pg_factory):
+    sync, factory, client, requests = setup(new_pg_factory)
     with client:
         first = sync.run(NOW)
         assert first['status'] == 'partial' and first['requestCount'] == 1
@@ -57,8 +58,8 @@ def test_budget_resume_and_same_target_zero_http():
             assert session.scalar(select(func.count()).select_from(SourcePayload)) == 2
 
 
-def test_permission_stops_without_fake_completion():
-    sync, factory, client, requests = setup(budget=60, handler=lambda _: httpx.Response(403))
+def test_permission_stops_without_fake_completion(new_pg_factory):
+    sync, factory, client, requests = setup(new_pg_factory, budget=60, handler=lambda _: httpx.Response(403))
     with client:
         report = sync.run(NOW)
     assert report['status'] == 'failed' and report['requestCount'] == 1 and len(requests) == 1
@@ -67,8 +68,8 @@ def test_permission_stops_without_fake_completion():
         assert all('limit_status' not in row.data for row in session.scalars(select(DailyBasic)))
 
 
-def test_dry_run_has_no_writes_or_http():
-    sync, factory, client, requests = setup()
+def test_dry_run_has_no_writes_or_http(new_pg_factory):
+    sync, factory, client, requests = setup(new_pg_factory)
     with client:
         assert sync.preflight(NOW)['pendingCount'] == 2
     assert requests == []
@@ -76,8 +77,8 @@ def test_dry_run_has_no_writes_or_http():
         assert session.scalar(select(func.count()).select_from(JobRun)) == 0
 
 
-def test_stock_lock_blocks_http():
-    sync, _, client, requests = setup()
+def test_stock_lock_blocks_http(new_pg_factory):
+    sync, _, client, requests = setup(new_pg_factory)
     key = 'sync-stock-data:representative-50'
     assert sync.lock.try_acquire(key)
     try:
@@ -88,9 +89,9 @@ def test_stock_lock_blocks_http():
         sync.lock.release(key)
 
 
-def test_unexpected_persist_error_retains_actual_http_and_safe_run(monkeypatch):
+def test_unexpected_persist_error_retains_actual_http_and_safe_run(new_pg_factory, monkeypatch):
     from app.market.pulse.repository import PulseRepository
-    sync, factory, client, requests = setup()
+    sync, factory, client, requests = setup(new_pg_factory)
     def fail(*args):
         raise RuntimeError('secret database password')
     monkeypatch.setattr(PulseRepository, 'persist', fail)
@@ -103,8 +104,8 @@ def test_unexpected_persist_error_retains_actual_http_and_safe_run(monkeypatch):
         assert run.status == 'failed' and run.request_count == 1
 
 
-def test_target_change_blocks_publication_without_more_http(monkeypatch):
-    sync, factory, client, _ = setup(budget=60)
+def test_target_change_blocks_publication_without_more_http(new_pg_factory, monkeypatch):
+    sync, factory, client, _ = setup(new_pg_factory, budget=60)
     from app.market.pulse.repository import PulseRepository
     original = PulseRepository.target
     calls = 0
@@ -121,10 +122,10 @@ def test_target_change_blocks_publication_without_more_http(monkeypatch):
 
 
 @pytest.mark.parametrize('failure', ['target_recheck', 'publisher'])
-def test_publication_exception_preserves_collection_evidence(monkeypatch, failure):
+def test_publication_exception_preserves_collection_evidence(new_pg_factory, monkeypatch, failure):
     from app.market.pulse import sync as module
     from app.market.pulse.repository import PulseRepository
-    sync, factory, client, requests = setup(budget=60)
+    sync, factory, client, requests = setup(new_pg_factory, budget=60)
     def fail(*args, **kwargs):
         raise RuntimeError('secret database credentials')
     if failure == 'publisher':

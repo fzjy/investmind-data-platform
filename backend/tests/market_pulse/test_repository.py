@@ -9,7 +9,7 @@ from sqlalchemy import select, func
 from app.connectors.tushare.contracts import TushareResponse
 from app.db.models import DailyBasic, Security, SourcePayload, JobCursor, IngestionBatch, RejectedRecord
 from app.market.data.catalog import MarketDataCatalog
-from backend.tests.jobs.test_build_and_publish_integration import _factory
+
 
 DAY = date(2026, 10, 16)
 NOW = datetime(2026, 10, 16, 15, 35, tzinfo=UTC)
@@ -22,11 +22,12 @@ def module():
     return importlib.import_module('app.market.pulse.repository')
 
 
-def setup():
+def setup(new_pg_factory):
     value = module()
-    factory = _factory()
+    factory = new_pg_factory()
     with factory.begin() as session:
         session.add(Security(ts_code=CODE, symbol='600519', name='controlled'))
+        session.flush()
         session.add(DailyBasic(ts_code=CODE, trade_date=DAY, pe=23, data={'pe': '23', 'other': {'a': 1}}))
     return value, factory, value.PulseRepository(factory)
 
@@ -35,8 +36,8 @@ def response(status=0, code=CODE, day='20261016', fields=FIELDS):
     return TushareResponse(fields=fields, items=((code, day, status),))
 
 
-def test_status_zero_preserves_other_basic_fields():
-    value, factory, repo = setup()
+def test_status_zero_preserves_other_basic_fields(new_pg_factory):
+    value, factory, repo = setup(new_pg_factory)
     assert not repo.is_complete(CODE, DAY, 'fp', NOW)
     assert repo.persist(CODE, DAY, 'fp', response(), NOW)
     assert repo.is_complete(CODE, DAY, 'fp', NOW)
@@ -52,8 +53,8 @@ def test_status_zero_preserves_other_basic_fields():
     response('2.5'), response(code='000001.SZ'), response(day='20261015'),
     response(fields=('ts_code', 'ts_code', 'limit_status')),
     TushareResponse(fields=FIELDS, items=()), TushareResponse(fields=FIELDS, items=((CODE, '20261016', 2),)*2)])
-def test_rejects_wrong_identity_or_invalid_status(bad):
-    _, factory, repo = setup()
+def test_rejects_wrong_identity_or_invalid_status(new_pg_factory, bad):
+    _, factory, repo = setup(new_pg_factory)
     assert not repo.persist(CODE, DAY, 'fp', bad, NOW)
     assert not repo.is_complete(CODE, DAY, 'fp', NOW)
     with factory() as session:
@@ -64,8 +65,8 @@ def test_rejects_wrong_identity_or_invalid_status(bad):
 
 
 @pytest.mark.parametrize('damage', ['raw_content', 'raw_hash', 'batch', 'cursor', 'core', 'request'])
-def test_corrupt_proof_is_not_complete_or_publishable(damage):
-    value, factory, repo = setup()
+def test_corrupt_proof_is_not_complete_or_publishable(new_pg_factory, damage):
+    value, factory, repo = setup(new_pg_factory)
     repo.persist(CODE, DAY, 'fp', response(2), NOW)
     with factory.begin() as session:
         basic = session.scalar(select(DailyBasic))
@@ -105,9 +106,9 @@ def test_pulse_config_does_not_invalidate_quotes():
     assert changed.pulse.max_requests_per_run == 51
 
 
-def test_old_ingestion_cannot_erase_owned_status_or_proof():
+def test_old_ingestion_cannot_erase_owned_status_or_proof(new_pg_factory):
     from app.ingestion.repositories import IngestionRepository
-    value, factory, repo = setup()
+    value, factory, repo = setup(new_pg_factory)
     repo.persist(CODE, DAY, 'fp', response(2), NOW)
     with factory.begin() as session:
         IngestionRepository(session).upsert(DailyBasic, {'ts_code': CODE, 'trade_date': DAY},

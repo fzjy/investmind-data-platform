@@ -39,7 +39,7 @@ def test_only_pulse_group_and_actual_http_total(monkeypatch):
         calls.append(kwargs)
         return {'status': 'completed', 'publishReady': True, 'requestCount': 2, 'publication': {'status': 'no_change'}}
     monkeypatch.setattr(module, 'run_pulse_step', pulse)
-    settings = Settings(data_backend='database', database_url='sqlite://', routine_stocks_enabled=False,
+    settings = Settings(data_backend='database', database_url='postgresql+psycopg://controlled.invalid/test', routine_stocks_enabled=False,
         routine_macro_enabled=False, routine_market_pulse_enabled=True)
     result = module.run_routine_update(settings, now=NOW, publish=True, macro_rebuild=lambda _:None)
     assert result['status'] == 'completed' and result['pulse']['requestCount'] == 2
@@ -56,7 +56,7 @@ def test_pulse_exception_does_not_skip_macro(monkeypatch):
     monkeypatch.setattr(module, 'run_pulse_step', fail)
     monkeypatch.setattr(module, 'run_macro_catchup', lambda *a, **kw: calls.append('macro') or
         {'status': 'completed', 'activeCoverageCompleted': True, 'requestCount': 0})
-    settings = Settings(data_backend='database', database_url='sqlite://', routine_stocks_enabled=False,
+    settings = Settings(data_backend='database', database_url='postgresql+psycopg://controlled.invalid/test', routine_stocks_enabled=False,
         routine_market_pulse_enabled=True)
     result = module.run_routine_update(settings, now=NOW, macro_rebuild=lambda _:None)
     assert result['status'] == 'failed' and result['httpCounts']['total'] is None

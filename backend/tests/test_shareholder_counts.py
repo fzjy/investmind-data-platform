@@ -1,16 +1,17 @@
 from datetime import date
-from app.db.models import IngestionBatch, SourcePayload, ShareholderCount
+from app.db.models import IngestionBatch, SourcePayload, ShareholderCount, Security
 from app.ingestion.repositories import content_hash
 from app.stocks.shareholder_counts import load_shareholder_counts
 from app.stocks.shareholder_returns import concentration_periods
-from backend.tests.jobs.test_build_and_publish_integration import _factory
 
 
-def test_raw_history_replays_overwritten_core_and_preserves_same_day_conflicts():
-    factory = _factory()
+
+def test_raw_history_replays_overwritten_core_and_preserves_same_day_conflicts(pg_factory):
+    factory = pg_factory
     code = '600519.SH'
     with factory.begin() as session:
         batch = IngestionBatch(id='counts', source='tushare', dataset='shareholder_count', status='completed', rejected_count=0)
+        session.add(Security(ts_code=code, symbol=code[:6], name=code))
         session.add(batch)
         session.flush()
         payload = dict(fields=['ts_code', 'ann_date', 'end_date', 'holder_num'], items=[

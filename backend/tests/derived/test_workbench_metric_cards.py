@@ -9,7 +9,7 @@ from sqlalchemy import create_engine, func, select, text
 from app.db.models import MetricInput, MetricValue
 from app.stocks.derived.pipeline import DerivedPipeline
 from app.stocks.derived.workbench_cards import CARD_IDS, CARD_VERSION, calculate_metric_cards, metric_value_card
-from tests.derived.test_pipeline import _factory
+from backend.tests.derived.test_pipeline import seed_security
 
 
 def fixture():
@@ -78,8 +78,9 @@ def test_unknown_year_and_incomparable_debt():
     assert all(c.value is None and any("2024" in m for m in c.missing) for c in (count, annual, ntm))
 
 
-def test_persistence_rerun_and_legacy_contract():
-    factory = _factory()
+def test_persistence_rerun_and_legacy_contract(pg_factory):
+    factory = pg_factory
+    seed_security(factory)
     inputs = fixture()
     for _ in range(2):
         with factory.begin() as session:
@@ -95,15 +96,16 @@ def test_persistence_rerun_and_legacy_contract():
         assert all(len(r.content_hash) == 64 for r in lineage)
 
 
-def test_upgrade_with_preexisting_rows_and_metadata_bootstrap(monkeypatch):
+def test_upgrade_with_preexisting_rows_and_metadata_bootstrap(pg_url, monkeypatch):
     migration = import_module("migrations.versions.20261111_0019_workbench_card_calculation")
-    with create_engine("sqlite://").begin() as conn:
-        conn.execute(text("create table metric_value(id integer primary key)"))
-        conn.execute(text("insert into metric_value values (1)"))
+    with create_engine(pg_url).begin() as conn:
+        conn.execute(text("create schema derived"))
+        conn.execute(text("create table derived.metric_value(id integer primary key)"))
+        conn.execute(text("insert into derived.metric_value values (1)"))
         monkeypatch.setattr(migration, "op", Operations(MigrationContext.configure(conn)))
         migration.upgrade()
         migration.upgrade()
-        assert conn.execute(text("select id, calculation from metric_value")).one() == (1, None)
+        assert conn.execute(text("select id, calculation from derived.metric_value")).one() == (1, None)
 
 
 

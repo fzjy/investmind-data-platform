@@ -1,7 +1,7 @@
 from datetime import date, datetime, timezone
 
 from app.db.models import ContentDocument, FinancialIndicator, IncomeStatement
-from backend.tests.marts.test_content_runtime import PRODUCT, SYMBOL, _factory, prepare, run, state
+from backend.tests.marts.test_content_runtime import PRODUCT, SYMBOL, prepare, run, state
 
 
 def test_conflicting_single_quarter_does_not_fall_back_to_cumulative():
@@ -15,8 +15,8 @@ def test_conflicting_single_quarter_does_not_fall_back_to_cumulative():
     assert values["revenue"] is None and "revenue" in conflicts
 
 
-def test_same_day_reports_republish_with_late_fields_and_original_versions(monkeypatch):
-    factory = _factory()
+def test_same_day_reports_republish_with_late_fields_and_original_versions(pg_factory, monkeypatch):
+    factory = pg_factory
     prepare(factory)
     day = date(2026, 4, 24)
     annual = date(2025, 12, 31)

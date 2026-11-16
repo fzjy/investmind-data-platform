@@ -37,12 +37,12 @@ def test_market_only_group_and_publish_ready(monkeypatch):
     assert report['status'] == 'completed' and report['httpCounts']['total'] == 0
 
 
-def test_restart_after_week_only_plans_latest_slot_and_bad_core_recovers():
+def test_restart_after_week_only_plans_latest_slot_and_bad_core_recovers(new_pg_factory):
     assert importlib.util.find_spec('app.market.data.schedule_repository') is not None, 'schedule repository missing'
     from app.market.data.schedule_repository import MarketScheduleRepository
     from app.market.data.catalog import plan_market_targets
     from backend.tests.market_data.test_sync import job
-    value, factory, _ = setup()
+    value, factory, _ = setup(new_pg_factory)
     repo = MarketScheduleRepository(factory)
     info = repo.inspect(catalog(), now=NOW)
     assert info['latestDueAt'] == '2026-10-15T11:00:00+00:00' and info['collected'] is False
@@ -63,14 +63,14 @@ def test_restart_after_week_only_plans_latest_slot_and_bad_core_recovers():
     assert repo.inspect(catalog(), now=NOW)['collected'] is False
 
 
-def test_collected_unpublished_cycle_can_publish_with_zero_http(monkeypatch):
+def test_collected_unpublished_cycle_can_publish_with_zero_http(new_pg_factory, monkeypatch):
     from app.market.data import runtime as module
     from app.market.data.catalog import plan_market_targets
     from app.market.data.schedule_repository import MarketScheduleRepository
     from app.market.data.scheduling import most_recent_market_schedule
     from backend.tests.market_data.test_cli import runtime
     from backend.tests.marts.test_content_runtime import state
-    mod, factory = runtime(monkeypatch, seeded=True)
+    mod, factory = runtime(new_pg_factory, monkeypatch, seeded=True)
     cat = catalog()
     MarketScheduleRepository(factory).record(cat, slot=most_recent_market_schedule(NOW,cat.schedule),
         targets=plan_market_targets(cat,NOW), checked_at=NOW, collection={'status':'completed'}, publication=None)
@@ -78,11 +78,11 @@ def test_collected_unpublished_cycle_can_publish_with_zero_http(monkeypatch):
         raise AssertionError('must reuse collected targets')
     monkeypatch.setattr(mod, 'TushareClient', forbidden)
     tomorrow_morning = NOW + timedelta(hours=15)
-    report = module.run_market_step(Settings(data_backend='database',database_url='sqlite:///controlled'),
+    report = module.run_market_step(Settings(data_backend='database',database_url='postgresql+psycopg://controlled.invalid/test'),
         now=tomorrow_morning, dry_run=False, publish=True)
     assert report['status'] == 'completed' and report['requestCount'] == 0
     before = state(factory)
-    assert module.run_market_step(Settings(data_backend='database',database_url='sqlite:///controlled'),
+    assert module.run_market_step(Settings(data_backend='database',database_url='postgresql+psycopg://controlled.invalid/test'),
         now=tomorrow_morning, dry_run=False, publish=True)['status'] == 'not_due'
     assert state(factory) == before
 
@@ -115,12 +115,12 @@ import pytest
 
 
 @pytest.mark.parametrize('lookback',[1,14])
-def test_partial_cycle_resumes_frozen_asset_targets_across_us_close(monkeypatch, lookback):
+def test_partial_cycle_resumes_frozen_asset_targets_across_us_close(new_pg_factory, monkeypatch, lookback):
     import httpx, json
     from app.connectors.tushare.client import TushareClient
     from app.market.data import runtime as module
     from backend.tests.market_data.test_cli import runtime
-    mod, factory = runtime(monkeypatch)
+    mod, factory = runtime(new_pg_factory, monkeypatch)
     cat_payload = catalog().model_dump(mode='json',by_alias=True)
     cat_payload['sync']['maxRequestsPerRun'] = 4
     cat_payload['sync']['lookbackDays'] = lookback
@@ -134,7 +134,7 @@ def test_partial_cycle_resumes_frozen_asset_targets_across_us_close(monkeypatch,
             'fields':['ts_code','trade_date','open','high','low','close','pre_close','pct_chg'],
             'items':[[payload['params']['ts_code'],payload['params']['end_date'],100,100,100,100,100,0]]}})
     monkeypatch.setattr(mod, 'TushareClient', lambda token, **kwargs:TushareClient(token,transport=httpx.MockTransport(transport),max_retries=0))
-    configured = Settings(data_backend='database',database_url='sqlite:///controlled',tushare_token='controlled')
+    configured = Settings(data_backend='database',database_url='postgresql+psycopg://controlled.invalid/test',tushare_token='controlled')
     assert module.run_market_step(configured,now=NOW,dry_run=False,publish=False)['status'] == 'partial'
     second = module.run_market_step(configured,now=NOW+timedelta(hours=15),dry_run=False,publish=False)
     assert second['requestCount'] == 4
@@ -142,7 +142,7 @@ def test_partial_cycle_resumes_frozen_asset_targets_across_us_close(monkeypatch,
     assert calls[4]['params']['end_date'] == '20261014'
 
 
-def test_tampered_completed_cycle_cannot_claim_zero_http_ready():
+def test_tampered_completed_cycle_cannot_claim_zero_http_ready(new_pg_factory):
     import copy
     from datetime import date, datetime
     from sqlalchemy import select
@@ -151,7 +151,7 @@ def test_tampered_completed_cycle_cannot_claim_zero_http_ready():
     from app.market.data.schedule_repository import MarketScheduleRepository
     from app.market.data.scheduling import most_recent_market_schedule
     from backend.tests.market_data.test_sync import job
-    _, factory, _ = setup()
+    _, factory, _ = setup(new_pg_factory)
     sync, client, _ = job(factory)
     try:
         sync.run(NOW)

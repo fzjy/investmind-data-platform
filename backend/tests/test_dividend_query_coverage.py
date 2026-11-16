@@ -1,4 +1,5 @@
 """实际派息查询覆盖：原件、空响应及北交所旧代码。"""
+from backend.tests.support.snapshots import set_snapshot_version
 import base64
 from copy import deepcopy
 from datetime import date, datetime, timedelta, timezone
@@ -57,8 +58,8 @@ class Client:
         return TushareResponse.model_validate(data)
 
 
-def factory(*, bse=False):
-    f = source()
+def factory(new_pg_factory, *, bse=False):
+    f = source(new_pg_factory)
     with f.begin() as s:
         old = s.get(PublishedSnapshot, 'screener')
         symbol = CURRENT if bse else old.payload['stocks'][0]['symbol']
@@ -76,8 +77,8 @@ def coverage(f, symbol):
         return dividend_query_coverage(s, [symbol])[symbol]
 
 
-def test_successful_empty_response_has_explicit_query_and_listing_coverage():
-    f, symbol = factory()
+def test_successful_empty_response_has_explicit_query_and_listing_coverage(new_pg_factory):
+    f, symbol = factory(new_pg_factory)
     assert refresh(f, Client(empty=True))['status'] == 'completed'
     item = coverage(f, symbol)
     assert item['querySource'].startswith('raw.source_payload:')
@@ -87,18 +88,18 @@ def test_successful_empty_response_has_explicit_query_and_listing_coverage():
     assert item['issues'] == []
 
 
-def test_failed_response_never_becomes_empty_query_coverage():
-    f, symbol = factory()
+def test_failed_response_never_becomes_empty_query_coverage(new_pg_factory):
+    f, symbol = factory(new_pg_factory)
     assert refresh(f, Client(fail=symbol))['status'] == 'blocked'
     item = coverage(f, symbol)
     assert item['querySource'] is None and item['issues']
     assert item['coverageEnd'] is None
 
 
-def test_mapping_and_old_code_share_budget_resume_and_merge_ledger():
+def test_mapping_and_old_code_share_budget_resume_and_merge_ledger(new_pg_factory):
     from app.portfolio.api.dividends import verified_dividend_rows, resolve_distribution_evidence
     from app.portfolio.marts.portfolio_ledger import load_portfolio_dividend_ledger
-    f, symbol = factory(bse=True)
+    f, symbol = factory(new_pg_factory, bse=True)
     client = Client()
     first = refresh(f, client, budget=1)
     assert first['status'] == 'pending' and first['requestCount'] == 1, first
@@ -125,13 +126,13 @@ def test_mapping_and_old_code_share_budget_resume_and_merge_ledger():
 
 
 @pytest.mark.parametrize('alias', [False, True])
-def test_ledger_event_metadata_belongs_to_actual_alias_or_historical_original(alias):
+def test_ledger_event_metadata_belongs_to_actual_alias_or_historical_original(new_pg_factory, alias):
     from app.portfolio.marts.portfolio_ledger import load_portfolio_dividend_ledger, validate_dividend_ledger
     class OldOnlyClient(Client):
         def call(self, api, params, fields):
             self.empty = api == 'dividend' and params['ts_code'] == CURRENT
             return super().call(api, params, fields)
-    f, symbol = factory(bse=alias)
+    f, symbol = factory(new_pg_factory, bse=alias)
     assert refresh(f, OldOnlyClient() if alias else Client())['status'] == 'completed'
     if not alias:
         assert refresh(f, Client(empty=True), now=NOW + timedelta(days=8))['status'] == 'completed'
@@ -168,8 +169,8 @@ def test_ledger_gate_rejects_unbound_original_metadata(saved, change):
     assert validate_dividend_ledger(ledger, (SYMBOL,), DAY)
 
 
-def test_alias_failure_keeps_successful_raw_and_does_not_grant_zero():
-    f, symbol = factory(bse=True)
+def test_alias_failure_keeps_successful_raw_and_does_not_grant_zero(new_pg_factory):
+    f, symbol = factory(new_pg_factory, bse=True)
     client = Client(empty=True, fail=OLD)
     result = refresh(f, client)
     assert result['status'] == 'blocked'
@@ -182,8 +183,8 @@ def test_alias_failure_keeps_successful_raw_and_does_not_grant_zero():
         assert s.scalars(select(SourcePayload)).all()
 
 
-def test_mapping_failure_is_visible_and_never_queries_aliases_blindly():
-    f, symbol = factory(bse=True)
+def test_mapping_failure_is_visible_and_never_queries_aliases_blindly(new_pg_factory):
+    f, symbol = factory(new_pg_factory, bse=True)
     client = Client(fail='bse_mapping')
     result = refresh(f, client)
     assert result['status'] == 'blocked' and result['requestCount'] == 1
@@ -191,8 +192,8 @@ def test_mapping_failure_is_visible_and_never_queries_aliases_blindly():
     assert coverage(f, symbol)['issues']
 
 
-def test_tampered_mapping_original_cannot_supply_alias_identity():
-    f, symbol = factory(bse=True)
+def test_tampered_mapping_original_cannot_supply_alias_identity(new_pg_factory):
+    f, symbol = factory(new_pg_factory, bse=True)
     result = refresh(f, Client())
     assert result['status'] == 'completed', result
     with f.begin() as s:
@@ -202,11 +203,11 @@ def test_tampered_mapping_original_cannot_supply_alias_identity():
     assert item['issues'] and item['querySource'] is None
 
 
-def test_cli_preview_discovers_mapping_after_legacy_primary_is_complete():
+def test_cli_preview_discovers_mapping_after_legacy_primary_is_complete(new_pg_factory):
     from app.portfolio.dividend_capture import capture_dividend_evidence, run_dividend_capture
     from backend.tests.test_dividend_evidence_capture import config
     from types import SimpleNamespace
-    f, symbol = factory(bse=True)
+    f, symbol = factory(new_pg_factory, bse=True)
     client = Client(empty=True)
     assert capture_dividend_evidence(f, client, execute=True, config=config())['status'] == 'completed'
     preview = run_dividend_capture(SimpleNamespace(), f)
@@ -217,9 +218,9 @@ def test_cli_preview_discovers_mapping_after_legacy_primary_is_complete():
     assert coverage(f, symbol)['issues'] == []
 
 
-def test_missing_bse_mapping_does_not_remove_unrelated_security_coverage():
+def test_missing_bse_mapping_does_not_remove_unrelated_security_coverage(new_pg_factory):
     from app.portfolio.api.dividends import dividend_query_coverage
-    f, symbol = factory()
+    f, symbol = factory(new_pg_factory)
     assert refresh(f, Client(empty=True))['status'] == 'completed'
     with f.begin() as s:
         s.add(Security(ts_code=CURRENT, symbol='920047', name='测试证券', list_date=date(2020, 11, 24)))
@@ -229,8 +230,8 @@ def test_missing_bse_mapping_does_not_remove_unrelated_security_coverage():
     assert values[CURRENT]['issues'] and values[CURRENT]['querySource'] is None
 
 
-def test_failed_mapping_revision_invalidates_old_query_coverage():
-    f, symbol = factory(bse=True)
+def test_failed_mapping_revision_invalidates_old_query_coverage(new_pg_factory):
+    f, symbol = factory(new_pg_factory, bse=True)
     assert refresh(f, Client(empty=True))['status'] == 'completed'
     assert coverage(f, symbol)['issues'] == []
     result = refresh(f, Client(fail='bse_mapping'), now=NOW + timedelta(days=8))
@@ -239,16 +240,16 @@ def test_failed_mapping_revision_invalidates_old_query_coverage():
     assert item['issues'] and item['querySource'] is None
 
 
-def test_mapping_at_supplier_1000_row_cap_never_grants_complete_coverage():
-    f, symbol = factory(bse=True)
+def test_mapping_at_supplier_1000_row_cap_never_grants_complete_coverage(new_pg_factory):
+    f, symbol = factory(new_pg_factory, bse=True)
     result = refresh(f, Client(mapping_size=1000))
     assert result['status'] == 'blocked' and result['requestCount'] == 1
     assert coverage(f, symbol)['issues']
 
 
-def test_fiscal_loader_isolates_missing_mapping_from_unrelated_security():
+def test_fiscal_loader_isolates_missing_mapping_from_unrelated_security(new_pg_factory):
     from app.stocks.derived.metric_dividends import load_dividend_years
-    f, symbol = factory()
+    f, symbol = factory(new_pg_factory)
     assert refresh(f, Client(empty=True))['status'] == 'completed'
     with f.begin() as s:
         s.add(Security(ts_code=CURRENT, symbol='920047', name='测试证券', list_date=date(2020, 11, 24)))
@@ -258,11 +259,11 @@ def test_fiscal_loader_isolates_missing_mapping_from_unrelated_security():
     assert not years[CURRENT]['2025']['covered'] and years[CURRENT]['2025']['issues']
 
 
-def test_invalid_security_original_is_isolated_in_coverage_result():
+def test_invalid_security_original_is_isolated_in_coverage_result(new_pg_factory):
     from app.portfolio.api.dividends import dividend_query_coverage, DIVIDEND_FIELDS
     from app.connectors.tushare.contracts import request_hash
     other = '600002.SH'
-    f, symbol = factory()
+    f, symbol = factory(new_pg_factory)
     with f.begin() as s:
         base = s.get(PublishedSnapshot, 'screener')
         base.payload = base.payload | dict(stocks=[dict(symbol=symbol), dict(symbol=other)])
@@ -278,16 +279,17 @@ def test_invalid_security_original_is_isolated_in_coverage_result():
     assert values[other]['issues'] and values[other]['querySource'] is None
 
 
-def test_missing_listing_date_isolated_in_mixed_portfolio_publication():
+def test_missing_listing_date_isolated_in_mixed_portfolio_publication(new_pg_factory):
     from app.db.models import DailyPrice, AdjustmentFactor
     from app.portfolio.marts.portfolio_runtime import rebuild_portfolio
     from app.portfolio.dividend_yield_inputs import valid_yield_inputs
-    f, symbol = factory()
+    f, symbol = factory(new_pg_factory)
     other = '600002.SH'
     with f.begin() as s:
         base = s.get(PublishedSnapshot, 'screener')
         base.payload = base.payload | dict(stocks=[*base.payload['stocks'], dict(symbol=other, price=10)])
         s.add(Security(ts_code=other, symbol='600002', name='缺上市日期', list_date=None))
+        s.flush()
         s.add(DailyPrice(ts_code=other, trade_date=date(2026, 8, 24), close=10))
         for code in (symbol, other):
             s.add(AdjustmentFactor(ts_code=code, trade_date=date(2026, 8, 24), adj_factor=1))
@@ -307,8 +309,8 @@ def test_missing_listing_date_isolated_in_mixed_portfolio_publication():
     assert inputs[symbol]['fiscalYears']['2025']['zeroConfirmed']
 
 
-def test_truncated_mapping_original_retains_physical_request_count_and_blocks():
-    f, symbol = factory(bse=True)
+def test_truncated_mapping_original_retains_physical_request_count_and_blocks(new_pg_factory):
+    f, symbol = factory(new_pg_factory, bse=True)
     client = Client(mapping_more=True)
     result = refresh(f, client)
     assert result['status'] == 'blocked' and result['requestCount'] == 1, result
@@ -316,10 +318,10 @@ def test_truncated_mapping_original_retains_physical_request_count_and_blocks():
     assert refresh(f, client)['requestCount'] == 0 and len(client.calls) == 1
 
 
-def test_ledger_never_accepts_caller_rows_in_place_of_verified_originals():
+def test_ledger_never_accepts_caller_rows_in_place_of_verified_originals(new_pg_factory):
     from app.portfolio.evidence import routine_ledger_evidence
     from app.portfolio.api.dividends import build_dividend_ledger
-    f, symbol = factory()
+    f, symbol = factory(new_pg_factory)
     assert refresh(f, Client())['status'] == 'completed'
     with f() as s:
         base = s.get(PublishedSnapshot, 'screener')
@@ -331,11 +333,11 @@ def test_ledger_never_accepts_caller_rows_in_place_of_verified_originals():
     assert ledger['assets'][symbol]['events'][0]['cashPerShare'] == .4
 
 
-def test_incomplete_alias_query_cannot_supply_ledger_zero_proof():
+def test_incomplete_alias_query_cannot_supply_ledger_zero_proof(new_pg_factory):
     from app.portfolio.dividend_capture import capture_dividend_evidence
     from app.portfolio.marts.portfolio_ledger import load_portfolio_dividend_ledger
     from backend.tests.test_dividend_evidence_capture import config
-    f, symbol = factory(bse=True)
+    f, symbol = factory(new_pg_factory, bse=True)
     client = Client(empty=True)
     assert capture_dividend_evidence(f, client, execute=True, config=config())['status'] == 'completed'
     assert refresh(f, Client(empty=True, fail=OLD))['status'] == 'blocked'
@@ -344,15 +346,15 @@ def test_incomplete_alias_query_cannot_supply_ledger_zero_proof():
     assert not asset.get('querySource') and asset['gaps']
 
 
-def test_ledger_coverage_never_advances_with_manifest_metadata_alone():
+def test_ledger_coverage_never_advances_with_manifest_metadata_alone(new_pg_factory):
     from app.portfolio.marts.portfolio_ledger import load_portfolio_dividend_ledger
-    f, symbol = factory()
+    f, symbol = factory(new_pg_factory)
     client = Client(empty=True)
     assert refresh(f, client)['status'] == 'completed'
     with f.begin() as s:
         base = s.get(PublishedSnapshot, 'screener')
         base.as_of += timedelta(days=1)
-        base.version = 'next-day'
+        set_snapshot_version(s, base, 'next-day')
         from app.portfolio.evidence import _get, _save, _seal
         manifest = _get(s, 'manifest').cursor_value
         _save(s, 'manifest', _seal({k:v for k,v in manifest.items() if k != 'checksum'} |
@@ -411,16 +413,16 @@ def test_ledger_gate_rejects_bad_history_event_date_without_raising(saved):
 
 
 @pytest.mark.parametrize('bse', [False, True])
-def test_new_base_day_refreshes_cash_queries_without_requerying_identity_metadata(bse):
+def test_new_base_day_refreshes_cash_queries_without_requerying_identity_metadata(new_pg_factory, bse):
     from app.stocks.derived.metric_dividends import load_dividend_years
-    f, symbol = factory(bse=bse)
+    f, symbol = factory(new_pg_factory, bse=bse)
     client = Client(empty=True)
     assert refresh(f, client)['status'] == 'completed'
     mapping_count = sum(api == 'bse_mapping' for api, _ in client.calls)
     with f.begin() as s:
         base = s.get(PublishedSnapshot, 'screener')
         base.as_of += timedelta(days=1)
-        base.version = 'next-day'
+        set_snapshot_version(s, base, 'next-day')
     result = refresh(f, client, now=NOW + timedelta(days=1))
     assert result['status'] == 'completed' and result['requestCount'] == (2 if bse else 1), result
     assert sum(api == 'bse_mapping' for api, _ in client.calls) == mapping_count

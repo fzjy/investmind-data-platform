@@ -12,7 +12,7 @@ from app.db.models import JobCursor, JobRun, Security
 from app.jobs.locks import ProcessLocalJobLock
 from app.shared.stock_mapping import StockMappingPolicy
 from app.stocks.universes import UniverseResolver
-from backend.tests.derived.test_inputs import _factory
+
 from backend.tests.classification.test_contracts import catalog_rows, member_row
 
 
@@ -22,8 +22,8 @@ def policy(**changes):
         sync.ClassificationSyncConfig(asOf=date(2026, 9, 18), **changes)})})
 
 
-def task(*, max_requests=128, selected=None, mapping=None, reply=None):
-    factory = _factory()
+def task(new_pg_factory, *, max_requests=128, selected=None, mapping=None, reply=None):
+    factory = new_pg_factory()
     selection = selected or UniverseResolver().resolve("representative-50")
     with factory.begin() as session:
         session.add_all([Security(ts_code=code, symbol=code[:6], name="样本") for code in selection.symbols])
@@ -50,12 +50,12 @@ def task(*, max_requests=128, selected=None, mapping=None, reply=None):
 
 
 @pytest.mark.parametrize("network", [False, True])
-def test_physical_retries_share_budget_before_post(network):
+def test_physical_retries_share_budget_before_post(new_pg_factory, network):
     def failure(body, count):
         if network:
             raise httpx.ConnectError("network unavailable")
         return httpx.Response(503)
-    job, _, calls, client = task(max_requests=2, reply=failure)
+    job, _, calls, client = task(new_pg_factory, max_requests=2, reply=failure)
     try:
         result = job.run()
         assert result["status"] == "partial" and result["requests"] == 2
@@ -65,8 +65,8 @@ def test_physical_retries_share_budget_before_post(network):
         client.close()
 
 
-def test_budget_partial_resume_and_completed_restart_zero_http():
-    job, factory, calls, client = task(max_requests=4)
+def test_budget_partial_resume_and_completed_restart_zero_http(new_pg_factory):
+    job, factory, calls, client = task(new_pg_factory, max_requests=4)
     try:
         first = job.run()
         assert first["status"] == "partial" and len(calls) == 4
@@ -84,8 +84,8 @@ def test_budget_partial_resume_and_completed_restart_zero_http():
         client.close()
 
 
-def test_dry_run_is_read_only_and_reports_lower_bound():
-    job, factory, calls, client = task()
+def test_dry_run_is_read_only_and_reports_lower_bound(new_pg_factory):
+    job, factory, calls, client = task(new_pg_factory)
     try:
         result = job.preflight()
         assert result["minimumRequests"] == 103 and result["pool"]["size"] == 50
@@ -98,8 +98,8 @@ def test_dry_run_is_read_only_and_reports_lower_bound():
         client.close()
 
 
-def test_budget_change_preserves_identity_but_contract_change_isolates():
-    job, _, _, client = task()
+def test_budget_change_preserves_identity_but_contract_change_isolates(new_pg_factory):
+    job, _, _, client = task(new_pg_factory)
     try:
         original = job.preflight()["contractIdentity"]
         job.policy = policy(maxRequestsPerRun=64)
@@ -113,9 +113,9 @@ def test_budget_change_preserves_identity_but_contract_change_isolates():
 
 
 @pytest.mark.parametrize("profile", ["all", "custom"])
-def test_non_fixed_pool_fails_before_http(profile):
+def test_non_fixed_pool_fails_before_http(new_pg_factory, profile):
     selection = replace(UniverseResolver().resolve("representative-50"), profile=profile)
-    job, _, calls, client = task(selected=selection)
+    job, _, calls, client = task(new_pg_factory, selected=selection)
     try:
         with pytest.raises(ValueError, match="representative-50"):
             job.preflight()
@@ -124,8 +124,8 @@ def test_non_fixed_pool_fails_before_http(profile):
         client.close()
 
 
-def test_missing_as_of_fails_without_guessing_calendar():
-    job, _, calls, client = task(mapping=StockMappingPolicy.load())
+def test_missing_as_of_fails_without_guessing_calendar(new_pg_factory):
+    job, _, calls, client = task(new_pg_factory, mapping=StockMappingPolicy.load())
     try:
         with pytest.raises(ValueError, match="asOf"):
             job.preflight()
@@ -134,8 +134,8 @@ def test_missing_as_of_fails_without_guessing_calendar():
         client.close()
 
 
-def test_lock_contention_zero_http():
-    job, _, calls, client = task()
+def test_lock_contention_zero_http(new_pg_factory):
+    job, _, calls, client = task(new_pg_factory)
     assert job.lock.try_acquire("sync-classification:tushare:SW2021")
     try:
         assert job.run()["status"] == "locked"
@@ -145,8 +145,8 @@ def test_lock_contention_zero_http():
         client.close()
 
 
-def test_authentication_failure_stops_immediately():
-    job, _, calls, client = task(reply=lambda body, count: httpx.Response(403))
+def test_authentication_failure_stops_immediately(new_pg_factory):
+    job, _, calls, client = task(new_pg_factory, reply=lambda body, count: httpx.Response(403))
     try:
         assert job.run()["status"] == "failed"
         assert len(calls) == 1
@@ -154,8 +154,8 @@ def test_authentication_failure_stops_immediately():
         client.close()
 
 
-def test_partial_report_has_all_stock_units_without_claiming_coverage():
-    job, _, _, client = task(max_requests=4)
+def test_partial_report_has_all_stock_units_without_claiming_coverage(new_pg_factory):
+    job, _, _, client = task(new_pg_factory, max_requests=4)
     try:
         result = job.run()
         assert len(result["stocks"]) == 50
@@ -167,8 +167,8 @@ def test_partial_report_has_all_stock_units_without_claiming_coverage():
         client.close()
 
 
-def test_client_without_budget_hook_cannot_issue_unmetered_http():
-    job, _, calls, client = task(max_requests=1)
+def test_client_without_budget_hook_cannot_issue_unmetered_http(new_pg_factory):
+    job, _, calls, client = task(new_pg_factory, max_requests=1)
     client._before_request = None
     try:
         result = job.run()
@@ -178,11 +178,11 @@ def test_client_without_budget_hook_cannot_issue_unmetered_http():
         client.close()
 
 
-def test_failed_query_is_retried_on_normal_resume_without_repeating_completed_units():
+def test_failed_query_is_retried_on_normal_resume_without_repeating_completed_units(new_pg_factory):
     def bad_first_stock(body, count):
         if count == 4:
             return httpx.Response(200, json={"code": 0, "data": {"fields": ["ts_code"], "items": []}})
-    job, _, calls, client = task(reply=bad_first_stock)
+    job, _, calls, client = task(new_pg_factory, reply=bad_first_stock)
     try:
         assert job.run()["status"] == "failed"
         result = job.run()

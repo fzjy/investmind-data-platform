@@ -1,11 +1,10 @@
-"""主营证据：仅内存库和合成HTTP，不使用用户配置/网络。"""
+"""主营证据：仅临时 PostgreSQL和合成HTTP，不使用用户配置/网络。"""
 import base64,json
 from copy import deepcopy
 from datetime import datetime,timezone,timedelta
 from hashlib import sha256
 import pytest
-from sqlalchemy import create_engine,select,func
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import select, func
 from app.db.models import DataAcquisitionState,JobCursor,IngestionBatch,SourcePayload,PublishedSnapshot
 from app.connectors.tushare.contracts import TushareResponse
 
@@ -16,16 +15,13 @@ def module():
     return business_supply
 
 @pytest.fixture
-def factory(monkeypatch,tmp_path):
+def factory(pg_factory, monkeypatch,tmp_path):
     m=module();path=tmp_path/'financial.json'
     path.write_text(json.dumps({'businessSupply':dict(enabled=True,maxHttpPerRun=20,timeoutSeconds=20,historyYears=10,refreshDays=7)}))
     monkeypatch.setattr(m,'CONFIG_FILE',path)
-    engine=create_engine('sqlite://',execution_options={'schema_translate_map':{'ops':None,'raw':None,'mart':None}})
-    for model in (DataAcquisitionState,JobCursor,IngestionBatch,SourcePayload,PublishedSnapshot):model.__table__.create(engine)
-    f=sessionmaker(engine,expire_on_commit=False)
+    f = pg_factory
     with f.begin() as s:s.add(PublishedSnapshot(product='screener',version='base',as_of=NOW,payload={'stocks':[{'symbol':'600519.SH'}]}))
     yield f
-    engine.dispose()
 
 class Client:
     def __init__(self,*,split=False,fail=False,empty=False,absent_flag=False,wrong=False,cap=False,too_many=False):

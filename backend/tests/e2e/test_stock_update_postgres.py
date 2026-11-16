@@ -19,7 +19,7 @@ from app.stocks.update.repository import StockUpdateRepository
 from app.marts.publication import SnapshotPublisher
 from app.marts.contracts import MartCandidate
 from app.stocks.universes import UniverseResolver
-from backend.tests.stock_update.test_sync import task, NOW
+from backend.tests.stock_update.test_sync import mock_client, NOW
 from backend.tests.stock_update.test_repository import sample
 
 pytestmark = [pytest.mark.postgres, pytest.mark.skipif(os.environ.get('DANG_RUN_POSTGRES_TESTS') != '1', reason='requires registered disposable PostgreSQL17')]
@@ -76,6 +76,7 @@ def test_pg_resume_and_stock_only_atomic_publication(pg, monkeypatch):
     with f.begin() as s:
         s.add_all([Security(ts_code=c, symbol=c[:6], name='样本', exchange='SSE', status='L',
             list_date=date(2026, 10, 12)) for c in pool.symbols])
+        s.flush()
         nodes = [Classification(provider='tushare', source='SW2021', classification_id=f'test{level}',
             name=f'层级{level}', level=level, parent_id=f'test{level-1}' if level>1 else None, data={}) for level in (1, 2, 3)]
         s.add_all(nodes)
@@ -90,7 +91,7 @@ def test_pg_resume_and_stock_only_atomic_publication(pg, monkeypatch):
                 'pct_chg': 0, 'amount': 1000, 'total_mv': 10000, 'circ_mv': 9000, 'adj_factor': 1,
                 'pe': 20, 'pb': 1, 'turnover_rate': 1} for day in ('20261012', '20261013')]
             return httpx.Response(200, json={'code': 0, 'data': {'fields': fields, 'items': [[r.get(field) for field in fields] for r in rows]}})
-    fake, client, calls = task(budget=3, override=override)
+    client, calls = mock_client(override=override)
     try:
         lock = PostgresAdvisoryJobLock(engine)
         first = StockUpdateSync(f, client, pool, StockUpdateOptions(max_requests=3), lock).run(NOW)

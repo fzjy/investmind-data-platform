@@ -135,11 +135,11 @@ def test_consecutive_years_are_anchored_to_latest_fiscal_and_stop_on_recorded_ze
     assert consecutive(records, 2026).value is None
 
 
-def test_core_formula_inputs_use_shared_zero_instead_of_legacy_cash(monkeypatch):
+def test_core_formula_inputs_use_shared_zero_instead_of_legacy_cash(pg_factory, monkeypatch):
     from app.db.models import Security
     from app.stocks.derived.inputs import CoreSnapshotRepository
-    from backend.tests.derived.test_inputs import _factory
-    factory = _factory()
+
+    factory = pg_factory
     with factory.begin() as session:
         session.add(Security(ts_code='600001.SH', symbol='600001', name='test', status='L'))
     monkeypatch.setattr('app.stocks.derived.metric_dividends.load_dividend_years',
@@ -172,9 +172,9 @@ def test_invalid_fiscal_date_never_becomes_query_backed_zero():
     assert not result['2025']['covered'] and result['2025']['issues']
 
 
-def test_failed_alias_evidence_is_isolated_per_security(monkeypatch):
+def test_failed_alias_evidence_is_isolated_per_security(pg_factory, monkeypatch):
     from app.stocks.derived import metric_dividends
-    from backend.tests.derived.test_inputs import _factory
+
     def originals(session, symbols):
         if '920047.BJ' in symbols:
             raise ValueError('alias_query_failed')
@@ -182,7 +182,7 @@ def test_failed_alias_evidence_is_isolated_per_security(monkeypatch):
     monkeypatch.setattr(metric_dividends, 'verified_dividend_rows', originals)
     monkeypatch.setattr('app.portfolio.api.dividends.dividend_query_coverage',
         lambda session, symbols: {s: coverage() for s in symbols})
-    with _factory()() as session:
+    with pg_factory() as session:
         result = metric_dividends.load_dividend_years(session, ['920047.BJ', '000001.SZ'], date(2026, 11, 14))
     assert not result['920047.BJ']['2025']['covered']
     assert result['000001.SZ']['2025']['zeroConfirmed']
@@ -218,19 +218,19 @@ def test_zero_dividend_risk_keeps_no_outflow_normal_without_zero_denominator_err
     assert all(r['status'] == 'normal' and not r['missingFields'] for r in relevant)
 
 
-def test_list_inputs_keep_more_than_five_years_for_consecutive_history(monkeypatch):
+def test_list_inputs_keep_more_than_five_years_for_consecutive_history(pg_factory, monkeypatch):
     from app.db.models import Security
     from app.stocks.derived.inputs import load_metric_card_inputs
     from app.stocks.derived import metric_dividends
     from app.stocks.derived.formulas import dividend_years as consecutive
-    from backend.tests.derived.test_inputs import _factory
+
     rows = [row(end_date=f'{y}1231', ann_date=f'{y+1}0501', imp_ann_date=f'{y+1}0501',
                 record_date=f'{y+1}0510', ex_date=f'{y+1}0511', pay_date=f'{y+1}0512',
                 div_listdate=None, stk_div=None, sourceId=f'raw.source_payload:10:row:{y}') for y in range(2020, 2026)]
     monkeypatch.setattr(metric_dividends, 'verified_dividend_rows', lambda *args: {'600001.SH': (10, rows)})
     monkeypatch.setattr('app.portfolio.api.dividends.dividend_query_coverage',
         lambda *args: {'600001.SH': coverage(coverageStart='2020-01-01')})
-    with _factory().begin() as session:
+    with pg_factory.begin() as session:
         session.add(Security(ts_code='600001.SH', symbol='600001', name='test', status='L', list_date=date(2020, 1, 1)))
         session.flush()
         inputs = load_metric_card_inputs(session, ['600001.SH'], date(2026, 11, 14))['600001.SH']

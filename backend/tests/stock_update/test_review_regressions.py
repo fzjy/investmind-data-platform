@@ -16,8 +16,8 @@ from backend.tests.stock_update.test_sync import task, NOW
 from backend.tests.stock_update.test_validation import response
 
 
-def test_actual_financial_empty_cannot_complete():
-    f, pool = fixtures()
+def test_actual_financial_empty_cannot_complete(new_pg_factory):
+    f, pool = fixtures(new_pg_factory)
     symbol = pool.symbols[0]
     with f.begin() as s:
         s.add(DisclosureSchedule(ts_code=symbol, end_date=date(2026, 9, 30), ann_date=date(2026, 10, 1), actual_date=date(2026, 10, 12)))
@@ -30,8 +30,8 @@ def test_actual_financial_empty_cannot_complete():
     assert result['status'] == 'pending'
 
 
-def test_same_announcement_can_progress_to_actual_disclosure():
-    f, pool = fixtures()
+def test_same_announcement_can_progress_to_actual_disclosure(new_pg_factory):
+    f, pool = fixtures(new_pg_factory)
     symbol = pool.symbols[0]
     with f.begin() as s:
         s.add(DisclosureSchedule(ts_code=symbol, end_date=date(2026, 9, 30), ann_date=date(2026, 10, 1), actual_date=None))
@@ -44,14 +44,14 @@ def test_same_announcement_can_progress_to_actual_disclosure():
     assert len(StockUpdatePlanner(f, pool, StockUpdateOptions()).stage_plans('financial', date(2026, 10, 13))) == 4
 
 
-def test_target_empty_is_retryable_not_completed_zero_http():
+def test_target_empty_is_retryable_not_completed_zero_http(new_pg_factory):
     available = [False]
     def override(body, count):
         if body['api_name'] in ('daily', 'daily_basic', 'adj_factor') and available[0]:
             fields = body['fields'].split(',')
             row = {'ts_code': body['params']['ts_code'], 'trade_date': '20261013', 'close': 10, 'total_mv': 100, 'adj_factor': 1}
             return httpx.Response(200, json={'code': 0, 'data': {'fields': fields, 'items': [[row.get(f) for f in fields]]}})
-    job, client, calls = task(override=override)
+    job, client, calls = task(new_pg_factory, override=override)
     try:
         first = job.run(NOW)
         assert first['status'] == 'partial' and first['publishReady'] is False
@@ -65,8 +65,8 @@ def test_target_empty_is_retryable_not_completed_zero_http():
         client.close()
 
 
-def test_resumed_preflight_uses_frozen_target():
-    job, client, _ = task(budget=3)
+def test_resumed_preflight_uses_frozen_target(new_pg_factory):
+    job, client, _ = task(new_pg_factory, budget=3)
     try:
         result = job.run(NOW)
         probe = job.preflight(NOW+timedelta(days=1))
@@ -77,7 +77,7 @@ def test_resumed_preflight_uses_frozen_target():
 
 
 @pytest.mark.parametrize("legacy", [0, 3, 1], ids=["current", "pre-sankey", "pre-metric-cards"])
-def test_report_gap_blocks_ready_then_recovers_all_four_tables(monkeypatch, legacy):
+def test_report_gap_blocks_ready_then_recovers_all_four_tables(new_pg_factory, monkeypatch, legacy):
     available = [False]
     def override(body, count):
         if body['api_name'] in {'income', 'balancesheet', 'cashflow', 'fina_indicator'} and available[0]:
@@ -86,7 +86,7 @@ def test_report_gap_blocks_ready_then_recovers_all_four_tables(monkeypatch, lega
                 'ann_date': '20261012', 'f_ann_date': '20261012', 'report_type': '1', 'update_flag': '0',
                 'total_revenue': 100, 'n_income_attr_p': 10, 'total_assets': 100, 'roe': 10}
             return httpx.Response(200, json={'code': 0, 'data': {'fields': fields, 'items': [[row.get(f) for f in fields]]}})
-    job, client, _ = task(market_ready=True, override=override)
+    job, client, _ = task(new_pg_factory, market_ready=True, override=override)
     try:
         with job.factory.begin() as s:
             nodes = [Classification(provider='tushare', source='SW2021', classification_id=f'test{i}', level=i,
@@ -132,11 +132,11 @@ def test_report_gap_blocks_ready_then_recovers_all_four_tables(monkeypatch, lega
         client.close()
 
 
-def test_replaying_narrow_cashflow_keeps_same_revision_details():
+def test_replaying_narrow_cashflow_keeps_same_revision_details(new_pg_factory):
     from app.db.models import CashflowStatement
     from app.connectors.tushare.strategies import LEGACY_CASHFLOW_FIELDS
 
-    factory, pool = fixtures()
+    factory, pool = fixtures(new_pg_factory)
     symbol = pool.symbols[0]
     full = plan_for(Dataset.CASHFLOW, {"ts_code": symbol, "period": "20260930"})
     narrow = replace(full, fields=LEGACY_CASHFLOW_FIELDS)
@@ -154,11 +154,11 @@ def test_replaying_narrow_cashflow_keeps_same_revision_details():
         assert row.data["n_cashflow_act"] == 100
 
 
-def test_daily_cashflow_parent_report_does_not_satisfy_disclosure():
+def test_daily_cashflow_parent_report_does_not_satisfy_disclosure(new_pg_factory):
     from app.db.models import CashflowStatement
     from app.connectors.tushare.strategies import LEGACY_CASHFLOW_FIELDS
 
-    factory, pool = fixtures()
+    factory, pool = fixtures(new_pg_factory)
     code, period, announced, target = pool.symbols[0], date(2026, 9, 30), date(2026, 10, 12), date(2026, 10, 13)
     with factory.begin() as session:
         session.add(DisclosureSchedule(ts_code=code, end_date=period, actual_date=announced))

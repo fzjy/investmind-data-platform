@@ -5,9 +5,9 @@ from sqlalchemy import event, func, select
 
 from app.connectors.tushare.contracts import TushareResponse
 from app.connectors.tushare.strategies import Dataset
-from app.db.models import DailyPrice, SourcePayload, JobCursor, RejectedRecord
+from app.db.models import Security, DailyPrice, SourcePayload, JobCursor, RejectedRecord
 from app.stocks.update.planning import plan_for
-from backend.tests.derived.test_inputs import _factory
+
 
 
 def sample(symbol='600519.SH', close=20):
@@ -16,9 +16,9 @@ def sample(symbol='600519.SH', close=20):
     return p, TushareResponse(fields=p.fields, items=(tuple(row.get(f) for f in p.fields),))
 
 
-def test_commit_failure_rolls_back_raw_core_progress():
+def test_commit_failure_rolls_back_raw_core_progress(pg_factory):
     from app.stocks.update.repository import StockUpdateRepository
-    f = _factory()
+    f = pg_factory
     def fail(session):
         raise RuntimeError('commit unavailable')
     event.listen(f, 'before_commit', fail)
@@ -33,10 +33,12 @@ def test_commit_failure_rolls_back_raw_core_progress():
             assert s.scalar(select(func.count()).select_from(model)) == 0
 
 
-def test_existing_market_not_overwritten_raw_retained():
+def test_existing_market_not_overwritten_raw_retained(pg_factory):
     from app.stocks.update.repository import StockUpdateRepository
-    f = _factory()
+    f = pg_factory
     with f.begin() as s:
+        s.add(Security(ts_code="600519.SH", symbol="600519", name="贵州茅台"))
+        s.flush()
         s.add(DailyPrice(ts_code='600519.SH', trade_date=date(2026, 10, 13), close=10))
     p, r = sample()
     repo = StockUpdateRepository(f)
@@ -48,9 +50,9 @@ def test_existing_market_not_overwritten_raw_retained():
     assert repo.state('test')[p.cursor_key]['status'] == 'completed'
 
 
-def test_invalid_response_retains_rejection_without_core():
+def test_invalid_response_retains_rejection_without_core(pg_factory):
     from app.stocks.update.repository import StockUpdateRepository
-    f = _factory()
+    f = pg_factory
     p, r = sample(symbol='000001.SZ')
     result = StockUpdateRepository(f).ingest_unit('test', p, r, date(2026, 10, 13), date(2023, 10, 13))
     assert result['status'] == 'failed'
@@ -60,12 +62,14 @@ def test_invalid_response_retains_rejection_without_core():
         assert s.scalar(select(func.count()).select_from(RejectedRecord)) == 1
 
 
-def test_existing_financial_version_enriched_and_replay_is_idempotent():
+def test_existing_financial_version_enriched_and_replay_is_idempotent(pg_factory):
     from app.db.models import FinancialIndicator
     from app.stocks.update.repository import StockUpdateRepository
-    factory = _factory()
+    factory = pg_factory
     period, day = date(2026, 9, 30), date(2026, 10, 13)
     with factory.begin() as session:
+        session.add(Security(ts_code="600519.SH", symbol="600519", name="贵州茅台"))
+        session.flush()
         session.add(FinancialIndicator(ts_code='600519.SH', end_date=period, ann_date=day, data={'legacy': 10}))
     plan = plan_for(Dataset.FINANCIAL_INDICATOR, {'ts_code': '600519.SH', 'period': '20260930'})
     row = dict(ts_code='600519.SH', end_date='20260930', ann_date='20261013', eps=3, bps=11, q_eps=None)
@@ -79,14 +83,16 @@ def test_existing_financial_version_enriched_and_replay_is_idempotent():
         assert {k: data[k] for k in ('eps', 'bps', 'q_eps', 'legacy')} == dict(eps=3, bps=11, q_eps=None, legacy=10)
 
 
-def test_latest_parent_or_older_complete_versions_cannot_finish_card_backfill():
+def test_latest_parent_or_older_complete_versions_cannot_finish_card_backfill(pg_factory):
     from dataclasses import replace
     from app.db.models import IncomeStatement
     from app.stocks.update.repository import StockUpdateRepository
-    factory = _factory()
+    factory = pg_factory
     period, day = date(2026, 9, 30), date(2026, 10, 13)
     plan = plan_for(Dataset.INCOME, {'ts_code': '600519.SH', 'period': '20260930'})
     with factory.begin() as s:
+        s.add(Security(ts_code="600519.SH", symbol="600519", name="贵州茅台"))
+        s.flush()
         for typ, stamp, data in [('1', 3, {'basic_eps': 2}), ('4', 6, {}), ('2', 7, {}), ('6', 10, {'basic_eps': 5})]:
             s.add(IncomeStatement(ts_code='600519.SH', end_date=period, report_type=typ,
                 ann_date=date(2026, 10, stamp), data=data))
@@ -103,17 +109,17 @@ def test_latest_parent_or_older_complete_versions_cannot_finish_card_backfill():
         assert s.scalar(select(IncomeStatement).where(IncomeStatement.report_type == '4')).data['basic_eps'] is None
 
 
-def test_manifest_does_not_shrink_on_resume():
+def test_manifest_does_not_shrink_on_resume(pg_factory):
     from app.stocks.update.repository import StockUpdateRepository
-    repo = StockUpdateRepository(_factory())
+    repo = StockUpdateRepository(pg_factory)
     p, _ = sample()
     assert repo.save_manifest('test', 'market', (p,)) == (p,)
     assert repo.save_manifest('test', 'market', ()) == (p,)
 
 
-def test_cached_response_requires_same_payload_and_request_evidence():
+def test_cached_response_requires_same_payload_and_request_evidence(pg_factory):
     from app.stocks.update.repository import StockUpdateRepository
-    f = _factory()
+    f = pg_factory
     repo = StockUpdateRepository(f)
     p, r = sample()
     original = repo.ingest_unit('test', p, r, date(2026, 10, 13), date(2023, 10, 13))

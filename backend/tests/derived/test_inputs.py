@@ -2,11 +2,7 @@ from datetime import date
 from decimal import Decimal
 
 import pytest
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
 
-from app.db.base import Base, DerivedBase, ExternalBase, MartBase
 from app.db.models import (
     Classification,
     ClassificationMember,
@@ -33,10 +29,11 @@ from app.stocks.derived.inputs import (
 )
 
 
-def test_repository_connects_visible_profitability_inputs_and_lineage() -> None:
-    factory = _factory()
+def test_repository_connects_visible_profitability_inputs_and_lineage(pg_factory) -> None:
+    factory = pg_factory
     with factory.begin() as session:
         session.add(Security(ts_code="600519.SH", symbol="600519", name="财务样本", status="L"))
+        session.flush()
         session.add(DailyPrice(ts_code="600519.SH", trade_date=date(2026, 3, 31), close=Decimal("10")))
         session.add_all([
             FinancialIndicator(ts_code="600519.SH", end_date=date(2025, 12, 31),
@@ -67,10 +64,11 @@ def test_repository_connects_visible_profitability_inputs_and_lineage() -> None:
 
 
 @pytest.mark.parametrize("roe", [None, 0, -3])
-def test_profitability_inputs_do_not_fill_missing_current_values_from_prior_period(roe) -> None:
-    factory = _factory()
+def test_profitability_inputs_do_not_fill_missing_current_values_from_prior_period(pg_factory, roe) -> None:
+    factory = pg_factory
     with factory.begin() as session:
         session.add(Security(ts_code="600519.SH", symbol="600519", name="财务样本", status="L"))
+        session.flush()
         session.add(DailyPrice(ts_code="600519.SH", trade_date=date(2026, 3, 31), close=Decimal("10")))
         session.add_all([
             FinancialIndicator(ts_code="600519.SH", end_date=date(2025, 9, 30),
@@ -95,10 +93,11 @@ def test_profitability_inputs_do_not_fill_missing_current_values_from_prior_peri
 @pytest.mark.parametrize("announced,actual", [
     (None, None), (date(2026, 4, 20), None), (date(2026, 3, 20), date(2026, 4, 20)),
 ])
-def test_profitability_without_visible_disclosure_keeps_null_with_missing_lineage(announced, actual):
-    factory = _factory()
+def test_profitability_without_visible_disclosure_keeps_null_with_missing_lineage(pg_factory, announced, actual):
+    factory = pg_factory
     with factory.begin() as session:
         session.add(Security(ts_code="600519.SH", symbol="600519", name="财务样本", status="L"))
+        session.flush()
         session.add(DailyPrice(ts_code="600519.SH", trade_date=date(2026, 3, 31), close=Decimal("10")))
         session.add(FinancialIndicator(ts_code="600519.SH", end_date=date(2025, 12, 31),
             ann_date=announced, f_ann_date=actual, report_type="1",
@@ -115,25 +114,6 @@ def test_profitability_without_visible_disclosure_keeps_null_with_missing_lineag
     assert (row["roe"], row["grossMargin"], row["netMargin"]) == (None, None, None)
 
 
-def _factory() -> sessionmaker:
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:",
-        poolclass=StaticPool,
-        execution_options={
-            "schema_translate_map": {
-                "raw": None,
-                "core": None,
-                "ops": None,
-                "derived": None,
-                "mart": None,
-            }
-        },
-    )
-    Base.metadata.create_all(engine)
-    DerivedBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
-    return sessionmaker(engine, expire_on_commit=False)
 
 
 def test_visible_financial_rows_excludes_future_revision() -> None:
@@ -242,8 +222,8 @@ def test_missing_input_has_deterministic_null_lineage() -> None:
     )
 
 
-def test_repository_builds_visible_ttm_inputs_and_excludes_future_rows() -> None:
-    factory = _factory()
+def test_repository_builds_visible_ttm_inputs_and_excludes_future_rows(pg_factory) -> None:
+    factory = pg_factory
     with factory.begin() as session:
         session.add(
             Security(
@@ -254,6 +234,7 @@ def test_repository_builds_visible_ttm_inputs_and_excludes_future_rows() -> None
                 status="L",
             )
         )
+        session.flush()
         session.add_all(
             [
                 DailyPrice(
@@ -320,10 +301,11 @@ def test_repository_builds_visible_ttm_inputs_and_excludes_future_rows() -> None
     assert date(2026, 4, 20) not in {row.visible_at for row in snapshot.financial_points}
 
 
-def test_repository_prefers_newer_visible_annual_report_and_matches_prior_annual() -> None:
-    factory = _factory()
+def test_repository_prefers_newer_visible_annual_report_and_matches_prior_annual(pg_factory) -> None:
+    factory = pg_factory
     with factory.begin() as session:
         session.add(Security(ts_code="600519.SH", symbol="600519", name="贵州茅台", exchange="SSE", status="L"))
+        session.flush()
         session.add(DailyPrice(ts_code="600519.SH", trade_date=date(2026, 3, 31), close=Decimal("1500")))
         session.add_all([
             IncomeStatement(ts_code="600519.SH", end_date=date(2025, 9, 30), ann_date=date(2025, 10, 20), report_type="1", data={"n_income_attr_p": 30, "total_revenue": 300}),
@@ -342,10 +324,11 @@ def test_repository_prefers_newer_visible_annual_report_and_matches_prior_annual
     assert values["previous_revenue"] == 1000
 
 
-def test_repository_handles_leap_day_for_three_year_history() -> None:
-    factory = _factory()
+def test_repository_handles_leap_day_for_three_year_history(pg_factory) -> None:
+    factory = pg_factory
     with factory.begin() as session:
         session.add(Security(ts_code="600519.SH", symbol="600519", name="贵州茅台", exchange="SSE", status="L"))
+        session.flush()
         session.add(DailyPrice(ts_code="600519.SH", trade_date=date(2024, 2, 29), close=Decimal("1500")))
         session.add(DailyBasic(ts_code="600519.SH", trade_date=date(2024, 2, 29), pe=Decimal("20"), pb=Decimal("5"), data={}))
 
@@ -354,8 +337,8 @@ def test_repository_handles_leap_day_for_three_year_history() -> None:
     assert values["pe_history_3y"] == (Decimal("20"),)
 
 
-def test_repository_limits_daily_market_rows_to_three_year_window() -> None:
-    factory = _factory()
+def test_repository_limits_daily_market_rows_to_three_year_window(pg_factory) -> None:
+    factory = pg_factory
     with factory.begin() as session:
         session.add(
             Security(
@@ -366,6 +349,7 @@ def test_repository_limits_daily_market_rows_to_three_year_window() -> None:
                 status="L",
             )
         )
+        session.flush()
         for model, value_field in (
             (DailyPrice, "close"),
             (DailyBasic, "pe"),
@@ -410,8 +394,8 @@ def test_repository_limits_daily_market_rows_to_three_year_window() -> None:
     }
 
 
-def test_repository_applies_point_in_time_security_holder_and_classification_filters() -> None:
-    factory = _factory()
+def test_repository_applies_point_in_time_security_holder_and_classification_filters(pg_factory) -> None:
+    factory = pg_factory
     with factory.begin() as session:
         security = Security(
             ts_code="600519.SH", symbol="600519", name="贵州茅台", exchange="SSE",
@@ -422,6 +406,7 @@ def test_repository_applies_point_in_time_security_holder_and_classification_fil
             status="L", list_date=date(2027, 1, 1),
         )
         session.add_all([security, future])
+        session.flush()
         session.add(DailyPrice(ts_code="600519.SH", trade_date=date(2026, 8, 24), close=Decimal("1500")))
         session.add(TopHolder(
             ts_code="600519.SH", end_date=date(2025, 12, 31), ann_date=date(2026, 9, 1),
@@ -442,10 +427,11 @@ def test_repository_applies_point_in_time_security_holder_and_classification_fil
     assert snapshot.classification_members == ()
 
 
-def test_repository_never_promotes_legacy_cash_without_query_and_tax_fields() -> None:
-    factory = _factory()
+def test_repository_never_promotes_legacy_cash_without_query_and_tax_fields(pg_factory) -> None:
+    factory = pg_factory
     with factory.begin() as session:
         session.add(Security(ts_code="600519.SH", symbol="600519", name="贵州茅台", exchange="SSE", status="L"))
+        session.flush()
         session.add(DailyPrice(ts_code="600519.SH", trade_date=date(2026, 8, 24), close=Decimal("1500")))
         session.add(DailyBasic(
             ts_code="600519.SH", trade_date=date(2026, 6, 1),
@@ -473,8 +459,8 @@ def test_repository_never_promotes_legacy_cash_without_query_and_tax_fields() ->
     assert values["latest_dps"] is None
 
 
-def test_repository_replaces_older_dividend_event_revision() -> None:
-    factory = _factory()
+def test_repository_replaces_older_dividend_event_revision(pg_factory) -> None:
+    factory = pg_factory
     with factory.begin() as session:
         session.add(
             Security(
@@ -485,6 +471,7 @@ def test_repository_replaces_older_dividend_event_revision() -> None:
                 status="L",
             )
         )
+        session.flush()
         session.add(
             DailyPrice(
                 ts_code="600519.SH",
@@ -536,10 +523,11 @@ def test_repository_replaces_older_dividend_event_revision() -> None:
     assert values["latest_dps"] is None
 
 
-def test_repository_uses_latest_visible_holder_period_and_action_dates() -> None:
-    factory = _factory()
+def test_repository_uses_latest_visible_holder_period_and_action_dates(pg_factory) -> None:
+    factory = pg_factory
     with factory.begin() as session:
         session.add(Security(ts_code="600519.SH", symbol="600519", name="贵州茅台", exchange="SSE", status="L"))
+        session.flush()
         session.add(DailyPrice(ts_code="600519.SH", trade_date=date(2026, 8, 24), close=Decimal("1500")))
         session.add_all([
             TopHolder(ts_code="600519.SH", end_date=date(2024, 12, 31), ann_date=date(2025, 3, 1), holder_type="机构", holder_name="旧机构", hold_amount=Decimal("100"), data={}),
@@ -555,8 +543,8 @@ def test_repository_uses_latest_visible_holder_period_and_action_dates() -> None
     assert any(row.source_table == "core.business_segment" for row in snapshot.financial_points)
 
 
-def test_repository_normalizes_json_float_before_decimal_risk_ratio() -> None:
-    factory = _factory()
+def test_repository_normalizes_json_float_before_decimal_risk_ratio(pg_factory) -> None:
+    factory = pg_factory
     with factory.begin() as session:
         session.add(
             Security(
@@ -567,6 +555,7 @@ def test_repository_normalizes_json_float_before_decimal_risk_ratio() -> None:
                 status="L",
             )
         )
+        session.flush()
         session.add(
             DailyPrice(
                 ts_code="600519.SH",

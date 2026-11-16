@@ -1,36 +1,15 @@
 from datetime import date
 from decimal import Decimal
 
-from sqlalchemy import create_engine, select
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
+from sqlalchemy import select
 
-from app.db.base import Base, DerivedBase, ExternalBase, MartBase
 from app.db.models import MetricInput, MetricValue, RiskResult, Security
 from app.stocks.derived.inputs import CoreSnapshot, InputSource, SecurityFormulaInputs
 from app.stocks.derived.pipeline import DerivedPipeline
 from app.stocks.derived.registry import FORMULAS
 
 
-def _factory() -> sessionmaker:
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:",
-        poolclass=StaticPool,
-        execution_options={
-            "schema_translate_map": {
-                "raw": None,
-                "core": None,
-                "ops": None,
-                "derived": None,
-                "mart": None,
-            }
-        },
-    )
-    Base.metadata.create_all(engine)
-    DerivedBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
-    factory = sessionmaker(engine, expire_on_commit=False)
+def seed_security(factory):
     with factory.begin() as session:
         session.add(
             Security(
@@ -40,7 +19,6 @@ def _factory() -> sessionmaker:
                 status="L",
             )
         )
-    return factory
 
 
 def _snapshot() -> CoreSnapshot:
@@ -111,8 +89,9 @@ def _snapshot() -> CoreSnapshot:
     )
 
 
-def test_pipeline_persists_real_lineage_and_leaves_risks_to_workbench_publication() -> None:
-    factory = _factory()
+def test_pipeline_persists_real_lineage_and_leaves_risks_to_workbench_publication(pg_factory) -> None:
+    factory = pg_factory
+    seed_security(factory)
     pipeline = DerivedPipeline(factory)
 
     first = pipeline.run(_snapshot(), ("600519.SH",))
@@ -134,8 +113,9 @@ def test_pipeline_persists_real_lineage_and_leaves_risks_to_workbench_publicatio
     )
 
 
-def test_lineage_count_ignores_historical_formula_versions() -> None:
-    factory = _factory()
+def test_lineage_count_ignores_historical_formula_versions(pg_factory) -> None:
+    factory = pg_factory
+    seed_security(factory)
     pipeline = DerivedPipeline(factory)
     first = pipeline.run(_snapshot(), ("600519.SH",))
     with factory.begin() as session:

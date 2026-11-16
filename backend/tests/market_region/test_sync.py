@@ -10,15 +10,16 @@ from app.connectors.tushare.client import TushareClient
 from app.db.models import DailyPrice, DailyBasic, Security, PublishedSnapshot, JobRun, SourcePayload
 from app.jobs.locks import ProcessLocalJobLock
 from app.market.data.catalog import MarketDataCatalog
-from backend.tests.market_pulse.test_sync import POOL, DAY, NOW, CODE, OTHER, _factory
+from backend.tests.market_pulse.test_sync import POOL, DAY, NOW, CODE, OTHER
 
 
-def setup(budget=1, handler=None):
+def setup(new_pg_factory, budget=1, handler=None):
     assert importlib.util.find_spec('app.market.region') is not None, 'region sync missing'
-    factory = _factory()
+    factory = new_pg_factory()
     with factory.begin() as session:
         for code in POOL.symbols:
             session.add(Security(ts_code=code, symbol=code[:6], name=code, data={'keep':1}))
+            session.flush()
             session.add(DailyPrice(ts_code=code, trade_date=DAY, close=10, pct_chg=0))
             session.add(DailyBasic(ts_code=code, trade_date=DAY, data={}))
         session.add(PublishedSnapshot(product='screener', version='old', as_of=NOW, payload={}))
@@ -35,8 +36,8 @@ def setup(budget=1, handler=None):
     return sync, factory, client, requests
 
 
-def test_budget_resume_cache_expiry_and_zero_http():
-    sync, factory, client, requests = setup()
+def test_budget_resume_cache_expiry_and_zero_http(new_pg_factory):
+    sync, factory, client, requests = setup(new_pg_factory)
     with client:
         assert sync.preflight(NOW)['pendingCount'] == 2 and requests == []
         first = sync.run(NOW)
@@ -50,8 +51,8 @@ def test_budget_resume_cache_expiry_and_zero_http():
         assert session.scalar(select(func.count()).select_from(SourcePayload))==2
 
 
-def test_metadata_budget_change_does_not_invalidate_cursor():
-    sync, _, client, requests = setup()
+def test_metadata_budget_change_does_not_invalidate_cursor(new_pg_factory):
+    sync, _, client, requests = setup(new_pg_factory)
     with client:
         sync.run(NOW)
         fingerprint = sync.fingerprint
@@ -62,8 +63,8 @@ def test_metadata_budget_change_does_not_invalidate_cursor():
         assert other.run(NOW)['requestCount']==1 and len(requests)==2
 
 
-def test_permission_stops_entire_source():
-    sync, factory, client, requests = setup(60, lambda _:httpx.Response(403))
+def test_permission_stops_entire_source(new_pg_factory):
+    sync, factory, client, requests = setup(new_pg_factory, 60, lambda _:httpx.Response(403))
     with client: result=sync.run(NOW)
     assert result['status']=='failed' and result['requestCount']==1 and len(requests)==1
     assert not result['publishReady'] and result['pendingCount']==2
@@ -71,8 +72,8 @@ def test_permission_stops_entire_source():
         assert all('area' not in row.data for row in session.scalars(select(Security)))
 
 
-def test_stock_lock_and_preflight_never_write_or_call():
-    sync, factory, client, requests = setup()
+def test_stock_lock_and_preflight_never_write_or_call(new_pg_factory):
+    sync, factory, client, requests = setup(new_pg_factory)
     assert sync.lock.try_acquire('sync-stock-data:representative-50')
     try:
         with client:
@@ -83,9 +84,9 @@ def test_stock_lock_and_preflight_never_write_or_call():
     with factory() as session: assert session.scalar(select(func.count()).select_from(JobRun))==0
 
 
-def test_capture_uses_response_clock_not_start_of_whole_job():
+def test_capture_uses_response_clock_not_start_of_whole_job(new_pg_factory):
     from app.market.data.repository import aware
-    sync,factory,client,_=setup(60)
+    sync,factory,client,_=setup(new_pg_factory, 60)
     captured=NOW+timedelta(minutes=2)
     sync.clock=lambda:captured
     with client: report=sync.run(NOW)
@@ -94,8 +95,8 @@ def test_capture_uses_response_clock_not_start_of_whole_job():
         assert {aware(raw.captured_at) for raw in session.scalars(select(SourcePayload))}=={captured}
 
 
-def test_conflicting_written_region_never_counts_as_complete(monkeypatch):
-    sync,factory,client,_=setup(60)
+def test_conflicting_written_region_never_counts_as_complete(new_pg_factory, monkeypatch):
+    sync,factory,client,_=setup(new_pg_factory, 60)
     with factory.begin() as session: session.get(Security,CODE).data={'region':'广东'}
     def forbidden(*a,**kw): raise AssertionError('invalid region must not publish')
     monkeypatch.setattr(importlib.import_module('app.market.region.sync'),'rebuild_market_marts',forbidden)
@@ -104,10 +105,10 @@ def test_conflicting_written_region_never_counts_as_complete(monkeypatch):
     assert report['pendingSymbols']==[CODE] and 'publication' not in report
 
 
-def test_previously_complete_cache_expiring_during_run_is_not_publish_ready(monkeypatch):
+def test_previously_complete_cache_expiring_during_run_is_not_publish_ready(new_pg_factory, monkeypatch):
     from app.market.region.repository import RegionRepository
     from backend.tests.market_region.test_repository import response
-    sync,factory,client,_=setup(60)
+    sync,factory,client,_=setup(new_pg_factory, 60)
     repo=RegionRepository(factory)
     assert repo.persist(CODE,sync.fingerprint,response(),NOW-timedelta(days=30)+timedelta(seconds=1))
     sync.clock=lambda:NOW+timedelta(seconds=2)
@@ -118,8 +119,8 @@ def test_previously_complete_cache_expiring_during_run_is_not_publish_ready(monk
     assert 'publication' not in report
 
 
-def test_unlock_error_preserves_http_and_attempts_all_releases():
-    sync,_,client,requests=setup(60)
+def test_unlock_error_preserves_http_and_attempts_all_releases(new_pg_factory):
+    sync,_,client,requests=setup(new_pg_factory, 60)
     original=sync.lock.release
     releases=[]
     def release(key):
@@ -135,8 +136,8 @@ def test_unlock_error_preserves_http_and_attempts_all_releases():
 
 
 @pytest.mark.parametrize('failure',['target_recheck','publisher'])
-def test_publish_error_retains_actual_http_and_checkpoint(monkeypatch, failure):
-    sync, _, client, requests = setup(60)
+def test_publish_error_retains_actual_http_and_checkpoint(new_pg_factory, monkeypatch, failure):
+    sync, _, client, requests = setup(new_pg_factory, 60)
     mod=importlib.import_module('app.market.region.sync')
     from app.market.region.repository import RegionRepository
     def fail(*args,**kwargs): raise RuntimeError('secret credentials')

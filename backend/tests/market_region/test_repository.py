@@ -7,7 +7,7 @@ from sqlalchemy import select, func
 from app.connectors.tushare.contracts import TushareResponse
 from app.db.models import Security, SourcePayload, JobCursor, IngestionBatch, RejectedRecord
 from app.ingestion.repositories import IngestionRepository
-from backend.tests.market_pulse.test_repository import CODE, NOW, _factory
+from backend.tests.market_pulse.test_repository import CODE, NOW
 
 
 def module():
@@ -19,16 +19,16 @@ def response(area=' 贵州 ', code=CODE, fields=('ts_code', 'area')):
     return TushareResponse(fields=fields, items=((code, area),))
 
 
-def setup():
+def setup(new_pg_factory):
     value = module()
-    factory = _factory()
+    factory = new_pg_factory()
     with factory.begin() as session:
         session.add(Security(ts_code=CODE, symbol='600519', name='controlled', data={'other': {'keep': 1}}))
     return value, factory, value.RegionRepository(factory)
 
 
-def test_region_preserves_security_and_old_writer():
-    value, factory, repo = setup()
+def test_region_preserves_security_and_old_writer(new_pg_factory):
+    value, factory, repo = setup(new_pg_factory)
     assert not repo.is_complete(CODE, 'fp', NOW, 30)
     assert repo.persist(CODE, 'fp', response(), NOW)
     with factory.begin() as session:
@@ -46,8 +46,8 @@ def test_region_preserves_security_and_old_writer():
 @pytest.mark.parametrize('bad', [response(None), response(True), response(1), response(''), response('--'), response('未知'),
     response(code='000001.SZ'), response(fields=('ts_code', 'ts_code')),
     TushareResponse(fields=('ts_code','area'), items=()), TushareResponse(fields=('ts_code','area'), items=((CODE,'贵州'),)*2)])
-def test_invalid_region_retains_raw_without_success_cursor(bad):
-    _, factory, repo = setup()
+def test_invalid_region_retains_raw_without_success_cursor(new_pg_factory, bad):
+    _, factory, repo = setup(new_pg_factory)
     assert not repo.persist(CODE, 'fp', bad, NOW)
     assert not repo.is_complete(CODE, 'fp', NOW, 30)
     with factory() as session:
@@ -58,8 +58,8 @@ def test_invalid_region_retains_raw_without_success_cursor(bad):
 
 
 @pytest.mark.parametrize('damage', ['raw_content','raw_hash','batch','cursor','core','request','future','fingerprint'])
-def test_invalid_or_corrupt_proof_is_unknown(damage):
-    value, factory, repo = setup()
+def test_invalid_or_corrupt_proof_is_unknown(new_pg_factory, damage):
+    value, factory, repo = setup(new_pg_factory)
     repo.persist(CODE, 'fp', response(), NOW)
     with factory.begin() as session:
         security, raw = session.get(Security, CODE), session.scalar(select(SourcePayload))
@@ -76,8 +76,8 @@ def test_invalid_or_corrupt_proof_is_unknown(damage):
         assert value.valid_regions(session, session.scalars(select(Security)), NOW) == {}
 
 
-def test_expired_metadata_is_not_complete_but_current_legacy_can_be_labeled():
-    value, factory, repo = setup()
+def test_expired_metadata_is_not_complete_but_current_legacy_can_be_labeled(new_pg_factory):
+    value, factory, repo = setup(new_pg_factory)
     repo.persist(CODE, 'fp', response(), NOW)
     assert repo.is_complete(CODE, 'fp', NOW + timedelta(days=29), 30)
     assert not repo.is_complete(CODE, 'fp', NOW + timedelta(days=30), 30)
@@ -94,8 +94,8 @@ def test_expired_metadata_is_not_complete_but_current_legacy_can_be_labeled():
         assert value.valid_regions(session, session.scalars(select(Security)), NOW) == {CODE: {'label':'深圳', 'capturedAt':None}}
 
 
-def test_missing_security_cannot_be_created_by_region():
-    _, factory, repo = setup()
+def test_missing_security_cannot_be_created_by_region(new_pg_factory):
+    _, factory, repo = setup(new_pg_factory)
     assert not repo.persist('000001.SZ', 'fp', response(code='000001.SZ'), NOW)
     with factory() as session:
         assert session.get(Security, '000001.SZ') is None
@@ -103,8 +103,8 @@ def test_missing_security_cannot_be_created_by_region():
 
 @pytest.mark.parametrize('old', [{'area':'深圳'},{'region':'深圳'},{'area':'深圳','region':'广东'},
     {'area':'深圳','region':'广东','_regionLineage':{'bad':True}}])
-def test_old_writer_preserves_legacy_and_conflict_evidence(old):
-    _,factory,_=setup()
+def test_old_writer_preserves_legacy_and_conflict_evidence(new_pg_factory, old):
+    _,factory,_=setup(new_pg_factory)
     with factory.begin() as session:
         session.get(Security,CODE).data=old
     with factory.begin() as session:
@@ -115,8 +115,8 @@ def test_old_writer_preserves_legacy_and_conflict_evidence(old):
 
 
 @pytest.mark.parametrize('bad_id',[{'bad':1},[1],True,'1',None,-1,0])
-def test_malformed_source_id_is_unknown_without_database_error(bad_id):
-    value,factory,repo=setup()
+def test_malformed_source_id_is_unknown_without_database_error(new_pg_factory, bad_id):
+    value,factory,repo=setup(new_pg_factory)
     repo.persist(CODE,'fp',response(),NOW)
     with factory.begin() as session:
         security=session.get(Security,CODE)

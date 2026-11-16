@@ -42,6 +42,22 @@ def pg_schema_url(pg_instance_url, pg_template):
 
 
 @pytest.fixture
+def new_pg_factory(pg_instance_url, pg_template):
+    """需要多个独立目标的用例可重复创建完整数据库。"""
+    from contextlib import ExitStack
+    from app.db.session import create_engine_and_session
+
+    with ExitStack() as stack:
+        def create():
+            url = stack.enter_context(postgres.database(pg_instance_url, template=pg_template))
+            engine, factory = create_engine_and_session(url)
+            stack.callback(engine.dispose)
+            return factory
+
+        yield create
+
+
+@pytest.fixture
 def pg_factory(pg_schema_url):
     from app.db.session import create_engine_and_session
     engine, factory = create_engine_and_session(pg_schema_url)

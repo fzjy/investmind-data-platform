@@ -1,4 +1,4 @@
-"""真实Builder/发布器/SQLite；边界只注入已校验的扩展输入。"""
+"""真实Builder/发布器/PostgreSQL；边界只注入已校验的扩展输入。"""
 from copy import deepcopy
 from dataclasses import replace
 from datetime import date
@@ -18,8 +18,8 @@ def inputs():
     return {'sources': {key: _empty(key) for key in ('usdcnh', 'nominalGdp')}}
 
 
-def test_extension_loader_runs_once_for_pair_and_reentry_does_not_promote():
-    engine, factory, _, history, publisher, statuses = setup(20)
+def test_extension_loader_runs_once_for_pair_and_reentry_does_not_promote(pg_factory):
+    engine, factory, _, history, publisher, statuses = setup(pg_factory, 20)
     try:
         with factory.begin() as session:
             session.scalar(select(MacroObservation).where(
@@ -43,8 +43,8 @@ def test_extension_loader_runs_once_for_pair_and_reentry_does_not_promote():
         engine.dispose()
 
 
-def test_source_quality_and_dto_reject_missing_or_changed_contract_without_altering_legacy():
-    engine, factory, _, _, _, _ = setup(20)
+def test_source_quality_and_dto_reject_missing_or_changed_contract_without_altering_legacy(pg_factory):
+    engine, factory, _, _, _, _ = setup(pg_factory, 20)
     try:
         builder = MacroMartBuilder(MacroRepository(factory), catalog=CATALOG)
         legacy = builder.build(AS_OF, 'legacy')

@@ -14,7 +14,7 @@ def test_market_rebuild_requires_explicit_publish_and_routes_settings(monkeypatc
     module = importlib.import_module("app.cli.main")
     assert importlib.util.find_spec("app.cli.market_rebuild") is not None, "market CLI missing"
     cli = importlib.import_module("app.cli.market_rebuild")
-    settings = Settings(data_backend="database", database_url="sqlite:///controlled", sync_hour=18)
+    settings = Settings(data_backend="database", database_url="postgresql+psycopg://controlled.invalid/test", sync_hour=18)
     monkeypatch.setattr(Settings, "from_env", classmethod(lambda cls: settings))
     class Engine:
         def dispose(self):

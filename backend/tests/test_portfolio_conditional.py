@@ -8,11 +8,11 @@ from app.db.models import PublishedSnapshot
 from app.portfolio.database_provider import PortfolioDatabaseProvider
 from app.portfolio.routes import create_router
 from app.shared.repository import SnapshotRepository
-from backend.tests.jobs.test_build_and_publish_integration import _factory
 
 
-def test_conditional_get_reads_metadata_only_and_invalidates_on_freshness_and_release():
-    factory = _factory()
+
+def test_conditional_get_reads_metadata_only_and_invalidates_on_freshness_and_release(pg_factory):
+    factory = pg_factory
     with factory.begin() as session:
         session.add(PublishedSnapshot(product="portfolio", version="v1", as_of=datetime.now(timezone.utc),
             payload={"assets": [], "prices": {}, "snapshotLabel": "v1"}, stale=False))

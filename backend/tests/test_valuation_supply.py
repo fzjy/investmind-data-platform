@@ -7,8 +7,7 @@ import importlib.util
 import json
 
 import pytest
-from sqlalchemy import create_engine, select, func
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import select, func
 from app.db.models import JobCursor, IngestionBatch, SourcePayload, PublishedSnapshot
 from app.connectors.tushare.contracts import TushareResponse
 
@@ -26,19 +25,15 @@ def module():
 
 
 @pytest.fixture
-def factory(monkeypatch, tmp_path):
+def factory(pg_factory, monkeypatch, tmp_path):
     m = module()
     path = tmp_path / 'financial.json'
     path.write_text(json.dumps({'valuationSupply': dict(enabled=True, maxHttpPerRun=20, timeoutSeconds=20, historyYears=5, revisionDays=7)}))
     monkeypatch.setattr(m, 'CONFIG_FILE', path)
-    engine = create_engine('sqlite://', execution_options={'schema_translate_map': {'ops': None, 'raw': None, 'mart': None}})
-    for model in (JobCursor, IngestionBatch, SourcePayload, PublishedSnapshot):
-        model.__table__.create(engine)
-    f = sessionmaker(engine, expire_on_commit=False)
+    f = pg_factory
     with f.begin() as s:
         s.add(PublishedSnapshot(product='screener', version='original', as_of=NOW, payload={'stocks': [{'symbol': '600519.SH'}]}))
     yield f
-    engine.dispose()
 
 
 class Client:

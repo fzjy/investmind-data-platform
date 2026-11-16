@@ -8,11 +8,11 @@ from app.stocks.marts.shareholder_returns import json_numbers, guard_returns, re
 from backend.tests.jobs.test_metric_card_publication import prepared, state, SYMBOL, PRODUCT
 
 
-def test_collected_financial_and_paid_event_reach_the_existing_snapshot():
+def test_collected_financial_and_paid_event_reach_the_existing_snapshot(new_pg_factory):
     from app.db.models import Dividend, IncomeStatement
     from app.stocks.marts.metric_cards import rebuild_metric_cards
 
-    factory = prepared()
+    factory = prepared(new_pg_factory)
     period = date(2011, 12, 31)
     with factory.begin() as session:
         session.add(IncomeStatement(ts_code=SYMBOL, end_date=period, ann_date=date(2012, 3, 1),
@@ -35,8 +35,8 @@ def test_json_boundary_preserves_raw_strings():
     assert json_numbers({"amount": Decimal("1.25"), "events": [{"raw": "1.25"}]}) == {"amount": 1.25, "events": [{"raw": "1.25"}]}
 
 
-def test_narrow_publish_and_retry_preserve_other_fields(monkeypatch):
-    factory = prepared()
+def test_narrow_publish_and_retry_preserve_other_fields(new_pg_factory, monkeypatch):
+    factory = prepared(new_pg_factory)
     before = state(factory)
     import app.stocks.shareholder_returns as source
     original = source.load_shareholder_returns
@@ -61,10 +61,10 @@ def test_narrow_publish_and_retry_preserve_other_fields(monkeypatch):
     assert rebuild_shareholder_returns(factory, dry_run=False, symbols=[SYMBOL])["status"] == "no_change"
 
 
-def test_post_collection_joint_publication_and_explicit_cards_scope(monkeypatch):
+def test_post_collection_joint_publication_and_explicit_cards_scope(new_pg_factory, monkeypatch):
     from app.stocks.marts.metric_cards import rebuild_metric_cards
     import app.stocks.shareholder_returns as source
-    factory = prepared()
+    factory = prepared(new_pg_factory)
     original = source.load_shareholder_returns
     def changed(session, symbols, as_of):
         values = original(session, symbols, as_of)

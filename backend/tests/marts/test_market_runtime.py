@@ -7,20 +7,20 @@ import pytest
 from sqlalchemy import select
 
 from app.db.models import Classification, ClassificationMember, DailyPrice, PublishedSnapshot
-from app.jobs.locks import ProcessLocalJobLock, data_publication_lock_key
+from app.jobs.locks import PostgresAdvisoryJobLock, data_publication_lock_key
 from app.marts.publication import SnapshotPublisher
 from app.stocks.universes.models import UniverseSelection
 from backend.tests.marts.test_content_runtime import prepare, state
-from backend.tests.jobs.test_build_and_publish_integration import _factory
+
 
 NOW = datetime(2026, 8, 25, 12, tzinfo=timezone.utc)
 SELECTION = UniverseSelection("representative-50", "controlled", "representative", ("600519.SH",), "controlled")
 
 
-def test_frozen_pulse_target_blocks_mixed_day_publication():
+def test_frozen_pulse_target_blocks_mixed_day_publication(pg_factory):
     from datetime import date
     from app.market.marts.market_runtime import rebuild_market_marts
-    factory = _factory()
+    factory = pg_factory
     prepare(factory)
     before = state(factory)
     report = rebuild_market_marts(factory, SELECTION, checked_at=NOW, dry_run=False,
@@ -29,9 +29,9 @@ def test_frozen_pulse_target_blocks_mixed_day_publication():
     assert state(factory) == before
 
 
-def test_corrupt_tagged_status_cannot_publish_as_known():
+def test_corrupt_tagged_status_cannot_publish_as_known(pg_factory):
     from app.db.models import DailyBasic
-    factory = _factory()
+    factory = pg_factory
     prepare(factory)
     with factory.begin() as session:
         basic = session.scalar(select(DailyBasic))
@@ -42,13 +42,13 @@ def test_corrupt_tagged_status_cannot_publish_as_known():
         assert stats['riseLimit'] is None and stats['coverage']['valid'] == 0
 
 
-def test_pulse_then_ordinary_build_keeps_valid_limits_and_rejects_corruption():
+def test_pulse_then_ordinary_build_keeps_valid_limits_and_rejects_corruption(pg_factory):
     from app.db.models import DailyBasic, SourcePayload
     from app.market.pulse.repository import PulseRepository, FIELDS
     from app.connectors.tushare.contracts import TushareResponse
     from app.jobs.build_and_publish import BuildAndPublishOptions
     from backend.tests.jobs.test_build_and_publish_integration import _real_build_and_publish_job
-    factory = _factory()
+    factory = pg_factory
     prepare(factory)
     with factory() as session:
         basic = session.scalar(select(DailyBasic))
@@ -69,8 +69,8 @@ def test_pulse_then_ordinary_build_keeps_valid_limits_and_rejects_corruption():
         assert session.get(PublishedSnapshot, 'market-overview').payload['limitStats']['coverage']['valid'] == 0
 
 
-def test_pulse_publication_retains_non_target_missing_faults():
-    factory = _factory()
+def test_pulse_publication_retains_non_target_missing_faults(pg_factory):
+    factory = pg_factory
     prepare(factory)
     fault = {'source': 'news', 'reason': 'SOURCE_PERMISSION_REQUIRED', 'code': 'OLD_NEWS_FAULT'}
     with factory.begin() as session:
@@ -89,8 +89,8 @@ def rebuild(factory, *, dry_run=False):
     return module.rebuild_market_marts(factory, SELECTION, checked_at=NOW, dry_run=dry_run)
 
 
-def test_dry_run_does_not_write_and_reports_actual_scope():
-    factory = _factory()
+def test_dry_run_does_not_write_and_reports_actual_scope(pg_factory):
+    factory = pg_factory
     prepare(factory)
     before = state(factory)
     report = rebuild(factory, dry_run=True)
@@ -99,8 +99,8 @@ def test_dry_run_does_not_write_and_reports_actual_scope():
     assert state(factory) == before
 
 
-def test_only_market_pair_publishes_and_same_input_reentry_writes_nothing():
-    factory = _factory()
+def test_only_market_pair_publishes_and_same_input_reentry_writes_nothing(pg_factory):
+    factory = pg_factory
     prepare(factory)
     before = state(factory)
     report = rebuild(factory)
@@ -116,8 +116,8 @@ def test_only_market_pair_publishes_and_same_input_reentry_writes_nothing():
     assert state(factory) == after
 
 
-def test_missing_quotes_never_publish_empty_success():
-    factory = _factory()
+def test_missing_quotes_never_publish_empty_success(pg_factory):
+    factory = pg_factory
     prepare(factory)
     with factory.begin() as session:
         session.query(DailyPrice).delete()
@@ -127,8 +127,8 @@ def test_missing_quotes_never_publish_empty_success():
     assert state(factory) == before
 
 
-def test_newer_one_sided_pointer_blocks_entire_pair():
-    factory = _factory()
+def test_newer_one_sided_pointer_blocks_entire_pair(pg_factory):
+    factory = pg_factory
     prepare(factory)
     with factory.begin() as session:
         session.get(PublishedSnapshot, "market-explorer").as_of = NOW
@@ -138,8 +138,8 @@ def test_newer_one_sided_pointer_blocks_entire_pair():
     assert state(factory) == before
 
 
-def test_second_product_failure_rolls_back_pair_and_history(monkeypatch):
-    factory = _factory()
+def test_second_product_failure_rolls_back_pair_and_history(pg_factory, monkeypatch):
+    factory = pg_factory
     prepare(factory)
     before = state(factory)
     original = SnapshotPublisher._write_page_snapshot
@@ -153,10 +153,10 @@ def test_second_product_failure_rolls_back_pair_and_history(monkeypatch):
     assert state(factory) == before
 
 
-def test_publication_lock_is_shared_and_missing_calendar_is_not_fresh():
-    factory = _factory()
+def test_publication_lock_is_shared_and_missing_calendar_is_not_fresh(pg_factory):
+    factory = pg_factory
     prepare(factory)
-    lock = ProcessLocalJobLock()
+    lock = PostgresAdvisoryJobLock(factory.kw["bind"])
     key = data_publication_lock_key()
     assert lock.try_acquire(key)
     try:
@@ -171,8 +171,8 @@ def test_publication_lock_is_shared_and_missing_calendar_is_not_fresh():
         assert pointer.stale is True and pointer.stale_reason == "MARKET_CALENDAR_UNKNOWN"
 
 
-def test_stock_only_rebuild_preserves_external_modules_and_news():
-    factory = _factory()
+def test_stock_only_rebuild_preserves_external_modules_and_news(pg_factory):
+    factory = pg_factory
     prepare(factory)
     news = [{"id": "existing", "title": "合法原记录", "time": "08:00", "source": "controlled", "publishedAt": NOW.isoformat()}]
     with factory.begin() as session:
@@ -185,8 +185,8 @@ def test_stock_only_rebuild_preserves_external_modules_and_news():
         assert session.scalar(select(PublishedSnapshot).where(PublishedSnapshot.product == "market-explorer")).payload["marketNews"] == news
 
 
-def test_null_prices_cannot_clear_good_rankings_and_claim_full_coverage():
-    factory = _factory()
+def test_null_prices_cannot_clear_good_rankings_and_claim_full_coverage(pg_factory):
+    factory = pg_factory
     prepare(factory)
     with factory.begin() as session:
         row = session.scalar(select(DailyPrice))
@@ -198,8 +198,8 @@ def test_null_prices_cannot_clear_good_rankings_and_claim_full_coverage():
     assert state(factory) == before
 
 
-def test_lost_membership_cannot_clear_existing_industry_heatmap():
-    factory = _factory()
+def test_lost_membership_cannot_clear_existing_industry_heatmap(pg_factory):
+    factory = pg_factory
     prepare(factory)
     with factory.begin() as session:
         session.add(Classification(id=1, provider="tushare", source="SW2021", classification_id="root", name="消费", level=1))
@@ -213,8 +213,8 @@ def test_lost_membership_cannot_clear_existing_industry_heatmap():
     assert state(factory) == before
 
 
-def test_other_source_members_are_not_counted_as_target_classification_coverage():
-    factory = _factory()
+def test_other_source_members_are_not_counted_as_target_classification_coverage(pg_factory):
+    factory = pg_factory
     prepare(factory)
     with factory.begin() as session:
         session.add(Classification(id=1, provider="tushare", source="SW2014", classification_id="old", name="旧分类", level=1))

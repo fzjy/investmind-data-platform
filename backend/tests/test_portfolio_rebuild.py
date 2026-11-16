@@ -1,3 +1,4 @@
+from backend.tests.support.snapshots import set_snapshot_version
 from copy import deepcopy
 from datetime import date, timedelta, timezone
 from decimal import Decimal
@@ -8,7 +9,7 @@ from typer.testing import CliRunner
 
 from app.db.models import AdjustmentFactor, DailyPrice, PublishedSnapshot, Security
 from app.jobs.locks import ProcessLocalJobLock, data_publication_lock_key
-from backend.tests.jobs.test_build_and_publish_integration import _factory
+
 from backend.tests.marts.test_content_runtime import prepare, state
 
 
@@ -17,8 +18,8 @@ def runtime():
     return rebuild_portfolio
 
 
-def source():
-    factory = _factory()
+def source(new_pg_factory):
+    factory = new_pg_factory()
     prepare(factory)
     with factory.begin() as session:
         session.add(AdjustmentFactor(ts_code='600519.SH', trade_date=date(2026,8,24), adj_factor=Decimal('1')))
@@ -29,10 +30,11 @@ def source():
     return factory
 
 
-def test_default_preview_writes_nothing_and_uses_published_scope():
-    factory = source()
+def test_default_preview_writes_nothing_and_uses_published_scope(new_pg_factory):
+    factory = source(new_pg_factory)
     with factory.begin() as s:
         s.add(Security(ts_code='OTHER',symbol='OTHER',name='外部证券'))
+        s.flush()
         s.add(DailyPrice(ts_code='OTHER',trade_date=date(2026,8,24),close=Decimal('1')))
     before = state(factory)
     report = runtime()(factory)
@@ -41,8 +43,8 @@ def test_default_preview_writes_nothing_and_uses_published_scope():
     assert report['asOf'] == '2026-08-24' and state(factory) == before
 
 
-def test_publish_changes_only_portfolio_then_reentry_is_no_change():
-    factory = source()
+def test_publish_changes_only_portfolio_then_reentry_is_no_change(new_pg_factory):
+    factory = source(new_pg_factory)
     before = state(factory)
     report = runtime()(factory, dry_run=False)
     assert report['status'] == 'completed' and report['promotedProducts'] == ['portfolio']
@@ -59,8 +61,8 @@ def test_publish_changes_only_portfolio_then_reentry_is_no_change():
 
 
 @pytest.mark.parametrize('value,reason', [(None, 'missing'), (0, 'invalid')])
-def test_factor_issue_can_be_published_then_repaired(value, reason):
-    factory = source()
+def test_factor_issue_can_be_published_then_repaired(new_pg_factory, value, reason):
+    factory = source(new_pg_factory)
     with factory.begin() as s:
         row = s.scalar(select(AdjustmentFactor))
         if value is None:
@@ -83,8 +85,8 @@ def test_factor_issue_can_be_published_then_repaired(value, reason):
 
 
 @pytest.mark.parametrize('bad', ['missing-price', 'zero-price', 'empty-scope', 'duplicate-scope', 'newer-portfolio'])
-def test_bad_source_never_publishes(bad):
-    factory = source()
+def test_bad_source_never_publishes(new_pg_factory, bad):
+    factory = source(new_pg_factory)
     with factory.begin() as s:
         if bad == 'missing-price': s.execute(delete(DailyPrice))
         if bad == 'zero-price': s.scalar(select(DailyPrice)).close = 0
@@ -98,9 +100,9 @@ def test_bad_source_never_publishes(bad):
     assert state(factory) == before
 
 
-def test_lock_conflict_and_parent_change_protect_user_work(monkeypatch):
+def test_lock_conflict_and_parent_change_protect_user_work(new_pg_factory, monkeypatch):
     import app.portfolio.marts.portfolio_runtime as module
-    factory=source();before=state(factory)
+    factory=source(new_pg_factory);before=state(factory)
     held=ProcessLocalJobLock();assert held.try_acquire(data_publication_lock_key())
     monkeypatch.setattr(module,'job_lock_for_engine',lambda engine:held)
     try: assert runtime()(factory,dry_run=False)['code']=='PORTFOLIO_PUBLICATION_LOCK_BUSY'
@@ -109,7 +111,7 @@ def test_lock_conflict_and_parent_change_protect_user_work(monkeypatch):
     original=module.PortfolioMartBuilder.build
     def intervening(self,*args,**kwargs):
         candidate=original(self,*args,**kwargs)
-        with factory.begin() as s: s.get(PublishedSnapshot,'portfolio').version='user-new-version'
+        with factory.begin() as s: set_snapshot_version(s, s.get(PublishedSnapshot,'portfolio'), 'user-new-version')
         return candidate
     monkeypatch.setattr(module.PortfolioMartBuilder,'build',intervening)
     report=runtime()(factory,dry_run=False)
@@ -121,7 +123,7 @@ def test_cli_explicit_publish_and_dry_run_priority(monkeypatch):
     from app.cli.main import app
     from app.config import Settings
     import app.cli.portfolio_rebuild as module
-    monkeypatch.setattr(Settings,'from_env',classmethod(lambda cls:Settings(data_backend='database',database_url='sqlite:///controlled')))
+    monkeypatch.setattr(Settings,'from_env',classmethod(lambda cls:Settings(data_backend='database',database_url='postgresql+psycopg://controlled.invalid/test')))
     class Engine:
         def dispose(self): pass
     monkeypatch.setattr(module,'create_engine_and_session',lambda url:(Engine(),'factory'))
@@ -132,8 +134,8 @@ def test_cli_explicit_publish_and_dry_run_priority(monkeypatch):
     assert calls==[True,True,False,True]
 
 
-def test_rebuild_excludes_project_settings_and_protects_price_history():
-    factory=source()
+def test_rebuild_excludes_project_settings_and_protects_price_history(new_pg_factory):
+    factory=source(new_pg_factory)
     with factory.begin() as s:
         p=s.get(PublishedSnapshot,'portfolio');d=deepcopy(p.payload)
         d['defaultState']={'positions':[{'assetId':'600519.SH','weight':100}]}
@@ -152,12 +154,15 @@ def test_rebuild_excludes_project_settings_and_protects_price_history():
     assert state(factory)==before
 
 
-def test_atomic_publisher_guard_rejects_race_without_writing_history(monkeypatch):
+def test_atomic_publisher_guard_rejects_race_without_writing_history(new_pg_factory, monkeypatch):
     import app.portfolio.marts.portfolio_runtime as module
-    factory=source();original=module.SnapshotPublisher.publish_many
+    factory=source(new_pg_factory);original=module.SnapshotPublisher.publish_many
     before=state(factory)
     def racing(self,*args,**kwargs):
-        with factory.begin() as s: s.get(PublishedSnapshot,'screener').version='racing-user-version'
+        with factory.begin() as s:
+            pointer = s.get(PublishedSnapshot, 'screener')
+            pointer.payload = dict(pointer.payload)
+            pointer.version = 'racing-user-version'
         return original(self,*args,**kwargs)
     monkeypatch.setattr(module.SnapshotPublisher,'publish_many',racing)
     report=runtime()(factory,dry_run=False)
@@ -166,8 +171,8 @@ def test_atomic_publisher_guard_rejects_race_without_writing_history(monkeypatch
     assert after['pages']==before['pages'] and after['pointers']['portfolio']==before['pointers']['portfolio']
 
 
-def test_missing_target_day_quote_is_not_relabeled_as_fresh():
-    factory=source()
+def test_missing_target_day_quote_is_not_relabeled_as_fresh(new_pg_factory):
+    factory=source(new_pg_factory)
     with factory.begin() as s:
         s.scalar(select(DailyPrice)).trade_date=date(2026,8,21)
         s.scalar(select(AdjustmentFactor)).trade_date=date(2026,8,21)
@@ -179,9 +184,9 @@ def test_missing_target_day_quote_is_not_relabeled_as_fresh():
     assert state(factory)==before
 
 
-def test_atomic_guard_preserves_concurrent_freshness_without_version_change(monkeypatch):
+def test_atomic_guard_preserves_concurrent_freshness_without_version_change(new_pg_factory, monkeypatch):
     import app.portfolio.marts.portfolio_runtime as module
-    factory=source();original=module.SnapshotPublisher.publish_many
+    factory=source(new_pg_factory);original=module.SnapshotPublisher.publish_many
     def refreshing(self,*args,**kwargs):
         with factory.begin() as s:
             p=s.get(PublishedSnapshot,'portfolio');p.stale=True;p.stale_reason='new-check-failed'
@@ -193,9 +198,9 @@ def test_atomic_guard_preserves_concurrent_freshness_without_version_change(monk
     assert after['pages']==before['pages'] and after['pointers']['portfolio'][3:5]==(True,'new-check-failed')
 
 
-def test_session_timezone_does_not_change_business_date(monkeypatch):
+def test_session_timezone_does_not_change_business_date(new_pg_factory, monkeypatch):
     from sqlalchemy.orm import Session
-    factory=source();original=Session.get
+    factory=source(new_pg_factory);original=Session.get
     def west(self,entity,ident,*args,**kwargs):
         row=original(self,entity,ident,*args,**kwargs)
         if entity is PublishedSnapshot and row is not None:

@@ -200,12 +200,12 @@ def test_noncanonical_monthly_point_does_not_crash_unrelated_eligible_derivation
         {'seriesId': 'cn.industry.value_added_yoy', 'period': '2026-08-15', 'reason': 'NON_CANONICAL_MONTHLY_PERIOD'}]
 
 
-def test_explicit_rebuild_defaults_to_reuse_without_collecting_or_repromoting(monkeypatch):
+def test_explicit_rebuild_defaults_to_reuse_without_collecting_or_repromoting(pg_factory, monkeypatch):
     from app.cli import main as cli
     from backend.tests.jobs.test_macro_publish import setup, AS_OF
     from sqlalchemy import select, func
     from app.db.models import PageSnapshot
-    engine, factory, _, _, publisher, _ = setup(20)
+    engine, factory, _, _, publisher, _ = setup(pg_factory, 20)
     dispose = engine.dispose
 
     class Clock(datetime):
@@ -222,8 +222,8 @@ def test_explicit_rebuild_defaults_to_reuse_without_collecting_or_repromoting(mo
     monkeypatch.setattr(cli.MacroSeriesCatalog, 'load', lambda *args: CATALOG)
     monkeypatch.setattr(engine, 'dispose', lambda: None)
     try:
-        first = cli._run_macro_rebuild(cli.Settings(database_url='sqlite://'))
-        second = cli._run_macro_rebuild(cli.Settings(database_url='sqlite://'))
+        first = cli._run_macro_rebuild(cli.Settings(database_url=engine.url.render_as_string(hide_password=False)))
+        second = cli._run_macro_rebuild(cli.Settings(database_url=engine.url.render_as_string(hide_password=False)))
         assert first.status == second.status == 'completed'
         assert first.version == second.version and second.promoted_products == ()
         with factory() as session:

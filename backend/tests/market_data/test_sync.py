@@ -33,8 +33,8 @@ def job(factory, *, budget=20, handler=None):
     return sync, client, requests
 
 
-def test_completed_target_new_process_reentry_is_zero_http():
-    _, factory, _ = setup()
+def test_completed_target_new_process_reentry_is_zero_http(new_pg_factory):
+    _, factory, _ = setup(new_pg_factory)
     sync, client, requests = job(factory)
     try:
         report = sync.run(NOW)
@@ -51,8 +51,8 @@ def test_completed_target_new_process_reentry_is_zero_http():
         client.close()
 
 
-def test_two_request_budget_stops_before_third_physical_http_and_resumes():
-    _, factory, _ = setup()
+def test_two_request_budget_stops_before_third_physical_http_and_resumes(new_pg_factory):
+    _, factory, _ = setup(new_pg_factory)
     sync, client, requests = job(factory, budget=2)
     try:
         first = sync.run(NOW)
@@ -66,8 +66,8 @@ def test_two_request_budget_stops_before_third_physical_http_and_resumes():
 
 
 @pytest.mark.parametrize('status', [401,403,429,500])
-def test_failed_asset_never_advances_success_cursor_or_retries(status):
-    _, factory, _ = setup()
+def test_failed_asset_never_advances_success_cursor_or_retries(new_pg_factory, status):
+    _, factory, _ = setup(new_pg_factory)
     sync, client, requests = job(factory, handler=lambda _: httpx.Response(status))
     try:
         report = sync.run(NOW)
@@ -80,8 +80,8 @@ def test_failed_asset_never_advances_success_cursor_or_retries(status):
         client.close()
 
 
-def test_dry_run_and_disabled_have_no_job_cursor_raw_or_http_side_effects():
-    _, factory, _ = setup()
+def test_dry_run_and_disabled_have_no_job_cursor_raw_or_http_side_effects(new_pg_factory):
+    _, factory, _ = setup(new_pg_factory)
     sync, client, requests = job(factory)
     try:
         assert sync.preflight(NOW)['pendingCount'] == 15
@@ -97,8 +97,8 @@ def test_dry_run_and_disabled_have_no_job_cursor_raw_or_http_side_effects():
         client.close()
 
 
-def test_missing_core_is_repaired_without_refetching_other_assets():
-    value, factory, _ = setup()
+def test_missing_core_is_repaired_without_refetching_other_assets(new_pg_factory):
+    value, factory, _ = setup(new_pg_factory)
     sync, client, requests = job(factory)
     try:
         sync.run(NOW)
@@ -109,8 +109,8 @@ def test_missing_core_is_repaired_without_refetching_other_assets():
         client.close()
 
 
-def test_network_errors_count_once_without_implicit_retries():
-    _, factory, _ = setup()
+def test_network_errors_count_once_without_implicit_retries(new_pg_factory):
+    _, factory, _ = setup(new_pg_factory)
     def offline(_):
         raise httpx.ConnectError('controlled-secret')
     sync, client, requests = job(factory, handler=offline)
@@ -122,10 +122,10 @@ def test_network_errors_count_once_without_implicit_retries():
         client.close()
 
 
-def test_forged_future_target_is_rejected_before_http():
+def test_forged_future_target_is_rejected_before_http(new_pg_factory):
     from dataclasses import replace
     from app.market.data.catalog import plan_market_targets
-    _, factory, _ = setup()
+    _, factory, _ = setup(new_pg_factory)
     sync, client, requests = job(factory)
     targets = plan_market_targets(sync.catalog,NOW)
     sync.targets = (replace(targets[0],end_date=targets[0].end_date+timedelta(days=1)), *targets[1:])
@@ -137,10 +137,10 @@ def test_forged_future_target_is_rejected_before_http():
         client.close()
 
 
-def test_unexpected_persist_failure_records_safe_failed_run_and_actual_http(monkeypatch):
+def test_unexpected_persist_failure_records_safe_failed_run_and_actual_http(new_pg_factory, monkeypatch):
     from app.db.models import JobRun
     from app.market.data.repository import MarketQuoteRepository
-    _, factory, _ = setup()
+    _, factory, _ = setup(new_pg_factory)
     sync, client, requests = job(factory)
     def fail(*args,**kwargs):
         raise RuntimeError('secret database credentials')

@@ -6,7 +6,7 @@ from sqlalchemy import select
 from app.db.models import Security, DailyBasic, DailyPrice, SourcePayload, PublishedSnapshot
 from app.stocks.derived.inputs import CoreSnapshot
 from app.market.marts.market import MarketMartBuilder
-from backend.tests.market_pulse.test_repository import CODE, DAY, NOW, _factory
+from backend.tests.market_pulse.test_repository import CODE, DAY, NOW
 from backend.tests.market_region.test_repository import setup, response
 
 OTHER='000001.SZ'
@@ -60,10 +60,10 @@ def test_current_metadata_time_separate_from_price_date_and_explicit_map_control
     assert '当前' in meta['basis'] and '非历史' in meta['basis'] and '城市' in meta['basis']
 
 
-def test_region_runtime_replaces_owned_category_and_blocks_lost_known_coverage():
+def test_region_runtime_replaces_owned_category_and_blocks_lost_known_coverage(pg_factory):
     from backend.tests.marts.test_market_runtime import rebuild, SELECTION, NOW as RUNTIME_NOW
     from backend.tests.marts.test_content_runtime import prepare, state
-    factory=_factory()
+    factory=pg_factory
     prepare(factory)
     with factory.begin() as session:
         session.get(Security,CODE).data={'area':'贵州'}
@@ -81,13 +81,13 @@ def test_region_runtime_replaces_owned_category_and_blocks_lost_known_coverage()
     assert state(factory)==before
 
 
-def test_ordinary_builder_keeps_verified_region_and_no_fallback_on_damage():
+def test_ordinary_builder_keeps_verified_region_and_no_fallback_on_damage(pg_factory):
     from app.connectors.tushare.contracts import TushareResponse
     from app.market.region.repository import RegionRepository, FIELDS
     from app.jobs.build_and_publish import BuildAndPublishOptions
     from backend.tests.jobs.test_build_and_publish_integration import _real_build_and_publish_job
     from backend.tests.marts.test_content_runtime import prepare
-    factory=_factory()
+    factory=pg_factory
     prepare(factory)
     now=datetime.now(UTC)
     assert RegionRepository(factory).persist(CODE,'controlled',TushareResponse(fields=FIELDS,items=((CODE,'贵州'),)),now)

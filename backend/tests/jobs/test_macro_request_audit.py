@@ -7,17 +7,17 @@ from sqlalchemy import select
 
 from app.db.models import IngestionBatch, MacroObservation, SourcePayload
 from app.macro.jobs.macro_sync_repository import MacroObservationRepository
-from backend.tests.jobs.test_build_and_publish_integration import _factory
+
 from backend.tests.jobs.test_macro_sync import AS_OF, CATALOG, TARGET, FakeProvider, old_state, result, setup_job
 
 
 @pytest.mark.parametrize("status", ["failed", "no_change", "success"])
-def test_failed_no_change_and_empty_actual_requests_are_audited_without_core_rows(status: str) -> None:
+def test_failed_no_change_and_empty_actual_requests_are_audited_without_core_rows(pg_factory, status: str) -> None:
     fetched = replace(result("fred", status), observations=(), raw_payload={"token": "canary-secret", "response": "controlled"})
     provider = FakeProvider("fred", fetched)
     catalog = CATALOG.model_copy(update={"series": tuple(item if item.id == TARGET else item.model_copy(update={"sources": ()}) for item in CATALOG.series)})
     engine, job, opts, _, _, _, _, _ = setup_job((provider,), catalog=catalog, states=(old_state(TARGET, AS_OF.date() - timedelta(days=2)),))
-    factory = _factory()
+    factory = pg_factory
     job._observations = MacroObservationRepository(factory)
     try:
         job.run(opts)
@@ -35,13 +35,13 @@ def test_failed_no_change_and_empty_actual_requests_are_audited_without_core_row
         factory.kw["bind"].dispose()
 
 
-def test_visible_and_deferred_rows_share_one_request_batch_and_window_hash() -> None:
+def test_visible_and_deferred_rows_share_one_request_batch_and_window_hash(pg_factory) -> None:
     fetched = result("fred")
     fetched = replace(fetched, observations=(*fetched.observations, replace(fetched.observations[0], released_at=AS_OF + timedelta(days=1), revision="future")))
     provider = FakeProvider("fred", fetched)
     catalog = CATALOG.model_copy(update={"series": tuple(item if item.id == TARGET else item.model_copy(update={"sources": ()}) for item in CATALOG.series)})
     engine, job, opts, _, _, _, _, _ = setup_job((provider,), catalog=catalog)
-    factory = _factory()
+    factory = pg_factory
     job._observations = MacroObservationRepository(factory)
     try:
         job.run(opts)
@@ -59,9 +59,9 @@ def test_visible_and_deferred_rows_share_one_request_batch_and_window_hash() -> 
         factory.kw["bind"].dispose()
 
 
-def test_request_retry_identity_is_idempotent_and_raw_survives_core_failure(monkeypatch) -> None:
+def test_request_retry_identity_is_idempotent_and_raw_survives_core_failure(pg_factory, monkeypatch) -> None:
     from app.connectors.macro.contracts import MacroFetchWindow
-    factory = _factory()
+    factory = pg_factory
     repository = MacroObservationRepository(factory)
     series = next(item for item in CATALOG.series if item.id == TARGET)
     fetched = replace(result("fred"), request_count=3)

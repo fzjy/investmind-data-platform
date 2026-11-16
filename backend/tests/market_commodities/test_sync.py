@@ -16,11 +16,12 @@ from backend.tests.market_etf.test_publication import prepare
 from backend.tests.marts.test_content_runtime import state
 
 
-def setup(budget=60,handler=None):
-    _,catalog,factory=sources_setup()
+def setup(new_pg_factory, budget=60,handler=None):
+    _,catalog,factory=sources_setup(new_pg_factory)
     with factory.begin() as session:
         for code in POOL.symbols:
             session.add(Security(ts_code=code,symbol=code[:6],name=code))
+            session.flush()
             session.add(DailyPrice(ts_code=code,trade_date=DAY,close=10,pct_chg=0))
             session.add(DailyBasic(ts_code=code,trade_date=DAY,data={}))
         session.add(PublishedSnapshot(product='screener',version='stock-old',as_of=NOW,payload={}))
@@ -38,8 +39,8 @@ def setup(budget=60,handler=None):
     return sync,factory,client,calls
 
 
-def test_one_http_budget_resumes_dynamic_requests_then_pair_and_zero_writes():
-    sync,factory,client,calls=setup(1)
+def test_one_http_budget_resumes_dynamic_requests_then_pair_and_zero_writes(new_pg_factory):
+    sync,factory,client,calls=setup(new_pg_factory, 1)
     before=state(factory)
     assert sync.preflight(NOW)['pendingCount']==24 and calls==[]
     with client:
@@ -61,8 +62,8 @@ def test_one_http_budget_resumes_dynamic_requests_then_pair_and_zero_writes():
         assert state(factory)==after and len(calls)==44
 
 
-def test_permission_stops_entire_group_and_lock_busy_never_calls():
-    sync,_,client,calls=setup(handler=lambda _:httpx.Response(403))
+def test_permission_stops_entire_group_and_lock_busy_never_calls(new_pg_factory):
+    sync,_,client,calls=setup(new_pg_factory, handler=lambda _:httpx.Response(403))
     with client:
         result=sync.run(NOW)
         assert result['status']=='failed' and result['requestCount']==1 and len(calls)==1
@@ -72,8 +73,8 @@ def test_permission_stops_entire_group_and_lock_busy_never_calls():
         assert len(calls)==1
 
 
-def test_pair_failure_rolls_back_but_does_not_lose_collected_components(monkeypatch):
-    sync,factory,client,calls=setup()
+def test_pair_failure_rolls_back_but_does_not_lose_collected_components(new_pg_factory, monkeypatch):
+    sync,factory,client,calls=setup(new_pg_factory)
     before=state(factory)
     original=SnapshotPublisher._write_page_snapshot
     def fail(self,session,candidate,version):
@@ -88,8 +89,8 @@ def test_pair_failure_rolls_back_but_does_not_lose_collected_components(monkeypa
     assert len(calls)==44
 
 
-def test_terminal_guard_blocks_ordinary_builder_erasing_commodity():
-    sync,factory,client,_=setup()
+def test_terminal_guard_blocks_ordinary_builder_erasing_commodity(new_pg_factory):
+    sync,factory,client,_=setup(new_pg_factory)
     with client: assert sync.run(NOW,publish=True)['status']=='completed'
     before=state(factory)
     payload={**before['pointers']['market-explorer'][2],'commodityData':{}}
@@ -98,8 +99,8 @@ def test_terminal_guard_blocks_ordinary_builder_erasing_commodity():
     assert state(factory)==before
 
 
-def test_recheck_and_unlock_failures_preserve_real_http(monkeypatch):
-    sync,_,client,calls=setup()
+def test_recheck_and_unlock_failures_preserve_real_http(new_pg_factory, monkeypatch):
+    sync,_,client,calls=setup(new_pg_factory)
     original=sync.preflight; count=0
     def check(now):
         nonlocal count
@@ -116,9 +117,9 @@ def test_recheck_and_unlock_failures_preserve_real_http(monkeypatch):
     assert len(released)==2 and 'private' not in str(result)
 
 
-def test_cached_mapping_gap_becomes_pending_again_instead_of_zero_http_dead_end():
+def test_cached_mapping_gap_becomes_pending_again_instead_of_zero_http_dead_end(new_pg_factory):
     from backend.tests.market_commodities.test_sources import complete
-    sync,factory,_,_=setup()
+    sync,factory,_,_=setup(new_pg_factory)
     complete(factory,sync.catalog)
     repo=mod().CommodityRepository(factory,sync.catalog)
     req=next(r for r in mod('contracts').source_requests(sync.catalog,DAY) if r['api']=='fut_mapping')
@@ -131,9 +132,9 @@ def test_cached_mapping_gap_becomes_pending_again_instead_of_zero_http_dead_end(
 
 @pytest.mark.parametrize('damage',['source','unit','bars','ohlc','captured','legacy_series',
     'price','change','pre_settle','zero_pre_settle','nan_price'])
-def test_dto_rejects_missing_real_commodity_contract(damage):
+def test_dto_rejects_missing_real_commodity_contract(new_pg_factory, damage):
     from backend.tests.market_commodities.test_sources import complete
-    sync,factory,_,_=setup()
+    sync,factory,_,_=setup(new_pg_factory)
     complete(factory,sync.catalog)
     with factory() as session:
         payload={**session.get(PublishedSnapshot,'market-explorer').payload,**mod().package(session,sync.catalog,DAY,NOW)}
@@ -152,11 +153,11 @@ def test_dto_rejects_missing_real_commodity_contract(damage):
     assert validate_product_payload('market-explorer',payload)
 
 
-def test_ordinary_builder_keeps_valid_commodity_and_corruption_blocks_erase():
+def test_ordinary_builder_keeps_valid_commodity_and_corruption_blocks_erase(new_pg_factory):
     from app.market.marts.market_runtime import rebuild_market_marts
     from app.market.data.catalog import MarketDataCatalog
     from unittest.mock import patch
-    sync,factory,client,_=setup()
+    sync,factory,client,_=setup(new_pg_factory)
     with client: assert sync.run(NOW,publish=True)['status']=='completed'
     with patch.object(MarketDataCatalog,'load',return_value=sync.catalog):
         assert rebuild_market_marts(factory,POOL,checked_at=NOW,dry_run=False)['status'] in {'completed','no_change'}
@@ -167,14 +168,14 @@ def test_ordinary_builder_keeps_valid_commodity_and_corruption_blocks_erase():
         assert state(factory)==before
 
 
-def test_next_stock_day_carries_only_verified_old_commodity_with_own_date():
+def test_next_stock_day_carries_only_verified_old_commodity_with_own_date(new_pg_factory):
     from datetime import date,datetime,UTC
     from unittest.mock import patch
     from app.market.marts.market_runtime import rebuild_market_marts
     from app.market.data.catalog import MarketDataCatalog
     from app.stocks.derived.inputs import CoreSnapshotRepository
     from app.jobs.build_and_publish import DefaultMartBuilders
-    sync,factory,client,_=setup()
+    sync,factory,client,_=setup(new_pg_factory)
     with client: assert sync.run(NOW,publish=True)['status']=='completed'
     next_day=date(2026,10,19); next_now=datetime(2026,10,19,15,35,tzinfo=UTC)
     with factory.begin() as session:

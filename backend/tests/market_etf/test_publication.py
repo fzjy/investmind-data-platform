@@ -28,8 +28,8 @@ def prepare(factory):
         session.add(PublishedSnapshot(product='macro-insights',version='macro-old',as_of=NOW,payload={'keep':1}))
 
 
-def test_etf_publication_changes_only_owned_subscope_and_zero_http_reentry():
-    sync,factory,client,calls,_=setup()
+def test_etf_publication_changes_only_owned_subscope_and_zero_http_reentry(new_pg_factory):
+    sync,factory,client,calls,_=setup(new_pg_factory)
     prepare(factory)
     before=state(factory)
     with client: report=sync.run(NOW,publish=True)
@@ -54,8 +54,8 @@ def test_etf_publication_changes_only_owned_subscope_and_zero_http_reentry():
     assert len(calls)==18 and state(factory)==after
 
 
-def test_second_product_write_failure_rolls_back_and_retains_collection(monkeypatch):
-    sync,factory,client,_,_=setup()
+def test_second_product_write_failure_rolls_back_and_retains_collection(new_pg_factory, monkeypatch):
+    sync,factory,client,_,_=setup(new_pg_factory)
     prepare(factory)
     before=state(factory)
     original=SnapshotPublisher._write_page_snapshot
@@ -70,8 +70,8 @@ def test_second_product_write_failure_rolls_back_and_retains_collection(monkeypa
 
 
 @pytest.mark.parametrize('damage',['remove','older','null_count','stocks','missing_capture','missing_source','bad_capture'])
-def test_terminal_guard_or_dto_prevents_etf_lost_or_stock_impersonation(damage):
-    sync,factory,client,_,_=setup()
+def test_terminal_guard_or_dto_prevents_etf_lost_or_stock_impersonation(new_pg_factory, damage):
+    sync,factory,client,_,_=setup(new_pg_factory)
     prepare(factory)
     with client: assert sync.run(NOW,publish=True)['status']=='completed'
     before=state(factory)
@@ -92,8 +92,8 @@ def test_terminal_guard_or_dto_prevents_etf_lost_or_stock_impersonation(damage):
         assert state(factory)==before
 
 
-def test_ordinary_market_builder_reads_etf_and_corruption_cannot_erase_it():
-    sync,factory,client,_,mod=setup()
+def test_ordinary_market_builder_reads_etf_and_corruption_cannot_erase_it(new_pg_factory):
+    sync,factory,client,_,mod=setup(new_pg_factory)
     prepare(factory)
     with client: sync.run(NOW,publish=True)
     from app.market.marts.market_runtime import rebuild_market_marts
@@ -109,7 +109,7 @@ def test_ordinary_market_builder_reads_etf_and_corruption_cannot_erase_it():
     assert state(factory)==before
 
 
-def test_next_trading_day_rebuild_carries_valid_old_etf_then_normal_entry_advances():
+def test_next_trading_day_rebuild_carries_valid_old_etf_then_normal_entry_advances(new_pg_factory):
     from datetime import date, datetime, UTC
     from app.db.models import DailyPrice,DailyBasic
     from app.market.data.catalog import plan_market_targets
@@ -120,7 +120,7 @@ def test_next_trading_day_rebuild_carries_valid_old_etf_then_normal_entry_advanc
     from backend.tests.market_etf.test_etf import response,FIELDS
     import httpx,json
     from app.connectors.tushare.client import TushareClient
-    sync,factory,client,_,_=setup()
+    sync,factory,client,_,_=setup(new_pg_factory)
     prepare(factory)
     with client: assert sync.run(NOW,publish=True)['status']=='completed'
     next_day=date(2026,10,19)

@@ -1,4 +1,4 @@
-"""Controlled JSONL -> SQLite -> real builder/service DTO for frontend rendering tests."""
+"""从受控 JSONL 和临时 PostgreSQL 导出前端渲染测试所用 DTO。"""
 from datetime import UTC, datetime
 import json
 from pathlib import Path
@@ -12,16 +12,18 @@ from app.macro.jobs.macro_publish import MacroPublishJob
 from app.macro.marts.macro import MacroMartBuilder, MacroRepository
 from app.marts.publication import SnapshotPublisher
 from app.shared.repository import SnapshotRepository
-from backend.tests.jobs.test_build_and_publish_integration import _factory
+
 from backend.tests.jobs.test_macro_offline_lineage import CATALOG, import_controlled_macro
 from backend.tests.jobs.test_macro_publish import History
 
 
-def main() -> None:
+from backend.tests.support.postgres import PostgresContainer, standalone_factory
+
+
+def export(instance_url) -> None:
     output: dict[str, object] = {}
     for label in ("full", "partial"):
-        factory = _factory()
-        with tempfile.TemporaryDirectory(prefix="macro-dto-") as temporary:
+        with standalone_factory(instance_url) as factory, tempfile.TemporaryDirectory(prefix="macro-dto-") as temporary:
             import_controlled_macro(factory, Path(temporary), 20)
             if label == "partial":
                 with factory.begin() as session:
@@ -37,11 +39,11 @@ def main() -> None:
                 "transmission": service.get_transmission().model_dump(mode="json", by_alias=True),
                 "insights": service.get_insights().model_dump(mode="json", by_alias=True),
             }
-        factory.kw["bind"].dispose()
     # Isolated Python (-I) ignores PYTHONIOENCODING; ASCII JSON is lossless even
     # when Windows redirects stdout using a legacy code page.
     print(json.dumps(output, ensure_ascii=True))
 
 
 if __name__ == "__main__":
-    main()
+    with PostgresContainer("postgres:17-alpine", driver="psycopg") as instance:
+        export(instance.get_connection_url())

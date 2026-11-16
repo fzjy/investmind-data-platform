@@ -10,13 +10,14 @@ from app.ingestion.normalizers import normalize_classification
 from app.ingestion.pipeline import IngestionPipeline
 from app.connectors.tushare.client import TushareClient
 from app.connectors.tushare.strategies import Dataset, RequestPlan
-from backend.tests.derived.test_inputs import _factory
 
 
-def test_same_code_different_sources_keep_original_ids():
-    factory = _factory()
+
+def test_same_code_different_sources_keep_original_ids(pg_factory):
+    factory = pg_factory
     with factory.begin() as session:
         session.add(Security(ts_code="600519.SH", symbol="600519", name="样本"))
+        session.flush()
         old = Classification(provider="tushare", source="SW2014", classification_id="801010.SI",
             name="旧行业", level=1, data={"src": "SW2014"})
         session.add(old)
@@ -43,8 +44,8 @@ def test_missing_source_never_guesses_sw2021():
     assert normalize_classification({"index_code": "801010.SI", "industry_name": "行业"})["source"] == "legacy_unknown"
 
 
-def test_generic_ingestion_never_overwrites_other_source():
-    factory = _factory()
+def test_generic_ingestion_never_overwrites_other_source(pg_factory):
+    factory = pg_factory
     def reply(request):
         source = json.loads(request.content)["params"]["src"]
         return httpx.Response(200, json={"code": 0, "data": {"fields": ["index_code", "industry_name", "level"],
@@ -59,8 +60,8 @@ def test_generic_ingestion_never_overwrites_other_source():
         assert [(node.source, node.name) for node in nodes] == [("SW2014", "SW2014"), ("SW2021", "SW2021")]
 
 
-def test_generic_request_source_mismatch_is_quarantined():
-    factory = _factory()
+def test_generic_request_source_mismatch_is_quarantined(pg_factory):
+    factory = pg_factory
     def reply(request):
         return httpx.Response(200, json={"code": 0, "data": {"fields": ["index_code", "industry_name", "src"],
             "items": [["801010.SI", "行业", "SW2014"]]}})

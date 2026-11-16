@@ -65,8 +65,8 @@ def test_public_contract_rejects_malformed_or_inconsistent_payload(damage):
     assert not contract_module().valid_enterprise_analysis(result)
 
 
-def test_macro_pair_captures_enterprise_once_reuses_on_reentry_and_blocks_forgery_atomically():
-    engine,factory,_,history,publisher,statuses=setup(20)
+def test_macro_pair_captures_enterprise_once_reuses_on_reentry_and_blocks_forgery_atomically(pg_factory):
+    engine,factory,_,history,publisher,statuses=setup(pg_factory, 20)
     captures=[]
     def loader(as_of):
         captures.append(as_of)
@@ -93,8 +93,8 @@ def test_macro_pair_captures_enterprise_once_reuses_on_reentry_and_blocks_forger
         engine.dispose()
 
 
-def test_old_payload_readable_but_new_enterprise_payload_cannot_publish_without_trusted_source():
-    engine,factory,_,_,_,statuses=setup(20)
+def test_old_payload_readable_but_new_enterprise_payload_cannot_publish_without_trusted_source(pg_factory):
+    engine,factory,_,_,_,statuses=setup(pg_factory, 20)
     try:
         builder=MacroMartBuilder(MacroRepository(factory),catalog=CATALOG)
         observations=builder.load_observations(CATALOG,AS_OF)
@@ -110,8 +110,8 @@ def test_old_payload_readable_but_new_enterprise_payload_cannot_publish_without_
         engine.dispose()
 
 
-def test_configured_loader_returning_none_cannot_silently_clear_cards():
-    engine,factory,_,history,publisher,statuses=setup(20)
+def test_configured_loader_returning_none_cannot_silently_clear_cards(pg_factory):
+    engine,factory,_,history,publisher,statuses=setup(pg_factory, 20)
     try:
         builder=MacroMartBuilder(MacroRepository(factory),catalog=CATALOG,enterprise_loader=lambda _:None)
         result=MacroPublishJob(builder,publisher,history).publish('macro-run',AS_OF,CATALOG,statuses)
@@ -120,17 +120,17 @@ def test_configured_loader_returning_none_cannot_silently_clear_cards():
         engine.dispose()
 
 
-def test_full_product_build_keeps_trusted_enterprise_capture_and_rejects_changed_candidate(monkeypatch):
+def test_full_product_build_keeps_trusted_enterprise_capture_and_rejects_changed_candidate(pg_factory, monkeypatch):
     from app.config import Settings
     from app.jobs.build_and_publish import DefaultMartBuilders, BuildAndPublishJob, BuildAndPublishOptions
     from app.jobs.build_history import SqlBuildHistory
     from app.stocks.derived.inputs import CoreSnapshotRepository
     from app.stocks.derived.pipeline import DerivedPipeline
     from app.marts.quality import QualityGate
-    from backend.tests.jobs.test_build_and_publish_integration import _factory, _seed_complete_core_sample
+    from backend.tests.jobs.test_build_and_publish_integration import _seed_complete_core_sample
     from backend.tests.marts.test_macro_derivations import row
     from app.marts.publication import SnapshotPublisher
-    factory=_factory(); _seed_complete_core_sample(factory)
+    factory=pg_factory; _seed_complete_core_sample(factory)
     with factory.begin() as s:
         s.add_all(row(item.id,'2026-08-01',1) for item in CATALOG.series)
     calls=[]
@@ -158,9 +158,9 @@ def test_full_product_build_keeps_trusted_enterprise_capture_and_rejects_changed
 
 
 @pytest.mark.parametrize('universe',['custom','all'])
-def test_other_stock_universe_modes_do_not_expand_or_disable_fixed_enterprise_pool(universe):
+def test_other_stock_universe_modes_do_not_expand_or_disable_fixed_enterprise_pool(pg_factory, universe):
     from app.config import Settings
-    engine,factory,_,_,_,_=setup(20)
+    engine,factory,_,_,_,_=setup(pg_factory, 20)
     try:
         # 有完整空Core表；生产loader必须仍只读固定50股，不能因股票同步模式不同整体失败。
         load=contract_module().enterprise_loader(factory,Settings(sync_universe=universe))

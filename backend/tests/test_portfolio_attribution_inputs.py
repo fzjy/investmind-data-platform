@@ -37,11 +37,11 @@ def test_zero_and_negative_ttm_are_preserved_for_the_consumer():
     assert result[0]["profitTtm"] == -10
 
 
-def test_publish_inputs_read_actual_core_and_keep_one_earlier_anchor():
+def test_publish_inputs_read_actual_core_and_keep_one_earlier_anchor(pg_factory):
     from app.db.models import DailyBasic, IncomeStatement, Security
-    from backend.tests.jobs.test_build_and_publish_integration import _factory
 
-    factory = _factory()
+
+    factory = pg_factory
     with factory.begin() as session:
         session.add(Security(ts_code="A", symbol="A", name="甲"))
         session.flush()

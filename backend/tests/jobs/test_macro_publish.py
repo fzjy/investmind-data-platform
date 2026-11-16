@@ -3,11 +3,8 @@ from __future__ import annotations
 from datetime import UTC, date, datetime, timedelta
 from decimal import Decimal
 
-from sqlalchemy import create_engine, select
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
+from sqlalchemy import select
 
-from app.db.base import Base, DerivedBase, ExternalBase, MartBase
 from app.db.models import MacroObservation, MacroSeriesState, PublishedSnapshot, QualityCheckResult
 from app.macro.jobs.macro_publish import MacroPublishJob
 from app.macro.jobs.macro_sync import MacroSeriesOutcome
@@ -33,16 +30,16 @@ class History:
         self.quality = tuple(quality)
 
 
-def setup(count: int):
-    engine = create_engine("sqlite+pysqlite:///:memory:", poolclass=StaticPool,
-                           execution_options={"schema_translate_map": {
-                               "raw": None, "core": None, "ops": None, "derived": None, "mart": None,
-                           }})
-    Base.metadata.create_all(engine)
-    DerivedBase.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
-    factory = sessionmaker(engine, expire_on_commit=False)
+def setup(factory, count: int):
+    engine = factory.kw["bind"]
+    statuses = seed_observations(factory, count)
+    history = History()
+    publisher = SnapshotPublisher(factory)
+    job = MacroPublishJob(MacroMartBuilder(MacroRepository(factory), catalog=CATALOG), publisher, history)
+    return engine, factory, job, history, publisher, statuses
+
+
+def seed_observations(factory, count):
     with factory.begin() as session:
         session.add_all(
             MacroObservation(source=item.sources[0].provider if item.sources else "fixture",
@@ -53,15 +50,11 @@ def setup(count: int):
                              revision="initial", value=Decimal("1"), source_url="https://example.com")
             for item in CATALOG.series[:count]
         )
-    history = History()
-    publisher = SnapshotPublisher(factory)
-    job = MacroPublishJob(MacroMartBuilder(MacroRepository(factory), catalog=CATALOG), publisher, history)
-    statuses = tuple(MacroSeriesOutcome(item.id, "fresh", item.sources[0].provider if item.sources else "fixture", 0, 0, 0, ()) for item in CATALOG.series)
-    return engine, factory, job, history, publisher, statuses
+    return tuple(MacroSeriesOutcome(item.id, "fresh", item.sources[0].provider if item.sources else "fixture", 0, 0, 0, ()) for item in CATALOG.series)
 
 
-def test_publishes_only_two_macro_products_at_exact_instant() -> None:
-    engine, factory, job, history, _, statuses = setup(20)
+def test_publishes_only_two_macro_products_at_exact_instant(pg_factory) -> None:
+    engine, factory, job, history, _, statuses = setup(pg_factory, 20)
     try:
         report = job.publish("macro-run", AS_OF, CATALOG, statuses)
         assert report.status == "completed" and not report.blocked
@@ -71,13 +64,13 @@ def test_publishes_only_two_macro_products_at_exact_instant() -> None:
         with factory() as session:
             rows = session.scalars(select(PublishedSnapshot)).all()
         assert {row.product for row in rows} == set(report.products)
-        assert all(row.as_of == AS_OF.replace(tzinfo=None) for row in rows)
+        assert all(row.as_of == AS_OF for row in rows)
     finally:
         engine.dispose()
 
 
-def test_fifteen_series_blocks_without_pointer_changes() -> None:
-    engine, factory, job, history, _, statuses = setup(15)
+def test_fifteen_series_blocks_without_pointer_changes(pg_factory) -> None:
+    engine, factory, job, history, _, statuses = setup(pg_factory, 15)
     try:
         report = job.publish("macro-run", AS_OF, CATALOG, statuses)
         assert report.status == "blocked" and report.blocked
@@ -89,8 +82,8 @@ def test_fifteen_series_blocks_without_pointer_changes() -> None:
         engine.dispose()
 
 
-def test_stale_status_keeps_value_and_state_reason_in_both_products() -> None:
-    engine, factory, _, history, publisher, statuses = setup(20)
+def test_stale_status_keeps_value_and_state_reason_in_both_products(pg_factory) -> None:
+    engine, factory, _, history, publisher, statuses = setup(pg_factory, 20)
     with factory.begin() as session:
         session.add(MacroSeriesState(
             series_id=CATALOG.series[0].id, catalog_version=CATALOG.catalog_version,
@@ -122,8 +115,8 @@ def test_stale_status_keeps_value_and_state_reason_in_both_products() -> None:
         engine.dispose()
 
 
-def test_blocked_macro_run_persists_quality_checks() -> None:
-    engine, factory, _, _, publisher, statuses = setup(15)
+def test_blocked_macro_run_persists_quality_checks(pg_factory) -> None:
+    engine, factory, _, _, publisher, statuses = setup(pg_factory, 15)
     history = SqlMacroSyncHistory(factory)
     run_id = history.start("2026-W38:" + CATALOG.catalog_version, AS_OF,
                            CATALOG.catalog_version, CATALOG.catalog_hash, "test", 1)
@@ -139,8 +132,8 @@ def test_blocked_macro_run_persists_quality_checks() -> None:
         engine.dispose()
 
 
-def test_duplicate_raw_observation_blocks_and_records_quality() -> None:
-    engine, factory, _, history, publisher, statuses = setup(20)
+def test_duplicate_raw_observation_blocks_and_records_quality(pg_factory) -> None:
+    engine, factory, _, history, publisher, statuses = setup(pg_factory, 20)
 
     class DuplicateRepository(MacroRepository):
         def all_observations(self, series_ids, as_of):
@@ -158,8 +151,8 @@ def test_duplicate_raw_observation_blocks_and_records_quality() -> None:
         engine.dispose()
 
 
-def test_older_macro_replay_preserves_both_newer_pointers() -> None:
-    engine, factory, job, _, publisher, statuses = setup(20)
+def test_older_macro_replay_preserves_both_newer_pointers(pg_factory) -> None:
+    engine, factory, job, _, publisher, statuses = setup(pg_factory, 20)
     try:
         current = job.publish("macro-run", AS_OF, CATALOG, statuses)
         replay = job.publish("macro-run", AS_OF - timedelta(hours=1), CATALOG, statuses)
@@ -172,8 +165,8 @@ def test_older_macro_replay_preserves_both_newer_pointers() -> None:
         engine.dispose()
 
 
-def test_invalid_raw_value_blocks_publication_and_records_quality() -> None:
-    engine, factory, _, history, publisher, statuses = setup(20)
+def test_invalid_raw_value_blocks_publication_and_records_quality(pg_factory) -> None:
+    engine, factory, _, history, publisher, statuses = setup(pg_factory, 20)
 
     class InvalidRepository(MacroRepository):
         def all_observations(self, series_ids, as_of):
@@ -191,8 +184,8 @@ def test_invalid_raw_value_blocks_publication_and_records_quality() -> None:
         engine.dispose()
 
 
-def test_later_released_invalid_revision_does_not_block_earlier_replay() -> None:
-    engine, factory, job, history, publisher, statuses = setup(20)
+def test_later_released_invalid_revision_does_not_block_earlier_replay(pg_factory) -> None:
+    engine, factory, job, history, publisher, statuses = setup(pg_factory, 20)
     definition = CATALOG.series[0]
     with factory.begin() as session:
         session.add(MacroObservation(
@@ -212,8 +205,8 @@ def test_later_released_invalid_revision_does_not_block_earlier_replay() -> None
         engine.dispose()
 
 
-def test_mixed_current_macro_times_report_pair_skip() -> None:
-    engine, _, job, history, publisher, statuses = setup(20)
+def test_mixed_current_macro_times_report_pair_skip(pg_factory) -> None:
+    engine, _, job, history, publisher, statuses = setup(pg_factory, 20)
     publisher.publish_many((MartCandidate("macro-transmission", AS_OF + timedelta(hours=1), {}),), "transmission-new", ())
     publisher.publish_many((MartCandidate("macro-insights", AS_OF - timedelta(hours=1), {}),), "insights-old", ())
     try:
@@ -227,10 +220,10 @@ def test_mixed_current_macro_times_report_pair_skip() -> None:
         engine.dispose()
 
 
-def test_unchanged_routine_rebuild_reuses_pair_after_quality_validation():
+def test_unchanged_routine_rebuild_reuses_pair_after_quality_validation(pg_factory):
     from sqlalchemy import func
     from app.db.models import PageSnapshot
-    engine, factory, job, history, publisher, statuses = setup(20)
+    engine, factory, job, history, publisher, statuses = setup(pg_factory, 20)
     try:
         first = job.publish('macro-run', AS_OF, CATALOG, statuses)
         history.quality = ()
@@ -239,13 +232,13 @@ def test_unchanged_routine_rebuild_reuses_pair_after_quality_validation():
         assert history.quality and all(q.passed for q in history.quality if q.severity == 'blocking')
         with factory() as session:
             assert session.scalar(select(func.count()).select_from(PageSnapshot)) == 2
-        assert {publisher.current(p).as_of for p in first.products} == {AS_OF.replace(tzinfo=None)}
+        assert {publisher.current(p).as_of for p in first.products} == {AS_OF}
     finally:
         engine.dispose()
 
 
-def test_routine_rebuild_with_changed_value_still_promotes_after_skipped_collection():
-    engine, factory, job, history, publisher, statuses = setup(20)
+def test_routine_rebuild_with_changed_value_still_promotes_after_skipped_collection(pg_factory):
+    engine, factory, job, history, publisher, statuses = setup(pg_factory, 20)
     try:
         first = job.publish('macro-run', AS_OF, CATALOG, statuses)
         with factory.begin() as session:

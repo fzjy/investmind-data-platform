@@ -11,12 +11,12 @@ from app.marts.contracts import MartRows, QualityContext
 from app.marts.publication import SnapshotPublisher
 from app.marts.quality import QualityGate
 from app.stocks.marts.stocks import ScreenerMartBuilder
-from backend.tests.jobs.test_build_and_publish_integration import _factory
+
 from backend.tests.marts.test_screener_builder import _core_snapshot
 
 
 @pytest.mark.parametrize("failure", ["rows", "field", "roic", "revenueGrowth"])
-def test_last_successful_publication_detects_consistent_but_degraded_candidate(failure):
+def test_last_successful_publication_detects_consistent_but_degraded_candidate(pg_factory, failure):
     snapshot = _core_snapshot()
     extra = Security(ts_code="000001.SZ", symbol="000001", name="sample", exchange="SZSE")
     snapshot = replace(snapshot, securities=(*snapshot.securities, extra))
@@ -27,7 +27,7 @@ def test_last_successful_publication_detects_consistent_but_degraded_candidate(f
         for row in rows:
             row[failure] = 10
     original = replace(candidate, payload={**candidate.payload, "stocks": rows}, rows=MartRows(screener=tuple(rows)))
-    publisher = SnapshotPublisher(_factory())
+    publisher = SnapshotPublisher(pg_factory)
     publisher.publish_many((original,), "good-baseline", ())
     if failure != "rows":
         rows = deepcopy(rows)
@@ -47,9 +47,9 @@ def test_last_successful_publication_detects_consistent_but_degraded_candidate(f
     assert publisher.current("screener").version == "good-baseline"
 
 
-def test_first_release_and_historical_release_do_not_have_false_baseline():
+def test_first_release_and_historical_release_do_not_have_false_baseline(pg_factory):
     snapshot = _core_snapshot()
-    publisher = SnapshotPublisher(_factory())
+    publisher = SnapshotPublisher(pg_factory)
     job = BuildAndPublishJob(None, None, None, QualityGate(), publisher, None)
     context = job._quality_context(snapshot, (), DerivedReport((), 0, 0, 0, 0))
     apply_baseline = getattr(job, "_baseline_context", None)
@@ -61,9 +61,9 @@ def test_first_release_and_historical_release_do_not_have_false_baseline():
     assert apply_baseline(context, earlier).baseline_screener_rows is None
 
 
-def test_retired_stock_is_not_an_anomalous_missing_row():
+def test_retired_stock_is_not_an_anomalous_missing_row(pg_factory):
     snapshot = _core_snapshot()
-    publisher = SnapshotPublisher(_factory())
+    publisher = SnapshotPublisher(pg_factory)
     candidate = ScreenerMartBuilder().build(snapshot, "test")
     publisher.publish_many((candidate,), "good", ())
     job = BuildAndPublishJob(None, None, None, QualityGate(), publisher, None)

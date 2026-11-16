@@ -6,7 +6,7 @@ from app.connectors.external_files.contracts import ContentImportRecord
 from app.content.announcement_history import AnnouncementPage, backfill_pages, history_plan
 from app.db.models import ContentDocument, PublishedSnapshot
 from app.shared.trading_days import chart_history_bounds
-from backend.tests.jobs.test_build_and_publish_integration import _factory
+
 
 SYMBOL = "600519.SH"
 
@@ -34,8 +34,8 @@ def test_short_history_and_leap_year():
     assert chart_history_bounds([date(2022, 1, 1), last]) == (date(2022, 1, 1), last)
 
 
-def test_retry_second_page_and_extend_only_unchecked_days():
-    factory = _factory()
+def test_retry_second_page_and_extend_only_unchecked_days(pg_factory):
+    factory = pg_factory
     publish_candles(factory, ["2026-07-01", "2026-07-10"])
     tokens = []
 
@@ -65,8 +65,8 @@ def test_retry_second_page_and_extend_only_unchecked_days():
         assert summary[SYMBOL]["checkedDays"] == 10
 
 
-def test_truncated_final_page_does_not_claim_coverage_and_empty_window_can_finish():
-    factory = _factory()
+def test_truncated_final_page_does_not_claim_coverage_and_empty_window_can_finish(pg_factory):
+    factory = pg_factory
     publish_candles(factory, ["2026-07-04"])
     short = lambda window, token: AnnouncementPage((notice("only"),), 2, None)
     assert backfill_pages(factory, [SYMBOL], short, 1)["status"] == "failed"
@@ -80,9 +80,9 @@ def test_truncated_final_page_does_not_claim_coverage_and_empty_window_can_finis
         assert session.scalar(select(ContentDocument)) is None
 
 
-def test_sample_covers_only_one_day_and_revisits_when_new_prices_arrive():
+def test_sample_covers_only_one_day_and_revisits_when_new_prices_arrive(pg_factory):
     from app.content.announcement_history import Window
-    factory = _factory()
+    factory = pg_factory
     day = date(2026, 7, 4)
     publish_candles(factory, ["2026-07-01", "2026-07-04"])
     called = []

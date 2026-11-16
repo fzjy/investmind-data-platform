@@ -7,8 +7,8 @@ from app.stocks.forecast_events import forecast_charts
 from backend.tests.stock_update.test_forecast_details import setup, SYMBOLS
 
 
-def test_forecasts_require_evidence_for_each_missing_candle():
-    factory, _ = setup()
+def test_forecasts_require_evidence_for_each_missing_candle(new_pg_factory):
+    factory, _ = setup(new_pg_factory)
     july = lambda day: date(2026, 7, day)
     symbol = SYMBOLS[0]
     with factory.begin() as s:

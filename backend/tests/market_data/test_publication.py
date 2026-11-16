@@ -7,7 +7,7 @@ import pytest
 from sqlalchemy import select
 
 from app.db.models import PublishedSnapshot
-from app.jobs.locks import ProcessLocalJobLock, data_publication_lock_key
+from app.jobs.locks import PostgresAdvisoryJobLock, data_publication_lock_key
 from app.marts.publication import SnapshotPublisher
 from backend.tests.market_data.test_catalog import catalog
 from backend.tests.market_data.test_repository import NOW, setup
@@ -16,8 +16,8 @@ from backend.tests.marts.test_content_runtime import prepare, state
 from backend.tests.marts.test_market_runtime import SELECTION
 
 
-def prepared(count=15):
-    value, factory, _ = setup()
+def prepared(new_pg_factory, count=15):
+    value, factory, _ = setup(new_pg_factory)
     prepare(factory)
     sync, client, _ = job(factory)
     try:
@@ -35,8 +35,8 @@ def publish(factory):
     return importlib.import_module('app.market.data.publication').publish_market_quotes(factory, catalog(), checked_at=NOW)
 
 
-def test_asset_dates_newer_than_stock_day_do_not_clear_stock_stale():
-    factory = prepared()
+def test_asset_dates_newer_than_stock_day_do_not_clear_stock_stale(new_pg_factory):
+    factory = prepared(new_pg_factory)
     with factory.begin() as session:
         pointer = session.get(PublishedSnapshot, 'market-overview')
         pointer.stale, pointer.stale_reason = True, 'SNAPSHOT_BEHIND_EXPECTED_DATE'
@@ -67,16 +67,16 @@ def test_asset_dates_newer_than_stock_day_do_not_clear_stock_stale():
     assert state(factory) == after
 
 
-def test_fourteen_assets_never_promote_either_market_pointer():
-    factory = prepared(14)
+def test_fourteen_assets_never_promote_either_market_pointer(new_pg_factory):
+    factory = prepared(new_pg_factory, 14)
     before = state(factory)
     report = publish(factory)
     assert report['status'] == 'blocked' and report['promotedProducts'] == []
     assert state(factory) == before
 
 
-def test_second_market_write_failure_rolls_back_pair_and_history(monkeypatch):
-    factory = prepared()
+def test_second_market_write_failure_rolls_back_pair_and_history(new_pg_factory, monkeypatch):
+    factory = prepared(new_pg_factory)
     before = state(factory)
     original = SnapshotPublisher._write_page_snapshot
     def fail(self, session, candidate, version):
@@ -89,9 +89,9 @@ def test_second_market_write_failure_rolls_back_pair_and_history(monkeypatch):
     assert state(factory) == before
 
 
-def test_shared_lock_does_not_write_and_newer_base_quote_cannot_regress():
-    factory = prepared()
-    lock = ProcessLocalJobLock()
+def test_shared_lock_does_not_write_and_newer_base_quote_cannot_regress(new_pg_factory):
+    factory = prepared(new_pg_factory)
+    lock = PostgresAdvisoryJobLock(factory.kw["bind"])
     assert lock.try_acquire(data_publication_lock_key())
     try:
         before = state(factory)
@@ -110,8 +110,8 @@ def test_shared_lock_does_not_write_and_newer_base_quote_cannot_regress():
     assert state(factory) == before
 
 
-def test_stock_only_rebuild_preserves_valid_newer_asset_quotes():
-    factory = prepared()
+def test_stock_only_rebuild_preserves_valid_newer_asset_quotes(new_pg_factory):
+    factory = prepared(new_pg_factory)
     publish(factory)
     before = state(factory)['pointers']['market-overview'][2]['globalIndices']
     from app.market.marts.market_runtime import rebuild_market_marts
@@ -126,10 +126,10 @@ def test_stock_only_rebuild_preserves_valid_newer_asset_quotes():
 
 
 @pytest.mark.parametrize('broken_group', ['globalIndices', 'etfQuotes'])
-def test_only_complete_real_quote_groups_clear_their_own_missing_source(broken_group):
+def test_only_complete_real_quote_groups_clear_their_own_missing_source(new_pg_factory, broken_group):
     from app.market.data.quality import clear_resolved_quote_missing
     from app.marts.contracts import MartCandidate
-    factory = prepared()
+    factory = prepared(new_pg_factory)
     publish(factory)
     payload = copy.deepcopy(state(factory)['pointers']['market-overview'][2])
     payload[broken_group] = payload[broken_group][:-1]
@@ -146,8 +146,8 @@ def test_only_complete_real_quote_groups_clear_their_own_missing_source(broken_g
 
 @pytest.mark.parametrize('field,bad', [('tradeDate','2026-10-17'), ('capturedAt',(NOW + timedelta(seconds=1)).isoformat()),
     ('source','unverified'), ('change',float('nan')), ('intraday',[1,2])])
-def test_quote_quality_rejects_bad_dates_sources_or_fake_intraday(field, bad):
-    factory = prepared()
+def test_quote_quality_rejects_bad_dates_sources_or_fake_intraday(new_pg_factory, field, bad):
+    factory = prepared(new_pg_factory)
     publish(factory)
     from app.marts.contracts import MartCandidate
     from app.market.data.quality import evaluate_market_quality
@@ -160,10 +160,10 @@ def test_quote_quality_rejects_bad_dates_sources_or_fake_intraday(field, bad):
     assert any(not check.passed and check.severity == 'blocking' for check in checks)
 
 
-def test_active_ingestion_blocks_publication_until_asset_set_is_stable():
-    factory = prepared()
+def test_active_ingestion_blocks_publication_until_asset_set_is_stable(new_pg_factory):
+    factory = prepared(new_pg_factory)
     before = state(factory)
-    lock = ProcessLocalJobLock()
+    lock = PostgresAdvisoryJobLock(factory.kw["bind"])
     assert lock.try_acquire('sync-market-data')
     try:
         assert publish(factory)['status'] == 'locked'
@@ -172,9 +172,9 @@ def test_active_ingestion_blocks_publication_until_asset_set_is_stable():
         lock.release('sync-market-data')
 
 
-def test_deep_quote_dto_rejects_bad_change_before_any_consumer():
+def test_deep_quote_dto_rejects_bad_change_before_any_consumer(new_pg_factory):
     from app.marts.dto import validate_product_payload
-    factory = prepared()
+    factory = prepared(new_pg_factory)
     publish(factory)
     with factory() as session:
         payload = copy.deepcopy(session.get(PublishedSnapshot,'market-overview').payload)

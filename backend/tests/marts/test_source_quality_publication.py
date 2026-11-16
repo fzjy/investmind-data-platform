@@ -5,13 +5,13 @@ from sqlalchemy import select
 from app.db.models import QualityCheckResult, TradeCalendar
 from app.jobs.build_and_publish import BuildAndPublishOptions
 from backend.tests.jobs.test_build_and_publish_integration import (
-    _factory, _real_build_and_publish_job, _seed_complete_core_sample,
+    _real_build_and_publish_job, _seed_complete_core_sample,
 )
 from backend.tests.marts.test_row_consistency import stored_publication
 
 
-def test_known_closed_source_day_blocks_real_job_and_records_quality():
-    factory = _factory()
+def test_known_closed_source_day_blocks_real_job_and_records_quality(pg_factory):
+    factory = pg_factory
     _seed_complete_core_sample(factory)
     job = _real_build_and_publish_job(factory)
     options = BuildAndPublishOptions(date(2026, 8, 24), ("600519.SH",))

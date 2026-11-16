@@ -2,13 +2,14 @@ from datetime import date
 
 from app.db.models import AdjustmentFactor, DailyBasic, DailyPrice, Security
 from app.stocks.derived.inputs import CoreSnapshotRepository
-from backend.tests.jobs.test_build_and_publish_integration import _factory
 
 
-def test_explicit_quote_snapshot_preserves_latest_values_without_materializing_history():
-    factory = _factory()
+
+def test_explicit_quote_snapshot_preserves_latest_values_without_materializing_history(pg_factory):
+    factory = pg_factory
     with factory.begin() as session:
         session.add(Security(ts_code="600519.SH", symbol="600519", name="sample", exchange="SSE"))
+        session.flush()
         for day in (22, 23, 24, 25):
             when = date(2026, 8, day)
             session.add(DailyPrice(ts_code="600519.SH", trade_date=when, close=day))

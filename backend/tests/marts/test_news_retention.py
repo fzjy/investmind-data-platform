@@ -7,7 +7,7 @@ from app.content.news_ingestion import ingest_news
 from app.content.news_storage import DatabaseNewsStore
 from app.db.models import ContentDocument, ExternalFile, ExternalRecord, JobCursor
 from backend.tests.marts.test_news_unified import NOW, RESPONSE
-from backend.tests.jobs.test_build_and_publish_integration import _factory
+
 from smartparse_news.collector import normalize
 
 
@@ -24,9 +24,9 @@ def seed(factory, days=366, pending=False):
     return store
 
 
-def test_retention_default_and_shared_raw_batch_boundary():
+def test_retention_default_and_shared_raw_batch_boundary(pg_factory):
     assert Config().retention_days == 365
-    factory = _factory(); store = seed(factory)
+    factory = pg_factory; store = seed(factory)
     prior = store.status()
     result = cleanup_news(factory, Config(), NOW)
     assert result['status'] == 'completed'
@@ -43,8 +43,8 @@ def test_retention_default_and_shared_raw_batch_boundary():
         assert session.scalar(select(ExternalFile)) is None
 
 
-def test_pending_records_remain_until_delivery_and_next_cycle():
-    factory = _factory(); store = seed(factory, pending=True)
+def test_pending_records_remain_until_delivery_and_next_cycle(pg_factory):
+    factory = pg_factory; store = seed(factory, pending=True)
     cleanup_news(factory, Config(), NOW)
     with factory() as session:
         assert len(session.scalars(select(ContentDocument)).all()) == 2
@@ -55,8 +55,8 @@ def test_pending_records_remain_until_delivery_and_next_cycle():
     with factory() as session: assert session.scalar(select(ContentDocument)) is None
 
 
-def test_cleanup_resumes_small_batches():
-    factory = _factory(); seed(factory)
+def test_cleanup_resumes_small_batches(pg_factory):
+    factory = pg_factory; seed(factory)
     config = Config(cleanup_batch_size=1, cleanup_max_batches=1)
     assert cleanup_news(factory, config, NOW)['status'] == 'running'
     for _ in range(40):
@@ -72,11 +72,11 @@ def test_invalid_retention_settings_are_rejected():
         with pytest.raises(ValueError): Config(**values)
 
 
-def test_snapshot_cleanup_preserves_prices_dates_other_sources_and_pending_news():
+def test_snapshot_cleanup_preserves_prices_dates_other_sources_and_pending_news(pg_factory):
     from copy import deepcopy
     from app.db.models import PageSnapshot, PublishedSnapshot, StockWorkbenchSnapshot
     from app.content.marts.content import ContentMartBuilder
-    factory = _factory(); store = seed(factory)
+    factory = pg_factory; store = seed(factory)
     with factory.begin() as session:
         docs = session.scalars(select(ContentDocument).order_by(ContentDocument.id)).all()
         items = ContentMartBuilder.from_documents(docs)
@@ -95,10 +95,10 @@ def test_snapshot_cleanup_preserves_prices_dates_other_sources_and_pending_news(
         assert session.scalar(select(PublishedSnapshot)).version == 'old'
 
 
-def test_failed_batch_rolls_back_and_alert_visible_then_recovers(monkeypatch):
+def test_failed_batch_rolls_back_and_alert_visible_then_recovers(pg_factory, monkeypatch):
     from app.content import news_retention as module
     from app.content.routes import read_news
-    factory = _factory(); seed(factory)
+    factory = pg_factory; seed(factory)
     original = module._step
     def fail_after_delete(session, state, config):
         original(session, state, config)
@@ -114,10 +114,10 @@ def test_failed_batch_rolls_back_and_alert_visible_then_recovers(monkeypatch):
     assert read_news(factory, now=NOW)['health']['code'] is None
 
 
-def test_events_active_faults_and_collection_cursor_are_protected():
+def test_events_active_faults_and_collection_cursor_are_protected(pg_factory):
     from app.content.news_runtime import save_health
     from app.db.models import OperationalAlert
-    factory = _factory(); store = seed(factory)
+    factory = pg_factory; store = seed(factory)
     old = NOW-timedelta(days=100)
     with store.transaction() as tx:
         tx.event(old.isoformat(), 'SOURCE_FAILED')
@@ -139,8 +139,8 @@ def test_events_active_faults_and_collection_cursor_are_protected():
         assert session.scalar(select(OperationalAlert)) is None
 
 
-def test_mid_cycle_longer_retention_restarts_scan_with_new_cutoff():
-    factory = _factory(); seed(factory)
+def test_mid_cycle_longer_retention_restarts_scan_with_new_cutoff(pg_factory):
+    factory = pg_factory; seed(factory)
     # 停机/配置切换发生在任何删除之前，恢复不能继续旧的短保留期。
     from app.content.news_storage import cursor
     with factory.begin() as session:
@@ -150,10 +150,10 @@ def test_mid_cycle_longer_retention_restarts_scan_with_new_cutoff():
     with factory() as session: assert len(session.scalars(select(ContentDocument)).all()) == 2
 
 
-def test_pending_snapshot_and_shared_announcement_batch_remain():
+def test_pending_snapshot_and_shared_announcement_batch_remain(pg_factory):
     from app.db.models import PageSnapshot
     from app.content.marts.content import ContentMartBuilder
-    factory = _factory(); store = seed(factory, pending=True)
+    factory = pg_factory; store = seed(factory, pending=True)
     with factory.begin() as session:
         docs = session.scalars(select(ContentDocument)).all()
         payload = {'marketNews': ContentMartBuilder.from_documents(docs)}
@@ -170,16 +170,16 @@ def test_pending_snapshot_and_shared_announcement_batch_remain():
         assert session.scalar(select(ExternalFile)) is not None
 
 
-def test_stopped_cleanup_makes_no_change():
-    factory = _factory(); seed(factory)
+def test_stopped_cleanup_makes_no_change(pg_factory):
+    factory = pg_factory; seed(factory)
     assert cleanup_news(factory, Config(), NOW, stopped=lambda: True)['status'] == 'stopped'
     with factory() as session: assert len(session.scalars(select(ContentDocument)).all()) == 2
 
 
-def test_workbench_mentions_are_recalculated_without_new_delivery():
+def test_workbench_mentions_are_recalculated_without_new_delivery(pg_factory):
     from copy import deepcopy
     from app.db.models import PageSnapshot, PublishedSnapshot, StockWorkbenchSnapshot
-    factory = _factory(); seed(factory)
+    factory = pg_factory; seed(factory)
     with factory.begin() as session:
         for row in session.scalars(select(ContentDocument)):
             row.securities = ['600519.SH'] if row.external_id == '2' else ['600000.SH']
@@ -204,9 +204,9 @@ def test_workbench_mentions_are_recalculated_without_new_delivery():
                 assert row.payload['dailyChart']['announcements'] == [{'title': '不改变公告'}]
 
 
-def test_resume_does_not_regress_news_published_after_cleanup_started():
+def test_resume_does_not_regress_news_published_after_cleanup_started(pg_factory):
     from app.db.models import PublishedSnapshot
-    factory = _factory(); seed(factory)
+    factory = pg_factory; seed(factory)
     config = Config(cleanup_max_batches=1)
     assert cleanup_news(factory, config, NOW)['status'] == 'running'
     later = NOW+timedelta(hours=1)

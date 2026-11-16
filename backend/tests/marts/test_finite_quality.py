@@ -15,7 +15,7 @@ from app.marts.dto import validate_product_payload
 from app.marts.publication import QualityCheckFailed, SnapshotPublisher
 from app.marts.quality import QualityGate
 from app.stocks.marts.stocks import ScreenerMartBuilder, StockWorkbenchMartBuilder
-from backend.tests.jobs.test_build_and_publish_integration import _factory
+
 from backend.tests.marts.test_screener_builder import _core_snapshot
 
 
@@ -95,8 +95,8 @@ def test_nonfinite_ohlc_returns_blocking_result_with_json_safe_details(location,
 
 
 @pytest.mark.parametrize("failure", ["dto", "ohlc"])
-def test_real_quality_failure_preserves_both_old_pointers_and_records(failure):
-    factory = _factory()
+def test_real_quality_failure_preserves_both_old_pointers_and_records(pg_factory, failure):
+    factory = pg_factory
     publisher = SnapshotPublisher(factory)
     original = candidates()
     initial_quality = checks(original)
@@ -134,7 +134,7 @@ def test_real_quality_failure_preserves_both_old_pointers_and_records(failure):
     {"open": None, "high": float("nan")},
     {"open": "bad", "high": Decimal("-Infinity")},
 ])
-def test_mixed_bad_ohlc_paths_record_json_safe_quality_history(bad_values):
+def test_mixed_bad_ohlc_paths_record_json_safe_quality_history(pg_factory, bad_values):
     screener, workbench = candidates()
     candle = {**workbench.rows.charts[0], **bad_values}
     workbench = replace(workbench, rows=replace(workbench.rows, charts=(candle,)))
@@ -142,7 +142,7 @@ def test_mixed_bad_ohlc_paths_record_json_safe_quality_history(bad_values):
     result = next(item for item in quality if item.name == "ohlc-valid")
     assert not result.passed
     json.dumps(result.details, allow_nan=False)
-    factory = _factory()
+    factory = pg_factory
     history = SqlBuildHistory(factory)
     run_id = history.start(BuildAndPublishOptions(date(2026, 8, 24), ("600519.SH",)))
     history.record_quality(run_id, quality)

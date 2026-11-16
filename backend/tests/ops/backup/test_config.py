@@ -86,7 +86,7 @@ def test_query_preserved_and_percent_encoded_password_hidden() -> None:
 
 
 @pytest.mark.parametrize("url", [
-    "sqlite:///secret-canary", "postgresql+asyncpg://u:p@host/db",
+    "mysql://u:secret-canary@host/db", "postgresql+asyncpg://u:p@host/db",
     "postgresql:///db", "postgresql://host/db", "postgresql://u:p@host/",
     "postgresql://u:p@one,two/db", "postgresql://u:p@host:0/db",
     "postgresql://u:p@host/db?sslmode=unsafe", "postgresql://u:p@host/db?connect_timeout=0",

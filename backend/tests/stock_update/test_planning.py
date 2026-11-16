@@ -5,7 +5,7 @@ import pytest
 from app.config import Settings
 from app.db.models import Security, TradeCalendar, DailyPrice, DisclosureSchedule, IncomeStatement
 from app.stocks.universes import UniverseResolver
-from backend.tests.derived.test_inputs import _factory
+
 
 
 def test_config_budget_rejects_zero():
@@ -13,8 +13,8 @@ def test_config_budget_rejects_zero():
         Settings(stock_update_max_requests_per_run=0)
 
 
-def fixtures():
-    factory = _factory()
+def fixtures(new_pg_factory):
+    factory = new_pg_factory()
     selection = UniverseResolver().resolve('representative-50')
     with factory.begin() as s:
         s.add_all([Security(ts_code=c, symbol=c[:6], name='样本', exchange='SSE', list_date=date(2026, 10, 12)) for c in selection.symbols])
@@ -30,9 +30,9 @@ def calendar(factory, start=date(2023, 10, 13), end=date(2026, 10, 14)):
                 day += timedelta(days=1)
 
 
-def test_calendar_pending_never_selects_stale_date():
+def test_calendar_pending_never_selects_stale_date(new_pg_factory):
     from app.stocks.update.planning import StockUpdatePlanner, StockUpdateOptions
-    f, pool = fixtures()
+    f, pool = fixtures(new_pg_factory)
     with f.begin() as s:
         s.add(TradeCalendar(exchange='SSE', cal_date=date(2026, 9, 18), is_open=True))
     p = StockUpdatePlanner(f, pool, StockUpdateOptions())
@@ -41,9 +41,9 @@ def test_calendar_pending_never_selects_stale_date():
     assert result['asOf'] is None and result['calendarPending'] is True
 
 
-def test_market_inventory_diff_and_financial_period_semantics():
+def test_market_inventory_diff_and_financial_period_semantics(new_pg_factory):
     from app.stocks.update.planning import StockUpdatePlanner, StockUpdateOptions
-    f, pool = fixtures()
+    f, pool = fixtures(new_pg_factory)
     calendar(f)
     symbol = pool.symbols[0]
     with f.begin() as s:
@@ -62,9 +62,9 @@ def test_market_inventory_diff_and_financial_period_semantics():
     assert set(dividend.params) == {'ts_code'}
 
 
-def test_later_parent_and_cumulative_do_not_hide_missing_single_quarter_eps():
+def test_later_parent_and_cumulative_do_not_hide_missing_single_quarter_eps(new_pg_factory):
     from app.stocks.update.planning import StockUpdatePlanner, StockUpdateOptions
-    factory, pool = fixtures()
+    factory, pool = fixtures(new_pg_factory)
     symbol, period = pool.symbols[0], date(2026, 9, 30)
     day = date(2026, 10, 13)
     with factory.begin() as s:
@@ -77,16 +77,16 @@ def test_later_parent_and_cumulative_do_not_hide_missing_single_quarter_eps():
     assert not any(p.api_name == 'income' for p in planner.stage_plans('financial', day, backfill_card_fields=False))
 
 
-def test_future_explicit_target_is_rejected():
+def test_future_explicit_target_is_rejected(new_pg_factory):
     from app.stocks.update.planning import StockUpdatePlanner, StockUpdateOptions
-    f, pool = fixtures()
+    f, pool = fixtures(new_pg_factory)
     with pytest.raises(ValueError):
         StockUpdatePlanner(f, pool, StockUpdateOptions(as_of=date(2026, 10, 14))).preflight(datetime(2026, 10, 14, 0, tzinfo=timezone.utc))
 
 
-def test_cutoff_and_weekend_are_not_calendar_guesses():
+def test_cutoff_and_weekend_are_not_calendar_guesses(new_pg_factory):
     from app.stocks.update.planning import StockUpdatePlanner, StockUpdateOptions
-    f, pool = fixtures()
+    f, pool = fixtures(new_pg_factory)
     options = StockUpdateOptions()
     assert options.upper(datetime(2026, 10, 14, 10, 59, tzinfo=timezone.utc)) == date(2026, 10, 13)
     assert options.upper(datetime(2026, 10, 14, 11, 0, tzinfo=timezone.utc)) == date(2026, 10, 14)
@@ -94,10 +94,10 @@ def test_cutoff_and_weekend_are_not_calendar_guesses():
     assert StockUpdatePlanner(f, pool, options).target(date(2026, 10, 18)) == date(2026, 10, 16)
 
 
-def test_calendar_conflicting_or_missing_day_blocks_target():
+def test_calendar_conflicting_or_missing_day_blocks_target(new_pg_factory):
     from sqlalchemy import delete, select
     from app.stocks.update.planning import StockUpdatePlanner, StockUpdateOptions
-    f, pool = fixtures()
+    f, pool = fixtures(new_pg_factory)
     calendar(f)
     with f.begin() as s:
         r = s.scalar(select(TradeCalendar).where(TradeCalendar.exchange == 'SZSE', TradeCalendar.cal_date == date(2026, 10, 13)))
@@ -110,8 +110,8 @@ def test_calendar_conflicting_or_missing_day_blocks_target():
         StockUpdatePlanner(f, pool, StockUpdateOptions()).target(date(2026, 10, 13))
 
 
-def test_first_weekend_calendar_request_covers_target_history_start():
+def test_first_weekend_calendar_request_covers_target_history_start(new_pg_factory):
     from app.stocks.update.planning import StockUpdatePlanner, StockUpdateOptions
-    f, pool = fixtures()
+    f, pool = fixtures(new_pg_factory)
     plans = StockUpdatePlanner(f, pool, StockUpdateOptions()).calendar_plans(date(2026, 10, 18))
     assert all(p.params['start_date'] <= '20231016' for p in plans)

@@ -12,7 +12,7 @@ from app.marts.publication import PublicationBaseChanged, SnapshotPublisher
 from app.stocks.derived.workbench_cards import CARD_IDS, metric_value_card
 from app.stocks.marts.metric_cards import project_cards, rebuild_metric_cards
 from backend.tests.jobs.test_build_and_publish_integration import (
-    _factory, _real_build_and_publish_job, _seed_complete_core_sample, _seed_second_security,
+    _real_build_and_publish_job, _seed_complete_core_sample, _seed_second_security,
 )
 
 
@@ -21,8 +21,8 @@ PRODUCT = "stock-workbench:" + SYMBOL
 DAY = date(2026, 8, 24)
 
 
-def prepared():
-    factory = _factory()
+def prepared(new_pg_factory):
+    factory = new_pg_factory()
     _seed_complete_core_sample(factory)
     _seed_second_security(factory)
     report = _real_build_and_publish_job(factory).run(BuildAndPublishOptions(DAY))
@@ -52,8 +52,8 @@ def metric_rows(factory):
             MetricValue.ts_code == SYMBOL, MetricValue.metric_id.in_(CARD_IDS), MetricValue.as_of == DAY))}
 
 
-def test_late_revision_dry_run_atomic_retry_history_and_unchanged_other_products(monkeypatch):
-    factory = prepared()
+def test_late_revision_dry_run_atomic_retry_history_and_unchanged_other_products(new_pg_factory, monkeypatch):
+    factory = prepared(new_pg_factory)
     before = state(factory)
     derived = metric_rows(factory)
     revise_bps(factory, 250)
@@ -89,8 +89,8 @@ def test_late_revision_dry_run_atomic_retry_history_and_unchanged_other_products
         assert old.payload == {k: v for k, v in before[PRODUCT][1].items() if k != "risks"}
 
 
-def test_inputs_and_parent_are_rechecked_in_promotion_transaction():
-    factory = prepared()
+def test_inputs_and_parent_are_rechecked_in_promotion_transaction(new_pg_factory):
+    factory = prepared(new_pg_factory)
     revise_bps(factory, 240)
     def preview():
         with factory() as s:
@@ -109,9 +109,9 @@ def test_inputs_and_parent_are_rechecked_in_promotion_transaction():
     assert state(factory) == latest
 
 
-def test_scoped_stock_builder_retains_searchable_other_workbenches():
+def test_scoped_stock_builder_retains_searchable_other_workbenches(new_pg_factory):
     from app.stocks.update.publication import StockSnapshotRepository, StockMartBuilders
-    factory = prepared()
+    factory = prepared(new_pg_factory)
     old = state(factory)
     snapshot = StockSnapshotRepository(factory).load(DAY, [SYMBOL])
     _, workbench = StockMartBuilders(factory).build(snapshot, (SYMBOL,), "next")
@@ -121,13 +121,13 @@ def test_scoped_stock_builder_retains_searchable_other_workbenches():
     assert state(factory) == old
 
 
-def test_daily_job_publishes_previously_visible_workbench_without_disclosures_on_payment_day():
+def test_daily_job_publishes_previously_visible_workbench_without_disclosures_on_payment_day(new_pg_factory):
     from dataclasses import replace
     from app.db.models import TradeCalendar, DailyBasic, DailyPrice
     from app.connectors.tushare.strategies import Dataset
     from app.stocks.jobs.daily_sync_repository import DailySyncRepository
     from backend.tests.jobs.test_daily_sync import make_job, standard_options, TEST_UNIVERSE
-    factory = prepared()
+    factory = prepared(new_pg_factory)
     before = state(factory)
     day = date(2026,8,25)
     with factory.begin() as s:
@@ -172,8 +172,8 @@ def test_postgres_source_lock_contention_is_retryable_without_waiting():
         persist_projected_cards(Session(), [SimpleNamespace(metric_card_signature="pending")])
 
 
-def test_unchanged_source_row_recomputed_on_settlement_day():
-    factory = _factory()
+def test_unchanged_source_row_recomputed_on_settlement_day(pg_factory):
+    factory = pg_factory
     _seed_complete_core_sample(factory)
     with factory.begin() as s:
         s.add(Dividend(ts_code=SYMBOL, end_date=date(2025,12,31), ann_date=date(2026,5,1), div_proc="实施",

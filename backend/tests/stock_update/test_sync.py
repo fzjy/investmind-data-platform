@@ -12,9 +12,7 @@ from backend.tests.stock_update.test_planning import fixtures
 NOW = datetime(2026, 10, 14, 0, tzinfo=timezone.utc)
 
 
-def task(budget=512, override=None, market_ready=False):
-    from app.stocks.update.sync import StockUpdateSync
-    factory, pool = fixtures()
+def mock_client(*, override=None, market_ready=False):
     calls = []
     def handler(request):
         body = json.loads(request.content)
@@ -38,13 +36,20 @@ def task(budget=512, override=None, market_ready=False):
         return httpx.Response(200, json={'code': 0, 'data': {'fields': fields,
             'items': [[row.get(f) for f in fields] for row in rows]}})
     client = TushareClient('private-token', transport=httpx.MockTransport(handler), backoff_seconds=0)
+    return client, calls
+
+
+def task(new_pg_factory, budget=512, override=None, market_ready=False):
+    from app.stocks.update.sync import StockUpdateSync
+    factory, pool = fixtures(new_pg_factory)
+    client, calls = mock_client(override=override, market_ready=market_ready)
     job = StockUpdateSync(factory, client, pool, StockUpdateOptions(max_requests=budget), ProcessLocalJobLock())
     return job, client, calls
 
 
-def test_budget_partial_and_resume_keeps_frozen_units():
+def test_budget_partial_and_resume_keeps_frozen_units(new_pg_factory):
     from app.stocks.update.sync import StockUpdateSync
-    job, client, calls = task(budget=3, market_ready=True)
+    job, client, calls = task(new_pg_factory, budget=3, market_ready=True)
     try:
         first = job.run(NOW)
         assert first['status'] == 'partial' and first['requests'] == 3
@@ -60,8 +65,8 @@ def test_budget_partial_and_resume_keeps_frozen_units():
         client.close()
 
 
-def test_physical_retries_share_single_budget():
-    job, client, calls = task(budget=2, override=lambda body, count: httpx.Response(503))
+def test_physical_retries_share_single_budget(new_pg_factory):
+    job, client, calls = task(new_pg_factory, budget=2, override=lambda body, count: httpx.Response(503))
     try:
         result = job.run(NOW)
         assert result['status'] == 'partial' and len(calls) == result['requests'] == 2
@@ -69,9 +74,9 @@ def test_physical_retries_share_single_budget():
         client.close()
 
 
-def test_pre_report_field_checkpoint_resumes_before_adopting_new_fields(monkeypatch):
+def test_pre_report_field_checkpoint_resumes_before_adopting_new_fields(new_pg_factory, monkeypatch):
     from app.connectors.tushare.strategies import Dataset, FIELD_REGISTRY
-    job, client, calls = task(budget=1)
+    job, client, calls = task(new_pg_factory, budget=1)
     try:
         with monkeypatch.context() as old:
             from app.connectors.tushare.strategies import LEGACY_CASHFLOW_FIELDS
@@ -87,10 +92,10 @@ def test_pre_report_field_checkpoint_resumes_before_adopting_new_fields(monkeypa
         client.close()
 
 
-def test_invalid_calendar_stops_before_stock_http():
+def test_invalid_calendar_stops_before_stock_http(new_pg_factory):
     def override(body, count):
         return httpx.Response(200, json={'code': 0, 'data': {'fields': body['fields'].split(','), 'items': []}})
-    job, client, calls = task(override=override)
+    job, client, calls = task(new_pg_factory, override=override)
     try:
         result = job.run(NOW)
         assert result['status'] == 'failed' and result['publishReady'] is False
@@ -99,8 +104,8 @@ def test_invalid_calendar_stops_before_stock_http():
         client.close()
 
 
-def test_dry_preflight_has_no_cursor_or_run():
-    job, client, calls = task()
+def test_dry_preflight_has_no_cursor_or_run(new_pg_factory):
+    job, client, calls = task(new_pg_factory)
     try:
         assert job.preflight(NOW)['calendarPending'] is True
         with job.factory() as s:

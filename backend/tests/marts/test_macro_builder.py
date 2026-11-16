@@ -1,15 +1,11 @@
 from datetime import date, datetime, timedelta, timezone
 from decimal import Decimal
 
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 import pytest
 
-from app.db.base import ExternalBase
 from app.db.models import MacroObservation
 from app.macro.marts.macro import MacroMartBuilder, MacroRepository
 from app.marts.dto import validate_product_payload
-from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
 from app.macro.jobs.macro_sync import MacroSeriesOutcome, MacroSourceFailure
 from app.connectors.macro.contracts import ProviderError
 from app.cli import main as main_module
@@ -28,10 +24,8 @@ def observation(series_id: str, source: str, observed: date, released: datetime,
                             value=Decimal(value), source_url="https://example.com/source")
 
 
-def test_repository_prefers_official_same_period_and_keeps_newer_fallback() -> None:
-    engine = create_engine("sqlite:///:memory:", execution_options={"schema_translate_map": {"raw": None, "core": None}})
-    ExternalBase.metadata.create_all(engine)
-    factory = sessionmaker(engine)
+def test_repository_prefers_official_same_period_and_keeps_newer_fallback(pg_factory) -> None:
+    factory = pg_factory
     cutoff = datetime(2026, 9, 20, 10, tzinfo=timezone.utc)
     rows = [
         observation("cn.cpi.yoy", "tushare", date(2026, 7, 1), cutoff - timedelta(days=20)),
@@ -124,15 +118,15 @@ def test_catalog_payload_covers_all_twenty_in_catalog_order() -> None:
     assert validate_product_payload("macro-insights", insights.payload) == ()
 
 
-def test_existing_observation_does_not_inherit_initial_state_missing_reason() -> None:
+def test_existing_observation_does_not_inherit_initial_state_missing_reason(pg_factory) -> None:
     from app.db.base import Base
     from app.db.session import create_engine_and_session
     from app.macro.jobs.macro_series_state import MacroSeriesStateRepository
     cutoff = datetime(2026, 9, 30, tzinfo=timezone.utc)
     row = observation("cn.cpi.yoy", "tushare", date(2026, 8, 1), cutoff - timedelta(days=1))
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
+    factory = pg_factory
+    engine = factory.kw["bind"]
     try:
-        Base.metadata.create_all(engine)
         repository = MacroSeriesStateRepository(factory, CATALOG.catalog_version)
         repository.mark_stale(row.series_id, checked_at=cutoff, error=ProviderError("MACRO_HISTORY_GAP", retryable=False))
         states = repository.get_all()
@@ -291,10 +285,8 @@ def test_quarterly_expiry_is_measured_from_period_end_in_rebuild_and_payload(cut
         assert status["observedAt"] == "2026-04-01"
 
 
-def test_as_of_query_does_not_see_later_revision() -> None:
-    engine = create_engine("sqlite:///:memory:", execution_options={"schema_translate_map": {"raw": None, "core": None}})
-    ExternalBase.metadata.create_all(engine)
-    factory = sessionmaker(engine)
+def test_as_of_query_does_not_see_later_revision(pg_factory) -> None:
+    factory = pg_factory
     with factory.begin() as session:
         session.add_all([observation("cn.cpi.yoy", "tushare", date(2026, 7, 1), datetime(2026, 8, 9, tzinfo=timezone.utc), "0.1"), observation("cn.cpi.yoy", "tushare", date(2026, 7, 1), datetime(2026, 9, 9, tzinfo=timezone.utc), "0.2")])
     rows = MacroRepository(factory).visible_observations(["cn.cpi.yoy"], datetime(2026, 8, 10, tzinfo=timezone.utc))
@@ -307,13 +299,9 @@ def test_as_of_query_does_not_see_later_revision() -> None:
     assert transmission.payload["transmission"]["modes"][1]["mainNodes"][0]["value"] == "0.1000000000%"
 
 
-def test_empty_macro_data_is_partial_but_keeps_required_keys() -> None:
-    engine = create_engine(
-        "sqlite:///:memory:",
-        execution_options={"schema_translate_map": {"raw": None, "core": None}},
-    )
-    ExternalBase.metadata.create_all(engine)
-    factory = sessionmaker(engine)
+def test_empty_macro_data_is_partial_but_keeps_required_keys(pg_factory) -> None:
+    factory = pg_factory
+    engine = factory.kw["bind"]
 
     transmission, insights = MacroMartBuilder(MacroRepository(factory)).build(
         datetime(2026, 8, 24, tzinfo=timezone.utc),

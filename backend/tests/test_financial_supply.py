@@ -1,3 +1,4 @@
+from backend.tests.support.snapshots import set_snapshot_version
 from datetime import date,datetime,timezone
 from copy import deepcopy
 import json,base64,hashlib
@@ -12,8 +13,8 @@ def module():
     return financial_supply
 
 
-def test_preview_is_readonly_dynamic_and_keeps_old_request_contracts():
-    f=source();before=db_state(f)
+def test_preview_is_readonly_dynamic_and_keeps_old_request_contracts(new_pg_factory):
+    f=source(new_pg_factory);before=db_state(f)
     r=module().capture(f,execute=False)
     assert r['status']=='planned' and r['requestCount']==0 and r['unitCount']==3
     assert db_state(f)==before
@@ -34,8 +35,8 @@ class Client:
         return TushareResponse.model_validate(data)
 
 
-def test_budget_resumes_originals_and_reentry_never_refetches():
-    f=source();c=Client()
+def test_budget_resumes_originals_and_reentry_never_refetches(new_pg_factory):
+    f=source(new_pg_factory);c=Client()
     for pending in (True,True,False):
         r=module().capture(f,c,execute=True,max_http=1)
         assert r['requestCount']==1
@@ -45,13 +46,13 @@ def test_budget_resumes_originals_and_reentry_never_refetches():
     assert len(c.calls)==3 and db_state(f)==before
 
 
-def test_failed_unit_cannot_be_bypassed_with_new_base():
-    f=source()
+def test_failed_unit_cannot_be_bypassed_with_new_base(new_pg_factory):
+    f=source(new_pg_factory)
     class Broken(Client):
         def call(self,*args):self.calls.append(args);raise TimeoutError('private-key')
     c=Broken();r=module().capture(f,c,execute=True,max_http=1)
     assert r['status'] in ('failed','blocked')
-    with f.begin() as s:s.get(PublishedSnapshot,'screener').version='new'
+    with f.begin() as s:set_snapshot_version(s, s.get(PublishedSnapshot,'screener'), 'new')
     assert module().capture(f,c,execute=True)['requestCount']==0
     assert len(c.calls)==1
 
@@ -113,9 +114,9 @@ def test_original_row_lineage_is_not_a_financial_statement_item():
     assert table['reportMetadata'][0]['sourceIds']==['raw:1:1']
 
 
-def test_publication_changes_financial_reports_and_dependent_cards_only_and_reentry_is_no_change():
+def test_publication_changes_financial_reports_and_dependent_cards_only_and_reentry_is_no_change(new_pg_factory):
     from app.stocks.financial_runtime import publish
-    f=source();c=Client();module().capture(f,c,execute=True)
+    f=source(new_pg_factory);c=Client();module().capture(f,c,execute=True)
     with f() as s:
         originals={p.product:deepcopy(p.payload) for p in s.scalars(select(PublishedSnapshot))}
     result=publish(f)
@@ -144,7 +145,7 @@ def test_publication_changes_financial_reports_and_dependent_cards_only_and_reen
     assert publish(f)['status']=='no_change'
 
 
-def test_paging_follows_saved_has_more_without_repeating_first_page():
+def test_paging_follows_saved_has_more_without_repeating_first_page(new_pg_factory):
     from app.connectors.tushare.contracts import TushareResponse
     class Pages(Client):
         def call(self,api,params,fields):
@@ -155,35 +156,35 @@ def test_paging_follows_saved_has_more_without_repeating_first_page():
             body=json.dumps({'code':0,'data':data}).encode()
             self.callback(dict(statusCode=200,credentialsRedacted=False,bodyBase64=base64.b64encode(body).decode(),bodySha256=hashlib.sha256(body).hexdigest(),byteLength=len(body)))
             return TushareResponse.model_validate(data)
-    f=source();c=Pages()
+    f=source(new_pg_factory);c=Pages()
     for _ in range(6):result=module().capture(f,c,execute=True,max_http=1)
     assert result['status']=='completed' and result['unitCount']==6
     assert module().capture(f,c,execute=True)['requestCount']==0
     assert len({(a,json.dumps(p,sort_keys=True)) for a,p,_ in c.calls})==6
 
 
-def test_bad_original_keeps_actual_physical_request_count():
+def test_bad_original_keeps_actual_physical_request_count(new_pg_factory):
     from app.connectors.tushare.contracts import TushareResponse
     class Bad(Client):
         def call(self,*args):
             response=super().call(*args)
             items=[list(r) for r in response.items];items[0][response.fields.index('end_date')]='20231231'
             return TushareResponse(fields=response.fields,items=tuple(tuple(r) for r in items))
-    result=module().capture(source(),Bad(),execute=True,max_http=1)
+    result=module().capture(source(new_pg_factory),Bad(),execute=True,max_http=1)
     assert result['status']=='blocked' and result['requestCount']==1
 
 
-def test_partial_capture_does_not_block_normal_workbench_build():
+def test_partial_capture_does_not_block_normal_workbench_build(new_pg_factory):
     from app.stocks.financial_runtime import tables_for_build
-    f=source();module().capture(f,Client(),execute=True,max_http=1)
+    f=source(new_pg_factory);module().capture(f,Client(),execute=True,max_http=1)
     assert tables_for_build(f,date(2026,8,24),('600519.SH',))=={}
 
 
-def test_completed_old_batch_can_bind_new_price_day_without_restarting_all():
+def test_completed_old_batch_can_bind_new_price_day_without_restarting_all(new_pg_factory):
     from datetime import timedelta
-    f=source();c=Client();module().capture(f,c,execute=True,max_http=1)
+    f=source(new_pg_factory);c=Client();module().capture(f,c,execute=True,max_http=1)
     with f.begin() as s:
-        base=s.get(PublishedSnapshot,'screener');base.version='new-day';base.as_of+=timedelta(days=1)
+        base=s.get(PublishedSnapshot,'screener');set_snapshot_version(s, base, 'new-day');base.as_of+=timedelta(days=1)
     r=module().capture(f,c,execute=True)
     assert r['status']=='completed' and r['compatibleTarget'] is True and r['currentTarget'] is False
     points=module().load_points(f,date(2026,8,25),('600519.SH',))
@@ -191,9 +192,9 @@ def test_completed_old_batch_can_bind_new_price_day_without_restarting_all():
     assert module().capture(f,c,execute=True)['requestCount']==0
 
 
-def test_legacy_core_anchor_does_not_shadow_target_lock_key():
+def test_legacy_core_anchor_does_not_shadow_target_lock_key(new_pg_factory):
     from app.ingestion.repositories import content_hash
-    f=source();c=Client();m=module();m.capture(f,c,execute=True)
+    f=source(new_pg_factory);c=Client();m=module();m.capture(f,c,execute=True)
     # 模拟已保存的早期合同，保留原请求与原件，只移除后来才增加的Core签名。
     with f.begin() as s:
         cursors=s.scalars(select(JobCursor).where(JobCursor.job_name==m.JOB)).all()
@@ -210,7 +211,7 @@ def test_legacy_core_anchor_does_not_shadow_target_lock_key():
     assert len(c.calls)==3
 
 
-def test_card_inputs_retain_prior_visible_revision_and_ignore_unfinished_or_duplicate_captures(monkeypatch):
+def test_card_inputs_retain_prior_visible_revision_and_ignore_unfinished_or_duplicate_captures(new_pg_factory, monkeypatch):
     from app.connectors.tushare.contracts import TushareResponse
     from app.stocks.derived.inputs import load_metric_card_inputs
 
@@ -232,7 +233,7 @@ def test_card_inputs_retain_prior_visible_revision_and_ignore_unfinished_or_dupl
                                bodySha256=hashlib.sha256(body).hexdigest(), byteLength=len(body)))
             return TushareResponse.model_validate(data)
 
-    f = source()
+    f = source(new_pg_factory)
     m = module()
     client = RevisionClient()
     symbol = '600519.SH'
@@ -248,7 +249,7 @@ def test_card_inputs_retain_prior_visible_revision_and_ignore_unfinished_or_dupl
     with f.begin() as s:
         base = s.get(PublishedSnapshot, 'screener')
         base.as_of = datetime(2026, 11, 1, tzinfo=timezone.utc)
-        base.version = 'november'
+        set_snapshot_version(s, base, 'november')
     assert m.capture(f, client, execute=True, max_http=1)['status'] == 'pending'
     assert income('2026-11-01') == old
     assert m.capture(f, client, execute=True)['status'] == 'completed'
@@ -260,8 +261,8 @@ def test_card_inputs_retain_prior_visible_revision_and_ignore_unfinished_or_dupl
     assert income('2026-11-01') == newer and income('2026-09-30') == old
 
 
-def test_visible_core_change_selects_new_batch_without_overwriting_old(monkeypatch):
-    f=source();c=Client();m=module();original=m.capture(f,c,execute=True)
+def test_visible_core_change_selects_new_batch_without_overwriting_old(new_pg_factory, monkeypatch):
+    f=source(new_pg_factory);c=Client();m=module();original=m.capture(f,c,execute=True)
     monkeypatch.setattr(m,'_core_signature',lambda *_:'changed-visible-core-facts')
     preview=m.capture(f,execute=False)
     assert preview['identity']!=original['identity']
@@ -273,9 +274,9 @@ def test_visible_core_change_selects_new_batch_without_overwriting_old(monkeypat
         assert len(s.scalars(select(JobCursor).where(JobCursor.cursor_key.like('contract:%'))).all())==2
 
 
-def test_no_supplement_batch_does_not_require_market_only_pointer_stock_rows():
+def test_no_supplement_batch_does_not_require_market_only_pointer_stock_rows(new_pg_factory):
     from app.stocks.financial_runtime import tables_for_build
-    f=source()
+    f=source(new_pg_factory)
     with f.begin() as s:s.get(PublishedSnapshot,'screener').payload={}
     assert module().load_points(f,date(2026,8,24),('600519.SH',))==()
     assert tables_for_build(f,date(2026,8,24),('600519.SH',))=={}
@@ -298,11 +299,11 @@ def test_cashflow_contracts_share_full_fields_and_only_request_individual_stocks
 
 
 @pytest.mark.parametrize("failed", [False, True], ids=["pending-refresh", "failed-refresh"])
-def test_daily_cashflow_reaches_workbench_during_history_refresh(failed):
+def test_daily_cashflow_reaches_workbench_during_history_refresh(new_pg_factory, failed):
     from app.db.models import CashflowStatement
     from app.stocks.financial_runtime import tables_for_build, publish
 
-    factory = source()
+    factory = source(new_pg_factory)
     module().capture(factory, Client(), execute=True)
     with factory.begin() as session:
         session.add(CashflowStatement(ts_code="600519.SH", end_date=date(2026, 6, 30),

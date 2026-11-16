@@ -7,8 +7,8 @@ from backend.tests.market_pulse.test_sync import setup, POOL
 from backend.tests.market_pulse.test_repository import NOW
 
 
-def test_readonly_runtime_creates_no_client_engine_or_locks(monkeypatch):
-    sync, factory, client, requests = setup()
+def test_readonly_runtime_creates_no_client_engine_or_locks(new_pg_factory, monkeypatch):
+    sync, factory, client, requests = setup(new_pg_factory)
     @contextmanager
     def readonly(_):
         yield factory
@@ -19,7 +19,7 @@ def test_readonly_runtime_creates_no_client_engine_or_locks(monkeypatch):
     monkeypatch.setattr(runtime, 'TushareClient', forbidden)
     monkeypatch.setattr(runtime.UniverseResolver, 'resolve', lambda *args: POOL)
     with client:
-        result = runtime.run_pulse_update(Settings(data_backend='database', database_url='sqlite://'), now=NOW,
+        result = runtime.run_pulse_update(Settings(data_backend='database', database_url='postgresql+psycopg://controlled.invalid/test'), now=NOW,
             dry_run=True, publish=True)
     assert result['status'] == 'planned' and result['pendingCount'] == 2 and requests == []
 
@@ -29,5 +29,5 @@ def test_runtime_rejects_fixture_or_non_fixed_pool_before_database(monkeypatch):
         raise AssertionError('no database access')
     monkeypatch.setattr(runtime, 'open_readonly_factory', forbidden)
     assert_fixture_configuration_rejected(monkeypatch)
-    for settings in (Settings(database_url=None, database_read_url=None), Settings(data_backend='database', database_url='sqlite://', sync_universe='all')):
+    for settings in (Settings(database_url=None, database_read_url=None), Settings(data_backend='database', database_url='postgresql+psycopg://controlled.invalid/test', sync_universe='all')):
         assert runtime.run_pulse_update(settings, now=NOW, dry_run=True)['status'] == 'configuration_error'

@@ -33,7 +33,7 @@ def test_only_region_group_total_and_failure_does_not_skip_macro(monkeypatch):
     calls=[]
     monkeypatch.setattr(module,'run_region_step',lambda *a,**kw:calls.append('region') or {
         'status':'completed','publishReady':True,'requestCount':2,'publication':{'status':'no_change'}})
-    settings=Settings(data_backend='database',database_url='sqlite://',routine_stocks_enabled=False,
+    settings=Settings(data_backend='database',database_url='postgresql+psycopg://controlled.invalid/test',routine_stocks_enabled=False,
         routine_macro_enabled=False,routine_region_enabled=True)
     result=module.run_routine_update(settings,now=NOW,publish=True,macro_rebuild=lambda _:None)
     assert result['status']=='completed' and result['httpCounts']=={'stocks':0,'macro':0,'region':2,'total':2}
@@ -72,10 +72,10 @@ def test_scheduler_region_daily_and_lifecycle_guard(monkeypatch):
     assert calls==['scheduled','startup']
 
 
-def test_runtime_readonly_creates_no_client_or_write_engine(monkeypatch):
+def test_runtime_readonly_creates_no_client_or_write_engine(new_pg_factory, monkeypatch):
     assert importlib.util.find_spec('app.market.region.runtime') is not None, 'region runtime missing'
     runtime=importlib.import_module('app.market.region.runtime')
-    sync,factory,client,requests=setup()
+    sync,factory,client,requests=setup(new_pg_factory)
     @contextmanager
     def readonly(_): yield factory
     def forbidden(*a,**kw): raise AssertionError('must remain readonly')
@@ -84,5 +84,5 @@ def test_runtime_readonly_creates_no_client_or_write_engine(monkeypatch):
     monkeypatch.setattr(runtime,'TushareClient',forbidden)
     monkeypatch.setattr(runtime.UniverseResolver,'resolve',lambda *a:POOL)
     with client:
-        result=runtime.run_region_update(Settings(data_backend='database',database_url='sqlite://'),now=NOW,dry_run=True,publish=True)
+        result=runtime.run_region_update(Settings(data_backend='database',database_url='postgresql+psycopg://controlled.invalid/test'),now=NOW,dry_run=True,publish=True)
     assert result['status']=='planned' and result['pendingCount']==2 and requests==[]

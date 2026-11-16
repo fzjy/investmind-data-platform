@@ -17,7 +17,7 @@ from app.macro.jobs.macro_sync_repository import MacroObservationRepository
 from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
 from app.macro.marts.macro import MacroMartBuilder, MacroRepository
 from app.marts.publication import SnapshotPublisher
-from backend.tests.jobs.test_build_and_publish_integration import _factory, _real_build_and_publish_job, _seed_complete_core_sample
+from backend.tests.jobs.test_build_and_publish_integration import _real_build_and_publish_job, _seed_complete_core_sample
 from backend.tests.jobs.test_macro_publish import History
 
 CATALOG = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE)
@@ -44,8 +44,8 @@ def import_controlled_macro(factory: sessionmaker[Session], directory: Path, cou
     ("-1.1234567890123", "-1.1234567890"),
     ("1.12345678909", "1.1234567891"),
 ])
-def test_real_import_rounding_preserves_lineage_and_publication(tmp_path: Path, value: str, stored: str) -> None:
-    factory = _factory()
+def test_real_import_rounding_preserves_lineage_and_publication(pg_factory, tmp_path: Path, value: str, stored: str) -> None:
+    factory = pg_factory
     import_controlled_macro(factory, tmp_path, value=value)
     with factory() as session:
         assert session.scalar(select(MacroObservation.value)) == Decimal(stored)
@@ -63,8 +63,8 @@ def test_real_import_rounding_preserves_lineage_and_publication(tmp_path: Path, 
     {"source": "tampered-offline"},
     {"unit": "tampered-unit"},
 ])
-def test_rounded_import_still_rejects_value_and_metadata_tampering(tmp_path: Path, changes: dict[str, object]) -> None:
-    factory = _factory()
+def test_rounded_import_still_rejects_value_and_metadata_tampering(pg_factory, tmp_path: Path, changes: dict[str, object]) -> None:
+    factory = pg_factory
     import_controlled_macro(factory, tmp_path, value="1.1234567890123")
     item = CATALOG.series[0]
     with factory.begin() as session:
@@ -109,8 +109,8 @@ def test_postgres_real_import_rounding_matches_stored_precision_without_trusting
             engine.dispose()
 
 
-def test_real_import_entry_publishes_all_twenty_with_original_sources(tmp_path: Path) -> None:
-    factory = _factory()
+def test_real_import_entry_publishes_all_twenty_with_original_sources(pg_factory, tmp_path: Path) -> None:
+    factory = pg_factory
     import_controlled_macro(factory, tmp_path)
     publisher = SnapshotPublisher(factory)
     job = MacroPublishJob(MacroMartBuilder(MacroRepository(factory)), publisher, History())
@@ -128,22 +128,22 @@ def test_real_import_entry_publishes_all_twenty_with_original_sources(tmp_path: 
     assert full.status == "completed" and set(result.products) <= set(full.products)
 
 
-def test_sync_baseline_accepts_traced_offline_for_disabled_online_series(tmp_path: Path) -> None:
-    factory = _factory()
+def test_sync_baseline_accepts_traced_offline_for_disabled_online_series(pg_factory, tmp_path: Path) -> None:
+    factory = pg_factory
     import_controlled_macro(factory, tmp_path)
     item = next(item for item in CATALOG.series if not item.sources)
     latest = MacroObservationRepository(factory).latest_visible(item, AS_OF, AS_OF.date())
     assert latest == ("controlled-offline", date(2026, 8, 1), datetime(2026, 8, 23, tzinfo=UTC))
 
 
-def test_sync_uses_verified_offline_without_provider_or_faked_identity(tmp_path: Path) -> None:
+def test_sync_uses_verified_offline_without_provider_or_faked_identity(pg_factory, tmp_path: Path) -> None:
     from app.connectors.macro.registry import MacroProviderRegistry
     from app.jobs.locks import ProcessLocalJobLock
     from app.macro.jobs.macro_series_state import MacroSeriesStateRepository
     from app.macro.jobs.macro_sync import MacroSyncJob
     from app.macro.jobs.macro_sync_history import SqlMacroSyncHistory
     from app.macro.jobs.macro_sync_planning import MacroSyncOptions
-    factory = _factory()
+    factory = pg_factory
     import_controlled_macro(factory, tmp_path)
     history = SqlMacroSyncHistory(factory)
     publisher = SnapshotPublisher(factory)
@@ -159,8 +159,8 @@ def test_sync_uses_verified_offline_without_provider_or_faked_identity(tmp_path:
     assert all(item.status == "fallback" and item.actual_source == "controlled-offline" and item.fallback_used for item in result.outcomes)
 
 
-def test_registered_online_source_wins_same_period_but_newer_offline_period_is_kept(tmp_path: Path) -> None:
-    factory = _factory()
+def test_registered_online_source_wins_same_period_but_newer_offline_period_is_kept(pg_factory, tmp_path: Path) -> None:
+    factory = pg_factory
     import_controlled_macro(factory, tmp_path)
     item = CATALOG.require("cn.cpi.yoy")
     with factory.begin() as session:
@@ -179,8 +179,8 @@ def test_registered_online_source_wins_same_period_but_newer_offline_period_is_k
     assert MacroObservationRepository(factory).latest_visible(item, AS_OF, AS_OF.date())[0] == "controlled-offline"
 
 
-def test_untraced_or_modified_import_is_not_trusted_and_unselected_history_does_not_block(tmp_path: Path) -> None:
-    factory = _factory()
+def test_untraced_or_modified_import_is_not_trusted_and_unselected_history_does_not_block(pg_factory, tmp_path: Path) -> None:
+    factory = pg_factory
     import_controlled_macro(factory, tmp_path)
     item = CATALOG.series[0]
     with factory.begin() as session:

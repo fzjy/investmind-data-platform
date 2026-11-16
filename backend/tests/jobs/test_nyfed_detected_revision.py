@@ -7,7 +7,7 @@ from app.macro.jobs.macro_sync_repository import MacroObservationRepository
 from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
 from app.macro.marts.macro import MacroRepository
 from backend.tests.connectors.macro.test_us_official import FakeJsonTransport
-from backend.tests.jobs.test_build_and_publish_integration import _factory
+
 
 
 def test_nyfed_official_percent_field_and_inclusive_window() -> None:
@@ -23,12 +23,12 @@ def test_nyfed_official_percent_field_and_inclusive_window() -> None:
     assert result.raw_payload["payload"]["refRates"][0]["revisionIndicator"] == "Y"
 
 
-def test_nyfed_repeated_y_is_idempotent_and_changed_value_is_detected_with_strict_replay() -> None:
+def test_nyfed_repeated_y_is_idempotent_and_changed_value_is_detected_with_strict_replay(pg_factory) -> None:
     series = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE).require("us.rate.effective_fed_funds")
     source = next(source for source in series.sources if source.provider == "nyfed")
     captured = datetime(2026, 9, 20, 8, tzinfo=UTC)
     window = MacroFetchWindow(date(2026, 9, 18), date(2026, 9, 18), captured)
-    factory = _factory()
+    factory = pg_factory
     repository = MacroObservationRepository(factory)
     try:
         for index, value in enumerate(("4.33", "4.33", "4.35")):

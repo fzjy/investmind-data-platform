@@ -7,7 +7,7 @@ from sqlalchemy import select
 
 from app.connectors.tushare.contracts import TushareResponse
 from app.db.models import SourcePayload, JobCursor, IngestionBatch
-from backend.tests.market_pulse.test_sync import NOW,DAY,POOL,_factory
+from backend.tests.market_pulse.test_sync import NOW, DAY, POOL
 
 
 def mod(name='repository'):
@@ -15,12 +15,12 @@ def mod(name='repository'):
     return importlib.import_module('app.market.commodities.'+name)
 
 
-def setup():
+def setup(new_pg_factory):
     contracts=mod('contracts')
     from app.market.data.catalog import MarketDataCatalog
     catalog=MarketDataCatalog.load()
     catalog=catalog.model_copy(update={'commodities':catalog.commodities.model_copy(update={'enabled':True,'history_days':5})})
-    return contracts,catalog,_factory()
+    return contracts,catalog,new_pg_factory()
 
 
 def response(request):
@@ -52,8 +52,8 @@ def complete(factory,catalog):
     raise AssertionError('bounded source graph failed to finish')
 
 
-def test_real_mapping_dates_units_and_partial_aggregation():
-    _,catalog,factory=setup()
+def test_real_mapping_dates_units_and_partial_aggregation(new_pg_factory):
+    _,catalog,factory=setup(new_pg_factory)
     plan=complete(factory,catalog)
     assert plan['ready'] and plan['pendingRequests']==[]
     with factory() as session: package=mod().package(session,catalog,DAY,NOW)
@@ -73,8 +73,8 @@ def test_real_mapping_dates_units_and_partial_aggregation():
 
 
 @pytest.mark.parametrize('damage',['wrong_code','duplicate','outside','ohlc','negative','bool','nan','missing_date','saturated'])
-def test_bad_mapping_or_daily_never_completes(damage):
-    _,catalog,factory=setup()
+def test_bad_mapping_or_daily_never_completes(new_pg_factory, damage):
+    _,catalog,factory=setup(new_pg_factory)
     repo=mod().CommodityRepository(factory,catalog)
     request=next(r for r in repo.plan(DAY,NOW)['pendingRequests'] if r['api']=='fut_mapping')
     good=response(request)
@@ -97,8 +97,8 @@ def test_bad_mapping_or_daily_never_completes(damage):
 
 
 @pytest.mark.parametrize('damage',['hash','past_time','cursor_time','batch_time','cursor_bool','params'])
-def test_damaged_raw_time_or_request_never_publishes(damage):
-    _,catalog,factory=setup()
+def test_damaged_raw_time_or_request_never_publishes(new_pg_factory, damage):
+    _,catalog,factory=setup(new_pg_factory)
     complete(factory,catalog)
     with factory.begin() as session:
         cursor=session.scalar(select(JobCursor).where(JobCursor.job_name=='sync-commodities'))
@@ -112,8 +112,8 @@ def test_damaged_raw_time_or_request_never_publishes(damage):
     with factory() as session: assert mod().package(session,catalog,DAY,NOW) is None
 
 
-def test_metadata_delisting_and_missing_calendar_days_block_package():
-    _,catalog,factory=setup()
+def test_metadata_delisting_and_missing_calendar_days_block_package(new_pg_factory):
+    _,catalog,factory=setup(new_pg_factory)
     repo=mod().CommodityRepository(factory,catalog)
     complete(factory,catalog)
     request=next(r for r in mod('contracts').source_requests(catalog,DAY) if r['api']=='fut_basic')
@@ -122,8 +122,8 @@ def test_metadata_delisting_and_missing_calendar_days_block_package():
     with factory() as session: assert mod().package(session,catalog,DAY,NOW) is None
 
 
-def test_budget_and_timeout_change_do_not_invalidate_any_checkpoint_or_quotes():
-    _,catalog,factory=setup()
+def test_budget_and_timeout_change_do_not_invalidate_any_checkpoint_or_quotes(new_pg_factory):
+    _,catalog,factory=setup(new_pg_factory)
     repo=mod().CommodityRepository(factory,catalog)
     complete(factory,catalog)
     changed=catalog.model_copy(update={'commodities':catalog.commodities.model_copy(update={'max_requests_per_run':1,'timeout_seconds':30})})
@@ -131,8 +131,8 @@ def test_budget_and_timeout_change_do_not_invalidate_any_checkpoint_or_quotes():
     assert mod().CommodityRepository(factory,changed).plan(DAY,NOW)['ready']
 
 
-def test_non_main_delivery_ohlc_is_not_required_but_actual_main_ohlc_is_strict():
-    _,catalog,factory=setup()
+def test_non_main_delivery_ohlc_is_not_required_but_actual_main_ohlc_is_strict(new_pg_factory):
+    _,catalog,factory=setup(new_pg_factory)
     repo=mod().CommodityRepository(factory,catalog)
     for req in repo.plan(DAY,NOW)['pendingRequests']: assert repo.persist(req,response(req),NOW) is None
     req=next(r for r in repo.plan(DAY,NOW)['pendingRequests'] if r['api']=='fut_daily' and r['params']['ts_code']=='AU2610.SHF')
@@ -145,8 +145,8 @@ def test_non_main_delivery_ohlc_is_not_required_but_actual_main_ohlc_is_strict()
     assert repo.persist(req,TushareResponse(fields=data.fields,items=tuple(map(tuple,rows))),NOW)=='COMMODITY_RESPONSE_REJECTED'
 
 
-def test_three_digit_czce_contract_uses_metadata_lifecycle_not_guessed_year():
-    _,catalog,factory=setup()
+def test_three_digit_czce_contract_uses_metadata_lifecycle_not_guessed_year(new_pg_factory):
+    _,catalog,factory=setup(new_pg_factory)
     repo=mod().CommodityRepository(factory,catalog)
     for _ in range(3):
         for req in repo.plan(DAY,NOW)['pendingRequests']:
@@ -166,8 +166,8 @@ def test_three_digit_czce_contract_uses_metadata_lifecycle_not_guessed_year():
     assert not repo.plan(DAY,NOW)['ready']
 
 
-def test_exchange_closed_day_needs_no_mapping_or_invented_candle():
-    _,catalog,factory=setup()
+def test_exchange_closed_day_needs_no_mapping_or_invented_candle(new_pg_factory):
+    _,catalog,factory=setup(new_pg_factory)
     repo=mod().CommodityRepository(factory,catalog)
     for _ in range(3):
         for req in repo.plan(DAY,NOW)['pendingRequests']:
@@ -197,9 +197,9 @@ def test_cross_year_week_and_full_month_have_hand_checked_period_boundaries():
     assert aggregate(rows,'monthly',date(2026,1,1),date(2026,1,30))[0]['partial']
 
 
-def test_close_basis_dto_and_legacy_snapshot_remain_distinct():
+def test_close_basis_dto_and_legacy_snapshot_remain_distinct(new_pg_factory):
     from copy import deepcopy
-    _,catalog,factory=setup()
+    _,catalog,factory=setup(new_pg_factory)
     complete(factory,catalog)
     with factory() as session: payload=mod().package(session,catalog,DAY,NOW)
     valid=mod('dto').valid_commodity_payload

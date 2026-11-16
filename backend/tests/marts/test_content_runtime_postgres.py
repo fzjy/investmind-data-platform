@@ -5,13 +5,10 @@ from datetime import date
 
 import pytest
 from sqlalchemy import text
-from testcontainers.community.postgres import PostgresContainer
 
 from app.config import Settings
 from app.connectors.external_files.reader import ExternalFileReader
-from app.db.base import Base, DerivedBase, ExternalBase, MartBase
 from app.db.models import ContentDocument, PublishedSnapshot
-from app.db.session import create_engine_and_session
 from app.jobs.locks import PostgresAdvisoryJobLock, data_publication_lock_key
 from app.jobs.build_and_publish import BuildAndPublishOptions
 from app.content.marts.content_runtime import rebuild_content_marts
@@ -20,40 +17,22 @@ from app.marts.publication import SnapshotPublisher
 from app.shared.repository import SnapshotRepository
 from sqlalchemy import select
 from backend.tests.marts.test_content_runtime import NOW, PRODUCT, SYMBOL, add_content, state
-from backend.tests.jobs.test_build_and_publish_integration import _factory, _seed_complete_core_sample, _real_build_and_publish_job
+from backend.tests.jobs.test_build_and_publish_integration import _seed_complete_core_sample, _real_build_and_publish_job
 
 pytestmark = [pytest.mark.postgres, pytest.mark.skipif(
     os.environ.get("DANG_RUN_POSTGRES_TESTS") != "1", reason="requires registered disposable PostgreSQL17")]
 
 
 @pytest.fixture
-def database():
-    with PostgresContainer("postgres:17-alpine", driver="psycopg") as postgres:
-        url = postgres.get_connection_url(driver="psycopg")
-        engine, factory = create_engine_and_session(url)
-        with engine.begin() as connection:
-            for schema in ("core", "raw", "ops", "derived", "mart"):
-                connection.execute(text(f"CREATE SCHEMA {schema}"))
-            assert int(connection.scalar(text("SHOW server_version_num"))) // 10000 == 17
-        for base in (Base, DerivedBase, ExternalBase, MartBase):
-            base.metadata.create_all(engine)
-        try:
-            # Existing SQLite seed helper does not flush security before dependents.
-            # Copy its controlled core rows in FK order, then run the real builders.
-            seed_factory = _factory()
-            _seed_complete_core_sample(seed_factory)
-            with seed_factory.kw["bind"].connect() as source, engine.begin() as target:
-                for table in Base.metadata.sorted_tables:
-                    records = [dict(row) for row in source.execute(select(table)).mappings()]
-                    if records:
-                        target.execute(table.insert(), records)
-            seed_factory.kw["bind"].dispose()
-            result = _real_build_and_publish_job(factory).run(BuildAndPublishOptions(date(2026, 8, 24), (SYMBOL,)))
-            assert result.status == "completed"
-            add_content(factory)
-            yield Settings(database_url=url), factory, engine
-        finally:
-            engine.dispose()
+def database(pg_factory, pg_schema_url):
+    engine = pg_factory.kw["bind"]
+    with engine.connect() as connection:
+        assert int(connection.scalar(text("SHOW server_version_num"))) // 10000 == 17
+    _seed_complete_core_sample(pg_factory)
+    result = _real_build_and_publish_job(pg_factory).run(BuildAndPublishOptions(date(2026, 8, 24), (SYMBOL,)))
+    assert result.status == "completed"
+    add_content(pg_factory)
+    return Settings(database_url=pg_schema_url), pg_factory, engine
 
 
 def test_pg_real_entry_publishes_then_same_value_changes_nothing(database):

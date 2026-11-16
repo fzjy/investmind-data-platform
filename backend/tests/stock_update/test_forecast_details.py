@@ -9,7 +9,7 @@ from app.db.models import FinancialForecast, JobCursor, PublishedSnapshot, Sourc
 from app.ingestion.normalizers import normalize_financial_row
 from app.ingestion.pipeline import IngestionPipeline
 from app.stocks import forecast_details as detail
-from backend.tests.jobs.test_build_and_publish_integration import _factory
+
 
 NOW = datetime(2026, 11, 11, tzinfo=UTC)
 SYMBOLS = ("600519.SH", "688111.SH")
@@ -20,10 +20,13 @@ def sample(symbol, day):
         p_change_min=8, p_change_max=10, net_profit_min=100, net_profit_max=120)
 
 
-def setup():
-    f = _factory()
+def setup(new_pg_factory):
+    f = new_pg_factory()
     rows = [sample(SYMBOLS[0], "20260703"), sample(SYMBOLS[0], "20260715"), sample(SYMBOLS[1], "20260715")]
+    from app.db.models import Security
     with f.begin() as s:
+        s.add_all(Security(ts_code=code, symbol=code[:6], name="样本") for code in SYMBOLS)
+        s.flush()
         def add(product, payload):
             s.add(PublishedSnapshot(product=product, payload=payload, as_of=NOW, version="test"))
         add("screener", {"stocks": [{"symbol": sym} for sym in SYMBOLS]})
@@ -53,8 +56,8 @@ def run(f, client, **options):
     return detail.capture(f, client, **(args | options))
 
 
-def test_resume_and_preserve_details_on_old_contract_reingest():
-    f, rows = setup()
+def test_resume_and_preserve_details_on_old_contract_reingest(new_pg_factory):
+    f, rows = setup(new_pg_factory)
     client = Source(rows)
     assert run(f, client, dry_run=True)["readyWindows"] == 2 and not client.calls
     assert run(f, client)["enrichedCount"] == 2
@@ -70,9 +73,9 @@ def test_resume_and_preserve_details_on_old_contract_reingest():
     assert run(f, client)["requestCount"] == 0
 
 
-def test_late_core_forecast_is_discovered_from_notice_and_does_not_repeat():
+def test_late_core_forecast_is_discovered_from_notice_and_does_not_repeat(new_pg_factory):
     from app.db.models import ContentDocument
-    f, rows = setup()
+    f, rows = setup(new_pg_factory)
     symbol = SYMBOLS[1]
     with f.begin() as session:
         session.add(ContentDocument(source="cninfo", content_type="announcement", external_id="n",
@@ -87,8 +90,8 @@ def test_late_core_forecast_is_discovered_from_notice_and_does_not_repeat():
         assert forecast.data["summary"] == "增长" and forecast.end_date == date(2026,6,30)
 
 
-def test_empty_windows_bounded_and_single_day_limit_is_unresolved(monkeypatch):
-    f, rows = setup()
+def test_empty_windows_bounded_and_single_day_limit_is_unresolved(new_pg_factory, monkeypatch):
+    f, rows = setup(new_pg_factory)
     client = Source([])
     assert run(f, client, symbols=SYMBOLS[:1])["waitingRows"] == 2
     assert run(f, client, symbols=SYMBOLS[:1])["requestCount"] == 0
@@ -102,8 +105,8 @@ def test_empty_windows_bounded_and_single_day_limit_is_unresolved(monkeypatch):
     assert report["unresolvedRows"] == 1 and report["enrichedCount"] == 0
 
 
-def test_new_candle_does_not_reset_retry_for_same_month():
-    f, _ = setup()
+def test_new_candle_does_not_reset_retry_for_same_month(new_pg_factory):
+    f, _ = setup(new_pg_factory)
     symbol = SYMBOLS[1]
     def set_end(day):
         with f.begin() as session:
@@ -117,8 +120,8 @@ def test_new_candle_does_not_reset_retry_for_same_month():
     assert run(f, source, symbols=[symbol])["requestCount"] == 0
 
 
-def test_ambiguous_forecast_keeps_raw_and_allows_other_rows():
-    f, rows = setup()
+def test_ambiguous_forecast_keeps_raw_and_allows_other_rows(new_pg_factory):
+    f, rows = setup(new_pg_factory)
     ambiguous = {**rows[0], "type": "修正"}
     report = run(f, Source(rows + [ambiguous]), symbols=[SYMBOLS[0]])
     assert report["enrichedCount"] == 1 and report["waitingRows"] == 1
@@ -127,8 +130,8 @@ def test_ambiguous_forecast_keeps_raw_and_allows_other_rows():
         assert session.scalar(select(SourcePayload)) is not None
 
 
-def test_rate_limit_does_not_advance_and_leap_year_bound():
-    f, rows = setup()
+def test_rate_limit_does_not_advance_and_leap_year_bound(new_pg_factory):
+    f, rows = setup(new_pg_factory)
     class Limited:
         def call(self, *args):
             raise TushareRateLimitError()

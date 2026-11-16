@@ -1,11 +1,11 @@
 from datetime import date
 import json
 
-from app.db.models import DailyBasic, DailyPrice, FinancialIndicator, IncomeStatement
+from app.db.models import Security, DailyBasic, DailyPrice, FinancialIndicator, IncomeStatement
 from app.stocks.derived.inputs import load_metric_card_inputs
 from app.stocks.derived.metric_dividends import dividend_years
 from app.portfolio.evidence import verified_dividend_rows
-from backend.tests.derived.test_inputs import _factory
+
 from backend.tests.test_dividend_ledger import saved, row, SYMBOL
 
 
@@ -14,8 +14,10 @@ def query(raw_id=10):
                 coverageStart='1990-01-01', coverageEnd='2026-11-14', issues=[])
 
 
-def test_paired_market_rows_visible_consolidated_revisions_and_symbol_isolation():
-    with _factory().begin() as s:
+def test_paired_market_rows_visible_consolidated_revisions_and_symbol_isolation(pg_factory):
+    with pg_factory.begin() as s:
+        s.add_all(Security(ts_code=code, symbol=code[:6], name="样本") for code in (SYMBOL, "600002.SH"))
+        s.flush()
         d = date.fromisoformat
         day = d('2026-10-31')
         s.add_all([DailyPrice(ts_code=SYMBOL, trade_date=day, close=20),
@@ -101,13 +103,15 @@ def test_narrow_core_observation_deduplicated_only_if_values_match():
     assert not conflict['covered'] and '同一版本的分配原始记录相互冲突' in conflict['issues']
 
 
-def test_transient_cancellation_remains_visible_after_omission_and_duplicate_responses():
+def test_transient_cancellation_remains_visible_after_omission_and_duplicate_responses(pg_factory):
     from app.connectors.tushare.contracts import TushareResponse
     from app.connectors.tushare.strategies import Dataset
     from app.stocks.update.planning import plan_for
     from app.stocks.update.repository import StockUpdateRepository
-    factory = _factory()
+    factory = pg_factory
     day = date(2026, 8, 1)
+    with factory.begin() as session:
+        session.add(Security(ts_code=SYMBOL, symbol=SYMBOL[:6], name="样本"))
     plan = plan_for(Dataset.DIVIDEND, {'ts_code': SYMBOL})
     repo = StockUpdateRepository(factory)
     original = row()

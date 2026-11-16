@@ -14,7 +14,7 @@ from app.jobs.locks import ProcessLocalJobLock
 from app.market.data.catalog import MarketDataCatalog, plan_market_targets
 from app.market.data.contracts import QUOTE_FIELDS
 from app.market.data.repository import MarketQuoteRepository
-from backend.tests.market_pulse.test_sync import POOL, DAY, NOW, _factory
+from backend.tests.market_pulse.test_sync import POOL, DAY, NOW
 
 CODE = '510300.SH'
 FIELDS = {'fund_daily': ('ts_code','trade_date','close','pct_chg','vol','amount'),
@@ -33,14 +33,15 @@ def response(api, code=CODE, day='20261016', value=None):
     return TushareResponse(fields=FIELDS[api], items=(tuple(values),))
 
 
-def setup(budget=20, handler=None):
+def setup(new_pg_factory, budget=20, handler=None):
     mod = module()
-    factory = _factory()
+    factory = new_pg_factory()
     catalog = MarketDataCatalog.load()
     catalog = catalog.model_copy(update={'etf_heatmap': catalog.etf_heatmap.model_copy(update={'enabled':True, 'max_requests_per_run':budget})})
     with factory.begin() as session:
         for code in POOL.symbols:
             session.add(Security(ts_code=code, symbol=code[:6], name=code))
+            session.flush()
             session.add(DailyPrice(ts_code=code, trade_date=DAY, close=10, pct_chg=0))
             session.add(DailyBasic(ts_code=code, trade_date=DAY, data={}))
         session.add(PublishedSnapshot(product='screener', version='old', as_of=NOW, payload={}))
@@ -62,8 +63,8 @@ def setup(budget=20, handler=None):
     return sync, factory, client, calls, mod
 
 
-def test_two_components_resume_and_exact_units_and_same_target_zero_writes():
-    sync, factory, client, calls, mod = setup(1)
+def test_two_components_resume_and_exact_units_and_same_target_zero_writes(new_pg_factory):
+    sync, factory, client, calls, mod = setup(new_pg_factory, 1)
     with client:
         assert sync.preflight(NOW)['pendingCount'] == 18 and calls == []
         for count in range(18):
@@ -96,15 +97,15 @@ def test_two_components_resume_and_exact_units_and_same_target_zero_writes():
     ('fund_daily',response('fund_daily',value=-1)),
     ('fund_share',TushareResponse(fields=FIELDS['fund_share'],items=((CODE,'20261016',1),)*2)),
 ])
-def test_invalid_component_never_gets_success_checkpoint(api,bad):
-    sync, factory, _, _, mod = setup()
+def test_invalid_component_never_gets_success_checkpoint(new_pg_factory, api,bad):
+    sync, factory, _, _, mod = setup(new_pg_factory)
     repo = mod.EtfRepository(factory)
     assert repo.persist(CODE,DAY,api,sync.fingerprint,bad,NOW) == 'ETF_RESPONSE_REJECTED'
     assert repo.component(CODE,DAY,api,sync.fingerprint,NOW) is None
 
 
-def test_legal_missing_is_distinct_and_zero_turnover_is_real():
-    sync, factory, _, _, mod = setup()
+def test_legal_missing_is_distinct_and_zero_turnover_is_real(new_pg_factory):
+    sync, factory, _, _, mod = setup(new_pg_factory)
     repo=mod.EtfRepository(factory)
     assert repo.persist(CODE,DAY,'fund_share',sync.fingerprint,TushareResponse(fields=FIELDS['fund_share'],items=()),NOW) == 'ETF_SOURCE_NOT_AVAILABLE'
     assert repo.persist(CODE,DAY,'fund_daily',sync.fingerprint,response('fund_daily',value=0),NOW) is None
@@ -112,8 +113,8 @@ def test_legal_missing_is_distinct_and_zero_turnover_is_real():
 
 
 @pytest.mark.parametrize('damage',['hash','cursor_bool','batch','future','past_capture','cursor_capture','batch_capture','core','core_raw','request'])
-def test_corrupt_lineage_or_quote_cannot_be_published(damage):
-    sync,factory,client,_,mod=setup()
+def test_corrupt_lineage_or_quote_cannot_be_published(new_pg_factory, damage):
+    sync,factory,client,_,mod=setup(new_pg_factory)
     with client: assert sync.run(NOW)['status']=='completed'
     with factory.begin() as session:
         cursor=session.scalar(select(JobCursor).where(JobCursor.job_name==mod.JOB_NAME))
@@ -137,8 +138,8 @@ def test_corrupt_lineage_or_quote_cannot_be_published(damage):
     with factory() as session: assert mod.tiles(session,sync.catalog,DAY,NOW)==[]
 
 
-def test_budget_option_change_keeps_checkpoint_and_quote_identity():
-    sync,_,client,calls,_=setup(1)
+def test_budget_option_change_keeps_checkpoint_and_quote_identity(new_pg_factory):
+    sync,_,client,calls,_=setup(new_pg_factory, 1)
     with client: sync.run(NOW)
     changed=sync.catalog.model_copy(update={'etf_heatmap':sync.catalog.etf_heatmap.model_copy(update={'max_requests_per_run':20,'timeout_seconds':30})})
     other=type(sync)(sync.factory,client,POOL,changed,sync.lock)
@@ -146,8 +147,8 @@ def test_budget_option_change_keeps_checkpoint_and_quote_identity():
     assert other.preflight(NOW)['pendingCount']==17 and len(calls)==1
 
 
-def test_permission_stops_once_and_locks_block_without_http():
-    sync,_,client,calls,_=setup(handler=lambda _:httpx.Response(403))
+def test_permission_stops_once_and_locks_block_without_http(new_pg_factory):
+    sync,_,client,calls,_=setup(new_pg_factory, handler=lambda _:httpx.Response(403))
     with client:
         report=sync.run(NOW)
         assert report['status']=='failed' and report['requestCount']==1 and len(calls)==1
@@ -157,8 +158,8 @@ def test_permission_stops_once_and_locks_block_without_http():
         assert len(calls)==1
 
 
-def test_recheck_error_keeps_real_http_and_completed_checkpoints(monkeypatch):
-    sync,_,client,calls,_=setup()
+def test_recheck_error_keeps_real_http_and_completed_checkpoints(new_pg_factory, monkeypatch):
+    sync,_,client,calls,_=setup(new_pg_factory)
     original=sync.preflight
     count=0
     def preflight(now):
@@ -175,8 +176,8 @@ def test_recheck_error_keeps_real_http_and_completed_checkpoints(monkeypatch):
     assert sync.preflight(NOW)['pendingCount']==0
 
 
-def test_unlock_error_keeps_http_and_releases_every_lock():
-    sync,_,client,calls,_=setup()
+def test_unlock_error_keeps_http_and_releases_every_lock(new_pg_factory):
+    sync,_,client,calls,_=setup(new_pg_factory)
     release=sync.lock.release
     released=[]
     def fail(key):
@@ -190,14 +191,14 @@ def test_unlock_error_keeps_http_and_releases_every_lock():
     assert released==['sync-market-data','sync-stock-data:representative-50','sync-etf-heatmap']
 
 
-def test_no_etf_checkpoints_keeps_unmigrated_ordinary_builder_read_compatible():
-    sync,factory,_,_,mod=setup()
+def test_no_etf_checkpoints_keeps_unmigrated_ordinary_builder_read_compatible(new_pg_factory):
+    sync,factory,_,_,mod=setup(new_pg_factory)
     MarketDailyQuote.__table__.drop(factory.kw['bind'])
     with factory() as session: assert mod.tiles(session,sync.catalog,DAY,NOW)==[]
 
 
-def test_legitimate_core_revision_recollects_only_conflicting_daily_not_shares():
-    sync,factory,client,calls,mod=setup()
+def test_legitimate_core_revision_recollects_only_conflicting_daily_not_shares(new_pg_factory):
+    sync,factory,client,calls,mod=setup(new_pg_factory)
     with client: assert sync.run(NOW)['status']=='completed'
     target=next(t for t in plan_market_targets(sync.catalog,NOW) if t.asset.asset_code==CODE)
     quote=TushareResponse(fields=QUOTE_FIELDS,items=((CODE,'20261016',4.236,4.236,4.236,4.236,4.242,-0.15),))

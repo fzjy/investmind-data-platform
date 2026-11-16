@@ -3,11 +3,8 @@ from datetime import date
 from decimal import Decimal
 
 import pytest
-from sqlalchemy import create_engine, event
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
+from sqlalchemy import event
 
-from app.db.base import Base, DerivedBase, ExternalBase, MartBase
 from app.db.models import DailyBasic, DailyPrice, MetricValue, RiskResult, Security
 from app.stocks.derived.inputs import CoreSnapshot, SecurityFormulaInputs
 from app.stocks.marts.stocks import ScreenerMartBuilder
@@ -226,17 +223,9 @@ def test_screener_validator_reports_missing_and_invalid_nested_fields() -> None:
     assert "stocks[0].inventoryRisk" in errors
 
 
-def test_screener_prefetches_derived_rows_for_all_securities() -> None:
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:",
-        poolclass=StaticPool,
-        execution_options={"schema_translate_map": {name: None for name in ("raw", "core", "ops", "derived", "mart")}},
-    )
-    Base.metadata.create_all(engine)
-    DerivedBase.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
-    factory = sessionmaker(engine, expire_on_commit=False)
+def test_screener_prefetches_derived_rows_for_all_securities(pg_factory) -> None:
+    factory = pg_factory
+    engine = factory.kw["bind"]
     second = Security(
         ts_code="000001.SZ",
         symbol="000001",
@@ -258,6 +247,8 @@ def test_screener_prefetches_derived_rows_for_all_securities() -> None:
         ),
     )
     with factory.begin() as session:
+        session.add_all(snapshot.securities)
+        session.flush()
         session.add_all(
             [
                 MetricValue(
@@ -385,16 +376,16 @@ def test_new_list_contract_accepts_legacy_rows_rejects_bad_order_status_and_reas
     del original['stocks'][0]['listRisks'], original['stocks'][0]['listMissingReasons']
     assert validate_product_payload('screener', original) == ()
 
-def test_valuation_window_requires_listing_age_calendar_and_all_expected_observations():
+def test_valuation_window_requires_listing_age_calendar_and_all_expected_observations(pg_factory):
     from types import SimpleNamespace
     from app.db.models import TradeCalendar
     from app.stocks.marts.screener_list import valuation_windows
-    from backend.tests.derived.test_inputs import _factory
+
     start, end = date(2026,8,24), date(2026,8,25)
     code = '600519.SH'
     item = SimpleNamespace(exchange='SSE', list_date=date(2001,8,27))
     source = {'start':start.isoformat(),'valuations':[[end.isoformat(),10,2]]}
-    with _factory().begin() as s:
+    with pg_factory.begin() as s:
         def check():
             valuation_windows(s, {code:item}, {code:source}, end)
             return source['listWindowGap']
@@ -406,7 +397,7 @@ def test_valuation_window_requires_listing_age_calendar_and_all_expected_observa
         item.list_date = end
         assert '上市未满' in check()
 
-def test_ten_year_percentiles_keep_unconflicted_metric_and_reject_closed_day(monkeypatch):
+def test_ten_year_percentiles_keep_unconflicted_metric_and_reject_closed_day(pg_factory, monkeypatch):
     from datetime import timedelta
     from types import SimpleNamespace
     from sqlalchemy import insert
@@ -414,7 +405,7 @@ def test_ten_year_percentiles_keep_unconflicted_metric_and_reject_closed_day(mon
     from app.stocks.derived.risk_inputs import load_risk_inputs
     from app.stocks.marts.screener_list import list_projection, valuation_windows
     from app.stocks import valuation_supply
-    from backend.tests.derived.test_inputs import _factory
+
 
     start, end = date(2016, 8, 25), date(2026, 8, 25)
     code = '600519.SH'
@@ -428,7 +419,9 @@ def test_ten_year_percentiles_keep_unconflicted_metric_and_reject_closed_day(mon
     def history(_session, _codes, _as_of):
         return {code:{'start':start.isoformat(), 'end':end.isoformat(), 'rows':raw}}
     monkeypatch.setattr(valuation_supply, 'risk_valuation_history', history)
-    with _factory().begin() as session:
+    with pg_factory.begin() as session:
+        session.add(Security(ts_code=code, symbol=code[:6], name=code))
+        session.flush()
         session.execute(insert(TradeCalendar), [
             {'exchange':'SSE', 'cal_date':d, 'is_open':opened} for d, opened in calendar.items()])
         session.add(DailyBasic(ts_code=code, trade_date=start, pe=11, pb=2))
@@ -460,16 +453,18 @@ def test_partial_year_publishes_known_paid_subtotal_without_complete_annual_amou
     assert year['cashAmount'] is None and year['payoutRatio'] is None
     assert result['researchValues']['payoutRatio'] is None
 
-def test_suspension_requires_individual_trading_evidence_for_valuation_window():
+def test_suspension_requires_individual_trading_evidence_for_valuation_window(pg_factory):
     from types import SimpleNamespace
     from app.db.models import Suspension, TradeCalendar
     from app.stocks.marts.screener_list import valuation_windows
-    from backend.tests.derived.test_inputs import _factory
+
     code = '600519.SH'
     first, last = date(2026,8,24), date(2026,8,25)
     history = {'start':first.isoformat(),'valuations':[[last.isoformat(),10,2]]}
     security = SimpleNamespace(exchange='SSE', list_date=date(2001,8,27))
-    with _factory().begin() as session:
+    with pg_factory.begin() as session:
+        session.add(Security(ts_code=code, symbol=code[:6], name=code))
+        session.flush()
         def check():
             valuation_windows(session, {code:security}, {code:history}, last)
             return history['listWindowGap']

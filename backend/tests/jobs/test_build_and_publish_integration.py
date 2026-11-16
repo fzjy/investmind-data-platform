@@ -2,11 +2,9 @@ from datetime import date, datetime, timezone
 from decimal import Decimal
 
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine, func, select
+from sqlalchemy import func, select
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
 
-from app.db.base import Base, DerivedBase, ExternalBase, MartBase
 from app.db.models import (
     BalanceSheet,
     CashflowStatement,
@@ -34,44 +32,26 @@ from app.marts.dto import validate_product_payload
 from backend.tests.test_screener import default_request
 
 
-def _factory() -> sessionmaker:
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:",
-        poolclass=StaticPool,
-        connect_args={"check_same_thread": False},
-        execution_options={
-            "schema_translate_map": {
-                "raw": None,
-                "core": None,
-                "ops": None,
-                "derived": None,
-                "mart": None,
-            }
-        },
-    )
-    Base.metadata.create_all(engine)
-    DerivedBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
-    return sessionmaker(engine, expire_on_commit=False)
 
 
-def _seed_complete_core_sample(factory: sessionmaker) -> None:
+def _seed_complete_core_sample(factory: sessionmaker, *, ts_code="600519.SH", name="贵州茅台", board=None) -> None:
     with factory.begin() as session:
         session.add(
             Security(
-                ts_code="600519.SH",
-                symbol="600519",
-                name="贵州茅台",
+                ts_code=ts_code,
+                symbol=ts_code[:6],
+                name=name,
+                board=board,
                 exchange="SSE",
                 status="L",
                 list_date=date(2001, 8, 27),
                 data={"industry": "食品饮料", "region": "贵州"},
             )
         )
+        session.flush()
         session.add(
             DailyPrice(
-                ts_code="600519.SH",
+                ts_code=ts_code,
                 trade_date=date(2026, 8, 24),
                 open=Decimal("1490"),
                 high=Decimal("1510"),
@@ -84,7 +64,7 @@ def _seed_complete_core_sample(factory: sessionmaker) -> None:
         )
         session.add(
             DailyBasic(
-                ts_code="600519.SH",
+                ts_code=ts_code,
                 trade_date=date(2026, 8, 24),
                 pe=Decimal("20"),
                 pb=Decimal("5"),
@@ -99,7 +79,7 @@ def _seed_complete_core_sample(factory: sessionmaker) -> None:
         session.add_all(
             [
                 IncomeStatement(
-                    ts_code="600519.SH",
+                    ts_code=ts_code,
                     end_date=date(2025, 9, 30),
                     ann_date=date(2025, 10, 20),
                     report_type="1",
@@ -111,7 +91,7 @@ def _seed_complete_core_sample(factory: sessionmaker) -> None:
                     },
                 ),
                 IncomeStatement(
-                    ts_code="600519.SH",
+                    ts_code=ts_code,
                     end_date=date(2024, 12, 31),
                     ann_date=date(2025, 3, 20),
                     report_type="1",
@@ -123,7 +103,7 @@ def _seed_complete_core_sample(factory: sessionmaker) -> None:
                     },
                 ),
                 IncomeStatement(
-                    ts_code="600519.SH",
+                    ts_code=ts_code,
                     end_date=date(2024, 9, 30),
                     ann_date=date(2024, 10, 20),
                     report_type="1",
@@ -135,7 +115,7 @@ def _seed_complete_core_sample(factory: sessionmaker) -> None:
                     },
                 ),
                 BalanceSheet(
-                    ts_code="600519.SH",
+                    ts_code=ts_code,
                     end_date=date(2025, 12, 31),
                     ann_date=date(2026, 2, 20),
                     report_type="1",
@@ -150,28 +130,28 @@ def _seed_complete_core_sample(factory: sessionmaker) -> None:
                     },
                 ),
                 CashflowStatement(
-                    ts_code="600519.SH",
+                    ts_code=ts_code,
                     end_date=date(2025, 9, 30),
                     ann_date=date(2025, 10, 20),
                     report_type="1",
                     data={"n_cashflow_act": 30, "c_pay_acq_const_fiolta": 5},
                 ),
                 CashflowStatement(
-                    ts_code="600519.SH",
+                    ts_code=ts_code,
                     end_date=date(2024, 12, 31),
                     ann_date=date(2025, 3, 20),
                     report_type="1",
                     data={"n_cashflow_act": 100, "c_pay_acq_const_fiolta": 15},
                 ),
                 CashflowStatement(
-                    ts_code="600519.SH",
+                    ts_code=ts_code,
                     end_date=date(2024, 9, 30),
                     ann_date=date(2024, 10, 20),
                     report_type="1",
                     data={"n_cashflow_act": 20, "c_pay_acq_const_fiolta": 4},
                 ),
                 FinancialIndicator(
-                    ts_code="600519.SH",
+                    ts_code=ts_code,
                     end_date=date(2025, 12, 31),
                     ann_date=date(2026, 2, 20),
                     report_type="1",
@@ -190,17 +170,20 @@ def _seed_complete_core_sample(factory: sessionmaker) -> None:
 
 def _seed_second_security(factory: sessionmaker) -> None:
     with factory.begin() as session:
+        session.add(
+            Security(
+                ts_code="000001.SZ",
+                symbol="000001",
+                name="平安银行",
+                exchange="SZSE",
+                status="L",
+                list_date=date(1991, 4, 3),
+                data={"industry": "银行", "region": "深圳"},
+            )
+        )
+        session.flush()
         session.add_all(
             (
-                Security(
-                    ts_code="000001.SZ",
-                    symbol="000001",
-                    name="平安银行",
-                    exchange="SZSE",
-                    status="L",
-                    list_date=date(1991, 4, 3),
-                    data={"industry": "银行", "region": "深圳"},
-                ),
                 DailyPrice(
                     ts_code="000001.SZ",
                     trade_date=date(2026, 8, 24),
@@ -248,8 +231,8 @@ def _real_build_and_publish_job(
     )
 
 
-def test_securities_without_macro_rows_publish_and_macro_api_stays_unpublished(monkeypatch) -> None:
-    factory = _factory()
+def test_securities_without_macro_rows_publish_and_macro_api_stays_unpublished(pg_factory, monkeypatch) -> None:
+    factory = pg_factory
     _seed_complete_core_sample(factory)
     # 股东投影以已发布证券池为输入；先建立稳定范围，避免首轮发布本身改变下一轮输入。
     with factory.begin() as session:
@@ -288,13 +271,8 @@ def test_securities_without_macro_rows_publish_and_macro_api_stays_unpublished(m
         "settings",
         Settings(
             data_backend="database",
-            database_url="sqlite+pysqlite:///:memory:",
+            database_url=factory.kw["bind"].url.render_as_string(hide_password=False),
         ),
-    )
-    monkeypatch.setattr(
-        main_module,
-        "create_engine",
-        lambda *_args, **_kwargs: factory.kw["bind"],
     )
     client = TestClient(main_module.create_app())
     responses = {
@@ -332,8 +310,8 @@ def test_securities_without_macro_rows_publish_and_macro_api_stays_unpublished(m
     assert workbench["financial"]["statements"]["tables"]
 
 
-def test_full_build_reads_macro_state_metadata() -> None:
-    factory = _factory()
+def test_full_build_reads_macro_state_metadata(pg_factory) -> None:
+    factory = pg_factory
     _seed_complete_core_sample(factory)
     with factory.begin() as session:
         session.add(MacroSeriesState(
@@ -351,9 +329,9 @@ def test_full_build_reads_macro_state_metadata() -> None:
     assert status["lastCheckedAt"] == "2026-08-23T00:00:00+00:00"
 
 
-def test_full_build_blocks_empty_macro_and_still_bootstraps_securities() -> None:
+def test_full_build_blocks_empty_macro_and_still_bootstraps_securities(pg_factory) -> None:
     from app.bootstrap import SnapshotReadinessChecker
-    factory = _factory()
+    factory = pg_factory
     _seed_complete_core_sample(factory)
     report = _real_build_and_publish_job(factory).run(BuildAndPublishOptions(date(2026, 8, 24), ("600519.SH",)))
     assert report.status == "completed"
@@ -365,8 +343,8 @@ def test_full_build_blocks_empty_macro_and_still_bootstraps_securities() -> None
     assert any(result.name == "macro-coverage-at-least-80" and not result.passed for result in report.quality)
 
 
-def test_full_build_preserves_old_macro_when_new_candidate_fails_quality() -> None:
-    factory = _factory()
+def test_full_build_preserves_old_macro_when_new_candidate_fails_quality(pg_factory) -> None:
+    factory = pg_factory
     _seed_complete_core_sample(factory)
     old_as_of = datetime(2026, 8, 23, tzinfo=timezone.utc)
     from app.marts.contracts import MartCandidate
@@ -379,8 +357,8 @@ def test_full_build_preserves_old_macro_when_new_candidate_fails_quality() -> No
         assert session.get(PublishedSnapshot, "market-overview").version != "old-macro"
 
 
-def test_build_without_symbol_scope_publishes_all_active_workbenches() -> None:
-    factory = _factory()
+def test_build_without_symbol_scope_publishes_all_active_workbenches(pg_factory) -> None:
+    factory = pg_factory
     _seed_complete_core_sample(factory)
 
     report = _real_build_and_publish_job(factory).run(
@@ -393,8 +371,8 @@ def test_build_without_symbol_scope_publishes_all_active_workbenches() -> None:
         assert session.get(PublishedSnapshot, "stock-workbench:600519.SH") is not None
 
 
-def test_explicit_empty_workbench_scope_builds_only_global_products() -> None:
-    factory = _factory()
+def test_explicit_empty_workbench_scope_builds_only_global_products(pg_factory) -> None:
+    factory = pg_factory
     _seed_complete_core_sample(factory)
     quality = RecordingQualityGate()
 
@@ -415,8 +393,8 @@ def test_explicit_empty_workbench_scope_builds_only_global_products() -> None:
     assert quality.contexts[0].requested_workbenches == ()
 
 
-def test_explicit_workbench_scope_keeps_global_snapshot_full_market() -> None:
-    factory = _factory()
+def test_explicit_workbench_scope_keeps_global_snapshot_full_market(pg_factory) -> None:
+    factory = pg_factory
     _seed_complete_core_sample(factory)
     _seed_second_security(factory)
     quality = RecordingQualityGate()

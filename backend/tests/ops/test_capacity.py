@@ -67,7 +67,7 @@ def test_budget_failure_and_unconfigured_recommendations_are_distinct():
 
 def test_status_rejects_non_postgres_without_connecting():
     with pytest.raises(capacity().CapacityError, match="capacity_postgres_required"):
-        capacity().capacity_status(SimpleNamespace(database_read_url="sqlite:///unused", database_url=None))
+        capacity().capacity_status(SimpleNamespace(database_read_url="mysql://controlled.invalid/unused", database_url=None))
 
 
 @pytest.mark.parametrize("command", ["capacity-status", "capacity-benchmark"])

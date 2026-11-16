@@ -8,14 +8,14 @@ from app.stocks.marts.risk_rebuild import rebuild_workbench_risks
 from backend.tests.jobs.test_metric_card_publication import DAY, PRODUCT, SYMBOL, prepared
 
 
-def test_valuation_rechecks_same_day_revisions_and_missing_incremental_trading_days(monkeypatch):
+def test_valuation_rechecks_same_day_revisions_and_missing_incremental_trading_days(new_pg_factory, monkeypatch):
     from datetime import timedelta
 
     from app.db.models import DailyBasic, DailyPrice
     from app.stocks.derived.risk_inputs import load_risk_inputs
     from app.stocks.derived.workbench_risks import calculate_risks
 
-    factory = prepared()
+    factory = prepared(new_pg_factory)
     history = {SYMBOL: dict(start="2016-08-24", end=DAY.isoformat(), rows={DAY.isoformat(): [20, 5]})}
     monkeypatch.setattr("app.stocks.valuation_supply.risk_valuation_history", lambda *args: history)
     def valuation(session, day):
@@ -38,8 +38,8 @@ def test_valuation_rechecks_same_day_revisions_and_missing_incremental_trading_d
         assert valuation(s, tomorrow)["status"] != "unknown"
 
 
-def test_rebuild_replaces_obsolete_results_and_scrubs_both_history_tables():
-    factory = prepared()
+def test_rebuild_replaces_obsolete_results_and_scrubs_both_history_tables(new_pg_factory):
+    factory = prepared(new_pg_factory)
     with factory.begin() as s:
         parent = s.get(PublishedSnapshot, PRODUCT)
         initial = deepcopy(parent.payload)
@@ -66,12 +66,12 @@ def test_rebuild_replaces_obsolete_results_and_scrubs_both_history_tables():
     assert repeat["currentSets"] == repeat["replacedRows"] == repeat["pageHistory"] == repeat["workbenchHistory"] == 0
 
 
-def test_explicit_history_and_fallback_discard_legacy_risk_payload():
+def test_explicit_history_and_fallback_discard_legacy_risk_payload(new_pg_factory):
     from app.shared.repository import SnapshotRepository
     from app.stocks.database_provider import StocksDatabaseProvider
     from app.stocks.normalizer import normalize_workbench
 
-    factory = prepared()
+    factory = prepared(new_pg_factory)
     with factory.begin() as s:
         pointer = s.get(PublishedSnapshot, PRODUCT)
         version, quote = pointer.version, pointer.payload["quote"]
@@ -88,12 +88,12 @@ def test_explicit_history_and_fallback_discard_legacy_risk_payload():
         assert payload["risks"] == dict(historical=True, level="风险清单仅提供最新结果", score=None, groups=[])
 
 
-def test_source_revision_cannot_publish_stale_risk_details():
+def test_source_revision_cannot_publish_stale_risk_details(new_pg_factory):
     from datetime import date
     from app.marts.contracts import MartCandidate
     from app.marts.publication import PublicationBaseChanged, SnapshotPublisher
     from app.stocks.marts.risk_cards import project_risks
-    factory = prepared()
+    factory = prepared(new_pg_factory)
     with factory() as s:
         parent = s.get(PublishedSnapshot, PRODUCT)
         pending = project_risks(s, [MartCandidate(PRODUCT, parent.as_of, parent.payload,
@@ -110,11 +110,11 @@ def test_source_revision_cannot_publish_stale_risk_details():
         assert row.status == "risk" and row.inputs["reportDate"] == "2025-12-31"
 
 
-def test_announcement_only_release_persists_risk_version_and_rollback_is_atomic(monkeypatch):
+def test_announcement_only_release_persists_risk_version_and_rollback_is_atomic(new_pg_factory, monkeypatch):
     from app.marts.contracts import MartCandidate
     from app.marts.publication import SnapshotPublisher
     from app.stocks.marts.risk_cards import project_overlay_risks
-    factory = prepared()
+    factory = prepared(new_pg_factory)
     with factory() as s:
         parent = s.get(PublishedSnapshot, PRODUCT)
         versions = {PRODUCT: parent.version}

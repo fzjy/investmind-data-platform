@@ -3,11 +3,12 @@ from datetime import datetime, timedelta
 from decimal import Decimal
 
 import pytest
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy import func, select
 
 from app.connectors.tushare.contracts import TushareResponse
 from app.db.models import DailyPrice, IngestionBatch, JobCursor, RejectedRecord, Security, SourcePayload
-from backend.tests.jobs.test_build_and_publish_integration import _factory
+
 from backend.tests.market_data.test_normalization import FIELDS, target
 
 NOW = datetime.fromisoformat('2026-10-15T15:13:00+00:00')
@@ -18,9 +19,9 @@ def module():
     return importlib.import_module('app.market.data.repository')
 
 
-def setup():
+def setup(new_pg_factory):
     value = module()
-    factory = _factory()
+    factory = new_pg_factory()
     return value, factory, value.MarketQuoteRepository(factory)
 
 
@@ -28,8 +29,8 @@ def response(close=100, *, day='20261015', code='000001.SH'):
     return TushareResponse(fields=FIELDS, items=((code, day, close, close, close, close, 100, close - 100),))
 
 
-def test_valid_asset_commit_includes_raw_core_and_cursor():
-    value, factory, repo = setup()
+def test_valid_asset_commit_includes_raw_core_and_cursor(new_pg_factory):
+    value, factory, repo = setup(new_pg_factory)
     assert repo.is_complete(target(), checked_at=NOW) is False
     result = repo.persist(target(), response(), captured_at=NOW)
     assert result['status'] == 'completed' and result['retainedCount'] == 1
@@ -45,8 +46,8 @@ def test_valid_asset_commit_includes_raw_core_and_cursor():
         assert session.scalar(select(func.count()).select_from(DailyPrice)) == 0
 
 
-def test_identical_content_keeps_core_lineage_but_revision_preserves_old_raw():
-    value, factory, repo = setup()
+def test_identical_content_keeps_core_lineage_but_revision_preserves_old_raw(new_pg_factory):
+    value, factory, repo = setup(new_pg_factory)
     repo.persist(target(), response(), captured_at=NOW)
     first = repo.latest(target(), checked_at=NOW)
     repo.persist(target(), response(), captured_at=NOW + timedelta(seconds=1))
@@ -60,8 +61,8 @@ def test_identical_content_keeps_core_lineage_but_revision_preserves_old_raw():
         assert session.get(SourcePayload, first.source_payload_id) is not None
 
 
-def test_rejected_window_preserves_raw_but_not_success_cursor():
-    value, factory, repo = setup()
+def test_rejected_window_preserves_raw_but_not_success_cursor(new_pg_factory):
+    value, factory, repo = setup(new_pg_factory)
     result = repo.persist(target(), response(code='000001.SZ'), captured_at=NOW)
     assert result['status'] == 'rejected'
     with factory() as session:
@@ -72,8 +73,8 @@ def test_rejected_window_preserves_raw_but_not_success_cursor():
 
 
 @pytest.mark.parametrize('damage', ['missing_core', 'illegal_core', 'changed_core', 'raw_mismatch', 'raw_hash', 'missing_raw'])
-def test_success_cursor_with_missing_or_corrupt_core_is_not_complete(damage):
-    value, factory, repo = setup()
+def test_success_cursor_with_missing_or_corrupt_core_is_not_complete(new_pg_factory, damage):
+    value, factory, repo = setup(new_pg_factory)
     repo.persist(target(), response(), captured_at=NOW)
     with factory.begin() as session:
         quote = session.scalar(select(value.MarketDailyQuote))
@@ -90,12 +91,17 @@ def test_success_cursor_with_missing_or_corrupt_core_is_not_complete(damage):
         elif damage == 'raw_hash':
             raw.content_hash = '0' * 64
         else:
+            with pytest.raises(IntegrityError), session.begin_nested():
+                session.delete(raw)
+                session.flush()
+            session.delete(quote)
+            session.flush()
             session.delete(raw)
     assert repo.is_complete(target(), checked_at=NOW) is False
 
 
-def test_future_capture_is_not_visible_and_rejection_preserves_success():
-    value, factory, repo = setup()
+def test_future_capture_is_not_visible_and_rejection_preserves_success(new_pg_factory):
+    value, factory, repo = setup(new_pg_factory)
     repo.persist(target(), response(), captured_at=NOW)
     assert repo.is_complete(target(), checked_at=NOW - timedelta(seconds=1)) is False
     with factory() as session:
@@ -106,15 +112,15 @@ def test_future_capture_is_not_visible_and_rejection_preserves_success():
         assert session.scalar(select(JobCursor)).cursor_value == original
 
 
-def test_missing_migration_is_safe_without_auto_create():
-    value, factory, repo = setup()
+def test_missing_migration_is_safe_without_auto_create(new_pg_factory):
+    value, factory, repo = setup(new_pg_factory)
     value.MarketDailyQuote.__table__.drop(factory.kw['bind'])
     with pytest.raises(ValueError, match='MARKET_MIGRATION_REQUIRED'):
         repo.is_complete(target(), checked_at=NOW)
 
 
-def test_duplicate_identical_raw_rows_remain_replayable_complete_proof():
-    _, _, repo = setup()
+def test_duplicate_identical_raw_rows_remain_replayable_complete_proof(new_pg_factory):
+    _, _, repo = setup(new_pg_factory)
     original = response()
     duplicate = TushareResponse(fields=original.fields, items=original.items * 2)
     assert repo.persist(target(), duplicate, captured_at=NOW)['status'] == 'completed'

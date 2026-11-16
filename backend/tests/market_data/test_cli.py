@@ -12,10 +12,10 @@ from backend.tests.market_data.test_sync import job
 from backend.tests.marts.test_content_runtime import prepare, state
 
 
-def runtime(monkeypatch, *, seeded=False):
+def runtime(new_pg_factory, monkeypatch, *, seeded=False):
     assert importlib.util.find_spec('app.market.data.runtime') is not None, 'market runtime missing'
     module = importlib.import_module('app.market.data.runtime')
-    _, factory, _ = setup()
+    _, factory, _ = setup(new_pg_factory)
     prepare(factory)
     if seeded:
         sync, client, _ = job(factory)
@@ -32,25 +32,25 @@ def runtime(monkeypatch, *, seeded=False):
     return module, factory
 
 
-def test_publish_with_dry_run_is_read_only(monkeypatch):
-    module, factory = runtime(monkeypatch)
+def test_publish_with_dry_run_is_read_only(new_pg_factory, monkeypatch):
+    module, factory = runtime(new_pg_factory, monkeypatch)
     before = state(factory)
     def forbidden(*args, **kwargs):
         raise AssertionError('client must not be created')
     monkeypatch.setattr(module, 'TushareClient', forbidden)
-    report = module.run_market_update(Settings(data_backend='database', database_url='sqlite:///controlled'),
+    report = module.run_market_update(Settings(data_backend='database', database_url='postgresql+psycopg://controlled.invalid/test'),
         now=NOW, dry_run=True, publish=True)
     assert report['status'] == 'planned' and report['requestCount'] == 0
     assert state(factory) == before
 
 
-def test_missing_token_with_valid_completed_cache_needs_no_client(monkeypatch):
-    module, factory = runtime(monkeypatch, seeded=True)
+def test_missing_token_with_valid_completed_cache_needs_no_client(new_pg_factory, monkeypatch):
+    module, factory = runtime(new_pg_factory, monkeypatch, seeded=True)
     def forbidden(*args, **kwargs):
         raise AssertionError('client must not be created')
     monkeypatch.setattr(module, 'TushareClient', forbidden)
     before = state(factory)
-    settings = Settings(data_backend='database', database_url='sqlite:///controlled')
+    settings = Settings(data_backend='database', database_url='postgresql+psycopg://controlled.invalid/test')
     collected = module.run_market_update(settings, now=NOW)
     assert collected['status'] == 'completed' and collected['requestCount'] == 0
     assert state(factory) == before
@@ -58,15 +58,15 @@ def test_missing_token_with_valid_completed_cache_needs_no_client(monkeypatch):
     assert published['publication']['status'] == 'completed' and published['requestCount'] == 0
 
 
-def test_pending_without_token_is_configuration_error(monkeypatch):
-    module, _ = runtime(monkeypatch)
-    report = module.run_market_update(Settings(data_backend='database', database_url='sqlite:///controlled'), now=NOW)
+def test_pending_without_token_is_configuration_error(new_pg_factory, monkeypatch):
+    module, _ = runtime(new_pg_factory, monkeypatch)
+    report = module.run_market_update(Settings(data_backend='database', database_url='postgresql+psycopg://controlled.invalid/test'), now=NOW)
     assert report['status'] == 'configuration_error' and report['code'] == 'MARKET_CREDENTIAL_REQUIRED'
     assert report['requestCount'] == 0
 
 
-def test_invalid_config_fails_before_connection_or_client(monkeypatch):
-    module, _ = runtime(monkeypatch)
+def test_invalid_config_fails_before_connection_or_client(new_pg_factory, monkeypatch):
+    module, _ = runtime(new_pg_factory, monkeypatch)
     def invalid():
         raise ValueError('secret-config-value')
     def forbidden(*args, **kwargs):
@@ -74,12 +74,12 @@ def test_invalid_config_fails_before_connection_or_client(monkeypatch):
     monkeypatch.setattr(module.MarketDataCatalog, 'load', invalid)
     monkeypatch.setattr(module, 'create_engine_and_session', forbidden)
     monkeypatch.setattr(module, 'open_readonly_factory', forbidden)
-    report = module.run_market_update(Settings(data_backend='database', database_url='sqlite:///controlled'), now=NOW)
+    report = module.run_market_update(Settings(data_backend='database', database_url='postgresql+psycopg://controlled.invalid/test'), now=NOW)
     assert report['status'] == 'configuration_error' and 'secret-config-value' not in str(report)
 
 
-def test_fixture_is_rejected_and_cli_is_registered(monkeypatch):
-    module, _ = runtime(monkeypatch)
+def test_fixture_is_rejected_and_cli_is_registered(new_pg_factory, monkeypatch):
+    module, _ = runtime(new_pg_factory, monkeypatch)
     assert_fixture_configuration_rejected(monkeypatch)
     assert module.run_market_update(Settings(database_url=None, database_read_url=None), now=NOW)['status'] == 'configuration_error'
     monkeypatch.setattr(Settings, 'from_env', lambda: Settings(database_url=None, database_read_url=None))
@@ -89,12 +89,12 @@ def test_fixture_is_rejected_and_cli_is_registered(monkeypatch):
     assert CliRunner().invoke(app, ['sync-market-data', '--help']).exit_code == 0
 
 
-def test_unknown_secret_argument_and_database_errors_are_redacted(monkeypatch):
-    module, _ = runtime(monkeypatch)
+def test_unknown_secret_argument_and_database_errors_are_redacted(new_pg_factory, monkeypatch):
+    module, _ = runtime(new_pg_factory, monkeypatch)
     def fail(*args, **kwargs):
         raise RuntimeError('postgresql://private-user:secret-pass@private-host/database')
     monkeypatch.setattr(module, 'create_engine_and_session', fail)
-    report = module.run_market_update(Settings(data_backend='database', database_url='sqlite:///controlled', tushare_token='secret-pass'), now=NOW)
+    report = module.run_market_update(Settings(data_backend='database', database_url='postgresql+psycopg://controlled.invalid/test', tushare_token='secret-pass'), now=NOW)
     assert report['status'] == 'failed'
     assert all(secret not in str(report) for secret in ('private-user','secret-pass','private-host'))
     result = CliRunner().invoke(app, ['sync-market-data', '--token', 'secret-pass'])

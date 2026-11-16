@@ -16,7 +16,7 @@ def module():
 
 
 def settings(**changes):
-    return Settings(data_backend='database', database_url='sqlite://', **changes)
+    return Settings(data_backend='database', database_url='postgresql+psycopg://controlled.invalid/test', **changes)
 
 
 def setup_steps(monkeypatch, stocks=None, macro=None):
@@ -126,11 +126,11 @@ def test_interrupt_is_not_swallowed(monkeypatch):
     assert calls == []
 
 
-def test_real_stock_preflight_does_not_create_http_job_or_cursor(monkeypatch):
+def test_real_stock_preflight_does_not_create_http_job_or_cursor(new_pg_factory, monkeypatch):
     from sqlalchemy import select, func
     from app.db.models import JobRun, JobCursor
     m = module()
-    job, client, calls = task()
+    job, client, calls = task(new_pg_factory)
     engine = job.factory.kw['bind']
     monkeypatch.setattr(engine, 'dispose', lambda: None)
     monkeypatch.setattr(stock_runtime, 'create_engine_and_session', lambda url: (engine, job.factory))
@@ -153,10 +153,10 @@ def test_real_stock_preflight_does_not_create_http_job_or_cursor(monkeypatch):
         client.close()
 
 
-def real_runtime(monkeypatch, *, market_ready):
+def real_runtime(new_pg_factory, monkeypatch, *, market_ready):
     from app.connectors.tushare.client import TushareClient
     m = module()
-    job, client, calls = task(market_ready=market_ready)
+    job, client, calls = task(new_pg_factory, market_ready=market_ready)
     engine = job.factory.kw['bind']
     transport = client._client._transport  # external boundary only; DB/cursor/job stay real
     monkeypatch.setattr(engine, 'dispose', lambda: None)
@@ -165,9 +165,9 @@ def real_runtime(monkeypatch, *, market_ready):
     return m, job, client, calls
 
 
-def test_recreated_runtime_after_days_resumes_frozen_units_and_reentry_is_zero_http(monkeypatch):
+def test_recreated_runtime_after_days_resumes_frozen_units_and_reentry_is_zero_http(new_pg_factory, monkeypatch):
     from datetime import timedelta
-    m, job, client, calls = real_runtime(monkeypatch, market_ready=True)
+    m, job, client, calls = real_runtime(new_pg_factory, monkeypatch, market_ready=True)
     try:
         first = m.run_routine_update(settings(routine_macro_enabled=False, tushare_token='private-token',
             stock_update_max_requests_per_run=3), now=NOW, macro_rebuild=lambda s: None)
@@ -187,8 +187,8 @@ def test_recreated_runtime_after_days_resumes_frozen_units_and_reentry_is_zero_h
         client.close()
 
 
-def test_delayed_supplier_does_not_publish_empty_target(monkeypatch):
-    m, job, client, calls = real_runtime(monkeypatch, market_ready=False)
+def test_delayed_supplier_does_not_publish_empty_target(new_pg_factory, monkeypatch):
+    m, job, client, calls = real_runtime(new_pg_factory, monkeypatch, market_ready=False)
     monkeypatch.setattr(stock_runtime, 'publish_stock_update', lambda *a, **k: (_ for _ in ()).throw(AssertionError('must not publish')))
     try:
         report = m.run_routine_update(settings(routine_macro_enabled=False, tushare_token='private-token'),
@@ -201,10 +201,10 @@ def test_delayed_supplier_does_not_publish_empty_target(monkeypatch):
         client.close()
 
 
-def test_stock_publication_exception_retains_collection_and_http_evidence(monkeypatch):
+def test_stock_publication_exception_retains_collection_and_http_evidence(new_pg_factory, monkeypatch):
     from datetime import date
     from app.db.models import Classification, ClassificationMember
-    m, job, client, calls = real_runtime(monkeypatch, market_ready=True)
+    m, job, client, calls = real_runtime(new_pg_factory, monkeypatch, market_ready=True)
     with job.factory.begin() as session:
         nodes = [Classification(provider='tushare', source='SW2021', classification_id=f'test{level}',
             name=f'层级{level}', level=level, parent_id=f'test{level-1}' if level > 1 else None, data={}) for level in (1, 2, 3)]
@@ -265,22 +265,15 @@ def test_sqlite_preflight_does_not_create_missing_file(tmp_path):
     assert not target.exists()
 
 
-def test_real_sqlite_readonly_preflight_preserves_file_and_rejects_writes(tmp_path, monkeypatch):
-    import hashlib
-    import sqlite3
+def test_real_postgres_readonly_preflight_preserves_state_and_rejects_writes(pg_schema_url, monkeypatch):
     from sqlalchemy import text
-    from sqlalchemy.exc import OperationalError
+    from sqlalchemy.exc import DBAPIError
     from app.shared.readonly_database import open_readonly_factory
-    from backend.tests.derived.test_inputs import _factory
-    target = tmp_path / 'existing.sqlite'
-    factory = _factory()
-    raw = factory.kw['bind'].raw_connection()
-    with sqlite3.connect(target) as copy:
-        raw.driver_connection.backup(copy)
-    raw.close()
-    before = hashlib.sha256(target.read_bytes()).hexdigest()
+    from backend.tests.test_cli import _database_state
+
+    before = _database_state(pg_schema_url)
     m = module()
-    configured = Settings(data_backend='database', database_url='sqlite:///'+target.as_posix(), routine_macro_enabled=False)
+    configured = Settings(data_backend="database", database_url=pg_schema_url, routine_macro_enabled=False)
     report = m.run_routine_update(configured, now=NOW, dry_run=True, macro_rebuild=lambda s: None)
     assert report['status'] == 'planned' and report['httpCounts']['total'] == 0
     from app.cli.main import app
@@ -290,19 +283,19 @@ def test_real_sqlite_readonly_preflight_preserves_file_and_rejects_writes(tmp_pa
     result = CliRunner().invoke(app, ['update-routine','--dry-run'])
     assert result.exit_code == 0, result.output
     assert json.loads(result.stdout)['httpCounts']['total'] == 0
-    with open_readonly_factory('sqlite:///'+target.as_posix()) as readonly:
+    with open_readonly_factory(pg_schema_url) as readonly:
         with readonly() as session:
-            with pytest.raises(OperationalError):
-                session.execute(text("INSERT INTO job_cursor(job_name,cursor_key,cursor_value) VALUES ('illegal','test','{}')"))
-    assert hashlib.sha256(target.read_bytes()).hexdigest() == before
-    factory.kw['bind'].dispose()
+            with pytest.raises(DBAPIError) as error:
+                session.execute(text("INSERT INTO ops.job_cursor(job_name,cursor_key,cursor_value) VALUES ('illegal','test','{}')"))
+            assert error.value.orig.sqlstate == "25006"
+    assert _database_state(pg_schema_url) == before
 
 
-def test_real_stock_publication_lock_uses_typed_busy_contract():
+def test_real_stock_publication_lock_uses_typed_busy_contract(pg_factory):
     from app.jobs.locks import ProcessLocalJobLock
     from app.jobs.run_errors import JobLockedError
     from app.stocks.update.publication import publish_stock_update
-    from backend.tests.derived.test_inputs import _factory
+
     from app.stocks.universes import UniverseResolver
     from datetime import date
     lock = ProcessLocalJobLock()
@@ -310,7 +303,7 @@ def test_real_stock_publication_lock_uses_typed_busy_contract():
     assert lock.try_acquire(key)
     try:
         with pytest.raises(JobLockedError):
-            publish_stock_update(_factory(), UniverseResolver().resolve('representative-50'),
+            publish_stock_update(pg_factory, UniverseResolver().resolve('representative-50'),
                 date(2026,10,13), lock, collection={'status':'completed','publishReady':True,'identity':'test'})
     finally:
         lock.release(key)

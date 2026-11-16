@@ -34,7 +34,7 @@ def test_etf_group_is_independent_and_counted_in_unified_entry(monkeypatch):
     calls=[]
     monkeypatch.setattr(mod,'run_etf_step',lambda *a,**kw:calls.append('etf') or {
         'status':'completed','requestCount':18,'publishReady':True,'publication':{'status':'no_change'}})
-    settings=Settings(data_backend='database',database_url='sqlite://',routine_stocks_enabled=False,
+    settings=Settings(data_backend='database',database_url='postgresql+psycopg://controlled.invalid/test',routine_stocks_enabled=False,
         routine_macro_enabled=False,routine_etf_heatmap_enabled=True)
     result=mod.run_routine_update(settings,now=NOW,publish=True,macro_rebuild=lambda _:None)
     assert calls==['etf'] and result['status']=='completed'
@@ -74,10 +74,10 @@ def test_scheduler_etf_daily_trigger_and_guard(monkeypatch):
     assert calls==['scheduled','startup']
 
 
-def test_runtime_readonly_has_no_client_engine_or_locks(monkeypatch):
+def test_runtime_readonly_has_no_client_engine_or_locks(new_pg_factory, monkeypatch):
     assert importlib.util.find_spec('app.market.etf.runtime') is not None, 'ETF runtime missing'
     mod=module('runtime')
-    sync,factory,client,calls,_=setup()
+    sync,factory,client,calls,_=setup(new_pg_factory)
     @contextmanager
     def readonly(_): yield factory
     def forbidden(*a,**kw): raise AssertionError('not readonly')
@@ -87,5 +87,5 @@ def test_runtime_readonly_has_no_client_engine_or_locks(monkeypatch):
     monkeypatch.setattr(mod.MarketDataCatalog,'load',lambda:sync.catalog)
     monkeypatch.setattr(mod.UniverseResolver,'resolve',lambda *a:POOL)
     with client:
-        report=mod.run_etf_update(Settings(data_backend='database',database_url='sqlite://'),now=NOW,dry_run=True,publish=True)
+        report=mod.run_etf_update(Settings(data_backend='database',database_url='postgresql+psycopg://controlled.invalid/test'),now=NOW,dry_run=True,publish=True)
     assert report['status']=='planned' and report['pendingCount']==18 and calls==[]

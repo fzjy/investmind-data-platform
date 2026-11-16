@@ -28,16 +28,16 @@ def test_unified_commodity_group_independent_total_and_order(monkeypatch):
     for name in ('etf','commodity'):
         monkeypatch.setattr(routine,'run_'+name+'_step',lambda *a,name=name,**kw:calls.append(name) or {
             'status':'completed','requestCount':1 if name=='etf' else 44,'publishReady':True,'publication':{'status':'no_change'}})
-    settings=Settings(data_backend='database',database_url='sqlite://',routine_stocks_enabled=False,routine_macro_enabled=False,
+    settings=Settings(data_backend='database',database_url='postgresql+psycopg://controlled.invalid/test',routine_stocks_enabled=False,routine_macro_enabled=False,
         routine_etf_heatmap_enabled=True,routine_commodities_enabled=True)
     result=routine.run_routine_update(settings,now=NOW,publish=True,macro_rebuild=lambda _:None)
     assert result['status']=='completed' and calls==['etf','commodity']
     assert result['httpCounts']['total']==45 and result['httpCounts']['commodities']==44
 
 
-def test_readonly_runtime_no_client_write_engine_or_locks(monkeypatch):
+def test_readonly_runtime_no_client_write_engine_or_locks(new_pg_factory, monkeypatch):
     assert importlib.util.find_spec('app.market.commodities.runtime') is not None,'commodity runtime missing'
-    runtime=mod('runtime'); sync,factory,client,calls=setup()
+    runtime=mod('runtime'); sync,factory,client,calls=setup(new_pg_factory)
     @contextmanager
     def readonly(_): yield factory
     def forbidden(*a,**kw): raise AssertionError('not readonly')
@@ -46,13 +46,13 @@ def test_readonly_runtime_no_client_write_engine_or_locks(monkeypatch):
     monkeypatch.setattr(runtime,'TushareClient',forbidden)
     monkeypatch.setattr(runtime.MarketDataCatalog,'load',lambda:sync.catalog)
     monkeypatch.setattr(runtime.UniverseResolver,'resolve',lambda *a:POOL)
-    with client: report=runtime.run_commodity_update(Settings(data_backend='database',database_url='sqlite://'),now=NOW,dry_run=True,publish=True)
+    with client: report=runtime.run_commodity_update(Settings(data_backend='database',database_url='postgresql+psycopg://controlled.invalid/test'),now=NOW,dry_run=True,publish=True)
     assert report['status']=='planned' and report['pendingCount']==24 and calls==[]
 
 
-def test_daily_schedule_lifecycle_guard_and_startup(monkeypatch):
+def test_daily_schedule_lifecycle_guard_and_startup(new_pg_factory, monkeypatch):
     assert 'routine_commodities_enabled' in Settings.model_fields
-    sync,_,_,_=setup(); catalog=sync.catalog
+    sync,_,_,_=setup(new_pg_factory); catalog=sync.catalog
     scheduler=BlockingScheduler(timezone='Asia/Shanghai')
     configure_scheduler(scheduler,Settings(routine_commodities_enabled=True),SimpleNamespace(run_scheduled=lambda _:None,run_startup=lambda _:None),
         clock=lambda:NOW,commodity_job=lambda:None,commodity_schedule=catalog.schedule)

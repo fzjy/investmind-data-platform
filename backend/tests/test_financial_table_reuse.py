@@ -1,4 +1,5 @@
 """扩字段仅补改表，冻结来源引用仍校验原字节和完整分页。"""
+from backend.tests.support.snapshots import set_snapshot_version
 from copy import deepcopy
 from datetime import datetime,timedelta,timezone
 import pytest
@@ -19,8 +20,8 @@ def expanded(monkeypatch):
     return old,policy
 
 
-def prepare(monkeypatch):
-    m=module();f=source();client=Client();policy=deepcopy(m.config())
+def prepare(new_pg_factory, monkeypatch):
+    m=module();f=source(new_pg_factory);client=Client();policy=deepcopy(m.config())
     policy['tables']['cashflow']['fields']=[v for v in policy['tables']['cashflow']['fields'] if v not in FIELDS]
     monkeypatch.setattr(m,'config',lambda:deepcopy(policy))
     first=m.capture(f,client,execute=True)
@@ -29,8 +30,8 @@ def prepare(monkeypatch):
     return m,f,client,first,before,policy
 
 
-def test_only_changed_table_requests_new_originals_and_all_actual_lineage_remains(monkeypatch):
-    m,f,c,first,before,policy=prepare(monkeypatch)
+def test_only_changed_table_requests_new_originals_and_all_actual_lineage_remains(new_pg_factory, monkeypatch):
+    m,f,c,first,before,policy=prepare(new_pg_factory, monkeypatch)
     preview=m.capture(f,execute=False)
     assert preview['completedCount']==2 and preview['unitCount']==3
     assert db_state(f)==before
@@ -53,23 +54,23 @@ def test_only_changed_table_requests_new_originals_and_all_actual_lineage_remain
 
 
 @pytest.mark.parametrize('changed',['scope-date','signature','expired'])
-def test_changed_scope_signature_or_expired_originals_are_never_reused(monkeypatch,changed):
-    m,f,c,_,_,_=prepare(monkeypatch)
+def test_changed_scope_signature_or_expired_originals_are_never_reused(new_pg_factory, monkeypatch,changed):
+    m,f,c,_,_,_=prepare(new_pg_factory, monkeypatch)
     kwargs={}
     if changed=='scope-date':
         with f.begin() as s:
-            row=s.get(PublishedSnapshot,'screener');row.as_of+=timedelta(days=1);row.version='new'
+            row=s.get(PublishedSnapshot,'screener');row.as_of+=timedelta(days=1);set_snapshot_version(s, row, 'new')
     elif changed=='signature':monkeypatch.setattr(m,'_core_signature',lambda *_:'new-visible-core')
     else:kwargs['now']=datetime.now(timezone.utc)+timedelta(days=8)
     preview=m.capture(f,execute=False,**kwargs)
     assert preview['completedCount']==0 and preview['unitCount']==3
 
 
-def test_rebuilt_same_date_pointer_preserves_actual_origin_version_and_reuses_unchanged_facts(monkeypatch):
-    m,f,c,first,_,_=prepare(monkeypatch)
+def test_rebuilt_same_date_pointer_preserves_actual_origin_version_and_reuses_unchanged_facts(new_pg_factory, monkeypatch):
+    m,f,c,first,_,_=prepare(new_pg_factory, monkeypatch)
     with f.begin() as s:
         old_version=s.get(PublishedSnapshot,'screener').version
-        s.get(PublishedSnapshot,'screener').version='same-date-rebuilt'
+        set_snapshot_version(s, s.get(PublishedSnapshot,'screener'), 'same-date-rebuilt')
     preview=m.capture(f,execute=False);assert preview['completedCount']==2
     assert m.capture(f,c,execute=True)['requestCount']==1
     points=m.load_points(f,datetime(2026,8,24).date(),('600519.SH',))
@@ -77,16 +78,16 @@ def test_rebuilt_same_date_pointer_preserves_actual_origin_version_and_reuses_un
         assert point.values['_sourceBaseVersion']==('same-date-rebuilt' if point.source_table=='core.cashflow_statement' else old_version)
 
 
-def test_corrupt_prior_raw_never_causes_fallback_or_supplier_request(monkeypatch):
-    m,f,c,_,_,_=prepare(monkeypatch)
+def test_corrupt_prior_raw_never_causes_fallback_or_supplier_request(new_pg_factory, monkeypatch):
+    m,f,c,_,_,_=prepare(new_pg_factory, monkeypatch)
     with f.begin() as s:s.get(SourcePayload,1).content_hash='invalid'
     before=db_state(f);result=m.capture(f,c,execute=True)
     assert result['status']=='blocked' and result['requestCount']==0 and len(c.calls)==3
     assert db_state(f)==before
 
 
-def test_failed_changed_table_is_not_bypassed_by_another_configuration(monkeypatch):
-    m,f,c,_,_,policy=prepare(monkeypatch)
+def test_failed_changed_table_is_not_bypassed_by_another_configuration(new_pg_factory, monkeypatch):
+    m,f,c,_,_,policy=prepare(new_pg_factory, monkeypatch)
     class Broken(Client):
         def call(self,*args):self.calls.append(args);raise TimeoutError('private')
     broken=Broken();result=m.capture(f,broken,execute=True,max_http=1)
@@ -96,8 +97,8 @@ def test_failed_changed_table_is_not_bypassed_by_another_configuration(monkeypat
     assert result['status']=='blocked' and result['requestCount']==0 and len(broken.calls)==1
 
 
-def test_unfinished_old_batch_is_resumed_before_fields_migration(monkeypatch):
-    m=module();f=source();c=Client();policy=deepcopy(m.config())
+def test_unfinished_old_batch_is_resumed_before_fields_migration(new_pg_factory, monkeypatch):
+    m=module();f=source(new_pg_factory);c=Client();policy=deepcopy(m.config())
     policy['tables']['cashflow']['fields']=[v for v in policy['tables']['cashflow']['fields'] if v not in FIELDS]
     monkeypatch.setattr(m,'config',lambda:deepcopy(policy))
     m.capture(f,c,execute=True,max_http=1)
@@ -107,9 +108,9 @@ def test_unfinished_old_batch_is_resumed_before_fields_migration(monkeypatch):
     assert not set(FIELDS)<=set(c.calls[-1][2])
 
 
-def test_historical_reference_cannot_cross_core_signature_even_with_rehashed_contract(monkeypatch):
+def test_historical_reference_cannot_cross_core_signature_even_with_rehashed_contract(new_pg_factory, monkeypatch):
     from app.ingestion.repositories import content_hash
-    m,f,c,_,_,_=prepare(monkeypatch);assert m.capture(f,c,execute=True)['status']=='completed'
+    m,f,c,_,_,_=prepare(new_pg_factory, monkeypatch);assert m.capture(f,c,execute=True)['status']=='completed'
     with f.begin() as s:
         row=s.scalars(select(JobCursor).where(JobCursor.cursor_key.like('contract:%')).order_by(JobCursor.id.desc())).first()
         value=deepcopy(row.cursor_value);identity=content_hash(value);value['coreSignature']='different'
@@ -120,12 +121,12 @@ def test_historical_reference_cannot_cross_core_signature_even_with_rehashed_con
         m.load_points(f,datetime(2026,8,24).date(),('600519.SH',))
 
 
-def test_newly_captured_contract_does_not_hide_older_visible_macro_evidence(monkeypatch):
+def test_newly_captured_contract_does_not_hide_older_visible_macro_evidence(new_pg_factory, monkeypatch):
     from backend.tests.macro.test_stock_history_bridge import prepared,inputs,bridge
     m=module();policy=deepcopy(m.config())
     policy['tables']['cashflow']['fields']=[v for v in policy['tables']['cashflow']['fields'] if v not in FIELDS]
     monkeypatch.setattr(m,'config',lambda:deepcopy(policy))
-    f=prepared();before=bridge().load_stock_history_bridge(f,inputs(),datetime(2026,11,7).date(),enabled=True)
+    f=prepared(new_pg_factory);before=bridge().load_stock_history_bridge(f,inputs(),datetime(2026,11,7).date(),enabled=True)
     assert len(before.financials)==6
     expanded(monkeypatch)
     assert m.capture(f,Client(),execute=True,now=datetime(2026,11,7,tzinfo=timezone.utc))['status']=='completed'
@@ -136,7 +137,7 @@ def test_newly_captured_contract_does_not_hide_older_visible_macro_evidence(monk
     assert any(r.source_key.startswith('raw.source_payload:4:') for r in later.financials)
 
 
-def test_repeated_page_is_detected_even_when_actual_raw_ids_differ():
+def test_repeated_page_is_detected_even_when_actual_raw_ids_differ(new_pg_factory):
     import base64,hashlib,json
     from app.connectors.tushare.contracts import TushareResponse
     class Repeating(Client):
@@ -149,13 +150,13 @@ def test_repeated_page_is_detected_even_when_actual_raw_ids_differ():
             self.callback(dict(statusCode=200,credentialsRedacted=False,bodyBase64=base64.b64encode(body).decode(),
                 bodySha256=hashlib.sha256(body).hexdigest(),byteLength=len(body)))
             return TushareResponse.model_validate(data)
-    f=source();c=Repeating();result=module().capture(f,c,execute=True,max_http=4)
+    f=source(new_pg_factory);c=Repeating();result=module().capture(f,c,execute=True,max_http=4)
     assert result['status']=='blocked' and result['code']=='FINANCIAL_PAGING_NO_PROGRESS'
     assert result['requestCount']==4 and len(c.calls)==4
 
 
-def test_referenced_table_retains_its_own_refresh_deadline(monkeypatch):
-    m,f,c,_,_,policy=prepare(monkeypatch);t0=datetime(2026,11,1,tzinfo=timezone.utc)
+def test_referenced_table_retains_its_own_refresh_deadline(new_pg_factory, monkeypatch):
+    m,f,c,_,_,policy=prepare(new_pg_factory, monkeypatch);t0=datetime(2026,11,1,tzinfo=timezone.utc)
     with f.begin() as s:
         for raw in s.scalars(select(SourcePayload)):raw.captured_at=t0
         for batch in s.scalars(select(IngestionBatch).where(IngestionBatch.dataset==m.JOB)):batch.finished_at=t0
@@ -170,8 +171,8 @@ def test_referenced_table_retains_its_own_refresh_deadline(monkeypatch):
     assert m.capture(f,execute=False,now=t0+timedelta(days=8))['completedCount']==0
 
 
-def test_complete_referenced_contract_failure_is_not_hidden_by_new_table(monkeypatch):
-    m,f,c,first,_,_=prepare(monkeypatch);assert m.capture(f,c,execute=True)['status']=='completed'
+def test_complete_referenced_contract_failure_is_not_hidden_by_new_table(new_pg_factory, monkeypatch):
+    m,f,c,first,_,_=prepare(new_pg_factory, monkeypatch);assert m.capture(f,c,execute=True)['status']=='completed'
     with f.begin() as s:
         row=s.scalar(select(JobCursor).where(JobCursor.cursor_key==first['identity']+':cashflow:600519.SH'))
         row.cursor_value=row.cursor_value|{'status':'failed'}

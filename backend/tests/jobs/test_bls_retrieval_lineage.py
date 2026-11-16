@@ -7,11 +7,11 @@ from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
 from app.macro.marts.macro import MacroMartBuilder, MacroRepository
 from app.db.models import SourcePayload
 from sqlalchemy import select
-from backend.tests.jobs.test_build_and_publish_integration import _factory
+
 from backend.tests.connectors.macro.test_us_official import FakeBlsTransport
 
 
-def test_selected_bls_retrieval_date_comes_from_matching_audited_response_not_publication_or_clock() -> None:
+def test_selected_bls_retrieval_date_comes_from_matching_audited_response_not_publication_or_clock(pg_factory) -> None:
     catalog = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE)
     series = catalog.require("us.cpi.yoy")
     source = next(source for source in series.sources if source.provider == "bls")
@@ -23,7 +23,7 @@ def test_selected_bls_retrieval_date_comes_from_matching_audited_response_not_pu
     ]}]}]}
     fetched = BlsMacroProvider(FakeBlsTransport(payload)).fetch(series, source, window)
     assert fetched.status == "success"
-    factory = _factory()
+    factory = pg_factory
     repository = MacroObservationRepository(factory)
     builder = MacroMartBuilder(MacroRepository(factory), catalog=catalog)
     try:
@@ -56,7 +56,7 @@ def test_selected_bls_retrieval_date_comes_from_matching_audited_response_not_pu
         factory.kw["bind"].dispose()
 
 
-def test_bls_retrieval_lineage_matches_numeric_storage_precision_for_local_pc1() -> None:
+def test_bls_retrieval_lineage_matches_numeric_storage_precision_for_local_pc1(pg_factory) -> None:
     catalog = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE)
     series = catalog.require("us.cpi.yoy")
     source = next(source for source in series.sources if source.provider == "bls")
@@ -67,7 +67,7 @@ def test_bls_retrieval_lineage_matches_numeric_storage_precision_for_local_pc1()
         {"year": "2026", "period": "M08", "value": "319.679"},
     ]}]}]}
     fetched = BlsMacroProvider(FakeBlsTransport(payload)).fetch(series, source, window)
-    factory = _factory()
+    factory = pg_factory
     try:
         repository = MacroObservationRepository(factory)
         batch = repository.audit_request(series, source, window, fetched, captured, "decimal")

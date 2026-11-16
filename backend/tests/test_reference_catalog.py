@@ -1,20 +1,11 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from app.db.models import DataAcquisitionState,JobCursor,IngestionBatch,SourcePayload
-
-def factory():
-    e=create_engine('sqlite://',execution_options={'schema_translate_map':{'ops':None,'raw':None}})
-    for m in (DataAcquisitionState,JobCursor,IngestionBatch,SourcePayload):m.__table__.create(e)
-    return sessionmaker(e,expire_on_commit=False)
-
-def test_default_preview_never_calls_provider():
+def test_default_preview_never_calls_provider(pg_factory):
     from app.portfolio.reference_catalog import capture_catalog
-    f=factory()
+    f=pg_factory
     assert capture_catalog(f)['requestCount']==0
 
-def test_reservation_survives_failure_and_never_implicitly_retries():
+def test_reservation_survives_failure_and_never_implicitly_retries(pg_factory):
     from app.portfolio.reference_catalog import capture_catalog
-    f=factory()
+    f=pg_factory
     class Client:
         def set_response_observer(self,observer):pass
         def call(self,*args):raise ValueError('failed')
@@ -22,12 +13,12 @@ def test_reservation_survives_failure_and_never_implicitly_retries():
     assert r['requestCount']==2 and r['failedCount']==2
     assert capture_catalog(f,Client(),execute=True)['requestCount']==0
 
-def test_original_saved_and_reentry_is_zero_even_when_directory_is_empty():
+def test_original_saved_and_reentry_is_zero_even_when_directory_is_empty(pg_factory):
     from app.portfolio.reference_catalog import capture_catalog,FIELDS
     from app.connectors.tushare.contracts import TushareResponse
     from hashlib import sha256
     import base64,json
-    f=factory()
+    f=pg_factory
     class Client:
         def set_response_observer(self,observer):self.observer=observer
         def call(self,*args):
@@ -38,14 +29,14 @@ def test_original_saved_and_reentry_is_zero_even_when_directory_is_empty():
     assert r['catalogReady'] is False and r['requestCount']==2
     assert capture_catalog(f,Client(),execute=True)['requestCount']==0
 
-def test_installed_package_without_checkout_has_bounded_defaults(monkeypatch,tmp_path):
+def test_installed_package_without_checkout_has_bounded_defaults(pg_factory, monkeypatch,tmp_path):
     import app.portfolio.reference_catalog as module
     monkeypatch.setattr(module,'CONFIG_FILE',tmp_path/'no-repository'/'portfolio.json')
-    assert module.capture_catalog(factory())['requestCount']==0
+    assert module.capture_catalog(pg_factory)['requestCount']==0
 
-def test_frozen_contract_change_cannot_consume_more_requests():
+def test_frozen_contract_change_cannot_consume_more_requests(pg_factory):
     from app.portfolio.reference_catalog import capture_catalog
-    f=factory()
+    f=pg_factory
     # 无请求列表的显式空计划只持久冻结合同，不产生供应商调用。
     assert capture_catalog(f,execute=True,_requests=[],_job='test-reference-freeze',_contract={'asOf':'2026-10-21'})['requestCount']==0
     r=capture_catalog(f,execute=True,_requests=[],_job='test-reference-freeze',_contract={'asOf':'2026-10-22'})

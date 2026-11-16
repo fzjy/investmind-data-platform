@@ -8,12 +8,12 @@ from app.stocks.derived.inputs import CoreSnapshotRepository
 from app.stocks.derived.pipeline import DerivedPipeline
 from app.jobs.build_and_publish import BuildAndPublishJob
 from app.marts.quality import QualityGate
-from backend.tests.jobs.test_build_and_publish_integration import _factory, _seed_complete_core_sample
+from backend.tests.jobs.test_build_and_publish_integration import _seed_complete_core_sample
 
 
 @pytest.mark.parametrize("failure", ["hash", "name", "table", "key", "duplicate"])
-def test_same_lineage_count_cannot_hide_wrong_input_identity(failure):
-    factory = _factory()
+def test_same_lineage_count_cannot_hide_wrong_input_identity(pg_factory, failure):
+    factory = pg_factory
     _seed_complete_core_sample(factory)
     snapshot = CoreSnapshotRepository(factory).load(date(2026, 8, 24), ("600519.SH",))
     pipeline = DerivedPipeline(factory)
@@ -41,8 +41,8 @@ def test_same_lineage_count_cannot_hide_wrong_input_identity(failure):
     assert all("600519.SH" in error for error in errors)
 
 
-def test_real_derived_run_reports_identity_and_gate_consumes_it():
-    factory = _factory()
+def test_real_derived_run_reports_identity_and_gate_consumes_it(pg_factory):
+    factory = pg_factory
     _seed_complete_core_sample(factory)
     snapshot = CoreSnapshotRepository(factory).load(date(2026, 8, 24), ("600519.SH",))
     report = DerivedPipeline(factory).run(snapshot, ("600519.SH",))
@@ -52,9 +52,9 @@ def test_real_derived_run_reports_identity_and_gate_consumes_it():
     assert results["lineage-inputs-match"].passed
 
 
-def test_legitimate_missing_input_context_still_has_verifiable_identity():
+def test_legitimate_missing_input_context_still_has_verifiable_identity(pg_factory):
     from app.db.models import Security
-    factory = _factory()
+    factory = pg_factory
     with factory.begin() as session:
         session.add(Security(ts_code="600519.SH", symbol="600519", name="sample", data={}))
     snapshot = CoreSnapshotRepository(factory).load(date(2026, 8, 24), ("600519.SH",))

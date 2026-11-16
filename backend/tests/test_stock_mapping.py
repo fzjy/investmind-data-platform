@@ -10,15 +10,16 @@ from app.stocks.derived.registry import calculate_formula
 from app.stocks.marts.stocks import ScreenerMartBuilder, StockWorkbenchMartBuilder
 from app.shared.stock_mapping import StockMappingPolicy, DEFAULT_STOCK_MAPPING_FILE
 import json
-from backend.tests.derived.test_inputs import _factory
+
 from backend.tests.marts.test_screener_builder import _core_snapshot
 
 
-def holder_snapshot(types=("开放式投资基金",), amounts=("200000",), *, basics=True,
+def holder_snapshot(new_pg_factory, types=("开放式投资基金",), amounts=("200000",), *, basics=True,
     report_basic=True, report_date=date(2026, 6, 30)):
-    factory = _factory()
+    factory = new_pg_factory()
     with factory.begin() as session:
         session.add(Security(ts_code="600519.SH", symbol="600519", name="样本", status="L"))
+        session.flush()
         if basics:
             session.add(DailyBasic(ts_code="600519.SH", trade_date=date(2026, 8, 24), data={"total_share": 200, "float_share": 80}))
             if report_basic:
@@ -34,8 +35,8 @@ def holder_snapshot(types=("开放式投资基金",), amounts=("200000",), *, ba
     return CoreSnapshotRepository(factory).load(date(2026, 8, 24), ("600519.SH",))
 
 
-def test_institution_percentage_uses_report_period_total_shares_in_shares_not_latest_float_shares():
-    snapshot = holder_snapshot()
+def test_institution_percentage_uses_report_period_total_shares_in_shares_not_latest_float_shares(new_pg_factory):
+    snapshot = holder_snapshot(new_pg_factory)
     context = snapshot.security_inputs["600519.SH"]
     metric = calculate_formula("institutionHolding", context.values)
     # 200000股 ÷ (100万股 × 10000) = 20%，不是最新80万流通股或200万总股本。
@@ -47,8 +48,8 @@ def test_institution_percentage_uses_report_period_total_shares_in_shares_not_la
 
 @pytest.mark.parametrize("kind", ["保险投资组合", "金融机构—证券公司", "金融机构—银行",
     "资产管理公司", "基本养老保险基金", "QFII"])
-def test_explicit_financial_holder_types_are_recognized(kind):
-    result = calculate_formula("institutionHolding", holder_snapshot((kind,)).security_inputs["600519.SH"].values)
+def test_explicit_financial_holder_types_are_recognized(new_pg_factory, kind):
+    result = calculate_formula("institutionHolding", holder_snapshot(new_pg_factory, (kind,)).security_inputs["600519.SH"].values)
     assert result.value == Decimal("20")
 
 
@@ -61,13 +62,13 @@ def test_explicit_financial_holder_types_are_recognized(kind):
     (("开放式投资基金",), ("2000000",), None),
     (("开放式投资基金", "未知新类型"), ("200000", "100"), Decimal("20")),
 ])
-def test_missing_and_invalid_holder_inputs_are_not_normalized_to_zero(kinds, amounts, want):
-    result = calculate_formula("institutionHolding", holder_snapshot(kinds, amounts).security_inputs["600519.SH"].values)
+def test_missing_and_invalid_holder_inputs_are_not_normalized_to_zero(new_pg_factory, kinds, amounts, want):
+    result = calculate_formula("institutionHolding", holder_snapshot(new_pg_factory, kinds, amounts).security_inputs["600519.SH"].values)
     assert result.value == want
 
 
-def test_missing_report_period_denominator_does_not_reuse_current_capital():
-    result = calculate_formula("institutionHolding", holder_snapshot(report_basic=False).security_inputs["600519.SH"].values)
+def test_missing_report_period_denominator_does_not_reuse_current_capital(new_pg_factory):
+    result = calculate_formula("institutionHolding", holder_snapshot(new_pg_factory, report_basic=False).security_inputs["600519.SH"].values)
     assert result.value is None
 
 
@@ -101,8 +102,8 @@ def test_classification_never_mixes_source_or_future_members(kwargs):
 
 
 @pytest.mark.parametrize("day,want", [(23, Decimal("20")), (22, None)])
-def test_report_capital_max_lag_boundary(day, want):
-    context = holder_snapshot(report_date=date(2026, 6, day)).security_inputs["600519.SH"]
+def test_report_capital_max_lag_boundary(new_pg_factory, day, want):
+    context = holder_snapshot(new_pg_factory, report_date=date(2026, 6, day)).security_inputs["600519.SH"]
     assert calculate_formula("institutionHolding", context.values).value == want
 
 
@@ -143,10 +144,11 @@ def test_classification_root_zero_is_a_root_not_a_missing_parent():
     assert (stock["majorIndustry"], stock["subIndustry"]) == ("食品饮料", "白酒")
 
 
-def test_institution_deduplicates_latest_visible_revision_not_old_conflicts():
-    factory = _factory()
+def test_institution_deduplicates_latest_visible_revision_not_old_conflicts(pg_factory):
+    factory = pg_factory
     with factory.begin() as session:
         session.add(Security(ts_code="600519.SH", symbol="600519", name="样本", status="L"))
+        session.flush()
         session.add(DailyBasic(ts_code="600519.SH", trade_date=date(2026, 6, 30), data={"total_share": 100}))
         for ann, amount in [(1, "100000"), (1, "110000"), (2, "200000")]:
             session.add(TopHolder(ts_code="600519.SH", end_date=date(2026, 6, 30),
@@ -156,22 +158,31 @@ def test_institution_deduplicates_latest_visible_revision_not_old_conflicts():
     assert calculate_formula("institutionHolding", context.values).value == Decimal("20")
 
 
-def test_config_change_affects_real_input_assembly_and_lineage(monkeypatch, tmp_path):
+def test_config_change_affects_real_input_assembly_and_lineage(new_pg_factory, monkeypatch, tmp_path):
     import app.shared.stock_mapping as mapping_module
     raw = json.loads(DEFAULT_STOCK_MAPPING_FILE.read_text(encoding="utf-8"))
     raw["institution"]["includedTypes"].append("未知新类型")
     path = tmp_path / "mapping.json"
     path.write_text(json.dumps(raw), encoding="utf-8")
     monkeypatch.setattr(mapping_module, "DEFAULT_STOCK_MAPPING_FILE", path)
-    context = holder_snapshot(("未知新类型",)).security_inputs["600519.SH"]
+    context = holder_snapshot(new_pg_factory, ("未知新类型",)).security_inputs["600519.SH"]
     assert calculate_formula("institutionHolding", context.values).value == Decimal("20")
     assert StockMappingPolicy.load(path).fingerprint in context.sources["institution_shares"].source_record_key
 
 
 @pytest.mark.parametrize("value", ["NaN", "Infinity", "-Infinity"])
-def test_non_finite_holder_amount_is_missing_not_a_numeric_percentage(value):
-    context = holder_snapshot(amounts=(value,)).security_inputs["600519.SH"]
-    assert calculate_formula("institutionHolding", context.values).value is None
+def test_non_finite_holder_amount_is_missing_not_a_numeric_percentage(pg_factory, value):
+    code = "600519.SH"
+    period = date(2026, 6, 30)
+    security = Security(ts_code=code, symbol=code[:6], name="样本", status="L", data={})
+    basic = DailyBasic(ts_code=code, trade_date=period, data={"total_share": 100})
+    holder = TopHolder(ts_code=code, end_date=period, ann_date=date(2026, 8, 1),
+                       holder_type="开放式投资基金", holder_name="holder", hold_amount=Decimal(value))
+    # PostgreSQL 的定精度 numeric 拒绝无穷值，直接检验输入组装器的处理。
+    inputs, gaps = CoreSnapshotRepository(pg_factory)._assemble_inputs(
+        (security,), (), (basic,), {}, (), (holder,), date(2026, 8, 24), (code,))
+    assert any(gap.get("calculationStatus") == "invalid_or_missing_holder_amount" for gap in gaps)
+    assert calculate_formula("institutionHolding", inputs[code].values).value is None
 
 
 def test_classification_conflict_does_not_fall_back_to_security_or_pool_tags():
@@ -193,10 +204,11 @@ def test_disconnected_members_cannot_be_stitched_into_full_classification(broken
 
 
 @pytest.mark.parametrize("latest_name,want", [("same ", Decimal("20")), ("   ", None)])
-def test_holder_name_whitespace_cannot_duplicate_a_revision_or_invent_identity(latest_name, want):
-    factory = _factory()
+def test_holder_name_whitespace_cannot_duplicate_a_revision_or_invent_identity(pg_factory, latest_name, want):
+    factory = pg_factory
     with factory.begin() as session:
         session.add(Security(ts_code="600519.SH", symbol="600519", name="样本", status="L"))
+        session.flush()
         session.add(DailyBasic(ts_code="600519.SH", trade_date=date(2026, 6, 30), data={"total_share": 100}))
         for ann, name, amount in [(1, "same", "100000"), (2, latest_name, "200000")]:
             session.add(TopHolder(ts_code="600519.SH", end_date=date(2026, 6, 30),
@@ -208,10 +220,11 @@ def test_holder_name_whitespace_cannot_duplicate_a_revision_or_invent_identity(l
         assert any(item.get("calculationStatus") == "invalid_holder_name" for item in snapshot.missing_data)
 
 
-def test_unusable_finite_capital_is_missing_without_aborting_the_batch():
-    factory = _factory()
+def test_unusable_finite_capital_is_missing_without_aborting_the_batch(pg_factory):
+    factory = pg_factory
     with factory.begin() as session:
         session.add(Security(ts_code="600519.SH", symbol="600519", name="样本", status="L"))
+        session.flush()
         session.add(DailyBasic(ts_code="600519.SH", trade_date=date(2026, 6, 30), data={"total_share": "1e999999"}))
         session.add(TopHolder(ts_code="600519.SH", end_date=date(2026, 6, 30), ann_date=date(2026, 8, 1),
             holder_type="机构", holder_name="known", hold_amount=Decimal("200000"), data={}))

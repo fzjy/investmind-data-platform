@@ -9,12 +9,12 @@ from sqlalchemy import select
 from app.config import Settings
 from app.db.models import ContentDocument, PageSnapshot, PublishedSnapshot, StockWorkbenchSnapshot
 from app.jobs.build_and_publish import BuildAndPublishOptions
-from app.jobs.locks import ProcessLocalJobLock, data_publication_lock_key
+from app.jobs.locks import PostgresAdvisoryJobLock, data_publication_lock_key
 from app.marts.publication import SnapshotPublisher
 from app.market.database_provider import MarketDatabaseProvider
 from app.stocks.database_provider import StocksDatabaseProvider
 from app.shared.repository import SnapshotRepository
-from backend.tests.jobs.test_build_and_publish_integration import _factory, _seed_complete_core_sample, _real_build_and_publish_job
+from backend.tests.jobs.test_build_and_publish_integration import _seed_complete_core_sample, _real_build_and_publish_job
 
 NOW = datetime(2026, 8, 25, 12, tzinfo=timezone.utc)
 SYMBOL = "600519.SH"
@@ -51,14 +51,12 @@ def state(factory):
 
 def run(factory, monkeypatch, *, as_of=NOW):
     module = runtime()
-    # The in-memory engine belongs to this test, not to the runtime adapter.
-    monkeypatch.setattr(factory.kw["bind"], "dispose", lambda: None)
-    monkeypatch.setattr(module, "create_engine_and_session", lambda _url: (factory.kw["bind"], factory))
-    return module.rebuild_content_marts(Settings(database_url="sqlite:///controlled"), as_of=as_of)
+    url = factory.kw["bind"].url.render_as_string(hide_password=False)
+    return module.rebuild_content_marts(Settings(database_url=url), as_of=as_of)
 
 
-def test_no_content_leaves_every_snapshot_unchanged(monkeypatch):
-    factory = _factory()
+def test_no_content_leaves_every_snapshot_unchanged(pg_factory, monkeypatch):
+    factory = pg_factory
     prepare(factory)
     before = state(factory)
     report = run(factory, monkeypatch)
@@ -66,8 +64,8 @@ def test_no_content_leaves_every_snapshot_unchanged(monkeypatch):
     assert state(factory) == before
 
 
-def test_stock_rebuild_keeps_each_visible_document_at_snapshot_cutoff(monkeypatch):
-    factory = _factory()
+def test_stock_rebuild_keeps_each_visible_document_at_snapshot_cutoff(pg_factory, monkeypatch):
+    factory = pg_factory
     prepare(factory)
     disclosed = datetime(2026, 8, 24, 7, tzinfo=timezone.utc)
     with factory.begin() as session:
@@ -93,16 +91,16 @@ def test_stock_rebuild_keeps_each_visible_document_at_snapshot_cutoff(monkeypatc
     assert chart_and_mentions() == expected
 
 
-def test_no_base_never_builds_sample_snapshots(monkeypatch):
-    factory = _factory()
+def test_no_base_never_builds_sample_snapshots(pg_factory, monkeypatch):
+    factory = pg_factory
     add_content(factory)
     report = run(factory, monkeypatch)
     assert report["status"] == "blocked" and report["code"] == "CONTENT_NO_BASE_SNAPSHOT"
     assert state(factory)["pointers"] == {} and state(factory)["pages"] == []
 
 
-def test_shanghai_midnight_notice_publishes_pending_until_next_candle(monkeypatch):
-    factory = _factory()
+def test_shanghai_midnight_notice_publishes_pending_until_next_candle(pg_factory, monkeypatch):
+    factory = pg_factory
     prepare(factory)
     add_content(factory)
     stamp = datetime(2026, 8, 24, 16, tzinfo=timezone.utc)
@@ -113,8 +111,8 @@ def test_shanghai_midnight_notice_publishes_pending_until_next_candle(monkeypatc
     assert (item["disclosedOn"], item["disclosureTime"], item["placementStatus"]) == ("2026-08-25", None, "pending")
 
 
-def test_real_publication_preserves_other_fields_and_is_idempotent(monkeypatch):
-    factory = _factory()
+def test_real_publication_preserves_other_fields_and_is_idempotent(pg_factory, monkeypatch):
+    factory = pg_factory
     prepare(factory)
     before = state(factory)
     add_content(factory)
@@ -151,8 +149,8 @@ def test_real_publication_preserves_other_fields_and_is_idempotent(monkeypatch):
     assert state(factory) == after
 
 
-def test_failed_second_product_rolls_back_first_product_and_history(monkeypatch):
-    factory = _factory()
+def test_failed_second_product_rolls_back_first_product_and_history(pg_factory, monkeypatch):
+    factory = pg_factory
     prepare(factory)
     add_content(factory)
     before = state(factory)
@@ -168,8 +166,8 @@ def test_failed_second_product_rolls_back_first_product_and_history(monkeypatch)
     assert state(factory) == before
 
 
-def test_bad_base_quality_blocks_all_products(monkeypatch):
-    factory = _factory()
+def test_bad_base_quality_blocks_all_products(pg_factory, monkeypatch):
+    factory = pg_factory
     prepare(factory)
     add_content(factory)
     with factory.begin() as session:
@@ -183,12 +181,12 @@ def test_bad_base_quality_blocks_all_products(monkeypatch):
     assert state(factory) == before
 
 
-def test_shared_publication_lock_blocks_rebuild(monkeypatch):
-    factory = _factory()
+def test_shared_publication_lock_blocks_rebuild(pg_factory, monkeypatch):
+    factory = pg_factory
     prepare(factory)
     add_content(factory)
     before = state(factory)
-    lock = ProcessLocalJobLock()
+    lock = PostgresAdvisoryJobLock(factory.kw["bind"])
     assert lock.try_acquire(data_publication_lock_key())
     try:
         assert run(factory, monkeypatch)["code"] == "CONTENT_LOCK_BUSY"
@@ -198,8 +196,8 @@ def test_shared_publication_lock_blocks_rebuild(monkeypatch):
 
 
 @pytest.mark.parametrize("status", ["unknown", "restricted", "link_only"])
-def test_rights_downgrade_scrubs_current_and_versioned_snapshots(monkeypatch, status):
-    factory = _factory()
+def test_rights_downgrade_scrubs_current_and_versioned_snapshots(pg_factory, monkeypatch, status):
+    factory = pg_factory
     prepare(factory)
     add_content(factory)
     assert run(factory, monkeypatch)["status"] == "completed"
@@ -219,8 +217,8 @@ def test_missing_configuration_is_safe():
     assert report["status"] == "blocked" and report["code"] == "CONTENT_DATABASE_REQUIRED"
 
 
-def test_relicensing_can_publish_after_historical_redaction(monkeypatch):
-    factory = _factory()
+def test_relicensing_can_publish_after_historical_redaction(pg_factory, monkeypatch):
+    factory = pg_factory
     prepare(factory)
     add_content(factory)
     assert run(factory, monkeypatch)["status"] == "completed"
@@ -232,8 +230,8 @@ def test_relicensing_can_publish_after_historical_redaction(monkeypatch):
     assert SnapshotRepository(factory).read("market-explorer").raw["marketNews"][0]["body"] == "许可正文"
 
 
-def test_legacy_numeric_id_cannot_borrow_another_documents_license(monkeypatch):
-    factory = _factory()
+def test_legacy_numeric_id_cannot_borrow_another_documents_license(pg_factory, monkeypatch):
+    factory = pg_factory
     prepare(factory)
     add_content(factory)
     with factory.begin() as session:
@@ -245,13 +243,9 @@ def test_legacy_numeric_id_cannot_borrow_another_documents_license(monkeypatch):
     assert "legacy secret" not in str(state(factory))
 
 
-def test_default_time_uses_real_clock_and_configured_database(tmp_path):
-    from app.db.session import create_engine_and_session
-    from app.db.base import Base, DerivedBase, ExternalBase, MartBase
-    url = "sqlite:///" + (tmp_path / "content.db").as_posix()
-    engine, factory = create_engine_and_session(url)
-    for base in (Base, DerivedBase, ExternalBase, MartBase):
-        base.metadata.create_all(engine)
+def test_default_time_uses_real_clock_and_configured_database(pg_schema_url, pg_factory):
+    factory = pg_factory
+    url = pg_schema_url
     prepare(factory)
     add_content(factory)
     before = datetime.now(timezone.utc)
@@ -260,11 +254,10 @@ def test_default_time_uses_real_clock_and_configured_database(tmp_path):
     assert report["status"] == "completed"
     assert before <= datetime.fromisoformat(report["asOf"]) <= after
     assert SnapshotRepository(factory).read("market-explorer").raw["marketNews"][0]["title"] == "年度报告"
-    engine.dispose()
 
 
-def test_link_only_history_keeps_metadata_only(monkeypatch):
-    factory = _factory()
+def test_link_only_history_keeps_metadata_only(pg_factory, monkeypatch):
+    factory = pg_factory
     prepare(factory)
     add_content(factory)
     assert run(factory, monkeypatch)["status"] == "completed"
@@ -282,8 +275,8 @@ def test_link_only_history_keeps_metadata_only(monkeypatch):
 
 @pytest.mark.parametrize("status", ["link_only", "unknown", "restricted"])
 @pytest.mark.parametrize("remove_all_bases", [False, True])
-def test_revoked_history_without_current_pointer_is_redacted(monkeypatch, status, remove_all_bases):
-    factory = _factory()
+def test_revoked_history_without_current_pointer_is_redacted(pg_factory, monkeypatch, status, remove_all_bases):
+    factory = pg_factory
     prepare(factory)
     add_content(factory)
     assert run(factory, monkeypatch)["status"] == "completed"

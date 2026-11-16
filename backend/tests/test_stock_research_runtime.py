@@ -6,7 +6,7 @@ from app.config import Settings
 from app.db.models import PublishedSnapshot
 from app.jobs.locks import ProcessLocalJobLock,data_publication_lock_key
 from app.stocks.marts.stock_research_runtime import rebuild_stock_research
-from backend.tests.jobs.test_build_and_publish_integration import _factory
+
 from backend.tests.marts.test_content_runtime import prepare,state
 
 def old_stock(factory):
@@ -17,16 +17,16 @@ def old_stock(factory):
             row.pop('researchValues',None);row.pop('financialTrends',None)
         p.payload=payload
 
-def test_rebuild_default_dry_run_is_read_only_and_actual_scope():
-    factory=_factory();old_stock(factory);before=state(factory)
+def test_rebuild_default_dry_run_is_read_only_and_actual_scope(pg_factory):
+    factory=pg_factory;old_stock(factory);before=state(factory)
     report=rebuild_stock_research(factory)
     assert report['status']=='planned' and report['wouldPublish'] and report['symbolCount']==1 and report['workbenchCount']==1
     assert report['requestCount']==0 and state(factory)==before
 
 
-def test_operating_history_is_built_after_statement_overlay_and_published_without_other_changes():
+def test_operating_history_is_built_after_statement_overlay_and_published_without_other_changes(pg_factory):
     from app.stocks.operating_history import operating_history
-    factory=_factory();old_stock(factory)
+    factory=pg_factory;old_stock(factory)
     assert rebuild_stock_research(factory,dry_run=False)['status']=='completed'
     with factory() as session:
         snapshot=session.get(PublishedSnapshot,'stock-workbench:600519.SH')
@@ -36,8 +36,8 @@ def test_operating_history_is_built_after_statement_overlay_and_published_withou
     again=rebuild_stock_research(factory,dry_run=False)
     assert again['status']=='no_change' and again['requestCount']==0
 
-def test_rebuild_only_promotes_stock_pair_and_reentry_does_not_promote():
-    factory=_factory();old_stock(factory);before=state(factory)
+def test_rebuild_only_promotes_stock_pair_and_reentry_does_not_promote(pg_factory):
+    factory=pg_factory;old_stock(factory);before=state(factory)
     report=rebuild_stock_research(factory,dry_run=False)
     assert report['status']=='completed' and set(report['promotedProducts'])=={'screener','stock-workbench:600519.SH'}
     after=state(factory)
@@ -59,9 +59,9 @@ def test_company_projection_without_new_holders_preserves_published_holdings():
     assert result['financial']['shareholders']['periods']==current[work.product]['financial']['shareholders']['periods']
 
 
-def test_busy_lock_or_missing_workbench_do_not_write(monkeypatch):
+def test_busy_lock_or_missing_workbench_do_not_write(pg_factory, monkeypatch):
     import app.stocks.marts.stock_research_runtime as module
-    factory=_factory();old_stock(factory);before=state(factory)
+    factory=pg_factory;old_stock(factory);before=state(factory)
     held=ProcessLocalJobLock();assert held.try_acquire(data_publication_lock_key())
     monkeypatch.setattr(module,'job_lock_for_engine',lambda engine:held)
     assert rebuild_stock_research(factory,dry_run=False)['code']=='STOCK_PUBLICATION_LOCK_BUSY'
@@ -76,7 +76,7 @@ def test_cli_requires_publish_and_dry_run_wins(monkeypatch):
     from app.cli.main import app
     import app.cli.stock_research as module
     assert_fixture_configuration_rejected(monkeypatch)
-    monkeypatch.setattr(Settings,'from_env',classmethod(lambda cls:Settings(data_backend='database',database_url='sqlite:///controlled')))
+    monkeypatch.setattr(Settings,'from_env',classmethod(lambda cls:Settings(data_backend='database',database_url='postgresql+psycopg://controlled.invalid/test')))
     class Engine:
         def dispose(self):pass
     monkeypatch.setattr(module,'create_engine_and_session',lambda url:(Engine(),'test factory'))
@@ -87,9 +87,9 @@ def test_cli_requires_publish_and_dry_run_wins(monkeypatch):
     monkeypatch.setattr(module,'rebuild_stock_research',run)
     for args in [[],['--dry-run'],['--publish'],['--publish','--dry-run']]:assert CliRunner().invoke(app,['rebuild-stock-research',*args]).exit_code==0
     assert calls==[True,True,False,True]
-def test_business_only_rebuild_preserves_unrelated_workbench_and_screener(monkeypatch):
+def test_business_only_rebuild_preserves_unrelated_workbench_and_screener(pg_factory, monkeypatch):
     from app.stocks import business_projection
-    factory = _factory()
+    factory = pg_factory
     old_stock(factory)
     product = 'stock-workbench:600519.SH'
     def read_pair():

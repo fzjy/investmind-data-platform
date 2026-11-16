@@ -1,10 +1,11 @@
-"""日常组合组：真实SQLite和HTTP边界替身，不接供应商。"""
+"""日常组合组：真实PostgreSQL和HTTP边界替身，不接供应商。"""
+from backend.tests.support.snapshots import set_snapshot_version
 from datetime import datetime, timedelta, timezone
 from copy import deepcopy
 import pytest
 from sqlalchemy import select, func
 
-from app.db.models import JobCursor, SourcePayload, PublishedSnapshot, Dividend
+from app.db.models import JobCursor, SourcePayload, PublishedSnapshot, Dividend, Security
 from backend.tests.test_dividend_evidence_capture import source, Client, config, db_state
 
 NOW = datetime(2026, 11, 5, tzinfo=timezone.utc)
@@ -42,15 +43,15 @@ def refresh(factory, client=None, **kw):
         execute=kw.pop('execute', True), config=config(kw.pop('budget', 20)), revision_days=7,completion_clock=lambda:instant, **kw)
 
 
-def test_preview_never_writes_and_dynamic_scope():
-    f=source(); before=db_state(f)
+def test_preview_never_writes_and_dynamic_scope(new_pg_factory):
+    f=source(new_pg_factory); before=db_state(f)
     r=refresh(f, execute=False)
     assert r['status']=='planned' and r['requestCount']==0 and r['pendingCount']==1
     assert db_state(f)==before
 
 
-def test_completed_reentry_zero_and_changed_core_refreshes_one_security():
-    f=source(); c=ObservedClient(f)
+def test_completed_reentry_zero_and_changed_core_refreshes_one_security(new_pg_factory):
+    f=source(new_pg_factory); c=ObservedClient(f)
     assert refresh(f,c)['requestCount']==1
     after=db_state(f)
     assert refresh(f,c)['requestCount']==0
@@ -62,8 +63,8 @@ def test_completed_reentry_zero_and_changed_core_refreshes_one_security():
     assert len(c.calls)==2
 
 
-def test_revision_interval_and_cross_day_partial_resume_do_not_repeat_completed():
-    f=source()
+def test_revision_interval_and_cross_day_partial_resume_do_not_repeat_completed(new_pg_factory):
+    f=source(new_pg_factory)
     with f.begin() as s:
         base=s.get(PublishedSnapshot,'screener')
         base.payload={**base.payload,'stocks':[*base.payload['stocks'],{'symbol':'600002.SH'}]}
@@ -77,8 +78,8 @@ def test_revision_interval_and_cross_day_partial_resume_do_not_repeat_completed(
     assert refresh(f,c,now=NOW+timedelta(days=12))['requestCount']==2
 
 
-def test_failed_cycle_blocks_new_date_and_preserves_manifest():
-    f=source(); c=ObservedClient(f)
+def test_failed_cycle_blocks_new_date_and_preserves_manifest(new_pg_factory):
+    f=source(new_pg_factory); c=ObservedClient(f)
     assert refresh(f,c)['status']=='completed'
     class Broken(ObservedClient):
         def call(self,*args):
@@ -91,8 +92,8 @@ def test_failed_cycle_blocks_new_date_and_preserves_manifest():
     assert 'private-token' not in str(second)
 
 
-def test_corrupt_manifest_source_does_not_fallback_or_refetch():
-    f=source(); c=ObservedClient(f); refresh(f,c)
+def test_corrupt_manifest_source_does_not_fallback_or_refetch(new_pg_factory):
+    f=source(new_pg_factory); c=ObservedClient(f); refresh(f,c)
     with f.begin() as s:
         raw=s.scalars(select(SourcePayload).order_by(SourcePayload.id.desc())).first()
         raw.payload={**raw.payload,'items':[]}
@@ -136,10 +137,10 @@ def test_new_workbench_model_refreshes_portfolio_in_same_routine(monkeypatch):
     assert report['portfolio']['publication']['version'] == 'refreshed'
 
 
-def test_manifest_feeds_ledger_and_corruption_never_falls_back():
+def test_manifest_feeds_ledger_and_corruption_never_falls_back(new_pg_factory):
     from app.portfolio.marts.portfolio_ledger import load_portfolio_dividend_ledger
     from datetime import date
-    f=source(); c=ObservedClient(f); refresh(f,c)
+    f=source(new_pg_factory); c=ObservedClient(f); refresh(f,c)
     with f() as s:
         symbol=s.get(PublishedSnapshot,'screener').payload['stocks'][0]['symbol']
     ledger=load_portfolio_dividend_ledger(f,(symbol,),date(2026,8,24),{symbol:'2026-01-01'})
@@ -152,15 +153,15 @@ def test_manifest_feeds_ledger_and_corruption_never_falls_back():
     assert bad['sourceStatus']=='invalid_evidence' and not bad['assets'][symbol]['events']
 
 
-def test_pending_batch_survives_new_base_day_then_refreshes_new_cutoff():
-    f=source()
+def test_pending_batch_survives_new_base_day_then_refreshes_new_cutoff(new_pg_factory):
+    f=source(new_pg_factory)
     with f.begin() as s:
         base=s.get(PublishedSnapshot,'screener')
         base.payload={**base.payload,'stocks':[*base.payload['stocks'],{'symbol':'600002.SH'}]}
     c=ObservedClient(f)
     assert refresh(f,c,budget=1)['status']=='pending'
     with f.begin() as s:
-        base=s.get(PublishedSnapshot,'screener');base.version='next-day'
+        base=s.get(PublishedSnapshot,'screener');set_snapshot_version(s, base, 'next-day')
         base.as_of=base.as_of+timedelta(days=1)
     finished_old=refresh(f,c,budget=1,now=NOW+timedelta(days=3))
     assert finished_old['status']=='pending' and finished_old['requestCount']==1
@@ -176,7 +177,7 @@ def test_pending_batch_survives_new_base_day_then_refreshes_new_cutoff():
     assert refresh(f,c,now=NOW+timedelta(days=4))['requestCount']==0
 
 
-def test_reference_failure_prevents_portfolio_publication_but_reports_http(monkeypatch):
+def test_reference_failure_prevents_portfolio_publication_but_reports_http(new_pg_factory, monkeypatch):
     from app.config import Settings
     import app.portfolio.reference_catalog as catalog
     import app.portfolio.reference_history as history
@@ -184,14 +185,14 @@ def test_reference_failure_prevents_portfolio_publication_but_reports_http(monke
     from contextlib import contextmanager
     import app.shared.readonly_database as database
     import app.db.session as db
-    f=source();engine=f.kw['bind']
+    f=source(new_pg_factory);engine=f.kw['bind']
     monkeypatch.setattr(engine,'dispose',lambda:None)
     monkeypatch.setattr(db,'create_engine_and_session',lambda url:(engine,f))
     monkeypatch.setattr(module(),'portfolio_routine_config',lambda:dict(enabled=True,referenceEnabled=True,dividendsEnabled=False,referenceIntervalDays=1))
     monkeypatch.setattr(catalog,'run_catalog',lambda *a,**kw:dict(status='completed',catalogReady=True,requestCount=0))
     monkeypatch.setattr(history,'run_history',lambda *a,**kw:dict(status='failed',requestCount=2,historyReady=False))
     monkeypatch.setattr(publication,'rebuild_portfolio',lambda *a,**kw:pytest.fail('failed reference must not publish'))
-    r=module().run_portfolio_step(Settings(data_backend='database',database_url='sqlite://'),now=NOW,dry_run=False,publish=True)
+    r=module().run_portfolio_step(Settings(data_backend='database',database_url='postgresql+psycopg://controlled.invalid/test'),now=NOW,dry_run=False,publish=True)
     assert r['status']=='failed' and r['requestCount']==2 and not r['publishReady']
 
 
@@ -207,9 +208,9 @@ def test_only_portfolio_selects_no_other_sources_or_mutates_settings(monkeypatch
     assert r['httpCounts']==dict(stocks=0,macro=0,portfolio=0,total=0)
 
 
-def test_all_units_finished_before_manifest_crash_recovers_without_client():
+def test_all_units_finished_before_manifest_crash_recovers_without_client(new_pg_factory):
     from app.portfolio.dividend_capture import capture_dividend_evidence
-    f=source()
+    f=source(new_pg_factory)
     with f.begin() as s:
         b=s.get(PublishedSnapshot,'screener');b.payload={**b.payload,'stocks':[*b.payload['stocks'],{'symbol':'600002.SH'}]}
     c=ObservedClient(f); first=refresh(f,c,budget=1)
@@ -224,9 +225,10 @@ def test_all_units_finished_before_manifest_crash_recovers_without_client():
     assert result['status']=='completed' and result['requestCount']==0
 
 
-def test_core_change_during_capture_prevents_publish_until_next_increment():
-    f=source()
+def test_core_change_during_capture_prevents_publish_until_next_increment(new_pg_factory):
+    f=source(new_pg_factory)
     with f.begin() as s:
+        s.add(Security(ts_code='600002.SH', symbol='600002', name='第二只股票'))
         b=s.get(PublishedSnapshot,'screener');a=b.payload['stocks'][0]['symbol']
         b.payload={**b.payload,'stocks':[*b.payload['stocks'],{'symbol':'600002.SH'}]}
     c=ObservedClient(f);refresh(f,c)
@@ -241,8 +243,8 @@ def test_core_change_during_capture_prevents_publish_until_next_increment():
     assert refresh(f,c)['requestCount']==1
 
 
-def test_checks_use_each_unit_completion_instead_of_cycle_start():
-    f=source()
+def test_checks_use_each_unit_completion_instead_of_cycle_start(new_pg_factory):
+    f=source(new_pg_factory)
     with f.begin() as s:
         b=s.get(PublishedSnapshot,'screener');b.payload={**b.payload,'stocks':[*b.payload['stocks'],{'symbol':'600002.SH'}]}
     c=ObservedClient(f);refresh(f,c,budget=1)
@@ -252,11 +254,10 @@ def test_checks_use_each_unit_completion_instead_of_cycle_start():
 
 
 @pytest.mark.parametrize('status',['failed','reserved'])
-def test_reference_new_target_cannot_bypass_old_failed_or_unknown_unit(monkeypatch,status):
-    from backend.tests.test_reference_catalog import factory
+def test_reference_new_target_cannot_bypass_old_failed_or_unknown_unit(pg_factory, monkeypatch,status):
     import app.portfolio.reference_history as m
     from app.ingestion.repositories import content_hash
-    f=factory()
+    f=pg_factory
     old=dict(schemaVersion=1,baseVersion='old',asOf='2026-10-21',start='2026-10-20',
              targets=[{'target':'H00300','code':'H00300.CSI'}],fields=list(m.FIELDS),calendarHash='old')
     with f.begin() as s:
@@ -272,7 +273,7 @@ def test_reference_new_target_cannot_bypass_old_failed_or_unknown_unit(monkeypat
     assert r['status']=='blocked' and r['requestCount']==0 and client.calls==0
 
 
-def test_reference_partial_finishes_frozen_window_then_prepares_new_day(monkeypatch):
+def test_reference_partial_finishes_frozen_window_then_prepares_new_day(new_pg_factory, monkeypatch):
     import json,base64,hashlib
     from datetime import date
     from app.db.models import TradeCalendar,DailyPrice
@@ -280,7 +281,7 @@ def test_reference_partial_finishes_frozen_window_then_prepares_new_day(monkeypa
     from app.connectors.tushare.contracts import TushareResponse
     import app.portfolio.reference_catalog as catalog
     import app.portfolio.reference_history as history
-    f=source()
+    f=source(new_pg_factory)
     with f.begin() as s:
         first=s.scalar(select(func.min(DailyPrice.trade_date)))
         day=first
@@ -311,7 +312,7 @@ def test_reference_partial_finishes_frozen_window_then_prepares_new_day(monkeypa
     one=history.capture_history(f,c,execute=True)
     assert one['status']=='pending' and one['requestCount']==1
     with f.begin() as s:
-        base=s.get(PublishedSnapshot,'screener');base.version='new-day';base.as_of+=timedelta(days=1)
+        base=s.get(PublishedSnapshot,'screener');set_snapshot_version(s, base, 'new-day');base.as_of+=timedelta(days=1)
     resumed=history.capture_history(f,c,execute=True)
     assert resumed['code']=='REFERENCE_PREVIOUS_TARGET_FINISHED' and resumed['requestCount']==1
     assert history.capture_history(f,c,execute=True)['status']=='pending'
@@ -325,7 +326,7 @@ def test_reference_partial_finishes_frozen_window_then_prepares_new_day(monkeypa
     published = history.load_benchmarks(f, date.fromisoformat(contract['asOf']), contract['start'])
     assert len(published) == 2
     with f.begin() as s:
-        s.get(PublishedSnapshot, 'screener').version = 'same-day-stock-update'
+        set_snapshot_version(s, s.get(PublishedSnapshot, 'screener'), 'same-day-stock-update')
     reused = history.capture_history(f, c, execute=True)
     assert reused['historyReady'] and reused['requestCount'] == 0
     assert reused['identity'] == history.content_hash(contract)

@@ -170,11 +170,11 @@ def test_fifty_security_history_stays_sparse_and_validates_without_daily_rows():
           f'build_seconds={build_seconds:.4f}, validate_seconds={validation_seconds:.4f}')
 
 
-def test_historical_model_requires_a_version_retained_on_its_own_day():
+def test_historical_model_requires_a_version_retained_on_its_own_day(pg_factory):
     from app.db.models import MetricValue
     from app.portfolio.dividend_yield_inputs import load_yield_inputs
-    from backend.tests.derived.test_inputs import _factory
-    factory = _factory()
+
+    factory = pg_factory
     with factory.begin() as session:
         for day, saved in [('2026-05-20', '2026-05-20'), ('2026-05-21', '2026-06-01')]:
             session.add(MetricValue(ts_code='000001.SZ', metric_id='workbenchNtmDividendYield',

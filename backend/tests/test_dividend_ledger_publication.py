@@ -14,12 +14,12 @@ def valid():
             'events':[],'issues':[],'gaps':[]}}}
 
 
-def test_common_builder_and_explicit_rebuild_both_keep_ledger(monkeypatch):
+def test_common_builder_and_explicit_rebuild_both_keep_ledger(new_pg_factory, monkeypatch):
     import app.portfolio.marts.portfolio_ledger as module
     from app.portfolio.marts.portfolio import PortfolioMartBuilder
     from app.portfolio.marts.portfolio_runtime import rebuild_portfolio
     from app.stocks.derived.inputs import CoreSnapshotRepository
-    f=source();calls=[]
+    f=source(new_pg_factory);calls=[]
     def load(factory,symbols,as_of,price_starts):
         calls.append((symbols,as_of));return valid()
     monkeypatch.setattr(module,'load_portfolio_dividend_ledger',load)
@@ -37,10 +37,10 @@ def test_common_builder_and_explicit_rebuild_both_keep_ledger(monkeypatch):
 
 
 @pytest.mark.parametrize('change', ['future','scope','nan','complete','bad-event','changed-source'])
-def test_bad_ledger_cannot_promote_or_change_old_products(monkeypatch,change):
+def test_bad_ledger_cannot_promote_or_change_old_products(new_pg_factory, monkeypatch,change):
     import app.portfolio.marts.portfolio_ledger as module
     from app.portfolio.marts.portfolio_runtime import rebuild_portfolio
-    f=source();before=state(f);value=valid()
+    f=source(new_pg_factory);before=state(f);value=valid()
     if change=='future':value['asOf']='2027-01-01'
     if change=='scope':value['assets']['OTHER']=deepcopy(value['assets']['600519.SH'])
     if change=='nan':value['assets']['600519.SH']['events']=[{'stockRatio':float('nan')}]
@@ -52,9 +52,9 @@ def test_bad_ledger_cannot_promote_or_change_old_products(monkeypatch,change):
     assert report['status']=='blocked' and state(f)==before
 
 
-def test_without_capture_returns_missing_state_and_never_fixture():
+def test_without_capture_returns_missing_state_and_never_fixture(new_pg_factory):
     from app.portfolio.marts.portfolio_runtime import rebuild_portfolio
-    f=source()
+    f=source(new_pg_factory)
     report=rebuild_portfolio(f,dry_run=False)
     assert report['status']=='completed'
     model=state(f)['pointers']['portfolio'][2]['dividendLedger']
@@ -62,11 +62,11 @@ def test_without_capture_returns_missing_state_and_never_fixture():
     assert model['assets']['600519.SH']['events']==[]
 
 
-def test_yield_publication_calculates_current_model_from_inputs_instead_of_saved_value():
+def test_yield_publication_calculates_current_model_from_inputs_instead_of_saved_value(new_pg_factory):
     from app.db.models import MetricValue
     from sqlalchemy import select
     from app.portfolio.marts.portfolio_runtime import rebuild_portfolio
-    factory = source()
+    factory = source(new_pg_factory)
     with factory.begin() as session:
         model = session.scalar(select(MetricValue).where(MetricValue.metric_id=='workbenchNtmDividendYield'))
         model.value, model.quality, model.missing_fields = 4, 'ok', []

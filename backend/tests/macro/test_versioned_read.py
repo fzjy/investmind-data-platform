@@ -12,11 +12,11 @@ from app.marts.publication import SnapshotPublisher
 from app.shared.contracts import DataMeta, ProviderSnapshot
 from app.shared.errors import DataServiceError
 from app.shared.repository import SnapshotRepository
-from backend.tests.jobs.test_build_and_publish_integration import _factory
 
 
-def test_existing_two_routes_can_read_same_historical_release_without_current_pointer() -> None:
-    factory = _factory()
+
+def test_existing_two_routes_can_read_same_historical_release_without_current_pointer(pg_factory) -> None:
+    factory = pg_factory
     cutoff = datetime(2026, 9, 20, tzinfo=UTC)
     candidates = MacroMartBuilder(MacroRepository(factory)).build(cutoff, "old")
     publisher = SnapshotPublisher(factory)

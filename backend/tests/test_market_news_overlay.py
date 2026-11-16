@@ -5,14 +5,14 @@ import pytest
 from app.content.routes import read_news
 from app.db.models import JobCursor
 from app.market.routes import create_router
-from backend.tests.jobs.test_build_and_publish_integration import _factory
+
 from backend.tests.support.fixtures import FixtureStore
 from backend.tests.support.providers import MarketFixtureProvider
 
 
 @pytest.mark.parametrize("latest", ["bad-stamp", "2026-11-01T08:00:00"])
-def test_invalid_news_health_keeps_market_snapshot_available(latest):
-    factory = _factory()
+def test_invalid_news_health_keeps_market_snapshot_available(pg_factory, latest):
+    factory = pg_factory
     with factory.begin() as session:
         session.add(JobCursor(job_name="news-collector", cursor_key="sina-finance",
                               cursor_value={"latestPublishedAt": latest}))
