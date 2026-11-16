@@ -4,11 +4,10 @@ from datetime import date
 from uuid import UUID
 
 import pytest
-from sqlalchemy import Engine, create_engine, select
+from sqlalchemy import Engine, select
 from sqlalchemy.orm import Session, sessionmaker
 
 from app.connectors.tushare.strategies import Dataset, TushareMode
-from app.db.base import Base
 from app.db.models import JobFailure, JobRun
 from app.stocks.jobs.backfill import PlanFailure
 from app.stocks.jobs.daily_sync import DailySyncExecutionContext
@@ -32,26 +31,14 @@ FULL_MARKET = UniverseSelection(
 )
 
 
-def make_history() -> tuple[Engine, sessionmaker[Session], SqlDailySyncHistory]:
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:",
-        execution_options={
-            "schema_translate_map": {
-                "raw": None,
-                "core": None,
-                "ops": None,
-                "derived": None,
-                "mart": None,
-            }
-        },
-    )
-    Base.metadata.create_all(engine)
-    factory = sessionmaker(engine, expire_on_commit=False)
+def make_history(pg_factory) -> tuple[Engine, sessionmaker[Session], SqlDailySyncHistory]:
+    engine = pg_factory.kw["bind"]
+    factory = pg_factory
     return engine, factory, SqlDailySyncHistory(factory)
 
 
-def test_start_writes_running_row_with_cli_execution_details() -> None:
-    engine, factory, history = make_history()
+def test_start_writes_running_row_with_cli_execution_details(pg_factory) -> None:
+    engine, factory, history = make_history(pg_factory)
 
     run_id = history.start(
         date(2026, 9, 2),
@@ -74,8 +61,8 @@ def test_start_writes_running_row_with_cli_execution_details() -> None:
     engine.dispose()
 
 
-def test_finish_and_failure_persist_daily_run_details() -> None:
-    engine, factory, history = make_history()
+def test_finish_and_failure_persist_daily_run_details(pg_factory) -> None:
+    engine, factory, history = make_history(pg_factory)
     run_id = history.start(
         date(2026, 9, 2),
         TushareMode.STANDARD,
@@ -134,8 +121,8 @@ def test_finish_and_failure_persist_daily_run_details() -> None:
     engine.dispose()
 
 
-def test_scheduler_execution_context_is_preserved_in_history() -> None:
-    engine, factory, history = make_history()
+def test_scheduler_execution_context_is_preserved_in_history(pg_factory) -> None:
+    engine, factory, history = make_history(pg_factory)
     execution = DailySyncExecutionContext(
         trigger="scheduler",
         scheduler_instance_id="instance-1",
@@ -181,8 +168,8 @@ def test_scheduler_execution_requires_instance_id() -> None:
         DailySyncExecutionContext(trigger="scheduler")
 
 
-def test_has_completed_requires_exact_daily_completed_universe_row() -> None:
-    engine, factory, history = make_history()
+def test_has_completed_requires_exact_daily_completed_universe_row(pg_factory) -> None:
+    engine, factory, history = make_history(pg_factory)
     with factory.begin() as session:
         session.add_all(
             (
@@ -220,8 +207,8 @@ def test_has_completed_requires_exact_daily_completed_universe_row() -> None:
 
 
 @pytest.mark.parametrize("status", ("skipped", "locked"))
-def test_record_terminal_writes_finished_row_with_uuid(status: str) -> None:
-    engine, factory, history = make_history()
+def test_record_terminal_writes_finished_row_with_uuid(pg_factory, status: str) -> None:
+    engine, factory, history = make_history(pg_factory)
 
     run_id = history.record_terminal(
         date(2026, 9, 2),
@@ -252,8 +239,8 @@ def test_record_terminal_writes_finished_row_with_uuid(status: str) -> None:
     engine.dispose()
 
 
-def test_job_run_default_details_remains_empty_for_old_callers() -> None:
-    engine, factory, _history = make_history()
+def test_job_run_default_details_remains_empty_for_old_callers(pg_factory) -> None:
+    engine, factory, _history = make_history(pg_factory)
     with factory.begin() as session:
         session.add(
             JobRun(

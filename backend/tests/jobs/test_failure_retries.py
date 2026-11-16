@@ -3,11 +3,9 @@ from __future__ import annotations
 from types import SimpleNamespace
 
 import pytest
-from sqlalchemy import create_engine, select
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import select
 
 from app.connectors.tushare.strategies import Dataset, RequestPlan, TushareMode
-from app.db.base import Base
 from app.db.models import JobFailure, JobRun
 from app.jobs.failure_retries import (
     FailureQuery,
@@ -46,23 +44,6 @@ def test_replay_request_round_trips_every_request_plan_field() -> None:
     assert restored_mode is TushareMode.VIP
 
 
-def _sqlite_factory():
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:",
-        execution_options={
-            "schema_translate_map": {
-                "raw": None,
-                "core": None,
-                "ops": None,
-                "derived": None,
-                "mart": None,
-            }
-        },
-    )
-    Base.metadata.create_all(engine)
-    return engine, sessionmaker(engine, expire_on_commit=False)
-
-
 def _daily_payload() -> dict[str, object]:
     return serialize_replay_request(
         RequestPlan(
@@ -80,8 +61,8 @@ def _daily_payload() -> dict[str, object]:
     )
 
 
-def test_sql_failure_repository_filters_unresolved_failures_and_resolves_one() -> None:
-    engine, factory = _sqlite_factory()
+def test_sql_failure_repository_filters_unresolved_failures_and_resolves_one(pg_factory) -> None:
+    factory = pg_factory
     with factory.begin() as session:
         session.add_all(
             [
@@ -89,6 +70,7 @@ def test_sql_failure_repository_filters_unresolved_failures_and_resolves_one() -
                 JobRun(id="run-2", job_name="backfill", business_key="two", status="failed"),
             ]
         )
+        session.flush()
         session.add_all(
             [
                 JobFailure(
@@ -148,7 +130,6 @@ def test_sql_failure_repository_filters_unresolved_failures_and_resolves_one() -
     assert stored.attempts == 2
     assert stored.last_attempted_at is not None
     assert stored.resolved_at is not None
-    engine.dispose()
 
 
 class MemoryFailureStore:
@@ -290,10 +271,11 @@ def test_deserialize_replay_request_rejects_an_unsupported_schema() -> None:
         deserialize_replay_request({"schemaVersion": 2})
 
 
-def test_sql_failure_repository_records_a_failed_retry_without_resolving_it() -> None:
-    engine, factory = _sqlite_factory()
+def test_sql_failure_repository_records_a_failed_retry_without_resolving_it(pg_factory) -> None:
+    factory = pg_factory
     with factory.begin() as session:
         session.add(JobRun(id="run-1", job_name="backfill", business_key="one", status="failed"))
+        session.flush()
         failure = JobFailure(
             job_run_id="run-1",
             dataset="daily",
@@ -324,4 +306,3 @@ def test_sql_failure_repository_records_a_failed_retry_without_resolving_it() ->
     assert updated.attempts == 2
     assert updated.last_attempted_at is not None
     assert updated.resolved_at is None
-    engine.dispose()

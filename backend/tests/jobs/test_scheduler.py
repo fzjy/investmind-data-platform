@@ -21,9 +21,7 @@ from pydantic import SecretStr
 
 from app.config import Settings
 from app.connectors.tushare.strategies import TushareMode
-from app.db.base import Base
 from app.db.models import JobRun, PublishedSnapshot, TradeCalendar
-from app.db.session import create_engine_and_session
 from app.jobs import scheduler as scheduler_module
 from app.stocks.jobs.daily_sync_runtime import DailySyncRuntime
 from app.stocks.jobs.daily_sync_history import daily_sync_business_key
@@ -200,17 +198,16 @@ def test_registered_macro_cron_matches_schedule_helpers_across_dst(local_time, n
 
 
 @pytest.mark.parametrize("status", ["partial", "failed"])
-def test_real_registered_cron_runs_once_per_week_even_when_attempt_fails(status):
+def test_real_registered_cron_runs_once_per_week_even_when_attempt_fails(pg_factory, status):
     from contextlib import contextmanager
     from app.macro.jobs.macro_sync import MacroSyncReport
     from app.macro.jobs.macro_sync_runtime import MacroSyncRuntime
     from app.macro.jobs.macro_scheduler import MacroScheduledCoordinator
     from app.macro.jobs.macro_sync_history import SqlMacroSyncHistory
-    from app.jobs.locks import ProcessLocalJobLock
+    from app.jobs.locks import PostgresAdvisoryJobLock
     from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
     settings = Settings(sync_timezone="America/New_York", macro_sync_day_of_week="sun", macro_sync_time="01:30")
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
-    Base.metadata.create_all(engine)
+    engine, factory = pg_factory.kw["bind"], pg_factory
     catalog = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE)
     calls = []
     class Job:
@@ -223,7 +220,7 @@ def test_real_registered_cron_runs_once_per_week_even_when_attempt_fails(status)
     coordinator = MacroScheduledCoordinator(
         settings=settings, catalog=catalog, history=SqlMacroSyncHistory(factory),
         state=SchedulerStateRepository(factory), runtime_factory=runtime,
-        publication_lock=ProcessLocalJobLock(),
+        publication_lock=PostgresAdvisoryJobLock(engine),
     )
     scheduler = configure_scheduler(create_scheduler(settings), settings, RecordingCoordinator(), macro_job=lambda: None)
     trigger = scheduler.get_job("sync-macro").trigger
@@ -1596,12 +1593,12 @@ def test_runtime_context_cleanup_failure_is_reported_without_primary(
     ),
 )
 def test_real_builder_wires_shared_selection_and_instance_id(
+    pg_factory,
     monkeypatch,
     selection: UniverseSelection,
     configured_profile: str,
 ) -> None:
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
-    Base.metadata.create_all(engine)
+    engine, factory = pg_factory.kw["bind"], pg_factory
     with factory.begin() as session:
         session.add(TradeCalendar(exchange="SSE", cal_date=NOW.date(), is_open=True))
     job = object()
@@ -1747,11 +1744,10 @@ def test_executor_boundary_never_logs_original_exception_or_chain(
 
 @pytest.mark.parametrize("gaps_remain,other_failure", ((False, False), (True, False), (False, True)))
 def test_periodic_production_refresh_reconciles_backlog_without_restarting(
+    pg_factory,
     monkeypatch, gaps_remain: bool, other_failure: bool,
 ) -> None:
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
-    Base.metadata.create_all(engine)
-    PublishedSnapshot.__table__.create(engine)
+    engine, factory = pg_factory.kw["bind"], pg_factory
     state = SchedulerStateRepository(factory)
     state.ensure_checkpoint(UNIVERSE, fallback=NOW.date(), now=NOW)
     with factory.begin() as session:
@@ -2067,13 +2063,12 @@ def test_macro_startup_failure_does_not_mask_primary_daily_error(monkeypatch):
 
 
 @pytest.mark.parametrize("enabled", [False, True])
-def test_production_builder_opens_shared_macro_runtime_lazily(monkeypatch, enabled):
+def test_production_builder_opens_shared_macro_runtime_lazily(pg_factory, monkeypatch, enabled):
     from contextlib import contextmanager
     from app.macro.jobs.macro_sync import MacroSyncReport
     from app.macro.jobs.macro_sync_runtime import MacroSyncRuntime
     from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
-    Base.metadata.create_all(engine)
+    engine, factory = pg_factory.kw["bind"], pg_factory
     with factory.begin() as session:
         session.add(TradeCalendar(exchange="SSE", cal_date=NOW.date(), is_open=True))
     calls = []

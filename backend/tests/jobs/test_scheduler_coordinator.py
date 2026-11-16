@@ -7,9 +7,7 @@ from datetime import UTC, date, datetime, timedelta
 import pytest
 
 from app.connectors.tushare.strategies import TushareMode
-from app.db.base import Base
 from app.db.models import JobFailure, JobRun, TradeCalendar
-from app.db.session import create_engine_and_session
 from app.stocks.jobs.daily_sync import DailySyncOptions, DailySyncReport
 from app.stocks.jobs.daily_sync_history import daily_sync_business_key
 from app.stocks.jobs.scheduler_coordinator import ScheduledDailySyncCoordinator
@@ -101,6 +99,7 @@ class RecordingJob:
                 )
             )
             if status == "failed":
+                session.flush()
                 session.add(
                     JobFailure(
                         job_run_id=run_id,
@@ -135,9 +134,8 @@ def selection() -> UniverseSelection:
 
 
 @pytest.fixture
-def repository() -> Iterator[SchedulerStateRepository]:
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
-    Base.metadata.create_all(engine)
+def repository(pg_factory) -> Iterator[SchedulerStateRepository]:
+    engine, factory = pg_factory.kw["bind"], pg_factory
     yield SchedulerStateRepository(factory)
     engine.dispose()
 

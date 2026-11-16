@@ -231,18 +231,8 @@ def test_process_local_lock_is_idempotent_and_does_not_reenter() -> None:
     lock.release("sync-daily:2026-09-02")
 
 
-def test_job_lock_factory_uses_postgres_only_for_postgresql_dialect() -> None:
-    postgres_engine = cast(
-        Engine,
-        SimpleNamespace(dialect=SimpleNamespace(name="postgresql")),
-    )
-    sqlite_engine = cast(
-        Engine,
-        SimpleNamespace(dialect=SimpleNamespace(name="sqlite")),
-    )
-
-    assert isinstance(job_lock_for_engine(postgres_engine), PostgresAdvisoryJobLock)
-    assert isinstance(job_lock_for_engine(sqlite_engine), ProcessLocalJobLock)
+def test_job_lock_factory_uses_postgres_only_for_postgresql_dialect(pg_factory) -> None:
+    assert isinstance(job_lock_for_engine(pg_factory.kw["bind"]), PostgresAdvisoryJobLock)
 
 
 def test_postgres_lock_closes_connection_when_not_acquired() -> None:

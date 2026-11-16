@@ -1,36 +1,14 @@
 from datetime import date
 
-from sqlalchemy import create_engine, select
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
+from sqlalchemy import select
 
-from app.db.base import Base
 from app.db.models import JobRun
 from app.jobs.build_and_publish import BuildAndPublishOptions
 from app.jobs.build_history import SqlBuildHistory
 
 
-def _factory() -> sessionmaker:
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:",
-        poolclass=StaticPool,
-        connect_args={"check_same_thread": False},
-        execution_options={
-            "schema_translate_map": {
-                "raw": None,
-                "core": None,
-                "ops": None,
-                "derived": None,
-                "mart": None,
-            }
-        },
-    )
-    Base.metadata.create_all(engine)
-    return sessionmaker(engine, expire_on_commit=False)
-
-
-def test_long_symbol_scope_uses_bounded_deterministic_business_key() -> None:
-    factory = _factory()
+def test_long_symbol_scope_uses_bounded_deterministic_business_key(pg_factory) -> None:
+    factory = pg_factory
     history = SqlBuildHistory(factory)
     symbols = tuple(f"{index:06d}.SZ" for index in range(1, 51))
     changed_symbols = (*symbols[:-1], "600519.SH")

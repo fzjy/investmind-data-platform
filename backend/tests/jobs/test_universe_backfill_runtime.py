@@ -2,14 +2,12 @@ from __future__ import annotations
 
 from datetime import date
 from pathlib import Path
-from types import SimpleNamespace
 
 import pytest
 
 import app.stocks.jobs.universe_backfill_runtime as runtime_module
 from app.config import Settings
 from app.connectors.tushare.strategies import TushareMode
-from app.db.base import Base
 from app.db.session import create_engine_and_session
 from app.stocks.derived.inputs import CoreSnapshotRepository
 from app.ingestion.pagination import PaginatedPlanRunner
@@ -35,10 +33,10 @@ SELECTION = UniverseSelection(
 )
 
 
-def database_settings(**changes: object) -> Settings:
+def database_settings(pg_schema_url, **changes: object) -> Settings:
     values: dict[str, object] = {
         "_env_file": None,
-        "database_url": "sqlite+pysqlite:///:memory:",
+        "database_url": pg_schema_url,
         "tushare_token": "test-token",
         "tushare_mode": "standard",
         "tushare_standard_requests_per_minute": 17,
@@ -73,18 +71,14 @@ class RecordingClient:
 
 
 def test_runtime_uses_settings_selection_and_shared_filtered_pipeline(
+    pg_schema_url,
     monkeypatch: pytest.MonkeyPatch,
-    tmp_path: Path,
 ) -> None:
-    database_url = f"sqlite+pysqlite:///{tmp_path / 'runtime.sqlite3'}"
-    engine, _factory = create_engine_and_session(database_url)
-    Base.metadata.create_all(engine)
-    engine.dispose()
     RecordingClient.instances.clear()
     monkeypatch.setattr(runtime_module, "TushareClient", RecordingClient)
 
     with open_universe_backfill_runtime(
-        database_settings(database_url=database_url),
+        database_settings(pg_schema_url),
     ) as runtime:
         assert isinstance(runtime, UniverseBackfillRuntime)
         assert runtime.selection.profile == "representative-50"
@@ -140,11 +134,16 @@ def patch_lifecycle_dependencies(
     *,
     client_enter_error: BaseException | None = None,
 ) -> None:
-    class FakeEngine:
-        dialect = SimpleNamespace(name="sqlite")
+    def create(database_url):
+        engine, factory = create_engine_and_session(database_url)
+        dispose = engine.dispose
 
-        def dispose(self) -> None:
+        def record_dispose():
             events.append("engine.dispose")
+            dispose()
+
+        monkeypatch.setattr(engine, "dispose", record_dispose)
+        return engine, factory
 
     class FakeRepository:
         def __init__(self, _factory: object) -> None:
@@ -185,7 +184,7 @@ def patch_lifecycle_dependencies(
     monkeypatch.setattr(
         runtime_module,
         "create_engine_and_session",
-        lambda _database_url: (FakeEngine(), lambda: None),
+        create,
     )
     monkeypatch.setattr(runtime_module, "DailySyncRepository", FakeRepository)
     monkeypatch.setattr(runtime_module, "UniverseResolver", FakeResolver)
@@ -199,12 +198,13 @@ def assert_resources_closed_once(events: list[str]) -> None:
 
 
 def test_runtime_closes_client_and_engine_on_normal_exit(
+    pg_schema_url,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     events: list[str] = []
     patch_lifecycle_dependencies(monkeypatch, events)
 
-    with open_universe_backfill_runtime(database_settings()):
+    with open_universe_backfill_runtime(database_settings(pg_schema_url)):
         events.append("body")
 
     assert events == [
@@ -217,6 +217,7 @@ def test_runtime_closes_client_and_engine_on_normal_exit(
 
 
 def test_runtime_closes_client_and_engine_when_construction_fails(
+    pg_schema_url,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     events: list[str] = []
@@ -228,13 +229,14 @@ def test_runtime_closes_client_and_engine_when_construction_fails(
     monkeypatch.setattr(runtime_module, "UniverseRowFilter", raising_filter)
 
     with pytest.raises(RuntimeError, match="controlled construction failure"):
-        with open_universe_backfill_runtime(database_settings()):
+        with open_universe_backfill_runtime(database_settings(pg_schema_url)):
             raise AssertionError("failed construction must not yield")
 
     assert_resources_closed_once(events)
 
 
 def test_runtime_closes_client_and_engine_when_client_enter_fails(
+    pg_schema_url,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     events: list[str] = []
@@ -246,7 +248,7 @@ def test_runtime_closes_client_and_engine_when_client_enter_fails(
     )
 
     with pytest.raises(RuntimeError, match="client enter failed") as raised:
-        with open_universe_backfill_runtime(database_settings()):
+        with open_universe_backfill_runtime(database_settings(pg_schema_url)):
             raise AssertionError("failed client enter must not yield")
 
     assert raised.value is error
@@ -256,6 +258,7 @@ def test_runtime_closes_client_and_engine_when_client_enter_fails(
 
 @pytest.mark.parametrize("error_type", (RuntimeError, KeyboardInterrupt, SystemExit))
 def test_runtime_closes_resources_and_propagates_body_exceptions(
+    pg_schema_url,
     monkeypatch: pytest.MonkeyPatch,
     error_type: type[BaseException],
 ) -> None:
@@ -264,7 +267,7 @@ def test_runtime_closes_resources_and_propagates_body_exceptions(
     error = error_type("consumer failed")
 
     with pytest.raises(error_type) as raised:
-        with open_universe_backfill_runtime(database_settings()):
+        with open_universe_backfill_runtime(database_settings(pg_schema_url)):
             raise error
 
     assert raised.value is error
@@ -289,9 +292,10 @@ def test_runtime_closes_resources_and_propagates_body_exceptions(
     ],
 )
 def test_runtime_requires_database_token_and_as_of(
+    pg_schema_url,
     changes: dict[str, object],
     message: str,
 ) -> None:
     with pytest.raises(UniverseBackfillRuntimeError, match=message):
-        with open_universe_backfill_runtime(database_settings(**changes)):
+        with open_universe_backfill_runtime(database_settings(pg_schema_url, **changes)):
             raise AssertionError("invalid runtime must not open")

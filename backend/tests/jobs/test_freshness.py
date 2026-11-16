@@ -4,12 +4,10 @@ from collections.abc import Iterator
 from datetime import date, datetime, time, timezone
 
 import pytest
-from sqlalchemy import create_engine, event
+from sqlalchemy import event
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import ORMExecuteState, Session, sessionmaker
-from sqlalchemy.pool import StaticPool
 
-from app.db.base import Base, DerivedBase, MartBase
 from app.db.models import PublishedSnapshot
 from app.jobs.freshness import FreshnessService
 
@@ -18,24 +16,8 @@ NOW = datetime(2026, 9, 5, 4, 0, tzinfo=timezone.utc)
 
 
 @pytest.fixture
-def factory() -> sessionmaker[Session]:
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:",
-        poolclass=StaticPool,
-        execution_options={
-            "schema_translate_map": {
-                "raw": None,
-                "core": None,
-                "ops": None,
-                "derived": None,
-                "mart": None,
-            }
-        },
-    )
-    Base.metadata.create_all(engine)
-    DerivedBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
-    return sessionmaker(engine, expire_on_commit=False)
+def factory(pg_factory):
+    return pg_factory
 
 
 @pytest.fixture

@@ -5,11 +5,10 @@ from dataclasses import FrozenInstanceError, replace
 from datetime import UTC, date, datetime
 
 import pytest
-from sqlalchemy import create_engine, select
+from sqlalchemy import select
 from sqlalchemy.orm import Session, sessionmaker
 
 from app.connectors.tushare.strategies import TushareMode
-from app.db.base import Base
 from app.db.models import JobRun
 from app.stocks.jobs.universe_backfill import (
     UniverseBackfillCounts,
@@ -29,22 +28,8 @@ LATER = datetime(2026, 9, 13, 9, 0, tzinfo=UTC)
 
 
 @pytest.fixture
-def factory() -> Iterator[sessionmaker[Session]]:
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:",
-        execution_options={
-            "schema_translate_map": {
-                "raw": None,
-                "core": None,
-                "ops": None,
-                "derived": None,
-                "mart": None,
-            }
-        },
-    )
-    Base.metadata.create_all(engine)
-    yield sessionmaker(engine, expire_on_commit=False)
-    engine.dispose()
+def factory(pg_factory):
+    return pg_factory
 
 
 @pytest.fixture
@@ -232,7 +217,7 @@ def test_force_fails_running_status_even_when_finished_at_is_present(
 
     old = run(factory, first.run_id)
     assert old.status == "failed"
-    assert old.finished_at == LATER.replace(tzinfo=None)
+    assert old.finished_at == LATER
     assert old.details["supersededByForce"] is True
 
 

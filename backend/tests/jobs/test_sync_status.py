@@ -476,12 +476,10 @@ def test_consecutive_failures_degrade_status(harness: StatusHarness) -> None:
 
 
 @pytest.fixture
-def macro_reader(monkeypatch):
+def macro_reader(pg_factory, monkeypatch):
     import httpx
     from app.config import Settings
-    from app.db.base import Base, ExternalBase
     from app.db.models import PublishedSnapshot
-    from app.db.session import create_engine_and_session
     from app.jobs import sync_status
     from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
 
@@ -493,10 +491,7 @@ def macro_reader(monkeypatch):
     from app.connectors.macro.fred import FredMacroProvider
     monkeypatch.setattr(TushareClient, "__init__", forbidden)
     monkeypatch.setattr(FredMacroProvider, "__init__", forbidden)
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
-    Base.metadata.create_all(engine)
-    PublishedSnapshot.__table__.create(engine)
-    ExternalBase.metadata.create_all(engine)
+    engine, factory = pg_factory.kw["bind"], pg_factory
     catalog = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE)
     yield sync_status.MacroStatusReader(factory, Settings(), catalog=catalog), factory, engine, catalog
     engine.dispose()

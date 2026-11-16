@@ -6,22 +6,20 @@ from datetime import UTC, date, datetime, timedelta
 import pytest
 from sqlalchemy.orm import Session, sessionmaker
 
-from app.db.base import Base
 from app.db.models import JobFailure, JobRun, TradeCalendar
-from app.db.session import create_engine_and_session
 from app.stocks.jobs.daily_sync_history import daily_sync_business_key
 from app.jobs.scheduler_state import SchedulerStateRepository
 from app.stocks.universes.models import UniverseSelection
 
 
-NOW = datetime(2026, 9, 5, 12, 0)
+NOW = datetime(2026, 9, 5, 12, 0, tzinfo=UTC)
 RECOVERY_NOW = NOW.replace(tzinfo=UTC)
-LATER = datetime(2026, 9, 5, 13, 0)
-RESOLVED = datetime(2026, 9, 5, 14, 0)
+LATER = datetime(2026, 9, 5, 13, 0, tzinfo=UTC)
+RESOLVED = datetime(2026, 9, 5, 14, 0, tzinfo=UTC)
 
 
 def dt(hour: int, minute: int) -> datetime:
-    return datetime(2026, 9, 5, hour, minute)
+    return datetime(2026, 9, 5, hour, minute, tzinfo=UTC)
 
 
 @pytest.fixture
@@ -47,9 +45,8 @@ def other_selection() -> UniverseSelection:
 
 
 @pytest.fixture
-def repository() -> Iterator[SchedulerStateRepository]:
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
-    Base.metadata.create_all(engine)
+def repository(pg_factory) -> Iterator[SchedulerStateRepository]:
+    engine, factory = pg_factory.kw["bind"], pg_factory
     yield SchedulerStateRepository(factory)
     engine.dispose()
 

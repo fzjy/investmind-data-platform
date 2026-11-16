@@ -6,7 +6,6 @@ from datetime import date
 import pytest
 from sqlalchemy.orm import Session, sessionmaker
 
-from app.db.base import Base
 from app.db.models import (
     DisclosureSchedule,
     Repurchase,
@@ -15,17 +14,15 @@ from app.db.models import (
     ShareUnlock,
     TradeCalendar,
 )
-from app.db.session import create_engine_and_session
 from app.stocks.jobs.daily_sync_repository import DailySyncRepository, DisclosureTarget
 from app.stocks.universes.models import UniverseSecurityState
 
 
 @pytest.fixture
-def repository_fixture() -> Iterator[
+def repository_fixture(pg_factory) -> Iterator[
     tuple[DailySyncRepository, sessionmaker[Session]]
 ]:
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
-    Base.metadata.create_all(engine)
+    engine, factory = pg_factory.kw["bind"], pg_factory
 
     with factory.begin() as session:
         session.add_all(
@@ -50,6 +47,7 @@ def repository_fixture() -> Iterator[
                 ),
             ]
         )
+        session.flush()
         session.add_all(
             [
                 TradeCalendar(

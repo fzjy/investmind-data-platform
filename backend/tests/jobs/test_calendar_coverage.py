@@ -3,9 +3,7 @@ from datetime import UTC, date, datetime, timedelta
 import pytest
 from sqlalchemy import select, func
 
-from app.db.base import Base
 from app.db.models import SchedulerCheckpoint, TradeCalendar
-from app.db.session import create_engine_and_session
 from app.stocks.jobs.scheduler_planning import CatchupPlanner, ExpectedBusinessDateResolver, TradeCalendarUnavailable
 from app.jobs.scheduler_state import SchedulerStateRepository
 from app.stocks.universes.models import UniverseSelection
@@ -16,9 +14,8 @@ from types import SimpleNamespace
 
 
 @pytest.fixture
-def calendar():
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
-    Base.metadata.create_all(engine)
+def calendar(pg_factory):
+    engine, factory = pg_factory.kw["bind"], pg_factory
     yield SchedulerStateRepository(factory), factory
     engine.dispose()
 

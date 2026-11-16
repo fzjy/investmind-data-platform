@@ -25,10 +25,10 @@ SELECTION = UniverseSelection(
 )
 
 
-def make_settings(**changes: object) -> Settings:
+def make_settings(pg_schema_url, **changes: object) -> Settings:
     values: dict[str, object] = {
         "_env_file": None,
-        "database_url": "sqlite+pysqlite:///:memory:",
+        "database_url": pg_schema_url,
         "tushare_token": "test-token",
         "tushare_mode": "standard",
         "tushare_standard_requests_per_minute": 17,
@@ -40,6 +40,7 @@ def make_settings(**changes: object) -> Settings:
 
 
 def monkeypatch_runtime_dependencies(
+    pg_schema_url,
     monkeypatch: pytest.MonkeyPatch,
     events: list[str],
     *,
@@ -47,10 +48,6 @@ def monkeypatch_runtime_dependencies(
     pipeline_error: Exception | None = None,
 ) -> dict[str, object]:
     captured: dict[str, object] = {}
-
-    class FakeEngine:
-        def dispose(self) -> None:
-            events.append("engine.dispose")
 
     class FakeRepository:
         def __init__(self, factory: object) -> None:
@@ -119,8 +116,14 @@ def monkeypatch_runtime_dependencies(
         def __init__(self, **kwargs: object) -> None:
             captured["job_kwargs"] = kwargs
 
-    engine = FakeEngine()
-    factory = object()
+    engine, factory = runtime_module.create_engine_and_session(pg_schema_url)
+    dispose = engine.dispose
+
+    def record_dispose():
+        events.append("engine.dispose")
+        dispose()
+
+    monkeypatch.setattr(engine, "dispose", record_dispose)
     monkeypatch.setattr(
         runtime_module,
         "create_engine_and_session",
@@ -171,13 +174,14 @@ def monkeypatch_runtime_dependencies(
 
 
 def test_open_runtime_builds_one_selection_and_closes_resources(
+    pg_schema_url,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     events: list[str] = []
-    state = monkeypatch_runtime_dependencies(monkeypatch, events)
+    state = monkeypatch_runtime_dependencies(pg_schema_url, monkeypatch, events)
 
     with open_daily_sync_runtime(
-        make_settings(),
+        make_settings(pg_schema_url),
         "representative-50",
         None,
     ) as runtime:
@@ -207,11 +211,13 @@ def test_open_runtime_builds_one_selection_and_closes_resources(
 
 
 def test_open_runtime_closes_client_when_client_enter_raises(
+    pg_schema_url,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     events: list[str] = []
     error = RuntimeError("client enter failed")
     monkeypatch_runtime_dependencies(
+        pg_schema_url,
         monkeypatch,
         events,
         client_enter_error=error,
@@ -219,7 +225,7 @@ def test_open_runtime_closes_client_when_client_enter_raises(
 
     with pytest.raises(RuntimeError, match="client enter failed") as raised:
         with open_daily_sync_runtime(
-            make_settings(),
+            make_settings(pg_schema_url),
             "representative-50",
             None,
         ):
@@ -230,11 +236,13 @@ def test_open_runtime_closes_client_when_client_enter_raises(
 
 
 def test_open_runtime_closes_resources_when_assembly_raises_after_enter(
+    pg_schema_url,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     events: list[str] = []
     error = RuntimeError("pipeline assembly failed")
     monkeypatch_runtime_dependencies(
+        pg_schema_url,
         monkeypatch,
         events,
         pipeline_error=error,
@@ -242,7 +250,7 @@ def test_open_runtime_closes_resources_when_assembly_raises_after_enter(
 
     with pytest.raises(RuntimeError, match="pipeline assembly failed") as raised:
         with open_daily_sync_runtime(
-            make_settings(),
+            make_settings(pg_schema_url),
             "representative-50",
             None,
         ):
@@ -253,14 +261,15 @@ def test_open_runtime_closes_resources_when_assembly_raises_after_enter(
 
 
 def test_open_runtime_closes_resources_when_consumer_raises(
+    pg_schema_url,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     events: list[str] = []
-    monkeypatch_runtime_dependencies(monkeypatch, events)
+    monkeypatch_runtime_dependencies(pg_schema_url, monkeypatch, events)
 
     with pytest.raises(RuntimeError, match="consumer failed"):
         with open_daily_sync_runtime(
-            make_settings(tushare_mode="vip"),
+            make_settings(pg_schema_url, tushare_mode="vip"),
             "representative-50",
             None,
         ) as runtime:
@@ -272,24 +281,25 @@ def test_open_runtime_closes_resources_when_consumer_raises(
 
 
 @pytest.mark.parametrize(
-    ("settings", "message"),
+    ("missing", "message"),
     [
-        (make_settings(database_url=None), "sync-daily requires DANG_DATABASE_URL"),
-        (make_settings(tushare_token=None), "sync-daily requires DANG_TUSHARE_TOKEN"),
+        ("database_url", "sync-daily requires DANG_DATABASE_URL"),
+        ("tushare_token", "sync-daily requires DANG_TUSHARE_TOKEN"),
     ],
 )
 def test_open_runtime_requires_database_and_token(
-    settings: Settings,
+    pg_schema_url,
+    missing: str,
     message: str,
 ) -> None:
     with pytest.raises(DailySyncRuntimeError, match=message):
-        with open_daily_sync_runtime(settings, "representative-50", None):
+        with open_daily_sync_runtime(make_settings(pg_schema_url, **{missing: None}), "representative-50", None):
             raise AssertionError("invalid runtime must not open")
 
 
 def test_redact_runtime_error_reuses_cli_sensitive_value_rules() -> None:
     assert redact_runtime_error(
-        "test-token sqlite:///secret.db postgresql://user:password@db/dang",
+        "test-token postgresql://private@db/private postgresql://user:password@db/dang",
         "test-token",
-        "sqlite:///secret.db",
+        "postgresql://private@db/private",
     ) == "*** *** postgresql://user:***@db/dang"
