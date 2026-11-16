@@ -91,6 +91,8 @@ class PulseSync:
                         errors.append(error)
                         try:
                             with self.factory.begin() as session:
+                                from app.acquisition.adapters.markets import record_market
+                                record_market(session,'limit_status',code,parameters(code, day),now,error=error,run_id=run_id)
                                 session.add(JobFailure(job_run_id=run_id, dataset=JOB_NAME,
                                     request_key=repo.identity(code, day, self.fingerprint), error_code=error,
                                     message=error, request_payload={'tsCode': code, 'tradeDate': day.isoformat()},

@@ -98,7 +98,14 @@ class ClassificationSync:
             params = {"ts_code": symbol, "is_new": flag}
             fields = MEMBER_FIELDS
         prior_count = self.budget.used
-        response = self.client.call("index_classify" if catalog else "index_member_all", params, fields)
+        try:
+            response = self.client.call("index_classify" if catalog else "index_member_all", params, fields)
+        except TushareError:
+            from app.acquisition.adapters.classification import record_classification
+            with self.repository.factory.begin() as session:
+                record_classification(session,identity,'SW2021' if catalog else symbol,member=not catalog,
+                                      error='CLASSIFICATION_SOURCE_FAILED')
+            raise
         return self.repository.record_response(identity, unit, response, params, fields,
             page_size=self.policy.classification.sync.pageSize, observed_at=datetime.now(timezone.utc),
             request_count=self.budget.used - prior_count)

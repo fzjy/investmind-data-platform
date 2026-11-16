@@ -213,7 +213,13 @@ def capture(factory,client=None,*,execute=False,now=None,max_http=None):
             if report['failedCount'] or report['status']=='blocked' or report['requestCount']==0:raise ValueError('BUSINESS_CAPTURE_BLOCKED')
         if execute and ready:
             with factory.begin() as s:
-                if _cursor(s,'completed:'+content_hash(c)) is None:s.add(JobCursor(job_name=JOB,cursor_key='completed:'+content_hash(c),cursor_value=dict(completedAt=now.isoformat())))
+                if _cursor(s,'completed:'+content_hash(c)) is None:
+                    from app.acquisition.contracts import StateKey
+                    from app.acquisition.tracking import record_terminal
+                    s.add(JobCursor(job_name=JOB,cursor_key='completed:'+content_hash(c),cursor_value=dict(completedAt=now.isoformat())))
+                    for symbol in c['scope']:
+                        record_terminal(s,StateKey('stock-business','','security',symbol),started_at=now,checked_at=now,
+                            status='success',scope={'source':'tushare','contract':content_hash(c)},reason='主营拆分窗口已核全')
         return dict(status=('completed' if ready else 'pending') if execute else 'planned',requestCount=spent,identity=content_hash(c),
             unitCount=len(specs),completedCount=len(saved),leafCount=len(leaves),scope=c['scope'],asOf=c['asOf'],sourceBaseVersion=c['sourceBaseVersion'],
             compatibleTarget=c['scope']==source['scope'] and c['asOf']<=source['asOf'])

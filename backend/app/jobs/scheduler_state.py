@@ -414,6 +414,8 @@ class SchedulerStateRepository:
                     )
                 )
                 recovered.append(run.id)
+        from app.acquisition.tracking import recover_attempts
+        recover_attempts(self._session_factory,now=now,active_attempt_ids=set())
         return tuple(recovered)
 
     def open_alert(

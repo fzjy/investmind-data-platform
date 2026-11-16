@@ -5,6 +5,7 @@ import pytest
 from sqlalchemy import create_engine, func, select
 from sqlalchemy.orm import sessionmaker
 
+from app.db.models.acquisition import DataAcquisitionState
 from app.db.models.core import MacroObservation
 from app.db.models.ops import JobCursor, JobRun
 from app.db.models.raw import IngestionBatch, SourcePayload
@@ -21,7 +22,7 @@ def database(tmp_path):
     file = tmp_path / 'execution.sqlite'
     engine = create_engine(f'sqlite:///{file.as_posix()}', execution_options={
         'schema_translate_map': {'raw': None, 'core': None, 'ops': None}})
-    for model in (JobCursor, JobRun, IngestionBatch, SourcePayload, MacroObservation):
+    for model in (DataAcquisitionState, JobCursor, JobRun, IngestionBatch, SourcePayload, MacroObservation):
         model.__table__.create(engine)
     yield file, sessionmaker(engine, expire_on_commit=False)
     engine.dispose()

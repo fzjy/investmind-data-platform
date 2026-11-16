@@ -76,6 +76,7 @@ class Binding:
     dependencies: tuple[str, ...]
     writers: tuple[str, ...]
     unavailable_reason: str | None = None
+    name: str = ""
 
 
 @dataclass(frozen=True)

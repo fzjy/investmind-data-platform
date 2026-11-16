@@ -70,6 +70,10 @@ def create_app(*, background_news: bool = False) -> FastAPI:
         return {"status": "ok", "database": "ready"}
 
     session_factory = sessionmaker(database_engine, expire_on_commit=False)
+    from app.acquisition.routes import create_router as create_status_router
+    from app.acquisition.service import StatusService
+    application.state.acquisition_status = StatusService(session_factory)
+    application.include_router(create_status_router(application.state.acquisition_status))
     application.include_router(create_content_router(session_factory))
     repository = SnapshotRepository(session_factory)
     application.include_router(create_market_router(

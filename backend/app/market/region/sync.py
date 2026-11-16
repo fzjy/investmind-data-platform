@@ -88,6 +88,8 @@ class RegionSync:
                         errors.append(error)
                         try:
                             with self.factory.begin() as session:
+                                from app.acquisition.adapters.markets import record_market
+                                record_market(session,'region',code,parameters(code),now,error=error,run_id=run_id)
                                 session.add(JobFailure(job_run_id=run_id,dataset=JOB_NAME,
                                     request_key=repo.identity(code,self.fingerprint),error_code=error,message=error,
                                     request_payload={'tsCode':code},retryable=not stop,last_attempted_at=now))

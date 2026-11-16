@@ -238,3 +238,9 @@ python -I backend/tests/run_isolated.py pytest backend/tests -q
 3. 运行 `python -m app.cli.main backup-database --force`，在停写后生成一份新的最终备份。这里使用 `--force` 是为了绕过普通备份周期。按第 6 节对**本次返回的备份 ID**执行恢复验证。确认 `restore_verified` 后，保留原件并安全传送整个备份目录（含 `database.dump`、`manifest.json`、`verification.json`）。记录转移前各文件的 SHA-256 供接收端核对。
 4. 随包交接代码版本、状态记录、运行配置清单和必要的外部文件。供应商密钥通过部署环境单独提供。当前新闻队列与断点随 PostgreSQL 备份迁移，若有尚待迁入的旧 SQLite，再一并交接 `data/news-collector/`。保留本机原库和卷，切换期间保持本机采集停止。
 5. 接下来在目标主机继续操作，直接打开[服务器手册：接收本机迁移](server-operations.md#receive-migration)。该章节从服务器环境准备和空库恢复开始，随后核验 API、切换采集，并进入服务器日常运行。
+
+## 查看与初始化获取状态
+
+打开接口文档并选择数据条目，在“数据获取状态”中按证券、品种、来源或条目内指标筛选。数量按当前页统计，最后一列保留执行失败或范围待确认的原因。历史凭证不足时可结合对应数据表和任务回执进一步核对。
+
+部署时先确认在途任务结束并保留数据库备份，再执行 Alembic 升级至 `20261116_0022`。新表位于 `ops.data_acquisition_state`。使用 `python -m app.cli.main reconcile-data-status --limit 100` 只读盘点历史凭证，每页传回 `--cursor` 继续。加 `--apply` 写入该页已核验的摘要，可重复执行。旧业务值或整池任务成功不能单独产生新的成功凭证。进程重启后，新的采集按各自的事务记录状态；已有任务开关沿用当前配置。

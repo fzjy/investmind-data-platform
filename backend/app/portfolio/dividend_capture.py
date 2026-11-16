@@ -300,6 +300,14 @@ def capture_dividend_evidence(factory, client=None, *, execute=False, config=Non
                 batch.row_count = len(response.items) if response is not None else 0
                 batch.rejected_count = 1 if error else 0
                 batch.finished_at = finished_at
+                if observed and frozen['apiName'] == 'dividend':
+                    from app.acquisition.contracts import StateKey
+                    from app.acquisition.tracking import record_terminal
+                    record_terminal(s,StateKey('stock-dividend','','security',symbol),
+                        started_at=finished_at,checked_at=finished_at,status='failed' if error else 'success',
+                        code='DIVIDEND_RESPONSE_FAILED' if error else None,scope={'source':'tushare','api':'dividend',
+                            'params':_request('dividend',symbol),'confirmedEmpty':not error and not response.items},
+                        references=({'batchId':batch.id},))
             if error:
                 return {**report, 'code':'CAPTURE_RESPONSE_FAILED', 'symbol':symbol, 'errorType':error}
             report['completedCount'] += 1

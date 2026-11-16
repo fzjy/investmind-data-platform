@@ -18,6 +18,16 @@ class CollectionAuditReader:
 
     def __call__(self):
         now, catalog = utc(self.clock()), self.catalog_loader()
+        from app.acquisition.macro_compat import read_compatible_macro_audit
+        def legacy():
+            entries = self.base_entries(now, catalog)
+            entries.extend(extension_entries(self.factory, self.extension_loader(), now))
+            entries.extend(financial_entries(self.factory, self.enterprise_enabled(), now))
+            return {'schemaVersion':'1.0','basis':'current-collection-records','readAt':now.isoformat(),
+                    'catalogVersion':catalog.catalog_version,'entries':entries}
+        return read_compatible_macro_audit(self.factory, legacy, now=now)
+
+    def base_entries(self, now, catalog):
         with self.factory() as session:
             states = {r.series_id: r for r in session.scalars(select(MacroSeriesState))}
             running = session.scalars(select(JobRun).where(JobRun.status == 'running')).all()
@@ -48,7 +58,4 @@ class CollectionAuditReader:
                 if active:
                     status, error, checked = 'running', None, max(utc(r.started_at) for r in active)
                 entries.append(record(sid, enabled, status, checked, success, error, now=now))
-        entries.extend(extension_entries(self.factory, self.extension_loader(), now))
-        entries.extend(financial_entries(self.factory, self.enterprise_enabled(), now))
-        return {'schemaVersion': '1.0', 'basis': 'current-collection-records',
-            'readAt': now.isoformat(), 'catalogVersion': catalog.catalog_version, 'entries': entries}
+        return entries

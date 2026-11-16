@@ -65,3 +65,13 @@
 [从原字段反查项目、页面、指标](field-consumers.md) · [InvestMind 选股器逐字段用途](screener-field-usage.md) · [证券公告与披露](workbench-announcements.md)
 
 [逐指标留存策略、公式版本和可回溯区间](derived-history.md)
+
+## 数据获取状态
+
+`GET /api/v1/data-status?entryId=stock-daily&entryId=stock-dividend&subjectKey=600519.SH` 返回同一证券两类数据各自的执行凭证、可用性和审计结果。宏观按系列查询，例如 `?entryId=cn.cpi.yoy`。合并条目可指定 `itemId`，例如 `stock-dividend-yield` 中的 `expectedDividendYieldNTM`。
+
+返回的 `collection.status` 表示最近执行或检查的结果。`availability` 描述查询视图中的数据，`audit.status` 可取 `normal`、`failed`、`missing`、`excluded`。数据缺失且本轮报错时计入缺失，原因保留错误。已有值且执行失败时计入失败。暂停、运行中、范围不适用和缺少可信记录均单独统计。有效值和成功检查可来自不同日期；审计不推断供应商最新发布日期。
+
+默认 `view=stored`、`scopeKind=routine`、`limit=25`。历史补采使用 `scopeKind=historical`。查询指定发布内容时传 `view=published&product=macro-insights&version=...`；省略版本读取当前指针。无法核对所选版本的字段会返回原因。每页上限 100 项；下一页沿用相同条件传回 `nextCursor`。未知条目或版本返回 404，筛选条件无效返回 422，状态库不可用返回 503。查询不会触发采集。
+
+现有宏观洞察继续通过顶层 `collectionAudit` 提供五种执行状态，消费端可继续使用原有解析器。

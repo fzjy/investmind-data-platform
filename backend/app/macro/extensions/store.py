@@ -322,6 +322,8 @@ class ExtensionStore:
             row.status, row.error_message, row.finished_at = 'failed', code, now
             batch = session.get(IngestionBatch, row.id)
             batch.status, batch.finished_at = 'failed', now
+            from app.acquisition.adapters.plans import record_extension
+            record_extension(session,row,now)
 
     def replay(self, run_id: str, *, clock=None) -> dict:
         from app.macro.extensions.ingest import ingest_evidence
@@ -344,4 +346,6 @@ class ExtensionStore:
             row.status, row.finished_at = 'completed', completed_at
             batch = session.get(IngestionBatch, row.id)
             batch.status, batch.finished_at = 'completed', completed_at
+            from app.acquisition.adapters.plans import record_extension
+            record_extension(session,row,completed_at)
             return {'insertedRows': sum(binding['coreId'] not in before for binding in bindings), 'boundRows': len(bindings)}

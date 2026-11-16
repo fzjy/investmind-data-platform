@@ -74,6 +74,11 @@ def mount_admin(app: FastAPI, *, project_root: Path, manager=None):
                             '<article class="document"><a href="/admin/#docs">返回接口文档</a><pre>' + body + '</pre></article>')
 
     engine = app.state.read_engine
+    from app.acquisition.routes import create_router as create_status_router
+    from app.acquisition.service import StatusService
+    from sqlalchemy.orm import sessionmaker
+    status_service = getattr(app.state, 'acquisition_status', None) or StatusService(sessionmaker(engine),root=project_root)
+    admin.include_router(create_status_router(status_service,path='/api/data-status'))
     config = manager.config if manager else Configuration(project_root)
 
     @admin.exception_handler(KeyError)

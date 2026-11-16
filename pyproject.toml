@@ -57,6 +57,7 @@ migrations = "backend/migrations"
 investmind_defaults = "config"
 
 [tool.setuptools.package-data]
+"app.acquisition" = ["bindings.json"]
 "app.local_admin" = ["static/*.html", "static/*.css", "static/*.js"]
 # 把根配置目录及下两层目录中的业务 JSON 一起装入发行包。
 investmind_defaults = ["*.json", "*/*.json", "*/*/*.json"]

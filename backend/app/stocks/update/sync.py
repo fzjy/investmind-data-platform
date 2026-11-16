@@ -118,9 +118,26 @@ class StockUpdateSync:
                         if self.client is None:
                             raise ValueError('client required')
                         before = budget.used
-                        response = self.client.call(plan.api_name, plan.params, plan.fields)
-                        evidence = self.repository.ingest_unit(identity, plan, response, target,
-                            self.options.start(target), request_count=budget.used-before)
+                        from app.acquisition.adapters.stocks import stock_attempts
+                        from app.acquisition.tracking import record_failed_attempt, start_attempt
+                        if before >= budget.limit:
+                            raise BudgetExhausted('physical HTTP request budget exhausted')
+                        attempts = stock_attempts(plan, identity, run_id=run_id)
+                        with self.factory.begin() as session:
+                            for attempt in attempts:
+                                start_attempt(session, attempt)
+                        try:
+                            response = self.client.call(plan.api_name, plan.params, plan.fields)
+                            evidence = self.repository.ingest_unit(identity, plan, response, target,
+                                self.options.start(target), request_count=budget.used-before, attempts=attempts)
+                        except BudgetExhausted:
+                            raise
+                        except Exception:
+                            for attempt in attempts:
+                                record_failed_attempt(self.factory, attempt, code='STOCK_ACQUISITION_FAILED',
+                                    reason='请求或数据提交失败', checked_at=datetime.now(timezone.utc),
+                                    references=({'runId':run_id},))
+                            raise
                     if evidence['status'] != 'completed':
                         result.update(status='partial' if evidence['status'] == 'pending' else evidence['status'], error=evidence['error'])
                         return result

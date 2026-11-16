@@ -124,6 +124,7 @@ def open_universe_backfill_runtime(
                         factory,
                         job_name=cursor_job_name,
                     ),
+                    status_factory=factory, scope_kind='historical',
                     mode=mode,
                     page_size=settings.tushare_page_size,
                     fingerprint_context=selection.fingerprint,

@@ -8,7 +8,8 @@ from app.acquisition.contracts import Binding
 
 @lru_cache(maxsize=4)
 def load_bindings(root: Path) -> tuple[Binding,...]:
-    rows = json.loads((root/'backend/app/acquisition/bindings.json').read_text(encoding='utf-8'))
+    path = root/'backend/app/acquisition/bindings.json'
+    rows = json.loads((path if path.is_file() else Path(__file__).with_name('bindings.json')).read_text(encoding='utf-8'))
     return tuple(Binding(**{**row, 'dependencies': tuple(row['dependencies']),
                             'writers': tuple(row['writers'])}) for row in rows)
 

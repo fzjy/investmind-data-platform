@@ -28,6 +28,8 @@ def save_health(factory, state, config, now, delivery_error=None, delivery_ok=Fa
         row.cursor_value = {**state, 'alertActive': active, 'error': error,
                             'deliveryError': delivery_error,
                             'staleHours': config.stale_hours, 'checkedAt': now.isoformat()}
+        from app.acquisition.adapters.content import record_news
+        record_news(session, state, now, delivery_error)
         alert = session.scalar(select(OperationalAlert).where(OperationalAlert.alert_key == JOB))
         if active:
             if alert is None:

@@ -139,4 +139,6 @@ class PulseRepository:
             batch.status, batch.row_count = 'completed', 1
             ingestion.upsert(JobCursor, {'job_name': JOB_NAME, 'cursor_key': identity(code, day, fingerprint)}, {
                 'cursor_value': {'sourcePayloadId': raw.id, 'contentHash': raw.content_hash}, 'updated_at': captured_at})
+            from app.acquisition.adapters.markets import record_market
+            record_market(session,'limit_status',code,parameters(code, day),captured_at,batch_id=batch.id)
             return True

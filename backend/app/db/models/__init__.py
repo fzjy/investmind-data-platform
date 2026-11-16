@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from app.db.models.acquisition import DataAcquisitionState
 from app.db.models.market_quotes import MarketDailyQuote
 from app.db.models.enterprise_receivables import ReceivableAttempt, ReceivableResponse, ReceivableSupplement
 from app.db.models.enterprise_orders import OrderAttempt, OrderResponse, OrderSupplement

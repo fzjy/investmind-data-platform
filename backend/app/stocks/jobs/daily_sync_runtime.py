@@ -107,6 +107,7 @@ def open_daily_sync_runtime(
             runner = PaginatedPlanRunner(
                 lambda plan: pipeline.run(plan, mode=mode.value),
                 SqlJobCursorRepository(factory, job_name="sync-daily"),
+                status_factory=factory, scope_kind='routine',
                 mode=mode,
                 page_size=settings.tushare_page_size,
                 fingerprint_context=selection.fingerprint,
