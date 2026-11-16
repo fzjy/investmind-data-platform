@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from typing import TypeAlias
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, StrictBool, model_serializer
 
 
 Scalar: TypeAlias = str | int | float | bool | None
@@ -14,6 +14,15 @@ class TushareResponse(BaseModel):
 
     fields: tuple[str, ...]
     items: tuple[tuple[Scalar, ...], ...]
+
+    has_more: StrictBool | None = None
+
+    @model_serializer(mode='wrap')
+    def serialize_response(self, handler):
+        data = handler(self)
+        if self.has_more is None:
+            data.pop('has_more',None)
+        return data
 
     def rows(self) -> tuple[dict[str, Scalar], ...]:
         rows: list[dict[str, Scalar]] = []

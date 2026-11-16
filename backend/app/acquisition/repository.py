@@ -29,7 +29,9 @@ def validate_metadata(value):
 
 
 def scope_id(scope):
-    if 'seriesId' in scope and 'contract' in scope:
+    if 'coverageContract' in scope:
+        identity = {'coverageContract':scope['coverageContract'],'source':scope.get('source')}
+    elif 'seriesId' in scope and 'contract' in scope:
         identity = {k:scope[k] for k in ('seriesId','contract')}
     else:
         identity = {k:v for k,v in scope.items() if k not in ('runId','confirmedEmpty','rawAt','checkKind','batchId')}

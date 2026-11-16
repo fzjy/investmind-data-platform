@@ -26,6 +26,19 @@
     "name": "宏观文件导入"
   },
   {
+    "entry_id": "external-macro",
+    "item_id": "series",
+    "subject_kind": "series",
+    "source_adapter": "imports",
+    "availability_adapter": "external_file",
+    "dependencies": [],
+    "writers": [
+      "ExternalImporter.import_file"
+    ],
+    "unavailable_reason": null,
+    "name": "导入的宏观指标"
+  },
+  {
     "entry_id": "external-content",
     "item_id": "",
     "subject_kind": "source",
@@ -37,6 +50,45 @@
     ],
     "unavailable_reason": null,
     "name": "公开内容文件导入"
+  },
+  {
+    "entry_id": "external-content",
+    "item_id": "news",
+    "subject_kind": "source",
+    "source_adapter": "imports",
+    "availability_adapter": "external_file",
+    "dependencies": [],
+    "writers": [
+      "ExternalImporter.import_file"
+    ],
+    "unavailable_reason": null,
+    "name": "导入新闻"
+  },
+  {
+    "entry_id": "external-content",
+    "item_id": "announcement",
+    "subject_kind": "source",
+    "source_adapter": "imports",
+    "availability_adapter": "external_file",
+    "dependencies": [],
+    "writers": [
+      "ExternalImporter.import_file"
+    ],
+    "unavailable_reason": null,
+    "name": "导入公告"
+  },
+  {
+    "entry_id": "external-content",
+    "item_id": "article",
+    "subject_kind": "source",
+    "source_adapter": "imports",
+    "availability_adapter": "external_file",
+    "dependencies": [],
+    "writers": [
+      "ExternalImporter.import_file"
+    ],
+    "unavailable_reason": null,
+    "name": "导入文章"
   },
   {
     "entry_id": "cn.gdp.real_yoy",
@@ -304,11 +356,9 @@
     "subject_kind": "series",
     "source_adapter": "macro",
     "availability_adapter": "source_payload",
-    "dependencies": [
-      "cn.gdp.real_yoy"
-    ],
+    "dependencies": [],
     "writers": [
-      "MacroSeriesStateRepository.mark_success"
+      "ExtensionStore.replay"
     ],
     "unavailable_reason": null,
     "name": "国内生产总值原始数据"
@@ -1062,7 +1112,7 @@
     "availability_adapter": "source_payload",
     "dependencies": [],
     "writers": [
-      "ExchangeSummaryStore.replay"
+      "SzMarketSampleStore.finish"
     ],
     "unavailable_reason": null,
     "name": "深圳市场每日统计"
@@ -1173,7 +1223,7 @@
     "availability_adapter": "source_payload",
     "dependencies": [],
     "writers": [
-      "PaginatedPlanRunner.__call__"
+      "refresh_mapping"
     ],
     "unavailable_reason": null,
     "name": "北交所证券代码映射"

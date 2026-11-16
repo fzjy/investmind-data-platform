@@ -1,4 +1,6 @@
 from contextlib import nullcontext
+from sqlalchemy import select
+from app.db.models import MacroSeriesState
 from datetime import datetime
 
 from app.acquisition.contracts import Evidence, StateKey
@@ -23,13 +25,29 @@ def read_macro_evidence(session, keys, *, now):
     factory = lambda: nullcontext(session)
     reader = CollectionAuditReader(factory)
     rows = []
+    scopes = {}
     if any(k.subject_kind == 'series' and not k.item_id for k in keys):
-        rows.extend(reader.base_entries(now,reader.catalog_loader()))
+        catalog = reader.catalog_loader()
+        rows.extend(reader.base_entries(now,catalog))
+        for state in session.scalars(select(MacroSeriesState).where(
+                MacroSeriesState.series_id.in_([k.subject_key for k in keys if not k.item_id]))):
+            scopes[state.series_id] = {'contract':state.catalog_version,'source':state.active_source,
+                'observedAt':state.latest_observed_at.isoformat() if state.latest_observed_at else None}
+        for row in rows:
+            scope = scopes.get(row['id'], {})
+            if row['status'] == 'success' and (not scope.get('source') or scope.get('contract') != catalog.catalog_version):
+                row.update(status='unrecorded', errorCode='COLLECTION_SOURCE_UNCONFIRMED')
     if any(k.entry_id.startswith('macro-extension-') for k in keys):
         rows.extend(extension_entries(factory,reader.extension_loader(),now))
     if any(k.entry_id.startswith('stock-') for k in keys):
         rows.extend(financial_entries(factory,reader.enterprise_enabled(),now,
                                       symbols=[k.subject_key for k in keys if k.entry_id.startswith('stock-')]))
+    from app.macro.extensions.plan import CONTRACTS
+    for contract in CONTRACTS.values():
+        scopes.setdefault(contract['seriesId'],{'source':contract['source']})
+    for series in EXCHANGE.values():
+        for sid in series:
+            scopes.setdefault(sid,{'source':'tushare'})
     indexed = {row['id']:row for row in rows}
     result = {}
     for key in keys:
@@ -39,7 +57,7 @@ def read_macro_evidence(session, keys, *, now):
         row = indexed[sid]
         timestamp = lambda field: datetime.fromisoformat(row[field]) if row[field] else None
         result[key] = Evidence(row['status'], timestamp('checkedAt'),timestamp('successAt'),row['errorCode'],
-                               '',{'seriesId':sid},({'collectionId':sid},))
+                               '',{'seriesId':sid,**scopes.get(sid,{})},({'collectionId':sid},))
     return result
 
 
@@ -51,6 +69,7 @@ def write_series_result(session, row, *, status, checked):
     scope = {'contract':row.catalog_version, 'seriesId':row.series_id}
     if status == 'success':
         scope['source'] = row.active_source
+        scope['observedAt'] = row.latest_observed_at.isoformat() if row.latest_observed_at else None
     record_terminal(session, key, started_at=checked, checked_at=checked, status=status, scope=scope,
                     code=code, references=({'seriesId':row.series_id},),
                     reason={'unrecorded':'质量或预算标记，未确认本轮获取结果','failed':'系列采集失败',

@@ -3,6 +3,14 @@ from datetime import UTC, datetime
 from typing import Literal
 
 
+class QueryError(ValueError):
+    """可公开的查询条件错误。"""
+
+
+class UnknownResource(KeyError):
+    """查询指定的目录、产品或版本不存在。"""
+
+
 @dataclass(frozen=True, order=True)
 class StateKey:
     entry_id: str

@@ -40,6 +40,8 @@ class IngestionRepository:
         response: TushareResponse,
     ) -> SourcePayload:
         raw = {"fields": list(response.fields), "items": [list(item) for item in response.items]}
+        if response.has_more is not None:
+            raw["has_more"] = response.has_more
         request_key = request_hash(api_name, params, fields)
         response_hash = content_hash(raw)
         payload = SourcePayload(

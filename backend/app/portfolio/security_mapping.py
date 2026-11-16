@@ -14,7 +14,7 @@ ROW_CAP = 1000  # bse_mapping 文档375的单次供应商上限，满额不能�
 
 
 def validate_mapping_response(response, fields):
-    if tuple(response.fields) != tuple(fields) or tuple(fields) != FIELDS or len(response.items) >= ROW_CAP:
+    if tuple(response.fields) != tuple(fields) or tuple(fields) != FIELDS or response.has_more or len(response.items) >= ROW_CAP:
         raise ValueError('MAPPING_FIELDS_OR_CAP_INVALID')
     old_codes = {}
     for row in response.rows():
@@ -114,7 +114,14 @@ def refresh_mapping(factory, client, *, base, now, execute, config, revision_day
             captured = captured.replace(tzinfo=timezone.utc) if captured.tzinfo is None else captured.astimezone(timezone.utc)
             value = _seal(dict(unit=unit, asOf=target['asOf'], checkedAt=unit.get('completedAt', captured.isoformat())))
             _save(session, 'mapping', value)
-            mapping_evidence(session, allow_pending=True)
+            _, pairs = mapping_evidence(session, allow_pending=True)
+            from app.acquisition.contracts import StateKey
+            from app.acquisition.tracking import record_terminal
+            for symbol in sorted({code for pair in pairs for code in (pair['o_code'],pair['n_code'])}):
+                record_terminal(session, StateKey('stock-bse-mapping','','security',symbol),
+                    started_at=datetime.fromisoformat(unit['startedAt']), checked_at=datetime.fromisoformat(value['checkedAt']),
+                    status='success',scope={'api':'bse_mapping','source':'tushare'},
+                    references=({'batchId':raw.batch_id},))
             _save(session, 'mapping:active', _seal(dict(status='completed', target=target)))
     except (ValueError, KeyError, TypeError, AttributeError, OverflowError, binascii.Error):
         return result | dict(status='blocked', code='DIVIDEND_MAPPING_EVIDENCE_INVALID', pendingCount=1)

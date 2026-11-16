@@ -128,8 +128,8 @@ class ExternalImporter:
                                 setattr(existing_row, key, value)
                 file_row.imported_at = datetime.now(timezone.utc)
                 from app.acquisition.adapters.imports import record_import
-                sources = [('external-macro' if isinstance(row, MacroImportRecord) else 'external-content', row.source)
-                           for row in records]
+                sources = [('external-macro',row.source,row.series_id) if isinstance(row,MacroImportRecord)
+                           else ('external-content',row.source,row.content_type) for row in records]
                 record_import(session, sources, file_row, file_row.imported_at)
                 result = ImportSummary("imported", file_row.id, file_hash, len(records), len(records), 0, self._affected_products(records))
             if errors:

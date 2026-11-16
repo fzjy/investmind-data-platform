@@ -66,6 +66,7 @@ class UniverseRowFilter:
             filtered_response = TushareResponse(
                 fields=response.fields,
                 items=tuple(retained),
+                has_more=response.has_more,
             )
         return FilteredResponse(
             response=filtered_response,

@@ -76,6 +76,8 @@ def capture_catalog(factory,client=None,*,execute=False,_requests=None,_job=JOB,
             try:
                 response=client.call(api,params,fields)
                 if tuple(response.fields)!=fields or len(response.items)>8000:raise ValueError('目录字段/行数无效')
+                if response.has_more and api in ('index_basic','etf_basic','index_weight'):
+                    raise ValueError('目录响应仍有未取得的分页')
                 if _validator is not None:_validator(response,spec)
                 elif any(str(r.get('ts_code','')).split('.')[0]!=symbol for r in response.rows()):raise ValueError('目录返回其他指数')
             except Exception as exc:error=type(exc).__name__

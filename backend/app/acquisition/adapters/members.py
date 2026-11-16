@@ -14,7 +14,8 @@ def record_member_plan(session, row, checked):
     if not code:
         return
     from app.acquisition.catalog import load_bindings
-    from app.acquisition.service import ROOT
+    from pathlib import Path
+    ROOT = Path(__file__).resolve().parents[4]
     target = next((b.item_id for b in load_bindings(ROOT) if b.entry_id=='macro-enterprise'
                    and code in (b.item_id,b.item_id.split('.')[0])),None)
     if not target:

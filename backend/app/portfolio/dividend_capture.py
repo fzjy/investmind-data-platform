@@ -59,7 +59,7 @@ def _base(session):
 def validate_capture_response(response, symbol, fields):
     if len(set(response.fields)) != len(response.fields) or not set(fields) <= set(response.fields):
         raise ValueError('RESPONSE_FIELDS_MISMATCH')
-    if len(response.items) >= ROW_CAP:
+    if response.has_more or len(response.items) >= ROW_CAP:
         raise ValueError('RESPONSE_CAP_REACHED')
     for row in response.rows():
         if row.get('ts_code') != symbol:
@@ -240,7 +240,7 @@ def capture_dividend_evidence(factory, client=None, *, execute=False, config=Non
                     unit = deepcopy(cursor(s, key).cursor_value)
                     if unit['status'] != 'reserved' or unit['attemptObserved']:
                         raise ValueError('PHYSICAL_ATTEMPT_ALREADY_RECORDED')
-                    unit.update(attemptObserved=True, startedAt=datetime.now(timezone.utc).isoformat())
+                    unit.update(attemptObserved=True, startedAt=(clock() if clock else datetime.now(timezone.utc)).isoformat())
                     put(s, key, unit)
                 observed = True
                 report['requestCount'] += 1
@@ -275,6 +275,8 @@ def capture_dividend_evidence(factory, client=None, *, execute=False, config=Non
                 raw = s.get(SourcePayload, transport_raw_id) if transport_raw_id is not None else None
                 if response is not None:
                     decoded = {'fields':list(response.fields), 'items':[list(item) for item in response.items]}
+                    if response.has_more is not None:
+                        decoded['has_more'] = response.has_more
                     if raw is not None and raw.payload.get('_http', {}).get('credentialsRedacted'):
                         decoded = None
                         error = 'CredentialEchoInResponse'
@@ -304,7 +306,7 @@ def capture_dividend_evidence(factory, client=None, *, execute=False, config=Non
                     from app.acquisition.contracts import StateKey
                     from app.acquisition.tracking import record_terminal
                     record_terminal(s,StateKey('stock-dividend','','security',symbol),
-                        started_at=finished_at,checked_at=finished_at,status='failed' if error else 'success',
+                        started_at=datetime.fromisoformat(unit['startedAt']),checked_at=finished_at,status='failed' if error else 'success',
                         code='DIVIDEND_RESPONSE_FAILED' if error else None,scope={'source':'tushare','api':'dividend',
                             'params':_request('dividend',symbol),'confirmedEmpty':not error and not response.items},
                         references=({'batchId':batch.id},))

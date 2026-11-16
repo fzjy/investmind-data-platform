@@ -1,5 +1,6 @@
 """按游标读取既有凭证，复用采集器的原件和范围校验。"""
 from datetime import datetime
+from app.acquisition.adapters.imports import import_keys
 from functools import lru_cache
 from sqlalchemy import select
 from app.acquisition.adapters.markets import commodity_subject, MARKET_APIS
@@ -77,7 +78,10 @@ def import_records(session,row,now):
     checked = utc(row.imported_at)
     if row.status != 'imported' or not checked or checked > now or row.rejected_count or not row.valid_count:
         return ()
-    pairs = session.execute(select(ExternalRecord.record_type,ExternalRecord.payload['source'].as_string())
+    items = session.execute(select(ExternalRecord.record_type,ExternalRecord.payload['source'].as_string(),
+        ExternalRecord.payload['seriesId'].as_string(),ExternalRecord.payload['contentType'].as_string())
         .where(ExternalRecord.external_file_id==row.id).distinct())
-    return tuple(historical_record(StateKey('external-'+kind,'','source',source),checked,
-        {'source':source,'fileHash':row.file_hash},({'fileId':row.id},)) for kind,source in pairs if source)
+    keys = {pair for kind,source,series,content in items if source
+            for pair in import_keys('external-'+kind,source,series if kind=='macro' else content)}
+    return tuple(historical_record(key,checked,{'source':source,'fileHash':row.file_hash},({'fileId':row.id},))
+                 for key,source in sorted(keys))

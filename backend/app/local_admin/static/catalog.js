@@ -30,12 +30,16 @@ function acquisitionPanel(box,entry,api,current){
   const labels={normal:"正常",failed:"数据获取失败",missing:"数据缺失",excluded:"单独说明"};
   const availability={available:"已有数据",confirmed_empty:"已核实为空",missing:"无可用值",unknown:"范围待确认",not_applicable:"不适用"};
   let sequence=0;
-  form.append(subject,item,query);
+  const scope=node("select");
+  scope.setAttribute("aria-label","采集范围");
+  scope.append(new Option("常规采集","routine"),new Option("历史补采","historical"));
+  if(entry.id==="stock-announcements")scope.value="historical";
+  form.append(subject,item,scope,query);
   box.append(form,results);
   async function load(cursor){
     const id=++sequence;
     results.replaceChildren(node("p","正在读取获取状态…","muted"));
-    const params=new URLSearchParams({entryId:entry.id,limit:"15"});
+    const params=new URLSearchParams({entryId:entry.id,limit:"15",scopeKind:scope.value});
     if(subject.value.trim())params.set("subjectKey",subject.value.trim());
     if(item.value.trim())params.set("itemId",item.value.trim());
     if(cursor)params.set("cursor",cursor);
@@ -70,6 +74,7 @@ function acquisitionPanel(box,entry,api,current){
       if(current()&&sequence===id)results.replaceChildren(node("p","获取状态暂不可用："+error.message,"catalog-warning"));
     }
   }
+  scope.onchange=()=>load(null);
   form.onsubmit=event=>{event.preventDefault();load(null);};
   load(null);
 }

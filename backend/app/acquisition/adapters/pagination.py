@@ -24,15 +24,19 @@ def tracked_pages(factory,plan,scope_kind,page_size,identity,runner):
         raise
     with factory.begin() as session:
         verified = result.completed and not result.resumed_from_offset and not result.filtered_count
+        offset = result.resumed_from_offset
         for index, page in enumerate(result.batches):
             batch = session.get(IngestionBatch,page.batch_id)
-            params = {**plan.params,'limit':str(page_size),'offset':str(index*page_size+result.resumed_from_offset)}
+            params = {**plan.params,'limit':str(page_size),'offset':str(offset)}
             raw = session.scalar(select(SourcePayload).filter_by(batch_id=page.batch_id,api_name=plan.api_name,
                                 request_hash=request_hash(plan.api_name,params,plan.fields)))
             if not (batch and batch.status == 'completed' and raw and content_hash(raw.payload) == raw.content_hash):
                 verified = False
                 break
             response = TushareResponse.model_validate(raw.payload)
+            offset += page.received_count
+            if index == len(result.batches)-1 and response.has_more:
+                verified = False
             subject = 'exchange' if plan.api_name == 'trade_cal' else 'ts_code'
             if (len(response.items) != page.received_count or not set(plan.fields)<=set(response.fields) or
                 any(r.get(subject)!=plan.params[subject] for r in response.rows())):

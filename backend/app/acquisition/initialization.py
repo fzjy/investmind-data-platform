@@ -46,7 +46,8 @@ def _stock_record(session, row, manifest, now):
         state = 'failed'
     elif batch.status == 'completed' and not batch.rejected_count:
         response = TushareResponse.model_validate(raw.payload)
-        if (len(response.items) != value.get('received') or len(response.items) >= plan.page_size or
+        if (len(response.items) != value.get('received') or response.has_more or
+            len(response.items) >= plan.page_size and response.has_more is not False or
             not set(plan.fields) <= set(response.fields) or
             any(r.get('ts_code',r.get('exchange')) != attempt.key.subject_key for r in response.rows())):
             return None

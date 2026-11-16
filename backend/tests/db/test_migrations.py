@@ -235,6 +235,7 @@ def test_foundation_tables_can_be_created_for_sqlite_tests() -> None:
     Base.metadata.create_all(engine)
 
     assert set(Base.metadata.tables) <= {
+        "ops.data_acquisition_state",
         "raw.ingestion_batch",
         "raw.source_payload",
         "raw.rejected_record",

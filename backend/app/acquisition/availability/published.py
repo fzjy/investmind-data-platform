@@ -1,7 +1,8 @@
 from dataclasses import replace
+from app.acquisition.periods import contains
 from sqlalchemy import select
 from app.acquisition.availability.stored import finite, MISSING, UNKNOWN
-from app.acquisition.contracts import Availability
+from app.acquisition.contracts import Availability, UnknownResource
 from app.db.models import PageSnapshot, PublishedSnapshot, StockWorkbenchSnapshot
 
 
@@ -19,7 +20,7 @@ def snapshot(session, context):
                 StockWorkbenchSnapshot.ts_code == product.split(':',1)[1], StockWorkbenchSnapshot.snapshot_version == version))
             if saved:
                 return version, saved.payload
-    raise KeyError('发布产品或版本不存在')
+    raise UnknownResource('发布产品或版本不存在')
 
 
 def _item(key, product, payload, period):
@@ -50,8 +51,23 @@ def _item(key, product, payload, period):
         if payload.get('symbol',key.subject_key) != key.subject_key:
             return Availability('unknown',reason='快照证券与请求对象不一致')
         if key.entry_id == 'stock-announcements':
-            events = (payload.get('dailyChart') or {}).get('announcements',[])
-            return Availability('available',reason='该证券的快照内有公告') if events else MISSING
+            chart = payload.get('dailyChart') or {}
+            events = chart.get('announcements',[])
+            for event in reversed(events):
+                day = str(event.get('publishedAt') or event.get('date') or '')[:10]
+                if not period or contains(period,day):
+                    return Availability('available',day or None,'该证券的快照内有公告','cninfo')
+            coverage = chart.get('announcementCoverage') or {}
+            from app.acquisition.periods import covers
+            window = {'start':coverage.get('from'),'end':coverage.get('to')}
+            if (coverage.get('pendingDays') == 0 and coverage.get('checkedDays',0)>0
+                    and (not period or covers(window,None,period))):
+                return Availability('confirmed_empty',period,'该范围已逐日检查，无公告','cninfo')
+            return Availability('unknown',reason='快照没有公告，该范围尚未核全')
+        if key.entry_id == 'stock-research':
+            tables = ((payload.get('financial') or {}).get('statements') or {}).get('tables') or {}
+            has_points = any(t.get('periods') and t.get('rows') for t in tables if isinstance(t,dict))
+            return Availability('available',reason='该证券的已发布报表有研究数据') if has_points else MISSING
         if key.entry_id == 'stock-ratio-inputs':
             metrics = payload.get('metrics') or {}
             field = next((f for f in metrics.get('fields',[]) if f['id']==key.item_id),{})
@@ -68,6 +84,29 @@ def _item(key, product, payload, period):
         row = next((r for r in payload.get('stocks',[]) if r.get('symbol') == key.subject_key),{})
         value = (row.get('researchValues') or {}).get(key.item_id, row.get(key.item_id))
         return Availability('available',reason='发布行中有有效数值') if finite(value) else MISSING
+    if key.entry_id == 'macro-enterprise' and product=='macro-transmission':
+        parent = payload.get('enterpriseAnalysis') or {}
+        targets = (parent.get('officialTargets') or {}).get('targets',[])
+        target = next((t for t in targets if t.get('code') == key.item_id),{})
+        if target.get('status') == 'no-intersection':
+            return Availability('not_applicable',reason='已公布成员与当前分析股票池没有交集')
+        analysis = target.get('analysis') or {}
+        cards = analysis.get('cards') or []
+        if target.get('status') != 'available' or not cards or not target.get('poolMembers'):
+            return MISSING
+        dates = {p['period'] for card in cards for p in card.get('points',[]) if p.get('period')}
+        selected = period or max(dates,default=None)
+        if not selected:
+            return MISSING
+        for card in cards:
+            point = next((p for p in card.get('points',[]) if p.get('period')==selected),{})
+            quality = next((q for q in card.get('quality',[]) if q.get('period')==selected),{})
+            if quality.get('candidateCount') == 0 or (not finite(point.get('result')) and
+                    quality.get('status') in ('non-positive-aggregate-base','non-finite-aggregate')):
+                return Availability('not_applicable',selected,'所选期没有适用样本或计算基数')
+            if not finite(point.get('result')) or not quality.get('sampleCount'):
+                return MISSING
+        return Availability('available',selected,'目标范围有财报分析结果及样本覆盖')
     if key.entry_id == 'security-search' and product == 'screener':
         return Availability('available',reason='快照内包含可检索的证券') if payload.get('stocks') else MISSING
     if key.entry_id == 'macro-spreads' and product == 'macro-insights':

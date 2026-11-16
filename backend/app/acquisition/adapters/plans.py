@@ -23,6 +23,8 @@ def write_summary(session,key,summary,scope,refs):
 
 
 def record_extension(session, row, checked):
+    from app.acquisition.adapters.aliases import record_source_document
+    record_source_document(session,row,checked)
     plan = row.details['plan']
     group = plan['groupId']
     from app.macro.housing_history_plan import VERSIONS
@@ -73,6 +75,9 @@ def reference_unit(session, job, spec, identity, value, checked):
     if api not in entries:
         return
     key = StateKey(entries[api],'','security' if api=='fina_mainbz' else 'instrument',subject)
+    scope = {'source':'tushare','contract':identity,'params':params,'api':api}
+    if api=='fina_mainbz':
+        scope['coverageContract'] = identity
     record_terminal(session,key,started_at=checked,checked_at=checked,status='success' if value['status']=='completed' else 'failed',
                     code='SOURCE_OR_VALIDATION_FAILED' if value['status']=='failed' else None,
-                    scope={'source':'tushare','contract':identity,'params':params},references=({'batchId':value['batchId']},))
+                    scope=scope,references=({'batchId':value['batchId']},))

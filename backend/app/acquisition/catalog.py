@@ -25,6 +25,10 @@ def validate_bindings(root: Path) -> list[dict]:
         key = binding.entry_id, binding.item_id
         if key in seen or not binding.writers and not binding.unavailable_reason:
             issues.append({'entryId': key[0], 'itemId':key[1], 'code':'INVALID_BINDING'})
+        if binding.source_adapter not in {'stocks','markets','macro','members','derived','content','imports'}:
+            issues.append({'entryId':key[0],'itemId':key[1],'code':'UNKNOWN_SOURCE_ADAPTER'})
+        if binding.subject_kind not in {'series','security','product','instrument','industry','exchange','source'}:
+            issues.append({'entryId':key[0],'itemId':key[1],'code':'UNKNOWN_SUBJECT_KIND'})
         seen.add(key)
         for dep in binding.dependencies:
             if dep not in entries:

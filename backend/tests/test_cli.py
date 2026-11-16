@@ -1617,7 +1617,11 @@ def test_backfill_wires_rate_limit_and_page_size_by_mode(monkeypatch) -> None:
             *,
             mode: object,
             page_size: int,
+            status_factory: object,
+            scope_kind: str,
         ) -> None:
+            assert scope_kind == "historical"
+            assert status_factory is factory
             captured["page_runner"] = self
             captured["run_page"] = run_page
             captured["cursor_store"] = cursor_store

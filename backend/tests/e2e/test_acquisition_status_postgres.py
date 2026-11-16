@@ -45,4 +45,14 @@ def test_migration_preserves_pointer_and_newer_concurrent_attempt(monkeypatch):
         with factory() as session:
             assert StateRepository(session).read((key,))[key].error_code == 'FAILED_2'
             assert session.scalar(text("SELECT version FROM mart.published_snapshot WHERE product='acceptance'")) == 'original'
+        from app.acquisition.initialization import apply_initialization, plan_initialization
+        from app.acquisition.contracts import EvidenceRecord
+        page = plan_initialization(factory,root=PROJECT_ROOT,now=start,limit=10,cursor=None)
+        assert not page.records
+        old = Attempt(key,'historic',start,{},'initialization')
+        historical = EvidenceRecord(old,Evidence('success',start,start))
+        with factory.begin() as session:
+            assert apply_initialization(session,(historical,)) == {'written':0}
+            assert StateRepository(session).read((key,))[key].error_code == 'FAILED_2'
+            assert session.scalar(text("SELECT version FROM mart.published_snapshot WHERE product='acceptance'")) == 'original'
         engine.dispose()

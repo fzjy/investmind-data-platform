@@ -74,4 +74,6 @@
 
 默认 `view=stored`、`scopeKind=routine`、`limit=25`。历史补采使用 `scopeKind=historical`。查询指定发布内容时传 `view=published&product=macro-insights&version=...`；省略版本读取当前指针。无法核对所选版本的字段会返回原因。每页上限 100 项；下一页沿用相同条件传回 `nextCursor`。未知条目或版本返回 404，筛选条件无效返回 422，状态库不可用返回 503。查询不会触发采集。
 
+单证券跨条目可指定 `subjectKind=security&subjectKey=600519.SH` 并分页。外部内容可按 `itemId=news|announcement|article` 分别查询。外部宏观按 `entryId=external-macro&itemId=series&subjectKey=<系列代码>` 查询。包含 URL 或特殊字符的来源使用列表返回的 `source-sha256-…` 标识。数据期可传日期、月份、季度或年份；只有回执可以证明所选期时才会给出该期的成功结论。
+
 现有宏观洞察继续通过顶层 `collectionAudit` 提供五种执行状态，消费端可继续使用原有解析器。

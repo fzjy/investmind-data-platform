@@ -131,6 +131,12 @@ class StockUpdateSync:
                             evidence = self.repository.ingest_unit(identity, plan, response, target,
                                 self.options.start(target), request_count=budget.used-before, attempts=attempts)
                         except BudgetExhausted:
+                            from app.acquisition.contracts import Evidence
+                            from app.acquisition.tracking import finish_attempt
+                            with self.factory.begin() as session:
+                                for attempt in attempts:
+                                    finish_attempt(session,attempt,Evidence('unrecorded', datetime.now(timezone.utc),
+                                        reason='本轮请求预算耗尽，未取得终态回执',scope=attempt.scope))
                             raise
                         except Exception:
                             for attempt in attempts:

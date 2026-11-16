@@ -154,7 +154,7 @@ class PaginatedPlanRunner:
             )
             batches.append(batch)
 
-            if batch.rejected_count > 0:
+            if batch.rejected_count > 0 or batch.has_more and not batch.received_count:
                 return self._result(
                     plan,
                     resumed_from_offset,
@@ -163,7 +163,7 @@ class PaginatedPlanRunner:
                     completed=False,
                 )
 
-            if batch.received_count < page_size:
+            if batch.has_more is False or batch.has_more is None and batch.received_count < page_size:
                 self._delete_cursor(
                     plan.cursor_key,
                     plan,
@@ -179,7 +179,7 @@ class PaginatedPlanRunner:
                     completed=True,
                 )
 
-            offset += page_size
+            offset += batch.received_count
             self._save_cursor(
                 plan.cursor_key,
                 self._cursor_shape(plan, fingerprint, page_size, offset),

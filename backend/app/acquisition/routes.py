@@ -6,7 +6,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.acquisition.contracts import AuditContext, StatusQuery
+from app.acquisition.contracts import AuditContext, StatusQuery, QueryError, UnknownResource
 
 
 def envelope(page):
@@ -33,17 +33,17 @@ def create_router(service, *, path='/api/v1/data-status'):
         unique = lambda values: tuple(dict.fromkeys(values or ()))
         try:
             if max(map(len,(entryId or (),itemId or (),subjectKey or ()))) > 100:
-                raise ValueError('筛选条件过多')
+                raise QueryError('筛选条件过多')
             if not limit.isascii() or not limit.isdigit() or len(limit)>3:
-                raise ValueError('分页大小必须为 1 至 100 的整数')
+                raise QueryError('分页大小必须为 1 至 100 的整数')
             query = StatusQuery(unique(entryId),unique(itemId),subjectKind,unique(subjectKey),scopeKind,
                                 AuditContext(view,product,version,period),int(limit),cursor)
             payload = envelope(service.query(query))
-        except KeyError:
+        except UnknownResource:
             raise HTTPException(404,'目录、产品或版本不存在') from None
-        except ValueError as exc:
-            raise HTTPException(422,str(exc) if not isinstance(exc,UnicodeError) else '查询参数无效') from None
-        except SQLAlchemyError:
+        except QueryError as exc:
+            raise HTTPException(422,str(exc)) from None
+        except (SQLAlchemyError,ValueError,KeyError,TypeError,OSError):
             raise HTTPException(503,'状态数据库暂不可用，请检查连接及数据库迁移') from None
         return JSONResponse(jsonable_encoder(payload),headers={'Cache-Control':'no-store'})
     return router

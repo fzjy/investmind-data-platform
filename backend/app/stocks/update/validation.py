@@ -23,7 +23,7 @@ def strict_date(value, *, required=False):
 def validate_response(plan, response, as_of: date, window_start: date) -> TushareResponse:
     if len(set(response.fields)) != len(response.fields) or not set(plan.fields) <= set(response.fields):
         raise ValueError('response fields mismatch')
-    if len(response.items) >= plan.page_size:
+    if response.has_more or len(response.items) >= plan.page_size and response.has_more is not False:
         raise ValueError('response reached cap; pagination not verified')
     seen, retained = {}, []
     for row in response.rows():
@@ -100,4 +100,4 @@ def validate_response(plan, response, as_of: date, window_start: date) -> Tushar
         start, end = strict_date(plan.params['start_date']), strict_date(plan.params['end_date'])
         if len(seen) != (end-start).days+1:
             raise ValueError('calendar response incomplete')
-    return TushareResponse(fields=response.fields, items=tuple(retained))
+    return response.model_copy(update={"items":tuple(retained)})

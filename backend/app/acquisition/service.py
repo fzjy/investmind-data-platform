@@ -13,8 +13,9 @@ from app.acquisition.adapters.macro import read_macro_evidence
 from app.acquisition.availability.published import read_published
 from app.acquisition.availability.stored import read_stored
 from app.acquisition.catalog import load_bindings
-from app.acquisition.contracts import Assessment, Availability, Evidence, StateKey, StatusItem, StatusPage
-from app.acquisition.repository import StateRepository
+from app.acquisition.contracts import QueryError, UnknownResource, Assessment, Availability, Evidence, StateKey, StatusItem, StatusPage
+from app.acquisition.periods import bounds, covers, contains
+from app.acquisition.repository import StateRepository, scope_id
 from app.acquisition.rules import classify, classify_derived
 from app.db.models import DataAcquisitionState
 
@@ -30,6 +31,12 @@ def configured(root, binding):
     from app.config_paths import CONFIG_ROOT
     config = root/'config' if (root/'config').is_dir() else CONFIG_ROOT
     kind, entry = binding.subject_kind, binding.entry_id
+    from app.acquisition.adapters.aliases import SERIES
+    aliases = [subject for (key,subject) in SERIES if key == entry]
+    if aliases:
+        return aliases
+    if entry == 'market-sz-summary':
+        return ['SZSE']
     if kind == 'security':
         data = json.loads((config/'stocks/universes/representative-50.json').read_text(encoding='utf-8'))
         return [r['tsCode'] for r in data['symbols']]
@@ -39,6 +46,8 @@ def configured(root, binding):
         if entry in ('commodity-contracts','commodity-mapping'):
             return [r['code'] for r in data.get('commodities',{}).get('assets',[])]
         return [r['assetCode'] for r in data['assets'] if r['apiName'] == api]
+    if entry == 'external-macro' and kind == 'series':
+        return []
     if kind == 'series':
         return [binding.item_id or entry]
     if kind == 'product':
@@ -65,12 +74,14 @@ def _cursor(query, last=None):
             raise ValueError
         return StateKey(*key)
     except (ValueError,TypeError,UnicodeError):
-        raise ValueError('游标无效或查询条件已改变') from None
+        raise QueryError('游标无效或查询条件已改变') from None
 
 
 def assess_keys(session, keys, context, *, now, root=ROOT):
     # 同一次读取共享依赖和证据。
     bindings = {(b.entry_id,b.item_id):b for b in load_bindings(root)}
+    from app.acquisition.availability.members import member_reader
+    subjects_for, enterprise_inputs = member_reader(session,context)
     required = set(keys)
     children = {}
     def expand(key):
@@ -80,17 +91,14 @@ def assess_keys(session, keys, context, *, now, root=ROOT):
             for child in bindings.values():
                 if child.entry_id != dep or (child.item_id and (dep,'') in bindings):
                     continue
-                if child.subject_kind == key.subject_kind == 'series':
-                    subject = child.item_id or dep
-                elif child.subject_kind == key.subject_kind:
-                    subject = key.subject_key
-                else:
-                    continue
-                child_key = StateKey(dep,child.item_id,child.subject_kind,subject,key.scope_kind)
-                deps.append(child_key)
-                if child_key not in required:
-                    required.add(child_key)
-                    expand(child_key)
+                deps.extend(StateKey(dep,child.item_id,child.subject_kind,subject,key.scope_kind)
+                            for subject in subjects_for(key,child))
+        if key.entry_id == 'macro-enterprise':
+            deps.extend(enterprise_inputs(key))
+        for child_key in deps:
+            if child_key not in required:
+                required.add(child_key)
+                expand(child_key)
         children[key] = deps
     for key in keys:
         expand(key)
@@ -100,10 +108,11 @@ def assess_keys(session, keys, context, *, now, root=ROOT):
     for key, old in read_macro_evidence(session,legacy_keys,now=now).items():
         new = evidence.get(key)
         if (not new or old.status in ('paused','running') and key.subject_kind=='series' or
-            old.checked_at and (not new.checked_at or old.checked_at > new.checked_at)):
+            old.checked_at and (not new.checked_at or old.checked_at > new.checked_at)
+            and (new.status != 'failed' or old.status == 'failed' or scope_id(new.scope) == scope_id(old.scope))):
             evidence[key] = old
     values = (read_published(session,required,context) if context.view == 'published' else
-              read_stored(session,required,now=now))
+              read_stored(session,required,now=now,period=context.period))
     from app.config_paths import CONFIG_ROOT
     config_root = root/'config' if (root/'config').is_dir() else CONFIG_ROOT
     source_configs = {}
@@ -127,6 +136,15 @@ def assess_keys(session, keys, context, *, now, root=ROOT):
             source_configs[file] = json.loads((config_root/file).read_text(encoding='utf-8'))
         config = source_configs[file]
         return config.get('enabled') is False or section and config.get(section,{}).get('enabled') is False
+    security_keys = {k.subject_key for k in required if k.subject_kind=='security'}
+    known_securities = set()
+    if security_keys:
+        from app.db.models import Security
+        pool_binding = next(b for b in bindings.values() if b.subject_kind=='security')
+        known_securities.update(configured(root,pool_binding))
+        candidates = security_keys - known_securities
+        if candidates:
+            known_securities.update(session.scalars(select(Security.ts_code).where(Security.ts_code.in_(candidates))))
     items = {}
     def assess(key):
         if key in items:
@@ -141,16 +159,27 @@ def assess_keys(session, keys, context, *, now, root=ROOT):
                 value = Availability('confirmed_empty',reason='已完整查询该范围，返回零条记录')
         if value.source and proof.scope.get('source') and value.source != proof.scope['source']:
             value = replace(value,kind='unknown',reason='数据与执行记录的来源不一致')
-        if context.period and value.period != context.period:
+        if context.period and value.kind == 'available' and not contains(context.period,value.period):
             value = replace(value,kind='unknown',reason='数据期与请求范围尚未核对')
+        if context.period and proof.status in ('success','failed') and not covers(proof.scope,value.period,context.period):
+            proof = Evidence('unrecorded',reason='已有执行记录未证明所选数据期',scope=proof.scope)
+        if (key.subject_kind=='security' and key.subject_key not in known_securities and
+                value.kind=='missing' and proof.status=='unrecorded'):
+            value = Availability('not_applicable',reason='证券未登记，当前来源覆盖范围待确认')
         if paused(key):
             proof = replace(proof,status='paused',reason='来源配置已暂停')
         result = classify(value,proof)
-        if binding.source_adapter == 'derived':
+        if binding.source_adapter == 'derived' and proof.status not in ('paused','running'):
             deps = tuple(assess(k).assessment for k in children[key])
             if len(set(binding.dependencies)) != len({k.entry_id for k in children[key]}):
                 deps += (Assessment('excluded','需核对聚合范围中的实际成员'),)
             result = classify_derived(value,deps)
+        if key.entry_id == 'macro-enterprise' and value.kind == 'available' and proof.status not in ('paused','running'):
+            data = [classify(Availability('available'),evidence.get(k,Evidence('unrecorded')))
+                    for k in children[key]]
+            if not data:
+                data = [Assessment('excluded','未找到计算样本的报表回执')]
+            result = classify_derived(value,tuple([result,*data]))
         name = binding.name
         items[key] = StatusItem(key,name,replace(context,version=value.version or context.version),proof,value,result)
         return items[key]
@@ -164,28 +193,30 @@ class StatusService:
 
     def query(self, request):
         ctx = request.context
+        if ctx.period:
+            bounds(ctx.period)
         if request.scope_kind not in ('routine','historical') or ctx.view not in ('stored','published'):
-            raise ValueError('视图或采集范围无效')
+            raise QueryError('视图或采集范围无效')
         if ctx.view == 'stored' and (ctx.product or ctx.version) or ctx.view == 'published' and not ctx.product:
-            raise ValueError('发布视图须指定产品，入库视图不接受产品或版本')
+            raise QueryError('发布视图须指定产品，入库视图不接受产品或版本')
         if not 1 <= request.limit <= 100 or not (request.entry_ids or request.subject_keys):
-            raise ValueError('请指定目录条目或对象，分页大小必须在 1 至 100 内')
+            raise QueryError('请指定目录条目或对象，分页大小必须在 1 至 100 内')
         if len(request.entry_ids)>20 or len(request.subject_keys)>100 or len(request.item_ids)>100:
-            raise ValueError('筛选数量超过限制')
-        if any(not re.fullmatch(r'[A-Za-z0-9_.:-]{1,160}',s) for s in request.subject_keys):
-            raise ValueError('对象代码无效')
+            raise QueryError('筛选数量超过限制')
+        if any(not re.fullmatch(r'[\w.:-]{1,160}',s) for s in request.subject_keys):
+            raise QueryError('对象代码无效')
         if set(request.entry_ids) - catalog_entries(self.root):
-            raise KeyError('目录条目不存在')
+            raise UnknownResource('目录条目不存在')
         all_bindings = load_bindings(self.root)
         if request.subject_kind and request.subject_kind not in {b.subject_kind for b in all_bindings}:
-            raise ValueError('对象类型无效')
+            raise QueryError('对象类型无效')
         allowed = [b for b in all_bindings if (not request.entry_ids or b.entry_id in request.entry_ids)
                    and (not request.item_ids or b.item_id in request.item_ids)
                    and (not request.subject_kind or b.subject_kind == request.subject_kind)]
         if request.item_ids and set(request.item_ids) - {b.item_id for b in allowed}:
-            raise KeyError('条目内指标不存在')
+            raise UnknownResource('条目内指标不存在')
         if request.entry_ids and len(allowed)*len(request.subject_keys)>100:
-            raise ValueError('展开后的条目与对象组合超过 100')
+            raise QueryError('展开后的条目与对象组合超过 100')
         after = _cursor(request)
         now = self.clock()
         with self.factory() as session, session.begin():
@@ -205,15 +236,17 @@ class StatusService:
                 for subject in subjects:
                     if b.subject_kind == 'security' and not re.fullmatch(r'[0-9]{6}\.(?:SZ|SH|BJ)',subject):
                         if request.entry_ids and all(x.subject_kind=='security' for x in allowed):
-                            raise ValueError('证券代码应包含六位数字和交易所后缀')
+                            raise QueryError('证券代码应包含六位数字和交易所后缀')
                         continue
-                    if b.subject_kind == 'series' and subject != (b.item_id or b.entry_id):
+                    if b.subject_kind == 'series' and b.entry_id != 'external-macro' and subject != (b.item_id or b.entry_id):
                         continue
                     key = StateKey(b.entry_id,b.item_id,b.subject_kind,subject,request.scope_kind)
+                    if b.subject_kind == 'product' and subject not in configured(self.root,b):
+                        continue
                     if not after or key > after:
                         candidates.add(key)
-            if request.subject_keys and len(candidates) > 100:
-                raise ValueError('展开后的条目与对象组合超过 100')
+            if len(request.subject_keys) > 1 and len(candidates) > 100:
+                raise QueryError('展开后的条目与对象组合超过 100')
             ordered = sorted(candidates)
             page = ordered[:request.limit]
             items = assess_keys(session,page,ctx,now=now,root=self.root)
