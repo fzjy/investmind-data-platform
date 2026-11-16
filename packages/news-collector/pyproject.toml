@@ -14,10 +14,6 @@ requires-python = ">=3.12"
 # 发行包元数据中的简短用途说明。
 description = "Independent bounded financial news collector"
 
-[project.scripts]
-# 安装后生成的新闻命令行入口，指向实现模块中的 main 函数。
-smartparse-news = "smartparse_news.__main__:main"
-
 [tool.setuptools.packages.find]
 # 从此目录发现需要打包的 Python 模块。
 where = ["src"]

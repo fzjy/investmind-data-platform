@@ -6,6 +6,31 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 from smartparse_news import Collector, Config
+from smartparse_news.collector import initial_state
+from smartparse_news.storage import StoreLocked
+from contextlib import contextmanager
+from copy import deepcopy
+
+class MemoryStore:
+    def __init__(self): self.state = initial_state(); self.rows = []; self.locked = False
+    @contextmanager
+    def transaction(self):
+        if self.locked: raise StoreLocked()
+        yield self
+    def load(self): return deepcopy(self.state)
+    def save(self, state): self.state = deepcopy(state)
+    def status(self): return self.load()
+    def append(self, record, now):
+        prior = [r for r in self.rows if r["record"]["externalId"] == record["externalId"]]
+        if prior and prior[-1]["record"]["contentHash"] == record["contentHash"]: return
+        self.rows.append({"queueId": len(self.rows)+1, "record": record, "delivered": False})
+    def pending(self, limit=500): return [{"queueId":r["queueId"],"record":r["record"]} for r in self.rows if not r["delivered"]][:limit]
+    def ack(self, ids):
+        for r in self.rows:
+            if r["queueId"] in ids: r["delivered"] = True
+    def event(self, now, code): pass
+    def expire(self, cutoff): pass
+
 
 NOW = datetime(2026, 11, 10, 2, tzinfo=timezone.utc)
 
@@ -22,10 +47,10 @@ class CollectorTests(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
         self.config = Config(page_size=2, max_pages=1, interval_seconds=1,
                              request_interval_seconds=0, retry_count=0)
-        self.path = Path(self.tmp.name) / 'state.sqlite'
+        self.store = MemoryStore()
 
     def collector(self, response):
-        return Collector(self.path, self.config, fetch=lambda _: response, sleep=lambda _: None)
+        return Collector(self.config, store=self.store, fetch=lambda _: response, sleep=lambda _: None)
 
     def test_commit_page_and_resume_then_ack(self):
         c = self.collector(page())
@@ -83,7 +108,7 @@ class CollectorTests(unittest.TestCase):
         calls = []
         def fetch(_):
             calls.append(1); raise TimeoutError('private diagnostic not persisted')
-        c = Collector(self.path, replace(self.config, retry_count=2), fetch=fetch, sleep=lambda _: None)
+        c = Collector(replace(self.config, retry_count=2), store=self.store, fetch=fetch, sleep=lambda _: None)
         result = c.run(NOW)
         self.assertEqual(len(calls), 3)
         self.assertEqual(result['lastError'], 'SOURCE_UNAVAILABLE')
@@ -105,12 +130,8 @@ class CollectorTests(unittest.TestCase):
 
     def test_concurrent_run_is_locked(self):
         c = self.collector(page())
-        db = c.connect()
-        try:
-            db.execute('BEGIN IMMEDIATE')
-            self.assertEqual(c.run(NOW)['status'], 'locked')
-        finally:
-            db.close()
+        self.store.locked = True
+        self.assertEqual(c.run(NOW)['status'], 'locked')
 
 
 if __name__ == '__main__':

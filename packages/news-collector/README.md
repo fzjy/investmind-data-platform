@@ -25,7 +25,6 @@ python -m alembic -c backend/alembic.ini upgrade head
 
 ## 旧状态迁移
 
-根.env的`DANG_NEWS_STATE_PATH`仅用于定位首版遗留SQLite（默认data/news-collector/state.sqlite），不是新运行存储。首次后台运行在任务锁下只读旧库，主库一批事务导入队列/事件/游标并核对；迁移标记保证重复启动幂等。原SQLite和已有JSONL保留为历史核对材料，不再更新。首次没有旧库后又发现旧文件会明确报告NEWS_LATE_LEGACY_CONFLICT，需要核对来源，不能静默忽略或覆盖已运行的主库。损坏/目标冲突不自动重建。
 
 ## 单次预检、状态与更新
 
@@ -39,10 +38,11 @@ python -m app.cli.main sync-news --publish
 
 ## 独立代码与可复用边界
 
-本包不导入宿主app、不读项目.env。核心依赖Store/Transaction协议；宿主通过DatabaseNewsStore提供PostgreSQL实现。包仍提供标准库SQLiteStore供项目外独立使用和旧格式测试，这不代表数据底座运行需要 SQLite。SQLite适配器仅按抓取时间清理本地已交付队列/事件，不承担宿主Core/Raw/快照保留策略；项目由news_retention统一处理。单独使用可安装本包后运行`smartparse-news run/status/pending --config <JSON> --state <SQLite>`。
 
 来源为新浪财经7x24结构化接口，以稳定ID向历史翻页；不是有稳定SLA的开放API，东财未核验，不自动替换。只输出标题、来源、时间、原文链接及证券提示，不转载正文/摘要或保存编辑者账号。源码HTML清理集中在适配器。失败不推进游标，达到每轮上限保留nextId；catching_up不表示24小时目标已完整。窗口外修订、来源删除及超出可见历史不保证发现；A→B→A回退视为新修订。初始历史与持续运行按真实证据分别验收。
 
 ## 测试
 
 安装后`python -m unittest discover -s packages/news-collector/tests -v`；宿主用项目隔离测试入口。测试不应访问真实HTTP或用户数据库。
+
+采集核心只接受宿主注入的 Store；不提供独立命令或文件存储。宿主保留 watch-news、sync-news、news-status。旧文件迁入通过一次性运维工具完成，正常启动不读取旧文件。

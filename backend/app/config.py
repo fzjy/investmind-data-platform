@@ -149,7 +149,6 @@ class Settings(BaseSettings):
     bootstrap_force: bool = False
     external_import_path: Path = Path("./imports")
     news_config_path: Path = CONFIG_ROOT / "news/news-collector.json"
-    news_state_path: Path = PROJECT_ROOT / "data/news-collector/state.sqlite"
     backup_tool_mode: Literal["native", "docker"] = "docker"
     backup_path: str = "./backend/backups"
     backup_native_bin: str | None = None

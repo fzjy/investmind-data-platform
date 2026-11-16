@@ -233,7 +233,6 @@ def main(*, child_url: str | None = None) -> None:
         news_config = Path(directory) / 'news-disabled.json'
         news_config.write_text('{"enabled": false}', encoding='utf-8')
         os.environ['DANG_NEWS_CONFIG_PATH'] = str(news_config)
-        os.environ['DANG_NEWS_STATE_PATH'] = str(Path(directory) / 'absent-legacy.sqlite')
         isolate_extension_config(Path(directory))
         isolate_official_member_config(Path(directory))
         if args[0] == "pytest":

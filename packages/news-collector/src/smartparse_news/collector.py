@@ -13,7 +13,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import urlopen, Request
 
-from .storage import Store, SQLiteStore, StoreLocked
+from .storage import Store, StoreLocked
 
 UTC = timezone.utc
 SHANGHAI = timezone(timedelta(hours=8))
@@ -143,13 +143,10 @@ def initial_state():
 
 
 class Collector:
-    def __init__(self, path: Path | None, config: Config, *, store: Store | None = None, fetch=None, sleep=time.sleep, stopped=lambda: False):
+    def __init__(self, config: Config, *, store: Store, fetch=None, sleep=time.sleep, stopped=lambda: False):
         self.config, self.sleep, self.stopped = config, sleep, stopped
         self.fetch = fetch or (lambda params: fetch_sina(params, config.timeout_seconds))
-        self.store = store if store is not None else SQLiteStore(Path(path), initial_state())
-
-    def connect(self):
-        return self.store.connect()  # SQLite独立使用的兼容入口；宿主只使用Store协议。
+        self.store = store
 
     def status(self): return self.store.status()
     def pending(self, limit=500): return self.store.pending(limit)

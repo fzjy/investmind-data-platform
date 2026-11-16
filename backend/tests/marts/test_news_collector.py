@@ -7,13 +7,12 @@ from app.db.models import ContentDocument, OperationalAlert
 from app.content.routes import read_news
 from app.content.news_runtime import save_health, run_news
 from smartparse_news import Collector, Config
-from backend.tests.jobs.test_build_and_publish_integration import _factory
+from backend.tests.marts.test_news_unified import factory
 
 NOW = datetime(2026, 11, 10, 2, tzinfo=timezone.utc)
 
 
-def test_keyset_same_second_and_rights():
-    factory = _factory()
+def test_keyset_same_second_and_rights(factory):
     with factory.begin() as session:
         for i in range(4):
             session.add(ContentDocument(source='sina-finance', dedupe_key=str(i), title=str(i),
@@ -29,8 +28,8 @@ def test_keyset_same_second_and_rights():
         read_news(factory, 'invalid', now=NOW)
 
 
-def test_health_deduplicates_recovers_and_detects_shutdown_delay():
-    factory = _factory(); config = Config()
+def test_health_deduplicates_recovers_and_detects_shutdown_delay(factory):
+    config = Config()
     state = dict(failures=2, lastError='SCHEMA_CHANGED', lastSuccessAt=NOW.isoformat(), latestPublishedAt=NOW.isoformat())
     save_health(factory, state, config, NOW)
     save_health(factory, state, config, NOW)
@@ -43,8 +42,8 @@ def test_health_deduplicates_recovers_and_detects_shutdown_delay():
     assert read_news(factory, now=NOW+timedelta(days=1))['health']['status'] == 'warning'
 
 
-def test_collection_success_cannot_resolve_pending_delivery_failure():
-    factory = _factory(); config = Config()
+def test_collection_success_cannot_resolve_pending_delivery_failure(factory):
+    config = Config()
     state = dict(failures=0, lastError=None, lastSuccessAt=NOW.isoformat())
     save_health(factory, state, config, NOW, 'PUBLICATION_FAILED')
     save_health(factory, state, config, NOW)
@@ -56,10 +55,9 @@ def test_collection_success_cannot_resolve_pending_delivery_failure():
         assert session.scalar(select(OperationalAlert)).status == 'resolved'
 
 
-def test_ingestion_revision_allows_title_revert_without_duplicate_document(tmp_path):
+def test_ingestion_revision_allows_title_revert_without_duplicate_document(tmp_path, factory):
     from app.ingestion.external_import import ExternalImporter
     from app.connectors.external_files.reader import ExternalFileReader
-    factory = _factory()
     importer = ExternalImporter(factory, ExternalFileReader(tmp_path))
     for revision, title in enumerate(['A', 'B', 'A']):
         record = dict(schemaVersion='1.0', recordType='content', contentType='news',
@@ -72,14 +70,14 @@ def test_ingestion_revision_allows_title_revert_without_duplicate_document(tmp_p
             assert len(documents) == 1 and documents[0].title == title
 
 
-def test_failed_publication_preserves_delivery_then_retries(tmp_path, monkeypatch):
+def test_failed_publication_preserves_delivery_then_retries(tmp_path, monkeypatch, factory):
     from app.content import news_runtime as runtime
-    factory = _factory(); engine = factory.kw['bind']
+    engine = factory.kw['bind']
     monkeypatch.setattr(engine, 'dispose', lambda: None)
     monkeypatch.setattr(runtime, 'create_engine_and_session', lambda _, **kw: (engine, factory))
     config = tmp_path/'news.json'; config.write_text('{}')
-    settings = Settings(database_url='sqlite:///controlled', news_config_path=config,
-        news_state_path=tmp_path/'state.sqlite', external_import_path=tmp_path/'imports')
+    settings = Settings(database_url=str(engine.url), news_config_path=config,
+        external_import_path=tmp_path/'imports')
     def seed_run(self, now):
         # Test-only no-network payload; no imported fixture data in production.
         self.fetch = lambda _: {'result': {'status': {'code': 0}, 'data': {'feed': {'list': [

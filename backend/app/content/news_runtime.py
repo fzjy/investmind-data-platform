@@ -65,14 +65,12 @@ def run_news(settings, *, publish=False, dry_run=False, stopped=lambda: False, s
     report = {'status': 'failed', 'requestCount': 0}
     try:
         store = DatabaseNewsStore(factory)
-        migration = store.migrate_legacy(settings.news_state_path)
         retention = run_cleanup(factory, config, now, stopped=stopped)
         options = {'sleep': sleep} if sleep is not None else {}
-        collector = Collector(None, config, store=store, stopped=stopped, **options)
+        collector = Collector(config, store=store, stopped=stopped, **options)
         report = collector.run(now)
         report['retention'] = retention
         report['storage'] = 'postgresql' if engine.dialect.name == 'postgresql' else 'test-database'
-        report['migration'] = migration
         state = collector.status()
         save_health(factory, state, config, now)
         if publish and not stopped():

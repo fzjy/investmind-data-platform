@@ -9,7 +9,19 @@ from app.content.news_storage import DatabaseNewsStore
 from app.content.news_ingestion import ingest_news
 from app.db.models import ContentDocument, JobCursor
 from app.db.models.news import NewsDelivery
-from backend.tests.jobs.test_build_and_publish_integration import _factory
+from app.db.session import create_engine_and_session
+from app.db.base import ALL_BASES
+
+@pytest.fixture
+def factory(pg_url):
+    engine, factory = create_engine_and_session(pg_url)
+    with engine.begin() as connection:
+        for schema in {table.schema for base in ALL_BASES for table in base.metadata.tables.values() if table.schema}:
+            connection.exec_driver_sql(f'CREATE SCHEMA IF NOT EXISTS "{schema}"')
+        for base in ALL_BASES:
+            base.metadata.create_all(connection)
+    yield factory
+    engine.dispose()
 
 NOW = datetime(2026, 11, 10, 3, tzinfo=timezone.utc)
 RESPONSE = {'result': {'status': {'code': 0}, 'data': {'feed': {'list': [
@@ -17,59 +29,10 @@ RESPONSE = {'result': {'status': {'code': 0}, 'data': {'feed': {'list': [
     {'id': 1, 'create_time': '2026-11-10 10:59:00', 'rich_text': '【第二条】原文'}]}}}}
 
 
-def test_legacy_migration_preserves_state_rows_pending_and_is_idempotent(tmp_path):
-    config = Config(page_size=2, max_pages=1, request_interval_seconds=0)
-    path = tmp_path/'legacy.sqlite'
-    legacy = Collector(path, config, fetch=lambda _: RESPONSE)
-    legacy.run(NOW); legacy.ack([legacy.pending()[0]['queueId']])
-    before = path.read_bytes()
-    factory = _factory(); store = DatabaseNewsStore(factory)
-    result = store.migrate_legacy(path)
-    assert result['rows'] == 2 and result['pending'] == 1
-    assert store.status() == legacy.status()
-    assert store.pending()[0]['record'] == legacy.pending()[0]['record']
-    assert store.migrate_legacy(path) == result and before == path.read_bytes()
-    assert Collector(None, config, store=store, fetch=lambda _: pytest.fail('not due')).run(NOW)['requestCount'] == 0
-
-
-def test_corrupt_legacy_never_initializes_or_clears(tmp_path):
-    path = tmp_path/'broken.sqlite'; path.write_bytes(b'not sqlite')
-    factory = _factory(); store = DatabaseNewsStore(factory)
-    with pytest.raises(Exception): store.migrate_legacy(path)
-    with factory() as session:
-        assert session.scalar(select(JobCursor)) is None
-    assert path.read_bytes() == b'not sqlite'
-
-
-def test_invalid_second_legacy_row_rolls_back_entire_migration(tmp_path):
-    import sqlite3
-    from contextlib import closing
-    path = tmp_path/'legacy.sqlite'
-    legacy = Collector(path, Config(request_interval_seconds=0), fetch=lambda _: RESPONSE)
-    legacy.run(NOW)
-    with closing(sqlite3.connect(path)) as db, db:
-        db.execute("UPDATE queue SET payload='{}' WHERE id=2")
-    factory = _factory(); store = DatabaseNewsStore(factory)
-    with pytest.raises(RuntimeError): store.migrate_legacy(path)
-    with factory() as session:
-        assert session.scalar(select(NewsDelivery)) is None
-        assert session.scalar(select(JobCursor)) is None
-
-
-def test_later_legacy_file_is_reported_instead_of_silently_skipped(tmp_path):
-    path = tmp_path/'late.sqlite'; store = DatabaseNewsStore(_factory())
-    assert store.migrate_legacy(path)['status'] == 'no_legacy'
-    legacy = Collector(path, Config(request_interval_seconds=0), fetch=lambda _: RESPONSE)
-    legacy.run(NOW)
-    with pytest.raises(RuntimeError, match='NEWS_LATE_LEGACY_CONFLICT'):
-        store.migrate_legacy(path)
-    assert len(legacy.pending()) == 2
-
-
-def test_delivery_ack_and_health_recovery_roll_back_together(tmp_path, monkeypatch):
+def test_delivery_ack_and_health_recovery_roll_back_together(tmp_path, monkeypatch, factory):
     from app.content.news_runtime import save_health
-    factory = _factory(); store = DatabaseNewsStore(factory)
-    c = Collector(None, Config(request_interval_seconds=0), store=store, fetch=lambda _: RESPONSE)
+    store = DatabaseNewsStore(factory)
+    c = Collector(Config(request_interval_seconds=0), store=store, fetch=lambda _: RESPONSE)
     c.run(NOW); ids = [r['queueId'] for r in c.pending()]
     state = c.status()
     save_health(factory, state, Config(), NOW, 'PUBLICATION_FAILED')
@@ -84,10 +47,9 @@ def test_delivery_ack_and_health_recovery_roll_back_together(tmp_path, monkeypat
         assert session.scalar(select(OperationalAlert)).status == 'active'
 
 
-def test_database_store_collects_without_files_and_direct_delivery_is_idempotent(tmp_path):
-    factory = _factory(); store = DatabaseNewsStore(factory)
-    store.migrate_legacy(tmp_path/'absent.sqlite')
-    c = Collector(None, Config(page_size=3, request_interval_seconds=0), store=store, fetch=lambda _: RESPONSE)
+def test_database_store_collects_without_files_and_direct_delivery_is_idempotent(tmp_path, factory):
+    store = DatabaseNewsStore(factory)
+    c = Collector(Config(page_size=3, request_interval_seconds=0), store=store, fetch=lambda _: RESPONSE)
     c.run(NOW); pending = c.pending()
     assert ingest_news(factory, pending) == 2
     assert ingest_news(factory, pending) == 2
@@ -98,9 +60,9 @@ def test_database_store_collects_without_files_and_direct_delivery_is_idempotent
     assert list(tmp_path.iterdir()) == []
 
 
-def test_stop_prevents_next_supplier_request(tmp_path):
-    store = DatabaseNewsStore(_factory())
-    c = Collector(None, Config(), store=store, stopped=lambda: True, fetch=lambda _: pytest.fail('must not fetch'))
+def test_stop_prevents_next_supplier_request(tmp_path, factory):
+    store = DatabaseNewsStore(factory)
+    c = Collector(Config(), store=store, stopped=lambda: True, fetch=lambda _: pytest.fail('must not fetch'))
     assert c.run(NOW)['requestCount'] == 0
 
 
