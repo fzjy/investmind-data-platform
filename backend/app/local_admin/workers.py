@@ -2,8 +2,8 @@
 from __future__ import annotations
 import asyncio
 import os
-import sqlite3
-from pathlib import Path
+from sqlalchemy.exc import SQLAlchemyError
+from app.db.session import create_engine_and_session
 import subprocess
 import sys
 import time
@@ -16,19 +16,23 @@ from app.market.data.catalog import MarketDataCatalog
 
 
 class LocalManager:
-    def __init__(self, root, launch=None, *, market_path=None):
+    def __init__(self, root, launch=None, *, market_path=None, session_factory=None):
         self.root = root
         self.settings = Settings.from_env()
         self.config = Configuration(root, news_path=self.settings.news_config_path, market_path=market_path)
-        self.store = ControlStore(root / "data/local-admin/control.sqlite3")
+        self.engine = None
+        if session_factory is None:
+            self.engine, session_factory = create_engine_and_session(self.settings.database_url)
+        self.store = ControlStore(session_factory)
         self.launch = launch or self._spawn
         self.workers = {}
         self.failed = {}
         self.lock = RLock()
+        self.stopping = False
 
     def _spawn(self, name):
         return subprocess.Popen([sys.executable, str(self.root / "scripts/start-project.py"), "--child", name],
-            cwd=self.root, env={**os.environ, "INVESTMIND_LOCAL_CONTROL": str(self.store.path)},
+            cwd=self.root, env={**os.environ, "INVESTMIND_LOCAL_CONTROL": self.store.owner},
             stdin=subprocess.PIPE, creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0,
             start_new_session=os.name != "nt")
 
@@ -57,13 +61,15 @@ class LocalManager:
 
     def start(self):
         with self.lock:
+            self.store.acquire()
             self.sync_files()
             self.store.reset_instance(TASKS, cold=True)
             self.reconcile()
 
     def apply(self, name, version, changes):
         with self.lock:
-            saved = self.config.save(name, version, changes)
+            with self.store.transaction():
+                saved = self.config.save(name, version, changes)
             try:
                 self.sync_files(name)
                 workers = {"news-worker", "scheduler"} if name == "tasks" else {
@@ -71,12 +77,14 @@ class LocalManager:
                 for worker in workers:
                     self.failed.pop(worker, None)
                 self.reconcile()
-            except (OSError, ValueError, sqlite3.Error) as error:
+            except (OSError, ValueError, SQLAlchemyError) as error:
                 saved["applyError"] = f"文件已保存，运行配置待应用（{type(error).__name__}）。请重试。"
             return saved
 
     def reconcile(self):
         with self.lock:
+            if self.stopping:
+                return
             rows = self.store.rows()
             for worker, names in (("news-worker", ["news"]), ("scheduler", [n for n in TASKS if n != "news"])):
                 process = self.workers.get(worker)
@@ -112,10 +120,17 @@ class LocalManager:
             await asyncio.to_thread(self.reconcile)
 
     def shutdown(self):
-        for worker in self.workers.values():
-            worker.stdin.close()
-        for worker in self.workers.values():
-            worker.wait()
+        with self.lock:
+            self.stopping = True
+            try:
+                for worker in self.workers.values():
+                    worker.stdin.close()
+                for worker in self.workers.values():
+                    worker.wait()
+            finally:
+                self.store.release()
+                if self.engine is not None:
+                    self.engine.dispose()
 
 
 def managed_news(store, *, runner=None, settings_loader=Settings.from_env, sleep=time.sleep, stop_requested=lambda: False):
@@ -156,12 +171,13 @@ def managed_news(store, *, runner=None, settings_loader=Settings.from_env, sleep
         applied = {**row, "rule": f"每 {config.interval_seconds} 秒"}
         store.acknowledge(applied)
         recovery = generation != row["recovered"]
-        if store.admit("news", generation, recovery=recovery):
+        execution_id = store.admit("news", generation, recovery=recovery, revision=row["revision"])
+        if execution_id is not None:
             try:
                 report = (runner or run_news)(settings, publish=True)
-                store.finish("news", summarize("news", report, recovery))
+                store.finish("news", execution_id, summarize("news", report, recovery))
             except Exception:
-                store.finish("news", "失败，请查看新闻运行记录")
+                store.finish("news", execution_id, "失败，请查看新闻运行记录")
                 raise
         due = time.monotonic() + config.interval_seconds
         when = datetime.now(UTC) + timedelta(seconds=config.interval_seconds)

@@ -84,24 +84,31 @@ async def serve_local(tasks, port):
         watcher = None
         try:
             manager.start()
-            watcher = asyncio.create_task(manager.monitor())
+            async def watch_manager():
+                try:
+                    await manager.monitor()
+                finally:
+                    server.should_exit = True
+            watcher = asyncio.create_task(watch_manager())
             await server.serve(sockets=[sock])
         finally:
             if watcher:
                 watcher.cancel()
                 await asyncio.gather(watcher, return_exceptions=True)
             manager.shutdown()
+            if watcher and not watcher.cancelled():
+                watcher.result()
 
 
 def run_child(name):
     # 父进程退出（含终端被关闭）时管道关闭，子进程收到与 Ctrl+C 相同的停止请求。
     import threading
-    control_path = os.environ.get("INVESTMIND_LOCAL_CONTROL")
+    owner = os.environ.get("INVESTMIND_LOCAL_CONTROL")
     parent_closed = threading.Event()
 
     def stop_on_eof():
         os.read(sys.stdin.fileno(), 1)
-        if control_path:
+        if owner:
             parent_closed.set()
             return
         if os.name == "nt":
@@ -118,9 +125,12 @@ def run_child(name):
         signal.signal(signal.SIGBREAK, signal.default_int_handler)
     threading.Thread(target=stop_on_eof, daemon=True).start()
     control = None
-    if control_path:
+    if owner:
         from app.local_admin.control import ControlStore
-        control = ControlStore(Path(control_path))
+        from app.config import Settings
+        from app.db.session import create_engine_and_session
+        _, factory = create_engine_and_session(Settings.from_env().database_url)
+        control = ControlStore(factory, owner)
     if name == "scheduler":
         from app.jobs.scheduler import main as run_scheduler
         return run_scheduler(control_store=control, stop_requested=parent_closed.is_set)

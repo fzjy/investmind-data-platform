@@ -3,6 +3,7 @@ from functools import partial
 
 from apscheduler.triggers.cron import CronTrigger
 from app.local_admin.configuration import TASKS
+from app.local_admin.control import OwnerLost
 from app.macro.jobs.macro_scheduler import MacroWeeklyCronTrigger
 from app.market.jobs.market_scheduler import (
     MarketDailyCronTrigger, MarketScheduledCoordinator, PulseScheduledCoordinator,
@@ -99,26 +100,30 @@ class ManagedSchedule:
     def _call(self, row, work, reason, recovery):
         name = row["name"]
         def admitted():
-            if not self.store.admit(name, row["generation"], recovery=recovery,
-                                    revision=None if recovery else row["revision"]):
+            execution_id = self.store.admit(name, row["generation"], recovery=recovery,
+                                    revision=None if recovery else row["revision"])
+            if execution_id is None:
                 return
             try:
                 result = work()
                 summary = summarize(name, result, recovery)
             except BaseException:
-                self.store.finish(name, "失败，请查看运行记录")
+                self.store.finish(name, execution_id, "失败，请查看运行记录")
                 raise
-            self.store.finish(name, summary)
+            self.store.finish(name, execution_id, summary)
         return self.runtime._guard_job(admitted, reason)
 
     def tick(self):
-        if self.stop_requested():
+        try:
+            rows = None if self.stop_requested() else self.store.rows()
+        except OwnerLost:
+            rows = None
+        if rows is None:
             # 控制线程不能 join 自己。唤醒 BlockingScheduler，由 run() 的 finally 等在途作业。
             with self.runtime._jobs_condition:
                 self.runtime._jobs_stopping = True
             self.scheduler.shutdown(wait=False)
             return
-        rows = self.store.rows()
         rt = self.runtime
         flags = {flag: bool(rows[name]["enabled"]) for name, (_, flag, _, _) in MARKET.items()}
         flags["scheduler_announcements_enabled"] = bool(rows["announcements"]["enabled"])

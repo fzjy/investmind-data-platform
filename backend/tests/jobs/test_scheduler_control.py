@@ -18,8 +18,8 @@ def until(predicate):
         time.sleep(.02)
 
 
-def test_only_enabled_generation_admitted(tmp_path):
-    store = ControlStore(tmp_path / "control.db")
+def test_only_enabled_generation_admitted(tmp_path, control_store):
+    store = control_store
     for name in TASKS:
         store.target(name, name == "macro", "daily")
     started, release = Event(), Event()

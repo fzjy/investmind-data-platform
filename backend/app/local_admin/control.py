@@ -1,98 +1,145 @@
-"""本机进程共用的任务意图与执行回执；每次准入在 SQLite 内原子判断。"""
+"""PostgreSQL 本机管理锁、任务意图与执行历史。"""
 from contextlib import contextmanager
-from pathlib import Path
-import sqlite3
 from datetime import UTC, datetime
+from uuid import uuid4
+
+from sqlalchemy import select, text, update
+
+from app.db.models.local_admin import LocalAdminExecution as Execution, LocalAdminTask as Task
 
 
-def now():
-    return datetime.now(UTC).isoformat()
+class OwnerLost(RuntimeError):
+    pass
+
+
+def api_row(record):
+    return {col.name: value.isoformat() if isinstance(value, datetime) else value
+            for col in record.__table__.columns if col.name != "owner"
+            for value in [getattr(record, col.name)]}
 
 
 class ControlStore:
-    def __init__(self, path: Path):
-        self.path = path
-        path.parent.mkdir(parents=True, exist_ok=True)
-        with self.connection() as db:
-            db.execute("""CREATE TABLE IF NOT EXISTS task (
-                name TEXT PRIMARY KEY, enabled INTEGER NOT NULL, rule TEXT NOT NULL,
-                generation INTEGER DEFAULT 1, revision INTEGER DEFAULT 1, recovered INTEGER DEFAULT 0,
-                applied INTEGER DEFAULT 0, effective TEXT DEFAULT '', active INTEGER DEFAULT 0,
-                started TEXT, finished TEXT, result TEXT, next_run TEXT, error TEXT, seen TEXT
-            )""")
-            db.execute("""CREATE TABLE IF NOT EXISTS execution (
-                id INTEGER PRIMARY KEY, name TEXT NOT NULL, generation INTEGER NOT NULL,
-                recovery INTEGER NOT NULL, started TEXT NOT NULL, finished TEXT, result TEXT
-            )""")
-            db.execute("CREATE INDEX IF NOT EXISTS execution_by_task ON execution(name, id DESC)")
+    def __init__(self, session_factory, owner=None):
+        self.factory = session_factory
+        self.owner = owner
+        self.connection = None
+
+    def acquire(self):
+        with self.factory() as session:
+            connection = session.get_bind().connect()
+        try:
+            owner = "investmind-admin-" + uuid4().hex
+            connection.execute(text("SELECT set_config('application_name', :owner, false)"), {"owner": owner})
+            if not connection.scalar(text("SELECT pg_try_advisory_lock(151710, 1)")):
+                raise OwnerLost("已有管理进程持有数据库锁")
+            connection.commit()
+            self.owner = owner
+            self.connection = connection
+        except BaseException:
+            connection.invalidate()
+            connection.close()
+            raise
+
+    def release(self):
+        if self.connection is not None:
+            self.connection.invalidate()
+            self.connection.close()
+            self.connection = None
 
     @contextmanager
-    def connection(self):
-        db = sqlite3.connect(self.path, timeout=10)
-        db.row_factory = sqlite3.Row
-        try:
-            with db:
-                yield db
-        finally:
-            db.close()
+    def transaction(self):
+        with self.factory.begin() as session:
+            # 将跨任务的恢复与领取排序，接管者等待先前已获准的事务提交。
+            session.execute(text("SELECT pg_advisory_xact_lock(151710, 2)"))
+            if self.owner is None or not session.scalar(text("""
+                SELECT EXISTS (SELECT FROM pg_locks l JOIN pg_stat_activity a ON a.pid=l.pid
+                WHERE a.datname=current_database() AND a.application_name=:owner
+                AND l.locktype='advisory' AND l.granted AND l.classid=151710
+                AND l.objid=1 AND l.objsubid=2)
+            """), {"owner": self.owner}):
+                raise OwnerLost("管理进程已失去数据库锁")
+            yield session
 
     def target(self, name, enabled, rule):
         self.targets([(name, enabled, rule)])
 
     def targets(self, targets):
-        with self.connection() as db:
-            db.executemany("""INSERT INTO task(name,enabled,rule) VALUES(?,?,?)
-                ON CONFLICT(name) DO UPDATE SET enabled=excluded.enabled, rule=excluded.rule,
-                generation=generation+(enabled!=excluded.enabled), revision=revision+1, applied=0, error=NULL
-                WHERE enabled!=excluded.enabled OR rule!=excluded.rule""", targets)
+        with self.transaction() as session:
+            for name, enabled, rule in targets:
+                row = session.get(Task, name)
+                if row is None:
+                    session.add(Task(name=name, enabled=enabled, rule=rule, owner=self.owner))
+                elif row.enabled != enabled or row.rule != rule:
+                    row.generation += int(row.enabled != enabled)
+                    row.revision += 1
+                    row.enabled, row.rule = enabled, rule
+                    row.applied, row.error = 0, None
 
     def rows(self):
-        with self.connection() as db:
-            return {r["name"]: dict(r) for r in db.execute("SELECT * FROM task")}
+        with self.transaction() as session:
+            return {r.name: api_row(r) for r in session.scalars(select(Task))}
 
     def get(self, name):
-        with self.connection() as db:
-            return dict(db.execute("SELECT * FROM task WHERE name=?", (name,)).fetchone())
+        with self.transaction() as session:
+            return api_row(session.get(Task, name))
 
     def admit(self, name, generation, *, recovery, revision=None):
-        with self.connection() as db:
-            started = now()
-            changed = db.execute("""UPDATE task SET active=1, started=?, finished=NULL, result=NULL,
-                recovered=CASE WHEN ? THEN generation ELSE recovered END
-                WHERE name=? AND enabled AND active=0 AND generation=? AND (NOT ? OR recovered!=generation)
-                AND (? IS NULL OR revision=?)""",
-                (started, recovery, name, generation, recovery, revision, revision))
-            if changed.rowcount:
-                db.execute("INSERT INTO execution(name,generation,recovery,started) VALUES(?,?,?,?)",
-                           (name, generation, recovery, started))
-            return bool(changed.rowcount)
+        with self.transaction() as session:
+            started = datetime.now(UTC)
+            claim = update(Task).where(Task.name == name, Task.enabled, ~Task.active,
+                                       Task.owner == self.owner, Task.generation == generation)
+            if recovery:
+                claim = claim.where(Task.recovered != generation).values(recovered=generation)
+            if revision is not None:
+                claim = claim.where(Task.revision == revision)
+            claim = claim.values(active=True, started=started, finished=None, result=None)
+            if session.scalar(claim.returning(Task.name)) is None:
+                return None
+            execution = Execution(name=name, generation=generation, recovery=recovery,
+                                  started=started, owner=self.owner)
+            session.add(execution)
+            session.flush()
+            return execution.id
 
-    def finish(self, name, result):
-        with self.connection() as db:
-            finished = now()
-            db.execute("UPDATE execution SET result=?,finished=? WHERE name=? AND finished IS NULL AND result IS NULL",
-                       (result, finished, name))
-            db.execute("UPDATE task SET active=0,finished=?,result=? WHERE name=?", (finished, result, name))
+    def finish(self, name, execution_id, result):
+        with self.transaction() as session:
+            execution = session.get(Execution, execution_id)
+            if (execution is None or execution.name != name or execution.owner != self.owner
+                    or execution.result is not None or execution.finished is not None):
+                return
+            row = session.get(Task, name)
+            execution.finished = row.finished = datetime.now(UTC)
+            execution.result = row.result = result
+            row.active = False
 
     def recent(self, name, offset):
-        with self.connection() as db:
-            return [dict(row) for row in db.execute(
-                "SELECT * FROM execution WHERE name=? ORDER BY id DESC LIMIT 21 OFFSET ?", (name, offset))]
+        with self.transaction() as session:
+            return [api_row(r) for r in session.scalars(select(Execution).where(Execution.name == name)
+                    .order_by(Execution.id.desc()).limit(21).offset(offset))]
 
     def acknowledge(self, row, next_run=None, error=None):
-        with self.connection() as db:
-            db.execute("""UPDATE task SET applied=?, effective=?, next_run=?, error=?, seen=?
-                WHERE name=? AND revision=? AND generation=? AND rule=?""",
-                (0 if error else row["generation"], "" if error else row["rule"], next_run, error, now(),
-                 row["name"], row["revision"], row["generation"], row["rule"]))
+        with self.transaction() as session:
+            task = session.get(Task, row["name"])
+            if all(getattr(task, key) == row[key] for key in ("revision", "generation", "rule")):
+                task.applied = 0 if error else task.generation
+                task.effective = "" if error else task.rule
+                task.next_run = datetime.fromisoformat(next_run) if next_run else None
+                task.error, task.seen = error, datetime.now(UTC)
 
     def reset_instance(self, names, *, cold=False):
-        with self.connection() as db:
+        with self.transaction() as session:
             for name in names:
-                db.execute("UPDATE execution SET result='进程退出，结束时间待确认' WHERE name=? AND finished IS NULL AND result IS NULL", (name,))
-                # 已开始但失联的轮次保留消费标记，避免重放同一供应商请求。
-                db.execute("""UPDATE task SET generation=generation+(? AND enabled AND NOT active AND NOT EXISTS(
-                        SELECT 1 FROM execution e WHERE e.name=task.name AND e.generation=task.generation
-                        AND e.finished IS NULL)),
-                    result=CASE WHEN active THEN '上次进程退出，结果待确认' ELSE result END,
-                    active=0, applied=0, effective='', next_run=NULL, seen=NULL WHERE name=?""", (cold, name))
+                task = session.get(Task, name)
+                unfinished = session.scalars(select(Execution).where(Execution.name == name,
+                    Execution.finished.is_(None))).all()
+                for run in unfinished:
+                    if run.result is None:
+                        run.result = "进程退出，结束时间待确认"
+                if cold and task.enabled and not task.active and not any(
+                        run.generation == task.generation for run in unfinished):
+                    task.generation += 1
+                if task.active:
+                    task.result = "上次进程退出，结果待确认"
+                task.owner = self.owner
+                task.active, task.applied, task.effective = False, 0, ""
+                task.next_run = task.seen = None

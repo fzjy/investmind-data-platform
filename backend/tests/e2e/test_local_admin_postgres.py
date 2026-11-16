@@ -1,34 +1,28 @@
-import os
 from pathlib import Path
 from shutil import copytree
 from types import SimpleNamespace
 from io import BytesIO
 
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
-from testcontainers.community.postgres import PostgresContainer
-import pytest
 from app.main import create_app
 from app.local_admin.routes import mount_admin
 from app.local_admin.workers import LocalManager
 from app.db.models import JobRun, JobCursor, SchedulerHeartbeat, JobFailure, QualityCheckResult
 
-pytestmark = pytest.mark.skipif(os.environ.get("DANG_RUN_POSTGRES_TESTS")!="1", reason="disposable PostgreSQL")
-
-
-def test_local_entry_apply_and_run_links(tmp_path):
+def test_local_entry_apply_and_run_links(tmp_path, control_store):
     root = Path(__file__).resolve().parents[3]
     copytree(root / "config", tmp_path / "config")
     spawned = []
     def launch(name):
         spawned.append(name)
         return SimpleNamespace(stdin=BytesIO(), poll=lambda:None, wait=lambda:None)
-    manager = LocalManager(tmp_path, launch)
+    control_store.release()
+    manager = LocalManager(tmp_path, launch, session_factory=control_store.factory)
     manager.start()
-    with PostgresContainer("postgres:17-alpine", driver="psycopg") as pg:
-        engine = create_engine(pg.get_connection_url())
+    with control_store.factory() as session:
+        engine = session.get_bind()
+    try:
         with engine.begin() as conn:
-            conn.exec_driver_sql("CREATE SCHEMA ops")
             for model in (JobRun,JobCursor,SchedulerHeartbeat,JobFailure,QualityCheckResult):
                 model.__table__.create(conn)
             conn.execute(JobRun.__table__.insert(),dict(id="example",job_name="sync-daily",business_key="today"))
@@ -48,9 +42,16 @@ def test_local_entry_apply_and_run_links(tmp_path):
             assert len(spawned)==1
             tasks = client.get("/admin/api/tasks").json()
             assert next(t for t in tasks if t["name"]=="stocks")["applyState"]=="已保存，待应用"
+            generation = manager.store.get("stocks")["generation"]
+            local_id = manager.store.admit("stocks", generation, recovery=True)
+            manager.store.finish("stocks", local_id, "完成")
+            history = client.get("/admin/api/tasks/stocks/runs").json()
+            assert history["localRuns"][0]["id"] == local_id
+            assert history["runs"][0]["id"] == "example"
             run = client.get("/admin/api/tasks/stocks/runs/example").json()
             assert client.get("/admin/api/tasks/news/runs").json()["cursor"]["cursor_key"]=="sina-finance"
             assert "待确认" in run["runs"][0]["displayStatus"]
             assert client.get("/admin/api/tasks/macro/runs/example").status_code==404
             assert client.get("/admin/api/tables/ops/job_failure?run=example").json()["rows"] == []
-        engine.dispose()
+    finally:
+        manager.shutdown()

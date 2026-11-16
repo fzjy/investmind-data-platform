@@ -21,3 +21,21 @@ def pg_database(pg_instance_url):
 @pytest.fixture
 def pg_url(pg_database):
     return pg_database()
+
+@pytest.fixture
+def control_store(pg_url):
+    from app.db.models.local_admin import LocalAdminTask, LocalAdminExecution
+    from app.db.session import create_engine_and_session
+    from app.local_admin.control import ControlStore
+    engine, factory = create_engine_and_session(pg_url)
+    with engine.begin() as connection:
+        connection.exec_driver_sql("CREATE SCHEMA ops")
+        for model in (LocalAdminTask, LocalAdminExecution):
+            model.__table__.create(connection)
+    store = ControlStore(factory)
+    store.acquire()
+    try:
+        yield store
+    finally:
+        store.release()
+        engine.dispose()
