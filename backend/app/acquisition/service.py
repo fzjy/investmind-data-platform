@@ -40,6 +40,14 @@ def configured(root, binding):
     if kind == 'security':
         data = json.loads((config/'stocks/universes/representative-50.json').read_text(encoding='utf-8'))
         return [r['tsCode'] for r in data['symbols']]
+    if entry in ('index-basic','index-weights','etf-basic'):
+        targets = json.loads((config/'macro/enterprise-targets.json').read_text(encoding='utf-8'))['targets']
+        kind = 'etf' if entry=='etf-basic' else 'index'
+        codes = [row['code'] for row in targets if row['kind']==kind]
+        if entry=='index-basic':
+            from app.portfolio.reference_catalog import TARGETS
+            codes.extend(TARGETS)
+        return codes
     if kind == 'instrument':
         data = json.loads((config/'market/market-data.json').read_text(encoding='utf-8'))
         api = {'index-daily':'index_daily','index-global':'index_global','etf-daily':'fund_daily','etf-shares':'fund_daily'}.get(entry)
@@ -113,6 +121,17 @@ def assess_keys(session, keys, context, *, now, root=ROOT):
             evidence[key] = old
     values = (read_published(session,required,context) if context.view == 'published' else
               read_stored(session,required,now=now,period=context.period))
+    from app.acquisition.adapters.targets import APIS, target_status
+    for key in required:
+        if key.entry_id not in APIS or key.scope_kind!='routine':
+            continue
+        old, value = target_status(session,key,now)
+        new = evidence.get(key)
+        if old and (not new or new.status not in ('failed','running') and old.checked_at and
+                    (not new.checked_at or old.checked_at>new.checked_at)):
+            evidence[key] = old
+        if context.view=='stored' and values[key].kind=='unknown':
+            values[key] = value
     from app.config_paths import CONFIG_ROOT
     config_root = root/'config' if (root/'config').is_dir() else CONFIG_ROOT
     source_configs = {}
