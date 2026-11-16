@@ -559,3 +559,24 @@ def test_alert_reopens_same_row_and_open_alerts_are_defensive_and_sorted(
     assert tuple(alert.key for alert in alerts) == ("a-key", "z-key")
     alerts[0].details["nested"] = {"value": 99}
     assert repository.alert("a-key").details == {"nested": {"value": 1}}
+
+@pytest.mark.parametrize("attributes,constraint,expected", [
+    ({"pgcode": "23505"}, "scheduler_checkpoint_pkey", True),
+    ({"sqlstate": "23505"}, "scheduler_checkpoint_pkey", True),
+    ({"pgcode": "23505"}, "another_constraint", False),
+    ({"pgcode": "23503"}, "scheduler_checkpoint_pkey", False),
+    ({"sqlstate": "23503", "pgcode": "23505"}, "scheduler_checkpoint_pkey", False),
+])
+def test_expected_duplicate_key_driver_diagnostics(attributes, constraint, expected):
+    from types import SimpleNamespace
+    from sqlalchemy.exc import IntegrityError
+    from app.jobs.scheduler_state import _is_expected_duplicate_key
+
+    original = Exception("database error")
+    for name, value in attributes.items():
+        setattr(original, name, value)
+    original.diag = SimpleNamespace(constraint_name=constraint)
+    error = IntegrityError(None, None, original)
+    assert _is_expected_duplicate_key(
+        error, postgresql_constraints=frozenset({"scheduler_checkpoint_pkey"})
+    ) is expected

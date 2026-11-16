@@ -21,6 +21,28 @@ if __name__ == "__main__":
         print(json.dumps({'postgres': value, 'shared': shared,
                           'pgEnvironment': [key for key in __import__('os').environ if key.upper().startswith('PG')],
                           'dotenvDisabled': config.PROJECT_ENV_FILE.name == 'missing.env'}))
+    elif mode == "redirect":
+        from sqlalchemy.engine import make_url
+        from unittest.mock import patch
+        from backend.tests.support.postgres import child_url
+        url = make_url(child_url)
+        rejected = 0
+        for key, value in (("hostaddr", "192.0.2.1"), ("service", "test_canary")):
+            for from_query in (True, False):
+                engine = (create_engine(url.update_query_dict({key: value})) if from_query
+                          else create_engine(url, connect_args={key: value}))
+                with patch.object(engine.dialect, "connect", side_effect=RuntimeError("driver reached")) as driver:
+                    try:
+                        engine.connect()
+                    except AssertionError:
+                        rejected += 1
+                    finally:
+                        engine.dispose()
+                    driver.assert_not_called()
+        print(json.dumps({"rejected": rejected}))
+    elif mode == "environment":
+        import os
+        print(json.dumps(sorted(k for k in os.environ if k.upper().startswith("PG"))))
     elif mode == "allowed":
         with httpx.Client(transport=httpx.MockTransport(lambda request: httpx.Response(200))) as client:
             status = client.get("https://example.invalid").status_code

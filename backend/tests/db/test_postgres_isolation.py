@@ -52,3 +52,30 @@ def test_public_entry_rejects_child_url_before_database_access():
     )
     assert result.returncode != 0
     assert result.stderr.strip() == 'Only pytest or backend.tests modules are allowed'
+
+
+def test_registered_identity_rejects_libpq_redirects(pg_url):
+    import json
+    from backend.tests.support.postgres import run_child
+    result = run_child(pg_url, "backend.tests.isolation_probe", "redirect")
+    assert result.returncode == 97, result.stderr
+    assert "violations=4" in result.stderr
+    assert json.loads(result.stdout) == {"rejected": 4}
+
+
+def test_public_entry_clears_inherited_libpq_settings(monkeypatch):
+    import json
+    from pathlib import Path
+    import subprocess
+    import sys
+
+    root = Path(__file__).resolve().parents[3]
+    monkeypatch.setenv("PGHOSTADDR", "192.0.2.1")
+    monkeypatch.setenv("PGSERVICE", "test_canary")
+    result = subprocess.run(
+        [sys.executable, "-I", str(root / "backend/tests/run_isolated.py"),
+         "backend.tests.isolation_probe", "environment"],
+        text=True, capture_output=True, timeout=15, cwd=root,
+    )
+    assert result.returncode == 0, result.stderr
+    assert json.loads(result.stdout) == []

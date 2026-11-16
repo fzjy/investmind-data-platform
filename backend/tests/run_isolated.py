@@ -70,7 +70,7 @@ def main(*, child_url: str | None = None) -> None:
     root = Path(__file__).resolve().parents[2]
     sys.path[:0] = [str(root), str(root / "backend"), str(root / "packages/news-collector/src")]
     for name in tuple(os.environ):
-        if name.upper().startswith(("DANG_", "COMPOSE_")):
+        if name.upper().startswith(("DANG_", "COMPOSE_", "PG")):
             del os.environ[name]
     os.environ["DANG_RUN_POSTGRES_TESTS"] = "1" if postgres else "0"
     os.environ["DANG_DATABASE_URL"] = child_url or "postgresql+psycopg://invalid.invalid/unregistered"
@@ -125,7 +125,11 @@ def main(*, child_url: str | None = None) -> None:
 
     def controlled_database(dialect: Dialect, record: object, args: object, params: dict[str, object]) -> None:
         identity = (params.get("host"), params.get("port"), params.get("dbname"), params.get("user"), params.get("password"))
-        if (postgres or child_url) and dialect.name == "postgresql" and identity in allowed_databases:
+        # libpq 的 DSN、service 和 hostaddr 均可改变实际目标。只放行登记的端点及项目连接选项。
+        allowed_params = {"host", "port", "dbname", "user", "password", "options",
+                          "context", "connect_timeout", "application_name", "sslmode"}
+        if ((postgres or child_url) and dialect.name == "postgresql" and identity in allowed_databases
+                and not args and params.keys() <= allowed_params):
             return
         violations.append("unregistered database")
         raise AssertionError("Offline tests forbid unregistered databases")

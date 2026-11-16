@@ -112,7 +112,8 @@ def _is_expected_duplicate_key(
     postgresql_constraints: frozenset[str],
 ) -> bool:
     diagnostic = getattr(error.orig, "diag", None)
-    return (getattr(error.orig, "sqlstate", None) == "23505"
+    sqlstate = getattr(error.orig, "sqlstate", None) or getattr(error.orig, "pgcode", None)
+    return (sqlstate == "23505"
             and getattr(diagnostic, "constraint_name", None) in postgresql_constraints)
 
 
