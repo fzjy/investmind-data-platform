@@ -227,7 +227,7 @@ class SchedulerRuntime:
         self._jobs_stopping = False
         self._active_jobs = 0
 
-    def run(self) -> None:
+    def run(self, *, local_control=None) -> None:
         instance_id = self._state.start_instance(
             "daily-sync",
             now=self._now(),
@@ -300,6 +300,10 @@ class SchedulerRuntime:
                 universe_profile=self._universe.profile,
                 universe_version=self._universe.version,
             )
+            if local_control is not None:
+                from apscheduler.executors.pool import ThreadPoolExecutor
+                scheduler.add_executor(ThreadPoolExecutor(1), "control")
+                local_control(self)
             scheduler.start()
         except (KeyboardInterrupt, SystemExit):
             normal_stop = True
@@ -857,14 +861,13 @@ def build_scheduler_runtime(
     database_url = settings.database_url or ""
     database_read_url = settings.database_read_url or ""
 
-    macro_coordinator = None
-    if settings.macro_sync_enabled:
+    def make_macro(active_settings):
         with daily_runtime.session_factory() as session:
             engine = session.get_bind()
-        macro_coordinator = MacroScheduledCoordinator(
-            settings=settings, catalog=MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE),
+        return MacroScheduledCoordinator(
+            settings=active_settings, catalog=MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE),
             history=SqlMacroSyncHistory(daily_runtime.session_factory), state=state,
-            runtime_factory=lambda: open_macro_sync_runtime(settings),
+            runtime_factory=lambda: open_macro_sync_runtime(active_settings),
             publication_lock=job_lock_for_engine(engine), clock=clock,
         )
 
@@ -880,7 +883,7 @@ def build_scheduler_runtime(
             clock=clock,
         )
 
-    return SchedulerRuntime(
+    runtime = SchedulerRuntime(
         settings=settings,
         state=state,
         universe=daily_runtime.selection,
@@ -889,13 +892,15 @@ def build_scheduler_runtime(
         freshness_runner=refresh,
         clock=clock,
         logger_factory=logger_factory,
-        macro_coordinator=macro_coordinator,
+        macro_coordinator=make_macro(settings) if settings.macro_sync_enabled else None,
         market_coordinator=MarketScheduledCoordinator(settings) if settings.routine_market_enabled else None,
         pulse_coordinator=PulseScheduledCoordinator(settings) if settings.routine_market_pulse_enabled else None,
         region_coordinator=RegionScheduledCoordinator(settings) if settings.routine_region_enabled else None,
         etf_coordinator=EtfScheduledCoordinator(settings) if settings.routine_etf_heatmap_enabled else None,
         commodity_coordinator=CommodityScheduledCoordinator(settings) if settings.routine_commodities_enabled else None,
     )
+    runtime.make_macro = make_macro
+    return runtime
 
 
 def _validate_startup_settings(settings: Settings, *, confirm_full_market: bool = False) -> None:
@@ -915,7 +920,7 @@ def _validate_startup_settings(settings: Settings, *, confirm_full_market: bool 
         raise RuntimeError("DANG_SYNC_UNIVERSE_FILE is only valid for custom universe")
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None, *, control_store=None) -> int:
     parser = SafeArgumentParser(prog="app.jobs.scheduler", description="显式启动配置驱动的常驻调度；关机期间不运行。")
     parser.add_argument("--confirm-full-market", action="store_true", help="本次明确授权all股票池自动同步")
     arguments = parser.parse_args([] if argv is None else argv)
@@ -949,6 +954,12 @@ def main(argv: list[str] | None = None) -> int:
     runtime_completed = False
     manager = None
     try:
+        if control_store is not None:
+            # 本机控制器逐项启动；停用的任务不应在总入口准备或补跑。
+            settings = settings.model_copy(update=dict(scheduler_daily_enabled=False,
+                scheduler_announcements_enabled=False, macro_sync_enabled=False, routine_market_enabled=False,
+                routine_region_enabled=False, routine_market_pulse_enabled=False, routine_etf_heatmap_enabled=False,
+                routine_commodities_enabled=False))
         _validate_startup_settings(settings, confirm_full_market=arguments.confirm_full_market)
         candidate_manager = open_daily_sync_runtime(
             settings,
@@ -959,7 +970,11 @@ def main(argv: list[str] | None = None) -> int:
         manager = candidate_manager
         scheduler_runtime = build_scheduler_runtime(settings, daily_runtime)
         try:
-            scheduler_runtime.run()
+            if control_store is None:
+                scheduler_runtime.run()
+            else:
+                from app.jobs.scheduler_control import ManagedSchedule
+                scheduler_runtime.run(local_control=lambda rt: ManagedSchedule(control_store, rt, rt.make_macro).install())
         except BaseException as primary_error:
             try:
                 manager.__exit__(

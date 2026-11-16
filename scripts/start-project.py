@@ -72,43 +72,24 @@ async def serve_local(tasks, port):
     from app.main import create_app
 
     # 先占用监听端口，避免重复启动项目时先触发一轮采集。
-    config = uvicorn.Config(create_app(), host="127.0.0.1", port=port)
+    from app.local_admin.routes import mount_admin
+    from app.local_admin.workers import LocalManager
+    application = create_app()
+    config = uvicorn.Config(application, host="127.0.0.1", port=port)
     server = uvicorn.Server(config)
-    workers = {}
     with config.bind_socket() as sock:
+        manager = LocalManager(ROOT)
+        mount_admin(application, project_root=ROOT, manager=manager)
+        watcher = None
         try:
-            for name in services(tasks):
-                if name == "api":
-                    continue
-                workers[name] = subprocess.Popen(
-                    [sys.executable, str(Path(__file__).resolve()), "--child", name],
-                    cwd=ROOT, env={**os.environ, **scheduler_env(tasks)},
-                    stdin=subprocess.PIPE,
-                    creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0,
-                    start_new_session=os.name != "nt",
-                )
-
-            async def monitor():
-                while workers:
-                    for name, worker in workers.items():
-                        if worker.poll() is not None:
-                            server.should_exit = True
-                            raise RuntimeError(f"{name} 提前退出，退出码 {worker.returncode}")
-                    await asyncio.sleep(0.5)
-
-            watcher = asyncio.create_task(monitor())
-            try:
-                await server.serve(sockets=[sock])
-                if watcher.done():
-                    watcher.result()
-            finally:
+            manager.start()
+            watcher = asyncio.create_task(manager.monitor())
+            await server.serve(sockets=[sock])
+        finally:
+            if watcher:
                 watcher.cancel()
                 await asyncio.gather(watcher, return_exceptions=True)
-        finally:
-            for worker in workers.values():
-                worker.stdin.close()
-            for worker in workers.values():
-                worker.wait()
+            manager.shutdown()
 
 
 def run_child(name):
@@ -130,9 +111,16 @@ def run_child(name):
     if os.name == "nt":
         signal.signal(signal.SIGBREAK, signal.default_int_handler)
     threading.Thread(target=stop_on_eof, daemon=True).start()
+    control = None
+    if os.environ.get("INVESTMIND_LOCAL_CONTROL"):
+        from app.local_admin.control import ControlStore
+        control = ControlStore(Path(os.environ["INVESTMIND_LOCAL_CONTROL"]))
     if name == "scheduler":
         from app.jobs.scheduler import main as run_scheduler
-        return run_scheduler()
+        return run_scheduler(control_store=control)
+    if control is not None:
+        from app.local_admin.workers import managed_news
+        return managed_news(control)
     from app.cli.main import app
     app(args=["watch-news"])
 

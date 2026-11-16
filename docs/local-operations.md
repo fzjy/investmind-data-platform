@@ -72,7 +72,9 @@ python scripts/start-project.py
 
 在浏览器打开 `http://127.0.0.1:8000/health`，确认 `database=ready`。再打开 `http://127.0.0.1:8000/api/v1/portfolio`，查看已发布数据的日期和版本。数据库连通而业务接口返回 `DATA_NOT_READY` 时，检查对应产品的构建和发布记录。
 
-启动器从 `config/scheduled-tasks.json` 读取任务开关，与 API 一起启动相应进程。各项默认关闭。按第 5 节配置后，在项目终端按 Ctrl+C 停止，再执行相同的启动命令。结束开发时，在各自终端用 `Ctrl+C` 停止进程，等写入完成后按需停止数据库：
+本机启动器在同一端口提供[数据底座管理台](http://127.0.0.1:8000/admin/)。若设置了 `DANG_BACKEND_PORT`，使用该端口。任务状态页展示调度规则、进程回执和下一次触发；点任务名可看运行历史和有关联依据的记录。数据表页按 schema 选表，每页 25 条，可以查看字段、翻页和展开长值。接口文档页提供公共接口与字段说明。
+
+在“运行配置”内按文件点击“应用”。任务默认关闭；关闭会阻止后续轮次并等本轮完成，恢复会按来源的检查点及限额检查缺口。市场调度时刻由五组任务共用，新闻间隔在下轮读取时生效。任务状态显示保存与生效的区别。本机回执位于 `data/local-admin/control.sqlite3`。只读浏览无需启用采集。结束开发时，在各自终端用 `Ctrl+C` 停止进程，等写入完成后按需停止数据库：
 
 ```sh
 docker compose -f docker-compose.backend.yml -f docker-compose.local-db.yml stop postgres
@@ -140,7 +142,7 @@ FRED声明：This product uses the FRED® API but is not endorsed or certified b
 <a id="scheduled"></a>
 <a id="news"></a>
 
-在 [定时采集配置](../config/scheduled-tasks.json) 里将需要的任务改为 `true`。运行 `python scripts/start-project.py --plan` 查看选择结果，然后重启项目。新闻使用 `news-worker`，其余启用的任务共用 `scheduler`。切换前先结束原先手动启动的同类进程。
+本机管理台可以直接应用任务开关。手动编辑[定时采集配置](../config/scheduled-tasks.json)时，运行 `python scripts/start-project.py --plan` 查看选择结果，然后在页面重新载入并应用，或重启项目。新闻使用 `news-worker`，其余启用的任务共用 `scheduler`。切换前先结束原先手动启动的同类进程。
 
 修改市场调度时间等启动时读取的配置后，在项目终端按 Ctrl+C，再运行 `python scripts/start-project.py`。运行中的新闻工作进程每轮重读[新闻配置](../config/news/news-collector.json)，新的轮询间隔在后续循环生效。日、周任务沿用 `.env` 的时区、日同步小时和分钟、宏观周同步日期和时间，市场各组遵守 `config/market/market-data.json` 的来源配置。日周调度沿用现有 Tushare 凭据和股票池要求。用 `python -m app.cli.main news-status` 或 `python -m app.cli.main sync-status` 查看对应的交付记录、心跳与作业。
 

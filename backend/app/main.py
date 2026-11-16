@@ -48,6 +48,7 @@ def create_app(*, background_news: bool = False) -> FastAPI:
     if settings.database_read_url.startswith("sqlite"):
         engine_options["execution_options"] = {"schema_translate_map": {"raw": None, "core": None, "ops": None, "derived": None, "mart": None}}
     database_engine = create_engine(settings.database_read_url, **engine_options)
+    application.state.read_engine = database_engine
     application.add_middleware(
         CORSMiddleware,
         allow_origins=list(settings.cors_origins),
