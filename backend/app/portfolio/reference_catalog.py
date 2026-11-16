@@ -76,6 +76,8 @@ def capture_catalog(factory,client=None,*,execute=False,_requests=None,_job=JOB,
             try:
                 response=client.call(api,params,fields)
                 if tuple(response.fields)!=fields or len(response.items)>8000:raise ValueError('目录字段/行数无效')
+                if response.has_more and api in ('index_basic','etf_basic','index_weight'):
+                    raise ValueError('目录响应仍有未取得的分页')
                 if _validator is not None:_validator(response,spec)
                 elif any(str(r.get('ts_code','')).split('.')[0]!=symbol for r in response.rows()):raise ValueError('目录返回其他指数')
             except Exception as exc:error=type(exc).__name__
@@ -92,6 +94,8 @@ def capture_catalog(factory,client=None,*,execute=False,_requests=None,_job=JOB,
                         raw.payload=raw.payload|decoded;raw.content_hash=content_hash(raw.payload)
                 value=saved.cursor_value|dict(status='failed' if error else 'completed',errorType=error,rowCount=len(response.items) if response else 0,responseContentHash=raw.content_hash if raw is not None else None)
                 saved.cursor_value=value;batch.status=value['status'];batch.row_count=value['rowCount'];batch.rejected_count=int(bool(error));batch.finished_at=datetime.now(timezone.utc)
+                from app.acquisition.adapters.plans import reference_unit
+                reference_unit(s,_job,spec,identity,value,batch.finished_at)
                 result['units'].append(value)
                 result['failedCount']+=int(bool(error))
             if error and _stop_on_error:break

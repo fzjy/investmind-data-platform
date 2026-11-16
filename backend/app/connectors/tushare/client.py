@@ -174,7 +174,11 @@ class TushareClient:
             raise TushareSchemaError("Tushare fields 结构不正确")
         if not isinstance(raw_items, list) or not all(isinstance(item, list) for item in raw_items):
             raise TushareSchemaError("Tushare items 结构不正确")
+        more = data.get("has_more")
+        if "has_more" in data and type(more) is not bool:
+            raise TushareSchemaError("Tushare has_more 结构不正确")
         result = TushareResponse(
+            has_more=more,
             fields=tuple(raw_fields),
             items=tuple(tuple(item) for item in raw_items),
         )

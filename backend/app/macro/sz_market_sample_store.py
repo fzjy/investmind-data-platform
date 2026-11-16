@@ -129,3 +129,10 @@ class SzMarketSampleStore:
                 row.row_count = batch.row_count = len(data['items'])
                 row.status = batch.status = 'completed'
             row.finished_at = batch.finished_at = now
+            from app.acquisition.contracts import StateKey, utc
+            from app.acquisition.tracking import record_terminal
+            if error != 'EXTENSION_COLLECTION_CHANGED':
+                record_terminal(session,StateKey('market-sz-summary','','exchange','SZSE'),
+                    started_at=utc(row.started_at),checked_at=now,status='failed' if error else 'success',
+                    scope={'source':'tushare','api':'sz_daily_info','params':plan['query']['params']},
+                    code=error,references=({'batchId':RUN},),reason='深圳市场原始样本，单位尚未确认')

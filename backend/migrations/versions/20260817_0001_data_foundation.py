@@ -13,7 +13,7 @@ branch_labels = None
 depends_on = None
 
 # 当前metadata含后续迁移独占表，历史入口不得提前创建或接管其所有权。
-OWNED_LATER = {'ops.news_delivery', 'core.market_daily_quote', 'ops.enterprise_receivable_attempt',
+OWNED_LATER = {'ops.data_acquisition_state', 'ops.news_delivery', 'core.market_daily_quote', 'ops.enterprise_receivable_attempt',
     'raw.enterprise_receivable_response', 'core.enterprise_receivable_supplement',
     'ops.enterprise_order_attempt','raw.enterprise_order_response','core.enterprise_order_supplement',
     'ops.enterprise_rea_plan','ops.enterprise_rea_attempt','raw.enterprise_rea_response','core.enterprise_rea_supplement'}

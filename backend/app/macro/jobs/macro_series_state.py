@@ -91,6 +91,8 @@ class MacroSeriesStateRepository:
             state.last_error_message = None
             state.consecutive_failures = 0
             state.updated_at = checked_at
+            from app.acquisition.adapters.macro import write_series_result
+            write_series_result(session, state, status='success', checked=checked_at)
 
     def mark_stale(
         self,
@@ -122,6 +124,8 @@ class MacroSeriesStateRepository:
             state.last_error_message = safe_message
             state.consecutive_failures += 1
             state.updated_at = checked_at
+            from app.acquisition.adapters.macro import write_series_result
+            write_series_result(session, state, status='failed', checked=checked_at)
 
     def get_all(self) -> tuple[MacroSeriesStateView, ...]:
         with self._session_factory() as session:

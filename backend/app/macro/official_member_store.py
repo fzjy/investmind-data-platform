@@ -231,6 +231,8 @@ class OfficialMemberStore:
             if d['phase']!='reserved' or code not in FAILURE_CODES or now<utc(row.started_at):raise ValueError('OFFICIAL_MEMBER_RUN_INVALID')
             row.details={**d,'phase':'failed'};row.status='failed';row.finished_at=now;row.error_message=code
             batch=session.get(IngestionBatch,key);batch.status='failed';batch.finished_at=now
+            from app.acquisition.adapters.members import record_member_plan
+            record_member_plan(session,row,now)
 
     def replay(self,key,now):
         now=instant(now)
@@ -246,4 +248,6 @@ class OfficialMemberStore:
             row.details={**d,'phase':'completed','normalized':normalized};row.status='completed';row.finished_at=now
             row.row_count=normalized.get('memberCount',0)
             batch=session.get(IngestionBatch,key);batch.status='completed';batch.finished_at=now;batch.row_count=row.row_count
+            from app.acquisition.adapters.members import record_member_plan
+            record_member_plan(session,row,now)
             return {'status':'completed','supplierHttp':0,'readOnly':False,'runId':key}

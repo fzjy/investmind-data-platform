@@ -303,6 +303,8 @@ class FiscalStore:
             row.details = {**d, 'phase': 'failed'}
             row.status, row.finished_at, row.error_message = 'failed', now, code
             batch = session.get(IngestionBatch, key); batch.status, batch.finished_at = 'failed', now
+            from app.acquisition.adapters.plans import record_extension
+            record_extension(session,row,now)
 
     def replay_failed_raw(self, key, *, clock=None, dry_run=False):
         return self.replay(key, clock=clock, _failed_raw=True, dry_run=dry_run)
@@ -384,4 +386,6 @@ class FiscalStore:
             row.details = {**d, 'phase': 'completed', 'coreBindings': bindings}
             row.status, row.finished_at, row.row_count = 'completed', finished, len(bindings)
             batch = session.get(IngestionBatch, key); batch.status, batch.finished_at, batch.row_count = 'completed', finished, len(bindings)
+            from app.acquisition.adapters.plans import record_extension
+            record_extension(session,row,finished)
             return {'insertedRows': inserted, 'boundRows': len(bindings)}

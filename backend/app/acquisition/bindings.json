@@ -1,0 +1,3351 @@
+[
+  {
+    "entry_id": "news",
+    "item_id": "",
+    "subject_kind": "source",
+    "source_adapter": "content",
+    "availability_adapter": "news_delivery",
+    "dependencies": [],
+    "writers": [
+      "save_health"
+    ],
+    "unavailable_reason": null,
+    "name": "财经快讯"
+  },
+  {
+    "entry_id": "external-macro",
+    "item_id": "",
+    "subject_kind": "source",
+    "source_adapter": "imports",
+    "availability_adapter": "external_file",
+    "dependencies": [],
+    "writers": [
+      "ExternalImporter.import_file"
+    ],
+    "unavailable_reason": null,
+    "name": "宏观文件导入"
+  },
+  {
+    "entry_id": "external-macro",
+    "item_id": "series",
+    "subject_kind": "series",
+    "source_adapter": "imports",
+    "availability_adapter": "external_file",
+    "dependencies": [],
+    "writers": [
+      "ExternalImporter.import_file"
+    ],
+    "unavailable_reason": null,
+    "name": "导入的宏观指标"
+  },
+  {
+    "entry_id": "external-content",
+    "item_id": "",
+    "subject_kind": "source",
+    "source_adapter": "imports",
+    "availability_adapter": "external_file",
+    "dependencies": [],
+    "writers": [
+      "ExternalImporter.import_file"
+    ],
+    "unavailable_reason": null,
+    "name": "公开内容文件导入"
+  },
+  {
+    "entry_id": "external-content",
+    "item_id": "news",
+    "subject_kind": "source",
+    "source_adapter": "imports",
+    "availability_adapter": "external_file",
+    "dependencies": [],
+    "writers": [
+      "ExternalImporter.import_file"
+    ],
+    "unavailable_reason": null,
+    "name": "导入新闻"
+  },
+  {
+    "entry_id": "external-content",
+    "item_id": "announcement",
+    "subject_kind": "source",
+    "source_adapter": "imports",
+    "availability_adapter": "external_file",
+    "dependencies": [],
+    "writers": [
+      "ExternalImporter.import_file"
+    ],
+    "unavailable_reason": null,
+    "name": "导入公告"
+  },
+  {
+    "entry_id": "external-content",
+    "item_id": "article",
+    "subject_kind": "source",
+    "source_adapter": "imports",
+    "availability_adapter": "external_file",
+    "dependencies": [],
+    "writers": [
+      "ExternalImporter.import_file"
+    ],
+    "unavailable_reason": null,
+    "name": "导入文章"
+  },
+  {
+    "entry_id": "cn.gdp.real_yoy",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "中国实际 GDP 同比"
+  },
+  {
+    "entry_id": "cn.cpi.yoy",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "中国 CPI 同比"
+  },
+  {
+    "entry_id": "cn.cpi.core_yoy",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "中国核心 CPI 同比"
+  },
+  {
+    "entry_id": "cn.ppi.yoy",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "中国 PPI 同比"
+  },
+  {
+    "entry_id": "cn.pmi.manufacturing",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "中国制造业 PMI"
+  },
+  {
+    "entry_id": "cn.industry.value_added_yoy",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "中国规模以上工业增加值同比"
+  },
+  {
+    "entry_id": "cn.money.m1_yoy",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "中国 M1 同比"
+  },
+  {
+    "entry_id": "cn.money.m2_yoy",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "中国 M2 同比"
+  },
+  {
+    "entry_id": "cn.credit.tsf_stock_yoy",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "中国社会融资规模存量同比"
+  },
+  {
+    "entry_id": "cn.rate.dr007",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "中国 DR007"
+  },
+  {
+    "entry_id": "cn.rate.govbond_10y",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "中国 10 年期国债收益率"
+  },
+  {
+    "entry_id": "cn.fx.usdcny",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "美元兑人民币汇率"
+  },
+  {
+    "entry_id": "us.gdp.real_qoq_annualized",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "美国实际 GDP 环比折年率"
+  },
+  {
+    "entry_id": "us.cpi.yoy",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "美国 CPI 同比"
+  },
+  {
+    "entry_id": "us.cpi.core_yoy",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "美国核心 CPI 同比"
+  },
+  {
+    "entry_id": "us.pce.core_yoy",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "美国核心 PCE 同比"
+  },
+  {
+    "entry_id": "us.labor.unemployment_rate",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "美国失业率"
+  },
+  {
+    "entry_id": "us.labor.nonfarm_payroll_change",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "美国非农就业月增量"
+  },
+  {
+    "entry_id": "us.rate.effective_fed_funds",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "美国有效联邦基金利率"
+  },
+  {
+    "entry_id": "us.rate.treasury_10y",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "macro_observation",
+    "dependencies": [],
+    "writers": [
+      "MacroSeriesStateRepository.mark_success"
+    ],
+    "unavailable_reason": null,
+    "name": "美国 10 年期国债收益率"
+  },
+  {
+    "entry_id": "source-cn_gdp",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "ExtensionStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "国内生产总值原始数据"
+  },
+  {
+    "entry_id": "macro-extension-usdcnh",
+    "item_id": "fx.usdcnh",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "ExtensionStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "离岸人民币汇率"
+  },
+  {
+    "entry_id": "macro-extension-vix",
+    "item_id": "us.volatility.vix",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "ExtensionStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "美国波动率指数"
+  },
+  {
+    "entry_id": "macro-extension-governmentBonds",
+    "item_id": "cn.fiscal.government_bond_net_financing",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "FiscalStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "政府债券融资"
+  },
+  {
+    "entry_id": "macro-extension-householdCredit",
+    "item_id": "cn.credit.household_medium_long_term_month",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "OfficialMacroStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "住户中长期贷款"
+  },
+  {
+    "entry_id": "macro-extension-householdCredit",
+    "item_id": "cn.credit.household_medium_long_term_ytd",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "OfficialMacroStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "住户中长期贷款"
+  },
+  {
+    "entry_id": "macro-extension-tier1Housing",
+    "item_id": "cn.house.price_70_city_mom.tier1",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "OfficialMacroStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "一线城市住宅价格"
+  },
+  {
+    "entry_id": "macro-extension-tier1Housing",
+    "item_id": "cn.house.price_70_city_mom.tier1.existing",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "OfficialMacroStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "一线城市住宅价格"
+  },
+  {
+    "entry_id": "macro-extension-specialBonds",
+    "item_id": "cn.fiscal.special_bonds_new_month",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "OfficialMacroStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "地方政府专项债"
+  },
+  {
+    "entry_id": "macro-extension-specialBonds",
+    "item_id": "cn.fiscal.special_bonds_new_quota",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "OfficialMacroStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "地方政府专项债"
+  },
+  {
+    "entry_id": "macro-extension-specialBonds",
+    "item_id": "cn.fiscal.special_bonds_new_ytd",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "OfficialMacroStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "地方政府专项债"
+  },
+  {
+    "entry_id": "macro-extension-specialBonds",
+    "item_id": "cn.fiscal.special_bonds_reported_progress",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "OfficialMacroStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "地方政府专项债"
+  },
+  {
+    "entry_id": "macro-extension-propertyLoans",
+    "item_id": "cn.credit.property_loans_balance",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "OfficialMacroStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "房地产贷款"
+  },
+  {
+    "entry_id": "macro-extension-propertyLoans",
+    "item_id": "cn.credit.property_loans_yoy",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "OfficialMacroStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "房地产贷款"
+  },
+  {
+    "entry_id": "macro-extension-marginBalances",
+    "item_id": "cn.market.margin_balance.sse",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "ExchangeSummaryStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "融资余额"
+  },
+  {
+    "entry_id": "macro-extension-marginBalances",
+    "item_id": "cn.market.margin_balance.szse",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "ExchangeSummaryStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "融资余额"
+  },
+  {
+    "entry_id": "macro-extension-marginBalances",
+    "item_id": "cn.market.margin_balance.bse",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "ExchangeSummaryStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "融资余额"
+  },
+  {
+    "entry_id": "macro-extension-aShareFloatMv",
+    "item_id": "cn.market.a_share_float_mv.sh",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "ExchangeSummaryStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "A 股流通市值"
+  },
+  {
+    "entry_id": "macro-extension-aShareFloatMv",
+    "item_id": "cn.market.a_share_float_mv.sz",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "ExchangeSummaryStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "A 股流通市值"
+  },
+  {
+    "entry_id": "macro-extension-nominalGdp",
+    "item_id": "cn.gdp.nominal_cumulative",
+    "subject_kind": "series",
+    "source_adapter": "macro",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "ExtensionStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "名义 GDP 与平减指标"
+  },
+  {
+    "entry_id": "macro-enterprise",
+    "item_id": "000300.SH",
+    "subject_kind": "product",
+    "source_adapter": "members",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [],
+    "writers": [
+      "OfficialMemberStore.replay",
+      "OfficialMemberStore.fail"
+    ],
+    "unavailable_reason": null,
+    "name": "沪深300（指数或 ETF 分析对象）"
+  },
+  {
+    "entry_id": "macro-enterprise",
+    "item_id": "000905.SH",
+    "subject_kind": "product",
+    "source_adapter": "members",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [],
+    "writers": [
+      "OfficialMemberStore.replay",
+      "OfficialMemberStore.fail"
+    ],
+    "unavailable_reason": null,
+    "name": "中证500（指数或 ETF 分析对象）"
+  },
+  {
+    "entry_id": "macro-enterprise",
+    "item_id": "000510.SH",
+    "subject_kind": "product",
+    "source_adapter": "members",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [],
+    "writers": [
+      "OfficialMemberStore.replay",
+      "OfficialMemberStore.fail"
+    ],
+    "unavailable_reason": null,
+    "name": "中证A500（指数或 ETF 分析对象）"
+  },
+  {
+    "entry_id": "macro-enterprise",
+    "item_id": "512880.SH",
+    "subject_kind": "product",
+    "source_adapter": "members",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [],
+    "writers": [
+      "OfficialMemberStore.replay",
+      "OfficialMemberStore.fail"
+    ],
+    "unavailable_reason": null,
+    "name": "证券ETF（指数或 ETF 分析对象）"
+  },
+  {
+    "entry_id": "macro-enterprise",
+    "item_id": "512800.SH",
+    "subject_kind": "product",
+    "source_adapter": "members",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [],
+    "writers": [
+      "OfficialMemberStore.replay",
+      "OfficialMemberStore.fail"
+    ],
+    "unavailable_reason": null,
+    "name": "银行ETF（指数或 ETF 分析对象）"
+  },
+  {
+    "entry_id": "macro-enterprise",
+    "item_id": "159928.SZ",
+    "subject_kind": "product",
+    "source_adapter": "members",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [],
+    "writers": [
+      "OfficialMemberStore.replay",
+      "OfficialMemberStore.fail"
+    ],
+    "unavailable_reason": null,
+    "name": "消费ETF（指数或 ETF 分析对象）"
+  },
+  {
+    "entry_id": "macro-enterprise",
+    "item_id": "512010.SH",
+    "subject_kind": "product",
+    "source_adapter": "members",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [],
+    "writers": [
+      "OfficialMemberStore.replay",
+      "OfficialMemberStore.fail"
+    ],
+    "unavailable_reason": null,
+    "name": "医药ETF（指数或 ETF 分析对象）"
+  },
+  {
+    "entry_id": "macro-enterprise",
+    "item_id": "512400.SH",
+    "subject_kind": "product",
+    "source_adapter": "members",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [],
+    "writers": [
+      "OfficialMemberStore.replay",
+      "OfficialMemberStore.fail"
+    ],
+    "unavailable_reason": null,
+    "name": "有色金属ETF（指数或 ETF 分析对象）"
+  },
+  {
+    "entry_id": "macro-enterprise",
+    "item_id": "512660.SH",
+    "subject_kind": "product",
+    "source_adapter": "members",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [],
+    "writers": [
+      "OfficialMemberStore.replay",
+      "OfficialMemberStore.fail"
+    ],
+    "unavailable_reason": null,
+    "name": "军工ETF（指数或 ETF 分析对象）"
+  },
+  {
+    "entry_id": "macro-enterprise",
+    "item_id": "515220.SH",
+    "subject_kind": "product",
+    "source_adapter": "members",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [],
+    "writers": [
+      "OfficialMemberStore.replay",
+      "OfficialMemberStore.fail"
+    ],
+    "unavailable_reason": null,
+    "name": "煤炭ETF（指数或 ETF 分析对象）"
+  },
+  {
+    "entry_id": "macro-enterprise",
+    "item_id": "512980.SH",
+    "subject_kind": "product",
+    "source_adapter": "members",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [],
+    "writers": [
+      "OfficialMemberStore.replay",
+      "OfficialMemberStore.fail"
+    ],
+    "unavailable_reason": null,
+    "name": "传媒ETF（指数或 ETF 分析对象）"
+  },
+  {
+    "entry_id": "macro-enterprise",
+    "item_id": "515030.SH",
+    "subject_kind": "product",
+    "source_adapter": "members",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [],
+    "writers": [
+      "OfficialMemberStore.replay",
+      "OfficialMemberStore.fail"
+    ],
+    "unavailable_reason": null,
+    "name": "新能源车ETF（指数或 ETF 分析对象）"
+  },
+  {
+    "entry_id": "macro-enterprise",
+    "item_id": "512200.SH",
+    "subject_kind": "product",
+    "source_adapter": "members",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [],
+    "writers": [
+      "OfficialMemberStore.replay",
+      "OfficialMemberStore.fail"
+    ],
+    "unavailable_reason": null,
+    "name": "房地产ETF（指数或 ETF 分析对象）"
+  },
+  {
+    "entry_id": "macro-enterprise",
+    "item_id": "588200.SH",
+    "subject_kind": "product",
+    "source_adapter": "members",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [],
+    "writers": [
+      "OfficialMemberStore.replay",
+      "OfficialMemberStore.fail"
+    ],
+    "unavailable_reason": null,
+    "name": "科创芯片ETF（指数或 ETF 分析对象）"
+  },
+  {
+    "entry_id": "macro-spreads",
+    "item_id": "",
+    "subject_kind": "product",
+    "source_adapter": "derived",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [
+      "cn.ppi_cpi_spread",
+      "cn.m2_m1_spread",
+      "cn.money.m1_minus_m2_yoy",
+      "cn.govbond_dr007_spread",
+      "us.treasury_fed_funds_spread",
+      "cn.us.rate_spread"
+    ],
+    "writers": [
+      "publish"
+    ],
+    "unavailable_reason": null,
+    "name": "宏观利差与剪刀差"
+  },
+  {
+    "entry_id": "cn.ppi_cpi_spread",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "derived",
+    "availability_adapter": "macro_observation",
+    "dependencies": [
+      "cn.ppi.yoy",
+      "cn.cpi.yoy"
+    ],
+    "writers": [
+      "publish"
+    ],
+    "unavailable_reason": null,
+    "name": "PPI-CPI 剪刀差"
+  },
+  {
+    "entry_id": "cn.m2_m1_spread",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "derived",
+    "availability_adapter": "macro_observation",
+    "dependencies": [
+      "cn.money.m2_yoy",
+      "cn.money.m1_yoy"
+    ],
+    "writers": [
+      "publish"
+    ],
+    "unavailable_reason": null,
+    "name": "M2-M1 剪刀差"
+  },
+  {
+    "entry_id": "cn.money.m1_minus_m2_yoy",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "derived",
+    "availability_adapter": "macro_observation",
+    "dependencies": [
+      "cn.money.m1_yoy",
+      "cn.money.m2_yoy"
+    ],
+    "writers": [
+      "publish"
+    ],
+    "unavailable_reason": null,
+    "name": "M1-M2 差值"
+  },
+  {
+    "entry_id": "cn.govbond_dr007_spread",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "derived",
+    "availability_adapter": "macro_observation",
+    "dependencies": [
+      "cn.rate.govbond_10y",
+      "cn.rate.dr007"
+    ],
+    "writers": [
+      "publish"
+    ],
+    "unavailable_reason": null,
+    "name": "国债-DR007 利差"
+  },
+  {
+    "entry_id": "us.treasury_fed_funds_spread",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "derived",
+    "availability_adapter": "macro_observation",
+    "dependencies": [
+      "us.rate.treasury_10y",
+      "us.rate.effective_fed_funds"
+    ],
+    "writers": [
+      "publish"
+    ],
+    "unavailable_reason": null,
+    "name": "美债-联邦基金利差"
+  },
+  {
+    "entry_id": "cn.us.rate_spread",
+    "item_id": "",
+    "subject_kind": "series",
+    "source_adapter": "derived",
+    "availability_adapter": "macro_observation",
+    "dependencies": [
+      "cn.rate.govbond_10y",
+      "us.rate.treasury_10y"
+    ],
+    "writers": [
+      "publish"
+    ],
+    "unavailable_reason": null,
+    "name": "中美利差"
+  },
+  {
+    "entry_id": "market-daily-summary",
+    "item_id": "",
+    "subject_kind": "exchange",
+    "source_adapter": "markets",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "ExchangeSummaryStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "市场每日统计"
+  },
+  {
+    "entry_id": "etf-basic",
+    "item_id": "",
+    "subject_kind": "instrument",
+    "source_adapter": "markets",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "capture_catalog"
+    ],
+    "unavailable_reason": null,
+    "name": "ETF 基础资料"
+  },
+  {
+    "entry_id": "etf-daily",
+    "item_id": "",
+    "subject_kind": "instrument",
+    "source_adapter": "markets",
+    "availability_adapter": "market_daily_quote",
+    "dependencies": [],
+    "writers": [
+      "EtfRepository.persist"
+    ],
+    "unavailable_reason": null,
+    "name": "ETF 日行情"
+  },
+  {
+    "entry_id": "etf-shares",
+    "item_id": "",
+    "subject_kind": "instrument",
+    "source_adapter": "markets",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "EtfRepository.persist"
+    ],
+    "unavailable_reason": null,
+    "name": "基金份额与规模"
+  },
+  {
+    "entry_id": "commodity-contracts",
+    "item_id": "",
+    "subject_kind": "instrument",
+    "source_adapter": "markets",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "CommodityRepository.persist"
+    ],
+    "unavailable_reason": null,
+    "name": "期货合约资料"
+  },
+  {
+    "entry_id": "commodity-daily",
+    "item_id": "",
+    "subject_kind": "instrument",
+    "source_adapter": "markets",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "CommodityRepository.persist"
+    ],
+    "unavailable_reason": null,
+    "name": "商品期货日行情"
+  },
+  {
+    "entry_id": "commodity-mapping",
+    "item_id": "",
+    "subject_kind": "instrument",
+    "source_adapter": "markets",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "CommodityRepository.persist"
+    ],
+    "unavailable_reason": null,
+    "name": "期货主力合约映射"
+  },
+  {
+    "entry_id": "commodity-calendar",
+    "item_id": "",
+    "subject_kind": "exchange",
+    "source_adapter": "markets",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "CommodityRepository.persist"
+    ],
+    "unavailable_reason": null,
+    "name": "期货交易日历"
+  },
+  {
+    "entry_id": "fx-daily",
+    "item_id": "",
+    "subject_kind": "instrument",
+    "source_adapter": "markets",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "ExtensionStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "外汇日行情"
+  },
+  {
+    "entry_id": "index-basic",
+    "item_id": "",
+    "subject_kind": "instrument",
+    "source_adapter": "markets",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "capture_catalog"
+    ],
+    "unavailable_reason": null,
+    "name": "指数基础资料"
+  },
+  {
+    "entry_id": "index-daily",
+    "item_id": "",
+    "subject_kind": "instrument",
+    "source_adapter": "markets",
+    "availability_adapter": "market_daily_quote",
+    "dependencies": [],
+    "writers": [
+      "MarketQuoteRepository.persist"
+    ],
+    "unavailable_reason": null,
+    "name": "国内指数日行情"
+  },
+  {
+    "entry_id": "index-global",
+    "item_id": "",
+    "subject_kind": "instrument",
+    "source_adapter": "markets",
+    "availability_adapter": "market_daily_quote",
+    "dependencies": [],
+    "writers": [
+      "MarketQuoteRepository.persist"
+    ],
+    "unavailable_reason": null,
+    "name": "全球指数日行情"
+  },
+  {
+    "entry_id": "index-weights",
+    "item_id": "",
+    "subject_kind": "instrument",
+    "source_adapter": "markets",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "capture_catalog"
+    ],
+    "unavailable_reason": null,
+    "name": "指数成分与权重"
+  },
+  {
+    "entry_id": "market-margin",
+    "item_id": "",
+    "subject_kind": "exchange",
+    "source_adapter": "markets",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "ExchangeSummaryStore.replay"
+    ],
+    "unavailable_reason": null,
+    "name": "融资融券余额"
+  },
+  {
+    "entry_id": "market-sz-summary",
+    "item_id": "",
+    "subject_kind": "exchange",
+    "source_adapter": "markets",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "SzMarketSampleStore.finish"
+    ],
+    "unavailable_reason": null,
+    "name": "深圳市场每日统计"
+  },
+  {
+    "entry_id": "market-overview",
+    "item_id": "",
+    "subject_kind": "product",
+    "source_adapter": "derived",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [
+      "stock-daily",
+      "stock-daily-basic",
+      "stock-basic",
+      "index-daily",
+      "index-global",
+      "etf-daily"
+    ],
+    "writers": [
+      "rebuild_market_marts"
+    ],
+    "unavailable_reason": null,
+    "name": "市场统计与情绪"
+  },
+  {
+    "entry_id": "market-explorer",
+    "item_id": "",
+    "subject_kind": "product",
+    "source_adapter": "derived",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [
+      "stock-daily",
+      "stock-daily-basic",
+      "stock-basic",
+      "index-daily",
+      "index-global",
+      "etf-daily",
+      "stock-classification",
+      "stock-classification-members",
+      "commodity-daily",
+      "commodity-mapping",
+      "etf-shares",
+      "news"
+    ],
+    "writers": [
+      "rebuild_market_marts"
+    ],
+    "unavailable_reason": null,
+    "name": "市场浏览与热力图"
+  },
+  {
+    "entry_id": "portfolio-inputs",
+    "item_id": "",
+    "subject_kind": "product",
+    "source_adapter": "derived",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [
+      "stock-basic",
+      "stock-daily",
+      "stock-adjustment",
+      "stock-daily-basic",
+      "stock-dividend",
+      "stock-income",
+      "stock-financial-indicator",
+      "index-basic",
+      "index-daily",
+      "trade-calendar",
+      "cn.rate.govbond_10y"
+    ],
+    "writers": [
+      "rebuild_portfolio"
+    ],
+    "unavailable_reason": null,
+    "name": "资产价格、分红与基准公共输入"
+  },
+  {
+    "entry_id": "stock-adjustment",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "adjustment_factor",
+    "dependencies": [],
+    "writers": [
+      "StockUpdateRepository.ingest_unit"
+    ],
+    "unavailable_reason": null,
+    "name": "复权因子"
+  },
+  {
+    "entry_id": "stock-balance",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "balance_sheet",
+    "dependencies": [],
+    "writers": [
+      "StockUpdateRepository.ingest_unit",
+      "capture_catalog"
+    ],
+    "unavailable_reason": null,
+    "name": "资产负债表"
+  },
+  {
+    "entry_id": "stock-bse-mapping",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "refresh_mapping"
+    ],
+    "unavailable_reason": null,
+    "name": "北交所证券代码映射"
+  },
+  {
+    "entry_id": "stock-cashflow",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "cashflow_statement",
+    "dependencies": [],
+    "writers": [
+      "StockUpdateRepository.ingest_unit",
+      "capture_catalog"
+    ],
+    "unavailable_reason": null,
+    "name": "现金流量表"
+  },
+  {
+    "entry_id": "stock-daily",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "daily_price",
+    "dependencies": [],
+    "writers": [
+      "StockUpdateRepository.ingest_unit"
+    ],
+    "unavailable_reason": null,
+    "name": "股票日行情"
+  },
+  {
+    "entry_id": "stock-daily-basic",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "daily_basic",
+    "dependencies": [],
+    "writers": [
+      "StockUpdateRepository.ingest_unit"
+    ],
+    "unavailable_reason": null,
+    "name": "每日估值与股本"
+  },
+  {
+    "entry_id": "stock-disclosure",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "disclosure_schedule",
+    "dependencies": [],
+    "writers": [
+      "StockUpdateRepository.ingest_unit"
+    ],
+    "unavailable_reason": null,
+    "name": "财报披露日程"
+  },
+  {
+    "entry_id": "stock-dividend",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "dividend",
+    "dependencies": [],
+    "writers": [
+      "StockUpdateRepository.ingest_unit"
+    ],
+    "unavailable_reason": null,
+    "name": "分红送转记录"
+  },
+  {
+    "entry_id": "stock-express",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "financial_express",
+    "dependencies": [],
+    "writers": [
+      "PaginatedPlanRunner.__call__"
+    ],
+    "unavailable_reason": null,
+    "name": "业绩快报"
+  },
+  {
+    "entry_id": "stock-financial-indicator",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "financial_indicator",
+    "dependencies": [],
+    "writers": [
+      "StockUpdateRepository.ingest_unit"
+    ],
+    "unavailable_reason": null,
+    "name": "财务指标"
+  },
+  {
+    "entry_id": "stock-business",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "business_segment",
+    "dependencies": [],
+    "writers": [
+      "capture_catalog",
+      "capture"
+    ],
+    "unavailable_reason": null,
+    "name": "主营业务分部"
+  },
+  {
+    "entry_id": "stock-forecast",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "financial_forecast",
+    "dependencies": [],
+    "writers": [
+      "PaginatedPlanRunner.__call__"
+    ],
+    "unavailable_reason": null,
+    "name": "业绩预告"
+  },
+  {
+    "entry_id": "stock-income",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "income_statement",
+    "dependencies": [],
+    "writers": [
+      "StockUpdateRepository.ingest_unit",
+      "capture_catalog"
+    ],
+    "unavailable_reason": null,
+    "name": "利润表"
+  },
+  {
+    "entry_id": "stock-classification",
+    "item_id": "",
+    "subject_kind": "industry",
+    "source_adapter": "stocks",
+    "availability_adapter": "classification",
+    "dependencies": [],
+    "writers": [
+      "ClassificationRepository.commit_catalog"
+    ],
+    "unavailable_reason": null,
+    "name": "行业分类"
+  },
+  {
+    "entry_id": "stock-classification-members",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "classification_member",
+    "dependencies": [],
+    "writers": [
+      "ClassificationRepository.commit_stock"
+    ],
+    "unavailable_reason": null,
+    "name": "行业成员"
+  },
+  {
+    "entry_id": "stock-repurchase",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "repurchase",
+    "dependencies": [],
+    "writers": [
+      "PaginatedPlanRunner.__call__"
+    ],
+    "unavailable_reason": null,
+    "name": "股份回购"
+  },
+  {
+    "entry_id": "stock-unlock",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "share_unlock",
+    "dependencies": [],
+    "writers": [
+      "PaginatedPlanRunner.__call__"
+    ],
+    "unavailable_reason": null,
+    "name": "限售股解禁"
+  },
+  {
+    "entry_id": "stock-holder-count",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "shareholder_count",
+    "dependencies": [],
+    "writers": [
+      "PaginatedPlanRunner.__call__"
+    ],
+    "unavailable_reason": null,
+    "name": "股东户数"
+  },
+  {
+    "entry_id": "stock-basic",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "security",
+    "dependencies": [],
+    "writers": [
+      "PaginatedPlanRunner.__call__"
+    ],
+    "unavailable_reason": null,
+    "name": "证券基础资料"
+  },
+  {
+    "entry_id": "stock-top-holders",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "top_holder",
+    "dependencies": [],
+    "writers": [
+      "PaginatedPlanRunner.__call__"
+    ],
+    "unavailable_reason": null,
+    "name": "前十大股东"
+  },
+  {
+    "entry_id": "trade-calendar",
+    "item_id": "",
+    "subject_kind": "exchange",
+    "source_adapter": "stocks",
+    "availability_adapter": "trade_calendar",
+    "dependencies": [],
+    "writers": [
+      "PaginatedPlanRunner.__call__"
+    ],
+    "unavailable_reason": null,
+    "name": "股票交易日历"
+  },
+  {
+    "entry_id": "metric-realMoneyIndex",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": "历史公式留存；现行显示口径须按消费字段核对",
+    "name": "真钱指数"
+  },
+  {
+    "entry_id": "metric-freeCashFlow",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-cashflow"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": "历史公式留存；现行显示口径须按消费字段核对",
+    "name": "自由现金流"
+  },
+  {
+    "entry_id": "metric-roic",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-income",
+      "stock-balance",
+      "stock-financial-indicator"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": "历史公式留存；现行显示口径须按消费字段核对",
+    "name": "历史投入资本回报率"
+  },
+  {
+    "entry_id": "metric-pePercentile",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-daily-basic"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": "历史公式留存；现行显示口径须按消费字段核对",
+    "name": "历史市盈率分位"
+  },
+  {
+    "entry_id": "metric-pbPercentile",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-daily-basic"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": "历史公式留存；现行显示口径须按消费字段核对",
+    "name": "历史市净率分位"
+  },
+  {
+    "entry_id": "metric-dividendYears",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-dividend",
+      "stock-basic"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": "历史公式留存；现行显示口径须按消费字段核对",
+    "name": "连续分红年数"
+  },
+  {
+    "entry_id": "metric-payoutRatio",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-dividend",
+      "stock-income"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": "历史公式留存；现行显示口径须按消费字段核对",
+    "name": "派息率"
+  },
+  {
+    "entry_id": "metric-capitalReturnRatio",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-dividend",
+      "stock-repurchase",
+      "stock-cashflow"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": "历史公式留存；现行显示口径须按消费字段核对",
+    "name": "股东回报率"
+  },
+  {
+    "entry_id": "metric-expectedDividendYield",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-dividend",
+      "stock-daily"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": "历史公式留存；现行显示口径须按消费字段核对",
+    "name": "历史预期股息率"
+  },
+  {
+    "entry_id": "metric-institutionHolding",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-top-holders",
+      "stock-daily-basic"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": "历史公式留存；现行显示口径须按消费字段核对",
+    "name": "机构持仓比例"
+  },
+  {
+    "entry_id": "metric-netDebt",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-balance"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": "历史公式留存；现行显示口径须按消费字段核对",
+    "name": "净负债"
+  },
+  {
+    "entry_id": "metric-profitGrowth",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-income"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": "历史公式留存；现行显示口径须按消费字段核对",
+    "name": "净利润同比增长"
+  },
+  {
+    "entry_id": "metric-revenueGrowth",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-income"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": "历史公式留存；现行显示口径须按消费字段核对",
+    "name": "营业收入同比增长"
+  },
+  {
+    "entry_id": "metric-cashflowGrowth",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-cashflow"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": "历史公式留存；现行显示口径须按消费字段核对",
+    "name": "经营现金流同比增长"
+  },
+  {
+    "entry_id": "card-workbenchPeTtm",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-daily",
+      "stock-income",
+      "stock-financial-indicator"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": null,
+    "name": "PE (TTM)"
+  },
+  {
+    "entry_id": "card-workbenchPb",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-daily",
+      "stock-financial-indicator"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": null,
+    "name": "PB"
+  },
+  {
+    "entry_id": "card-workbenchMarketCap",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-daily",
+      "stock-daily-basic"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": null,
+    "name": "总市值"
+  },
+  {
+    "entry_id": "card-workbenchNetCash",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-balance",
+      "stock-financial-indicator"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": null,
+    "name": "账上净现金"
+  },
+  {
+    "entry_id": "stock-dividend-yield",
+    "item_id": "dividendYield",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-dividend",
+      "stock-daily"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": null,
+    "name": "股息率({fy}已派·财年归属)"
+  },
+  {
+    "entry_id": "stock-dividend-yield",
+    "item_id": "expectedDividendYield",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-dividend",
+      "stock-daily",
+      "stock-income",
+      "stock-daily-basic"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": null,
+    "name": "预期股息率(本年度·季节性权重)"
+  },
+  {
+    "entry_id": "stock-dividend-yield",
+    "item_id": "expectedDividendYieldNTM",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-dividend",
+      "stock-daily",
+      "stock-income",
+      "stock-daily-basic"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": null,
+    "name": "预期股息率(未来12月·NTM)"
+  },
+  {
+    "entry_id": "card-workbenchFiveYearDividendCount",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "metric_value",
+    "dependencies": [
+      "stock-dividend",
+      "stock-basic"
+    ],
+    "writers": [
+      "rebuild_metric_cards"
+    ],
+    "unavailable_reason": null,
+    "name": "分红次数(近5财年)"
+  },
+  {
+    "entry_id": "risk-high_cash_high_debt",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "risk_result",
+    "dependencies": [
+      "stock-balance",
+      "stock-financial-indicator"
+    ],
+    "writers": [
+      "rebuild_workbench_risks"
+    ],
+    "unavailable_reason": null,
+    "name": "存贷双高"
+  },
+  {
+    "entry_id": "risk-goodwill_risk",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "risk_result",
+    "dependencies": [
+      "stock-balance"
+    ],
+    "writers": [
+      "rebuild_workbench_risks"
+    ],
+    "unavailable_reason": null,
+    "name": "商誉/资产"
+  },
+  {
+    "entry_id": "risk-profit_structure_non_operating_dependency",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "risk_result",
+    "dependencies": [
+      "stock-income"
+    ],
+    "writers": [
+      "rebuild_workbench_risks"
+    ],
+    "unavailable_reason": null,
+    "name": "非经营依赖度"
+  },
+  {
+    "entry_id": "risk-impairment_pressure",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "risk_result",
+    "dependencies": [
+      "stock-income"
+    ],
+    "writers": [
+      "rebuild_workbench_risks"
+    ],
+    "unavailable_reason": null,
+    "name": "减值压力"
+  },
+  {
+    "entry_id": "risk-comprehensive_income_gap",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "risk_result",
+    "dependencies": [
+      "stock-income"
+    ],
+    "writers": [
+      "rebuild_workbench_risks"
+    ],
+    "unavailable_reason": null,
+    "name": "综合收益差异"
+  },
+  {
+    "entry_id": "risk-eps_quality_gap",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "risk_result",
+    "dependencies": [
+      "stock-income",
+      "stock-financial-indicator"
+    ],
+    "writers": [
+      "rebuild_workbench_risks"
+    ],
+    "unavailable_reason": null,
+    "name": "EPS 质量差"
+  },
+  {
+    "entry_id": "risk-equity_cash_support",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "risk_result",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-balance"
+    ],
+    "writers": [
+      "rebuild_workbench_risks"
+    ],
+    "unavailable_reason": null,
+    "name": "净资产现金流支撑"
+  },
+  {
+    "entry_id": "risk-valuation_band",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "risk_result",
+    "dependencies": [
+      "stock-daily-basic",
+      "stock-daily"
+    ],
+    "writers": [
+      "rebuild_workbench_risks"
+    ],
+    "unavailable_reason": null,
+    "name": "估值分位带"
+  },
+  {
+    "entry_id": "risk-interest_debt_burden",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "risk_result",
+    "dependencies": [
+      "stock-income",
+      "stock-balance",
+      "stock-financial-indicator"
+    ],
+    "writers": [
+      "rebuild_workbench_risks"
+    ],
+    "unavailable_reason": null,
+    "name": "有息负债负担"
+  },
+  {
+    "entry_id": "risk-dividend_vs_financing",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "risk_result",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-dividend"
+    ],
+    "writers": [
+      "rebuild_workbench_risks"
+    ],
+    "unavailable_reason": null,
+    "name": "分红与融资"
+  },
+  {
+    "entry_id": "risk-dividend_sustainability",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "risk_result",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-dividend"
+    ],
+    "writers": [
+      "rebuild_workbench_risks"
+    ],
+    "unavailable_reason": null,
+    "name": "分红可持续性"
+  },
+  {
+    "entry_id": "risk-earnings_quality_non_recurring",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "risk_result",
+    "dependencies": [
+      "stock-income",
+      "stock-cashflow",
+      "stock-financial-indicator"
+    ],
+    "writers": [
+      "rebuild_workbench_risks"
+    ],
+    "unavailable_reason": null,
+    "name": "利润结构/扣非"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "operatingCashFlow",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-cashflow"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "经营现金流"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "investingCashFlow",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-cashflow"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "投资现金流"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "financingCashFlow",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-cashflow"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "筹资现金流"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "netCashChange",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-cashflow"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "现金净增加额"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "cashEnding",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-cashflow"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "期末现金余额"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "revenue",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-income"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "营业收入"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "operatingProfit",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-income"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "营业利润"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "totalProfit",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-income"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "利润总额"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "parentNetProfit",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-income"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "归母净利润"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "netProfit",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-income"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "净利润"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "ebit",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-income"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "息税前利润"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "ebitda",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-income"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "息税折旧摊销前利润"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "interestExpense",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-income"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "利息支出"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "totalAssets",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-balance"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "总资产"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "totalEquity",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-balance"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "股东权益"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "totalLiabilities",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-balance"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "负债合计"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "cash",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-balance"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "货币资金"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "currentAssets",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-balance"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "流动资产"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "currentLiab",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-balance"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "流动负债"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "salesCash",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-cashflow"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "销售收现"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "purchaseCash",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-cashflow"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "购货付现"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "cost",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-income"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "营业成本"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "capex",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-cashflow"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "资本开支"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "accountsReceiv",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-balance"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "应收账款"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "notesReceiv",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-balance"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "应收票据"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "prepayment",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-balance"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "预付款项"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "contractAssets",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-balance"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "合同资产"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "inventory",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-balance"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "存货"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "acctPayable",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-balance"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "应付账款"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "notesPayable",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-balance"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "应付票据"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "advReceipts",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-balance"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "预收款项"
+  },
+  {
+    "entry_id": "stock-ratio-inputs",
+    "item_id": "contractLiab",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "income_statement",
+    "dependencies": [
+      "stock-balance"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "合同负债"
+  },
+  {
+    "entry_id": "stock-research",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [
+      "stock-daily",
+      "stock-adjustment",
+      "stock-daily-basic",
+      "stock-income",
+      "stock-balance",
+      "stock-cashflow",
+      "stock-financial-indicator",
+      "stock-dividend",
+      "stock-repurchase",
+      "stock-top-holders",
+      "stock-classification",
+      "stock-classification-members"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "证券配对研究"
+  },
+  {
+    "entry_id": "security-search",
+    "item_id": "",
+    "subject_kind": "product",
+    "source_adapter": "derived",
+    "availability_adapter": "published_snapshot",
+    "dependencies": [
+      "stock-basic"
+    ],
+    "writers": [
+      "publish_stock_update"
+    ],
+    "unavailable_reason": null,
+    "name": "证券搜索"
+  },
+  {
+    "entry_id": "security-region",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "security",
+    "dependencies": [],
+    "writers": [
+      "RegionRepository.persist"
+    ],
+    "unavailable_reason": null,
+    "name": "证券地域"
+  },
+  {
+    "entry_id": "stock-announcements",
+    "item_id": "",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "source_payload",
+    "dependencies": [],
+    "writers": [
+      "backfill_pages"
+    ],
+    "unavailable_reason": null,
+    "name": "证券公告"
+  },
+  {
+    "entry_id": "screener-pe",
+    "item_id": "pe",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-daily-basic"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "PE · 市盈率"
+  },
+  {
+    "entry_id": "screener-pb",
+    "item_id": "pb",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-daily-basic"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "PB · 市净率"
+  },
+  {
+    "entry_id": "screener-pePercentile",
+    "item_id": "pePercentile",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-daily-basic",
+      "trade-calendar"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "PE分位 · 5年"
+  },
+  {
+    "entry_id": "screener-pbPercentile",
+    "item_id": "pbPercentile",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-daily-basic",
+      "trade-calendar"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "PB分位 · 5年"
+  },
+  {
+    "entry_id": "screener-dividendYears",
+    "item_id": "dividendYears",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-dividend",
+      "stock-basic"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "连续分红 · 年数"
+  },
+  {
+    "entry_id": "screener-payoutRatio",
+    "item_id": "payoutRatio",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-dividend",
+      "stock-income",
+      "stock-daily-basic"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "股利支付率 · 3年均值"
+  },
+  {
+    "entry_id": "screener-capitalReturnRatio",
+    "item_id": "capitalReturnRatio",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-dividend",
+      "stock-repurchase",
+      "stock-cashflow"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "资本回报/股权筹资(FY) · 分红+回购/股权筹资"
+  },
+  {
+    "entry_id": "screener-capitalReturnRatio",
+    "item_id": "capitalReturnRatioCum3y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-dividend",
+      "stock-repurchase",
+      "stock-cashflow"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "资本回报/股权筹资(3年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-capitalReturnRatio",
+    "item_id": "capitalReturnRatioCum5y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-dividend",
+      "stock-repurchase",
+      "stock-cashflow"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "资本回报/股权筹资(5年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-capitalReturnRatio",
+    "item_id": "capitalReturnRatioCum10y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-dividend",
+      "stock-repurchase",
+      "stock-cashflow"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "资本回报/股权筹资(10年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-roe",
+    "item_id": "roe",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-financial-indicator"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "ROE · 净资产收益率"
+  },
+  {
+    "entry_id": "screener-roic",
+    "item_id": "roic",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-financial-indicator"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "年报 ROIC · 投入资本回报率"
+  },
+  {
+    "entry_id": "screener-realMoneyIndex",
+    "item_id": "realMoneyIndex",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "真钱指数 · 现金流/归母净利润"
+  },
+  {
+    "entry_id": "screener-realMoneyIndex",
+    "item_id": "realMoneyIndexCum3y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "真钱指数(3年) · 年报累计口径"
+  },
+  {
+    "entry_id": "screener-realMoneyIndex",
+    "item_id": "realMoneyIndexCum5y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "真钱指数(5年) · 年报累计口径"
+  },
+  {
+    "entry_id": "screener-realMoneyIndex",
+    "item_id": "realMoneyIndexCum10y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "真钱指数(10年) · 年报累计口径"
+  },
+  {
+    "entry_id": "screener-ocfToRevenue",
+    "item_id": "ocfToRevenue",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "经现/营收 · FY年报"
+  },
+  {
+    "entry_id": "screener-ocfToRevenue",
+    "item_id": "ocfToRevenueCum3y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "经现/营收(3年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-ocfToRevenue",
+    "item_id": "ocfToRevenueCum5y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "经现/营收(5年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-ocfToRevenue",
+    "item_id": "ocfToRevenueCum10y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "经现/营收(10年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-ocfToTotalLiab",
+    "item_id": "ocfToTotalLiab",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-balance"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "经现/负债 · FY年报"
+  },
+  {
+    "entry_id": "screener-ocfToTotalLiab",
+    "item_id": "ocfToTotalLiabCum3y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-balance"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "经现/负债(3年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-ocfToTotalLiab",
+    "item_id": "ocfToTotalLiabCum5y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-balance"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "经现/负债(5年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-ocfToTotalLiab",
+    "item_id": "ocfToTotalLiabCum10y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-balance"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "经现/负债(10年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-capexCoverageRatio",
+    "item_id": "capexCoverageRatio",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "资本开支保障 · A股 OCF/capex"
+  },
+  {
+    "entry_id": "screener-capexCoverageRatio",
+    "item_id": "capexCoverageRatioCum3y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "资本开支保障(3年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-capexCoverageRatio",
+    "item_id": "capexCoverageRatioCum5y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "资本开支保障(5年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-capexCoverageRatio",
+    "item_id": "capexCoverageRatioCum10y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "资本开支保障(10年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-freeCashFlowFy",
+    "item_id": "freeCashFlowFy",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "自由现金流 · A股 OCF-capex"
+  },
+  {
+    "entry_id": "screener-freeCashFlowFy",
+    "item_id": "freeCashFlowFyCum3y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "自由现金流(3年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-freeCashFlowFy",
+    "item_id": "freeCashFlowFyCum5y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "自由现金流(5年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-freeCashFlowFy",
+    "item_id": "freeCashFlowFyCum10y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "自由现金流(10年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-freeCashFlowMarginFy",
+    "item_id": "freeCashFlowMarginFy",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "自由现金流率 · A股 OCF-capex/营收"
+  },
+  {
+    "entry_id": "screener-freeCashFlowMarginFy",
+    "item_id": "freeCashFlowMarginFyCum3y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "自由现金流率(3年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-freeCashFlowMarginFy",
+    "item_id": "freeCashFlowMarginFyCum5y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "自由现金流率(5年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-freeCashFlowMarginFy",
+    "item_id": "freeCashFlowMarginFyCum10y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "自由现金流率(10年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-cashCollectionRatio",
+    "item_id": "cashCollectionRatio",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "收现比 · A股现金流明细"
+  },
+  {
+    "entry_id": "screener-cashCollectionRatio",
+    "item_id": "cashCollectionRatioCum3y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "收现比(3年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-cashCollectionRatio",
+    "item_id": "cashCollectionRatioCum5y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "收现比(5年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-cashCollectionRatio",
+    "item_id": "cashCollectionRatioCum10y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "收现比(10年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-cashPaymentRatio",
+    "item_id": "cashPaymentRatio",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "付现比 · A股现金流明细"
+  },
+  {
+    "entry_id": "screener-cashPaymentRatio",
+    "item_id": "cashPaymentRatioCum3y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "付现比(3年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-cashPaymentRatio",
+    "item_id": "cashPaymentRatioCum5y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "付现比(5年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-cashPaymentRatio",
+    "item_id": "cashPaymentRatioCum10y",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-cashflow",
+      "stock-income"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "付现比(10年) · 累计口径"
+  },
+  {
+    "entry_id": "screener-institutionHolding",
+    "item_id": "institutionHolding",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-top-holders"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "机构持仓 · 前十大流通股东合计"
+  },
+  {
+    "entry_id": "screener-institutionHoldingChange",
+    "item_id": "institutionHoldingChange",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-top-holders"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "机构增减 · 较上期变化"
+  },
+  {
+    "entry_id": "screener-longMoneyHoldingRatio",
+    "item_id": "longMoneyHoldingRatio",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "长钱持仓 · 国家队/社保/险资/QFII"
+  },
+  {
+    "entry_id": "screener-fundHeavyCount",
+    "item_id": "fundHeavyCount",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "基金重仓数 · 公募重仓"
+  },
+  {
+    "entry_id": "screener-chipConcentrationChange",
+    "item_id": "chipConcentrationChange",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "筹码集中 · 股东户数下降"
+  },
+  {
+    "entry_id": "screener-marketCap",
+    "item_id": "marketCap",
+    "subject_kind": "security",
+    "source_adapter": "derived",
+    "availability_adapter": "stock_screener_daily",
+    "dependencies": [
+      "stock-daily-basic"
+    ],
+    "writers": [
+      "SnapshotPublisher.publish_many"
+    ],
+    "unavailable_reason": null,
+    "name": "市值 · 亿元"
+  },
+  {
+    "entry_id": "stock-daily-basic",
+    "item_id": "limit_status",
+    "subject_kind": "security",
+    "source_adapter": "stocks",
+    "availability_adapter": "daily_basic",
+    "dependencies": [],
+    "writers": [
+      "PulseRepository.persist"
+    ],
+    "unavailable_reason": null,
+    "name": "涨跌停状态"
+  }
+]

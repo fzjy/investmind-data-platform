@@ -130,4 +130,6 @@ class MarketQuoteRepository:
             rows = self._rows(session, target)
             ingestion.upsert(JobCursor, {'job_name': JOB_NAME, 'cursor_key': target.identity}, {
                 'cursor_value': {'rows': self._proof(rows)}, 'updated_at': captured_at})
+            from app.acquisition.adapters.markets import record_market
+            record_market(session,target.asset.api_name,target.asset.asset_code,target.params,captured_at,batch_id=batch.id)
             return {'status': 'completed', 'retainedCount': len(quotes)}

@@ -1,10 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from app.db.models import JobCursor,IngestionBatch,SourcePayload
+from app.db.models import DataAcquisitionState,JobCursor,IngestionBatch,SourcePayload
 
 def factory():
     e=create_engine('sqlite://',execution_options={'schema_translate_map':{'ops':None,'raw':None}})
-    for m in (JobCursor,IngestionBatch,SourcePayload):m.__table__.create(e)
+    for m in (DataAcquisitionState,JobCursor,IngestionBatch,SourcePayload):m.__table__.create(e)
     return sessionmaker(e,expire_on_commit=False)
 
 def test_default_preview_never_calls_provider():

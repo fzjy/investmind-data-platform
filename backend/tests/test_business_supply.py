@@ -6,7 +6,7 @@ from hashlib import sha256
 import pytest
 from sqlalchemy import create_engine,select,func
 from sqlalchemy.orm import sessionmaker
-from app.db.models import JobCursor,IngestionBatch,SourcePayload,PublishedSnapshot
+from app.db.models import DataAcquisitionState,JobCursor,IngestionBatch,SourcePayload,PublishedSnapshot
 from app.connectors.tushare.contracts import TushareResponse
 
 NOW=datetime(2026,11,6,tzinfo=timezone.utc)
@@ -21,7 +21,7 @@ def factory(monkeypatch,tmp_path):
     path.write_text(json.dumps({'businessSupply':dict(enabled=True,maxHttpPerRun=20,timeoutSeconds=20,historyYears=10,refreshDays=7)}))
     monkeypatch.setattr(m,'CONFIG_FILE',path)
     engine=create_engine('sqlite://',execution_options={'schema_translate_map':{'ops':None,'raw':None,'mart':None}})
-    for model in (JobCursor,IngestionBatch,SourcePayload,PublishedSnapshot):model.__table__.create(engine)
+    for model in (DataAcquisitionState,JobCursor,IngestionBatch,SourcePayload,PublishedSnapshot):model.__table__.create(engine)
     f=sessionmaker(engine,expire_on_commit=False)
     with f.begin() as s:s.add(PublishedSnapshot(product='screener',version='base',as_of=NOW,payload={'stocks':[{'symbol':'600519.SH'}]}))
     yield f

@@ -191,6 +191,8 @@ def test_open_runtime_builds_one_selection_and_closes_resources(
         assert captured["row_filter_selection"] is runtime.selection
         assert captured["job_kwargs"]["universe"] is runtime.selection
         assert captured["page_runner"][2] == {
+            "scope_kind": "routine",
+            "status_factory": state["factory"],
             "mode": TushareMode.STANDARD,
             "page_size": 123,
             "fingerprint_context": SELECTION.fingerprint,

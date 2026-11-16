@@ -118,6 +118,8 @@ class CommodityRepository:
             batch.status,batch.row_count='completed',len(response.items)
             ingestion.upsert(JobCursor,{'job_name':JOB_NAME,'cursor_key':req['identity']},
                 {'cursor_value':{'sourcePayloadId':raw.id,'contentHash':raw.content_hash},'updated_at':captured_at})
+            from app.acquisition.adapters.markets import record_market
+            record_market(session,req['api'],req['params'].get('ts_code') or req['params'].get('exchange'),req['params'],captured_at,batch_id=batch.id)
             return None
 
     def plan(self,day,now,session=None):

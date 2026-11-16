@@ -19,6 +19,65 @@ function table(head,rows){
   }
   wrap.append(t);return wrap;
 }
+function acquisitionPanel(box,entry,api,current){
+  const form=node("form",null,"catalog-status-filters");
+  const subject=node("input"),item=node("input");
+  subject.placeholder="证券、品种或来源代码";
+  item.placeholder="条目内指标 ID";
+  subject.setAttribute("aria-label",subject.placeholder);
+  item.setAttribute("aria-label",item.placeholder);
+  const query=node("button","查询"),results=node("div");
+  const labels={normal:"正常",failed:"数据获取失败",missing:"数据缺失",excluded:"单独说明"};
+  const availability={available:"已有数据",confirmed_empty:"已核实为空",missing:"无可用值",unknown:"范围待确认",not_applicable:"不适用"};
+  let sequence=0;
+  const scope=node("select");
+  scope.setAttribute("aria-label","采集范围");
+  scope.append(new Option("常规采集","routine"),new Option("历史补采","historical"));
+  if(entry.id==="stock-announcements")scope.value="historical";
+  form.append(subject,item,scope,query);
+  box.append(form,results);
+  async function load(cursor){
+    const id=++sequence;
+    results.replaceChildren(node("p","正在读取获取状态…","muted"));
+    const params=new URLSearchParams({entryId:entry.id,limit:"15",scopeKind:scope.value});
+    if(subject.value.trim())params.set("subjectKey",subject.value.trim());
+    if(item.value.trim())params.set("itemId",item.value.trim());
+    if(cursor)params.set("cursor",cursor);
+    try{
+      const page=await api("/admin/api/data-status?"+params);
+      if(!current()||sequence!==id)return;
+      const counts={normal:0,failed:0,missing:0,excluded:0};
+      const rows=page.items.map(row=>{
+        counts[row.audit.status]++;
+        const proof=row.collection;
+        const reason=node("div",row.audit.reason);
+        const run=proof.scope.runId||proof.references.find(r=>r.runId)?.runId;
+        const task=(entry.frequencies||[]).find(f=>f.task)?.task;
+        if(run&&task){
+          const href="/admin/#tasks?"+new URLSearchParams({task,run});
+          reason.append(node("br"),link("查看运行 "+run,href));
+        }else if(run)reason.append(node("p","运行 ID · "+run));
+        return [row.key.subjectKey,row.key.itemId||row.name,labels[row.audit.status],
+          availability[row.availability.kind],row.availability.period,proof.checkedAt,proof.successAt,
+          JSON.stringify(proof.scope),reason];
+      });
+      results.replaceChildren(node("p","本页 "+rows.length+" 项 · "+Object.entries(counts).map(([k,v])=>labels[k]+" "+v).join(" · ")),
+        node("p","状态读取时间 "+page.readAt,"muted"));
+      if(rows.length)results.append(table(["对象","指标","审计结果","入库情况","数据期","最近检查","最近成功","检查范围","原因"],rows));
+      else results.append(node("p","当前筛选下没有可列出的对象。"));
+      if(page.nextCursor){
+        const next=node("button","下一页");
+        next.onclick=()=>load(page.nextCursor);
+        results.append(next);
+      }
+    }catch(error){
+      if(current()&&sequence===id)results.replaceChildren(node("p","获取状态暂不可用："+error.message,"catalog-warning"));
+    }
+  }
+  scope.onchange=()=>load(null);
+  form.onsubmit=event=>{event.preventDefault();load(null);};
+  load(null);
+}
 function heading(box,text){
   box.append(node("h2",text));
 }
@@ -172,6 +231,7 @@ export async function renderCatalog(container,params,{api,origin}){
   function section(key,label){
     const box=node("section");box.dataset.section=key;heading(box,label);body.append(box);return box;
   }
+  acquisitionPanel(section("status","数据获取状态"),e,api,current);
   const calls=section("access","获取方式");
   for(const a of e.access){
     if(a.description)calls.append(node("p",a.description));

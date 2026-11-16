@@ -25,6 +25,7 @@ class BatchResult:
     rejected_count: int
     retained_count: int = -1
     filtered_count: int = 0
+    has_more: bool | None = None
 
     def __post_init__(self) -> None:
         if self.retained_count == -1:
@@ -88,7 +89,7 @@ class IngestionPipeline:
         batch.finished_at = datetime.now(timezone.utc)
         return BatchResult(batch.id, plan.dataset,
             len(response.items) if received_count is None else received_count,
-            batch.row_count, rejected, len(response.items), filtered_count)
+            batch.row_count, rejected, len(response.items), filtered_count, response.has_more)
 
     def _upsert_row(self, repository: IngestionRepository, dataset: Dataset, row: dict[str, Any], *, classification_source: str | None = None) -> None:
         if dataset is Dataset.SECURITY:

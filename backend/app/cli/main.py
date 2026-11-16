@@ -486,6 +486,7 @@ def backfill(
             page_runner = PaginatedPlanRunner(
                 lambda page_plan: pipeline.run(page_plan, mode=mode_value.value),
                 SqlJobCursorRepository(factory),
+                status_factory=factory, scope_kind='historical',
                 mode=mode_value,
                 page_size=settings.tushare_page_size,
             )
@@ -797,6 +798,7 @@ def retry_failures(
                     page_runner = PaginatedPlanRunner(
                         lambda page_plan: pipeline.run(page_plan, mode=mode.value),
                         SqlJobCursorRepository(factory),
+                        status_factory=factory, scope_kind='historical',
                         mode=mode,
                     )
                     runners[mode] = page_runner
@@ -1627,6 +1629,8 @@ from app.cli.macro_enterprise import register_macro_enterprise_commands
 from app.cli.macro_extensions import register_macro_extension_commands
 from app.cli.official_members import register_official_member_commands
 
+from app.cli.data_status import register_data_status
+register_data_status(app)
 register_backup_commands(app)
 register_release_commands(app)
 register_capacity_commands(app)

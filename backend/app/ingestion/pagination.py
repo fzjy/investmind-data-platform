@@ -99,7 +99,11 @@ class PaginatedPlanRunner:
         mode: TushareMode,
         page_size: int | None = None,
         fingerprint_context: str | None = None,
+        status_factory=None,
+        scope_kind: str = 'historical',
     ) -> None:
+        self._status_factory = status_factory
+        self._scope_kind = scope_kind
         self._run_page = run_page
         self._cursor_store = cursor_store
         self._mode = mode
@@ -107,6 +111,14 @@ class PaginatedPlanRunner:
         self._fingerprint_context = fingerprint_context
 
     def __call__(self, plan: RequestPlan) -> PaginatedResult:
+        if self._status_factory is None:
+            return self._run_pages(plan)
+        from app.acquisition.adapters.pagination import tracked_pages
+        return tracked_pages(self._status_factory,plan,self._scope_kind,self._effective_page_size(plan),
+                             plan_fingerprint(plan,self._mode,self._effective_page_size(plan),self._fingerprint_context),
+                             self._run_pages)
+
+    def _run_pages(self, plan: RequestPlan) -> PaginatedResult:
         page_size = self._effective_page_size(plan)
         fingerprint = plan_fingerprint(
             plan,
@@ -142,7 +154,7 @@ class PaginatedPlanRunner:
             )
             batches.append(batch)
 
-            if batch.rejected_count > 0:
+            if batch.rejected_count > 0 or batch.has_more and not batch.received_count:
                 return self._result(
                     plan,
                     resumed_from_offset,
@@ -151,7 +163,7 @@ class PaginatedPlanRunner:
                     completed=False,
                 )
 
-            if batch.received_count < page_size:
+            if batch.has_more is False or batch.has_more is None and batch.received_count < page_size:
                 self._delete_cursor(
                     plan.cursor_key,
                     plan,
@@ -167,7 +179,7 @@ class PaginatedPlanRunner:
                     completed=True,
                 )
 
-            offset += page_size
+            offset += batch.received_count
             self._save_cursor(
                 plan.cursor_key,
                 self._cursor_shape(plan, fingerprint, page_size, offset),

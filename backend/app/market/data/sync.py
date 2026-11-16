@@ -85,6 +85,8 @@ class MarketDataSync:
                     pending.append(code)
                     errors.append(error)
                     with self.factory.begin() as session:
+                        from app.acquisition.adapters.markets import record_market
+                        record_market(session,t.asset.api_name,code,t.params,checked_at,error=error,run_id=run_id)
                         session.add(JobFailure(job_run_id=run_id, dataset=JOB_NAME,
                             request_key=t.identity, error_code=error, message=error,
                             request_payload={'assetCode': code}, retryable=True,

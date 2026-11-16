@@ -141,13 +141,23 @@ def extension_entries(factory, config, now):
     return entries
 
 
-def financial_entries(factory, enabled, now):
+def financial_entries(factory, enabled, now, *, symbols=()):
     """逐证券/报表汇总现有分页游标；不把整池成功映射为子范围成功。"""
     from app.ingestion.repositories import content_hash
     with factory() as session:
-        cursors = session.scalars(select(JobCursor).where(JobCursor.job_name == 'financial-statement-evidence')).all()
+        query = select(JobCursor).where(JobCursor.job_name == 'financial-statement-evidence')
+        if symbols:
+            query = query.where(or_(*(condition for code in set(symbols) for condition in (
+                JobCursor.cursor_key.endswith(':'+code),JobCursor.cursor_key.contains(':'+code+':offset:')))))
+        cursors = session.scalars(query).all()
+        if symbols and cursors:
+            contracts_query = select(JobCursor).where(JobCursor.job_name == 'financial-statement-evidence',
+                JobCursor.cursor_key.in_({'contract:'+r.cursor_key.partition(':')[0] for r in cursors}))
+            cursors.extend(session.scalars(contracts_query))
         contracts = {r.cursor_key[9:]: r.cursor_value for r in cursors if r.cursor_key.startswith('contract:')}
-        batches = {b.id: b for b in session.scalars(select(IngestionBatch).where(IngestionBatch.dataset == 'financial-statement-evidence'))}
+        batch_ids = {r.cursor_value.get('batchId') for r in cursors if isinstance(r.cursor_value,dict)}
+        batches = {b.id:b for b in session.scalars(select(IngestionBatch).where(
+            IngestionBatch.dataset == 'financial-statement-evidence',IngestionBatch.id.in_(batch_ids)))}
         groups = defaultdict(lambda: defaultdict(list))
         for row in cursors:
             match = re.fullmatch(r'([0-9a-f]{64}):(income|balance|cashflow):([^:]+)(?::offset:(\d+))?', row.cursor_key)

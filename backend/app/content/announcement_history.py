@@ -186,10 +186,19 @@ def backfill_pages(factory, symbols, fetch_page, page_budget, *, window_limit=No
                         session.add(cursor)
                     state = {} if operation == "recheck" and cursor.cursor_value.get("status") == "completed" else cursor.cursor_value
                     used += 1
+                    from app.acquisition.contracts import StateKey
+                    from app.acquisition.tracking import record_terminal
+                    started = datetime.now(UTC)
+                    def track(status, error=None, empty=False):
+                        record_terminal(session,StateKey('stock-announcements','','security',window.symbol,'historical'),
+                            started_at=started,checked_at=datetime.now(UTC),status=status,code=error,
+                            scope={'source':'cninfo','start':window.start.isoformat(),'end':window.end.isoformat(),
+                                   'confirmedEmpty':empty},references=({'cursor':window.key},))
                     try:
                         page = fetch_page(window, state.get("next"))
                     except Exception as exc:
                         cursor.cursor_value = {**state, "status": "failed", "error": type(exc).__name__}
+                        track("failed","ANNOUNCEMENT_REQUEST_OR_VALIDATION_FAILED")
                         return {"status": "failed", "window": window.key, "pages": used}
                     if page.response is not None:
                         batch = IngestionBatch(source="cninfo", dataset=JOB, mode="standard", status="completed",
@@ -204,9 +213,11 @@ def backfill_pages(factory, symbols, fetch_page, page_budget, *, window_limit=No
                     except ValueError as exc:
                         # 分页结果已不自洽，下次从该窗口首页重新核对。
                         cursor.cursor_value = {"status": "failed", "error": str(exc)}
+                        track("failed","ANNOUNCEMENT_REQUEST_OR_VALIDATION_FAILED")
                         return {"status": "failed", "window": window.key, "pages": used}
                     if state["next"] is None:
                         _finish(session, state["records"], symbols)
+                        track("success",empty=not state["records"])
                         cursor.cursor_value = {"status": "completed", "count": len(state["records"]),
                                                "checkedOn": datetime.now(ZoneInfo("Asia/Shanghai")).date().isoformat(),
                                                "checkedThrough": coverage[window.symbol]["to"]}

@@ -229,6 +229,8 @@ class ExchangeSummaryStore:
             if d['phase']!='reserved' or code not in FAILURE_CODES or now<utc(row.started_at):raise ValueError('EXCHANGE_RUN_INVALID')
             row.details={**d,'phase':'failed'};row.status='failed';row.finished_at=now;row.error_message=code
             batch=session.get(IngestionBatch,key);batch.status='failed';batch.finished_at=now
+            from app.acquisition.adapters.plans import record_extension
+            record_extension(session,row,now)
 
     def replay(self,key,now):
         now=instant(now)
@@ -254,6 +256,8 @@ class ExchangeSummaryStore:
             row.details={**d,'phase':'completed','normalized':normalized,'coreBindings':bindings}
             row.status='completed';row.finished_at=now;row.row_count=len(bindings)
             batch=session.get(IngestionBatch,key);batch.status='completed';batch.finished_at=now;batch.row_count=len(bindings)
+            from app.acquisition.adapters.plans import record_extension
+            record_extension(session,row,now)
             return {'status':'completed','supplierHttp':0,'readOnly':False,'runId':key,'insertedRows':len(bindings)}
 
     def inventory(self,plan,now):

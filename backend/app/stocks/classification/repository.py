@@ -79,6 +79,10 @@ class ClassificationRepository:
                 "responseHash": content_hash(payload.payload), "received": len(response.items),
                 "params": params, "observedAt": observed_at.isoformat(), "error": error}
             state["previousAttempts"] = history
+            if error:
+                from app.acquisition.adapters.classification import record_classification
+                record_classification(session,identity,'SW2021' if catalog else params['ts_code'],
+                                      member=not catalog,error='CLASSIFICATION_REJECTED',references=({'batchId':batch.id},))
             self._set(session, identity, unit, state)
             return state
 
@@ -123,6 +127,8 @@ class ClassificationRepository:
             for code, node in catalog.nodes.items():
                 repo.upsert(Classification, {"provider": "tushare", "source": catalog.source, "classification_id": code}, node)
             self._set(session, identity, "catalog", {"status": "completed", "hash": content_hash(catalog.nodes), "nodes": len(catalog.nodes)})
+            from app.acquisition.adapters.classification import record_classification
+            record_classification(session,identity,catalog.source,member=False)
             return catalog
 
     def commit_stock(self, identity: str, symbol: str, catalog: Catalog, window_start: date,
@@ -187,6 +193,8 @@ class ClassificationRepository:
                     batch.row_count = 0
                     evidence.update(status="failed", error=str(exc))
                     self._set(session, identity, f"{symbol}:{flag}", evidence)
+                from app.acquisition.adapters.classification import record_classification
+                record_classification(session,identity,symbol,member=True,error='MEMBER_VALIDATION_FAILED')
                 self._set(session, identity, key, result)
                 return result
             for record in records:
@@ -219,5 +227,8 @@ class ClassificationRepository:
                 "observedGaps": [{"from": prior.effective_to.isoformat(), "to": current.effective_from.isoformat()}
                     for prior, current in zip(records, records[1:])
                     if prior.effective_to and (current.effective_from - prior.effective_to).days > 1]}
+            from app.acquisition.adapters.classification import record_classification
+            record_classification(session,identity,symbol,member=True,empty=not records,
+                                  references=tuple({'rawId':i} for i in evidence_ids))
             self._set(session, identity, key, result)
             return result

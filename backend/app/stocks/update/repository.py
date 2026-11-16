@@ -113,13 +113,19 @@ class StockUpdateRepository:
                             retained.append(tuple(row[f] for f in response.fields))
                 continue
             retained.append(tuple(row[f] for f in response.fields))
-        return TushareResponse(fields=response.fields, items=tuple(retained))
+        return response.model_copy(update={"items":tuple(retained)})
 
-    def ingest_unit(self, identity, plan, response, as_of, window_start, *, request_count=1, cached_payload_id=None):
+    def ingest_unit(self, identity, plan, response, as_of, window_start, *, request_count=1, cached_payload_id=None, attempts=None):
+        from app.acquisition.adapters.stocks import stock_attempts, stock_result
+        from app.ingestion.repositories import content_hash
+        if attempts is None:
+            attempts = stock_attempts(plan, identity)
+        source = None
         with self.factory.begin() as session:
             if cached_payload_id is not None:
                 source = session.get(SourcePayload, cached_payload_id)
                 if (request_count != 0 or source is None or source.api_name != plan.api_name
+                    or source.content_hash != content_hash(source.payload)
                     or source.request_hash != request_hash(plan.api_name, plan.params, plan.fields)
                     or TushareResponse.model_validate(source.payload) != response):
                     raise ValueError('cached evidence mismatch')
@@ -147,7 +153,7 @@ class StockUpdateRepository:
                 repo.save_payload(batch, plan.api_name, plan.params, plan.fields, response)
                 error = str(exc) if isinstance(exc, ValueError) else 'invalid response'
                 repo.reject(batch, error)
-                status = 'incomplete' if len(response.items) >= plan.page_size else 'failed'
+                status = 'incomplete' if response.has_more or len(response.items) >= plan.page_size else 'failed'
                 batch.rejected_count, batch.row_count = 1, 0
                 retained = 0
             batch.status, batch.request_count, batch.finished_at = status, request_count, datetime.now(timezone.utc)
@@ -159,4 +165,5 @@ class StockUpdateRepository:
             if cached_payload_id is not None:
                 value['cachedSourcePayloadId'] = cached_payload_id
             self.set_state(session, identity, plan.cursor_key, value)
+            stock_result(session, attempts, value, batch.finished_at, cached=source)
             return value
