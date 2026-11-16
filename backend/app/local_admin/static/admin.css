@@ -8,3 +8,33 @@ main{min-width:0}h1{font-size:28px;letter-spacing:.05em;margin:0 0 18px}h2{font-
 button,select,input{font:inherit;border:1px solid #a6b7ae;border-radius:3px;background:#fff;color:#1e4335;padding:7px 11px}button{cursor:pointer}button.primary{background:#245b4c;color:white;border-color:#245b4c}button:hover,a:hover{filter:brightness(.88)}:focus-visible{outline:3px solid #b4843b;outline-offset:2px}button:disabled{opacity:.48;cursor:default}
 .toolbar,.pager{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0}.pager{justify-content:flex-end}.panel,fieldset{background:white;border:1px solid #d6dfd7;border-radius:4px;padding:16px 20px;margin:15px 0}.panel p{margin:7px 0}legend{font-weight:650;color:#24473b}label{display:inline-flex;align-items:center;gap:8px;margin:6px 18px 6px 0}input[type=checkbox]{accent-color:#245b4c;width:17px;height:17px}.pill{display:inline-block;border-left:3px solid #9bb7a7;padding-left:7px}.active{border-color:#c48a31}.document{max-width:1200px;margin:auto;padding:28px}.document pre,pre.value{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.65}.docrow{display:flex;align-items:baseline;gap:14px;padding:11px 0;border-bottom:1px solid #dae3da;flex-wrap:wrap}.docrow code{word-break:break-all}.docrow strong{min-width:48px;color:#436c5a}.notice{padding:14px;color:#506660}
 @media(max-width:800px){.shell{display:block;padding:16px}.brand{font-size:20px}nav{position:static;flex-direction:row;flex-wrap:wrap;border:0;padding:0 0 16px}nav a{padding:8px}header code{font-size:10px}th,td{padding:9px}h1{font-size:24px}}
+.catalog-layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:28px}
+.catalog-sidebar{align-self:start;position:sticky;top:15px;max-height:90vh;overflow:auto;background:#edf2eb;border:1px solid #d8e2d5;border-radius:4px;padding:14px}
+.catalog-sidebar input{width:100%;font-size:13px;margin-bottom:14px}
+.catalog-sidebar summary{font-weight:650;color:#41644b;padding:9px 0;cursor:pointer;font-size:13px}
+.catalog-entry{display:block;padding:8px 10px;border-radius:3px;color:#365b47;font-size:13px;text-decoration:none}
+.catalog-entry[aria-current=page]{background:#d8e8da;font-weight:650;border-left:3px solid #2d6b4a}
+.catalog-entry small{display:block;overflow-wrap:anywhere;font-size:11px;font-weight:400;color:#4f6b54}
+.catalog-body{min-width:0;background:#fff;padding:20px 25px;border:1px solid #dce4d7;border-radius:4px;line-height:1.7}
+.catalog-body h2.catalog-title{font-size:27px;margin:0 0 14px}
+.catalog-body section{scroll-margin-top:20px}
+.catalog-body .frame{margin:12px 0}
+.catalog-body .frame td{font-size:13px}
+.catalog-body .frame code{display:block;max-width:34ch;overflow-wrap:anywhere}
+.catalog-meta{display:grid;grid-template-columns:135px minmax(0,1fr);background:#f6f9f3;border:1px solid #d9e3d5;font-size:13px;margin:22px 0}
+.catalog-meta dt,.catalog-meta dd{margin:0;padding:10px 13px;border-bottom:1px solid #e1e8dc;white-space:pre-line}
+.catalog-meta dt{color:#5a705a;font-size:12px}
+.catalog-meta dd p{margin:2px 0 6px}
+.catalog-table-link{border-bottom:1px dotted #537d5b;font-family:Consolas,monospace;overflow-wrap:anywhere}
+.catalog-tables p{margin:0 0 7px}
+.catalog-jumps,.catalog-formulas{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.catalog-jumps button{background:transparent;border:0;border-bottom:1px solid #d5dfd0;border-radius:0;padding:5px 8px;font-size:13px}
+.catalog-formulas button{font-size:13px}
+.catalog-formulas button[aria-pressed=true]{background:#2d674e;color:#fff;border-color:#2d674e}
+.catalog-formula{background:#f2f8ed;border:1px solid #cddfc4;padding:15px 18px}
+.catalog-expression{font-size:16px;color:#224e32;line-height:1.9}
+.catalog-warning{border-left:3px solid #af803c;padding:8px 12px;background:#fbf5e9;font-size:13px}
+.catalog-match{background:#f8e5b0;outline:3px solid #f8e5b0}
+.catalog-call{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0f5eb;padding:13px;border:1px solid #dce5d5;font-family:Consolas,monospace;font-size:12px}
+@media(max-width:1100px){.catalog-layout{grid-template-columns:185px minmax(0,1fr);gap:14px}.catalog-body{padding:15px}.catalog-meta{grid-template-columns:100px minmax(0,1fr)}}
+@media(max-width:650px){.catalog-layout{display:block}.catalog-sidebar{position:static;max-height:280px;margin-bottom:15px}.catalog-body{padding:14px}.catalog-meta dt,.catalog-meta dd{padding:8px}.catalog-meta{grid-template-columns:85px minmax(0,1fr)}}

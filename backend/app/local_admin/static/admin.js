@@ -1,8 +1,8 @@
+import {renderCatalog} from "./catalog.js";
 const view = document.querySelector("#view");
 const title = document.querySelector("#title");
 const message = document.querySelector("#message");
 const names = {tasks:"任务状态", tables:"数据表", docs:"接口文档", config:"运行配置"};
-const docNames = {"platform-api.md":"公共接口目录","api-requests.md":"请求参数与校验","field-consumers.md":"字段来源与用途","news-api.md":"快讯","market-supply.md":"市场","macro-supply.md":"宏观","workbench-api.md":"工作台","screener-api-fields.md":"选股器","security-search.md":"证券搜索","portfolio-split-lineage.md":"组合"};
 let token, generation = 0, refresh;
 const el = (tag, text, cls) => {
   const node = document.createElement(tag);
@@ -105,6 +105,9 @@ async function taskPage(box, p) {
 async function tablePage(box,p) {
   const tables = await api("/admin/api/tables");
   if (!tables.length) { box.append(el("p","当前连接没有可浏览的应用表")); return; }
+  if(p.has("s") && p.has("t") && !tables.some(x=>x.schema===p.get("s")&&x.name===p.get("t"))){
+    box.append(el("p","当前库暂无此表："+p.get("s")+"."+p.get("t"))); return;
+  }
   const selected = tables.find(x=>x.schema===p.get("s")&&x.name===p.get("t")) || tables[0];
   const s=selected.schema,t=selected.name, toolbar=el("div",null,"toolbar"), choose=el("select");
   choose.setAttribute("aria-label","数据表");
@@ -150,23 +153,8 @@ async function tablePage(box,p) {
   if (!page.rows.length) box.append(el("p","此页没有记录","notice"));
   box.append(pager(page.previousCursor,page.nextCursor,n=>location.hash=query("tables",{s,t,cursor:n,...(code?{run:code}:{}),...(batch?{batch}:{})})));
 }
-async function docsPage(box) {
-  const links=el("div",null,"toolbar");
-  links.append(link("Swagger UI","/docs"),link("OpenAPI JSON","/openapi.json"));
-  box.append(links,el("h2","公共数据接口"));
-  const spec=await api("/openapi.json");
-  for(const [path,methods] of Object.entries(spec.paths)) {
-    if(!path.startsWith("/api/v1/")) continue;
-    for(const method of Object.keys(methods)) {
-      const row=el("div",null,"docrow");
-      row.append(el("strong",method.toUpperCase()),el("code",path));
-      box.append(row);
-    }
-  }
-  box.append(el("h2","接口与字段说明"));
-  const index=el("div",null,"toolbar");
-  for(const [file,label] of Object.entries(docNames)) index.append(link(label,"/admin/docs/"+file));
-  box.append(index);
+async function docsPage(box, params) {
+  return renderCatalog(box,params,{api,origin:location.origin});
 }
 async function configPage(box) {
   const tasks=await api("/admin/api/tasks");
