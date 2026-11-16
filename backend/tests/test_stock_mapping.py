@@ -170,8 +170,13 @@ def test_config_change_affects_real_input_assembly_and_lineage(new_pg_factory, m
     assert StockMappingPolicy.load(path).fingerprint in context.sources["institution_shares"].source_record_key
 
 
-@pytest.mark.parametrize("value", ["NaN", "Infinity", "-Infinity"])
-def test_non_finite_holder_amount_is_missing_not_a_numeric_percentage(pg_factory, value):
+def test_persisted_nan_holder_amount_is_missing(new_pg_factory):
+    context = holder_snapshot(new_pg_factory, amounts=("NaN",)).security_inputs["600519.SH"]
+    assert calculate_formula("institutionHolding", context.values).value is None
+
+
+@pytest.mark.parametrize("value", ["Infinity", "-Infinity"])
+def test_non_finite_holder_amount_is_missing_not_a_numeric_percentage(value):
     code = "600519.SH"
     period = date(2026, 6, 30)
     security = Security(ts_code=code, symbol=code[:6], name="样本", status="L", data={})
@@ -179,7 +184,10 @@ def test_non_finite_holder_amount_is_missing_not_a_numeric_percentage(pg_factory
     holder = TopHolder(ts_code=code, end_date=period, ann_date=date(2026, 8, 1),
                        holder_type="开放式投资基金", holder_name="holder", hold_amount=Decimal(value))
     # PostgreSQL 的定精度 numeric 拒绝无穷值，直接检验输入组装器的处理。
-    inputs, gaps = CoreSnapshotRepository(pg_factory)._assemble_inputs(
+    def forbidden_session():
+        pytest.fail("输入组装不应查询数据库")
+
+    inputs, gaps = CoreSnapshotRepository(forbidden_session)._assemble_inputs(
         (security,), (), (basic,), {}, (), (holder,), date(2026, 8, 24), (code,))
     assert any(gap.get("calculationStatus") == "invalid_or_missing_holder_amount" for gap in gaps)
     assert calculate_formula("institutionHolding", inputs[code].values).value is None

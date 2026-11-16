@@ -161,8 +161,8 @@ def test_pending_batch_survives_new_base_day_then_refreshes_new_cutoff(new_pg_fa
     c=ObservedClient(f)
     assert refresh(f,c,budget=1)['status']=='pending'
     with f.begin() as s:
-        base=s.get(PublishedSnapshot,'screener');set_snapshot_version(s, base, 'next-day')
-        base.as_of=base.as_of+timedelta(days=1)
+        base = s.get(PublishedSnapshot, 'screener')
+        set_snapshot_version(s, base, 'next-day', as_of=base.as_of + timedelta(days=1))
     finished_old=refresh(f,c,budget=1,now=NOW+timedelta(days=3))
     assert finished_old['status']=='pending' and finished_old['requestCount']==1
     assert finished_old['code']=='DIVIDEND_QUERY_EXPIRED' and not finished_old['publishReady']
@@ -312,7 +312,8 @@ def test_reference_partial_finishes_frozen_window_then_prepares_new_day(new_pg_f
     one=history.capture_history(f,c,execute=True)
     assert one['status']=='pending' and one['requestCount']==1
     with f.begin() as s:
-        base=s.get(PublishedSnapshot,'screener');set_snapshot_version(s, base, 'new-day');base.as_of+=timedelta(days=1)
+        base = s.get(PublishedSnapshot, 'screener')
+        set_snapshot_version(s, base, 'new-day', as_of=base.as_of + timedelta(days=1))
     resumed=history.capture_history(f,c,execute=True)
     assert resumed['code']=='REFERENCE_PREVIOUS_TARGET_FINISHED' and resumed['requestCount']==1
     assert history.capture_history(f,c,execute=True)['status']=='pending'

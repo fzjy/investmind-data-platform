@@ -72,7 +72,7 @@ def test_rejected_window_preserves_raw_but_not_success_cursor(new_pg_factory):
         assert session.scalar(select(func.count()).select_from(value.MarketDailyQuote)) == 0
 
 
-@pytest.mark.parametrize('damage', ['missing_core', 'illegal_core', 'changed_core', 'raw_mismatch', 'raw_hash', 'missing_raw'])
+@pytest.mark.parametrize('damage', ['missing_core', 'illegal_core', 'changed_core', 'raw_mismatch', 'raw_hash'])
 def test_success_cursor_with_missing_or_corrupt_core_is_not_complete(new_pg_factory, damage):
     value, factory, repo = setup(new_pg_factory)
     repo.persist(target(), response(), captured_at=NOW)
@@ -90,14 +90,32 @@ def test_success_cursor_with_missing_or_corrupt_core_is_not_complete(new_pg_fact
             raw.api_name = 'fund_daily'
         elif damage == 'raw_hash':
             raw.content_hash = '0' * 64
-        else:
-            with pytest.raises(IntegrityError), session.begin_nested():
-                session.delete(raw)
-                session.flush()
-            session.delete(quote)
-            session.flush()
-            session.delete(raw)
     assert repo.is_complete(target(), checked_at=NOW) is False
+
+
+def test_complete_quote_requires_readable_raw_payload(new_pg_factory, monkeypatch):
+    value, factory, repo = setup(new_pg_factory)
+    repo.persist(target(), response(), captured_at=NOW)
+    with factory.begin() as session:
+        quote = session.scalar(select(value.MarketDailyQuote))
+        raw_id = quote.source_payload_id
+        with pytest.raises(IntegrityError), session.begin_nested():
+            session.delete(session.get(SourcePayload, raw_id))
+            session.flush()
+    assert repo.is_complete(target(), checked_at=NOW)
+
+    reads = []
+    original_get = factory.class_.get
+
+    def get(session, model, identity, *args, **kwargs):
+        if model is SourcePayload and identity == raw_id:
+            reads.append(identity)
+            return None
+        return original_get(session, model, identity, *args, **kwargs)
+
+    monkeypatch.setattr(factory.class_, "get", get)
+    assert repo.is_complete(target(), checked_at=NOW) is False
+    assert reads == [raw_id]
 
 
 def test_future_capture_is_not_visible_and_rejection_preserves_success(new_pg_factory):

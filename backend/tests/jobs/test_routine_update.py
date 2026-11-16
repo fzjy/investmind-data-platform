@@ -15,8 +15,8 @@ def module():
     return routine_update
 
 
-def settings(**changes):
-    return Settings(data_backend='database', database_url='postgresql+psycopg://controlled.invalid/test', **changes)
+def settings(*, database_url='postgresql+psycopg://controlled.invalid/test', **changes):
+    return Settings(data_backend='database', database_url=database_url, **changes)
 
 
 def setup_steps(monkeypatch, stocks=None, macro=None):
@@ -132,17 +132,12 @@ def test_real_stock_preflight_does_not_create_http_job_or_cursor(new_pg_factory,
     m = module()
     job, client, calls = task(new_pg_factory)
     engine = job.factory.kw['bind']
-    monkeypatch.setattr(engine, 'dispose', lambda: None)
-    monkeypatch.setattr(stock_runtime, 'create_engine_and_session', lambda url: (engine, job.factory))
-    from contextlib import contextmanager
-    @contextmanager
-    def readonly_factory(url):
-        yield job.factory
-    monkeypatch.setattr(stock_runtime, 'open_readonly_factory', readonly_factory)
+    url = engine.url.render_as_string(hide_password=False)
+    monkeypatch.setattr(stock_runtime, 'create_engine_and_session', lambda *a, **k: pytest.fail('只读预检创建了写入引擎'))
     monkeypatch.setattr(stock_runtime, 'TushareClient', lambda *a, **k: (_ for _ in ()).throw(AssertionError('HTTP client forbidden')))
     monkeypatch.setattr(m, 'read_macro_catchup_plan', lambda s, **k: {'readOnly': True, 'activeCount': 18, 'requestCount': 0})
     try:
-        report = m.run_routine_update(settings(), now=NOW, dry_run=True, publish=True, macro_rebuild=lambda s: None)
+        report = m.run_routine_update(settings(database_url=url), now=NOW, dry_run=True, publish=True, macro_rebuild=lambda s: None)
         assert report['status'] == 'planned' and report['stocks']['asOf'] is None
         assert report['macro']['activeCount'] == 18 and report['httpCounts']['total'] == 0
         with job.factory() as session:
@@ -159,27 +154,25 @@ def real_runtime(new_pg_factory, monkeypatch, *, market_ready):
     job, client, calls = task(new_pg_factory, market_ready=market_ready)
     engine = job.factory.kw['bind']
     transport = client._client._transport  # external boundary only; DB/cursor/job stay real
-    monkeypatch.setattr(engine, 'dispose', lambda: None)
-    monkeypatch.setattr(stock_runtime, 'create_engine_and_session', lambda url: (engine, job.factory))
     monkeypatch.setattr(stock_runtime, 'TushareClient', lambda token, **kw: TushareClient(token, transport=transport, backoff_seconds=0))
-    return m, job, client, calls
+    return m, job, client, calls, engine.url.render_as_string(hide_password=False)
 
 
 def test_recreated_runtime_after_days_resumes_frozen_units_and_reentry_is_zero_http(new_pg_factory, monkeypatch):
     from datetime import timedelta
-    m, job, client, calls = real_runtime(new_pg_factory, monkeypatch, market_ready=True)
+    m, job, client, calls, url = real_runtime(new_pg_factory, monkeypatch, market_ready=True)
     try:
-        first = m.run_routine_update(settings(routine_macro_enabled=False, tushare_token='private-token',
+        first = m.run_routine_update(settings(database_url=url, routine_macro_enabled=False, tushare_token='private-token',
             stock_update_max_requests_per_run=3), now=NOW, macro_rebuild=lambda s: None)
         assert first['stocks']['status'] == 'partial' and first['httpCounts']['stocks'] == 3
-        second = m.run_routine_update(settings(routine_macro_enabled=False, tushare_token='private-token'),
+        second = m.run_routine_update(settings(database_url=url, routine_macro_enabled=False, tushare_token='private-token'),
             now=NOW+timedelta(days=6), macro_rebuild=lambda s: None)
         assert second['stocks']['status'] == 'completed'
         assert second['stocks']['asOf'] == '2026-10-13'
         assert second['httpCounts']['stocks'] == 249 and len(calls) == 252
         # Empty classification fixture cannot falsely pass publication readiness.
         assert second['status'] == 'partial' and second['stocks']['classified'] == 0
-        third = m.run_routine_update(settings(routine_macro_enabled=False, tushare_token='private-token'),
+        third = m.run_routine_update(settings(database_url=url, routine_macro_enabled=False, tushare_token='private-token'),
             now=NOW, macro_rebuild=lambda s: None)
         assert third['httpCounts'] == {'stocks': 0, 'macro': 0, 'total': 0}
         assert len(calls) == 252
@@ -188,10 +181,10 @@ def test_recreated_runtime_after_days_resumes_frozen_units_and_reentry_is_zero_h
 
 
 def test_delayed_supplier_does_not_publish_empty_target(new_pg_factory, monkeypatch):
-    m, job, client, calls = real_runtime(new_pg_factory, monkeypatch, market_ready=False)
+    m, job, client, calls, url = real_runtime(new_pg_factory, monkeypatch, market_ready=False)
     monkeypatch.setattr(stock_runtime, 'publish_stock_update', lambda *a, **k: (_ for _ in ()).throw(AssertionError('must not publish')))
     try:
-        report = m.run_routine_update(settings(routine_macro_enabled=False, tushare_token='private-token'),
+        report = m.run_routine_update(settings(database_url=url, routine_macro_enabled=False, tushare_token='private-token'),
             now=NOW, publish=True, macro_rebuild=lambda s: None)
         assert report['stocks']['status'] == 'partial'
         assert report['stocks']['publishReady'] is False
@@ -204,7 +197,7 @@ def test_delayed_supplier_does_not_publish_empty_target(new_pg_factory, monkeypa
 def test_stock_publication_exception_retains_collection_and_http_evidence(new_pg_factory, monkeypatch):
     from datetime import date
     from app.db.models import Classification, ClassificationMember
-    m, job, client, calls = real_runtime(new_pg_factory, monkeypatch, market_ready=True)
+    m, job, client, calls, url = real_runtime(new_pg_factory, monkeypatch, market_ready=True)
     with job.factory.begin() as session:
         nodes = [Classification(provider='tushare', source='SW2021', classification_id=f'test{level}',
             name=f'层级{level}', level=level, parent_id=f'test{level-1}' if level > 1 else None, data={}) for level in (1, 2, 3)]
@@ -218,7 +211,7 @@ def test_stock_publication_exception_retains_collection_and_http_evidence(new_pg
     monkeypatch.setattr(m, 'run_macro_catchup', lambda *a, **kw: {'status': 'skipped',
         'activeCoverageCompleted': True, 'requestCount': 0})
     try:
-        report = m.run_routine_update(settings(tushare_token='private-token'), now=NOW, publish=True,
+        report = m.run_routine_update(settings(database_url=url, tushare_token='private-token'), now=NOW, publish=True,
             macro_rebuild=lambda s: Publication('completed', 'macro-test-version'))
         assert report['stocks']['status'] == 'completed'
         assert report['stocks']['publishReady'] is True

@@ -184,7 +184,8 @@ def test_completed_old_batch_can_bind_new_price_day_without_restarting_all(new_p
     from datetime import timedelta
     f=source(new_pg_factory);c=Client();module().capture(f,c,execute=True,max_http=1)
     with f.begin() as s:
-        base=s.get(PublishedSnapshot,'screener');set_snapshot_version(s, base, 'new-day');base.as_of+=timedelta(days=1)
+        base = s.get(PublishedSnapshot, 'screener')
+        set_snapshot_version(s, base, 'new-day', as_of=base.as_of + timedelta(days=1))
     r=module().capture(f,c,execute=True)
     assert r['status']=='completed' and r['compatibleTarget'] is True and r['currentTarget'] is False
     points=module().load_points(f,date(2026,8,25),('600519.SH',))
