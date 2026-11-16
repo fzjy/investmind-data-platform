@@ -71,11 +71,13 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "记录编号",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "新浪财经"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       },
@@ -87,11 +89,13 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "标题",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "新浪财经"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       },
@@ -103,11 +107,13 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "来源",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "新浪财经"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       },
@@ -119,11 +125,13 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "原文链接",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "新浪财经"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       },
@@ -135,11 +143,13 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "发布时间",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "新浪财经"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       },
@@ -151,11 +161,13 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "摘要",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "新浪财经"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       },
@@ -167,11 +179,13 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "正文",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "新浪财经"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       },
@@ -183,11 +197,13 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "版权状态",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "新浪财经"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       },
@@ -199,11 +215,13 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "下一页游标",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "新浪财经"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -234,12 +252,17 @@
     "description": "按外部文件合同导入宏观观测",
     "status": "已接入，实际覆盖按留存证据核对",
     "scope": "按现有数据池、日期及采集合同覆盖",
-    "sources": [],
+    "sources": [
+      {
+        "name": "导入文件声明的 source（来源标识）",
+        "kind": "外部文件导入",
+        "description": "由操作者提供原文件及来源、原文链接和发布时间；无固定供应商，导入成功不代表已核验原发布方真实性。"
+      }
+    ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
-        "task": null
+        "name": "更新规则",
+        "description": "显式 CLI 文件导入，无独立自动采集日程。"
       }
     ],
     "tables": [
@@ -258,13 +281,13 @@
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "保存成功导入的记录及原文件身份，实际日期范围由导入内容决定。",
         "evidence": []
       },
       "revisions": {
         "value": null,
-        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "explanation": "宏观 revision（来源修订）与内容 ingestionRevision（导入修订）身份分别处理；不保证已取得发布方每次修改。",
         "evidence": []
       },
       "query": {
@@ -287,7 +310,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "合同版本",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -303,7 +328,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "记录类型",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -319,7 +346,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "来源",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -335,7 +364,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "宏观系列标识",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -351,7 +382,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "名称",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -367,7 +400,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "地区",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -383,7 +418,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "观测频率",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -399,7 +436,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "单位",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -415,7 +454,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "季节调整方式",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -431,7 +472,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "观测日期",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -447,7 +490,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "公开时刻",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -463,7 +508,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "修订版本",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -479,7 +526,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "观测数值",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -495,7 +544,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "原文链接",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -523,12 +574,17 @@
     "description": "按外部文件合同导入公开内容",
     "status": "已接入，实际覆盖按留存证据核对",
     "scope": "按现有数据池、日期及采集合同覆盖",
-    "sources": [],
+    "sources": [
+      {
+        "name": "导入文件声明的 source（来源标识）",
+        "kind": "外部文件导入",
+        "description": "由操作者提供原文件及来源、原文链接和发布时间；无固定供应商，导入成功不代表已核验原发布方真实性。"
+      }
+    ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
-        "task": null
+        "name": "更新规则",
+        "description": "显式 CLI 文件导入，无独立自动采集日程。"
       }
     ],
     "tables": [
@@ -547,13 +603,13 @@
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "保存成功导入的记录及原文件身份，实际日期范围由导入内容决定。",
         "evidence": []
       },
       "revisions": {
         "value": null,
-        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "explanation": "宏观 revision（来源修订）与内容 ingestionRevision（导入修订）身份分别处理；不保证已取得发布方每次修改。",
         "evidence": []
       },
       "query": {
@@ -576,7 +632,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "合同版本",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -592,7 +650,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "记录类型",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -608,7 +668,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "来源",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -624,7 +686,9 @@
         "unit": "待核验",
         "nullable": "可省略",
         "description": "外部编号",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -640,7 +704,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "内容类型",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -656,7 +722,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "标题",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -672,7 +740,9 @@
         "unit": "待核验",
         "nullable": "可省略",
         "description": "摘要",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -688,7 +758,9 @@
         "unit": "待核验",
         "nullable": "可省略",
         "description": "正文",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -704,7 +776,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "发布时间",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -720,7 +794,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "原文链接",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -736,7 +812,9 @@
         "unit": "待核验",
         "nullable": "可省略",
         "description": "证券代码列表",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -752,7 +830,9 @@
         "unit": "待核验",
         "nullable": "可省略",
         "description": "证券名称列表",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -768,7 +848,9 @@
         "unit": "待核验",
         "nullable": "必填",
         "description": "版权状态",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -784,7 +866,9 @@
         "unit": "待核验",
         "nullable": "可省略",
         "description": "导入修订版本",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "导入文件声明的 source（来源标识）"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,

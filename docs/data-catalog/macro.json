@@ -75,11 +75,21 @@
         "unit": "%",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "中国实际 GDP 同比",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "cn_gdp",
+          "tushare"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -200,11 +210,21 @@
         "unit": "%",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "中国 CPI 同比",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "cn_cpi",
+          "tushare"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -328,11 +348,21 @@
         "unit": "%",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "中国核心 CPI 同比",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "nbs",
+          "nbs"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -453,11 +483,21 @@
         "unit": "%",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "中国 PPI 同比",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "cn_ppi",
+          "tushare"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -585,11 +625,21 @@
         "unit": "index",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "中国制造业 PMI",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "cn_pmi",
+          "tushare"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -710,11 +760,21 @@
         "unit": "%",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "中国规模以上工业增加值同比",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "nbs",
+          "nbs"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -837,11 +897,21 @@
         "unit": "%",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "中国 M1 同比",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "cn_m",
+          "tushare"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -967,11 +1037,21 @@
         "unit": "%",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "中国 M2 同比",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "cn_m",
+          "tushare"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -1091,11 +1171,20 @@
         "unit": "%",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "中国社会融资规模存量同比",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "未供给"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -1218,11 +1307,21 @@
         "unit": "%",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "中国 DR007",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "repo_daily",
+          "tushare"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -1349,11 +1448,21 @@
         "unit": "%",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "中国 10 年期国债收益率",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "SddsIntrRateGovYldHis",
+          "chinamoney"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -1474,11 +1583,20 @@
         "unit": "CNY per USD",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "美元兑人民币汇率",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "未供给"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -1599,11 +1717,21 @@
         "unit": "%",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "美国实际 GDP 环比折年率",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "series_observations",
+          "fred"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -1730,11 +1858,22 @@
         "unit": "%",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "美国 CPI 同比",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "series_observations",
+          "publicAPI/v1/timeseries/data",
+          "fred"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
-          "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "value": true,
+          "explanation": "含底座来源转换或专题计算；采用的实际渠道决定是否进行该转换，见计算口径。",
           "evidence": []
         }
       }
@@ -1896,11 +2035,22 @@
         "unit": "%",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "美国核心 CPI 同比",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "series_observations",
+          "publicAPI/v1/timeseries/data",
+          "fred"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
-          "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "value": true,
+          "explanation": "含底座来源转换或专题计算；采用的实际渠道决定是否进行该转换，见计算口径。",
           "evidence": []
         }
       }
@@ -2056,11 +2206,21 @@
         "unit": "%",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "美国核心 PCE 同比",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "series_observations",
+          "fred"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
-          "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "value": true,
+          "explanation": "含底座来源转换或专题计算；采用的实际渠道决定是否进行该转换，见计算口径。",
           "evidence": []
         }
       }
@@ -2205,11 +2365,22 @@
         "unit": "%",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "美国失业率",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "series_observations",
+          "publicAPI/v1/timeseries/data",
+          "fred"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -2336,11 +2507,22 @@
         "unit": "thousand persons",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "美国非农就业月增量",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "series_observations",
+          "publicAPI/v1/timeseries/data",
+          "fred"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
-          "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "value": true,
+          "explanation": "含底座来源转换或专题计算；采用的实际渠道决定是否进行该转换，见计算口径。",
           "evidence": []
         }
       }
@@ -2502,11 +2684,22 @@
         "unit": "%",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "美国有效联邦基金利率",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "series_observations",
+          "rates/unsecured/effr/search",
+          "fred"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -2643,11 +2836,23 @@
         "unit": "%",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "美国 10 年期国债收益率",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "series_observations",
+          "daily_treasury_yield_curve",
+          "us_tycr",
+          "fred"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -2713,9 +2918,8 @@
     ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
-        "task": "macro"
+        "name": "更新规则",
+        "description": "由宏观专题执行器按专项配置或显式命令采集；专题观测频率和采集检查日程分别说明，配置文件为 macro-extensions.json。"
       }
     ],
     "tables": [
@@ -2728,8 +2932,8 @@
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "成功采集后按批次保留原始响应及采集时刻；是否已有原件、业务日期和版本覆盖依实际留存记录。",
         "evidence": []
       },
       "revisions": {
@@ -2757,7 +2961,9 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "累计名义国内生产总值",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "cn_gdp.gdp"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
@@ -2778,15 +2984,20 @@
     "category": "macro",
     "description": "离岸人民币汇率扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
     "status": "已接入，实际覆盖按留存证据核对",
-    "scope": "按现有数据池、日期及采集合同覆盖",
+    "scope": "按该专题配置的回看窗口与成功留存记录；不代表窗口完整或最新一期已经取得。",
     "sources": [
       {
-        "name": "专题来源",
-        "kind": "配置来源",
-        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+        "name": "Tushare / FXCM",
+        "api": "fx_daily.bid_close",
+        "kind": "专题来源",
+        "description": "离岸人民币汇率买入收盘价，非境内人民币中间价"
       }
     ],
     "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "日频；与下方采集检查日程分别计量"
+      },
       {
         "name": "专题采集规则",
         "description": "{\"frequency\": \"daily\", \"weekday\": 0, \"time\": \"19:00\", \"timezone\": \"Asia/Shanghai\"}",
@@ -2805,28 +3016,40 @@
         "table": "page_snapshot",
         "name": "历史发布快照",
         "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "专题标准化观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "ops",
+        "table": "job_run",
+        "name": "专题执行及冻结来源证据",
+        "fieldPath": ""
       }
     ],
     "history": {
       "records": {
         "value": true,
-        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "explanation": "保存成功留存原件、标准化观测和已发布专题点；缺期保留为空。",
         "evidence": []
       },
       "revisions": {
         "value": null,
-        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "explanation": "可保存不同来源及发布版本，但不保证发布方每次修订均已采集或每次中间重算都留存。",
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "宏观聚合接口支持已发布 version；载荷历史长度受原件覆盖限制。",
         "evidence": []
       }
     },
     "derived": {
-      "value": false,
-      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "value": true,
+      "explanation": "包含底座计算的结果，原始输入、计算窗口和缺值条件见下方。",
       "evidence": []
     },
     "fields": [
@@ -2838,16 +3061,43 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "离岸人民币汇率",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "fx_daily.bid_close"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
-          "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "value": true,
+          "explanation": "含底座来源转换或专题计算；采用的实际渠道决定是否进行该转换，见计算口径。",
           "evidence": []
         }
       }
     ],
-    "calculations": [],
+    "calculations": [
+      {
+        "id": "usdcnh-transform",
+        "name": "汇率变化",
+        "formula": "（最新买入收盘价 ÷ 上一个实际观测买入收盘价 − 1）× 100",
+        "inputs": [
+          {
+            "id": "bid_close",
+            "name": "离岸人民币买入收盘价"
+          }
+        ],
+        "window": "相邻实际观测，不保证连续交易日",
+        "version": "当前构建口径",
+        "missing": "缺输入、版本不符、无有效分母或相邻期缺失时留空并保留原因。",
+        "evidence": [
+          "backend/app/macro/extensions/view.py"
+        ]
+      }
+    ],
     "access": [
       {
         "kind": "aggregate",
@@ -2863,7 +3113,8 @@
     "evidence": [
       "config/macro/macro-extensions.json",
       "docs/macro-specialties.md",
-      "docs/official-source-fields.md"
+      "docs/official-source-fields.md",
+      "backend/app/macro/extensions/view.py"
     ]
   },
   {
@@ -2872,15 +3123,20 @@
     "category": "macro",
     "description": "美国波动率指数扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
     "status": "已接入，实际覆盖按留存证据核对",
-    "scope": "按现有数据池、日期及采集合同覆盖",
+    "scope": "按该专题配置的回看窗口与成功留存记录；不代表窗口完整或最新一期已经取得。",
     "sources": [
       {
-        "name": "专题来源",
-        "kind": "配置来源",
-        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+        "name": "CBOE，经 FRED 分发",
+        "api": "VIXCLS",
+        "kind": "专题来源",
+        "description": "VIX 日收盘，保留 CBOE 归属及用途说明"
       }
     ],
     "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "日频；与下方采集检查日程分别计量"
+      },
       {
         "name": "专题采集规则",
         "description": "{\"frequency\": \"daily\", \"weekday\": 0, \"time\": \"19:00\", \"timezone\": \"Asia/Shanghai\"}",
@@ -2899,28 +3155,40 @@
         "table": "page_snapshot",
         "name": "历史发布快照",
         "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "专题标准化观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "ops",
+        "table": "job_run",
+        "name": "专题执行及冻结来源证据",
+        "fieldPath": ""
       }
     ],
     "history": {
       "records": {
         "value": true,
-        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "explanation": "保存成功留存原件、标准化观测和已发布专题点；缺期保留为空。",
         "evidence": []
       },
       "revisions": {
         "value": null,
-        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "explanation": "可保存不同来源及发布版本，但不保证发布方每次修订均已采集或每次中间重算都留存。",
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "宏观聚合接口支持已发布 version；载荷历史长度受原件覆盖限制。",
         "evidence": []
       }
     },
     "derived": {
-      "value": false,
-      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "value": true,
+      "explanation": "包含底座计算的结果，原始输入、计算窗口和缺值条件见下方。",
       "evidence": []
     },
     "fields": [
@@ -2932,16 +3200,43 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "美国波动率指数",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "VIXCLS"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
-          "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "value": true,
+          "explanation": "含底座来源转换或专题计算；采用的实际渠道决定是否进行该转换，见计算口径。",
           "evidence": []
         }
       }
     ],
-    "calculations": [],
+    "calculations": [
+      {
+        "id": "vix-transform",
+        "name": "VIX 变化",
+        "formula": "（最新 VIX 日收盘值 ÷ 上一个实际观测值 − 1）× 100",
+        "inputs": [
+          {
+            "id": "VIXCLS",
+            "name": "VIX 日收盘值"
+          }
+        ],
+        "window": "相邻实际观测",
+        "version": "当前构建口径",
+        "missing": "缺输入、版本不符、无有效分母或相邻期缺失时留空并保留原因。",
+        "evidence": [
+          "backend/app/macro/extensions/view.py"
+        ]
+      }
+    ],
     "access": [
       {
         "kind": "aggregate",
@@ -2957,7 +3252,8 @@
     "evidence": [
       "config/macro/macro-extensions.json",
       "docs/macro-specialties.md",
-      "docs/official-source-fields.md"
+      "docs/official-source-fields.md",
+      "backend/app/macro/extensions/view.py"
     ]
   },
   {
@@ -2966,15 +3262,20 @@
     "category": "macro",
     "description": "政府债券融资扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
     "status": "已接入，实际覆盖按留存证据核对",
-    "scope": "按现有数据池、日期及采集合同覆盖",
+    "scope": "按该专题配置的回看窗口与成功留存记录；不代表窗口完整或最新一期已经取得。",
     "sources": [
       {
-        "name": "专题来源",
-        "kind": "配置来源",
-        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+        "name": "中国人民银行",
+        "api": "社会融资规模增量统计表",
+        "kind": "专题来源",
+        "description": "政府债券融资月增量及原文件"
       }
     ],
     "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "月频；与下方采集检查日程分别计量"
+      },
       {
         "name": "专题采集规则",
         "description": "{\"frequency\": \"weekly\", \"weekday\": 0, \"time\": \"09:00\", \"timezone\": \"Asia/Shanghai\"}",
@@ -2993,28 +3294,40 @@
         "table": "page_snapshot",
         "name": "历史发布快照",
         "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "专题标准化观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "ops",
+        "table": "job_run",
+        "name": "专题执行及冻结来源证据",
+        "fieldPath": ""
       }
     ],
     "history": {
       "records": {
         "value": true,
-        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "explanation": "保存成功留存原件、标准化观测和已发布专题点；缺期保留为空。",
         "evidence": []
       },
       "revisions": {
         "value": null,
-        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "explanation": "可保存不同来源及发布版本，但不保证发布方每次修订均已采集或每次中间重算都留存。",
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "宏观聚合接口支持已发布 version；载荷历史长度受原件覆盖限制。",
         "evidence": []
       }
     },
     "derived": {
       "value": false,
-      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "explanation": "采用官方已披露的该指标数值；官方本身的统计方法不计为底座派生。",
       "evidence": []
     },
     "fields": [
@@ -3026,11 +3339,20 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "政府债券融资",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "社会融资规模增量统计表"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -3051,7 +3373,8 @@
     "evidence": [
       "config/macro/macro-extensions.json",
       "docs/macro-specialties.md",
-      "docs/official-source-fields.md"
+      "docs/official-source-fields.md",
+      "backend/app/macro/extensions/view.py"
     ]
   },
   {
@@ -3060,15 +3383,20 @@
     "category": "macro",
     "description": "住户中长期贷款扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
     "status": "已接入，实际覆盖按留存证据核对",
-    "scope": "按现有数据池、日期及采集合同覆盖",
+    "scope": "按该专题配置的回看窗口与成功留存记录；不代表窗口完整或最新一期已经取得。",
     "sources": [
       {
-        "name": "专题来源",
-        "kind": "配置来源",
-        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+        "name": "中国人民银行",
+        "api": "金融统计报告",
+        "kind": "专题来源",
+        "description": "人民币住户中长期贷款累计额及可核对的当月净增"
       }
     ],
     "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "月频；与下方采集检查日程分别计量"
+      },
       {
         "name": "专题采集规则",
         "description": "{\"frequency\": \"weekly\", \"weekday\": 0, \"time\": \"09:00\", \"timezone\": \"Asia/Shanghai\"}",
@@ -3087,28 +3415,40 @@
         "table": "page_snapshot",
         "name": "历史发布快照",
         "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "专题标准化观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "ops",
+        "table": "job_run",
+        "name": "专题执行及冻结来源证据",
+        "fieldPath": ""
       }
     ],
     "history": {
       "records": {
         "value": true,
-        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "explanation": "保存成功留存原件、标准化观测和已发布专题点；缺期保留为空。",
         "evidence": []
       },
       "revisions": {
         "value": null,
-        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "explanation": "可保存不同来源及发布版本，但不保证发布方每次修订均已采集或每次中间重算都留存。",
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "宏观聚合接口支持已发布 version；载荷历史长度受原件覆盖限制。",
         "evidence": []
       }
     },
     "derived": {
-      "value": false,
-      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "value": true,
+      "explanation": "包含底座计算的结果，原始输入、计算窗口和缺值条件见下方。",
       "evidence": []
     },
     "fields": [
@@ -3120,16 +3460,43 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "住户中长期贷款",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "金融统计报告"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
-          "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "value": true,
+          "explanation": "含底座来源转换或专题计算；采用的实际渠道决定是否进行该转换，见计算口径。",
           "evidence": []
         }
       }
     ],
-    "calculations": [],
+    "calculations": [
+      {
+        "id": "householdCredit-transform",
+        "name": "累计转当月",
+        "formula": "同年当月累计净增 − 上月累计净增；1 月可直接采用当年累计",
+        "inputs": [
+          {
+            "id": "household_ytd",
+            "name": "住户中长期贷款同年累计净增"
+          }
+        ],
+        "window": "同年相邻月，不跨年相减",
+        "version": "当前构建口径",
+        "missing": "缺输入、版本不符、无有效分母或相邻期缺失时留空并保留原因。",
+        "evidence": [
+          "backend/app/macro/official_macro_normalize.py"
+        ]
+      }
+    ],
     "access": [
       {
         "kind": "aggregate",
@@ -3145,7 +3512,9 @@
     "evidence": [
       "config/macro/macro-extensions.json",
       "docs/macro-specialties.md",
-      "docs/official-source-fields.md"
+      "docs/official-source-fields.md",
+      "backend/app/macro/extensions/view.py",
+      "backend/app/macro/official_macro_normalize.py"
     ]
   },
   {
@@ -3154,15 +3523,20 @@
     "category": "macro",
     "description": "一线城市住宅价格扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
     "status": "已接入，实际覆盖按留存证据核对",
-    "scope": "按现有数据池、日期及采集合同覆盖",
+    "scope": "按该专题配置的回看窗口与成功留存记录；不代表窗口完整或最新一期已经取得。",
     "sources": [
       {
-        "name": "专题来源",
-        "kind": "配置来源",
-        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+        "name": "国家统计局",
+        "api": "70 个大中城市住宅销售价格报告",
+        "kind": "专题来源",
+        "description": "一线城市新房与二手住宅环比，采用官方汇总"
       }
     ],
     "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "月频；与下方采集检查日程分别计量"
+      },
       {
         "name": "专题采集规则",
         "description": "{\"frequency\": \"weekly\", \"weekday\": 0, \"time\": \"09:00\", \"timezone\": \"Asia/Shanghai\"}",
@@ -3181,28 +3555,40 @@
         "table": "page_snapshot",
         "name": "历史发布快照",
         "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "专题标准化观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "ops",
+        "table": "job_run",
+        "name": "专题执行及冻结来源证据",
+        "fieldPath": ""
       }
     ],
     "history": {
       "records": {
         "value": true,
-        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "explanation": "保存成功留存原件、标准化观测和已发布专题点；缺期保留为空。",
         "evidence": []
       },
       "revisions": {
         "value": null,
-        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "explanation": "可保存不同来源及发布版本，但不保证发布方每次修订均已采集或每次中间重算都留存。",
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "宏观聚合接口支持已发布 version；载荷历史长度受原件覆盖限制。",
         "evidence": []
       }
     },
     "derived": {
       "value": false,
-      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "explanation": "采用官方已披露的该指标数值；官方本身的统计方法不计为底座派生。",
       "evidence": []
     },
     "fields": [
@@ -3214,11 +3600,20 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "一线城市住宅价格",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "70 个大中城市住宅销售价格报告"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -3239,7 +3634,8 @@
     "evidence": [
       "config/macro/macro-extensions.json",
       "docs/macro-specialties.md",
-      "docs/official-source-fields.md"
+      "docs/official-source-fields.md",
+      "backend/app/macro/extensions/view.py"
     ]
   },
   {
@@ -3248,15 +3644,20 @@
     "category": "macro",
     "description": "地方政府专项债扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
     "status": "已接入，实际覆盖按留存证据核对",
-    "scope": "按现有数据池、日期及采集合同覆盖",
+    "scope": "按该专题配置的回看窗口与成功留存记录；不代表窗口完整或最新一期已经取得。",
     "sources": [
       {
-        "name": "专题来源",
-        "kind": "配置来源",
-        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+        "name": "财政部",
+        "api": "预算限额、债券发行统计和发布会",
+        "kind": "专题来源",
+        "description": "新增专项债年度额度、月发行、累计发行及进度"
       }
     ],
     "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "月，额度按年频；与下方采集检查日程分别计量"
+      },
       {
         "name": "专题采集规则",
         "description": "{\"frequency\": \"weekly\", \"weekday\": 0, \"time\": \"09:00\", \"timezone\": \"Asia/Shanghai\"}",
@@ -3275,28 +3676,40 @@
         "table": "page_snapshot",
         "name": "历史发布快照",
         "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "专题标准化观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "ops",
+        "table": "job_run",
+        "name": "专题执行及冻结来源证据",
+        "fieldPath": ""
       }
     ],
     "history": {
       "records": {
         "value": true,
-        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "explanation": "保存成功留存原件、标准化观测和已发布专题点；缺期保留为空。",
         "evidence": []
       },
       "revisions": {
         "value": null,
-        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "explanation": "可保存不同来源及发布版本，但不保证发布方每次修订均已采集或每次中间重算都留存。",
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "宏观聚合接口支持已发布 version；载荷历史长度受原件覆盖限制。",
         "evidence": []
       }
     },
     "derived": {
-      "value": false,
-      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "value": true,
+      "explanation": "包含底座计算的结果，原始输入、计算窗口和缺值条件见下方。",
       "evidence": []
     },
     "fields": [
@@ -3308,16 +3721,55 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "地方政府专项债",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "预算限额、债券发行统计和发布会"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
-          "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "value": true,
+          "explanation": "含底座来源转换或专题计算；采用的实际渠道决定是否进行该转换，见计算口径。",
           "evidence": []
         }
       }
     ],
-    "calculations": [],
+    "calculations": [
+      {
+        "id": "specialBonds-transform",
+        "name": "专项债进度与月差",
+        "formula": "计算进度 = 累计新增专项债发行 ÷ 同年年度额度 × 100；同年相邻累计差作为推算当月额，与直报当月额冲突时保留差异及缺值；发布会直报进度单列，不替换计算值",
+        "inputs": [
+          {
+            "id": "quota",
+            "name": "年度新增专项债限额"
+          },
+          {
+            "id": "issued_ytd",
+            "name": "年初累计新增专项债发行额"
+          },
+          {
+            "id": "issued_month",
+            "name": "当月发行直报额"
+          },
+          {
+            "id": "reported_progress",
+            "name": "发布会直报进度"
+          }
+        ],
+        "window": "同年度、相邻月份及可匹配文件版本",
+        "version": "当前构建口径",
+        "missing": "缺输入、版本不符、无有效分母或相邻期缺失时留空并保留原因。",
+        "evidence": [
+          "backend/app/macro/official_macro_normalize.py"
+        ]
+      }
+    ],
     "access": [
       {
         "kind": "aggregate",
@@ -3333,7 +3785,9 @@
     "evidence": [
       "config/macro/macro-extensions.json",
       "docs/macro-specialties.md",
-      "docs/official-source-fields.md"
+      "docs/official-source-fields.md",
+      "backend/app/macro/extensions/view.py",
+      "backend/app/macro/official_macro_normalize.py"
     ]
   },
   {
@@ -3342,15 +3796,20 @@
     "category": "macro",
     "description": "房地产贷款扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
     "status": "已接入，实际覆盖按留存证据核对",
-    "scope": "按现有数据池、日期及采集合同覆盖",
+    "scope": "按该专题配置的回看窗口与成功留存记录；不代表窗口完整或最新一期已经取得。",
     "sources": [
       {
-        "name": "专题来源",
-        "kind": "配置来源",
-        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+        "name": "中国人民银行",
+        "api": "金融机构贷款投向统计报告",
+        "kind": "专题来源",
+        "description": "房地产贷款余额和同比，缺正式报告时不供数"
       }
     ],
     "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "季频；与下方采集检查日程分别计量"
+      },
       {
         "name": "专题采集规则",
         "description": "{\"frequency\": \"weekly\", \"weekday\": 0, \"time\": \"09:00\", \"timezone\": \"Asia/Shanghai\"}",
@@ -3369,28 +3828,40 @@
         "table": "page_snapshot",
         "name": "历史发布快照",
         "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "专题标准化观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "ops",
+        "table": "job_run",
+        "name": "专题执行及冻结来源证据",
+        "fieldPath": ""
       }
     ],
     "history": {
       "records": {
         "value": true,
-        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "explanation": "保存成功留存原件、标准化观测和已发布专题点；缺期保留为空。",
         "evidence": []
       },
       "revisions": {
         "value": null,
-        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "explanation": "可保存不同来源及发布版本，但不保证发布方每次修订均已采集或每次中间重算都留存。",
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "宏观聚合接口支持已发布 version；载荷历史长度受原件覆盖限制。",
         "evidence": []
       }
     },
     "derived": {
       "value": false,
-      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "explanation": "采用官方已披露的该指标数值；官方本身的统计方法不计为底座派生。",
       "evidence": []
     },
     "fields": [
@@ -3402,11 +3873,20 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "房地产贷款",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "金融机构贷款投向统计报告"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       }
@@ -3427,7 +3907,8 @@
     "evidence": [
       "config/macro/macro-extensions.json",
       "docs/macro-specialties.md",
-      "docs/official-source-fields.md"
+      "docs/official-source-fields.md",
+      "backend/app/macro/extensions/view.py"
     ]
   },
   {
@@ -3436,15 +3917,20 @@
     "category": "macro",
     "description": "融资余额扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
     "status": "已接入，实际覆盖按留存证据核对",
-    "scope": "按现有数据池、日期及采集合同覆盖",
+    "scope": "按该专题配置的回看窗口与成功留存记录；不代表窗口完整或最新一期已经取得。",
     "sources": [
       {
-        "name": "专题来源",
-        "kind": "配置来源",
-        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+        "name": "Tushare / 交易所统计",
+        "api": "margin.rzye · daily_info.float_mv · sz_daily_info.float_mv",
+        "kind": "专题来源",
+        "description": "沪深融资余额与同日 A 股流通市值；融资分子可能含基金，北交所余额单列"
       }
     ],
     "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "日，面板按月对齐频；与下方采集检查日程分别计量"
+      },
       {
         "name": "专题采集规则",
         "description": "{\"frequency\": \"daily\", \"weekday\": 0, \"time\": \"19:00\", \"timezone\": \"Asia/Shanghai\"}",
@@ -3463,28 +3949,40 @@
         "table": "page_snapshot",
         "name": "历史发布快照",
         "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "专题标准化观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "ops",
+        "table": "job_run",
+        "name": "专题执行及冻结来源证据",
+        "fieldPath": ""
       }
     ],
     "history": {
       "records": {
         "value": true,
-        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "explanation": "保存成功留存原件、标准化观测和已发布专题点；缺期保留为空。",
         "evidence": []
       },
       "revisions": {
         "value": null,
-        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "explanation": "可保存不同来源及发布版本，但不保证发布方每次修订均已采集或每次中间重算都留存。",
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "宏观聚合接口支持已发布 version；载荷历史长度受原件覆盖限制。",
         "evidence": []
       }
     },
     "derived": {
-      "value": false,
-      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "value": true,
+      "explanation": "包含底座计算的结果，原始输入、计算窗口和缺值条件见下方。",
       "evidence": []
     },
     "fields": [
@@ -3496,16 +3994,51 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "融资余额",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "margin.rzye · daily_info.float_mv · sz_daily_info.float_mv"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
-          "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "value": true,
+          "explanation": "含底座来源转换或专题计算；采用的实际渠道决定是否进行该转换，见计算口径。",
           "evidence": []
         }
       }
     ],
-    "calculations": [],
+    "calculations": [
+      {
+        "id": "financing-to-float-mv",
+        "name": "融资余额与流通市值同日比值",
+        "formula": "100 ×（沪市融资余额＋深市融资余额，元）÷［100000000 ×（沪市 A 股流通市值＋深市 A 股流通市值，亿元）］；面板按月选取真实共同交易日。融资余额可能含基金，北交所单列，不能称为纯 A 股融资比例。",
+        "inputs": [
+          {
+            "id": "margin.rzye",
+            "name": "交易所融资余额（元）"
+          },
+          {
+            "id": "daily_info.float_mv",
+            "name": "沪深 A 股流通市值（亿元）"
+          },
+          {
+            "id": "sz_daily_info.float_mv",
+            "name": "深市板块补充，单位须经官方样例标定"
+          }
+        ],
+        "window": "真实同日输入的月对齐窗口，不向前填充",
+        "version": "当前构建口径",
+        "missing": "缺同日输入或深市补充未校准时留空。",
+        "evidence": [
+          "backend/app/macro/exchange_summary_view.py"
+        ]
+      }
+    ],
     "access": [
       {
         "kind": "aggregate",
@@ -3521,7 +4054,9 @@
     "evidence": [
       "config/macro/macro-extensions.json",
       "docs/macro-specialties.md",
-      "docs/official-source-fields.md"
+      "docs/official-source-fields.md",
+      "backend/app/macro/extensions/view.py",
+      "backend/app/macro/exchange_summary_view.py"
     ]
   },
   {
@@ -3530,15 +4065,20 @@
     "category": "macro",
     "description": "A 股流通市值扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
     "status": "已接入，实际覆盖按留存证据核对",
-    "scope": "按现有数据池、日期及采集合同覆盖",
+    "scope": "按该专题配置的回看窗口与成功留存记录；不代表窗口完整或最新一期已经取得。",
     "sources": [
       {
-        "name": "专题来源",
-        "kind": "配置来源",
-        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+        "name": "Tushare / 交易所统计",
+        "api": "daily_info.float_mv · sz_daily_info.float_mv",
+        "kind": "专题来源",
+        "description": "沪深 A 股流通市值；深市补充板块须单位校验后使用"
       }
     ],
     "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "日，面板按月对齐频；与下方采集检查日程分别计量"
+      },
       {
         "name": "专题采集规则",
         "description": "{\"frequency\": \"daily\", \"weekday\": 0, \"time\": \"19:00\", \"timezone\": \"Asia/Shanghai\"}",
@@ -3557,28 +4097,40 @@
         "table": "page_snapshot",
         "name": "历史发布快照",
         "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "专题标准化观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "ops",
+        "table": "job_run",
+        "name": "专题执行及冻结来源证据",
+        "fieldPath": ""
       }
     ],
     "history": {
       "records": {
         "value": true,
-        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "explanation": "保存成功留存原件、标准化观测和已发布专题点；缺期保留为空。",
         "evidence": []
       },
       "revisions": {
         "value": null,
-        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "explanation": "可保存不同来源及发布版本，但不保证发布方每次修订均已采集或每次中间重算都留存。",
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "宏观聚合接口支持已发布 version；载荷历史长度受原件覆盖限制。",
         "evidence": []
       }
     },
     "derived": {
-      "value": false,
-      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "value": true,
+      "explanation": "包含底座计算的结果，原始输入、计算窗口和缺值条件见下方。",
       "evidence": []
     },
     "fields": [
@@ -3590,16 +4142,51 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "A 股流通市值",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "daily_info.float_mv · sz_daily_info.float_mv"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
-          "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "value": true,
+          "explanation": "含底座来源转换或专题计算；采用的实际渠道决定是否进行该转换，见计算口径。",
           "evidence": []
         }
       }
     ],
-    "calculations": [],
+    "calculations": [
+      {
+        "id": "financing-to-float-mv",
+        "name": "融资余额与流通市值同日比值",
+        "formula": "100 ×（沪市融资余额＋深市融资余额，元）÷［100000000 ×（沪市 A 股流通市值＋深市 A 股流通市值，亿元）］；面板按月选取真实共同交易日。融资余额可能含基金，北交所单列，不能称为纯 A 股融资比例。",
+        "inputs": [
+          {
+            "id": "margin.rzye",
+            "name": "交易所融资余额（元）"
+          },
+          {
+            "id": "daily_info.float_mv",
+            "name": "沪深 A 股流通市值（亿元）"
+          },
+          {
+            "id": "sz_daily_info.float_mv",
+            "name": "深市板块补充，单位须经官方样例标定"
+          }
+        ],
+        "window": "真实同日输入的月对齐窗口，不向前填充",
+        "version": "当前构建口径",
+        "missing": "缺同日输入或深市补充未校准时留空。",
+        "evidence": [
+          "backend/app/macro/exchange_summary_view.py"
+        ]
+      }
+    ],
     "access": [
       {
         "kind": "aggregate",
@@ -3615,7 +4202,9 @@
     "evidence": [
       "config/macro/macro-extensions.json",
       "docs/macro-specialties.md",
-      "docs/official-source-fields.md"
+      "docs/official-source-fields.md",
+      "backend/app/macro/extensions/view.py",
+      "backend/app/macro/exchange_summary_view.py"
     ]
   },
   {
@@ -3624,15 +4213,20 @@
     "category": "macro",
     "description": "名义 GDP 与平减指标扩展专题。按专项预算和历史窗口采集，缺口保留为空。",
     "status": "已接入，实际覆盖按留存证据核对",
-    "scope": "按现有数据池、日期及采集合同覆盖",
+    "scope": "按该专题配置的回看窗口与成功留存记录；不代表窗口完整或最新一期已经取得。",
     "sources": [
       {
-        "name": "专题来源",
-        "kind": "配置来源",
-        "description": "官方文件、FRED 或 Tushare 的逐组来源见依据文档"
+        "name": "国家统计局，经 Tushare 分发",
+        "api": "cn_gdp.gdp · cn_gdp.gdp_yoy",
+        "kind": "专题来源",
+        "description": "累计名义 GDP 与实际 GDP 同比；平减指标须同季且版本匹配"
       }
     ],
     "frequencies": [
+      {
+        "name": "观测频率",
+        "description": "季频；与下方采集检查日程分别计量"
+      },
       {
         "name": "专题采集规则",
         "description": "{\"frequency\": \"weekly\", \"weekday\": 0, \"time\": \"09:00\", \"timezone\": \"Asia/Shanghai\"}",
@@ -3651,28 +4245,40 @@
         "table": "page_snapshot",
         "name": "历史发布快照",
         "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "专题标准化观测",
+        "fieldPath": ""
+      },
+      {
+        "schema": "ops",
+        "table": "job_run",
+        "name": "专题执行及冻结来源证据",
+        "fieldPath": ""
       }
     ],
     "history": {
       "records": {
         "value": true,
-        "explanation": "保留已采集的来源原件、已发布专题版本，缺期不补零",
+        "explanation": "保存成功留存原件、标准化观测和已发布专题点；缺期保留为空。",
         "evidence": []
       },
       "revisions": {
         "value": null,
-        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "explanation": "可保存不同来源及发布版本，但不保证发布方每次修订均已采集或每次中间重算都留存。",
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "宏观聚合接口支持已发布 version；载荷历史长度受原件覆盖限制。",
         "evidence": []
       }
     },
     "derived": {
-      "value": false,
-      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "value": true,
+      "explanation": "包含底座计算的结果，原始输入、计算窗口和缺值条件见下方。",
       "evidence": []
     },
     "fields": [
@@ -3684,16 +4290,51 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "名义 GDP 与平减指标",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "cn_gdp.gdp · cn_gdp.gdp_yoy"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
-          "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "value": true,
+          "explanation": "含底座来源转换或专题计算；采用的实际渠道决定是否进行该转换，见计算口径。",
           "evidence": []
         }
       }
     ],
-    "calculations": [],
+    "calculations": [
+      {
+        "id": "nominalGdp-transform",
+        "name": "单季 GDP 与平减指标",
+        "formula": "第一季金额 = 当季累计；其他季金额 = 当季累计 − 上季累计。名义同比 =（单季金额 ÷ 上年同季金额 − 1）× 100；近似平减差 = 名义同比 − 实际同比；严格平减变化率 =［（1＋名义同比/100）÷（1＋实际同比/100）−1］×100。平减结果不是价格指数水平。",
+        "inputs": [
+          {
+            "id": "gdp",
+            "name": "名义 GDP 年内累计额"
+          },
+          {
+            "id": "gdp_yoy",
+            "name": "同季实际 GDP 同比"
+          },
+          {
+            "id": "cn.gdp.real_yoy",
+            "name": "基础实际 GDP 同比及版本核对值"
+          }
+        ],
+        "window": "真实同季、累计转单季且实际增速版本相符",
+        "version": "当前构建口径",
+        "missing": "缺输入、版本不符、无有效分母或相邻期缺失时留空并保留原因。",
+        "evidence": [
+          "backend/app/macro/extensions/view.py"
+        ]
+      }
+    ],
     "access": [
       {
         "kind": "aggregate",
@@ -3709,22 +4350,76 @@
     "evidence": [
       "config/macro/macro-extensions.json",
       "docs/macro-specialties.md",
-      "docs/official-source-fields.md"
+      "docs/official-source-fields.md",
+      "backend/app/macro/extensions/view.py"
     ]
   },
   {
     "id": "macro-enterprise",
-    "name": "企业范围与官方目标",
+    "name": "企业样本与官方指数、ETF 成分范围",
     "category": "macro",
-    "description": "将企业财报与行业及官方目标按同版范围对照。",
+    "description": "对数据池企业财报按同版、同组和可比季度聚合，提供营收利润、库存、应收、现金流、分红与亏损等研究输入。官方目标指指数或 ETF 成分分析对象，不是政策目标；使用已验证官方当前成员与数据池交集重述历史。",
     "status": "已接入，实际覆盖按留存证据核对",
-    "scope": "按现有数据池、日期及采集合同覆盖",
-    "sources": [],
+    "scope": "配置企业池、行业或已验证官方指数/ETF 成员与池交集；当前池重述历史，不保证严格历史时点成员。覆盖与质量门槛按企业配置及每季结果。",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "stock_basic",
+        "kind": "采集渠道",
+        "description": "输入条目：证券基础资料。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "income",
+        "kind": "采集渠道",
+        "description": "输入条目：利润表。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "balancesheet",
+        "kind": "采集渠道",
+        "description": "输入条目：资产负债表。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "cashflow",
+        "kind": "采集渠道",
+        "description": "输入条目：现金流量表。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "daily_basic",
+        "kind": "采集渠道",
+        "description": "输入条目：每日估值与股本。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "trade_cal",
+        "kind": "采集渠道",
+        "description": "输入条目：股票交易日历。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "index_classify",
+        "kind": "采集渠道",
+        "description": "输入条目：行业分类。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "index_member_all",
+        "kind": "采集渠道",
+        "description": "输入条目：行业成员。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "中证指数及相关基金管理人",
+        "kind": "官方成分证据",
+        "description": "官方指数成员文件、基金跟踪指数声明及申赎清单等；具体文档身份按各对象冻结证据，Tushare 候选目录不等同已验证官方成员。"
+      }
+    ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
-        "task": null
+        "name": "更新规则",
+        "description": "随企业宏观发布或显式重建更新；官方成分证据有独立预算及执行开关，见 enterprise-targets 配置，不把基础宏观周任务视为全部专题采集承诺。"
       }
     ],
     "tables": [
@@ -3739,257 +4434,529 @@
         "table": "page_snapshot",
         "name": "发布历史",
         "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "security",
+        "name": "证券基础资料",
+        "fieldPath": ""
+      },
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "供应商原始响应",
+        "fieldPath": "payload"
+      },
+      {
+        "schema": "core",
+        "table": "income_statement",
+        "name": "利润表",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "balance_sheet",
+        "name": "资产负债表",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "cashflow_statement",
+        "name": "现金流量表",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "daily_basic",
+        "name": "每日估值与股本",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "trade_calendar",
+        "name": "股票交易日历",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "classification",
+        "name": "行业分类",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "classification_member",
+        "name": "行业成员",
+        "fieldPath": ""
+      },
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "官方成分文件与采集凭证",
+        "fieldPath": ""
+      },
+      {
+        "schema": "raw",
+        "table": "enterprise_target_observation",
+        "name": "Tushare 候选响应",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "enterprise_target_candidate",
+        "name": "候选范围，非已确认官方成员",
+        "fieldPath": ""
+      },
+      {
+        "schema": "raw",
+        "table": "enterprise_receivable_response",
+        "name": "应收补充冻结响应",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "enterprise_receivable_supplement",
+        "name": "应收补充核对结果",
+        "fieldPath": ""
+      },
+      {
+        "schema": "raw",
+        "table": "enterprise_order_response",
+        "name": "订单与合同负债补充冻结响应",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "enterprise_order_supplement",
+        "name": "订单与合同负债补充核对结果",
+        "fieldPath": ""
+      },
+      {
+        "schema": "raw",
+        "table": "enterprise_rea_response",
+        "name": "REA 财务补充冻结响应",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "enterprise_rea_supplement",
+        "name": "REA 财务补充核对结果",
+        "fieldPath": ""
       }
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "已发布企业季度点与范围质量记录随宏观快照保存。",
         "evidence": []
       },
       "revisions": {
-        "value": null,
-        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "value": true,
+        "explanation": "保存不同发布版本；旧快照不含每季完整逐行输入引用，不能据此恢复每次财报修订。",
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "宏观传导接口可按 version 查询已发布版本，成员历史完整性与版本查询能力分别计量。",
         "evidence": []
       }
     },
     "derived": {
-      "value": false,
-      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "value": true,
+      "explanation": "包含底座计算的结果，原始输入、计算窗口和缺值条件见下方。",
       "evidence": []
     },
     "fields": [
       {
         "id": "000300.SH",
-        "name": "沪深300",
+        "name": "沪深300（指数或 ETF 分析对象）",
         "role": "response",
         "type": "数值或对象，依具体响应合同",
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "官方目标，类型 index；与数据池交集及实际成分证据分别核验",
-        "sourceRefs": [],
+        "description": "官方成分分析对象；经成分文件核验后与数据池求交，不能将候选目录当作已确认成员。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-income",
+          "stock-balance",
+          "stock-cashflow",
+          "stock-daily-basic",
+          "trade-calendar",
+          "stock-classification",
+          "stock-classification-members"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "对象标识与成员证据；企业统计在对应范围内计算。",
           "evidence": []
         }
       },
       {
         "id": "000905.SH",
-        "name": "中证500",
+        "name": "中证500（指数或 ETF 分析对象）",
         "role": "response",
         "type": "数值或对象，依具体响应合同",
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "官方目标，类型 index；与数据池交集及实际成分证据分别核验",
-        "sourceRefs": [],
+        "description": "官方成分分析对象；经成分文件核验后与数据池求交，不能将候选目录当作已确认成员。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-income",
+          "stock-balance",
+          "stock-cashflow",
+          "stock-daily-basic",
+          "trade-calendar",
+          "stock-classification",
+          "stock-classification-members"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "对象标识与成员证据；企业统计在对应范围内计算。",
           "evidence": []
         }
       },
       {
         "id": "000510.SH",
-        "name": "中证A500",
+        "name": "中证A500（指数或 ETF 分析对象）",
         "role": "response",
         "type": "数值或对象，依具体响应合同",
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "官方目标，类型 index；与数据池交集及实际成分证据分别核验",
-        "sourceRefs": [],
+        "description": "官方成分分析对象；经成分文件核验后与数据池求交，不能将候选目录当作已确认成员。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-income",
+          "stock-balance",
+          "stock-cashflow",
+          "stock-daily-basic",
+          "trade-calendar",
+          "stock-classification",
+          "stock-classification-members"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "对象标识与成员证据；企业统计在对应范围内计算。",
           "evidence": []
         }
       },
       {
         "id": "512880.SH",
-        "name": "证券ETF",
+        "name": "证券ETF（指数或 ETF 分析对象）",
         "role": "response",
         "type": "数值或对象，依具体响应合同",
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
-        "sourceRefs": [],
+        "description": "官方成分分析对象；经成分文件核验后与数据池求交，不能将候选目录当作已确认成员。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-income",
+          "stock-balance",
+          "stock-cashflow",
+          "stock-daily-basic",
+          "trade-calendar",
+          "stock-classification",
+          "stock-classification-members"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "对象标识与成员证据；企业统计在对应范围内计算。",
           "evidence": []
         }
       },
       {
         "id": "512800.SH",
-        "name": "银行ETF",
+        "name": "银行ETF（指数或 ETF 分析对象）",
         "role": "response",
         "type": "数值或对象，依具体响应合同",
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
-        "sourceRefs": [],
+        "description": "官方成分分析对象；经成分文件核验后与数据池求交，不能将候选目录当作已确认成员。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-income",
+          "stock-balance",
+          "stock-cashflow",
+          "stock-daily-basic",
+          "trade-calendar",
+          "stock-classification",
+          "stock-classification-members"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "对象标识与成员证据；企业统计在对应范围内计算。",
           "evidence": []
         }
       },
       {
         "id": "159928.SZ",
-        "name": "消费ETF",
+        "name": "消费ETF（指数或 ETF 分析对象）",
         "role": "response",
         "type": "数值或对象，依具体响应合同",
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
-        "sourceRefs": [],
+        "description": "官方成分分析对象；经成分文件核验后与数据池求交，不能将候选目录当作已确认成员。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-income",
+          "stock-balance",
+          "stock-cashflow",
+          "stock-daily-basic",
+          "trade-calendar",
+          "stock-classification",
+          "stock-classification-members"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "对象标识与成员证据；企业统计在对应范围内计算。",
           "evidence": []
         }
       },
       {
         "id": "512010.SH",
-        "name": "医药ETF",
+        "name": "医药ETF（指数或 ETF 分析对象）",
         "role": "response",
         "type": "数值或对象，依具体响应合同",
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
-        "sourceRefs": [],
+        "description": "官方成分分析对象；经成分文件核验后与数据池求交，不能将候选目录当作已确认成员。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-income",
+          "stock-balance",
+          "stock-cashflow",
+          "stock-daily-basic",
+          "trade-calendar",
+          "stock-classification",
+          "stock-classification-members"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "对象标识与成员证据；企业统计在对应范围内计算。",
           "evidence": []
         }
       },
       {
         "id": "512400.SH",
-        "name": "有色金属ETF",
+        "name": "有色金属ETF（指数或 ETF 分析对象）",
         "role": "response",
         "type": "数值或对象，依具体响应合同",
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
-        "sourceRefs": [],
+        "description": "官方成分分析对象；经成分文件核验后与数据池求交，不能将候选目录当作已确认成员。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-income",
+          "stock-balance",
+          "stock-cashflow",
+          "stock-daily-basic",
+          "trade-calendar",
+          "stock-classification",
+          "stock-classification-members"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "对象标识与成员证据；企业统计在对应范围内计算。",
           "evidence": []
         }
       },
       {
         "id": "512660.SH",
-        "name": "军工ETF",
+        "name": "军工ETF（指数或 ETF 分析对象）",
         "role": "response",
         "type": "数值或对象，依具体响应合同",
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
-        "sourceRefs": [],
+        "description": "官方成分分析对象；经成分文件核验后与数据池求交，不能将候选目录当作已确认成员。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-income",
+          "stock-balance",
+          "stock-cashflow",
+          "stock-daily-basic",
+          "trade-calendar",
+          "stock-classification",
+          "stock-classification-members"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "对象标识与成员证据；企业统计在对应范围内计算。",
           "evidence": []
         }
       },
       {
         "id": "515220.SH",
-        "name": "煤炭ETF",
+        "name": "煤炭ETF（指数或 ETF 分析对象）",
         "role": "response",
         "type": "数值或对象，依具体响应合同",
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
-        "sourceRefs": [],
+        "description": "官方成分分析对象；经成分文件核验后与数据池求交，不能将候选目录当作已确认成员。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-income",
+          "stock-balance",
+          "stock-cashflow",
+          "stock-daily-basic",
+          "trade-calendar",
+          "stock-classification",
+          "stock-classification-members"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "对象标识与成员证据；企业统计在对应范围内计算。",
           "evidence": []
         }
       },
       {
         "id": "512980.SH",
-        "name": "传媒ETF",
+        "name": "传媒ETF（指数或 ETF 分析对象）",
         "role": "response",
         "type": "数值或对象，依具体响应合同",
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
-        "sourceRefs": [],
+        "description": "官方成分分析对象；经成分文件核验后与数据池求交，不能将候选目录当作已确认成员。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-income",
+          "stock-balance",
+          "stock-cashflow",
+          "stock-daily-basic",
+          "trade-calendar",
+          "stock-classification",
+          "stock-classification-members"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "对象标识与成员证据；企业统计在对应范围内计算。",
           "evidence": []
         }
       },
       {
         "id": "515030.SH",
-        "name": "新能源车ETF",
+        "name": "新能源车ETF（指数或 ETF 分析对象）",
         "role": "response",
         "type": "数值或对象，依具体响应合同",
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
-        "sourceRefs": [],
+        "description": "官方成分分析对象；经成分文件核验后与数据池求交，不能将候选目录当作已确认成员。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-income",
+          "stock-balance",
+          "stock-cashflow",
+          "stock-daily-basic",
+          "trade-calendar",
+          "stock-classification",
+          "stock-classification-members"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "对象标识与成员证据；企业统计在对应范围内计算。",
           "evidence": []
         }
       },
       {
         "id": "512200.SH",
-        "name": "房地产ETF",
+        "name": "房地产ETF（指数或 ETF 分析对象）",
         "role": "response",
         "type": "数值或对象，依具体响应合同",
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
-        "sourceRefs": [],
+        "description": "官方成分分析对象；经成分文件核验后与数据池求交，不能将候选目录当作已确认成员。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-income",
+          "stock-balance",
+          "stock-cashflow",
+          "stock-daily-basic",
+          "trade-calendar",
+          "stock-classification",
+          "stock-classification-members"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "对象标识与成员证据；企业统计在对应范围内计算。",
           "evidence": []
         }
       },
       {
         "id": "588200.SH",
-        "name": "科创芯片ETF",
+        "name": "科创芯片ETF（指数或 ETF 分析对象）",
         "role": "response",
         "type": "数值或对象，依具体响应合同",
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "官方目标，类型 etf；与数据池交集及实际成分证据分别核验",
-        "sourceRefs": [],
+        "description": "官方成分分析对象；经成分文件核验后与数据池求交，不能将候选目录当作已确认成员。",
+        "sourceRefs": [
+          "stock-basic",
+          "stock-income",
+          "stock-balance",
+          "stock-cashflow",
+          "stock-daily-basic",
+          "trade-calendar",
+          "stock-classification",
+          "stock-classification-members"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "对象标识与成员证据；企业统计在对应范围内计算。",
           "evidence": []
         }
       }
     ],
-    "calculations": [],
+    "calculations": [
+      {
+        "id": "enterprise-cards",
+        "name": "可比企业季度统计",
+        "formula": "财务流量转为可比单季、资产存量取期末值。基础 cards.scissors（营收利润剪刀差）的 result = 同组单季营收同比 − 归母净利润同比，消费项目可另行反向展示，不能将展示方向当成接口原值。cards.white-strip（应收剪刀差）= 同组期末应收账款同比 − 营收同比。cards.lying-flat（基础现金流差）= 单季经营现金流金额 − 资本开支金额，单位亿元；rea.series.lying-flat（企业躺平同比差）= 同组经营现金流同比 − 资本开支同比。cards.dividend（基础分红扩产差）= 单季资本开支金额 − 分红偿息支付金额，单位亿元；rea.series.dividend（分红挤出扩产同比差）= 分红偿息支付现金同比 − 资本开支同比，保留供应商合并支付项目口径。cards.inventory（库存卡）比较营收同比和期末库存同比，result 为前者减后者；亏损扩散以报告锚点之后、截止日之前的首个完整交易日为共同估值日，按该日有效成员市值加权。同比按同组同期可比合计计算，不平均公司同比。",
+        "inputs": [
+          {
+            "id": "income_statement",
+            "name": "营业收入与归母净利润"
+          },
+          {
+            "id": "balance_sheet",
+            "name": "应收账款与存货期末值"
+          },
+          {
+            "id": "cashflow_statement",
+            "name": "经营现金流、资本开支及分红偿息合并支付"
+          },
+          {
+            "id": "daily_basic.total_mv",
+            "name": "共同估值日总市值"
+          },
+          {
+            "id": "trade_calendar",
+            "name": "上交所开闭市日历，用于确定完整估值日"
+          },
+          {
+            "id": "official_members",
+            "name": "官方当前成员与数据池交集"
+          }
+        ],
+        "window": "可比季度与同组成员；基础卡、REA 展示分支分别定义，不互换同名数值",
+        "version": "当前构建口径",
+        "missing": "财报、成员证据、市场价值或覆盖门槛不足时留空并报告原因；缺估值日历为 valuation-calendar-missing，不能把样本结果解释为全部上市公司。",
+        "evidence": [
+          "backend/app/macro/enterprise.py"
+        ]
+      }
+    ],
     "access": [
       {
         "kind": "aggregate",
@@ -4004,7 +4971,14 @@
     ],
     "evidence": [
       "docs/macro-supply.md",
-      "config/macro/enterprise-targets.json"
+      "config/macro/enterprise-targets.json",
+      "backend/app/macro/enterprise_repository.py",
+      "backend/app/macro/enterprise.py",
+      "backend/app/macro/enterprise_official_targets.py",
+      "backend/app/macro/enterprise_loss.py",
+      "backend/app/macro/enterprise_rea.py",
+      "docs/macro-specialties.md",
+      "backend/app/macro/enterprise_contract.py"
     ]
   },
   {
@@ -4014,12 +4988,82 @@
     "description": "按两条基础系列的真实共同日期生成差值。",
     "status": "已接入，实际覆盖按留存证据核对",
     "scope": "按现有数据池、日期及采集合同覆盖",
-    "sources": [],
+    "sources": [
+      {
+        "name": "tushare",
+        "api": "cn_ppi",
+        "kind": "候选来源",
+        "description": "输入条目：中国 PPI 同比。优先级 1；转换 identity"
+      },
+      {
+        "name": "tushare",
+        "kind": "历史实供来源",
+        "description": "输入条目：中国 PPI 同比。核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      },
+      {
+        "name": "tushare",
+        "api": "cn_cpi",
+        "kind": "候选来源",
+        "description": "输入条目：中国 CPI 同比。优先级 1；转换 identity"
+      },
+      {
+        "name": "tushare",
+        "api": "cn_m",
+        "kind": "候选来源",
+        "description": "输入条目：中国 M2 同比。优先级 1；转换 identity"
+      },
+      {
+        "name": "chinamoney",
+        "api": "SddsIntrRateGovYldHis",
+        "kind": "候选来源",
+        "description": "输入条目：中国 10 年期国债收益率。优先级 1；转换 identity"
+      },
+      {
+        "name": "chinamoney",
+        "kind": "历史实供来源",
+        "description": "输入条目：中国 10 年期国债收益率。核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      },
+      {
+        "name": "tushare",
+        "api": "repo_daily",
+        "kind": "候选来源",
+        "description": "输入条目：中国 DR007。优先级 1；转换 identity"
+      },
+      {
+        "name": "fred",
+        "api": "series_observations",
+        "kind": "候选来源",
+        "description": "输入条目：美国 10 年期国债收益率。优先级 1；转换 identity"
+      },
+      {
+        "name": "us_treasury",
+        "api": "daily_treasury_yield_curve",
+        "kind": "候选来源",
+        "description": "输入条目：美国 10 年期国债收益率。优先级 2；转换 identity"
+      },
+      {
+        "name": "tushare",
+        "api": "us_tycr",
+        "kind": "候选来源",
+        "description": "输入条目：美国 10 年期国债收益率。优先级 3；转换 identity"
+      },
+      {
+        "name": "fred",
+        "kind": "历史实供来源",
+        "description": "输入条目：美国 10 年期国债收益率。核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      },
+      {
+        "name": "nyfed",
+        "api": "rates/unsecured/effr/search",
+        "kind": "候选来源",
+        "description": "输入条目：美国有效联邦基金利率。优先级 2；转换 identity"
+      }
+    ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
-        "task": null
+        "name": "更新规则",
+        "description": "随宏观发布对齐基础系列生成，逐项公式见对应剪刀差条目。",
+        "task": "macro"
       }
     ],
     "tables": [
@@ -4034,22 +5078,28 @@
         "table": "page_snapshot",
         "name": "发布历史",
         "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "macro_observation",
+        "name": "宏观观测",
+        "fieldPath": ""
       }
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "历史派生点随页面快照保存，基础观测各自保留",
         "evidence": []
       },
       "revisions": {
-        "value": null,
-        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "value": true,
+        "explanation": "保留已发布页面版本；同版本内部重算记录不单列",
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "宏观聚合接口支持 version（发布版本）查询",
         "evidence": []
       }
     },
@@ -4067,11 +5117,27 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "宏观利差与剪刀差",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "cn.ppi.yoy",
+          "cn.cpi.yoy",
+          "cn.money.m2_yoy",
+          "cn.money.m1_yoy",
+          "cn.rate.govbond_10y",
+          "cn.rate.dr007",
+          "us.rate.treasury_10y",
+          "us.rate.effective_fed_funds"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": true,
-          "explanation": "底座计算或转换",
+          "explanation": "含底座来源转换或专题计算；采用的实际渠道决定是否进行该转换，见计算口径。",
           "evidence": []
         }
       }
@@ -4112,7 +5178,8 @@
       }
     ],
     "evidence": [
-      "docs/macro-supply.md"
+      "docs/macro-supply.md",
+      "backend/app/macro/derivations.py"
     ]
   },
   {
@@ -4122,12 +5189,30 @@
     "description": "按两侧真实共同日期计算的宏观差值，缺期不向前填充。",
     "status": "已接入，实际覆盖按留存证据核对",
     "scope": "按现有数据池、日期及采集合同覆盖",
-    "sources": [],
+    "sources": [
+      {
+        "name": "tushare",
+        "api": "cn_ppi",
+        "kind": "候选来源",
+        "description": "输入条目：中国 PPI 同比。优先级 1；转换 identity"
+      },
+      {
+        "name": "tushare",
+        "kind": "历史实供来源",
+        "description": "输入条目：中国 PPI 同比。核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      },
+      {
+        "name": "tushare",
+        "api": "cn_cpi",
+        "kind": "候选来源",
+        "description": "输入条目：中国 CPI 同比。优先级 1；转换 identity"
+      }
+    ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
-        "task": null
+        "name": "更新规则",
+        "description": "随基础宏观输入发布时计算，观测频率按两侧共同日期。",
+        "task": "macro"
       }
     ],
     "tables": [
@@ -4175,11 +5260,21 @@
         "unit": "百分点",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "PPI-CPI 剪刀差",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "cn.ppi.yoy",
+          "cn.cpi.yoy"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": true,
-          "explanation": "底座计算或转换",
+          "explanation": "含底座来源转换或专题计算；采用的实际渠道决定是否进行该转换，见计算口径。",
           "evidence": []
         }
       }
@@ -4231,12 +5326,24 @@
     "description": "按两侧真实共同日期计算的宏观差值，缺期不向前填充。",
     "status": "已接入，实际覆盖按留存证据核对",
     "scope": "按现有数据池、日期及采集合同覆盖",
-    "sources": [],
+    "sources": [
+      {
+        "name": "tushare",
+        "api": "cn_m",
+        "kind": "候选来源",
+        "description": "输入条目：中国 M2 同比。优先级 1；转换 identity"
+      },
+      {
+        "name": "tushare",
+        "kind": "历史实供来源",
+        "description": "输入条目：中国 M2 同比。核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
-        "task": null
+        "name": "更新规则",
+        "description": "随基础宏观输入发布时计算，观测频率按两侧共同日期。",
+        "task": "macro"
       }
     ],
     "tables": [
@@ -4284,11 +5391,21 @@
         "unit": "百分点",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "M2-M1 剪刀差",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "cn.money.m2_yoy",
+          "cn.money.m1_yoy"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": true,
-          "explanation": "底座计算或转换",
+          "explanation": "含底座来源转换或专题计算；采用的实际渠道决定是否进行该转换，见计算口径。",
           "evidence": []
         }
       }
@@ -4340,12 +5457,24 @@
     "description": "按两侧真实共同日期计算的宏观差值，缺期不向前填充。",
     "status": "已接入，实际覆盖按留存证据核对",
     "scope": "按现有数据池、日期及采集合同覆盖",
-    "sources": [],
+    "sources": [
+      {
+        "name": "tushare",
+        "api": "cn_m",
+        "kind": "候选来源",
+        "description": "输入条目：中国 M1 同比。优先级 1；转换 identity"
+      },
+      {
+        "name": "tushare",
+        "kind": "历史实供来源",
+        "description": "输入条目：中国 M1 同比。核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
-        "task": null
+        "name": "更新规则",
+        "description": "随基础宏观输入发布时计算，观测频率按两侧共同日期。",
+        "task": "macro"
       }
     ],
     "tables": [
@@ -4393,11 +5522,21 @@
         "unit": "百分点",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "M1-M2 差值",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "cn.money.m1_yoy",
+          "cn.money.m2_yoy"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": true,
-          "explanation": "底座计算或转换",
+          "explanation": "含底座来源转换或专题计算；采用的实际渠道决定是否进行该转换，见计算口径。",
           "evidence": []
         }
       }
@@ -4449,12 +5588,35 @@
     "description": "按两侧真实共同日期计算的宏观差值，缺期不向前填充。",
     "status": "已接入，实际覆盖按留存证据核对",
     "scope": "按现有数据池、日期及采集合同覆盖",
-    "sources": [],
+    "sources": [
+      {
+        "name": "chinamoney",
+        "api": "SddsIntrRateGovYldHis",
+        "kind": "候选来源",
+        "description": "输入条目：中国 10 年期国债收益率。优先级 1；转换 identity"
+      },
+      {
+        "name": "chinamoney",
+        "kind": "历史实供来源",
+        "description": "输入条目：中国 10 年期国债收益率。核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      },
+      {
+        "name": "tushare",
+        "api": "repo_daily",
+        "kind": "候选来源",
+        "description": "输入条目：中国 DR007。优先级 1；转换 identity"
+      },
+      {
+        "name": "tushare",
+        "kind": "历史实供来源",
+        "description": "输入条目：中国 DR007。核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
-        "task": null
+        "name": "更新规则",
+        "description": "随基础宏观输入发布时计算，观测频率按两侧共同日期。",
+        "task": "macro"
       }
     ],
     "tables": [
@@ -4502,11 +5664,21 @@
         "unit": "百分点",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "国债-DR007 利差",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "cn.rate.govbond_10y",
+          "cn.rate.dr007"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": true,
-          "explanation": "底座计算或转换",
+          "explanation": "含底座来源转换或专题计算；采用的实际渠道决定是否进行该转换，见计算口径。",
           "evidence": []
         }
       }
@@ -4558,12 +5730,42 @@
     "description": "按两侧真实共同日期计算的宏观差值，缺期不向前填充。",
     "status": "已接入，实际覆盖按留存证据核对",
     "scope": "按现有数据池、日期及采集合同覆盖",
-    "sources": [],
+    "sources": [
+      {
+        "name": "fred",
+        "api": "series_observations",
+        "kind": "候选来源",
+        "description": "输入条目：美国 10 年期国债收益率。优先级 1；转换 identity"
+      },
+      {
+        "name": "us_treasury",
+        "api": "daily_treasury_yield_curve",
+        "kind": "候选来源",
+        "description": "输入条目：美国 10 年期国债收益率。优先级 2；转换 identity"
+      },
+      {
+        "name": "tushare",
+        "api": "us_tycr",
+        "kind": "候选来源",
+        "description": "输入条目：美国 10 年期国债收益率。优先级 3；转换 identity"
+      },
+      {
+        "name": "fred",
+        "kind": "历史实供来源",
+        "description": "输入条目：美国 10 年期国债收益率。核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      },
+      {
+        "name": "nyfed",
+        "api": "rates/unsecured/effr/search",
+        "kind": "候选来源",
+        "description": "输入条目：美国有效联邦基金利率。优先级 2；转换 identity"
+      }
+    ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
-        "task": null
+        "name": "更新规则",
+        "description": "随基础宏观输入发布时计算，观测频率按两侧共同日期。",
+        "task": "macro"
       }
     ],
     "tables": [
@@ -4611,11 +5813,21 @@
         "unit": "百分点",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "美债-联邦基金利差",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "us.rate.treasury_10y",
+          "us.rate.effective_fed_funds"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": true,
-          "explanation": "底座计算或转换",
+          "explanation": "含底座来源转换或专题计算；采用的实际渠道决定是否进行该转换，见计算口径。",
           "evidence": []
         }
       }
@@ -4667,12 +5879,47 @@
     "description": "按两侧真实共同日期计算的宏观差值，缺期不向前填充。",
     "status": "已接入，实际覆盖按留存证据核对",
     "scope": "按现有数据池、日期及采集合同覆盖",
-    "sources": [],
+    "sources": [
+      {
+        "name": "chinamoney",
+        "api": "SddsIntrRateGovYldHis",
+        "kind": "候选来源",
+        "description": "输入条目：中国 10 年期国债收益率。优先级 1；转换 identity"
+      },
+      {
+        "name": "chinamoney",
+        "kind": "历史实供来源",
+        "description": "输入条目：中国 10 年期国债收益率。核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      },
+      {
+        "name": "fred",
+        "api": "series_observations",
+        "kind": "候选来源",
+        "description": "输入条目：美国 10 年期国债收益率。优先级 1；转换 identity"
+      },
+      {
+        "name": "us_treasury",
+        "api": "daily_treasury_yield_curve",
+        "kind": "候选来源",
+        "description": "输入条目：美国 10 年期国债收益率。优先级 2；转换 identity"
+      },
+      {
+        "name": "tushare",
+        "api": "us_tycr",
+        "kind": "候选来源",
+        "description": "输入条目：美国 10 年期国债收益率。优先级 3；转换 identity"
+      },
+      {
+        "name": "fred",
+        "kind": "历史实供来源",
+        "description": "输入条目：美国 10 年期国债收益率。核验时刻 2026-11-14T16:59:05.100015+00:00；发布版本 20261108-366f83bfc727036c；当前实供须核对运行记录"
+      }
+    ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
-        "task": null
+        "name": "更新规则",
+        "description": "随基础宏观输入发布时计算，观测频率按两侧共同日期。",
+        "task": "macro"
       }
     ],
     "tables": [
@@ -4720,11 +5967,21 @@
         "unit": "bp",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "中美利差",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "sourceRefs": [
+          "cn.rate.govbond_10y",
+          "us.rate.treasury_10y"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "macro_observation",
+            "name": "按系列标识及可见版本读取观测",
+            "fieldPath": "value"
+          }
+        ],
         "derived": {
           "value": true,
-          "explanation": "底座计算或转换",
+          "explanation": "含底座来源转换或专题计算；采用的实际渠道决定是否进行该转换，见计算口径。",
           "evidence": []
         }
       }

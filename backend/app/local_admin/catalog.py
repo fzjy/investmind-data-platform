@@ -88,6 +88,14 @@ def validate_catalog(catalog: Catalog, *, project_root: Path, openapi: dict) -> 
             issue(entry.id,"category","CATEGORY_MISSING","分类不存在")
         if set(entry.history)!={"records","revisions","query"}:
             issue(entry.id,"history","HISTORY_MISSING","历史三个判断项不完整")
+        if not entry.sources:
+            issue(entry.id,"sources","SOURCE_MISSING","缺少来源说明；尚无供给时须明确写出缺口")
+        if not any(t.schema_ in {"core","raw"} for t in entry.tables):
+            issue(entry.id,"tables","INPUT_TABLE_MISSING","仅列出结果表，缺少来源原件或核心输入表")
+        if entry.derived.value is True and not entry.calculations:
+            issue(entry.id,"calculations","CALCULATION_MISSING","已标为派生内容，但缺少计算口径")
+        if entry.derived.value is not True and any(f.derived.value is True for f in entry.fields):
+            issue(entry.id,"derived","DERIVATION_CONFLICT","字段含派生结果，但条目派生判断不一致")
         for n,f in enumerate(entry.fields):
             if not re.search(r"[\u4e00-\u9fff]", f.name):
                 issue(entry.id,f"fields.{n}.name","LABEL_MISSING","缺少中文字段含义")

@@ -16,9 +16,8 @@
     ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
-        "task": "market"
+        "name": "更新规则",
+        "description": "由宏观专题执行器按专项配置或显式命令采集；专题观测频率和采集检查日程分别说明，配置文件为 macro-extensions.json。"
       }
     ],
     "tables": [
@@ -31,8 +30,8 @@
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "成功采集后按批次保留原始响应及采集时刻；是否已有原件、业务日期和版本覆盖依实际留存记录。",
         "evidence": []
       },
       "revisions": {
@@ -60,7 +59,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "交易所；上游 daily_info.exchange",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "daily_info.exchange"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -83,7 +84,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "流通市值；上游 daily_info.float_mv",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "daily_info.float_mv"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -106,7 +109,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "交易日期；上游 daily_info.trade_date",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "daily_info.trade_date"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -129,7 +134,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "证券代码；上游 daily_info.ts_code",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "daily_info.ts_code"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -149,13 +156,12 @@
     "access": [
       {
         "kind": "aggregate",
-        "path": "/api/v1/market/explorer",
         "method": "GET",
+        "path": "/api/v1/macro/insights",
         "responsePaths": [
-          "data（市场浏览，具体字段需按来源合同核验）"
+          "data.extensionInsights.marketSummary（交易所统计专题）"
         ],
-        "parameterNames": {},
-        "example": null
+        "description": "下列为已核对的消费位置；采集原字段不保证逐列对外返回，完整原件请查看对应数据表。"
       }
     ],
     "evidence": [
@@ -179,8 +185,8 @@
     ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
+        "name": "更新规则",
+        "description": "按采集任务的生效日程检查来源；行情按交易日，财报及公司行为按披露更新。实际覆盖与最近执行见运行附录。",
         "task": "market"
       }
     ],
@@ -194,8 +200,8 @@
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "成功采集后按批次保留原始响应及采集时刻；是否已有原件、业务日期和版本覆盖依实际留存记录。",
         "evidence": []
       },
       "revisions": {
@@ -223,7 +229,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "中文简称；上游 etf_basic.csname",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "etf_basic.csname"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -246,7 +254,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "ETF类别；上游 etf_basic.etf_type",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "etf_basic.etf_type"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -269,7 +279,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "交易所；上游 etf_basic.exchange",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "etf_basic.exchange"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -292,7 +304,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "指数代码；上游 etf_basic.index_code",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "etf_basic.index_code"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -315,7 +329,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "指数名称；上游 etf_basic.index_name",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "etf_basic.index_name"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -338,7 +354,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "上市状态；上游 etf_basic.list_status",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "etf_basic.list_status"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -361,7 +379,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "证券代码；上游 etf_basic.ts_code",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "etf_basic.ts_code"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -405,8 +425,8 @@
     ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
+        "name": "更新规则",
+        "description": "按采集任务的生效日程检查来源；行情按交易日，财报及公司行为按披露更新。实际覆盖与最近执行见运行附录。",
         "task": "market"
       }
     ],
@@ -455,7 +475,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "成交额；上游 fund_daily.amount",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fund_daily.amount"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -478,7 +500,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "收盘价；上游 fund_daily.close",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fund_daily.close"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -501,7 +525,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "最高价；上游 fund_daily.high",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fund_daily.high"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -524,7 +550,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "最低价；上游 fund_daily.low",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fund_daily.low"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -547,7 +575,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "开盘价；上游 fund_daily.open",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fund_daily.open"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -570,7 +600,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "涨跌幅；上游 fund_daily.pct_chg",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fund_daily.pct_chg"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -593,7 +625,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "前收盘价；上游 fund_daily.pre_close",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fund_daily.pre_close"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -616,7 +650,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "交易日期；上游 fund_daily.trade_date",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fund_daily.trade_date"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -639,7 +675,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "证券代码；上游 fund_daily.ts_code",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fund_daily.ts_code"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -662,7 +700,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "成交量；上游 fund_daily.vol",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fund_daily.vol"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -712,8 +752,8 @@
     ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
+        "name": "更新规则",
+        "description": "按采集任务的生效日程检查来源；行情按交易日，财报及公司行为按披露更新。实际覆盖与最近执行见运行附录。",
         "task": "market"
       }
     ],
@@ -727,8 +767,8 @@
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "成功采集后按批次保留原始响应及采集时刻；是否已有原件、业务日期和版本覆盖依实际留存记录。",
         "evidence": []
       },
       "revisions": {
@@ -750,13 +790,15 @@
     "fields": [
       {
         "id": "fd_share",
-        "name": "基金份额",
+        "name": "基金份额（万份）",
         "role": "source",
         "type": "存储类型 JSON",
         "unit": "待核验",
         "nullable": "存储列非空",
-        "description": "基金份额；上游 fund_share.fd_share",
-        "sourceRefs": [],
+        "description": "基金份额（万份）；上游 fund_share.fd_share",
+        "sourceRefs": [
+          "fund_share.fd_share"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -779,7 +821,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "交易日期；上游 fund_share.trade_date",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fund_share.trade_date"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -802,7 +846,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "证券代码；上游 fund_share.ts_code",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fund_share.ts_code"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -852,8 +898,8 @@
     ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
+        "name": "更新规则",
+        "description": "按采集任务的生效日程检查来源；行情按交易日，财报及公司行为按披露更新。实际覆盖与最近执行见运行附录。",
         "task": "commodities"
       }
     ],
@@ -867,8 +913,8 @@
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "成功采集后按批次保留原始响应及采集时刻；是否已有原件、业务日期和版本覆盖依实际留存记录。",
         "evidence": []
       },
       "revisions": {
@@ -890,13 +936,15 @@
     "fields": [
       {
         "id": "delist_date",
-        "name": "退市日期",
+        "name": "最后交易日期",
         "role": "source",
         "type": "存储类型 JSON",
         "unit": "待核验",
         "nullable": "存储列非空",
-        "description": "退市日期；上游 fut_basic.delist_date",
-        "sourceRefs": [],
+        "description": "最后交易日期；上游 fut_basic.delist_date",
+        "sourceRefs": [
+          "fut_basic.delist_date"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -919,7 +967,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "交易所；上游 fut_basic.exchange",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_basic.exchange"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -942,7 +992,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "期货品种代码；上游 fut_basic.fut_code",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_basic.fut_code"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -965,7 +1017,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "上市日期；上游 fut_basic.list_date",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_basic.list_date"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -988,7 +1042,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "名称；上游 fut_basic.name",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_basic.name"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1005,13 +1061,15 @@
       },
       {
         "id": "per_unit",
-        "name": "每手单位",
+        "name": "每手交易单位",
         "role": "source",
         "type": "存储类型 JSON",
         "unit": "待核验",
         "nullable": "存储列非空",
-        "description": "每手单位；上游 fut_basic.per_unit",
-        "sourceRefs": [],
+        "description": "每手交易单位；上游 fut_basic.per_unit",
+        "sourceRefs": [
+          "fut_basic.per_unit"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1034,7 +1092,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "报价单位；上游 fut_basic.quote_unit",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_basic.quote_unit"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1057,7 +1117,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "交易单位；上游 fut_basic.trade_unit",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_basic.trade_unit"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1080,7 +1142,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "证券代码；上游 fut_basic.ts_code",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_basic.ts_code"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1124,8 +1188,8 @@
     ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
+        "name": "更新规则",
+        "description": "按采集任务的生效日程检查来源；行情按交易日，财报及公司行为按披露更新。实际覆盖与最近执行见运行附录。",
         "task": "commodities"
       }
     ],
@@ -1139,8 +1203,8 @@
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "成功采集后按批次保留原始响应及采集时刻；是否已有原件、业务日期和版本覆盖依实际留存记录。",
         "evidence": []
       },
       "revisions": {
@@ -1168,7 +1232,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "成交额；上游 fut_daily.amount",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_daily.amount"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1191,7 +1257,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "收盘价；上游 fut_daily.close",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_daily.close"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1214,7 +1282,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "最高价；上游 fut_daily.high",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_daily.high"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1237,7 +1307,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "最低价；上游 fut_daily.low",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_daily.low"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1260,7 +1332,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "持仓量；上游 fut_daily.oi",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_daily.oi"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1283,7 +1357,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "开盘价；上游 fut_daily.open",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_daily.open"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1306,7 +1382,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "前收盘价；上游 fut_daily.pre_close",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_daily.pre_close"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1329,7 +1407,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "昨结算价；上游 fut_daily.pre_settle",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_daily.pre_settle"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1352,7 +1432,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "结算价；上游 fut_daily.settle",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_daily.settle"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1375,7 +1457,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "交易日期；上游 fut_daily.trade_date",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_daily.trade_date"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1398,7 +1482,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "证券代码；上游 fut_daily.ts_code",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_daily.ts_code"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1421,7 +1507,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "成交量；上游 fut_daily.vol",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_daily.vol"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1471,8 +1559,8 @@
     ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
+        "name": "更新规则",
+        "description": "按采集任务的生效日程检查来源；行情按交易日，财报及公司行为按披露更新。实际覆盖与最近执行见运行附录。",
         "task": "commodities"
       }
     ],
@@ -1486,8 +1574,8 @@
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "成功采集后按批次保留原始响应及采集时刻；是否已有原件、业务日期和版本覆盖依实际留存记录。",
         "evidence": []
       },
       "revisions": {
@@ -1515,7 +1603,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "对应合约代码；上游 fut_mapping.mapping_ts_code",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_mapping.mapping_ts_code"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1538,7 +1628,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "交易日期；上游 fut_mapping.trade_date",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_mapping.trade_date"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1561,7 +1653,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "证券代码；上游 fut_mapping.ts_code",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_mapping.ts_code"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1605,8 +1699,8 @@
     ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
+        "name": "更新规则",
+        "description": "按采集任务的生效日程检查来源；行情按交易日，财报及公司行为按披露更新。实际覆盖与最近执行见运行附录。",
         "task": "commodities"
       }
     ],
@@ -1620,8 +1714,8 @@
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "成功采集后按批次保留原始响应及采集时刻；是否已有原件、业务日期和版本覆盖依实际留存记录。",
         "evidence": []
       },
       "revisions": {
@@ -1649,7 +1743,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "日历日期；上游 fut_trade_cal.cal_date",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_trade_cal.cal_date"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1672,7 +1768,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "交易所；上游 fut_trade_cal.exchange",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_trade_cal.exchange"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1695,7 +1793,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "是否开市；上游 fut_trade_cal.is_open",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fut_trade_cal.is_open"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1739,9 +1839,8 @@
     ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
-        "task": "market"
+        "name": "更新规则",
+        "description": "由宏观专题执行器按专项配置或显式命令采集；专题观测频率和采集检查日程分别说明，配置文件为 macro-extensions.json。"
       }
     ],
     "tables": [
@@ -1754,8 +1853,8 @@
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "成功采集后按批次保留原始响应及采集时刻；是否已有原件、业务日期和版本覆盖依实际留存记录。",
         "evidence": []
       },
       "revisions": {
@@ -1783,7 +1882,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "卖出收盘价；上游 fx_daily.ask_close",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fx_daily.ask_close"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1806,7 +1907,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "买入收盘价；上游 fx_daily.bid_close",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fx_daily.bid_close"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1829,7 +1932,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "交易所；上游 fx_daily.exchange",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fx_daily.exchange"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1852,7 +1957,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "交易日期；上游 fx_daily.trade_date",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fx_daily.trade_date"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1875,7 +1982,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "证券代码；上游 fx_daily.ts_code",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "fx_daily.ts_code"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1895,13 +2004,12 @@
     "access": [
       {
         "kind": "aggregate",
-        "path": "/api/v1/market/explorer",
         "method": "GET",
+        "path": "/api/v1/macro/insights",
         "responsePaths": [
-          "data（市场浏览，具体字段需按来源合同核验）"
+          "data.extensionInsights.fx（离岸汇率专题，非原始全量外汇表）"
         ],
-        "parameterNames": {},
-        "example": null
+        "description": "下列为已核对的消费位置；采集原字段不保证逐列对外返回，完整原件请查看对应数据表。"
       }
     ],
     "evidence": [
@@ -1925,8 +2033,8 @@
     ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
+        "name": "更新规则",
+        "description": "按采集任务的生效日程检查来源；行情按交易日，财报及公司行为按披露更新。实际覆盖与最近执行见运行附录。",
         "task": "market"
       }
     ],
@@ -1940,8 +2048,8 @@
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "成功采集后按批次保留原始响应及采集时刻；是否已有原件、业务日期和版本覆盖依实际留存记录。",
         "evidence": []
       },
       "revisions": {
@@ -1969,7 +2077,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "基日；上游 index_basic.base_date",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_basic.base_date"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -1992,7 +2102,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "描述；上游 index_basic.desc",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_basic.desc"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -2009,13 +2121,15 @@
       },
       {
         "id": "exp_date",
-        "name": "计划截止日期",
+        "name": "指数终止日期",
         "role": "source",
         "type": "存储类型 JSON",
         "unit": "待核验",
         "nullable": "存储列非空",
-        "description": "计划截止日期；上游 index_basic.exp_date",
-        "sourceRefs": [],
+        "description": "指数终止日期；上游 index_basic.exp_date",
+        "sourceRefs": [
+          "index_basic.exp_date"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -2038,7 +2152,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "公司全称；上游 index_basic.fullname",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_basic.fullname"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -2055,13 +2171,15 @@
       },
       {
         "id": "list_date",
-        "name": "上市日期",
+        "name": "指数发布日期",
         "role": "source",
         "type": "存储类型 JSON",
         "unit": "待核验",
         "nullable": "存储列非空",
-        "description": "上市日期；上游 index_basic.list_date",
-        "sourceRefs": [],
+        "description": "指数发布日期；上游 index_basic.list_date",
+        "sourceRefs": [
+          "index_basic.list_date"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -2078,13 +2196,15 @@
       },
       {
         "id": "market",
-        "name": "市场",
+        "name": "市场代码",
         "role": "source",
         "type": "存储类型 JSON",
         "unit": "待核验",
         "nullable": "存储列非空",
-        "description": "市场；上游 index_basic.market",
-        "sourceRefs": [],
+        "description": "市场代码；上游 index_basic.market",
+        "sourceRefs": [
+          "index_basic.market"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -2107,7 +2227,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "名称；上游 index_basic.name",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_basic.name"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -2130,7 +2252,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "发布机构；上游 index_basic.publisher",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_basic.publisher"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -2153,7 +2277,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "证券代码；上游 index_basic.ts_code",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_basic.ts_code"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -2197,8 +2323,8 @@
     ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
+        "name": "更新规则",
+        "description": "按采集任务的生效日程检查来源；行情按交易日，财报及公司行为按披露更新。实际覆盖与最近执行见运行附录。",
         "task": "market"
       }
     ],
@@ -2247,7 +2373,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "收盘价；上游 index_daily.close",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_daily.close"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -2270,7 +2398,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "最高价；上游 index_daily.high",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_daily.high"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -2293,7 +2423,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "最低价；上游 index_daily.low",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_daily.low"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -2316,7 +2448,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "开盘价；上游 index_daily.open",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_daily.open"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -2339,7 +2473,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "涨跌幅；上游 index_daily.pct_chg",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_daily.pct_chg"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -2362,7 +2498,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "前收盘价；上游 index_daily.pre_close",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_daily.pre_close"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -2385,7 +2523,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "交易日期；上游 index_daily.trade_date",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_daily.trade_date"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -2408,7 +2548,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "证券代码；上游 index_daily.ts_code",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_daily.ts_code"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -2458,8 +2600,8 @@
     ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
+        "name": "更新规则",
+        "description": "按采集任务的生效日程检查来源；行情按交易日，财报及公司行为按披露更新。实际覆盖与最近执行见运行附录。",
         "task": "market"
       }
     ],
@@ -2508,7 +2650,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "收盘价；上游 index_global.close",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_global.close"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -2531,7 +2675,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "最高价；上游 index_global.high",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_global.high"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -2554,7 +2700,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "最低价；上游 index_global.low",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_global.low"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -2577,7 +2725,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "开盘价；上游 index_global.open",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_global.open"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -2600,7 +2750,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "涨跌幅；上游 index_global.pct_chg",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_global.pct_chg"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -2623,7 +2775,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "前收盘价；上游 index_global.pre_close",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_global.pre_close"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -2646,7 +2800,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "交易日期；上游 index_global.trade_date",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_global.trade_date"
+        ],
         "tableRefs": [
           {
             "schema": "core",
@@ -2669,7 +2825,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "证券代码；上游 index_global.ts_code",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_global.ts_code"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -2719,8 +2877,8 @@
     ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
+        "name": "更新规则",
+        "description": "按采集任务的生效日程检查来源；行情按交易日，财报及公司行为按披露更新。实际覆盖与最近执行见运行附录。",
         "task": "market"
       }
     ],
@@ -2734,8 +2892,8 @@
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "成功采集后按批次保留原始响应及采集时刻；是否已有原件、业务日期和版本覆盖依实际留存记录。",
         "evidence": []
       },
       "revisions": {
@@ -2763,7 +2921,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "成分证券代码；上游 index_weight.con_code",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_weight.con_code"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -2786,7 +2946,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "指数代码；上游 index_weight.index_code",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_weight.index_code"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -2809,7 +2971,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "交易日期；上游 index_weight.trade_date",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "index_weight.trade_date"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -2826,13 +2990,15 @@
       },
       {
         "id": "weight",
-        "name": "权重或加权利率",
+        "name": "成分权重",
         "role": "source",
         "type": "存储类型 JSON",
         "unit": "待核验",
         "nullable": "存储列非空",
-        "description": "权重或加权利率；上游 index_weight.weight",
-        "sourceRefs": [],
+        "description": "成分权重；上游 index_weight.weight",
+        "sourceRefs": [
+          "index_weight.weight"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -2876,9 +3042,8 @@
     ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
-        "task": "market"
+        "name": "更新规则",
+        "description": "由宏观专题执行器按专项配置或显式命令采集；专题观测频率和采集检查日程分别说明，配置文件为 macro-extensions.json。"
       }
     ],
     "tables": [
@@ -2891,8 +3056,8 @@
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "成功采集后按批次保留原始响应及采集时刻；是否已有原件、业务日期和版本覆盖依实际留存记录。",
         "evidence": []
       },
       "revisions": {
@@ -2920,7 +3085,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "交易所标识；上游 margin.exchange_id",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "margin.exchange_id"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -2943,7 +3110,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "融资余额；上游 margin.rzye",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "margin.rzye"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -2966,7 +3135,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "交易日期；上游 margin.trade_date",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "margin.trade_date"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -2986,13 +3157,12 @@
     "access": [
       {
         "kind": "aggregate",
-        "path": "/api/v1/market/explorer",
         "method": "GET",
+        "path": "/api/v1/macro/insights",
         "responsePaths": [
-          "data（市场浏览，具体字段需按来源合同核验）"
+          "data.extensionInsights.marketSummary（融资余额与流通市值专题）"
         ],
-        "parameterNames": {},
-        "example": null
+        "description": "下列为已核对的消费位置；采集原字段不保证逐列对外返回，完整原件请查看对应数据表。"
       }
     ],
     "evidence": [
@@ -3016,9 +3186,8 @@
     ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
-        "task": "market"
+        "name": "更新规则",
+        "description": "由宏观专题执行器按专项配置或显式命令采集；专题观测频率和采集检查日程分别说明，配置文件为 macro-extensions.json。"
       }
     ],
     "tables": [
@@ -3031,8 +3200,8 @@
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "成功采集后按批次保留原始响应及采集时刻；是否已有原件、业务日期和版本覆盖依实际留存记录。",
         "evidence": []
       },
       "revisions": {
@@ -3060,7 +3229,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "数量；上游 sz_daily_info.count",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "sz_daily_info.count"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -3083,7 +3254,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "流通市值；上游 sz_daily_info.float_mv",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "sz_daily_info.float_mv"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -3106,7 +3279,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "交易日期；上游 sz_daily_info.trade_date",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "sz_daily_info.trade_date"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -3129,7 +3304,9 @@
         "unit": "待核验",
         "nullable": "存储列非空",
         "description": "证券代码；上游 sz_daily_info.ts_code",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "sz_daily_info.ts_code"
+        ],
         "tableRefs": [
           {
             "schema": "raw",
@@ -3149,13 +3326,12 @@
     "access": [
       {
         "kind": "aggregate",
-        "path": "/api/v1/market/explorer",
         "method": "GET",
+        "path": "/api/v1/macro/insights",
         "responsePaths": [
-          "data（市场浏览，具体字段需按来源合同核验）"
+          "data.extensionInsights.marketSummary（深市补充及校准证据）"
         ],
-        "parameterNames": {},
-        "example": null
+        "description": "下列为已核对的消费位置；采集原字段不保证逐列对外返回，完整原件请查看对应数据表。"
       }
     ],
     "evidence": [
@@ -3166,15 +3342,52 @@
     "id": "market-overview",
     "name": "市场统计与情绪",
     "category": "markets",
-    "description": "按已发布证券池汇总市场成交、涨跌分布与情绪。",
+    "description": "基于 Tushare 日行情、每日指标和证券资料汇总成交额、涨跌分布；情绪分为底座自算 threshold-v1。涨跌停家数使用来源 limit_status，与阈值情绪计数分别定义；资金流未供给时显示缺失。",
     "status": "已接入，实际覆盖按留存证据核对",
-    "scope": "按现有数据池、日期及采集合同覆盖",
-    "sources": [],
+    "scope": "数据库当前覆盖证券池在选定交易日的有效行情。优先最近共同交易日，缺少共同日时取最近可见日；覆盖不足不表示全市场统计。全球指数、ETF 使用各自已配置行情来源。",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "daily",
+        "kind": "采集渠道",
+        "description": "输入条目：股票日行情。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "daily_basic",
+        "kind": "采集渠道",
+        "description": "输入条目：每日估值与股本。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "stock_basic",
+        "kind": "采集渠道",
+        "description": "输入条目：证券基础资料。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "index_daily",
+        "kind": "采集渠道",
+        "description": "输入条目：国内指数日行情。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "index_global",
+        "kind": "采集渠道",
+        "description": "输入条目：全球指数日行情。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "fund_daily",
+        "kind": "采集渠道",
+        "description": "输入条目：ETF 日行情。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      }
+    ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
-        "task": null
+        "name": "更新规则",
+        "description": "市场脉冲任务按生效日程重建；股票及市场来源更新提供输入。这里是日线收盘数据，任务执行频率不代表实时行情。",
+        "task": "marketPulse"
       }
     ],
     "tables": [
@@ -3189,28 +3402,64 @@
         "table": "page_snapshot",
         "name": "发布历史",
         "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "daily_price",
+        "name": "股票日行情",
+        "fieldPath": ""
+      },
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "供应商原始响应",
+        "fieldPath": "payload"
+      },
+      {
+        "schema": "core",
+        "table": "adjustment_factor",
+        "name": "复权因子",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "daily_basic",
+        "name": "每日估值与股本",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "security",
+        "name": "证券基础资料",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "market_daily_quote",
+        "name": "国内指数日行情",
+        "fieldPath": ""
       }
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "保留已发布页面快照；实际日期和版本依留存记录。",
         "evidence": []
       },
       "revisions": {
-        "value": null,
-        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "value": true,
+        "explanation": "保存不同发布版本；不记录同一版本内部的每次中间重算。",
         "evidence": []
       },
       "query": {
         "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "explanation": "现有市场接口读取当前发布，没有历史日期或 version 参数。",
         "evidence": []
       }
     },
     "derived": {
-      "value": false,
-      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "value": true,
+      "explanation": "包含底座计算的结果，原始输入、计算窗口和缺值条件见下方。",
       "evidence": []
     },
     "fields": [
@@ -3222,11 +3471,18 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "行情概览",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "stock-daily",
+          "stock-daily-basic",
+          "stock-basic",
+          "index-daily",
+          "index-global",
+          "etf-daily"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       },
@@ -3234,15 +3490,35 @@
         "id": "data.turnoverSnapshot",
         "name": "成交统计",
         "role": "response",
-        "type": "数值或对象，依具体响应合同",
-        "unit": "待核验",
-        "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "成交统计",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "type": "对象或数组，子字段依响应合同",
+        "unit": "不适用（对象或记录集合）",
+        "nullable": "可包含空值和覆盖状态，空值不表示零",
+        "description": "数据库已覆盖证券的同日汇总；情绪分按 threshold-v1 计算，见下方公式。",
+        "sourceRefs": [
+          "stock-daily",
+          "stock-daily-basic",
+          "stock-basic",
+          "index-daily",
+          "index-global",
+          "etf-daily"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "daily_price",
+            "name": "当日行情",
+            "fieldPath": ""
+          },
+          {
+            "schema": "core",
+            "table": "security",
+            "name": "证券及上市资料",
+            "fieldPath": ""
+          }
+        ],
         "derived": {
-          "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "value": true,
+          "explanation": "含底座计算结果，见计算口径",
           "evidence": []
         }
       },
@@ -3250,15 +3526,35 @@
         "id": "data.breadthSnapshots",
         "name": "涨跌宽度",
         "role": "response",
-        "type": "数值或对象，依具体响应合同",
-        "unit": "待核验",
-        "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "涨跌宽度",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "type": "对象或数组，子字段依响应合同",
+        "unit": "不适用（对象或记录集合）",
+        "nullable": "可包含空值和覆盖状态，空值不表示零",
+        "description": "数据库已覆盖证券的同日汇总；情绪分按 threshold-v1 计算，见下方公式。",
+        "sourceRefs": [
+          "stock-daily",
+          "stock-daily-basic",
+          "stock-basic",
+          "index-daily",
+          "index-global",
+          "etf-daily"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "daily_price",
+            "name": "当日行情",
+            "fieldPath": ""
+          },
+          {
+            "schema": "core",
+            "table": "security",
+            "name": "证券及上市资料",
+            "fieldPath": ""
+          }
+        ],
         "derived": {
-          "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "value": true,
+          "explanation": "含底座计算结果，见计算口径",
           "evidence": []
         }
       },
@@ -3266,15 +3562,35 @@
         "id": "data.sentimentSnapshot",
         "name": "情绪指标",
         "role": "response",
-        "type": "数值或对象，依具体响应合同",
-        "unit": "待核验",
-        "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "情绪指标",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "type": "对象或数组，子字段依响应合同",
+        "unit": "不适用（对象或记录集合）",
+        "nullable": "可包含空值和覆盖状态，空值不表示零",
+        "description": "数据库已覆盖证券的同日汇总；情绪分按 threshold-v1 计算，见下方公式。",
+        "sourceRefs": [
+          "stock-daily",
+          "stock-daily-basic",
+          "stock-basic",
+          "index-daily",
+          "index-global",
+          "etf-daily"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "daily_price",
+            "name": "当日行情",
+            "fieldPath": ""
+          },
+          {
+            "schema": "core",
+            "table": "security",
+            "name": "证券及上市资料",
+            "fieldPath": ""
+          }
+        ],
         "derived": {
-          "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "value": true,
+          "explanation": "含底座计算结果，见计算口径",
           "evidence": []
         }
       },
@@ -3282,15 +3598,29 @@
         "id": "data.globalIndices",
         "name": "全球指数",
         "role": "response",
-        "type": "数值或对象，依具体响应合同",
-        "unit": "待核验",
-        "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "全球指数",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "type": "对象或数组，子字段依响应合同",
+        "unit": "不适用（对象或记录集合）",
+        "nullable": "可包含空值和覆盖状态，空值不表示零",
+        "description": "按配置品种选取已发布行情，缺失时保留覆盖提示。",
+        "sourceRefs": [
+          "stock-daily",
+          "stock-daily-basic",
+          "stock-basic",
+          "index-daily",
+          "index-global",
+          "etf-daily"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "配置指数或 ETF 行情",
+            "fieldPath": ""
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按已发布输入选取、组织或映射，未增加指标计算",
           "evidence": []
         }
       },
@@ -3298,20 +3628,180 @@
         "id": "data.etfQuotes",
         "name": "ETF 报价",
         "role": "response",
-        "type": "数值或对象，依具体响应合同",
-        "unit": "待核验",
-        "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "ETF 报价",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "type": "对象或数组，子字段依响应合同",
+        "unit": "不适用（对象或记录集合）",
+        "nullable": "可包含空值和覆盖状态，空值不表示零",
+        "description": "按配置品种选取已发布行情，缺失时保留覆盖提示。",
+        "sourceRefs": [
+          "stock-daily",
+          "stock-daily-basic",
+          "stock-basic",
+          "index-daily",
+          "index-global",
+          "etf-daily"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "market_daily_quote",
+            "name": "配置指数或 ETF 行情",
+            "fieldPath": ""
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按已发布输入选取、组织或映射，未增加指标计算",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.turnoverTop10",
+        "name": "成交额前十",
+        "role": "response",
+        "type": "待核验",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "按当日实际覆盖行情生成，见统计公式。",
+        "sourceRefs": [
+          "daily",
+          "daily_basic",
+          "stock_basic",
+          "index_daily",
+          "index_global",
+          "fund_daily"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "daily_price",
+            "name": "统计输入",
+            "fieldPath": ""
+          }
+        ],
+        "derived": {
+          "value": false,
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.limitStats",
+        "name": "涨跌停统计",
+        "role": "response",
+        "type": "待核验",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "按当日实际覆盖行情生成，见统计公式。",
+        "sourceRefs": [
+          "daily",
+          "daily_basic",
+          "stock_basic",
+          "index_daily",
+          "index_global",
+          "fund_daily"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "daily_basic",
+            "name": "统计输入",
+            "fieldPath": ""
+          }
+        ],
+        "derived": {
+          "value": true,
+          "explanation": "底座计算或转换",
+          "evidence": []
+        }
+      },
+      {
+        "id": "data.fundFlowSnapshot",
+        "name": "资金流覆盖状态",
+        "role": "response",
+        "type": "待核验",
+        "unit": "待核验",
+        "nullable": "来源缺失时可为空，具体合同待核验",
+        "description": "资金流当前缺失，不以零代替。",
+        "sourceRefs": [
+          "daily",
+          "daily_basic",
+          "stock_basic",
+          "index_daily",
+          "index_global",
+          "fund_daily"
+        ],
+        "tableRefs": [],
+        "derived": {
+          "value": null,
+          "explanation": "暂无有效供给；当前是缺失状态占位，不存在可用计算值。",
           "evidence": []
         }
       }
     ],
-    "calculations": [],
+    "calculations": [
+      {
+        "id": "market-aggregation",
+        "name": "成交额、宽度与涨跌停统计",
+        "formula": "成交额 = 同日非空 amount（成交额，千元）之和；上涨/下跌家数按 pct_chg（涨跌幅）正负计数；平均涨幅 = 非空 pct_chg 算术平均；涨停/跌停家数按 daily_basic.limit_status 的 2/3 与 5/6 计数",
+        "inputs": [
+          {
+            "id": "amount",
+            "name": "日成交额（千元）"
+          },
+          {
+            "id": "pct_chg",
+            "name": "日涨跌幅（%）"
+          },
+          {
+            "id": "limit_status",
+            "name": "供应商涨跌停状态码"
+          }
+        ],
+        "window": "选定交易日和实际覆盖池",
+        "version": "当前构建口径",
+        "missing": "成交额全缺时为空；涨跌停无有效状态时为空，部分覆盖显式列出。",
+        "evidence": [
+          "backend/app/market/marts/market.py"
+        ]
+      },
+      {
+        "id": "threshold-v1",
+        "name": "阈值情绪分",
+        "formula": "R = 上涨数 ÷ 有效数；T = 阈值上涨数 ÷ 有效数；B = 触及阈值后回落数 ÷ 触及阈值数；情绪分 = 100 × [rise_weight × R + threshold_weight × min(T / rise_normalization, 1) + retreat_weight × (1 − min(B / retreat_normalization, 1))]。阈值上涨为 close ≥ pre_close ×（1＋threshold），触及为 high 达到同一阈值，回落为触及但收盘未达到。参数来自 market-data 配置，默认阈值 9.8%、权重 0.60/0.30/0.10、归一化 5%/50%，最终四舍五入为整数。",
+        "inputs": [
+          {
+            "id": "close",
+            "name": "收盘价"
+          },
+          {
+            "id": "pre_close",
+            "name": "前收盘价"
+          },
+          {
+            "id": "high",
+            "name": "日最高价"
+          },
+          {
+            "id": "vol",
+            "name": "成交量"
+          },
+          {
+            "id": "list_date",
+            "name": "上市日期"
+          },
+          {
+            "id": "sentiment",
+            "name": "阈值、权重、归一化及等级配置"
+          }
+        ],
+        "window": "选定交易日；排除停牌（成交量为零）及已知上市首日",
+        "version": "threshold-v1",
+        "missing": "覆盖缺项、重复或无效行情、无有效样本、无人触及阈值时不输出总分，保留计数和原因；阈值不等同各板块法定涨跌停幅度。",
+        "evidence": [
+          "backend/app/market/sentiment.py"
+        ]
+      }
+    ],
     "access": [
       {
         "kind": "aggregate",
@@ -3330,7 +3820,10 @@
       }
     ],
     "evidence": [
-      "docs/market-supply.md"
+      "docs/market-supply.md",
+      "backend/app/market/marts/market.py",
+      "backend/app/market/sentiment.py",
+      "config/market/market-data.json"
     ]
   },
   {
@@ -3339,13 +3832,85 @@
     "category": "markets",
     "description": "汇集行业、地域、ETF、商品与新闻的已发布产品。",
     "status": "已接入，实际覆盖按留存证据核对",
-    "scope": "按现有数据池、日期及采集合同覆盖",
-    "sources": [],
+    "scope": "实际覆盖证券按所配行业体系与当前地域标签分组；ETF、商品按各自配置池，未供给部分保留缺失状态。地域可能为城市，不保证统一省级口径或历史时点地域。",
+    "sources": [
+      {
+        "name": "Tushare",
+        "api": "daily",
+        "kind": "采集渠道",
+        "description": "输入条目：股票日行情。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "daily_basic",
+        "kind": "采集渠道",
+        "description": "输入条目：每日估值与股本。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "stock_basic",
+        "kind": "采集渠道",
+        "description": "输入条目：证券基础资料。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "index_daily",
+        "kind": "采集渠道",
+        "description": "输入条目：国内指数日行情。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "index_global",
+        "kind": "采集渠道",
+        "description": "输入条目：全球指数日行情。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "fund_daily",
+        "kind": "采集渠道",
+        "description": "输入条目：ETF 日行情。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "index_classify",
+        "kind": "采集渠道",
+        "description": "输入条目：行业分类。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "index_member_all",
+        "kind": "采集渠道",
+        "description": "输入条目：行业成员。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "fut_daily",
+        "kind": "采集渠道",
+        "description": "输入条目：商品期货日行情。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "fut_mapping",
+        "kind": "采集渠道",
+        "description": "输入条目：期货主力合约映射。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "Tushare",
+        "api": "fund_share",
+        "kind": "采集渠道",
+        "description": "输入条目：基金份额与规模。原始发布方及实际使用来源以数据主题和已留存原件为准"
+      },
+      {
+        "name": "新浪财经",
+        "kind": "原始发布与采集渠道",
+        "description": "输入条目：财经快讯。按新闻配置分页采集"
+      }
+    ],
     "frequencies": [
       {
-        "name": "采集规则",
-        "description": "按所属任务和来源配置执行",
-        "task": null
+        "name": "更新规则",
+        "description": "随市场重建发布；地域、ETF、商品和快讯分别按对应任务更新输入，具体日程见各来源条目和运行附录。",
+        "task": "marketPulse"
       }
     ],
     "tables": [
@@ -3360,28 +3925,82 @@
         "table": "page_snapshot",
         "name": "发布历史",
         "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "daily_price",
+        "name": "股票日行情",
+        "fieldPath": ""
+      },
+      {
+        "schema": "raw",
+        "table": "source_payload",
+        "name": "供应商原始响应",
+        "fieldPath": "payload"
+      },
+      {
+        "schema": "core",
+        "table": "adjustment_factor",
+        "name": "复权因子",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "daily_basic",
+        "name": "每日估值与股本",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "security",
+        "name": "证券基础资料",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "market_daily_quote",
+        "name": "国内指数日行情",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "classification",
+        "name": "行业分类",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "classification_member",
+        "name": "行业成员",
+        "fieldPath": ""
+      },
+      {
+        "schema": "core",
+        "table": "content_document",
+        "name": "公开内容",
+        "fieldPath": ""
       }
     ],
     "history": {
       "records": {
-        "value": null,
-        "explanation": "实际历期留存需按来源记录核验",
+        "value": true,
+        "explanation": "保留已发布页面快照；实际日期和版本依留存记录。",
         "evidence": []
       },
       "revisions": {
-        "value": null,
-        "explanation": "来源原件与同业务键更新策略须分别核验",
+        "value": true,
+        "explanation": "保存不同发布版本；不记录同一版本内部的每次中间重算。",
         "evidence": []
       },
       "query": {
         "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "explanation": "现有市场接口读取当前发布，没有历史日期或 version 参数。",
         "evidence": []
       }
     },
     "derived": {
-      "value": false,
-      "explanation": "直接来源数据；各输出字段的转换另行标明",
+      "value": true,
+      "explanation": "包含底座计算的结果，原始输入、计算窗口和缺值条件见下方。",
       "evidence": []
     },
     "fields": [
@@ -3389,15 +4008,53 @@
         "id": "data.heatmapData",
         "name": "热力图分组",
         "role": "response",
-        "type": "数值或对象，依具体响应合同",
-        "unit": "待核验",
-        "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "热力图分组",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "type": "对象或数组，子字段依响应合同",
+        "unit": "不适用（对象或记录集合）",
+        "nullable": "可包含空值和覆盖状态，空值不表示零",
+        "description": "按行业、地域或 ETF 形成分组统计与明细。",
+        "sourceRefs": [
+          "stock-daily",
+          "stock-daily-basic",
+          "stock-basic",
+          "index-daily",
+          "index-global",
+          "etf-daily",
+          "stock-classification",
+          "stock-classification-members",
+          "commodity-daily",
+          "commodity-mapping",
+          "etf-shares",
+          "news"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "daily_price",
+            "name": "行情",
+            "fieldPath": ""
+          },
+          {
+            "schema": "core",
+            "table": "daily_basic",
+            "name": "估值",
+            "fieldPath": ""
+          },
+          {
+            "schema": "core",
+            "table": "classification_member",
+            "name": "行业成员",
+            "fieldPath": ""
+          },
+          {
+            "schema": "core",
+            "table": "security",
+            "name": "地域资料",
+            "fieldPath": ""
+          }
+        ],
         "derived": {
-          "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "value": true,
+          "explanation": "含底座计算结果，见计算口径",
           "evidence": []
         }
       },
@@ -3409,11 +4066,24 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "地域覆盖说明",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "stock-daily",
+          "stock-daily-basic",
+          "stock-basic",
+          "index-daily",
+          "index-global",
+          "etf-daily",
+          "stock-classification",
+          "stock-classification-members",
+          "commodity-daily",
+          "commodity-mapping",
+          "etf-shares",
+          "news"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       },
@@ -3425,11 +4095,24 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "涨幅排行",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "stock-daily",
+          "stock-daily-basic",
+          "stock-basic",
+          "index-daily",
+          "index-global",
+          "etf-daily",
+          "stock-classification",
+          "stock-classification-members",
+          "commodity-daily",
+          "commodity-mapping",
+          "etf-shares",
+          "news"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       },
@@ -3441,11 +4124,24 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "跌幅排行",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "stock-daily",
+          "stock-daily-basic",
+          "stock-basic",
+          "index-daily",
+          "index-global",
+          "etf-daily",
+          "stock-classification",
+          "stock-classification-members",
+          "commodity-daily",
+          "commodity-mapping",
+          "etf-shares",
+          "news"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       },
@@ -3457,11 +4153,24 @@
         "unit": "待核验",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "商品行情",
-        "sourceRefs": [],
+        "sourceRefs": [
+          "stock-daily",
+          "stock-daily-basic",
+          "stock-basic",
+          "index-daily",
+          "index-global",
+          "etf-daily",
+          "stock-classification",
+          "stock-classification-members",
+          "commodity-daily",
+          "commodity-mapping",
+          "etf-shares",
+          "news"
+        ],
         "tableRefs": [],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按来源或发布记录选取、组织；不表示供应商原始响应与此容器结构相同。",
           "evidence": []
         }
       },
@@ -3469,20 +4178,78 @@
         "id": "data.marketNews",
         "name": "市场快讯",
         "role": "response",
-        "type": "数值或对象，依具体响应合同",
-        "unit": "待核验",
-        "nullable": "来源缺失时可为空，具体合同待核验",
-        "description": "市场快讯",
-        "sourceRefs": [],
-        "tableRefs": [],
+        "type": "对象或数组，子字段依响应合同",
+        "unit": "不适用（对象或记录集合）",
+        "nullable": "可包含空值和覆盖状态，空值不表示零",
+        "description": "默认读取快照快讯；news=latest 时附加读取已入库快讯，不向上游采集。",
+        "sourceRefs": [
+          "stock-daily",
+          "stock-daily-basic",
+          "stock-basic",
+          "index-daily",
+          "index-global",
+          "etf-daily",
+          "stock-classification",
+          "stock-classification-members",
+          "commodity-daily",
+          "commodity-mapping",
+          "etf-shares",
+          "news"
+        ],
+        "tableRefs": [
+          {
+            "schema": "core",
+            "table": "content_document",
+            "name": "公开快讯",
+            "fieldPath": ""
+          }
+        ],
         "derived": {
           "value": false,
-          "explanation": "来源直接提供，供应商自身算法另见来源说明",
+          "explanation": "按已发布输入选取、组织或映射，未增加指标计算",
           "evidence": []
         }
       }
     ],
-    "calculations": [],
+    "calculations": [
+      {
+        "id": "heatmap",
+        "name": "热力图与规模换算",
+        "formula": "分组涨幅 = 有效成员涨跌幅的算术平均；分组市值/成交额 = 全部成员对应值之和（任一缺项则该合计为空）；股票总市值由万元 ÷ 10000 转亿元，成交额由千元 ÷ 100000 转亿元。ETF 规模 = 基金份额（万份）× 收盘价 ÷ 10000，单位亿元。",
+        "inputs": [
+          {
+            "id": "pct_chg",
+            "name": "证券日涨跌幅"
+          },
+          {
+            "id": "total_mv",
+            "name": "证券总市值（万元）"
+          },
+          {
+            "id": "amount",
+            "name": "日成交额（千元）"
+          },
+          {
+            "id": "classification_member",
+            "name": "行业成员及生效区间"
+          },
+          {
+            "id": "security.data.area",
+            "name": "当前地域标签"
+          },
+          {
+            "id": "fd_share",
+            "name": "ETF 份额（万份）"
+          }
+        ],
+        "window": "同日有效成员；行业成员按有效期过滤，地域使用当前资料",
+        "version": "当前构建口径",
+        "missing": "缺少分类/地域时按覆盖信息处理，地域可进入未知组；不把缺失市值、成交额或份额当零。",
+        "evidence": [
+          "backend/app/market/marts/market.py"
+        ]
+      }
+    ],
     "access": [
       {
         "kind": "aggregate",
@@ -3501,7 +4268,10 @@
       }
     ],
     "evidence": [
-      "docs/market-supply.md"
+      "docs/market-supply.md",
+      "backend/app/market/marts/market.py",
+      "backend/app/market/marts/region_heatmap.py",
+      "backend/app/market/etf/repository.py"
     ]
   }
 ]
