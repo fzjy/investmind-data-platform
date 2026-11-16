@@ -20,24 +20,8 @@ from app.marts.publication import (
 
 
 @pytest.fixture
-def publisher() -> tuple[SnapshotPublisher, sessionmaker[Session]]:
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:",
-        poolclass=StaticPool,
-        execution_options={
-            "schema_translate_map": {
-                "raw": None,
-                "core": None,
-                "ops": None,
-                "derived": None,
-                "mart": None,
-            }
-        },
-    )
-    Base.metadata.create_all(engine)
-    DerivedBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
-    factory = sessionmaker(engine, expire_on_commit=False)
+def publisher(pg_factory) -> tuple[SnapshotPublisher, sessionmaker[Session]]:
+    factory = pg_factory
     return SnapshotPublisher(factory), factory
 
 
@@ -161,7 +145,7 @@ def test_same_day_older_instant_cannot_demote_newer_macro_pointer(publisher) -> 
     outcome = active.publish_many((older,), "old", passing_results())
     assert outcome.promoted_products == ()
     assert active.current("macro-insights").version == "new"
-    assert active.current("macro-insights").as_of == datetime(2026, 9, 20, 10)
+    assert active.current("macro-insights").as_of == newer.as_of
 
 
 def test_mixed_macro_pointer_times_skip_both_promotions_in_one_release(publisher) -> None:
@@ -277,12 +261,12 @@ def test_same_version_replay_rejects_changed_instant_and_rolls_back(publisher) -
             PageSnapshot.snapshot_version == "v-stable",
         ))
         assert history is not None
-        assert history.as_of == datetime(2026, 9, 14, 10)
+        assert history.as_of == datetime(2026, 9, 14, 10, tzinfo=timezone.utc)
         assert session.scalar(select(PageSnapshot).where(
             PageSnapshot.product == "other-product"
         )) is None
     assert active.current("other-product") is None
-    assert active.current("screener").as_of == datetime(2026, 9, 14, 10)
+    assert active.current("screener").as_of == datetime(2026, 9, 14, 10, tzinfo=timezone.utc)
 
 
 def test_publish_locks_existing_pointer_before_resetting_freshness(
@@ -337,7 +321,7 @@ def test_publish_clears_stale_reason_and_records_freshness_check(publisher) -> N
     assert refreshed.stale is False
     assert refreshed.stale_reason is None
     assert refreshed.freshness_checked_at == refreshed.published_at
-    assert refreshed.freshness_checked_at != previous_check.replace(tzinfo=None)
+    assert refreshed.freshness_checked_at != previous_check
 
 
 def test_publish_many_writes_history_and_switches_all_products(publisher) -> None:
@@ -356,9 +340,12 @@ def test_publish_many_failure_keeps_every_previous_pointer(publisher, monkeypatc
     active, _factory = publisher
     active.publish_many(v1_candidates(), "v1", passing_results())
 
+    write_page = active._write_page_snapshot
+
     def fail_on_portfolio(session, candidate, version) -> None:
         if candidate.product == "portfolio":
             raise RuntimeError("portfolio write failed")
+        return write_page(session, candidate, version)
 
     monkeypatch.setattr(active, "_write_page_snapshot", fail_on_portfolio)
     with pytest.raises(RuntimeError):

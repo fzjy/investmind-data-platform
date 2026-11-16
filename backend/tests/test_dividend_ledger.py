@@ -35,11 +35,8 @@ def evidence(rows):
 
 
 @pytest.fixture
-def saved():
-    engine = create_engine('sqlite://', execution_options={'schema_translate_map':{'raw':None, 'ops':None, 'mart':None, 'core':None}})
-    for model in (IngestionBatch, SourcePayload, JobCursor, PublishedSnapshot, Security):
-        model.__table__.create(engine)
-    with Session(engine, expire_on_commit=False) as s:
+def saved(pg_factory):
+    with pg_factory() as s:
         base = PublishedSnapshot(product='screener', version='base-one', as_of=datetime(2026,10,30,tzinfo=timezone.utc), payload={})
         frozen = dict(baseVersion='base-one', asOf='2026-10-30', symbols=[SYMBOL], apiName='dividend', fields=list(DIVIDEND_FIELDS))
         frozen['identity'] = content_hash(frozen)
@@ -47,7 +44,9 @@ def saved():
         batch = IngestionBatch(id='batch-one', source='tushare', dataset=DATASET, status='completed', request_count=1, row_count=1, rejected_count=0)
         raw = SourcePayload(batch_id=batch.id, api_name='dividend', request_hash=request_hash('dividend', {'ts_code':SYMBOL}, DIVIDEND_FIELDS),
             content_hash='', payload={}, captured_at=datetime(2026,10,31,2,3,tzinfo=timezone.utc))
-        s.add_all([base,control,batch,raw, Security(ts_code=SYMBOL, symbol='600001', name='测试证券', list_date=date(2000, 1, 1))]); s.flush()
+        s.add(batch)
+        s.flush()
+        s.add_all([base,control,raw, Security(ts_code=SYMBOL, symbol='600001', name='测试证券', list_date=date(2000, 1, 1))]); s.flush()
         unit = JobCursor(job_name=JOB_NAME, cursor_key=f"{frozen['identity']}:unit:{SYMBOL}", cursor_value={})
         s.add(unit)
 
@@ -62,7 +61,6 @@ def saved():
             s.commit()
         put([row()])
         yield s, base, control, unit, raw, put
-    engine.dispose()
 
 
 def build(saved, **changes):

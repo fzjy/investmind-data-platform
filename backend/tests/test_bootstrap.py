@@ -28,17 +28,6 @@ from app.db.models import PageSnapshot, PublishedSnapshot, StockWorkbenchSnapsho
 from backend.tests.support.fixtures import FixtureStore
 
 
-def _mart_factory() -> sessionmaker:
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:",
-        poolclass=StaticPool,
-        connect_args={"check_same_thread": False},
-        execution_options={"schema_translate_map": {"mart": None}},
-    )
-    MartBase.metadata.create_all(engine)
-    return sessionmaker(engine, expire_on_commit=False)
-
-
 def _seed_ready_release(
     factory: sessionmaker,
     symbols: tuple[str, ...],
@@ -196,8 +185,8 @@ def test_bootstrap_builds_fixed_cli_arguments() -> None:
     )
 
 
-def test_readiness_requires_all_products_and_one_version() -> None:
-    factory = _mart_factory()
+def test_readiness_requires_all_products_and_one_version(pg_factory) -> None:
+    factory = pg_factory
     symbols = ("600519.SH", "000001.SZ")
     _seed_ready_release(factory, symbols)
     result = SnapshotReadinessChecker(factory).check(symbols)
@@ -206,8 +195,8 @@ def test_readiness_requires_all_products_and_one_version() -> None:
     assert result.problems == ()
 
 
-def test_readiness_reports_missing_product() -> None:
-    factory = _mart_factory()
+def test_readiness_reports_missing_product(pg_factory) -> None:
+    factory = pg_factory
     _seed_ready_release(factory, ("600519.SH",))
     with factory.begin() as session:
         session.delete(session.get(PublishedSnapshot, "portfolio"))
@@ -217,8 +206,8 @@ def test_readiness_reports_missing_product() -> None:
 
 
 @pytest.mark.parametrize("macro_version", [None, "macro-v2"])
-def test_bootstrap_skips_securities_with_independent_or_unpublished_macro(macro_version: str | None) -> None:
-    factory = _mart_factory()
+def test_bootstrap_skips_securities_with_independent_or_unpublished_macro(pg_factory, macro_version: str | None) -> None:
+    factory = pg_factory
     symbols = ("600519.SH",)
     _seed_ready_release(factory, symbols)
     with factory.begin() as session:
@@ -240,8 +229,8 @@ def test_bootstrap_skips_securities_with_independent_or_unpublished_macro(macro_
 
 
 @pytest.mark.parametrize("fault", ["one-missing", "mismatch", "missing-history"])
-def test_readiness_rejects_broken_macro_domain(fault: str) -> None:
-    factory = _mart_factory()
+def test_readiness_rejects_broken_macro_domain(pg_factory, fault: str) -> None:
+    factory = pg_factory
     _seed_ready_release(factory, ("600519.SH",))
     with factory.begin() as session:
         pointer = session.get(PublishedSnapshot, "macro-insights")
@@ -256,8 +245,8 @@ def test_readiness_rejects_broken_macro_domain(fault: str) -> None:
     assert SnapshotReadinessChecker(factory).check(("600519.SH",)).ready is False
 
 
-def test_readiness_rejects_mixed_versions() -> None:
-    factory = _mart_factory()
+def test_readiness_rejects_mixed_versions(pg_factory) -> None:
+    factory = pg_factory
     _seed_ready_release(factory, ("600519.SH",))
     with factory.begin() as session:
         session.get(PublishedSnapshot, "portfolio").version = "v2"
@@ -266,8 +255,8 @@ def test_readiness_rejects_mixed_versions() -> None:
     assert "published products use multiple versions" in result.problems
 
 
-def test_readiness_requires_workbench_row_for_the_release_version() -> None:
-    factory = _mart_factory()
+def test_readiness_requires_workbench_row_for_the_release_version(pg_factory) -> None:
+    factory = pg_factory
     _seed_ready_release(factory, ("600519.SH",))
     with factory.begin() as session:
         session.delete(session.query(StockWorkbenchSnapshot).one())
@@ -276,8 +265,8 @@ def test_readiness_requires_workbench_row_for_the_release_version() -> None:
     assert "missing workbench snapshot: 600519.SH@v1" in result.problems
 
 
-def test_readiness_rejects_empty_payload_and_missing_page_snapshot() -> None:
-    factory = _mart_factory()
+def test_readiness_rejects_empty_payload_and_missing_page_snapshot(pg_factory) -> None:
+    factory = pg_factory
     _seed_ready_release(factory, ("600519.SH",))
     with factory.begin() as session:
         session.get(PublishedSnapshot, "macro-insights").payload = {}
@@ -289,8 +278,8 @@ def test_readiness_rejects_empty_payload_and_missing_page_snapshot() -> None:
     assert "missing page snapshot: portfolio@v1" in result.problems
 
 
-def test_readiness_rejects_nonempty_payload_that_violates_product_dto() -> None:
-    factory = _mart_factory()
+def test_readiness_rejects_nonempty_payload_that_violates_product_dto(pg_factory) -> None:
+    factory = pg_factory
     _seed_ready_release(factory, ("600519.SH",))
     with factory.begin() as session:
         session.get(PublishedSnapshot, "market-overview").payload = {

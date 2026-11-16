@@ -106,7 +106,7 @@ def _universe_backfill_settings(
     *,
     profile: str = "representative-50",
     as_of: date | None = date(2026, 9, 12),
-    database_url: str = "sqlite+pysqlite:///:memory:",
+    database_url: str = "postgresql+psycopg://controlled.invalid/test",
     token: str = "test-token",
 ) -> Settings:
     return Settings(
@@ -751,7 +751,7 @@ def test_sync_status_outputs_one_json_document_and_expected_exit_code(
 ) -> None:
     settings = Settings(
         _env_file=None,
-        database_url="sqlite+pysqlite:///:memory:",
+        database_url="postgresql+psycopg://controlled.invalid/test",
         tushare_token=None,
     )
     monkeypatch.setattr(
@@ -779,7 +779,7 @@ def test_sync_status_unknown_report_status_fails_safely(
 ) -> None:
     settings = Settings(
         _env_file=None,
-        database_url="sqlite+pysqlite:///:memory:",
+        database_url="postgresql+psycopg://controlled.invalid/test",
         tushare_token=None,
     )
     monkeypatch.setattr(
@@ -807,7 +807,7 @@ def test_sync_status_needs_no_token_and_never_opens_tushare_runtime(
 ) -> None:
     settings = Settings(
         _env_file=None,
-        database_url="sqlite+pysqlite:///:memory:",
+        database_url="postgresql+psycopg://controlled.invalid/test",
         tushare_token=None,
     )
     monkeypatch.setattr(
@@ -881,12 +881,7 @@ def test_sync_status_settings_failure_uses_a_fixed_safe_diagnostic(
         assert secret not in combined_output
 
 
-def _sync_status_database_url(path: Path) -> str:
-    database_url = f"sqlite+pysqlite:///{path.as_posix()}"
-    engine, factory = create_engine_and_session(database_url)
-    Base.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
+def seed_sync_status(factory):
     with factory.begin() as session:
         session.add_all(
             [
@@ -914,21 +909,21 @@ def _sync_status_database_url(path: Path) -> str:
                 ),
             ]
         )
-    engine.dispose()
-    return database_url
 
 
-def _sqlite_state(database_url: str) -> dict[str, tuple[tuple[str, ...], ...]]:
+def _database_state(database_url: str) -> dict[str, tuple[tuple[str, ...], ...]]:
     engine, _factory = create_engine_and_session(database_url)
     try:
         metadata = MetaData()
         with engine.connect() as connection:
-            table_names = sorted(sqlalchemy_inspect(connection).get_table_names())
+            inspector = sqlalchemy_inspect(connection)
+            tables = [(schema, name) for schema in ("core", "raw", "ops", "derived", "mart", "public")
+                      for name in inspector.get_table_names(schema=schema)]
             state: dict[str, tuple[tuple[str, ...], ...]] = {}
-            for table_name in table_names:
-                table = Table(table_name, metadata, autoload_with=connection)
+            for schema, table_name in tables:
+                table = Table(table_name, metadata, schema=schema, autoload_with=connection)
                 rows = connection.execute(select(table)).mappings()
-                state[table_name] = tuple(
+                state[table.fullname] = tuple(
                     sorted(
                         tuple(f"{key}={value!r}" for key, value in row.items())
                         for row in rows
@@ -940,11 +935,13 @@ def _sqlite_state(database_url: str) -> dict[str, tuple[tuple[str, ...], ...]]:
 
 
 @pytest.mark.parametrize("profile", ["all", "custom"])
-def test_build_sync_status_service_uses_real_sqlite_read_only(
+def test_build_sync_status_service_uses_postgres_read_only(
+    pg_factory, pg_schema_url,
     tmp_path: Path,
     profile: str,
 ) -> None:
-    database_url = _sync_status_database_url(tmp_path / f"sync-status-{profile}.db")
+    database_url = pg_schema_url
+    seed_sync_status(pg_factory)
     universe_file = tmp_path / "custom-universe.json"
     universe_file.write_text('["600519.SH"]', encoding="utf-8")
     settings = Settings(
@@ -955,14 +952,14 @@ def test_build_sync_status_service_uses_real_sqlite_read_only(
         sync_universe=profile,
         sync_universe_file=universe_file if profile == "custom" else None,
     )
-    before = _sqlite_state(database_url)
+    before = _database_state(database_url)
 
     with main_module.build_sync_status_service(settings) as service:
         payload = service.check(
             datetime(2026, 9, 5, 12, 0, tzinfo=UTC)
         ).to_payload()
 
-    after = _sqlite_state(database_url)
+    after = _database_state(database_url)
     assert payload["status"] == "degraded"
     assert payload["sync"]["universe"]["profile"] == profile
     assert before == after
@@ -1165,7 +1162,7 @@ def test_sync_daily_defaults_to_representative_and_reuses_one_selection(
     )
     settings = Settings(
         data_backend="database",
-        database_url="sqlite+pysqlite:///:memory:",
+        database_url="postgresql+psycopg://controlled.invalid/test",
         tushare_token="test-token",
         tushare_mode="standard",
         tushare_page_size=123,
@@ -1222,7 +1219,7 @@ def test_sync_daily_symbol_outside_universe_closes_runtime(
     events: list[str] = []
     settings = Settings(
         data_backend="database",
-        database_url="sqlite+pysqlite:///:memory:",
+        database_url="postgresql+psycopg://controlled.invalid/test",
         tushare_token="test-token",
     )
     selection = UniverseSelection(
@@ -1537,14 +1534,6 @@ def test_smoke_tushare_reports_provider_error_without_token(monkeypatch) -> None
     assert "test-token" not in result.output
 
 
-def _database_url(path: Path) -> str:
-    url = f"sqlite+pysqlite:///{path.as_posix()}"
-    engine, _factory = create_engine_and_session(url)
-    Base.metadata.create_all(engine)
-    engine.dispose()
-    return url
-
-
 def _successful_report(*, results: tuple[object, ...] = ()) -> SimpleNamespace:
     return SimpleNamespace(
         status="completed",
@@ -1643,7 +1632,7 @@ def test_backfill_wires_rate_limit_and_page_size_by_mode(monkeypatch) -> None:
         classmethod(
             lambda cls: Settings(
                 _env_file=None,
-                database_url="sqlite+pysqlite:///:memory:",
+                database_url="postgresql+psycopg://controlled.invalid/test",
                 tushare_token="test-token",
                 tushare_standard_requests_per_minute=17,
                 tushare_vip_requests_per_minute=88,
@@ -1758,7 +1747,7 @@ def test_backfill_json_includes_paginated_plans_and_flattened_batches(monkeypatc
         classmethod(
             lambda cls: Settings(
                 _env_file=None,
-                database_url="sqlite+pysqlite:///:memory:",
+                database_url="postgresql+psycopg://controlled.invalid/test",
                 tushare_token="test-token",
             )
         ),
@@ -1883,7 +1872,7 @@ def test_backfill_partial_paginated_error_prints_aggregate_exits_four_and_redact
         classmethod(
             lambda cls: Settings(
                 _env_file=None,
-                database_url="sqlite+pysqlite:///:memory:",
+                database_url="postgresql+psycopg://controlled.invalid/test",
                 tushare_token="test-token",
             )
         ),
@@ -1944,8 +1933,10 @@ def test_backfill_partial_paginated_error_prints_aggregate_exits_four_and_redact
     assert "test-token" not in result.output
 
 
-def test_backfill_executes_pipeline_and_prints_batch_summary(monkeypatch, tmp_path) -> None:
-    database_url = _database_url(tmp_path / "backfill-success.db")
+def test_backfill_executes_pipeline_and_prints_batch_summary(pg_schema_url, pg_factory, monkeypatch, tmp_path) -> None:
+    database_url = pg_schema_url
+    with pg_factory.begin() as session:
+        session.add_all(Security(ts_code=code, symbol=code[:6], name=code) for code in ("600519.SH", "000001.SZ"))
 
     class FakeClient:
         def __init__(self, token: str, **_: object) -> None:
@@ -2048,8 +2039,8 @@ def test_backfill_executes_pipeline_and_prints_batch_summary(monkeypatch, tmp_pa
     engine.dispose()
 
 
-def test_backfill_persists_provider_failure_and_exits_nonzero(monkeypatch, tmp_path) -> None:
-    database_url = _database_url(tmp_path / "backfill-failure.db")
+def test_backfill_persists_provider_failure_and_exits_nonzero(pg_schema_url, monkeypatch, tmp_path) -> None:
+    database_url = pg_schema_url
 
     class FailingClient:
         def __init__(self, token: str, **_: object) -> None:
@@ -2118,10 +2109,13 @@ def test_backfill_persists_provider_failure_and_exits_nonzero(monkeypatch, tmp_p
 
 
 def test_retry_failures_replays_a_persisted_request_and_resolves_it(
+    pg_schema_url, pg_factory,
     monkeypatch,
     tmp_path,
 ) -> None:
-    database_url = _database_url(tmp_path / "retry-failures.db")
+    database_url = pg_schema_url
+    with pg_factory.begin() as session:
+        session.add_all(Security(ts_code=code, symbol=code[:6], name=code) for code in ("600519.SH", "000001.SZ"))
     monkeypatch.setattr(
         main_module.Settings,
         "from_env",
@@ -2254,10 +2248,13 @@ def test_retry_failures_replays_a_persisted_request_and_resolves_it(
 
 
 def test_retry_failures_resumes_the_saved_offset_with_the_original_page_size(
+    pg_schema_url, pg_factory,
     monkeypatch,
     tmp_path,
 ) -> None:
-    database_url = _database_url(tmp_path / "retry-resume.db")
+    database_url = pg_schema_url
+    with pg_factory.begin() as session:
+        session.add_all(Security(ts_code=code, symbol=code[:6], name=code) for code in ("600519.SH", "000001.SZ"))
 
     def settings_with_page_size(page_size: int):
         return classmethod(
@@ -2394,10 +2391,11 @@ def test_retry_failures_resumes_the_saved_offset_with_the_original_page_size(
 
 
 def test_retry_failures_preserves_unretryable_failures_and_exits_four(
+    pg_schema_url,
     monkeypatch,
     tmp_path,
 ) -> None:
-    database_url = _database_url(tmp_path / "retry-unretryable.db")
+    database_url = pg_schema_url
     engine, factory = create_engine_and_session(database_url)
     with factory.begin() as session:
         session.add(
@@ -2408,6 +2406,7 @@ def test_retry_failures_preserves_unretryable_failures_and_exits_four(
                 status="failed",
             )
         )
+        session.flush()
         session.add(
             JobFailure(
                 job_run_id="run-unretryable",
@@ -2483,13 +2482,14 @@ def test_retry_failures_preserves_unretryable_failures_and_exits_four(
     ],
 )
 def test_retry_failures_without_token_never_attempts_or_changes_a_retryable_record(
+    pg_schema_url,
     monkeypatch,
     tmp_path,
     request_payload,
     expected_exit_code,
     expected_error_code,
 ) -> None:
-    database_url = _database_url(tmp_path / f"retry-no-token-{expected_exit_code}.db")
+    database_url = pg_schema_url
     engine, factory = create_engine_and_session(database_url)
     with factory.begin() as session:
         session.add(
@@ -2500,6 +2500,7 @@ def test_retry_failures_without_token_never_attempts_or_changes_a_retryable_reco
                 status="failed",
             )
         )
+        session.flush()
         session.add(
             JobFailure(
                 job_run_id="run-no-token",
@@ -2555,10 +2556,11 @@ def test_retry_failures_without_token_never_attempts_or_changes_a_retryable_reco
 
 
 def test_retry_failures_redacts_token_when_the_provider_fails_again(
+    pg_schema_url,
     monkeypatch,
     tmp_path,
 ) -> None:
-    database_url = _database_url(tmp_path / "retry-redaction.db")
+    database_url = pg_schema_url
     monkeypatch.setattr(
         main_module.Settings,
         "from_env",
@@ -2632,8 +2634,8 @@ def test_retry_failures_rejects_an_unknown_dataset() -> None:
     assert "unsupported dataset" in result.output
 
 
-def test_backfill_reports_sanitized_history_startup_failure(monkeypatch, tmp_path) -> None:
-    database_url = _database_url(tmp_path / "backfill-history-failure.db")
+def test_backfill_reports_sanitized_history_startup_failure(pg_schema_url, monkeypatch, tmp_path) -> None:
+    database_url = pg_schema_url
 
     class FakeClient:
         def __init__(self, token: str, **_: object) -> None:

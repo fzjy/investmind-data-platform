@@ -26,8 +26,8 @@ def write(root, name="content.json", **changes):
     ({"securities": [], "securityNames": ["浦发"]}, []),
     ({"securities": [], "title": "浦发银行 600000.SH 宣布分红"}, []),
 ])
-def test_exact_unique_hints_only(tmp_path, hints, want):
-    root, importer, factory = _importer(tmp_path)
+def test_exact_unique_hints_only(pg_factory, tmp_path, hints, want):
+    root, importer, factory = _importer(tmp_path, pg_factory)
     with factory.begin() as session:
         session.get(Security, "600000.SH").data = {"fullname": "上海浦东发展银行股份有限公司"}
         session.add(SecurityNameHistory(ts_code="600000.SH", name="浦发旧名"))
@@ -36,8 +36,8 @@ def test_exact_unique_hints_only(tmp_path, hints, want):
         assert session.scalar(select(ContentDocument)).securities == want
 
 
-def test_ambiguous_name_and_code_are_not_linked(tmp_path):
-    root, importer, factory = _importer(tmp_path)
+def test_ambiguous_name_and_code_are_not_linked(pg_factory, tmp_path):
+    root, importer, factory = _importer(tmp_path, pg_factory)
     with factory.begin() as session:
         session.add(Security(ts_code="600000.SZ", symbol="600000", name="浦发银行"))
     importer.import_file(write(root, securities=["600000"], securityNames=["浦发银行"]))
@@ -45,8 +45,8 @@ def test_ambiguous_name_and_code_are_not_linked(tmp_path):
         assert session.scalar(select(ContentDocument)).securities == []
 
 
-def test_unknown_explicit_code_rejected_on_every_attempt(tmp_path):
-    root, importer, factory = _importer(tmp_path)
+def test_unknown_explicit_code_rejected_on_every_attempt(pg_factory, tmp_path):
+    root, importer, factory = _importer(tmp_path, pg_factory)
     path = write(root, securities=["999999.SH"])
     for _ in range(2):
         with pytest.raises(ImportValidationFailed):
@@ -56,8 +56,8 @@ def test_unknown_explicit_code_rejected_on_every_attempt(tmp_path):
 
 
 @pytest.mark.parametrize("status", ["link_only", "unknown", "restricted"])
-def test_restricted_text_never_stored_or_displayed(tmp_path, status):
-    root, importer, factory = _importer(tmp_path)
+def test_restricted_text_never_stored_or_displayed(pg_factory, tmp_path, status):
+    root, importer, factory = _importer(tmp_path, pg_factory)
     importer.import_file(write(root, copyrightStatus=status))
     with factory() as session:
         document = session.scalar(select(ContentDocument))
@@ -74,23 +74,23 @@ def test_restricted_text_never_stored_or_displayed(tmp_path, status):
 
 
 @pytest.mark.parametrize("status", ["licensed", "public_domain"])
-def test_permitted_text_reaches_mart(tmp_path, status):
-    root, importer, factory = _importer(tmp_path)
+def test_permitted_text_reaches_mart(pg_factory, tmp_path, status):
+    root, importer, factory = _importer(tmp_path, pg_factory)
     importer.import_file(write(root, copyrightStatus=status))
     item = ContentMartBuilder(ContentRepository(factory)).build(datetime(2026, 10, 11, tzinfo=timezone.utc))[0]
     assert item["summary"] == "摘要" and item["body"] == "正文"
 
 
-def test_content_duplicate_reports_content_products(tmp_path):
-    root, importer, _ = _importer(tmp_path)
+def test_content_duplicate_reports_content_products(pg_factory, tmp_path):
+    root, importer, _ = _importer(tmp_path, pg_factory)
     path = write(root)
     first, second = importer.import_file(path), importer.import_file(path)
     assert first.affected_products == second.affected_products == ("market-explorer", "stock-workbench:600000.SH")
 
 
-def test_linked_query_filters_before_limit():
-    from backend.tests.jobs.test_build_and_publish_integration import _factory
-    factory = _factory()
+def test_linked_query_filters_before_limit(pg_factory):
+
+    factory = pg_factory
     with factory.begin() as session:
         for index in range(170):
             session.add(ContentDocument(source="x", dedupe_key=str(index), content_type="news", title=str(index),
@@ -100,16 +100,16 @@ def test_linked_query_filters_before_limit():
     assert [item["title"] for item in items] == ["0"]
 
 
-def test_content_cutoff_compares_the_same_instant_across_timezones(tmp_path):
-    root, importer, factory = _importer(tmp_path)
+def test_content_cutoff_compares_the_same_instant_across_timezones(pg_factory, tmp_path):
+    root, importer, factory = _importer(tmp_path, pg_factory)
     importer.import_file(write(root, publishedAt="2026-08-17T10:00:00+08:00", copyrightStatus="licensed"))
     builder = ContentMartBuilder(ContentRepository(factory))
     assert builder.build(datetime(2026, 8, 17, 1, tzinfo=timezone.utc)) == []
     assert [item["title"] for item in builder.build(datetime(2026, 8, 17, 3, tzinfo=timezone.utc))] == ["测试新闻"]
 
 
-def test_mixed_file_security_errors_keep_original_record_numbers(tmp_path):
-    root, importer, _ = _importer(tmp_path)
+def test_mixed_file_security_errors_keep_original_record_numbers(pg_factory, tmp_path):
+    root, importer, _ = _importer(tmp_path, pg_factory)
     path = root / "mixed.jsonl"
     macro = {"schemaVersion": "1.0", "recordType": "macro", "source": "controlled",
         "seriesId": "cn.cpi.yoy", "name": "CPI", "region": "CN", "frequency": "monthly",

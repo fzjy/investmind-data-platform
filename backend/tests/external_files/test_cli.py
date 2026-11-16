@@ -89,7 +89,7 @@ def test_rebuild_macro_emits_publication_version_products_and_quality(monkeypatc
     ("failed", "CONTENT_REBUILD_FAILED", 4),
 ])
 def test_rebuild_content_reports_real_runtime_status(monkeypatch, status, code, expected) -> None:
-    settings = main_module.Settings(database_url="sqlite://")
+    settings = main_module.Settings(database_url="postgresql+psycopg://controlled.invalid/test")
     monkeypatch.setattr(main_module.Settings, "from_env", lambda: settings)
     received = []
     def rebuild(actual):
@@ -113,7 +113,7 @@ def test_rebuild_content_configuration_error_does_not_expose_secret(monkeypatch)
 
 
 def test_rebuild_macro_publication_failure_exits_four(monkeypatch) -> None:
-    monkeypatch.setattr(main_module.Settings, "from_env", lambda: main_module.Settings(database_url="sqlite://"))
+    monkeypatch.setattr(main_module.Settings, "from_env", lambda: main_module.Settings(database_url="postgresql+psycopg://controlled.invalid/test"))
     monkeypatch.setattr(main_module, "_run_macro_rebuild", lambda settings: (_ for _ in ()).throw(
         RuntimeError("publication failed")
     ))
@@ -121,27 +121,17 @@ def test_rebuild_macro_publication_failure_exits_four(monkeypatch) -> None:
     assert result.exit_code == 4
 
 
-def test_rebuild_macro_lock_conflict_exits_five(monkeypatch) -> None:
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:", poolclass=StaticPool,
-        execution_options={"schema_translate_map": {
-            "raw": None, "core": None, "ops": None, "derived": None, "mart": None,
-        }},
-    )
-    Base.metadata.create_all(engine)
-    DerivedBase.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
-    factory = sessionmaker(engine, expire_on_commit=False)
+def test_rebuild_macro_lock_conflict_exits_five(pg_factory, monkeypatch) -> None:
+    factory = pg_factory
+    engine = factory.kw["bind"]
 
     class BusyLock:
         def try_acquire(self, key):
             assert key == "data-publication"
             return False
 
-    monkeypatch.setattr(main_module, "create_engine_and_session", lambda url: (engine, factory))
     monkeypatch.setattr(main_module, "job_lock_for_engine", lambda engine: BusyLock())
-    monkeypatch.setattr(main_module.Settings, "from_env", lambda: main_module.Settings(database_url="sqlite://"))
+    monkeypatch.setattr(main_module.Settings, "from_env", lambda: main_module.Settings(database_url=engine.url.render_as_string(hide_password=False)))
     result = CliRunner().invoke(app, ["rebuild-external-marts", "--product", "macro"])
     assert result.exit_code == 5, result.output
     assert "MacroRebuildLockedError" in result.stderr
@@ -183,20 +173,11 @@ def test_macro_rebuild_recomputes_stale_from_visible_revision_and_state_timing(
         )[0].status == "fresh"
 
 
-def test_macro_rebuild_publishes_imported_observations_through_macro_job(monkeypatch, tmp_path: Path) -> None:
+def test_macro_rebuild_publishes_imported_observations_through_macro_job(pg_factory, monkeypatch, tmp_path: Path) -> None:
     catalog = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE)
     now = datetime.now(UTC)
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:", poolclass=StaticPool,
-        execution_options={"schema_translate_map": {
-            "raw": None, "core": None, "ops": None, "derived": None, "mart": None,
-        }},
-    )
-    Base.metadata.create_all(engine)
-    DerivedBase.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
-    factory = sessionmaker(engine, expire_on_commit=False)
+    factory = pg_factory
+    engine = factory.kw["bind"]
     with factory.begin() as session:
         session.add(MacroSeriesState(
             series_id=catalog.series[0].id,
@@ -218,12 +199,10 @@ def test_macro_rebuild_publishes_imported_observations_through_macro_job(monkeyp
             revision="initial", value=Decimal("1"), source_url="https://example.com",
         ) for series in catalog.series if series.sources)
     _import_source_less(factory, catalog, tmp_path, (now - timedelta(days=1)).date(), now - timedelta(hours=1), "initial")
-    monkeypatch.setattr(main_module, "create_engine_and_session", lambda url: (engine, factory))
-    monkeypatch.setattr(engine, "dispose", lambda: None)
     monkeypatch.setattr(main_module, "BuildAndPublishJob", lambda *args, **kwargs: (_ for _ in ()).throw(
         AssertionError("stock rebuild must not run")
     ))
-    report = main_module._run_macro_rebuild(main_module.Settings(database_url="sqlite://"))
+    report = main_module._run_macro_rebuild(main_module.Settings(database_url=engine.url.render_as_string(hide_password=False)))
     assert report.status == "completed", report.quality
     assert report.products == ("macro-transmission", "macro-insights")
     with factory() as session:
@@ -245,22 +224,14 @@ def test_macro_rebuild_publishes_imported_observations_through_macro_job(monkeyp
     ("current_failure", "source_failed"),
 ])
 def test_macro_rebuild_publishes_distinct_expiry_and_provider_failure_reasons(
+    pg_factory,
     monkeypatch, state_kind, expected_reason, tmp_path: Path,
 ) -> None:
     catalog = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE)
     now = datetime.now(UTC)
     old_date = (now - timedelta(days=1000)).date()
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:", poolclass=StaticPool,
-        execution_options={"schema_translate_map": {
-            "raw": None, "core": None, "ops": None, "derived": None, "mart": None,
-        }},
-    )
-    Base.metadata.create_all(engine)
-    DerivedBase.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
-    factory = sessionmaker(engine, expire_on_commit=False)
+    factory = pg_factory
+    engine = factory.kw["bind"]
     with factory.begin() as session:
         if state_kind != "absent":
             session.add(MacroSeriesState(
@@ -280,11 +251,9 @@ def test_macro_rebuild_publishes_distinct_expiry_and_provider_failure_reasons(
             revision="expired-import", value=Decimal("1"), source_url="https://example.com",
         ) for series in catalog.series if series.sources)
     _import_source_less(factory, catalog, tmp_path, old_date, now - timedelta(hours=1), "expired-import")
-    monkeypatch.setattr(main_module, "create_engine_and_session", lambda url: (engine, factory))
     dispose = engine.dispose
-    monkeypatch.setattr(engine, "dispose", lambda: None)
     try:
-        report = main_module._run_macro_rebuild(main_module.Settings(database_url="sqlite://"))
+        report = main_module._run_macro_rebuild(main_module.Settings(database_url=engine.url.render_as_string(hide_password=False)))
         assert report.status == "completed", report.quality
         with factory() as session:
             snapshots = session.scalars(select(PublishedSnapshot)).all()
@@ -300,21 +269,12 @@ def test_macro_rebuild_publishes_distinct_expiry_and_provider_failure_reasons(
         dispose()
 
 
-def test_macro_rebuild_uses_one_observation_view_when_import_arrives_during_publish(monkeypatch, tmp_path: Path) -> None:
+def test_macro_rebuild_uses_one_observation_view_when_import_arrives_during_publish(pg_factory, monkeypatch, tmp_path: Path) -> None:
     catalog = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE)
     now = datetime.now(UTC)
     old_date = (now - timedelta(days=1)).date()
-    engine = create_engine(
-        "sqlite+pysqlite:///:memory:", poolclass=StaticPool,
-        execution_options={"schema_translate_map": {
-            "raw": None, "core": None, "ops": None, "derived": None, "mart": None,
-        }},
-    )
-    Base.metadata.create_all(engine)
-    DerivedBase.metadata.create_all(engine)
-    ExternalBase.metadata.create_all(engine)
-    MartBase.metadata.create_all(engine)
-    factory = sessionmaker(engine, expire_on_commit=False)
+    factory = pg_factory
+    engine = factory.kw["bind"]
     with factory.begin() as session:
         session.add(MacroSeriesState(
             series_id=catalog.series[0].id, catalog_version=catalog.catalog_version,
@@ -333,8 +293,6 @@ def test_macro_rebuild_uses_one_observation_view_when_import_arrives_during_publ
             revision="initial", value=Decimal("1"), source_url="https://example.com",
         ) for series in catalog.series if series.sources)
     _import_source_less(factory, catalog, tmp_path, old_date, now - timedelta(hours=1), "initial")
-    monkeypatch.setattr(main_module, "create_engine_and_session", lambda url: (engine, factory))
-    monkeypatch.setattr(engine, "dispose", lambda: None)
     held = False
     reads = {"states": 0, "observations": 0}
 
@@ -401,7 +359,7 @@ def test_macro_rebuild_uses_one_observation_view_when_import_arrives_during_publ
 
     monkeypatch.setattr(main_module.MacroPublishJob, "publish", import_then_publish)
     monkeypatch.setattr(main_module.MacroMartBuilder, "build", import_between_builds)
-    report = main_module._run_macro_rebuild(main_module.Settings(database_url="sqlite://"))
+    report = main_module._run_macro_rebuild(main_module.Settings(database_url=engine.url.render_as_string(hide_password=False)))
     assert report.status == "completed"
     with factory() as session:
         rows = session.scalars(select(PublishedSnapshot)).all()
