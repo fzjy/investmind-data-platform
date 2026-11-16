@@ -101,7 +101,7 @@ class ManagedSchedule:
         name = row["name"]
         def admitted():
             execution_id = self.store.admit(name, row["generation"], recovery=recovery,
-                                    revision=None if recovery else row["revision"])
+                                            revision=row["revision"])
             if execution_id is None:
                 return
             try:

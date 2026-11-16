@@ -139,19 +139,19 @@ def managed_news(store, *, runner=None, settings_loader=Settings.from_env, sleep
     from app.jobs.scheduler_control import summarize
     from datetime import UTC, datetime, timedelta
     due = 0
-    last_generation = None
+    last_revision = None
     while not stop_requested():
         row = store.get("news")
         if not row["enabled"]:
             store.acknowledge(row)
             return 0
         generation = row["generation"]
-        if last_generation != generation:
+        if last_revision != row["revision"]:
             due = 0
-            if last_generation is None and row["recovered"] == generation:
+            if row["recovered"] == generation:
                 # 父进程重试或冷启动时，已领取的本轮不能降格为立即轮询。
                 config = Config.read(settings_loader().news_config_path)
-                if row["next_run"]:
+                if last_revision is None and row["next_run"] and row["effective"] == row["rule"]:
                     scheduled = datetime.fromisoformat(row["next_run"])
                 elif row["finished"]:
                     scheduled = datetime.fromisoformat(row["finished"]) + timedelta(seconds=config.interval_seconds)
@@ -159,7 +159,7 @@ def managed_news(store, *, runner=None, settings_loader=Settings.from_env, sleep
                     scheduled = datetime.now(UTC) + timedelta(seconds=config.interval_seconds)
                 due = time.monotonic() + max(0, (scheduled - datetime.now(UTC)).total_seconds())
                 store.acknowledge(row, scheduled.isoformat())
-        last_generation = generation
+        last_revision = row["revision"]
         if time.monotonic() < due:
             sleep(min(0.5, due - time.monotonic()))
             continue
@@ -169,6 +169,9 @@ def managed_news(store, *, runner=None, settings_loader=Settings.from_env, sleep
             store.acknowledge(row, error="新闻来源配置已关闭")
             return 1
         applied = {**row, "rule": f"每 {config.interval_seconds} 秒"}
+        if applied["rule"] != row["rule"]:
+            sleep(0.5)
+            continue
         store.acknowledge(applied)
         recovery = generation != row["recovered"]
         execution_id = store.admit("news", generation, recovery=recovery, revision=row["revision"])

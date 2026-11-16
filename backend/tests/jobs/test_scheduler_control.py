@@ -65,3 +65,17 @@ def test_recovery_reports_gaps_and_limited_sources():
     assert "覆盖待核对" in summarize("market", {"status": "completed"}, True)
     result = summarize("commodities", {"status":"partial", "asOf":"2026-11-15", "pendingCount":12}, True)
     assert "12" in result and "2026-11-15" in result
+
+def test_stale_recovery_callback_preserves_new_rule_recovery(control_store):
+    store = control_store
+    store.target("market", True, "19:00")
+    runtime = SimpleNamespace(_scheduler=None, _guard_job=lambda fn, reason: fn)
+    schedule = ManagedSchedule(store, runtime, None)
+    calls = []
+    old = schedule._call(store.get("market"), lambda: calls.append("old"), "market", True)
+    store.target("market", True, "20:00")
+    old()
+    current = store.get("market")
+    assert calls == [] and current["recovered"] != current["generation"]
+    schedule._call(current, lambda: calls.append("new"), "market", True)()
+    assert calls == ["new"]

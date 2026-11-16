@@ -130,13 +130,13 @@ class ControlStore:
         with self.transaction() as session:
             for name in names:
                 task = session.get(Task, name)
-                unfinished = session.scalars(select(Execution).where(Execution.name == name,
-                    Execution.finished.is_(None))).all()
-                for run in unfinished:
-                    if run.result is None:
-                        run.result = "进程退出，结束时间待确认"
-                if cold and task.enabled and not task.active and not any(
-                        run.generation == task.generation for run in unfinished):
+                latest = session.scalar(select(Execution).where(
+                    Execution.name == name, Execution.generation == task.generation
+                ).order_by(Execution.id.desc()).limit(1))
+                session.execute(update(Execution).where(
+                    Execution.name == name, Execution.finished.is_(None), Execution.result.is_(None)
+                ).values(result="进程退出，结束时间待确认"))
+                if cold and task.enabled and not task.active and (latest is None or latest.finished is not None):
                     task.generation += 1
                 if task.active:
                     task.result = "上次进程退出，结果待确认"

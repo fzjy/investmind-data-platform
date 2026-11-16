@@ -142,3 +142,47 @@ def test_racing_workers_and_owner_takeover(control_store):
         assert successor.get("news")["result"] == "完成"
     finally:
         successor.release()
+
+def test_completed_run_after_crash_allows_next_cold_recovery(control_store):
+    store = control_store
+    store.target("news", True, "")
+    interrupted = store.admit("news", 1, recovery=True)
+    store.reset_instance(["news"])
+    store.reset_instance(["news"], cold=True)
+    assert store.admit("news", 1, recovery=True) is None
+    regular = store.admit("news", 1, recovery=False)
+    store.finish("news", regular, "完成")
+    store.reset_instance(["news"], cold=True)
+    assert store.get("news")["generation"] == 2
+    assert store.admit("news", 2, recovery=True)
+    history = {row["id"]: row for row in store.recent("news", 0)}
+    assert history[interrupted]["finished"] is None
+    assert history[regular]["result"] == "完成"
+
+def test_news_retries_recovery_immediately_after_rule_changes(control_store, tmp_path, monkeypatch):
+    config = tmp_path / "news.json"
+    config.write_text('{"interval_seconds":3600}')
+    store = control_store
+    store.target("news", True, "每 3600 秒")
+    calls = []
+    admit = store.admit
+
+    def change_before_admit(*args, **kwargs):
+        if not calls:
+            config.write_text('{"interval_seconds":60}')
+            store.target("news", True, "每 60 秒")
+        calls.append(kwargs["revision"])
+        return admit(*args, **kwargs)
+
+    def collect(settings, *, publish):
+        store.target("news", False, "每 60 秒")
+        return {"status": "completed"}
+
+    def unexpected_sleep(delay):
+        raise AssertionError("新规则的补跑不应等待旧间隔")
+
+    monkeypatch.setattr(store, "admit", change_before_admit)
+    managed_news(store, runner=collect, sleep=unexpected_sleep,
+                 settings_loader=lambda: SimpleNamespace(news_config_path=config))
+    assert calls == [1, 2]
+    assert len(store.recent("news", 0)) == 1
