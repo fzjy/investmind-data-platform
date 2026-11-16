@@ -943,7 +943,9 @@
     "availability_adapter": "source_payload",
     "dependencies": [],
     "writers": [
-      "capture_catalog"
+      "TargetExecutionStore.receive",
+      "TargetExecutionStore.fail",
+      "TargetEvidenceStore.normalize"
     ],
     "unavailable_reason": null,
     "name": "ETF 基础资料"
@@ -1047,6 +1049,9 @@
     "availability_adapter": "source_payload",
     "dependencies": [],
     "writers": [
+      "TargetExecutionStore.receive",
+      "TargetExecutionStore.fail",
+      "TargetEvidenceStore.normalize",
       "capture_catalog"
     ],
     "unavailable_reason": null,
@@ -1086,7 +1091,9 @@
     "availability_adapter": "source_payload",
     "dependencies": [],
     "writers": [
-      "capture_catalog"
+      "TargetExecutionStore.receive",
+      "TargetExecutionStore.fail",
+      "TargetEvidenceStore.normalize"
     ],
     "unavailable_reason": null,
     "name": "指数成分与权重"

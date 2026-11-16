@@ -32,6 +32,7 @@ def response_payload(response: TushareResponse) -> dict[str, object]:
 
 def validate_outer(request: TargetEvidenceRequest, response: TushareResponse, policy: TargetEvidencePolicy) -> None:
     if (not isinstance(request, TargetEvidenceRequest) or not isinstance(response, TushareResponse)
+        or response.has_more is True
         or not isinstance(response.fields, tuple) or not all(isinstance(f, str) for f in response.fields)
         or len(set(response.fields)) != len(response.fields) or set(response.fields) != set(request.fields)
         or not isinstance(response.items, tuple) or len(response.items) > policy.max_response_rows
