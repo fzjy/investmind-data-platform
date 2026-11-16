@@ -110,3 +110,5 @@ __all__ = [
 ]
 
 from .news import NewsDelivery
+
+from .local_admin import LocalAdminTask, LocalAdminExecution

@@ -24,7 +24,7 @@ def test_alembic_config_resolves_paths_from_project_root() -> None:
     )
 
     assert result.returncode == 0, result.stderr
-    assert result.stdout.strip() == "20261116_0022 (head)"
+    assert result.stdout.strip() == "20261117_0023 (head)"
 
 
 def test_documented_python_migration_commands_use_the_packaged_configuration() -> None:
@@ -34,3 +34,4 @@ def test_documented_python_migration_commands_use_the_packaged_configuration() -
         assert "python -m alembic -c backend/alembic.ini " + command in guide
     assert "python -m app.cli.main" in guide
     assert (root/"backend/migrations/env.py").is_file()
+
