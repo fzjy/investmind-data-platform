@@ -34,4 +34,3 @@ def test_documented_python_migration_commands_use_the_packaged_configuration() -
         assert "python -m alembic -c backend/alembic.ini " + command in guide
     assert "python -m app.cli.main" in guide
     assert (root/"backend/migrations/env.py").is_file()
-
