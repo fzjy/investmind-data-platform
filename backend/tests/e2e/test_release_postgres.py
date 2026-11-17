@@ -52,6 +52,8 @@ def source(tmp_path_factory):
             with pytest.MonkeyPatch.context() as migration_config:
                 migration_config.setitem(vars(config_module), "settings", target_settings)
                 command.downgrade(migration, "20260920_0009")
+            with engine.begin() as connection:
+                connection.execute(text("ALTER TABLE mart.published_snapshot ADD COLUMN source_note text DEFAULT 'original'"))
             with snapshot_inventory(engine, timeout=120) as view:
                 inventory = read_inventory(view.connection, timeout=120)
             settings = Settings(_env_file=None, database_url=url, backup_path=str(root))
@@ -129,7 +131,7 @@ def test_head_package_verification_preserves_source_without_pending_migrations(s
     assert_source_unchanged(engine, expected)
 
 
-@pytest.mark.parametrize("fault", ["migration", "version", "schema", "legacy_data", "api"])
+@pytest.mark.parametrize("fault", ["migration", "version", "schema", "legacy_data", "legacy_column", "pointer", "history", "api"])
 def test_upgrade_fault_never_passes_and_restores_original_backup(source, monkeypatch, fault):
     module = release_module()
     settings, engine, expected, path = source
@@ -160,6 +162,17 @@ def test_upgrade_fault_never_passes_and_restores_original_backup(source, monkeyp
                     connection.execute(text("ALTER TABLE core.macro_observation DROP COLUMN valid_until"))
                 elif fault == "legacy_data":
                     connection.execute(text("UPDATE core.security SET name='tampered' WHERE ts_code='600519.SH'"))
+                elif fault == "legacy_column":
+                    connection.execute(text("UPDATE mart.published_snapshot SET source_note='altered' WHERE product='screener'"))
+                elif fault in {"pointer", "history"}:
+                    connection.execute(text("ALTER TABLE mart.published_snapshot DROP CONSTRAINT fk_pointer_history"))
+                    if fault == "pointer":
+                        connection.execute(text("""UPDATE mart.published_snapshot
+                            SET payload=to_json('@investmind-history:' || repeat('0', 32)) WHERE product='screener'"""))
+                    else:
+                        connection.execute(text("""UPDATE mart.page_snapshot SET payload='{}'
+                            WHERE product='screener' AND snapshot_version=(
+                                SELECT version FROM mart.published_snapshot WHERE product='screener')"""))
                 connection.commit()
         finally:
             copy.dispose()
@@ -168,7 +181,7 @@ def test_upgrade_fault_never_passes_and_restores_original_backup(source, monkeyp
     assert report.status == "failed"
     assert report.exit_code in {3, 4}
     assert report.recovery_verified is True
-    expected_stage = {"migration": "upgrade", "version": "version_acceptance", "schema": "schema_acceptance", "legacy_data": "legacy_data", "api": "api_acceptance"}[fault]
+    expected_stage = {"migration": "upgrade", "version": "version_acceptance", "schema": "schema_acceptance", "legacy_data": "legacy_data", "legacy_column": "legacy_data", "pointer": "legacy_data", "history": "legacy_data", "api": "api_acceptance"}[fault]
     assert any(step.stage == expected_stage and step.status == "failed" for step in report.audit)
     assert "TOP_SECRET" not in report.model_dump_json()
     assert_source_unchanged(engine, expected)

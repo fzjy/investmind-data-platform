@@ -179,13 +179,29 @@ def _check_code_schema(connection: Connection, *, timeout: float) -> None:
             budget.remaining()
 
 
-def _legacy_fingerprints(connection: Connection, columns: dict[tuple[str, str], tuple[str, ...]], *, timeout: float) -> dict[tuple[str, str], tuple[int, str]]:
+# 0021 只把同产品、同版本、同一时刻的正文替换为包含正文摘要的引用。
+# 无法解析的引用产生 NULL，与迁移前强制要求的 JSON 对象指纹不同。
+_HISTORY_PAYLOAD_0021 = """CASE WHEN json_typeof(p.payload) <> 'string' THEN p.payload ELSE (
+    SELECT h.payload FROM mart.page_snapshot h
+    WHERE h.product=p.product AND h.snapshot_version=p.version AND h.as_of=p.as_of
+      AND p.product IN ('macro-insights','macro-transmission','market-overview','portfolio','screener')
+      AND NOT jsonb_exists_any(h.payload::jsonb, ARRAY['marketNews','dailyChart'])
+      AND p.payload::text = to_json('@investmind-history:' || md5(h.payload::text))::text
+) END AS payload"""
+
+
+def _legacy_fingerprints(connection: Connection, columns: dict[tuple[str, str], tuple[str, ...]], *,
+                         timeout: float, crossed_0021: bool = False) -> dict[tuple[str, str], tuple[int, str]]:
     budget = Budget(timeout)
     result = {}
     for (schema, table), names in columns.items():
         qualified = quote_identifier(schema) + "." + quote_identifier(table)
-        projection = ", ".join(quote_identifier(name) for name in names)
-        rows = budget.execute(connection, f'SELECT to_jsonb(t)::text FROM (SELECT {projection} FROM {qualified}) t ORDER BY to_jsonb(t)::text COLLATE "C"', stream=True)
+        resolve_payload = crossed_0021 and (schema, table) == ("mart", "published_snapshot")
+        projection = ", ".join(
+            _HISTORY_PAYLOAD_0021 if resolve_payload and name == "payload" else quote_identifier(name)
+            for name in names
+        )
+        rows = budget.execute(connection, f'SELECT to_jsonb(t)::text FROM (SELECT {projection} FROM {qualified} AS p) t ORDER BY to_jsonb(t)::text COLLATE "C"', stream=True)
         try:
             result[(schema, table)] = fingerprint_rows(rows.scalars(), check=budget.remaining)
         finally:
@@ -287,7 +303,9 @@ def verify_release(settings: Settings, *, package: str | Path) -> ReleaseReport:
                                 _check_code_schema(view.connection, timeout=budget.remaining())
                                 done(stage)
                                 stage = "legacy_data"
-                                if _legacy_fingerprints(view.connection, columns, timeout=budget.remaining()) != baseline:
+                                upgraded = _legacy_fingerprints(view.connection, columns, timeout=budget.remaining(),
+                                    crossed_0021="20261115_0021" in plan.migrations)
+                                if upgraded != baseline:
                                     raise BackupError("release_legacy_data_mismatch", 4, stage)
                                 inventory = service.read_inventory(view.connection, timeout=budget.remaining())
                                 if inventory.publications != manifest.inventory.publications:
