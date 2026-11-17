@@ -72,13 +72,14 @@ def test_unknown_capital_does_not_make_multiple_events_same_per_share_basis():
     assert result['annualReturns'][0]['observedDps'] is None
 
 
-def test_company_ledger_survives_research_only_base_change_and_rejects_future_day():
-    from sqlalchemy import select
+def test_company_ledger_survives_research_only_base_change_and_rejects_future_day(new_pg_factory):
+    from backend.tests.support.snapshots import set_snapshot_version
     from app.db.models import PublishedSnapshot
     from backend.tests.test_portfolio_routine import source,ObservedClient,refresh
-    f=source();refresh(f,ObservedClient(f))
+    f=source(new_pg_factory);refresh(f,ObservedClient(f))
     before=module().load_company_projections(f,('600519.SH',),date(2026,8,24))
-    with f.begin() as s:s.get(PublishedSnapshot,'screener').version='research-only-change'
+    with f.begin() as session:
+        set_snapshot_version(session, session.get(PublishedSnapshot, "screener"), "research-only-change")
     after=module().load_company_projections(f,('600519.SH',),date(2026,8,24))
     assert after==before
     assert next(r for r in after['600519.SH']['annualReturns'] if r['year']=='2025')['observedDps']==1

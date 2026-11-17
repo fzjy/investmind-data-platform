@@ -262,7 +262,9 @@ def test_settings_failure_does_not_mask_command_or_log_unsafe_exception() -> Non
     assert command_event(result)["settingsErrorType"] == "ValueError"
 
 
-def test_real_app_command_without_database_preserves_unavailable_json() -> None:
+def test_real_app_command_without_database_preserves_unavailable_json(monkeypatch) -> None:
+    monkeypatch.delenv("DANG_DATABASE_URL", raising=False)
+    monkeypatch.delenv("DANG_DATABASE_READ_URL", raising=False)
     module = observability()
     from app.cli.main import app as real_app
 

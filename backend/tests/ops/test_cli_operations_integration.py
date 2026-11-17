@@ -6,6 +6,12 @@ from typer.testing import CliRunner
 from app.cli.main import app
 
 
+@pytest.fixture(autouse=True)
+def no_database(monkeypatch):
+    monkeypatch.delenv("DANG_DATABASE_URL", raising=False)
+    monkeypatch.delenv("DANG_DATABASE_READ_URL", raising=False)
+
+
 def test_actual_cli_records_readonly_status_without_corrupting_report():
     result = CliRunner().invoke(app, ["sync-status"])
     assert result.exit_code == 3
