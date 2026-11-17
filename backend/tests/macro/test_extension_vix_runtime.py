@@ -1,3 +1,4 @@
+from backend.tests.support.pg_snapshot import database_snapshot
 """FRED真实httpx流/日志和持久预留；远端为完整受控HTTP边界。"""
 from datetime import timedelta
 import json
@@ -112,7 +113,7 @@ def test_fred_low_level_response_headers_redact_query_credentials(tmp_path, capl
 
 
 def test_vix_executor_stores_once_and_reentry_does_not_call_http(database, tmp_path, monkeypatch):
-    file, factory = database
+    db_engine, factory = database
     config = vix_config(tmp_path)
     from app.macro.extensions import config as module
     monkeypatch.setattr(module, 'DEFAULT_EXTENSION_CONFIG_FILE', tmp_path / 'extensions.json')
@@ -122,9 +123,9 @@ def test_vix_executor_stores_once_and_reentry_does_not_call_http(database, tmp_p
         return response(200, content=json.dumps(fred_payload()).encode())
     first = execute_extension_group(factory, config, 'vix', 'fred-private-key', transport=httpx.MockTransport(handler), now=VIX_NOW)
     assert first['status'] == 'completed' and first['supplierHttp'] == 1 and first['insertedRows'] == 2
-    before = file.read_bytes()
+    before = database_snapshot(db_engine)
     again = execute_extension_group(factory, config, 'vix', '', transport=httpx.MockTransport(handler), now=VIX_NOW + timedelta(seconds=1))
-    assert again['supplierHttp'] == 0 and file.read_bytes() == before and len(calls) == 1
+    assert again['supplierHttp'] == 0 and database_snapshot(db_engine) == before and len(calls) == 1
 
 
 @pytest.mark.parametrize('groups', [[], ['not-a-source'], ['vix', 'vix']])

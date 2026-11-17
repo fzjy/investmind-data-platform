@@ -36,7 +36,11 @@ def test_receipt_and_temporal_tampering_rejected(database,tmp_path,bad):
         if bad=='content':raw.content_hash='0'*64
         elif bad=='raw-api':raw.api_name='official-fund-contract'
         elif bad=='raw-time':raw.captured_at=NOW-timedelta(days=1)
-        elif bad=='batch':raw.batch_id='00000000-0000-0000-0000-000000000000'
+        elif bad == 'batch':
+            other = IngestionBatch(source='controlled', dataset='unrelated')
+            session.add(other)
+            session.flush()
+            raw.batch_id = other.id
         elif bad=='request-count':row.request_count=0
         elif bad=='fake-completed':
             row.details={**row.details,'phase':'completed','normalized':{}};row.status='completed';row.finished_at=NOW+timedelta(seconds=1)

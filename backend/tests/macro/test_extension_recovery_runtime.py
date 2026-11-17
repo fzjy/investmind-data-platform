@@ -1,3 +1,4 @@
+from backend.tests.support.pg_snapshot import database_snapshot
 """显式恢复入口只发冻结计划一次；HTTP边界受控，持久化真实。"""
 from datetime import timedelta
 import json
@@ -20,7 +21,7 @@ from backend.tests.macro.test_extension_store import database, NOW, count
 
 
 def test_recovery_sends_frozen_query_after_new_cycle_and_reentry_is_zero(database, tmp_path, monkeypatch):
-    file, factory = database
+    db_engine, factory = database
     catalog = enabled(tmp_path, monkeypatch)
     p, parent = failed(factory, tmp_path)
     # failed()写自己的受控配置，再恢复到显式启用文件。
@@ -36,11 +37,11 @@ def test_recovery_sends_frozen_query_after_new_cycle_and_reentry_is_zero(databas
     result = execute_extension_group(factory, catalog, 'usdcnh', 'private-token',
         recovery_of=parent, transport=httpx.MockTransport(handler), now=NOW + timedelta(days=2))
     assert result['status'] == 'completed' and result['supplierHttp'] == 1 and result['insertedRows'] == 1
-    before = file.read_bytes()
+    before = database_snapshot(db_engine)
     again = execute_extension_group(factory, catalog, 'usdcnh', '', recovery_of=parent,
         transport=httpx.MockTransport(handler), now=NOW + timedelta(days=3))
     assert again['status'] == 'completed' and again['supplierHttp'] == 0 and len(calls) == 1
-    assert before == file.read_bytes()
+    assert before == database_snapshot(db_engine)
 
 
 def test_uncertain_commit_does_not_send_and_later_reentry_does_not_refund(database, tmp_path, monkeypatch):
@@ -97,20 +98,20 @@ def controlled_runtime(factory, monkeypatch):
 
 
 def test_recovery_dry_run_is_readonly_and_all_targets_preflight_before_send(database, tmp_path, monkeypatch):
-    file, factory = database
+    db_engine, factory = database
     _, parent = failed(factory, tmp_path)
     enabled(tmp_path, monkeypatch)
     module, settings = controlled_runtime(factory, monkeypatch)
-    before = file.read_bytes()
+    before = database_snapshot(db_engine)
     preview = module.run_macro_extension_recovery(settings, [parent], dry_run=True, now=NOW + timedelta(seconds=2))
     assert preview['supplierHttp'] == 0 and preview['readOnly'] is True and preview['groups'][0]['parentRunId'] == parent
-    assert file.read_bytes() == before
+    assert database_snapshot(db_engine) == before
     calls = []
     invalid = '11111111-1111-4111-8111-111111111111'
     with pytest.raises(ExtensionError):
         module.run_macro_extension_recovery(settings, [parent, invalid],
             transport=httpx.MockTransport(lambda r: calls.append(r)), now=NOW + timedelta(seconds=2))
-    assert calls == [] and file.read_bytes() == before
+    assert calls == [] and database_snapshot(db_engine) == before
 
 
 @pytest.mark.parametrize('ids', [[], ['private-token'], ['11111111-1111-4111-8111-111111111111'] * 2,

@@ -19,7 +19,7 @@ def module():
     except ModuleNotFoundError:pytest.fail('official access runtime not implemented')
 
 
-@pytest.mark.parametrize('backend,url',[('fixture',None),('database','sqlite:///:memory:')])
+@pytest.mark.parametrize('backend,url',[('fixture',None),('database','mysql://invalid/rejected')])
 def test_runtime_requires_primary_postgres_before_any_connection(monkeypatch,backend,url):
     m=module();monkeypatch.setattr(m,'create_engine_and_session',lambda *_:pytest.fail('no connection'))
     if backend == 'fixture':

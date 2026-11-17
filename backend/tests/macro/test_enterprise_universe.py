@@ -1,3 +1,4 @@
+from backend.tests.support.pg_snapshot import database_snapshot
 """规模变化不得清卡、丢候选或悄悄扩大默认开发范围。"""
 from datetime import date
 from dataclasses import replace
@@ -86,9 +87,9 @@ def body(result):
 
 
 def test_custom_61_scope_is_shared_by_publication_audit_preview_and_dry_run(database,tmp_path,monkeypatch):
-    path,factory=database
+    db_engine,factory=database
     configured_file(tmp_path,monkeypatch,[f'{i:06d}.SZ' for i in range(1,62)])
-    before=path.read_bytes()
+    before=database_snapshot(db_engine)
     result=enterprise_loader(factory,Settings.from_env())(date(2024,5,31))
     assert result['poolCount']==61
     q=result['cards'][0]['quality'][-1]
@@ -99,11 +100,11 @@ def test_custom_61_scope_is_shared_by_publication_audit_preview_and_dry_run(data
         output=body(CliRunner().invoke(app,command))
         assert output['poolCount']==61
         assert output.get('requestCount',0)==0 and output.get('physicalHttpExecuted',0)==0
-    assert path.read_bytes()==before
+    assert database_snapshot(db_engine)==before
 
 
 def test_database_scope_reloads_members_without_excluding_missing_financials(database,monkeypatch):
-    path,factory=database
+    db_engine,factory=database
     monkeypatch.setenv('DANG_MACRO_ENTERPRISE_UNIVERSE','all')
     with factory.begin() as session:
         session.get(Security,'000001.SZ').status='L'
@@ -112,9 +113,9 @@ def test_database_scope_reloads_members_without_excluding_missing_financials(dat
         leaf=session.scalar(select(Classification.id).where(Classification.level==3))
         session.add(ClassificationMember(ts_code='000002.SZ',classification_id=leaf,effective_from=date(2020,1,1)))
     load=enterprise_loader(factory,Settings.from_env())
-    before=path.read_bytes()
+    before=database_snapshot(db_engine)
     first=load(date(2024,5,31))
-    assert path.read_bytes()==before
+    assert database_snapshot(db_engine)==before
     assert first['symbols']==['000001.SZ','000002.SZ']
     q=first['cards'][0]['quality'][-1]
     assert (q['sampleCount'],q['candidateCount'],q['coverage'])==(1,2,50)
@@ -127,14 +128,14 @@ def test_database_scope_reloads_members_without_excluding_missing_financials(dat
 
 
 def test_database_scope_reads_5000_real_members_without_write_or_financial_prefilter(database,monkeypatch):
-    path,factory=database
+    db_engine,factory=database
     monkeypatch.setenv('DANG_MACRO_ENTERPRISE_UNIVERSE','all')
     with factory.begin() as session:
         session.get(Security,'000001.SZ').status='L'
         session.add_all(Security(ts_code=f'{i:06d}.SZ',symbol=f'{i:06d}',name='Controlled missing',status='L',list_date=date(2020,1,1)) for i in range(2,5001))
-    before=path.read_bytes()
+    before=database_snapshot(db_engine)
     result=enterprise_loader(factory,Settings.from_env())(date(2024,5,31))
-    assert path.read_bytes()==before
+    assert database_snapshot(db_engine)==before
     assert result['poolCount']==len(result['symbols'])==5000
     q=result['cards'][0]['quality'][-1]
     assert (q['sampleCount'],q['candidateCount'],q['coverage'],q['status'])==(1,5000,0.02,'insufficient-coverage')

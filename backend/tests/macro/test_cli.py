@@ -38,7 +38,7 @@ def test_sync_macro_emits_one_final_json_and_maps_status(monkeypatch, status, ex
             "catalog_version": "v1", "catalog_hash": "hash"
         })()})()
 
-    monkeypatch.setattr(main_module.Settings, "from_env", lambda: Settings(database_url="sqlite://"))
+    monkeypatch.setattr(main_module.Settings, "from_env", lambda: Settings(database_url="postgresql+psycopg://invalid/unused"))
     monkeypatch.setattr(main_module, "open_macro_sync_runtime", runtime, raising=False)
     result = CliRunner().invoke(main_module.app, ["sync-macro", "--as-of", "2026-09-20", "--force"])
     assert result.exit_code == exit_code, result.output
@@ -65,7 +65,7 @@ def test_sync_macro_without_as_of_uses_live_mode(monkeypatch) -> None:
             "catalog_version": "v1", "catalog_hash": "hash"
         })()})()
 
-    monkeypatch.setattr(main_module.Settings, "from_env", lambda: Settings(database_url="sqlite://"))
+    monkeypatch.setattr(main_module.Settings, "from_env", lambda: Settings(database_url="postgresql+psycopg://invalid/unused"))
     monkeypatch.setattr(main_module, "open_macro_sync_runtime", runtime, raising=False)
     result = CliRunner().invoke(main_module.app, ["sync-macro"])
     assert result.exit_code == 0, result.output
@@ -79,9 +79,14 @@ def test_sync_macro_invalid_date_exits_two() -> None:
 
 
 def test_sync_macro_missing_database_exits_three_without_secret(monkeypatch) -> None:
-    monkeypatch.setattr(main_module.Settings, "from_env", lambda: Settings(fred_api_key="fred-secret"))
+    from unittest.mock import Mock
+    monkeypatch.delenv("DANG_DATABASE_URL", raising=False)
+    monkeypatch.setenv("DANG_FRED_API_KEY", "fred-secret")
+    runtime = Mock(side_effect=AssertionError("missing URL opened runtime"))
+    monkeypatch.setattr(main_module, "open_macro_sync_runtime", runtime)
     result = CliRunner().invoke(main_module.app, ["sync-macro"])
     assert result.exit_code == 3
+    runtime.assert_not_called()
     assert json.loads(result.stdout)["status"] == "failed"
     assert "fred-secret" not in result.output
 

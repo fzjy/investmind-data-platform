@@ -1,4 +1,4 @@
-"""当前持久采集状态独立于发布快照；仅内存数据库，无供应商请求。"""
+"""当前持久采集状态独立于发布快照；隔离测试数据库，无供应商请求。"""
 from datetime import datetime, timedelta, timezone
 from types import SimpleNamespace
 
@@ -6,9 +6,7 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from app.db.base import Base
 from app.db.models.ops import JobRun, MacroSeriesState
-from app.db.session import create_engine_and_session
 from app.macro.audit import CollectionAuditReader
 from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog
 from app.macro.routes import create_router
@@ -20,17 +18,15 @@ SID = 'cn.cpi.yoy'
 
 
 @pytest.fixture
-def setup(tmp_path):
-    engine, factory = create_engine_and_session('sqlite+pysqlite:///'+str(tmp_path/'audit.db'))
-    Base.metadata.create_all(engine)
+def setup(pg_factory):
+    factory = pg_factory
     catalog = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE)
     config = SimpleNamespace(groups={key: SimpleNamespace(collectionEnabled=True) for key in (
         'usdcnh', 'nominalGdp', 'vix', 'governmentBonds', 'householdCredit', 'tier1Housing',
         'specialBonds', 'propertyLoans', 'marginBalances', 'aShareFloatMv')})
     reader = CollectionAuditReader(factory, catalog_loader=lambda: catalog,
         extension_loader=lambda: config, enterprise_enabled=lambda: True, clock=lambda: NOW)
-    yield factory, reader
-    engine.dispose()
+    return factory, reader
 
 
 def entry(reader, sid=SID):
@@ -254,10 +250,10 @@ def test_real_exchange_bse_failure_does_not_contaminate_sh_or_sz(database, monke
     assert rows['cn.market.margin_balance.bse']['status'] == 'failed'
 
 
-def test_financial_records_are_per_symbol_and_kind_and_reader_is_readonly():
+def test_financial_records_are_per_symbol_and_kind_and_reader_is_readonly(new_pg_factory):
     from app.macro.audit_records import financial_entries
     from backend.tests.test_financial_supply import source, Client, module, db_state
-    factory = source()
+    factory = source(new_pg_factory)
     try:
         client = Client()
         assert module().capture(factory, client, execute=True, max_http=1)['completedCount'] == 1

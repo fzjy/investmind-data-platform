@@ -1,3 +1,5 @@
+from backend.tests.macro.pg_evidence import evidence_fixture_transaction
+from backend.tests.support.pg_snapshot import database_snapshot
 import inspect
 import json
 
@@ -19,8 +21,8 @@ def probe(factory,data,transport):
         page_size=5000,token='controlled-token',transport=transport,probe=True)
 
 
-def test_probe_one_actual_attempt_preserves_config_plan_and_batch_reuses_result(tmp_path):
-    batch,store,models,url,engine,factory=setup_database(tmp_path)
+def test_probe_one_actual_attempt_preserves_config_plan_and_batch_reuses_result(pg_schema_url):
+    batch,store,models,url,engine,factory=setup_database(pg_schema_url)
     data=full_inputs();calls=[]
     try:
         first=probe(factory,data,transport_for(data,calls))
@@ -35,13 +37,13 @@ def test_probe_one_actual_attempt_preserves_config_plan_and_batch_reuses_result(
 
 
 @pytest.mark.parametrize('replay_only',[False,True])
-def test_cached_or_replayed_result_does_not_claim_fresh_permission(replay_only,tmp_path):
-    batch,store,models,url,engine,factory=setup_database(tmp_path)
+def test_cached_or_replayed_result_does_not_claim_fresh_permission(replay_only,pg_schema_url):
+    batch,store,models,url,engine,factory=setup_database(pg_schema_url)
     data=full_inputs();calls=[]
     try:
         run(batch,factory,data,transport_for(data,calls))
         if replay_only:
-            with factory.begin() as session:
+            with evidence_fixture_transaction(factory, models.ReceivableSupplement) as session:
                 key=session.scalar(select(models.ReceivableSupplement.request_key))
                 session.execute(delete(models.ReceivableSupplement).where(models.ReceivableSupplement.request_key==key))
         result=probe(factory,data,transport_for(data,calls))
@@ -51,8 +53,8 @@ def test_cached_or_replayed_result_does_not_claim_fresh_permission(replay_only,t
 
 
 @pytest.mark.parametrize('condition',['null','no-match','permission'])
-def test_unusable_probe_cannot_authorize_bulk_collection(condition,tmp_path):
-    batch,store,models,url,engine,factory=setup_database(tmp_path)
+def test_unusable_probe_cannot_authorize_bulk_collection(condition,pg_schema_url):
+    batch,store,models,url,engine,factory=setup_database(pg_schema_url)
     data=full_inputs();calls=[]
     transport=transport_for(data,calls,value=None) if condition=='null' else transport_for(data,calls,status=403)
     if condition=='no-match':
@@ -72,7 +74,7 @@ def test_unusable_probe_cannot_authorize_bulk_collection(condition,tmp_path):
 
 
 def test_probe_cli_dry_run_uses_effective_one_without_token_or_writes(database,monkeypatch):
-    path,_=database;before=path.read_bytes()
+    db_engine,_=database;before=database_snapshot(db_engine)
     monkeypatch.delenv('DANG_TUSHARE_TOKEN',raising=False)
     monkeypatch.setenv('DANG_MACRO_CATCHUP_REQUEST_LIMIT','100')
     result=CliRunner().invoke(app,['probe-enterprise-receivables','--dry-run'])
@@ -80,4 +82,4 @@ def test_probe_cli_dry_run_uses_effective_one_without_token_or_writes(database,m
     data=next(json.loads(line) for line in result.stdout.splitlines() if line.startswith('{'))
     assert data['httpLimit']==1 and data['configuredHttpLimit']==100 and data['operation']=='probe'
     assert data['probeReady'] is False and data['requestCount']==0 and data['readOnly'] is True
-    assert path.read_bytes()==before
+    assert database_snapshot(db_engine)==before

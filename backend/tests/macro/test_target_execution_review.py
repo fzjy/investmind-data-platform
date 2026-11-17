@@ -2,9 +2,8 @@
 from copy import deepcopy
 
 import pytest
-from sqlalchemy import CheckConstraint, MetaData, select, text
+from sqlalchemy import CheckConstraint, MetaData, select, text, inspect
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy.sql.schema import BLANK_SCHEMA
 
 from app.macro.target_evidence_contract import evidence_hash
 from app.macro.target_evidence_schema import _sql
@@ -14,29 +13,33 @@ from backend.tests.macro.test_target_execution_store import database, root, NOW,
 
 
 def test_second_slot_is_rejected_by_database_constraint(database):
-    _,models,_,_,factory,_,_=database
+    _,models,_,factory,_,_=database
     with pytest.raises(IntegrityError),factory.begin() as s:
         s.add(models.TargetExecutionPlan(slot='second',fingerprint='a'*64,snapshot={},snapshot_hash='a'*64))
 
 
 def test_rogue_plan_row_blocks_prepare_and_progress_even_if_check_was_bypassed(database):
-    store,models,_,engine,factory,catalog,selection=database;plan=root(database)
+    store,models,engine,factory,catalog,selection=database;plan=root(database)
     with engine.begin() as c:
-        c.exec_driver_sql('PRAGMA ignore_check_constraints=ON')
+        constraint = next(item for item in inspect(engine).get_check_constraints(
+            "enterprise_target_execution_plan", schema="ops") if "slot" in item["sqltext"])
+        table = "ops.enterprise_target_execution_plan"
+        name = engine.dialect.identifier_preparer.quote(constraint["name"])
+        c.exec_driver_sql(f"ALTER TABLE {table} DROP CONSTRAINT {name}")
         c.execute(models.TargetExecutionPlan.__table__.insert().values(slot='second',fingerprint='a'*64,snapshot={},snapshot_hash='a'*64))
-        c.exec_driver_sql('PRAGMA ignore_check_constraints=OFF')
+        c.exec_driver_sql(f"ALTER TABLE {table} ADD CONSTRAINT {name} CHECK ({constraint['sqltext']}) NOT VALID")
     for call in (lambda:store.progress(plan),lambda:store.prepare(catalog,selection,NOW.date(),'Asia/Shanghai',persist=True)):
         with pytest.raises(ValueError,match='TARGET_EXECUTION_INVALID'):call()
 
 
 @pytest.mark.parametrize('literal',["re served","RESERVED","res(erved)"])
 def test_different_literal_schema_is_rejected_before_any_plan_write(database,literal):
-    store,models,_,engine,factory,catalog,selection=database
+    store,models,engine,factory,catalog,selection=database
     from app.db.base import TargetEvidenceBase
     metadata=MetaData()
     for table in TargetEvidenceBase.metadata.sorted_tables:
-        table.to_metadata(metadata,schema=None,referred_schema_fn=lambda *args:BLANK_SCHEMA)
-    attempt=metadata.tables['enterprise_target_execution_attempt']
+        table.to_metadata(metadata)
+    attempt=metadata.tables['ops.enterprise_target_execution_attempt']
     for constraint in attempt.constraints:
         if isinstance(constraint,CheckConstraint):
             constraint.sqltext=text(f"state = '{literal}' OR state = 'received' OR state = 'failed'")
@@ -67,7 +70,7 @@ def test_unknown_or_semantically_different_expressions_fail_closed(actual):
 
 @pytest.mark.parametrize('state',['reserved','failed'])
 def test_pending_request_must_be_current_graph_frontier(database,state):
-    store,models,_,_,factory,_,_=database;plan=root(database)
+    store,models,_,factory,_,_=database;plan=root(database)
     step=deepcopy(store.progress(plan)['next'])
     step['request'].update(apiName='index_weight',params={'index_code':'000300.SH','start_date':'20261001','end_date':'20261022'},
         fields=['index_code','con_code','trade_date','weight'])

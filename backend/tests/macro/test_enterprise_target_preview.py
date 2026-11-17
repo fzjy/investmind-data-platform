@@ -1,3 +1,4 @@
+from backend.tests.support.pg_snapshot import database_snapshot
 """防止把未验证库存、ETF代码或固定样本量伪装成可信成分。"""
 from datetime import date
 from importlib import import_module
@@ -92,15 +93,15 @@ def test_actual_readonly_repository_counts_inventory_without_reading_raw_body(da
     mod = module()
     repository = import_module('app.macro.enterprise_target_repository')
     from app.db.models import IndexConstituent, IngestionBatch, SourcePayload
-    path, factory = database
+    db_engine, factory = database
     with factory.begin() as session:
         session.add(IngestionBatch(id='controlled-source', source='tushare', dataset='index', status='success'))
         session.add(IndexConstituent(index_code='000300.SH', ts_code='000001.SZ', effective_from=date(2024, 8, 1), weight=1))
         for i, api in enumerate(['index_weight', 'index_weight', 'etf_basic', 'unrelated']):
             session.add(SourcePayload(batch_id='controlled-source', api_name=api, request_hash=f'{i:064}',
                 content_hash='b' * 64, payload={'private': 'not-output'}))
-    before = path.read_bytes()
-    with open_readonly_factory(f'sqlite:///{path.as_posix()}') as readonly:
+    before = database_snapshot(db_engine)
+    with open_readonly_factory(db_engine.url.render_as_string(hide_password=False)) as readonly:
         inventory = repository.load_target_evidence_inventory(readonly)
         result = mod.preview_enterprise_targets(selection(61), load_enterprise_target_catalog(), inventory, date(2024, 8, 1))
     assert result['inventory']['legacyConstituentRows'] == 1
@@ -109,4 +110,4 @@ def test_actual_readonly_repository_counts_inventory_without_reading_raw_body(da
     }
     assert result['membershipReady'] is False
     assert 'not-output' not in json.dumps(result)
-    assert path.read_bytes() == before
+    assert database_snapshot(db_engine) == before

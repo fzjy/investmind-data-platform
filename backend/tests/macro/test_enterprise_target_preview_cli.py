@@ -1,3 +1,4 @@
+from backend.tests.support.pg_snapshot import database_snapshot
 from backend.tests.support.configuration import assert_fixture_configuration_rejected
 """命令必须走真实配置/只读库存，不泄露异常或新增采集入口。"""
 from datetime import datetime
@@ -16,12 +17,12 @@ def output(result):
     return next(json.loads(line) for line in result.stdout.splitlines() if line.startswith('{'))
 
 
-def test_cli_reads_actual_sqlite_and_preserves_every_byte_and_real_date(database):
+def test_cli_reads_actual_postgres_and_preserves_database_and_uses_real_date(database):
     from app.config import Settings
     from zoneinfo import ZoneInfo
-    path, _ = database
+    db_engine, _ = database
     today = datetime.now(ZoneInfo(Settings.from_env().sync_timezone)).date().isoformat()
-    before = path.read_bytes()
+    before = database_snapshot(db_engine)
     result = CliRunner().invoke(app, ['preview-enterprise-targets'])
     assert result.exit_code == 0, result.stdout
     value = output(result)
@@ -30,33 +31,33 @@ def test_cli_reads_actual_sqlite_and_preserves_every_byte_and_real_date(database
     assert len(value['targets']) == 14 and value['targets'][2]['code'] == '000510.SH'
     assert value['inventory']['legacyConstituentRows'] == 0
     assert value['membershipReady'] is False and value['supplierHttp'] == 0
-    assert path.read_bytes() == before
+    assert database_snapshot(db_engine) == before
 
 
 def test_cli_uses_custom_sixty_one_members_without_expansion(database, tmp_path, monkeypatch):
-    path, _ = database
+    db_engine, _ = database
     pool = tmp_path / 'custom.json'
     pool.write_text(json.dumps([f'{i:06}.SZ' for i in range(1, 62)]), encoding='utf-8')
     monkeypatch.setenv('DANG_MACRO_ENTERPRISE_UNIVERSE', 'custom')
     monkeypatch.setenv('DANG_MACRO_ENTERPRISE_UNIVERSE_FILE', str(pool))
-    before = path.read_bytes()
+    before = database_snapshot(db_engine)
     result = CliRunner().invoke(app, ['preview-enterprise-targets'])
     assert result.exit_code == 0, result.stdout
     assert output(result)['pool']['size'] == 61 and output(result)['pool']['profile'] == 'custom'
-    assert path.read_bytes() == before
+    assert database_snapshot(db_engine) == before
 
 
 def test_cli_empty_custom_pool_is_safe_failure_not_whole_market(database, tmp_path, monkeypatch):
-    path, _ = database
+    db_engine, _ = database
     pool = tmp_path / 'empty.json'
     pool.write_text('[]', encoding='utf-8')
     monkeypatch.setenv('DANG_MACRO_ENTERPRISE_UNIVERSE', 'custom')
     monkeypatch.setenv('DANG_MACRO_ENTERPRISE_UNIVERSE_FILE', str(pool))
-    before = path.read_bytes()
+    before = database_snapshot(db_engine)
     result = CliRunner().invoke(app, ['preview-enterprise-targets'])
     assert result.exit_code == 2
     assert output(result) == {'status': 'failed', 'errorCode': 'ENTERPRISE_TARGET_PREVIEW_FAILED'}
-    assert path.read_bytes() == before
+    assert database_snapshot(db_engine) == before
 
 
 def test_fixture_mode_is_refused_before_connection(monkeypatch):
@@ -122,12 +123,12 @@ def test_unsupported_catalog_fails_before_database_connection(database, tmp_path
     def forbidden_connection(*args, **kwargs):
         pytest.fail('invalid configuration must fail before opening database')
     monkeypatch.setattr(macro_enterprise, 'open_readonly_factory', forbidden_connection)
-    path, _ = database
-    before, config_before = path.read_bytes(), file.read_bytes()
+    db_engine, _ = database
+    before, config_before = database_snapshot(db_engine), file.read_bytes()
     result = CliRunner().invoke(app, ['preview-enterprise-targets'])
     assert result.exit_code == 2
     assert output(result) == {'status': 'failed', 'errorCode': 'ENTERPRISE_TARGET_PREVIEW_FAILED'}
-    assert path.read_bytes() == before and file.read_bytes() == config_before
+    assert database_snapshot(db_engine) == before and file.read_bytes() == config_before
 
 
 @pytest.mark.parametrize('option', ['--publish', '--probe', '--force', '--as-of'])

@@ -1,3 +1,4 @@
+from backend.tests.macro.pg_evidence import evidence_fixture_transaction
 from dataclasses import replace
 from datetime import date
 import importlib
@@ -140,7 +141,7 @@ def test_all_stored_evidence_is_checked_before_any_new_http(database,failure):
     if failure=='failed': store.fail(request['requestKey'],'TushareNetworkError')
     elif failure=='later-corrupt':
         store.receive(request['requestKey'],response_for(request,original))
-        with factory.begin() as session: session.get(models.ReaInputResponse,request['requestKey']).response_hash='0'*64
+        with evidence_fixture_transaction(factory, models.ReaInputResponse) as session: session.get(models.ReaInputResponse,request['requestKey']).response_hash='0'*64
     calls=[]
     result=execute(factory,inputs,limit=100,calls=calls)
     assert result['status']=='blocked' and result['requestCount']==0 and calls==[]
@@ -178,7 +179,7 @@ def test_completed_historical_plan_can_be_reused_when_inputs_return_on_a_later_d
     first=execute(factory,data(1),limit=100,as_of=date(2024,8,1))
     second=execute(factory,changed_inputs(123),limit=100,as_of=date(2024,8,2))
     assert first['processingCompleted'] and second['processingCompleted']
-    with factory.begin() as session:
+    with evidence_fixture_transaction(factory, models.ReaInputPlan) as session:
         session.get(models.ReaInputPlan,first['planFingerprint']).created_at=datetime(2024,8,1,tzinfo=UTC)
         session.get(models.ReaInputPlan,second['planFingerprint']).created_at=datetime(2024,8,2,tzinfo=UTC)
     calls=[]
@@ -201,7 +202,7 @@ def test_tied_timestamps_cannot_hide_new_pending_plan_or_bypass_its_freeze(datab
     else: pytest.fail('controlled candidate with reverse fingerprint ordering missing')
     store=ReaInputStore(factory)
     store.freeze(plan,inputs,5000)
-    with factory.begin() as session:
+    with evidence_fixture_transaction(factory, models.ReaInputPlan) as session:
         for row in session.scalars(select(models.ReaInputPlan)):
             row.created_at=datetime(2024,8,1,tzinfo=UTC)
     assert store.latest()['plan']['planFingerprint']==plan['planFingerprint']
@@ -227,7 +228,7 @@ def test_progress_decodes_plan_once_per_validation_pass_and_still_checks_tail_ev
     result=implementation().read_rea_progress(factory,plan,store.latest()['sources'],5000)
     # One for latest(), one for this independent full progress pass, not per target.
     assert result['processingCompleted'] and len(calls)==2
-    with factory.begin() as session:
+    with evidence_fixture_transaction(factory, models.ReaInputResponse) as session:
         session.get(models.ReaInputResponse,plan['requests'][-1]['requestKey']).response_hash='bad'
     again=implementation().read_rea_progress(factory,plan,store.latest()['sources'],5000)
     assert again['blockedReasons']==['REA_EVIDENCE_INVALID'] and not again['processingCompleted']

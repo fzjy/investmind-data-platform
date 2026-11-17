@@ -1,4 +1,4 @@
-"""官方403父级单次诊断：隔离SQLite/假HTTP，不连接供应商。"""
+"""官方403父级单次诊断：隔离PostgreSQL/假HTTP，不连接供应商。"""
 from copy import deepcopy
 from datetime import timedelta
 from importlib import import_module

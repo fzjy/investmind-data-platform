@@ -1,11 +1,9 @@
-"""真实SQLite事务/唯一键，外部HTTP不在本测试层。"""
+"""真实PostgreSQL事务/唯一键，外部HTTP不在本测试层。"""
 from datetime import datetime, timedelta, timezone
 
 import pytest
-from sqlalchemy import create_engine, func, select
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import func, select
 
-from app.db.models.acquisition import DataAcquisitionState
 from app.db.models.core import MacroObservation
 from app.db.models.ops import JobCursor, JobRun
 from app.db.models.raw import IngestionBatch, SourcePayload
@@ -18,14 +16,8 @@ NOW = datetime(2026, 10, 22, 12, tzinfo=timezone.utc)
 
 
 @pytest.fixture
-def database(tmp_path):
-    file = tmp_path / 'execution.sqlite'
-    engine = create_engine(f'sqlite:///{file.as_posix()}', execution_options={
-        'schema_translate_map': {'raw': None, 'core': None, 'ops': None}})
-    for model in (DataAcquisitionState, JobCursor, JobRun, IngestionBatch, SourcePayload, MacroObservation):
-        model.__table__.create(engine)
-    yield file, sessionmaker(engine, expire_on_commit=False)
-    engine.dispose()
+def database(pg_factory):
+    return pg_factory.kw['bind'], pg_factory
 
 
 def store(factory):

@@ -1,3 +1,4 @@
+from backend.tests.support.pg_snapshot import database_snapshot
 from contextlib import contextmanager
 
 from app.config import Settings
@@ -9,7 +10,7 @@ from backend.tests.macro.test_official_macro_plan import NOW
 
 
 def test_new_groups_preview_reads_ledger_without_reservation_or_http(database,monkeypatch):
-    file,factory=database
+    db_engine,factory=database
     value=load_extension_config().model_dump()
     value['groups']['householdCredit']=policy()
     config=ExtensionConfig.model_validate(value)
@@ -18,10 +19,10 @@ def test_new_groups_preview_reads_ledger_without_reservation_or_http(database,mo
     @contextmanager
     def readonly(_):yield factory
     monkeypatch.setattr(preview,'open_readonly_factory',readonly)
-    before=file.read_bytes()
-    result=preview_macro_extensions(Settings(data_backend='database',database_url='sqlite:///not-opened'),now=NOW,group_ids=['householdCredit'])
+    before=database_snapshot(db_engine)
+    result=preview_macro_extensions(Settings(data_backend='database',database_url='postgresql+psycopg://invalid/unused'),now=NOW,group_ids=['householdCredit'])
     group=result['groups'][0]
     assert result['readOnly'] and result['supplierHttp']==0 and not result['planPersisted']
     assert group['execution']['status']=='new' and group['inventory']['validVisibleRows']==0
     assert group['inventory']['scope']=='frozen-plan-core-bindings'
-    assert file.read_bytes()==before
+    assert database_snapshot(db_engine)==before

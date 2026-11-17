@@ -1,3 +1,4 @@
+from backend.tests.support.pg_snapshot import database_snapshot
 from backend.tests.support.configuration import assert_fixture_configuration_rejected
 """新预览只读消费v2及新表，不因缺表自动迁移或采集。"""
 from datetime import datetime
@@ -6,8 +7,6 @@ import json
 from zoneinfo import ZoneInfo
 
 import pytest
-from sqlalchemy import MetaData
-from sqlalchemy.sql.schema import BLANK_SCHEMA
 from typer.testing import CliRunner
 
 from app.cli.main import app
@@ -19,9 +18,11 @@ from backend.tests.macro.test_target_evidence_normalize import request, response
 from backend.tests.macro.test_target_evidence_policy import policy
 
 
-def test_preview_missing_schema_reports_pending_and_preserves_bytes(database):
-    path, _ = database
-    before = path.read_bytes()
+def test_preview_missing_schema_reports_pending_and_preserves_database(database):
+    db_engine, _ = database
+    from app.db.base import TargetEvidenceBase
+    TargetEvidenceBase.metadata.drop_all(db_engine)
+    before = database_snapshot(db_engine)
     result = CliRunner().invoke(app, ['preview-enterprise-target-evidence'])
     assert result.exit_code == 0, result.stdout
     value = output(result)
@@ -34,41 +35,37 @@ def test_preview_missing_schema_reports_pending_and_preserves_bytes(database):
     assert value['membershipReady'] is False and value['executionSchemaReady'] is False
     assert value['supplierHttp'] == 0 and value['readOnly'] is True and 'policyConfigured' not in value
     assert value['sourceDependencies'][1]['sourceIndex'] is None
-    assert path.read_bytes() == before
+    assert database_snapshot(db_engine) == before
 
 
 def test_preview_existing_candidates_remain_not_proven_and_readonly(database):
-    path, factory = database
-    from app.db.base import TargetEvidenceBase
+    db_engine, factory = database
     from app.macro.target_evidence_store import TargetEvidenceStore
-    metadata = MetaData()
-    for table in TargetEvidenceBase.metadata.sorted_tables:
-        table.to_metadata(metadata, schema=None, referred_schema_fn=lambda *args: BLANK_SCHEMA)
-    metadata.create_all(factory.kw['bind'])
+
     store = TargetEvidenceStore(factory)
     key = store.receive(request(), response(), CAPTURED, policy())
     store.normalize(key, policy(), AS_OF, 'Asia/Shanghai', persist=True)
-    before = path.read_bytes()
+    before = database_snapshot(db_engine)
     result = CliRunner().invoke(app, ['preview-enterprise-target-evidence'])
     assert result.exit_code == 0, result.stdout
     value = output(result)
     assert value['schemaReady'] is True and value['inventory'] == {'observationCount': 1, 'candidateCount': 1}
-    assert value['membershipReady'] is False and path.read_bytes() == before
+    assert value['membershipReady'] is False and database_snapshot(db_engine) == before
     assert '"members":' not in result.stdout and '"capturedAt":' not in result.stdout
 
 
 @pytest.mark.parametrize('count', [0, 61])
 def test_preview_custom_pool_not_fixed_or_whole_market(database, tmp_path, monkeypatch, count):
-    path, _ = database
+    db_engine, _ = database
     file = tmp_path / 'pool.json'
     file.write_text(json.dumps([f'{i:06}.SZ' for i in range(1, count + 1)]), encoding='utf-8')
     monkeypatch.setenv('DANG_MACRO_ENTERPRISE_UNIVERSE', 'custom')
     monkeypatch.setenv('DANG_MACRO_ENTERPRISE_UNIVERSE_FILE', str(file))
-    before = path.read_bytes()
+    before = database_snapshot(db_engine)
     result = CliRunner().invoke(app, ['preview-enterprise-target-evidence'])
     assert result.exit_code == (0 if count else 2)
     assert (output(result)['pool']['size'] == count if count else output(result)['errorCode'] == 'TARGET_EVIDENCE_PREVIEW_FAILED')
-    assert path.read_bytes() == before
+    assert database_snapshot(db_engine) == before
 
 
 @pytest.mark.parametrize('invalid', ['v1', 'missing-policy', 'bad-policy'])
@@ -95,6 +92,8 @@ def test_preview_bad_catalog_fails_before_opening_database(database, tmp_path, m
 
 
 def test_enabled_policy_does_not_add_collection_capability(database, tmp_path, monkeypatch):
+    from app.db.models.enterprise_target_execution import TargetExecutionAttempt
+    TargetExecutionAttempt.__table__.drop(database[0])
     from app.macro import enterprise_target_catalog
     value = payload(); value['evidencePolicy']['collectionEnabled'] = True
     file = tmp_path / 'enabled.json'; file.write_text(json.dumps(value), encoding='utf-8')

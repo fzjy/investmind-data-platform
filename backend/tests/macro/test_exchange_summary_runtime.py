@@ -19,7 +19,6 @@ from backend.tests.macro.test_exchange_summary_client import TOKEN,response
 
 def setup(factory,monkeypatch):
     from datetime import date
-    with factory() as session:TradeCalendar.__table__.create(session.bind)
     with factory.begin() as session:
         session.add_all([TradeCalendar(exchange=r['exchange'],cal_date=date.fromisoformat(r['date']),is_open=r['open'],
             pretrade_date=date.fromisoformat(r['previous'])) for r in calendar()])

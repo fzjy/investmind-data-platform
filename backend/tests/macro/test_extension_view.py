@@ -1,4 +1,4 @@
-"""受控手算与真实SQLite血缘；绝不连接供应商或业务库。"""
+"""受控手算与真实PostgreSQL血缘；绝不连接供应商或业务库。"""
 from copy import deepcopy
 from datetime import timedelta
 

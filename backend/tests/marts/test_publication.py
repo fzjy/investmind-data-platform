@@ -6,7 +6,6 @@ import pytest
 from sqlalchemy import create_engine, event, func, select
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import ORMExecuteState, Session, sessionmaker
-from sqlalchemy.pool import StaticPool
 
 from app.db.base import Base, DerivedBase, MartBase
 from app.db.models import PageSnapshot, PublishedSnapshot

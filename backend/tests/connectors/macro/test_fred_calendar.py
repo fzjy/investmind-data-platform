@@ -114,14 +114,14 @@ def test_historical_observation_end_does_not_hide_newer_revisions():
     assert result.observations[0].valid_until is None
 
 
-def test_generic_runtime_uses_calendar_for_actual_request():
+def test_generic_runtime_uses_calendar_for_actual_request(pg_url):
     from app.macro.jobs.macro_sync_runtime import open_macro_sync_runtime
     series = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE).require('us.rate.treasury_10y')
     def handle(request):
         assert request.url.params['realtime_start'] == request.url.params['realtime_end'] == '2026-10-10'
         return httpx.Response(200, json={'count': 1, 'offset': 0, 'observations': [
             {'date': '2026-10-09', 'value': '4.2', 'realtime_start': '2026-10-10', 'realtime_end': '2026-10-10'}]})
-    with open_macro_sync_runtime(Settings(database_url='sqlite://', fred_api_key='controlled-key'),
+    with open_macro_sync_runtime(Settings(database_url=pg_url, fred_api_key='controlled-key'),
                                  transport=httpx.MockTransport(handle)) as runtime:
         result = runtime.job._registry.require('fred').fetch(series, series.sources[0],
             MacroFetchWindow(date(2026, 10, 1), date(2026, 10, 11), datetime(2026, 10, 11, 2, tzinfo=UTC)))
@@ -146,16 +146,14 @@ def test_shared_calendar_keeps_real_earlier_revision_end():
     assert [v.valid_until for v in result.observations] == [datetime(2026, 10, 2, tzinfo=UTC), None]
 
 
-def test_rates_runtime_cross_day_persists_real_values_without_publishing(tmp_path):
+def test_rates_runtime_cross_day_persists_real_values_without_publishing(pg_factory, pg_schema_url):
     from sqlalchemy import select
-    from app.db.base import Base, ExternalBase, MartBase
     from app.db.models import MacroObservation, MacroSeriesState, PublishedSnapshot
-    from app.db.session import create_engine_and_session
     from app.macro.jobs.macro_sync_planning import MacroSyncOptions
     from app.macro.jobs.us_rates_sync_runtime import open_us_rates_sync_runtime, SERIES_IDS
     from tests.jobs.test_us_rates_sync import seed
-    engine, factory = create_engine_and_session(f'sqlite+pysqlite:///{tmp_path / "calendar.sqlite"}')
-    for base in (Base, ExternalBase, MartBase): base.metadata.create_all(engine)
+    factory = pg_factory
+    engine = factory.kw['bind']
     seed(factory)
     now = datetime(2026, 10, 11, 2, tzinfo=UTC)
     calls = []
@@ -167,7 +165,7 @@ def test_rates_runtime_cross_day_persists_real_values_without_publishing(tmp_pat
             {'date': '2026-10-09', 'value': '3.8' if q['series_id'] == 'DFF' else '5.0',
              'realtime_start': '2026-10-10', 'realtime_end': '2026-10-10'}]})
     try:
-        with open_us_rates_sync_runtime(Settings(database_url=str(engine.url), fred_api_key='controlled-key'),
+        with open_us_rates_sync_runtime(Settings(database_url=pg_schema_url, fred_api_key='controlled-key'),
                                         transport=httpx.MockTransport(handle)) as runtime:
             runtime.job._clock = lambda: now
             result = runtime.job.run(MacroSyncOptions(now, 10, runtime.catalog.catalog_version,

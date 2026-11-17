@@ -1,3 +1,4 @@
+from backend.tests.support.pg_snapshot import database_snapshot
 from backend.tests.support.configuration import assert_fixture_configuration_rejected
 import json
 
@@ -10,16 +11,16 @@ from backend.tests.macro.test_enterprise_cli import database
 
 
 def test_preview_reads_actual_core_without_token_and_preserves_file(database,monkeypatch):
-    path,_=database
+    db_engine,_=database
     monkeypatch.delenv('DANG_TUSHARE_TOKEN',raising=False)
-    before=path.read_bytes()
+    before=database_snapshot(db_engine)
     result=CliRunner().invoke(app,['preview-enterprise-receivables'])
     assert result.exit_code==0,result.stdout
     data=next(json.loads(line) for line in result.stdout.splitlines() if line.startswith('{') and 'planFingerprint' in line)
     assert data['status']=='preview' and data['readOnly'] is True
     assert data['physicalHttpExecuted']==0 and data['logicalRequestCount']==2
     assert data['poolCount']==50 and data['physicalBudgetEnforced'] is False
-    assert path.read_bytes()==before
+    assert database_snapshot(db_engine)==before
 
 
 @pytest.mark.parametrize('mode',['custom','all'])

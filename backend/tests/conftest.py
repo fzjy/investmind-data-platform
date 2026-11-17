@@ -31,7 +31,10 @@ def pg_template(pg_instance_url):
     with postgres.database(pg_instance_url) as template:
         with pytest.MonkeyPatch.context() as patch:
             patch.setenv("DANG_DATABASE_URL", template)
-            command.upgrade(Config(str(PROJECT_ROOT / "backend/alembic.ini")), "head")
+            # 测试进程保留 pytest 的日志捕获，迁移脚本沿用项目路径。
+            config = Config()
+            config.set_main_option("script_location", str(PROJECT_ROOT / "backend/migrations"))
+            command.upgrade(config, "head")
         yield template
 
 

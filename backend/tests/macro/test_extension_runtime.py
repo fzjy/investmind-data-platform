@@ -1,4 +1,5 @@
-"""命令边界及真实SQLite执行组；只替换外部HTTP，不替换持久预算。"""
+from backend.tests.support.pg_snapshot import database_snapshot
+"""命令边界及真实PostgreSQL执行组；只替换外部HTTP，不替换持久预算。"""
 from datetime import timedelta
 import json
 
@@ -33,7 +34,7 @@ def execute(factory, catalog, token, **kwargs):
 
 
 def test_group_success_then_new_instance_same_target_has_zero_http_and_no_db_write(database, tmp_path, monkeypatch):
-    file, factory = database
+    db_engine, factory = database
     catalog = enabled(tmp_path, monkeypatch)
     calls = []
     def handler(request):
@@ -43,10 +44,10 @@ def test_group_success_then_new_instance_same_target_has_zero_http_and_no_db_wri
     result = execute(factory, catalog, 'private-token', transport=httpx.MockTransport(handler), now=NOW)
     assert result['status'] == 'completed' and result['supplierHttp'] == 1
     assert result['insertedRows'] == 1 and result['physicalBudgetEnforced'] is True
-    before = file.read_bytes()
+    before = database_snapshot(db_engine)
     repeated = execute(factory, catalog, '', transport=httpx.MockTransport(handler), now=NOW + timedelta(seconds=1))
     assert repeated['status'] == 'completed' and repeated['supplierHttp'] == 0
-    assert len(calls) == 1 and file.read_bytes() == before
+    assert len(calls) == 1 and database_snapshot(db_engine) == before
 
 
 def test_group_rate_limiter_is_before_reservation_and_unused_on_reentry(database, tmp_path, monkeypatch):
@@ -103,11 +104,11 @@ def test_permission_failure_is_safe_and_next_day_cannot_retry(database, tmp_path
 
 
 def test_replay_received_without_token_and_missing_token_new_writes_nothing(database, tmp_path, monkeypatch):
-    file, factory = database
+    db_engine, factory = database
     catalog = enabled(tmp_path, monkeypatch)
-    before = file.read_bytes()
+    before = database_snapshot(db_engine)
     assert execute(factory, catalog, '', now=NOW)['errorCode'] == 'EXTENSION_AUTH_ERROR'
-    assert file.read_bytes() == before
+    assert database_snapshot(db_engine) == before
     p = plan(tmp_path)
     # plan辅助fixture覆盖了同路径配置，再恢复有意开启的测试配置。
     catalog = enabled(tmp_path, monkeypatch)
@@ -128,29 +129,30 @@ def test_disabled_flag_is_reloaded_before_reservation_or_transport(database, tmp
     assert count(factory, JobRun) == 0 and calls == []
 
 
-def test_cli_dry_run_preserves_real_sqlite_and_has_only_dry_run_option(database, tmp_path, monkeypatch):
-    file, _ = database
+def test_cli_dry_run_preserves_real_postgres_and_has_only_dry_run_option(database, tmp_path, monkeypatch):
+    db_engine, _ = database
     enabled(tmp_path, monkeypatch)
     monkeypatch.setenv('DANG_DATA_BACKEND', 'database')
-    monkeypatch.setenv('DANG_DATABASE_URL', f'sqlite:///{file.as_posix()}')
-    monkeypatch.setenv('DANG_DATABASE_READ_URL', f'sqlite:///{file.as_posix()}')
-    before = file.read_bytes()
+    monkeypatch.setenv('DANG_DATABASE_URL', db_engine.url.render_as_string(hide_password=False))
+    monkeypatch.setenv('DANG_DATABASE_READ_URL', db_engine.url.render_as_string(hide_password=False))
+    before = database_snapshot(db_engine)
     result = CliRunner().invoke(app, ['sync-macro-extensions', '--dry-run'])
     assert result.exit_code == 0, result.stdout
     value = next(json.loads(line) for line in result.stdout.splitlines() if line.startswith('{'))
     assert value['supplierHttp'] == 0 and value['readOnly'] is True
     assert value['executorImplemented'] is True and value['physicalBudgetEnforced'] is False
-    assert file.read_bytes() == before
+    assert database_snapshot(db_engine) == before
+    monkeypatch.setenv('DANG_DATABASE_URL', 'mysql://invalid/rejected')
     formal = CliRunner().invoke(app, ['sync-macro-extensions'])
-    assert formal.exit_code == 2 and file.read_bytes() == before
+    assert formal.exit_code == 2 and database_snapshot(db_engine) == before
     for flag in ('--force', '--source', '--as-of', '--publish'):
         assert CliRunner().invoke(app, ['sync-macro-extensions', flag]).exit_code == 2
 
 
 def test_cli_errors_never_echo_secret_or_bad_config(database, tmp_path, monkeypatch):
-    file, _ = database
+    db_engine, _ = database
     monkeypatch.setenv('DANG_DATA_BACKEND', 'database')
-    monkeypatch.setenv('DANG_DATABASE_URL', f'sqlite:///{file.as_posix()}')
+    monkeypatch.setenv('DANG_DATABASE_URL', db_engine.url.render_as_string(hide_password=False))
     broken = tmp_path / 'broken.json'
     broken.write_text('{"password":"private-token"}', encoding='utf-8')
     monkeypatch.setattr(extension_config, 'DEFAULT_EXTENSION_CONFIG_FILE', broken)

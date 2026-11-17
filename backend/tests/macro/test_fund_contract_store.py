@@ -5,7 +5,7 @@ from importlib import import_module
 import pytest
 
 from app.db.models.ops import JobCursor,JobRun
-from app.db.models.raw import SourcePayload
+from app.db.models.raw import SourcePayload, IngestionBatch
 from app.macro.extensions.plan import digest
 from backend.tests.macro.test_extension_store import database,count
 from backend.tests.macro.test_fund_contract_discovery import NOW,plan,body
@@ -59,7 +59,11 @@ def test_raw_run_and_batch_binding_tampering_is_rejected(database,tmp_path,bad):
         elif bad=='content':raw.content_hash='0'*64
         elif bad=='time':raw.captured_at=NOW-timedelta(days=1)
         elif bad=='normalized':row.details={**row.details,'normalized':{**row.details['normalized'],'downloadResourceKey':'999999'}}
-        elif bad=='batch':raw.batch_id='00000000-0000-0000-0000-000000000000'
+        elif bad == 'batch':
+            other = IngestionBatch(source='controlled', dataset='unrelated')
+            session.add(other)
+            session.flush()
+            raw.batch_id = other.id
         elif bad=='request-count':row.request_count=0
     with pytest.raises(ValueError):s.inspect(p,NOW+timedelta(seconds=4))
 

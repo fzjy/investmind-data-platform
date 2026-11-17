@@ -9,9 +9,7 @@ import httpx
 import pytest
 from sqlalchemy import select
 
-from app.db.base import Base, ExternalBase
 from app.db.models import IngestionBatch, MacroObservation, SourcePayload
-from app.db.session import create_engine_and_session
 from app.macro.jobs.macro_sync_repository import MacroObservationRepository
 
 from app.connectors.macro.chinamoney import ChinaMoneyMacroProvider
@@ -263,14 +261,13 @@ def test_govbond_window_uses_china_business_date_at_utc_day_boundary() -> None:
     assert result.status == "success" and len(result.observations) == 22
 
 
-def test_govbond_real_repository_keeps_raw_pages_capture_time_and_idempotent_values() -> None:
+def test_govbond_real_repository_keeps_raw_pages_capture_time_and_idempotent_values(pg_factory) -> None:
     result, _ = _fetch(_pages())
     series = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE).require("cn.rate.govbond_10y")
     captured_at = datetime(2026, 10, 7, 13, tzinfo=UTC)
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
+    factory = pg_factory
+    engine = factory.kw['bind']
     try:
-        Base.metadata.create_all(engine)
-        ExternalBase.metadata.create_all(engine)
         repository = MacroObservationRepository(factory)
         first = repository.persist(series, result, captured_at)
         repeat = repository.persist(series, result, captured_at + timedelta(days=1))
@@ -280,7 +277,7 @@ def test_govbond_real_repository_keeps_raw_pages_capture_time_and_idempotent_val
             rows = session.scalars(select(MacroObservation)).all()
             assert len(rows) == 22
             assert all(row.series_id == "cn.rate.govbond_10y" for row in rows)
-            assert all(row.released_at == datetime(2026, 10, 7, 13) for row in rows)
+            assert all(row.released_at == captured_at for row in rows)
             assert all(row.revision.startswith("initial-import:") for row in rows)
             assert session.get(IngestionBatch, first.batch_id).request_count == 2
             payloads = session.scalars(select(SourcePayload)).all()
@@ -291,13 +288,12 @@ def test_govbond_real_repository_keeps_raw_pages_capture_time_and_idempotent_val
         engine.dispose()
 
 
-def test_govbond_failed_history_audits_first_page_without_writing_any_core() -> None:
+def test_govbond_failed_history_audits_first_page_without_writing_any_core(pg_factory) -> None:
     result, _ = _fetch(_pages(), source=_source(params={"maxPages": "1"}))
     series = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE).require("cn.rate.govbond_10y")
-    engine, factory = create_engine_and_session("sqlite+pysqlite:///:memory:")
+    factory = pg_factory
+    engine = factory.kw['bind']
     try:
-        Base.metadata.create_all(engine)
-        ExternalBase.metadata.create_all(engine)
         repository = MacroObservationRepository(factory)
         batch = repository.audit_request(series, _source(params={"maxPages": "1"}), _window(), result,
                                          datetime(2026, 10, 7, tzinfo=UTC), "bounded-govbond-failure")

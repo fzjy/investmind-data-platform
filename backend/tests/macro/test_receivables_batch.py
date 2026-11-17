@@ -1,3 +1,4 @@
+from backend.tests.macro.pg_evidence import evidence_fixture_transaction
 from dataclasses import replace
 import importlib
 import importlib.util
@@ -7,7 +8,6 @@ import httpx
 import pytest
 from sqlalchemy import func, select, text
 
-from app.db.base import Base
 from app.db.session import create_engine_and_session
 from backend.tests.macro.receivables_samples import AS_OF,POLICY,full_inputs,response_for
 
@@ -20,11 +20,10 @@ def modules():
         importlib.import_module('app.db.models.enterprise_receivables'))
 
 
-def setup_database(tmp_path):
+def setup_database(pg_schema_url):
     batch,store,models=modules()
-    url=f'sqlite:///{(tmp_path/"supplement.sqlite").as_posix()}'
-    engine,factory=create_engine_and_session(url)
-    Base.metadata.create_all(engine)
+    url = pg_schema_url
+    engine, factory = create_engine_and_session(url)
     return batch,store,models,url,engine,factory
 
 
@@ -48,8 +47,8 @@ def run(batch,factory,data,transport,limit=100,page_size=5000):
         request_limit=limit,page_size=page_size,token='controlled-token',transport=transport)
 
 
-def test_actual_sql_and_protocol_budget_resume_across_engines_then_zero_http(tmp_path):
-    batch,store,models,url,engine,factory=setup_database(tmp_path)
+def test_actual_sql_and_protocol_budget_resume_across_engines_then_zero_http(pg_schema_url):
+    batch,store,models,url,engine,factory=setup_database(pg_schema_url)
     data=full_inputs(); calls=[]
     try:
         first=run(batch,factory,data,transport_for(data,calls),limit=1)
@@ -68,8 +67,8 @@ def test_actual_sql_and_protocol_budget_resume_across_engines_then_zero_http(tmp
     finally: engine.dispose()
 
 
-def test_raw_response_survives_interruption_and_replays_without_refetch(tmp_path,monkeypatch):
-    batch,store,models,url,engine,factory=setup_database(tmp_path)
+def test_raw_response_survives_interruption_and_replays_without_refetch(pg_schema_url,monkeypatch):
+    batch,store,models,url,engine,factory=setup_database(pg_schema_url)
     data=full_inputs(); calls=[]
     original=store.ReceivablesStore.save_result
     def interrupted(*args,**kwargs): raise KeyboardInterrupt('controlled shutdown boundary')
@@ -87,8 +86,8 @@ def test_raw_response_survives_interruption_and_replays_without_refetch(tmp_path
 
 
 @pytest.mark.parametrize('value,page_size,reason',[(None,5000,'returned-null'),(123,1,'truncated')])
-def test_terminal_unavailability_is_not_zero_or_blindly_retried(tmp_path,value,page_size,reason):
-    batch,store,models,url,engine,factory=setup_database(tmp_path)
+def test_terminal_unavailability_is_not_zero_or_blindly_retried(pg_schema_url,value,page_size,reason):
+    batch,store,models,url,engine,factory=setup_database(pg_schema_url)
     data=full_inputs(); calls=[]
     try:
         first=run(batch,factory,data,transport_for(data,calls,value=value),page_size=page_size)
@@ -102,8 +101,8 @@ def test_terminal_unavailability_is_not_zero_or_blindly_retried(tmp_path,value,p
 
 
 @pytest.mark.parametrize('status',[403,429,500])
-def test_failed_physical_attempt_is_budgeted_saved_and_stops_without_hidden_retry(tmp_path,status):
-    batch,store,models,url,engine,factory=setup_database(tmp_path)
+def test_failed_physical_attempt_is_budgeted_saved_and_stops_without_hidden_retry(pg_schema_url,status):
+    batch,store,models,url,engine,factory=setup_database(pg_schema_url)
     data=full_inputs(); calls=[]
     try:
         result=run(batch,factory,data,transport_for(data,calls,status=status))
@@ -117,8 +116,8 @@ def test_failed_physical_attempt_is_budgeted_saved_and_stops_without_hidden_retr
     finally: engine.dispose()
 
 
-def test_network_failure_is_counted_and_next_manual_batch_can_resume(tmp_path):
-    batch,store,models,url,engine,factory=setup_database(tmp_path)
+def test_network_failure_is_counted_and_next_manual_batch_can_resume(pg_schema_url):
+    batch,store,models,url,engine,factory=setup_database(pg_schema_url)
     data=full_inputs(); calls=[]
     def broken(request):
         calls.append(request)
@@ -131,8 +130,8 @@ def test_network_failure_is_counted_and_next_manual_batch_can_resume(tmp_path):
     finally: engine.dispose()
 
 
-def test_reservation_failure_prevents_any_http(tmp_path,monkeypatch):
-    batch,store,models,url,engine,factory=setup_database(tmp_path)
+def test_reservation_failure_prevents_any_http(pg_schema_url,monkeypatch):
+    batch,store,models,url,engine,factory=setup_database(pg_schema_url)
     data=full_inputs(); calls=[]
     def broken(*args,**kwargs): raise ValueError('ENTERPRISE_RESERVATION_FAILED')
     monkeypatch.setattr(store.ReceivablesStore,'reserve',broken)
@@ -142,8 +141,8 @@ def test_reservation_failure_prevents_any_http(tmp_path,monkeypatch):
     finally: engine.dispose()
 
 
-def test_core_revision_creates_new_identity_and_preserves_old_facts(tmp_path):
-    batch,store,models,url,engine,factory=setup_database(tmp_path)
+def test_core_revision_creates_new_identity_and_preserves_old_facts(pg_schema_url):
+    batch,store,models,url,engine,factory=setup_database(pg_schema_url)
     data=full_inputs(); calls=[]
     try:
         assert run(batch,factory,data,transport_for(data,calls))['matchedCount']==4
@@ -156,12 +155,12 @@ def test_core_revision_creates_new_identity_and_preserves_old_facts(tmp_path):
     finally: engine.dispose()
 
 
-def test_corrupt_response_blocks_all_requests_without_overwrite_or_refetch(tmp_path):
-    batch,store,models,url,engine,factory=setup_database(tmp_path)
+def test_corrupt_response_blocks_all_requests_without_overwrite_or_refetch(pg_schema_url):
+    batch,store,models,url,engine,factory=setup_database(pg_schema_url)
     data=full_inputs(); calls=[]
     try:
         run(batch,factory,data,transport_for(data,calls),limit=1)
-        with factory.begin() as session:
+        with evidence_fixture_transaction(factory, models.ReceivableResponse) as session:
             row=session.scalar(select(models.ReceivableResponse))
             row.response_hash='0'*64
         result=run(batch,factory,data,transport_for(data,calls))
@@ -170,8 +169,8 @@ def test_corrupt_response_blocks_all_requests_without_overwrite_or_refetch(tmp_p
     finally: engine.dispose()
 
 
-def test_unfinished_reserved_attempt_is_not_mistaken_for_completed_response(tmp_path):
-    batch,store,models,url,engine,factory=setup_database(tmp_path)
+def test_unfinished_reserved_attempt_is_not_mistaken_for_completed_response(pg_schema_url):
+    batch,store,models,url,engine,factory=setup_database(pg_schema_url)
     data=full_inputs(); calls=[]
     def interrupted(request):
         calls.append(request)
@@ -186,8 +185,8 @@ def test_unfinished_reserved_attempt_is_not_mistaken_for_completed_response(tmp_
     finally: engine.dispose()
 
 
-def test_page_interpretation_policy_change_is_explicitly_blocked_without_http(tmp_path):
-    batch,store,models,url,engine,factory=setup_database(tmp_path)
+def test_page_interpretation_policy_change_is_explicitly_blocked_without_http(pg_schema_url):
+    batch,store,models,url,engine,factory=setup_database(pg_schema_url)
     data=full_inputs();calls=[]
     try:
         run(batch,factory,data,transport_for(data,calls))
@@ -197,8 +196,8 @@ def test_page_interpretation_policy_change_is_explicitly_blocked_without_http(tm
     finally: engine.dispose()
 
 
-def test_later_invalid_response_does_not_erase_earlier_committed_progress(tmp_path):
-    batch,store,models,url,engine,factory=setup_database(tmp_path)
+def test_later_invalid_response_does_not_erase_earlier_committed_progress(pg_schema_url):
+    batch,store,models,url,engine,factory=setup_database(pg_schema_url)
     data=full_inputs();calls=[]
     def handle(request):
         params=json.loads(request.content)['params'];calls.append(params)

@@ -1,3 +1,4 @@
+from backend.tests.support.pg_snapshot import database_snapshot
 from backend.tests.support.configuration import assert_fixture_configuration_rejected
 import json
 from datetime import datetime
@@ -13,14 +14,14 @@ def report(result):
 
 
 def test_rea_preview_cli_uses_real_readonly_core_and_never_mutates_database(database,monkeypatch):
-    path,_=database
+    db_engine,_=database
     from app.cli import macro_enterprise
     class ControlledDateTime(datetime):
         @classmethod
         def now(cls,tz=None):
             return datetime(2024,8,1,tzinfo=tz)
     monkeypatch.setattr(macro_enterprise,'datetime',ControlledDateTime)
-    before=path.read_bytes()
+    before=database_snapshot(db_engine)
     result=CliRunner().invoke(app,['preview-enterprise-rea-inputs'])
     assert result.exit_code==0,result.stdout
     value=report(result)
@@ -32,7 +33,7 @@ def test_rea_preview_cli_uses_real_readonly_core_and_never_mutates_database(data
     assert observed['fieldStates']['fix_assets']=='missing-field'
     assert observed['coreBinding']['annDate']=='2024-04-30'
     assert not value['persistenceImplemented'] and not value['physicalBudgetEnforced']
-    assert path.read_bytes()==before
+    assert database_snapshot(db_engine)==before
 
 
 def test_rea_preview_fixture_mode_is_refused_without_collection(monkeypatch):

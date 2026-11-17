@@ -1,10 +1,10 @@
-"""CLI真实只读字节保护及缺schema/关闭开关门。"""
+from backend.tests.support.pg_snapshot import database_snapshot
+"""CLI真实只读数据保护及缺schema/关闭开关门。"""
 from importlib import import_module
 import json
 
 import pytest
-from sqlalchemy import MetaData,select
-from sqlalchemy.sql.schema import BLANK_SCHEMA
+from sqlalchemy import select
 from typer.testing import CliRunner
 
 from app.cli.main import app
@@ -19,14 +19,17 @@ def module():
 
 
 def test_dry_run_missing_execution_schema_is_pending_and_never_migrates(database):
-    path,_=database;before=path.read_bytes()
+    db_engine,_=database
+    from app.db.base import TargetEvidenceBase
+    TargetEvidenceBase.metadata.drop_all(db_engine)
+    before=database_snapshot(db_engine)
     result=CliRunner().invoke(app,['sync-enterprise-target-evidence','--dry-run'])
     assert result.exit_code==0,result.stdout
     value=output(result)
     assert value['schemaReady'] is False and value['readOnly'] and value['supplierHttp']==0
     assert value['executorImplemented'] and value['physicalBudgetImplemented']
     assert value['membershipReady'] is False and not value['physicalBudgetEnforced']
-    assert path.read_bytes()==before
+    assert database_snapshot(db_engine)==before
 
 
 def test_explicit_disabled_entry_has_no_plan_or_transport_side_effect(database,tmp_path,monkeypatch):
@@ -34,28 +37,24 @@ def test_explicit_disabled_entry_has_no_plan_or_transport_side_effect(database,t
     file=tmp_path/'disabled.json'
     file.write_text(json.dumps(payload()),encoding='utf8')
     monkeypatch.setattr(enterprise_target_catalog,'DEFAULT_ENTERPRISE_TARGET_CATALOG_FILE',file)
-    path,_=database;before=path.read_bytes()
+    db_engine,_=database;before=database_snapshot(db_engine)
     result=CliRunner().invoke(app,['sync-enterprise-target-evidence'])
     assert result.exit_code==0,result.stdout
     value=output(result)
     assert value['status']=='disabled' and value['readOnly'] and value['requestCount']==0
-    assert path.read_bytes()==before
+    assert database_snapshot(db_engine)==before
 
 
 def test_formal_tables_preview_still_does_not_freeze_a_root(database):
-    path,factory=database;module()
-    from app.db.base import TargetEvidenceBase
+    db_engine,factory=database;module()
     from app.db.models.enterprise_target_execution import TargetExecutionPlan
-    metadata=MetaData()
-    for table in TargetEvidenceBase.metadata.sorted_tables:
-        table.to_metadata(metadata,schema=None,referred_schema_fn=lambda *args:BLANK_SCHEMA)
-    metadata.create_all(factory.kw['bind']);before=path.read_bytes()
+    before=database_snapshot(db_engine)
     result=CliRunner().invoke(app,['sync-enterprise-target-evidence','--dry-run'])
     assert result.exit_code==0,result.stdout
     value=output(result)
     assert value['schemaReady'] and value['rootReservedCount']==0
     assert not value['processingCompleted'] and value['requestCount']==0
-    assert path.read_bytes()==before
+    assert database_snapshot(db_engine)==before
     with factory() as s:assert s.scalars(select(TargetExecutionPlan)).all()==[]
 
 
@@ -72,14 +71,15 @@ def test_invalid_catalog_is_sanitized_before_database_capture(database,tmp_path,
     assert output(result)['errorCode']=='TARGET_EXECUTION_FAILED'
 
 
-def test_enabled_policy_cannot_write_sqlite(database,tmp_path,monkeypatch):
+def test_enabled_policy_cannot_write_foreign_dialect(database,tmp_path,monkeypatch):
+    monkeypatch.setenv("DANG_DATABASE_URL", "mysql://invalid/rejected")
     module();from app.macro import enterprise_target_catalog
-    path,_=database;value=payload();value['evidencePolicy']['collectionEnabled']=True
+    db_engine,_=database;value=payload();value['evidencePolicy']['collectionEnabled']=True
     file=tmp_path/'enabled.json';file.write_text(json.dumps(value),encoding='utf8')
     monkeypatch.setattr(enterprise_target_catalog,'DEFAULT_ENTERPRISE_TARGET_CATALOG_FILE',file)
-    before=path.read_bytes();result=CliRunner().invoke(app,['sync-enterprise-target-evidence'])
+    before=database_snapshot(db_engine);result=CliRunner().invoke(app,['sync-enterprise-target-evidence'])
     assert result.exit_code==2 and output(result)['errorCode']=='TARGET_POSTGRES_REQUIRED'
-    assert path.read_bytes()==before
+    assert database_snapshot(db_engine)==before
 
 
 @pytest.mark.parametrize('option',['--force','--retry','--as-of','--target','--source','--publish'])

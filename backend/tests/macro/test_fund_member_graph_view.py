@@ -53,10 +53,10 @@ def test_failed_graph_has_named_failure_and_never_fills_member_scope(database,tm
     assert load_official_witnesses(f,NOW+timedelta(seconds=3),c)==[]
 
 
-def test_uninitialized_optional_ops_storage_does_not_invent_proof_or_crash(tmp_path):
+def test_uninitialized_optional_ops_storage_does_not_invent_proof_or_crash(tmp_path, pg_url):
     from sqlalchemy import create_engine
     from sqlalchemy.orm import sessionmaker
-    c=load(tmp_path,value());engine=create_engine('sqlite://',execution_options={'schema_translate_map':{'ops':None,'raw':None}})
+    c=load(tmp_path,value());engine=create_engine(pg_url)
     try:
         witnesses,states=import_module('app.macro.fund_member_graph_view').load_fund_graph_view(sessionmaker(engine),NOW,c)
         assert witnesses==[] and all(s['status']=='not-collected' for s in states.values())

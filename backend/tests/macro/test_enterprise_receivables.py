@@ -1,3 +1,5 @@
+from backend.tests.macro.pg_evidence import evidence_fixture_transaction
+from backend.tests.support.pg_snapshot import database_snapshot
 """真实专用表只读适配：不重放写入、不接Raw-only或旧版本。"""
 from dataclasses import replace
 from datetime import UTC, date, datetime
@@ -29,9 +31,9 @@ def seed(factory, store_module, models, *, value=123, persist=True, historical=T
     if persist:
         store.recover(request, source, 5000, persist=True)
     if historical:
-        # 仅受控SQLite夹具时间；业务验收禁止改时间。
+        # 仅受控PostgreSQL夹具时间；业务验收禁止改时间。
         when = datetime(2024, 5, 1, tzinfo=UTC)
-        with factory.begin() as session:
+        with evidence_fixture_transaction(factory, models.ReceivableResponse, models.ReceivableSupplement) as session:
             a = session.get(models.ReceivableAttempt, attempt); a.created_at = a.finished_at = when
             session.get(models.ReceivableResponse, attempt).captured_at = when
             if persist:
@@ -40,23 +42,23 @@ def seed(factory, store_module, models, *, value=123, persist=True, historical=T
 
 
 @pytest.mark.parametrize('value,status', [(0, 'matched'), (None, 'returned-null')])
-def test_verified_result_loaded_without_database_write(tmp_path, value, status):
-    _, store, models, url, engine, factory = setup_database(tmp_path)
+def test_verified_result_loaded_without_database_write(pg_schema_url, value, status):
+    _, store, models, url, engine, factory = setup_database(pg_schema_url)
     try:
         data, _, source = seed(factory, store, models, value=value)
-        before = (tmp_path / 'supplement.sqlite').read_bytes()
+        before = database_snapshot(engine)
         result = load(factory, data)
         assert len(result.receivables) == 1 and result.receivables[0].status == status
         assert result.receivables[0].source_key == source.source_key
         assert result.receivables[0].value == ('0' if value == 0 else None)
-        assert (tmp_path / 'supplement.sqlite').read_bytes() == before and result.financials == data.financials
+        assert database_snapshot(engine) == before and result.financials == data.financials
     finally:
         engine.dispose()
 
 
-def test_supplement_provenance_ref_resolves_to_real_persisted_request_key(tmp_path):
+def test_supplement_provenance_ref_resolves_to_real_persisted_request_key(pg_schema_url):
     from app.macro.enterprise import build_enterprise_analysis
-    _, store, models, _, engine, factory = setup_database(tmp_path)
+    _, store, models, _, engine, factory = setup_database(pg_schema_url)
     try:
         data, request, _ = seed(factory, store, models)
         result = build_enterprise_analysis(load(factory, data), AS_OF, POLICY)
@@ -67,11 +69,11 @@ def test_supplement_provenance_ref_resolves_to_real_persisted_request_key(tmp_pa
         engine.dispose()
 
 
-def test_profit_only_revision_cannot_clear_valid_white_strip_for_fixed50(tmp_path):
+def test_profit_only_revision_cannot_clear_valid_white_strip_for_fixed50(pg_schema_url):
     from app.macro.enterprise import EnterpriseInputs, EnterprisePolicy, SecurityInput, IndustryInput, build_enterprise_analysis
     from app.macro.receivables_preview import preview_receivables
     from app.stocks.universes import UniverseResolver
-    _, store_module, models, _, engine, factory = setup_database(tmp_path)
+    _, store_module, models, _, engine, factory = setup_database(pg_schema_url)
     try:
         symbols = tuple(UniverseResolver().resolve('representative-50').symbols)
         template = [r for r in full_inputs().financials if r.symbol == '000001.SZ']
@@ -90,7 +92,7 @@ def test_profit_only_revision_cannot_clear_valid_white_strip_for_fixed50(tmp_pat
             attempt = store.reserve(request, 'c'*64, 'controlled-profit-revision', 5000)
             store.receive(attempt, response_for(source, 100 if source.end_date.year == 2023 else 150))
             store.recover(request, source, 5000, persist=True)
-        with factory.begin() as session:
+        with evidence_fixture_transaction(factory, models.ReceivableResponse, models.ReceivableSupplement) as session:
             when = datetime(2024,5,1,tzinfo=UTC)
             session.execute(update(models.ReceivableAttempt).values(created_at=when, finished_at=when))
             session.execute(update(models.ReceivableResponse).values(captured_at=when))
@@ -108,8 +110,8 @@ def test_profit_only_revision_cannot_clear_valid_white_strip_for_fixed50(tmp_pat
         engine.dispose()
 
 
-def test_raw_only_is_not_materialized_and_revision_does_not_use_old_supplement(tmp_path):
-    _, store, models, _, engine, factory = setup_database(tmp_path)
+def test_raw_only_is_not_materialized_and_revision_does_not_use_old_supplement(pg_schema_url):
+    _, store, models, _, engine, factory = setup_database(pg_schema_url)
     try:
         data, request, source = seed(factory, store, models, persist=False)
         assert load(factory, data).receivables == ()
@@ -123,8 +125,8 @@ def test_raw_only_is_not_materialized_and_revision_does_not_use_old_supplement(t
         engine.dispose()
 
 
-def test_future_capture_keeps_explicit_not_yet_visible_evidence(tmp_path):
-    _, store, models, _, engine, factory = setup_database(tmp_path)
+def test_future_capture_keeps_explicit_not_yet_visible_evidence(pg_schema_url):
+    _, store, models, _, engine, factory = setup_database(pg_schema_url)
     try:
         data, _, _ = seed(factory, store, models, historical=False)
         result = load(factory, data)
@@ -133,11 +135,11 @@ def test_future_capture_keeps_explicit_not_yet_visible_evidence(tmp_path):
         engine.dispose()
 
 
-def test_corrupted_stored_response_rejected_not_silently_cleared(tmp_path):
-    _, store, models, _, engine, factory = setup_database(tmp_path)
+def test_corrupted_stored_response_rejected_not_silently_cleared(pg_schema_url):
+    _, store, models, _, engine, factory = setup_database(pg_schema_url)
     try:
         data, _, _ = seed(factory, store, models)
-        with factory.begin() as session:
+        with evidence_fixture_transaction(factory, models.ReceivableResponse) as session:
             session.scalar(select(models.ReceivableResponse)).response_hash = 'b' * 64
         with pytest.raises(ValueError, match='ENTERPRISE_EVIDENCE_INVALID'):
             load(factory, data)
@@ -146,14 +148,14 @@ def test_corrupted_stored_response_rejected_not_silently_cleared(tmp_path):
 
 
 @pytest.mark.parametrize('all_missing', [True, False])
-def test_old_schema_compatible_but_partial_schema_refuses(tmp_path, all_missing):
-    _, _, _, _, engine, factory = setup_database(tmp_path)
+def test_old_schema_compatible_but_partial_schema_refuses(pg_schema_url, all_missing):
+    _, _, _, _, engine, factory = setup_database(pg_schema_url)
     try:
         with factory.begin() as session:
-            session.execute(text('DROP TABLE enterprise_receivable_supplement'))
+            session.execute(text('DROP TABLE core.enterprise_receivable_supplement'))
             if all_missing:
-                session.execute(text('DROP TABLE enterprise_receivable_response'))
-                session.execute(text('DROP TABLE enterprise_receivable_attempt'))
+                session.execute(text('DROP TABLE raw.enterprise_receivable_response'))
+                session.execute(text('DROP TABLE ops.enterprise_receivable_attempt'))
         if all_missing:
             assert load(factory, full_inputs()).receivables is None
         else:

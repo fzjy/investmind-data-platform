@@ -1,16 +1,16 @@
+from backend.tests.support.pg_snapshot import database_snapshot
 from backend.tests.support.configuration import assert_fixture_configuration_rejected
-"""只读SQLite实证、真实命令及异常脱敏。"""
+"""只读PostgreSQL实证、真实命令及异常脱敏。"""
 from datetime import date, datetime, timezone
 import json
 
 import pytest
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from typer.testing import CliRunner
 
 from app.cli.main import app
 from app.config import Settings
 from app.db.models.core import MacroObservation
+from app.db.session import create_engine_and_session
 from app.macro.extensions.config import ExtensionError
 from app.macro.extensions.preview import preview_macro_extensions
 
@@ -19,21 +19,22 @@ NOW = datetime(2026, 10, 22, 12, tzinfo=timezone.utc)
 
 
 @pytest.fixture
-def database(tmp_path, monkeypatch):
+def database(tmp_path, monkeypatch, pg_url):
     from app.macro.extensions import config as extension_config
     from backend.tests.macro.test_extension_plan import config as controlled_config
     controlled_config(tmp_path)
     monkeypatch.setattr(extension_config, 'DEFAULT_EXTENSION_CONFIG_FILE', tmp_path / 'extensions.json')
-    file = tmp_path / 'extension.sqlite'
-    url = f'sqlite:///{file.as_posix()}'
-    engine = create_engine(url, execution_options={'schema_translate_map': {'core': None}})
-    MacroObservation.__table__.create(engine)
-    factory = sessionmaker(engine)
+    engine, factory = create_engine_and_session(pg_url)
+    with engine.begin() as connection:
+        connection.exec_driver_sql('CREATE SCHEMA core')
+        MacroObservation.__table__.create(connection)
     monkeypatch.setenv('DANG_DATA_BACKEND', 'database')
-    monkeypatch.setenv('DANG_DATABASE_URL', url)
-    monkeypatch.setenv('DANG_DATABASE_READ_URL', url)
-    yield file, factory
-    engine.dispose()
+    monkeypatch.setenv('DANG_DATABASE_URL', pg_url)
+    monkeypatch.setenv('DANG_DATABASE_READ_URL', pg_url)
+    try:
+        yield engine, factory
+    finally:
+        engine.dispose()
 
 
 def row(**changes):
@@ -50,8 +51,8 @@ def output(result):
 
 
 def test_empty_preview_and_real_cli_are_readonly_and_not_executors(database):
-    file, _ = database
-    before = file.read_bytes()
+    db_engine, _ = database
+    before = database_snapshot(db_engine)
     result = preview_macro_extensions(Settings.from_env(), now=NOW)
     assert result['readOnly'] is True and result['supplierHttp'] == 0
     # C2现已实现执行能力，但只读预览不得冒称已执行/预留。
@@ -64,11 +65,11 @@ def test_empty_preview_and_real_cli_are_readonly_and_not_executors(database):
     assert cli.exit_code == 0, cli.stdout
     assert output(cli)['supplierHttp'] == 0
     assert datetime.fromisoformat(output(cli)['checkedAt']).date() == datetime.now(timezone.utc).date()
-    assert file.read_bytes() == before
+    assert database_snapshot(db_engine) == before
 
 
 def test_invalid_future_and_unrelated_inventory_never_count_as_usable(database):
-    file, factory = database
+    db_engine, factory = database
     with factory.begin() as session:
         session.add_all([row(), row(source='unknown'), row(revision='r2', unit='CNY/USD'),
             row(revision='r3', frequency='monthly'),
@@ -78,14 +79,15 @@ def test_invalid_future_and_unrelated_inventory_never_count_as_usable(database):
             row(series_id='cn.gdp.nominal_cumulative', frequency='quarterly', unit='亿元',
                 observed_at=date(2026, 7, 2), source_url='https://tushare.pro/document/2?doc_id=227'),
             row(series_id='not-a-target')])
-    before = file.read_bytes()
+    before = database_snapshot(db_engine)
     result = preview_macro_extensions(Settings.from_env(), now=NOW)
+    assert not result['schemaReady'] and 'ops.job_run' in result['problems']
     fx, gdp = result['groups']
     assert fx['inventory'] == {'rawRows': 7, 'validVisibleRows': 1,
         'invalidRows': 4, 'notVisibleRows': 2, 'distinctPeriods': 1}
     assert gdp['inventory']['invalidRows'] == 1
     assert fx['status'] == 'inventory_only' and fx['readyForPublication'] is False
-    assert file.read_bytes() == before
+    assert database_snapshot(db_engine) == before
 
 
 def test_bad_config_fails_before_opening_database(database, tmp_path, monkeypatch):

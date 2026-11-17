@@ -1,3 +1,4 @@
+from backend.tests.macro.pg_evidence import evidence_fixture_transaction
 """接近当前981候选规模的真实持久恢复；无供应商HTTP。"""
 from time import perf_counter
 
@@ -43,7 +44,7 @@ def test_large_durable_progress_is_linear_in_snapshot_decodes(database,monkeypat
     first=read_rea_progress(factory,plan,sources,5000)
     elapsed=perf_counter()-started
     assert first['processingCompleted'] and first['matchedCount']==984 and len(calls)==1
-    with factory.begin() as session:
+    with evidence_fixture_transaction(factory, models.ReaInputResponse) as session:
         session.get(models.ReaInputResponse,plan['requests'][-1]['requestKey']).response_hash='bad'
     second=read_rea_progress(factory,plan,sources,5000)
     assert second['blockedReasons']==['REA_EVIDENCE_INVALID'] and len(calls)==2

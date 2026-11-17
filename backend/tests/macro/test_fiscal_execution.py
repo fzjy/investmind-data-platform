@@ -1,3 +1,4 @@
+from backend.tests.support.pg_snapshot import database_snapshot
 from datetime import timedelta
 import importlib
 import json
@@ -40,7 +41,7 @@ def store(factory):
 
 
 def test_five_reserved_gets_ingest_48_signed_months_and_reenter_without_http(database, tmp_path, monkeypatch):
-    file, factory = database; c = setup(tmp_path, monkeypatch)
+    db_engine, factory = database; c = setup(tmp_path, monkeypatch)
     calls = []
     def handler(request):
         calls.append(request)
@@ -59,21 +60,21 @@ def test_five_reserved_gets_ingest_48_signed_months_and_reenter_without_http(dat
         rows = session.scalars(select(MacroObservation)).all()
         assert all(r.source == 'pboc' and r.unit == '亿元' and r.frequency == 'monthly' for r in rows)
         assert any(r.value == -1 for r in rows) and any(r.value == 0 for r in rows)
-    before = file.read_bytes()
+    before = database_snapshot(db_engine)
     again = execute(factory, c, transport=httpx.MockTransport(handler))
     assert again['status'] == 'completed' and again['supplierHttp'] == 0 and again['readOnly']
-    assert len(calls) == 5 and file.read_bytes() == before
+    assert len(calls) == 5 and database_snapshot(db_engine) == before
 
 
 def test_uncertain_reservation_is_not_resent(database, tmp_path, monkeypatch):
-    file, factory = database; c = setup(tmp_path, monkeypatch)
+    db_engine, factory = database; c = setup(tmp_path, monkeypatch)
     from app.macro.extensions.plan import build_extension_plan
     p = build_extension_plan('governmentBonds', c, NOW)
     store(factory).reserve(p, p['documents'][0], NOW)
-    before = file.read_bytes(); calls = []
+    before = database_snapshot(db_engine); calls = []
     result = execute(factory, c, transport=httpx.MockTransport(lambda r: calls.append(r)))
     assert result['status'] == 'blocked' and result['supplierHttp'] == 0 and calls == []
-    assert file.read_bytes() == before
+    assert database_snapshot(db_engine) == before
 
 
 def test_received_document_replays_without_network(database, tmp_path, monkeypatch):

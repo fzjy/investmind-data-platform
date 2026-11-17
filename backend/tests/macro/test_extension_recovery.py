@@ -1,4 +1,4 @@
-"""恢复预算独立、旧失败不变；真实SQLite而非模拟持久化。"""
+"""恢复预算独立、旧失败不变；真实PostgreSQL而非模拟持久化。"""
 from copy import deepcopy
 from datetime import timedelta
 

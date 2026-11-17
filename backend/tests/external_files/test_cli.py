@@ -8,7 +8,6 @@ from pathlib import Path
 import pytest
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session, sessionmaker
-from sqlalchemy.pool import StaticPool
 from typer.testing import CliRunner
 
 from app.cli.main import app

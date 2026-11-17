@@ -267,7 +267,7 @@ def test_real_new_parent_and_new_day_do_not_reset_project_pilot(database):
 
 
 def test_wrapper_dry_run_uses_existing_readonly_database(database, monkeypatch):
-    file, factory = database
+    db_engine, factory = database
     value = policy(parent(factory))
     from app.config import Settings
     from app.macro.extensions.config import ExtensionConfig, load_extension_config
@@ -276,13 +276,14 @@ def test_wrapper_dry_run_uses_existing_readonly_database(database, monkeypatch):
     data['contractSamples'] = {'szMarket': value}
     config = ExtensionConfig.model_validate(data)
     monkeypatch.setattr(runtime, 'load_extension_config', lambda: config)
-    settings = Settings(data_backend='database', database_url='sqlite:///' + file.as_posix(),
-        database_read_url='sqlite:///' + file.as_posix())
+    settings = Settings(data_backend='database', database_url=db_engine.url.render_as_string(hide_password=False),
+        database_read_url=db_engine.url.render_as_string(hide_password=False))
     n = count(factory, JobRun)
     preview = runtime.run_sz_market_sample(settings, dry_run=True)
     assert preview['status'] == 'preview' and preview['supplierHttp'] == 0
     assert count(factory, JobRun) == n
-    assert runtime.run_sz_market_sample(settings)['errorCode'] == 'EXTENSION_POSTGRES_REQUIRED'
+    rejected = Settings(data_backend='database', database_url='mysql://invalid/rejected')
+    assert runtime.run_sz_market_sample(rejected)['errorCode'] == 'EXTENSION_POSTGRES_REQUIRED'
 
 
 def test_cli_has_no_force_date_or_parent_override_and_sanitizes_failure(monkeypatch):

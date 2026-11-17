@@ -1,3 +1,4 @@
+from backend.tests.macro.pg_evidence import evidence_fixture_transaction
 from copy import deepcopy
 from datetime import date
 import importlib
@@ -8,7 +9,6 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 
 from app.connectors.tushare.contracts import TushareResponse
-from app.db.base import Base
 from app.db.session import create_engine_and_session
 from backend.tests.macro.test_rea_input_preview import data, preview
 
@@ -19,12 +19,11 @@ def implementation():
 
 
 @pytest.fixture
-def database(tmp_path):
+def database(pg_schema_url):
     module=implementation()
     models=importlib.import_module('app.db.models.enterprise_rea_inputs')
-    url=f'sqlite:///{(tmp_path/"rea.sqlite").as_posix()}'
-    engine,factory=create_engine_and_session(url)
-    Base.metadata.create_all(engine)
+    url = pg_schema_url
+    engine, factory = create_engine_and_session(url)
     yield module,models,url,engine,factory
     engine.dispose()
 
@@ -84,7 +83,8 @@ def test_corrupted_or_changed_evidence_is_not_silently_reused(database,damage):
     store.reserve(request,plan['planFingerprint'],'run-1',5000)
     store.receive(request['requestKey'],response_for(request,source))
     store.recover(request,source,5000,persist=True)
-    with factory.begin() as session:
+    affected = {"raw": (models.ReaInputResponse,), "result": (models.ReaInputSupplement,), "plan": (models.ReaInputPlan,)}.get(damage, ())
+    with evidence_fixture_transaction(factory, *affected) as session:
         if damage=='raw': session.get(models.ReaInputResponse,request['requestKey']).response_hash='0'*64
         elif damage=='result': session.get(models.ReaInputSupplement,request['requestKey']).outcome={'status':'matched','fields':{}}
         elif damage=='plan': session.get(models.ReaInputPlan,plan['planFingerprint']).snapshot_hash='0'*64

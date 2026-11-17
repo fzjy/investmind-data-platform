@@ -1,9 +1,10 @@
-"""真实SQLite证据消费：损坏拒绝、Raw-only不重放、全过程只读。"""
+from backend.tests.macro.pg_evidence import evidence_fixture_transaction
+from backend.tests.support.pg_snapshot import database_snapshot
+"""真实PostgreSQL证据消费：损坏拒绝、Raw-only不重放、全过程只读。"""
 from dataclasses import replace
 from datetime import UTC, date, datetime
 import importlib
 import importlib.util
-from pathlib import Path
 
 import pytest
 from sqlalchemy import select, text
@@ -34,7 +35,7 @@ def stage(database, *, raw_only=False, changes=None, inputs=None):
         store.receive(request['requestKey'], response_for(request, source, {**values, **(changes or {})}))
         if not raw_only:
             store.recover(request, source, 5000, persist=True)
-    with factory.begin() as session:
+    with evidence_fixture_transaction(factory, models.ReaInputResponse, models.ReaInputSupplement) as session:
         for model in (models.ReaInputAttempt, models.ReaInputResponse, models.ReaInputSupplement):
             for row in session.scalars(select(model)):
                 if model is models.ReaInputAttempt:
@@ -54,11 +55,11 @@ def load(database, inputs, *, page_size=5000):
 
 def test_persisted_fields_are_readonly_and_only_change_rea(database):
     inputs, _ = stage(database)
-    path = Path(database[2].removeprefix('sqlite:///'))
-    before = path.read_bytes()
+    db_engine = database[3]
+    before = database_snapshot(db_engine)
     loaded = load(database, inputs)
     assert len(loaded.rea_fields) == 40  # 每股2余额期×2字段+4现金流期×4字段。
-    assert loaded.financials == inputs.financials and path.read_bytes() == before
+    assert loaded.financials == inputs.financials and database_snapshot(db_engine) == before
     old = public_enterprise_analysis(inputs, AS_OF, POLICY, rea_enabled=True)
     result = public_enterprise_analysis(loaded, AS_OF, POLICY, rea_enabled=True)
     assert {k: v for k, v in result.items() if k != 'rea'} == {k: v for k, v in old.items() if k != 'rea'}
@@ -71,10 +72,10 @@ def test_persisted_fields_are_readonly_and_only_change_rea(database):
 
 def test_raw_without_persisted_result_is_not_promoted_by_readonly_consumer(database):
     inputs, _ = stage(database, raw_only=True)
-    path = Path(database[2].removeprefix('sqlite:///'))
-    before = path.read_bytes()
+    db_engine = database[3]
+    before = database_snapshot(db_engine)
     assert load(database, inputs).rea_fields == ()
-    assert path.read_bytes() == before
+    assert database_snapshot(db_engine) == before
 
 
 def test_normal_loader_and_audit_consume_the_same_persisted_evidence(enterprise_database):
@@ -88,7 +89,7 @@ def test_normal_loader_and_audit_consume_the_same_persisted_evidence(enterprise_
     from app.macro.enterprise_repository import load_enterprise_inputs, resolve_enterprise_selection
     from app.macro import rea_input_store
     from app.db.models import enterprise_rea_inputs as models
-    path, factory = enterprise_database
+    db_engine, factory = enterprise_database
     factory.configure(expire_on_commit=False)
     settings = Settings.from_env()
     with factory.begin() as session:
@@ -102,7 +103,7 @@ def test_normal_loader_and_audit_consume_the_same_persisted_evidence(enterprise_
                 update_flag=row.update_flag, data=dict(row.values)))
     inputs = load_enterprise_inputs(factory, resolve_enterprise_selection(factory, settings))
     stage((rea_input_store, models, None, None, factory), inputs=inputs)
-    before = path.read_bytes()
+    before = database_snapshot(db_engine)
     today = datetime.now(ZoneInfo(settings.sync_timezone)).date()
     normal = enterprise_loader(factory, settings)(today)
     assert normal['rea']['version']=='macro-enterprise-rea-v2'
@@ -115,7 +116,7 @@ def test_normal_loader_and_audit_consume_the_same_persisted_evidence(enterprise_
     assert audit['rea'] == normal['rea']
     assert audit['industryComparison'] == normal['industryComparison']
     assert normal['industryComparison']['groups'][0]['name'] == '消费'
-    assert path.read_bytes() == before
+    assert database_snapshot(db_engine) == before
 
 
 @pytest.mark.parametrize('damage', ['raw', 'result', 'plan', 'page'])
@@ -123,7 +124,8 @@ def test_corrupt_evidence_and_page_policy_changes_fail_closed(database, damage):
     inputs, plan = stage(database)
     _, models, _, _, factory = database
     key = plan['requests'][0]['requestKey']
-    with factory.begin() as session:
+    affected = {"raw": (models.ReaInputResponse,), "result": (models.ReaInputSupplement,), "plan": (models.ReaInputPlan,)}.get(damage, ())
+    with evidence_fixture_transaction(factory, *affected) as session:
         if damage == 'raw': session.get(models.ReaInputResponse, key).response_hash = '0' * 64
         elif damage == 'result': session.get(models.ReaInputSupplement, key).outcome = {'status': 'matched', 'fields': {}}
         elif damage == 'plan': session.get(models.ReaInputPlan, plan['planFingerprint']).snapshot_hash = '0' * 64
@@ -148,7 +150,7 @@ def test_changed_core_pool_and_ambiguous_metadata_never_reuse_old_evidence(datab
 def test_latest_receipt_date_and_returned_null_remain_explicit_gaps(database):
     inputs, _ = stage(database, changes={'fix_assets': None})
     _, models, _, _, factory = database
-    with factory.begin() as session:
+    with evidence_fixture_transaction(factory, models.ReaInputSupplement) as session:
         for row in session.scalars(select(models.ReaInputSupplement)):
             row.created_at = datetime(2024, 8, 1, 17, tzinfo=UTC)
     loaded = load(database, inputs)
@@ -165,11 +167,11 @@ def test_absent_schema_is_compatible_but_partial_schema_and_duplicate_source_fai
     with pytest.raises(ValueError):
         load(database, replace(inputs, financials=inputs.financials + inputs.financials[:1]))
     with database[-1].begin() as session:
-        session.execute(text('DROP TABLE enterprise_rea_supplement'))
+        session.execute(text('DROP TABLE core.enterprise_rea_supplement'))
     with pytest.raises(ValueError, match='REA_SUPPLEMENT_SCHEMA_REQUIRED'):
         load(database, inputs)
     with database[-1].begin() as session:
-        for table in ('enterprise_rea_response', 'enterprise_rea_attempt', 'enterprise_rea_plan'):
+        for table in ('raw.enterprise_rea_response', 'ops.enterprise_rea_attempt', 'ops.enterprise_rea_plan'):
             session.execute(text('DROP TABLE ' + table))
     assert load(database, inputs).rea_fields == ()
 
@@ -195,8 +197,8 @@ def test_renewal_estimation_reads_prior_fy_supplement_without_modifying_core(dat
         return load_enterprise_rea_inputs(database[-1],value,AS_OF,EnterprisePolicy(min_samples=1,max_quarters=1),
             page_size=5000,timezone='Asia/Shanghai')
     assert not one_quarter(replace(inputs,renewal_estimation_enabled=False)).rea_fields
-    path=Path(database[2].removeprefix('sqlite:///'));before=path.read_bytes()
+    db_engine=database[3];before=database_snapshot(db_engine)
     loaded=one_quarter(inputs)
     assert {e.field for e in loaded.rea_fields if e.source_key=='prior-fy'}==set(request['missingFields'])
     assert loaded.financials==inputs.financials
-    assert path.read_bytes()==before
+    assert database_snapshot(db_engine)==before
