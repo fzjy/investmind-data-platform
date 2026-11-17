@@ -69,4 +69,4 @@ python -I scripts/audit-scheduler-inventory.py --output scheduler-inventory.loca
 
 检查脚本从底座 CLI 注册表读取命令，从 scheduler 语法树读取作业 ID，从版本库读非敏感配置，再在同一 PostgreSQL REPEATABLE READ、READ ONLY 事务汇总日志、原件、失败、游标、心跳、检查点及新闻投递。证据覆盖 72 组作业、68 组游标、97 个来源/数据集组合。它不读取原文、连接值、游标内容或错误正文。部署现场另通过只读的 Docker 运行容器列表、Windows 进程及计划任务匹配盘点，时间为 11 月 14 日晚；不能用历史入库或注册时刻代替持续运行的验收。[逐项证据](research/investmind-scheduler-inventory.json) · [重放脚本](../scripts/audit-scheduler-inventory.py)
 
-使用项目启动器后，同一数据库的新闻队列由一个工作进程消费。切换前先停止手动启动的 `watch-news`，沿用原 PostgreSQL 数据库和已有的旧 SQLite 迁入目录 `data/news-collector/`。
+使用项目启动器后，同一数据库的新闻队列由一个工作进程消费。切换前先停止手动启动的 `watch-news`，确认新进程连接原 PostgreSQL 主库，以便沿用队列和已提交的游标。

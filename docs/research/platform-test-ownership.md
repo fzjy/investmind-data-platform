@@ -1,6 +1,6 @@
 # 离线测试归属
 
-独立底座通过 `python -I backend/tests/run_isolated.py pytest backend/tests -q` 验证发布与采集代码。安装步骤见[本机手册](../local-operations.md)。运行器从本仓读取 app、测试模块和 packages/news-collector/src，隔离业务数据库、真实供应商 HTTP、个人 .env 与默认 PostgreSQL 容器。Compose 合同使用受控示例配置执行 config 解析。
+启动 Docker 后，从仓库根目录通过 `python -I backend/tests/run_isolated.py --postgres pytest backend/tests packages/news-collector/tests -q` 验证发布与采集代码。安装步骤见[本机手册](../local-operations.md)。运行器从本仓读取 app、测试模块和 packages/news-collector/src，隔离业务数据库、真实供应商 HTTP、个人 .env 与默认 PostgreSQL 容器。Compose 合同使用受控示例配置执行 config 解析。
 
 2026-11-15 对原五组拆分测试实跑，23 项失败、6 项通过。以下变更将仍适用于底座的断言绑定至可执行入口。原测试在网站仓库提交 `701befd78024c6957dd38dde4a5bcb016f8b259e` 的 `backend/tests/` 下完整保存。保留该代码版本只为回溯，独立测试不读取网站仓库或其 Git 历史。
 
@@ -16,10 +16,10 @@
 
 独立底座的宏观 exporter 保留在 backend/tests/e2e，用于显式生成跨语言受控输出；网站的 18 个测试文件使用本仓随附的 24 份 gzip JSON。网站不会执行底座的 Python。
 
-现有页面 DTO 的字段与数据类型仍由底座测试覆盖，避免损害其他数据消费者依赖的公开合同。PostgreSQL 容器、生产调度和真实供应商取数的验收不计入默认离线测试。
+现有页面 DTO 的字段与数据类型仍由底座测试覆盖，避免损害其他数据消费者依赖的公开合同。完整回归使用一次性 PostgreSQL 容器。生产调度和真实供应商取数需在部署环境另行验收。
 
 ## 离线验收回执
 
-2026-11-15，独立底座使用自己的 `backend/.venv` 执行 `python -I backend/tests/run_isolated.py pytest backend/tests -q`。变更前全套有 7400 项通过、24 项失败、190 项按环境条件跳过。迁移后收集 7600 项，其中 7410 项通过、190 项按环境条件跳过，0 失败、0 错误、1 项警告，耗时 956.30 秒。隔离运行器报告真实 HTTP 或业务库访问违规数为 0，登记的临时 PostgreSQL 实例为 0。独立测试提交为 `8280f94`。
+2026-11-15，独立底座使用自己的 `backend/.venv` 执行当时的默认离线回归。变更前全套有 7400 项通过、24 项失败、190 项按环境条件跳过。迁移后收集 7600 项，其中 7410 项通过、190 项按环境条件跳过，0 失败、0 错误、1 项警告，耗时 956.30 秒。隔离运行器报告真实 HTTP 或业务库访问违规数为 0，登记的临时 PostgreSQL 实例为 0。独立测试提交为 `8280f94`。
 
 网站合同提交 `54f4896` 包含 24 份宏观公开合同样本和原 18 个测试文件。网站宏观根目录 519 项、嵌套审计 18 项、私有组合兼容 5 项均通过。

@@ -21,7 +21,7 @@
 - 表链接按浏览器当前 origin 构造，使用 `/admin/#tables?s=<schema>&t=<table>`，在新标签页打开。当前 11383 与其他端口都应正常。
 - 目录读取和验证使用只读入口。日期、计数和版本来自旧审计时须保留原核验日期。静态文档可以在数据库不可用时阅读。
 - 本机路由沿用已有同源和访问校验。元数据作为文本渲染，公共 OpenAPI 与服务器入口的合同延续现状。
-- 根目录运行验证命令。PowerShell 可定义 `function check-catalog { & backend/.venv/Scripts/python.exe -I backend/tests/run_isolated.py pytest @args }`。新测试只覆盖目录完整性、合同漂移及真实交互风险。
+- 根目录运行验证命令。PowerShell 可定义 `function check-catalog { & backend/.venv/Scripts/python.exe -I backend/tests/run_isolated.py --postgres pytest @args }`。新测试只覆盖目录完整性、合同漂移及真实交互风险。
 
 ## 重点审阅
 

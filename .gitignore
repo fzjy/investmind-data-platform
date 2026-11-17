@@ -74,10 +74,6 @@ backend/htmlcov/
 **/__pycache__/
 *.py[cod]
 packages/news-collector/src/*.egg-info/
-# 新闻采集本地状态及待迁入文件。
-data/news-collector/
-data/local-admin/
-imports/news-collector/
 
 # 根 Python 项目打包时生成的元数据、构建目录和分发包。
 /*.egg-info/

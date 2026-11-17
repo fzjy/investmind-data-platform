@@ -49,14 +49,14 @@ python -m alembic -c backend/alembic.ini heads
 | `app/jobs/` | 独立常驻调度入口 |
 | `migrations/`、`alembic.ini` | 数据库结构迁移 |
 | [仓库根配置目录](../config/) | 按业务领域维护的运行配置和历史目录，也是构建安装包的数据来源 |
-| `tests/` | 离线隔离测试与显式 PostgreSQL 验收 |
+| `tests/` | 隔离测试与 PostgreSQL 验收 |
 
 ## 验证
 
-从仓库根目录执行离线测试，运行器隔离用户 `.env`、业务数据库和真实供应商 HTTP：
+启动 Docker 后，从仓库根目录执行完整回归，运行器隔离用户 `.env`、业务数据库和真实供应商 HTTP：
 
 ```sh
-python -I backend/tests/run_isolated.py pytest backend/tests -q
+python -I backend/tests/run_isolated.py --postgres pytest backend/tests packages/news-collector/tests -q
 ```
 
-需要一次性 PostgreSQL 容器的用例默认不运行；显式容器验收和测试归属见[离线测试说明](../docs/research/platform-test-ownership.md)。新闻包自身的边界和测试见[新闻采集包说明](../packages/news-collector/README.md)。
+运行器使用一次性 PostgreSQL 容器。测试归属见[离线测试说明](../docs/research/platform-test-ownership.md)。新闻包自身的边界和测试见[新闻采集包说明](../packages/news-collector/README.md)。

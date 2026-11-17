@@ -84,7 +84,7 @@ python scripts/start-project.py
 
 同名原字段需按接口核验，例如解禁股数与行情流通股本、回购数量与日成交量。2026-11-16 补核了 [Tushare 回购字段](https://tushare.pro/document/2?doc_id=124)、[指数资料字段](https://tushare.pro/document/2?doc_id=94)和[期货合约字段](https://tushare.pro/document/2?doc_id=135)。来源文档说明字段含义，底座实际保存和暴露范围仍须结合归一化、发布代码及留存凭证判断。
 
-在“运行配置”内按文件点击“应用”。任务默认关闭；关闭会阻止后续轮次并等本轮完成，恢复会按来源的检查点及限额检查缺口。市场调度时刻由五组任务共用，新闻间隔在下轮读取时生效。任务状态显示保存与生效的区别。本机回执位于 `data/local-admin/control.sqlite3`。只读浏览无需启用采集。结束开发时，在各自终端用 `Ctrl+C` 停止进程，等写入完成后按需停止数据库：
+在“运行配置”内按文件点击“应用”。任务默认关闭；关闭会阻止后续轮次并等本轮完成，恢复会按来源的检查点及限额检查缺口。市场调度时刻由五组任务共用，新闻间隔在下轮读取时生效。任务状态显示保存与生效的区别。任务目标和工作进程回执保存在主库的 `ops.local_admin_task`，每轮执行记录保存在 `ops.local_admin_execution`。只读浏览无需启用采集。结束开发时，在各自终端用 `Ctrl+C` 停止进程，等写入完成后按需停止数据库：
 
 ```sh
 docker compose -f docker-compose.backend.yml -f docker-compose.local-db.yml stop postgres
@@ -221,10 +221,10 @@ python -m app.cli.main verify-release --help
 
 后者帮助说明`--package`需用实际备份包路径；明确准备好后再执行真实verify。正常迁移入口仍是 Alembic upgrade head，只对已确认目标库执行。升级后的服务需重新启动；不自动降级数据库版本来回滚。
 
-离线回归入口如下。运行器隔离用户 .env，使用受控数据和数据库，默认关闭需要一次性 PostgreSQL 容器的组；`--postgres` 仅用于另行明确启用的一次性容器验收。
+运行完整回归前启动 Docker，使运行器能够创建一次性 PostgreSQL 测试容器。从仓库根目录执行下列命令，运行器隔离用户 `.env`、业务库和真实供应商 HTTP。
 
 ```sh
-python -I backend/tests/run_isolated.py pytest backend/tests -q
+python -I backend/tests/run_isolated.py --postgres pytest backend/tests packages/news-collector/tests -q
 ```
 
 底座发布、备份和调度的实际覆盖分别见[接口目录](platform-api.md)、[本机交接](research/investmind-runtime-handoff.md)和[调度交接](scheduler-handoff.md)。
@@ -236,7 +236,7 @@ python -I backend/tests/run_isolated.py pytest backend/tests -q
 1. 记录正在使用的代码版本（`git rev-parse HEAD`）、未提交的部署差异、Alembic 当前版本、关键 API 快照的日期和版本。保存 `news-status` 和 `sync-status` 的输出，列出需要在服务器重建的采集配置、导入目录和密钥。
 2. 约定切换时刻，停止本机 `watch-news`、日周调度和其他可能写入的更新或导入任务。等在途写入完成后保持 PostgreSQL 运行。核对最终新闻状态、业务快照和任务检查点，以此作为恢复后的对照。
 3. 运行 `python -m app.cli.main backup-database --force`，在停写后生成一份新的最终备份。这里使用 `--force` 是为了绕过普通备份周期。按第 6 节对**本次返回的备份 ID**执行恢复验证。确认 `restore_verified` 后，保留原件并安全传送整个备份目录（含 `database.dump`、`manifest.json`、`verification.json`）。记录转移前各文件的 SHA-256 供接收端核对。
-4. 随包交接代码版本、状态记录、运行配置清单和必要的外部文件。供应商密钥通过部署环境单独提供。当前新闻队列与断点随 PostgreSQL 备份迁移，若有尚待迁入的旧 SQLite，再一并交接 `data/news-collector/`。保留本机原库和卷，切换期间保持本机采集停止。
+4. 随包交接代码版本、状态记录、运行配置清单和必要的外部文件。供应商密钥通过部署环境单独提供。本机任务状态、执行历史、新闻队列与游标随 PostgreSQL 备份一起迁移。保留本机原库和卷，切换期间保持本机采集停止。
 5. 接下来在目标主机继续操作，直接打开[服务器手册：接收本机迁移](server-operations.md#receive-migration)。该章节从服务器环境准备和空库恢复开始，随后核验 API、切换采集，并进入服务器日常运行。
 
 ## 查看与初始化获取状态

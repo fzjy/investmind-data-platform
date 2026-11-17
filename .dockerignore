@@ -19,7 +19,6 @@ backend/build
 backend/dist
 backend/backups
 backend/imports
-data/local-admin
 # 文件型密钥和数据库归档保留在宿主机。
 .secrets
 **/*.dump

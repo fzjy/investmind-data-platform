@@ -10,14 +10,14 @@
 
 **设计依据**　[已确认的本机管理台设计](../specs/2026-11-16-local-admin-design.md)
 
-**实施记录（2026-11-16）**　七项功能在 `codex/local-admin` 分支连续实施并完成一次独立代码审阅。启动器与子进程通过本机 SQLite 交换目标与回执，父进程通过管道通知子进程收尾。文件保存完成后同步目标，若此步失败，页面保留已保存版本以便重试；启动时从文件重新协调。使用临时 PostgreSQL 和模拟采集验证在途关闭、恢复代次和数据浏览，使用 Chrome 走查页面，并在 Windows 对实际调度子进程连续运行两轮启停验收。下列清单保留原始实施步骤，实际提交按功能实现与审阅修正归并。
+**实施记录（2026-11-16）**　七项功能在 `codex/local-admin` 分支连续实施并完成一次独立代码审阅。启动器与子进程通过持久化台账交换目标与回执，父进程通过管道通知子进程收尾。文件保存完成后同步目标，若此步失败，页面保留已保存版本以便重试；启动时从文件重新协调。使用临时 PostgreSQL 和模拟采集验证在途关闭、恢复代次和数据浏览，使用 Chrome 走查页面，并在 Windows 对实际调度子进程连续运行两轮启停验收。下列清单保留原始实施步骤，实际提交按功能实现与审阅修正归并。
 
 ## 全局约束
 
 - 本机入口为 `python scripts/start-project.py`、`127.0.0.1` 及现有端口的 `/admin`。服务器 Compose、公共 OpenAPI 和手动 CLI 入口保持原有合同。
 - 接口说明、表预览与状态查询均为只读。配置按文件应用；只有运行方确认后才能显示已生效。全程无需自动重启项目。
 - 日程展示频率、触发时刻和时区，轮询单列间隔，运行记录单列实际开始与耗时。按证据呈现进度和数据归属。
-- 下列命令从仓库根目录运行。PowerShell 中先定义 `function check-admin { & backend/.venv/Scripts/python.exe -I backend/tests/run_isolated.py pytest @args }`。标为 PostgreSQL 的用例使用同一入口的 `--postgres pytest` 模式和测试容器。
+- 下列命令从仓库根目录运行。PowerShell 中先定义 `function check-admin { & backend/.venv/Scripts/python.exe -I backend/tests/run_isolated.py --postgres pytest @args }`。数据库用例使用一次性 PostgreSQL 容器。
 
 ## 重点验证
 
@@ -72,7 +72,7 @@
 
 - [ ] 用临时文件和受控子进程写 `test_enable_after_empty_start`、`test_news_finishes_round_before_exit`、`test_retry_after_lost_receipt`；覆盖关闭最后一项、收尾时重开、启动失败、父进程结束和重启后恢复，验证不会因预期的子进程退出而终止 API。
 - [ ] 执行 `check-admin backend/tests/test_admin_workers.py -q` 验证初始失败。
-- [ ] 让启动器持续管理零到两个子进程。建议使用本机专用 SQLite 控制台账，建议路径为 `data/local-admin/control.sqlite3`，实施时在 `.gitignore` 中排除这个本机目录。启动器写命令、子进程领取并回报；保留原有标准输入 EOF 的父进程退出语义。命令带单调代次、目标值和文件版本。先登记待保存意图，再原子写文件，成功后才允许领取；重启按文件版本、进程实例与持久化回执恢复。独立 CLI 和 Compose 不打开台账。首次本机启动自动建台账，业务 PostgreSQL 无迁移。
+- [ ] 让启动器持续管理零到两个子进程。持久化管理目标与执行回执。启动器写命令、子进程领取并回报；保留原有标准输入 EOF 的父进程退出语义。命令带单调代次、目标值和文件版本。先登记待保存意图，再原子写文件，成功后才允许领取；重启按文件版本、进程实例与持久化回执恢复。台账由本机管理模式使用。当前表结构和迁移方式见[统一存储设计](../specs/2026-11-16-postgresql-only-design.md)。
 - [ ] 管理启动的新闻循环复用 `watch-news` 的单轮采集逻辑，在轮次之间处理控制请求并确认实际读取的间隔。区分“唤醒等待”和“中断本轮”，恢复使用原游标及有限回看能力。调度进程在执行工作期间仍能确认新日程。回执丢失先按同一命令查询；对已开始但结果不明的采集，核对业务证据后再决定是否续跑，证据不足则显示待确认。
 - [ ] 重跑本项和 `backend/tests/test_configured_startup.py`。验证受控进程在 Windows 可启动、收尾、回收，未启动真实采集。提交。
 

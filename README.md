@@ -65,7 +65,7 @@
 | [`.dockerignore`](.dockerignore) | Docker 构建上下文排除规则 |
 | [`.gitignore`](.gitignore) | 本地配置、备份和生成文件的 Git 忽略规则 |
 | [`pyproject.toml`](pyproject.toml) | Python 服务包、运行与开发依赖、测试及包资源配置 |
-| [`packages/news-collector/pyproject.toml`](packages/news-collector/pyproject.toml) | 新闻采集包的依赖、打包和命令入口 |
+| [`packages/news-collector/pyproject.toml`](packages/news-collector/pyproject.toml) | 新闻采集包的发行名称和 Python 模块发现配置 |
 | [`backend/alembic.ini`](backend/alembic.ini) | 数据库迁移工具配置，附[逐项中文说明](backend/README.md#alembic-settings) |
 
 **定时采集开关**统一放在 [scheduled-tasks.json](config/scheduled-tasks.json)。例如只要新闻，就把 `news` 改为 `true`，其他项保留 `false`。项目启动时读取，每项均为 JSON 布尔值。[字段说明](docs/config-fields/scheduled-tasks.schema.json)

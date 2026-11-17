@@ -17,7 +17,7 @@ dc --profile scheduler build
 | 根 `.env` 的 `DANG_POSTGRES_DB`、`DANG_POSTGRES_USER`、`DANG_POSTGRES_PASSWORD` | 设置本部署专用的库名、角色和随机密码；基础 Compose 把它们拼入容器内连接串，密码可使用随机生成的 URL 安全字符。既有卷中的角色和密码需要在 PostgreSQL 内管理 |
 | `DANG_TUSHARE_TOKEN`、`DANG_TUSHARE_MODE`、`DANG_FRED_API_KEY` | 设置有相应访问权限的供应商凭据。bootstrap 需要 Tushare 凭据；FRED 用于配置了它的宏观任务 |
 | `DANG_BACKEND_PORT`、`DANG_BACKEND_CORS_ORIGINS` | API 默认发布宿主机 8000 端口；按消费网站设置来源。基础端口映射绑定宿主机网络接口，按实际访问范围配置服务器防火墙或反向代理 |
-| `DANG_EXTERNAL_IMPORT_PATH`、`INVESTMIND_NEWS_STATE_DIRECTORY` | 前者是宿主机导入目录，挂到 scheduler 的 `/imports`；后者保存待兼容迁入的旧新闻状态。数据库卷保存当前业务数据、快讯队列和游标 |
+| `DANG_EXTERNAL_IMPORT_PATH` | 宿主机的外部数据导入目录，以只读方式挂到 scheduler 的 `/imports` |
 | 根 `config/` | 应用容器只读挂载 `./config:/app/config:ro`。修改任务开关或业务 JSON 后，按[第 6 节](#scheduled)应用变更。`.env` 用于 Compose 插值，只有声明中传入容器的变量才会影响该进程 |
 
 改完配置后再次执行 `dc config --quiet`。部署若叠加 [文件密钥配置](../docker-compose.secrets.yml)，请把该文件作为第二个 `-f` 加到 `dc` 定义，准备声明中的密钥文件并保持所有命令使用相同配置。该覆盖文件给 API 配置独立读连接，当前未给 `news-worker` 声明文件型数据库密钥，启用快讯前需给它配置可用的写连接。完整映射见 [Compose 声明](../docker-compose.backend.yml)。
@@ -57,7 +57,7 @@ dc run --rm --no-deps migrate alembic heads
 ```
 
 4. 对照源端版本和目标代码。如果代码有更新，先按第 7 节准备升级恢复点，再执行 `dc run --rm --no-deps migrate alembic upgrade head`。目标结构已就绪后用 `dc up -d --no-deps api` 仅启动读取服务。这里明确跳过依赖链，以便在恢复验收前保持数据库内容。按第 4 节查询业务快照，对照源端日期与版本。用第 5 节的 `job` 简写运行 `job news-status` 和 `job sync-status`，对照源端最近新闻时间、交付状态和历史作业。此时调度心跳仍应反映交接前的记录。
-5. 若有尚待兼容迁入的旧 SQLite，先将其交付到配置的新闻状态目录。确认源端已停写、目标验收通过，再按第 6 节启用所需采集服务并观察首次成功交付及调度心跳。上线前若验收失败，保留本机原库和目标备份以便恢复原运行方；若服务器已产生新写入，先停止目标端采集，盘点新增新闻、游标、批次及发布版本，确定保留或重放范围后再切回。避免两端同时采集。
+5. 确认源端已停写、目标验收通过，再按第 6 节启用所需采集服务并观察首次成功交付及调度心跳。上线前若验收失败，保留本机原库和目标备份以便恢复原运行方；若服务器已产生新写入，先停止目标端采集，盘点新增新闻、游标、批次及发布版本，确定保留或重放范围后再切回。避免两端同时采集。
 
 <a id="daily"></a>
 

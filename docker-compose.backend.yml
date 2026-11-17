@@ -163,11 +163,9 @@ services:
     environment:
       # 本服务连接容器内 PostgreSQL 的主连接串。
       DANG_DATABASE_URL: postgresql+psycopg://${DANG_POSTGRES_USER:-danginvest}:${DANG_POSTGRES_PASSWORD:-danginvest-local-only}@postgres:5432/${DANG_POSTGRES_DB:-danginvest}
-      # 容器内可迁入的旧新闻 SQLite 状态文件路径。
     volumes:
       # 将宿主机业务配置只读挂载到应用读取的位置。
       - ./config:/app/config:ro
-      # 挂载保存旧新闻状态的宿主机目录，供迁入历史断点。
     depends_on:
       bootstrap:
         # 等待前置任务以退出码 0 完成后再启动。

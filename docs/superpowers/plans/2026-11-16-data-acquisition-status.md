@@ -24,7 +24,7 @@
 - 不修改个人持仓、交易、策略参数；不更改已有业务记录的结构来重复存状态。
 - 当前工作树有上轮目录修订和用户的 `README.md` 修改。执行前记录归属，使用 using-git-worktrees 建立隔离工作区；将本功能依赖的已授权目录修订完整带入，不遗漏新 `scripts/data_catalog_semantics.py`，不提交用户 README 改动。
 - 下文 `Files` 中路径均为仓库根目录下的精确路径；新增文件按其职责创建。迁移文件暂定下一版本，实施前以 Alembic 唯一 head 为准调整 `down_revision`，不创建意外分支。
-- 下文简写的 `pytest ...` 命令均通过 `backend/.venv/Scripts/python.exe -I backend/tests/run_isolated.py pytest ...` 执行，不能直接加载用户 `.env`。命令中的新增文件由其所属任务创建。
+- 下文简写的 `pytest ...` 命令均通过 `backend/.venv/Scripts/python.exe -I backend/tests/run_isolated.py --postgres pytest ...` 执行，不能直接加载用户 `.env`。命令中的新增文件由其所属任务创建。
 
 ## Review Focus
 
@@ -86,7 +86,7 @@
 | derived 无值、依赖 failed | missing |
 
 至少提供 `test_missing_has_priority_and_keeps_error`、`test_excluded_not_in_three_categories`、`test_dependency_priority_matches_website`、`test_catalog_binding_covers_every_entry`。前两项断言形状为 `classify(Availability(kind='missing', period=None, reason='无值', source=None, version=None), failed_evidence).status == 'missing'` 且原因保留其错误码，以及 `summarize([normal,failed,missing,excluded]) == {'normal':1,'failed':1,'missing':1,'excluded':1}`。不按日期推断滞后；数值到可用性的有限值检查由 Task 7 锁定。
-- [ ] 运行 `backend/.venv/Scripts/python.exe -I backend/tests/run_isolated.py pytest backend/tests/acquisition/test_rules.py backend/tests/acquisition/test_bindings.py -q`，确认缺实现失败。
+- [ ] 运行 `backend/.venv/Scripts/python.exe -I backend/tests/run_isolated.py --postgres pytest backend/tests/acquisition/test_rules.py backend/tests/acquisition/test_bindings.py -q`，确认缺实现失败。
 - [ ] 实现契约和纯分类器；逐项填写当前目录绑定，不创建“所有条目默认成功”的兜底。日行情、分红按条目；三种股息率及现行筛选指标用独立 item；宏观专题子系列不能只绑定整组。历史公式、无供给内容标明原因。
 - [ ] 实现离线盘点脚本，输出每项对象、读证据位置、写入口、字段可用性和依赖。校验目录全集有归属、依赖无环、不能用整池 JobRun 给全部证券背书。脚本不访问数据库或网络。
 - [ ] 重跑上述测试及 `python -I scripts/audit-data-status-bindings.py`，要求缺失绑定/孤立 item/循环依赖均为 0。提交 `feat: define acquisition status contracts and catalog bindings`。
@@ -95,13 +95,13 @@
 
 **Files:** Create `backend/app/db/models/acquisition.py`、`backend/migrations/versions/20261116_0022_data_acquisition_state.py`、`backend/app/acquisition/repository.py`、`backend/tests/acquisition/{conftest.py,test_repository.py,test_migration.py}`；Modify `backend/app/db/models/__init__.py`。
 
-**Interfaces:** `StateRepository(session: Session)`；`begin(attempt: Attempt) -> bool`、`finish(attempt: Attempt, evidence: Evidence) -> bool`、`read(keys: tuple[StateKey,...]) -> dict[StateKey,Evidence]`。方法不自行 commit，事务由调用者管理。conftest 提供 `status_factory`（注册全部 ORM 的内存 SQLite）及冻结 UTC 时钟 `status_now`。
+**Interfaces:** `StateRepository(session: Session)`；`begin(attempt: Attempt) -> bool`、`finish(attempt: Attempt, evidence: Evidence) -> bool`、`read(keys: tuple[StateKey,...]) -> dict[StateKey,Evidence]`。方法不自行 commit，事务由调用者管理。conftest 提供 `status_factory`（注册全部 ORM 的隔离 PostgreSQL 测试库）及冻结 UTC 时钟 `status_now`。
 
 - [ ] 写失败测试：同股不同条目、同条目不同股票、routine/historical 分行；相同尝试幂等；较旧尝试晚完成返回 False；失败后 success_at 保留；事务回滚后新凭据/状态均不提交；未知或无时区时间拒绝。
 - [ ] 运行 `pytest backend/tests/acquisition/test_repository.py backend/tests/acquisition/test_migration.py -q`，确认失败。
 - [ ] 创建 `ops.data_acquisition_state`，唯一键为 StateKey 五字段；保存最后终态及其 scope、active attempt、开始时间、checked/success 时间及成功范围、计数、错误及引用。暂停是读时配置，不覆盖历史终态。存在必要失败子范围时保留其引用，不能仅用最后一次 HTTP 结果清除整个条目错误。
 - [ ] 条件更新使用数据库条件及现有发布/采集锁，不用进程内字典仲裁；旧尝试不得清除新 active attempt。finish 仅接受 success/failed/unrecorded 终态；running 由活跃尝试投影，paused 由来源配置投影。主键排序和查询索引支持条目/对象有界读取。禁止向 scope/reason 存 Token、原文或连接串。
-- [ ] 验证 SQLite 行为及隔离 PostgreSQL 的升级、索引、回滚/并发；迁移只新增表和索引，不扫描或改写 Core/Mart。测试通过后提交 `feat: persist acquisition states with attempt fencing`。
+- [ ] 验证状态读写及隔离 PostgreSQL 的升级、索引、回滚/并发；迁移只新增表和索引，不扫描或改写 Core/Mart。测试通过后提交 `feat: persist acquisition states with attempt fencing`。
 
 ### Task 3：公共追踪边界、范围仲裁和恢复
 
@@ -124,7 +124,7 @@
 - [ ] 运行 `pytest backend/tests/acquisition/test_stock_tracking.py backend/tests/stock_update/test_repository.py -q`，确认新断言失败而原行为基线可辨认。
 - [ ] 在实际网络异常捕获位置登记该单元失败，不能只修改 ingest_unit 而漏掉入库前请求失败。分页在终页证明及全部必要页完成后提交成功；缓存复用标记为本地检查并保留原件时间。
 - [ ] 财报复用 `financial-statement-evidence` 的合同、批次、原件及 has_more 核验；公告复用独立证券/日期窗凭证；主营、分类映射按 Task 1 writer 清单接入。历史 backfill 通过通用分页边界标 historical，不改变常规检查。
-- [ ] 验证 Task 1 股票域所有活跃来源有写入口或严格既有凭证适配。执行 `backend/.venv/Scripts/python.exe -I backend/tests/run_isolated.py pytest backend/tests/acquisition/test_stock_tracking.py backend/tests/stock_update backend/tests/marts/test_announcement_history.py -q`。通过后提交 `feat: track per-security stock dataset acquisition`。
+- [ ] 验证 Task 1 股票域所有活跃来源有写入口或严格既有凭证适配。执行 `backend/.venv/Scripts/python.exe -I backend/tests/run_isolated.py --postgres pytest backend/tests/acquisition/test_stock_tracking.py backend/tests/stock_update backend/tests/marts/test_announcement_history.py -q`。通过后提交 `feat: track per-security stock dataset acquisition`。
 
 ### Task 5：宏观基础系列与专题执行接入
 
@@ -145,7 +145,7 @@
 **Interfaces:** `read_market_evidence(...)`、`read_content_evidence(...)`、`read_import_evidence(...)` 参数及返回类型与 Task 5 read_macro_evidence 一致。
 
 - [ ] 写失败测试：指数/ETF/期货按代码独立；ETF 价格成功而份额失败独立；地域结果无效不能成功；新闻真实请求错误和入库交付错误均可追查，而仅 SOURCE_STALE 质量告警不冒充新请求失败；合法零新增新闻检查成功；导入 dry-run 不写获取状态，坏文件不产生成功凭据。
-- [ ] 执行 `backend/.venv/Scripts/python.exe -I backend/tests/run_isolated.py pytest backend/tests/acquisition/test_market_tracking.py backend/tests/acquisition/test_content_tracking.py backend/tests/acquisition/test_import_tracking.py backend/tests/market_data backend/tests/market_pulse backend/tests/market_region backend/tests/market_etf backend/tests/market_commodities backend/tests/marts/test_news_collector.py backend/tests/marts/test_news_unified.py backend/tests/external_files -q`，确认新增断言失败。
+- [ ] 执行 `backend/.venv/Scripts/python.exe -I backend/tests/run_isolated.py --postgres pytest backend/tests/acquisition/test_market_tracking.py backend/tests/acquisition/test_content_tracking.py backend/tests/acquisition/test_import_tracking.py backend/tests/market_data backend/tests/market_pulse backend/tests/market_region backend/tests/market_etf backend/tests/market_commodities backend/tests/marts/test_news_collector.py backend/tests/marts/test_news_unified.py backend/tests/external_files -q`，确认新增断言失败。
 - [ ] 复用现有原件身份、请求参数、内容哈希及 Core 绑定。HTTP 异常在 sync 层和解析拒收在 repository 层均通过同一追踪服务归入对应尝试，不重复计数。新闻分别保留来源检查与内容交付/发布范围，未成功入库不能报该存储条目正常。
 - [ ] 导入以来源/内容类型及文件哈希建立范围；只从被接受记录映射对象，无法识别对象的坏文件只记导入范围错误，不扩散到所有系列。提交前覆盖 Task 1 剩余活跃 writer 清单，既有历史兼容内容明确说明。
 - [ ] 验证相应域测试通过，提交 `feat: track market content and imported data acquisition`。
@@ -225,7 +225,7 @@
 **Interfaces:** 复用各 Task 已定义接口；交付真实数据仍由已有采集任务提供，新测试使用可控来源和隔离库。
 
 - [ ] 先写集成断言并确认未覆盖路径会失败：源成功→提交→统一状态→查询→管理显示；保留旧值后源失败→failed；无值源失败→missing；修复同范围→normal；暂停/运行/不适用→excluded 且不进入三类；强制 commit 失败不产生假成功。
-- [ ] 运行 `backend/.venv/Scripts/python.exe -I backend/tests/run_isolated.py pytest backend/tests/acquisition backend/tests/macro/test_collection_audit.py backend/tests/test_admin_catalog.py backend/tests/test_admin_catalog_routes.py backend/tests/test_local_admin_routes.py backend/tests/test_domain_boundaries.py -q`。再按实际改动域运行原有 stocks/market/news/import 定向测试；通过后不无理由重复全库。
+- [ ] 运行 `backend/.venv/Scripts/python.exe -I backend/tests/run_isolated.py --postgres pytest backend/tests/acquisition backend/tests/macro/test_collection_audit.py backend/tests/test_admin_catalog.py backend/tests/test_admin_catalog_routes.py backend/tests/test_local_admin_routes.py backend/tests/test_domain_boundaries.py -q`。再按实际改动域运行原有 stocks/market/news/import 定向测试；通过后不无理由重复全库。
 - [ ] 用运行器登记的一次性 PostgreSQL 跑迁移、并发、初始化及指针不变测试，命令为 `backend/.venv/Scripts/python.exe -I backend/tests/run_isolated.py --postgres pytest backend/tests/acquisition/test_migration.py backend/tests/e2e/test_acquisition_status_postgres.py -q`。只能由运行器登记 `postgres:17-alpine` 容器，不连接 `.env` 业务库冒充隔离测试。
 - [ ] 执行绑定全集校验、导出可重复性、`node --check backend/app/local_admin/static/catalog.js`、`git diff --check`；确认没有网站仓修改、用户 README 改动或临时原型进入提交。
 - [ ] 按所选执行技能完成最终独立复核；修正事实/实现问题后只重跑受影响验证。交付覆盖清单逐条对应适配/依赖/未供给原因，不将空表或未接入域当作完成。

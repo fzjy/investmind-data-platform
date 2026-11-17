@@ -15,4 +15,4 @@
 
 股票工作台将同一内容库的证券关联用于提及次数，将巨潮公告元数据用于日线标点。50 只工作台已逐只复核，当前普通公告的历史查核只覆盖金山办公两天，结构化业绩预告及报表披露日各有独立来源。[公告、提及与披露逐项溯源](workbench-announcements.md)
 
-在[定时采集配置](../config/scheduled-tasks.json)中启用 `news` 后，项目启动器会运行一个 `watch-news` 进程，Compose 中对应 `news-worker` 服务。新闻队列、游标和交付状态保存在 PostgreSQL，`data/news-collector/` 用于迁入已有的旧 SQLite 状态。
+在[定时采集配置](../config/scheduled-tasks.json)中启用 `news` 后，项目启动器会运行一个 `watch-news` 进程，Compose 中对应 `news-worker` 服务。新闻队列、游标和交付状态保存在 PostgreSQL，由项目数据库备份统一保存。
