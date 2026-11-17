@@ -95,7 +95,7 @@
 
 **Files:** Create `backend/app/db/models/acquisition.py`、`backend/migrations/versions/20261116_0022_data_acquisition_state.py`、`backend/app/acquisition/repository.py`、`backend/tests/acquisition/{conftest.py,test_repository.py,test_migration.py}`；Modify `backend/app/db/models/__init__.py`。
 
-**Interfaces:** `StateRepository(session: Session)`；`begin(attempt: Attempt) -> bool`、`finish(attempt: Attempt, evidence: Evidence) -> bool`、`read(keys: tuple[StateKey,...]) -> dict[StateKey,Evidence]`。方法不自行 commit，事务由调用者管理。conftest 提供 `status_factory`（注册全部 ORM 的隔离 PostgreSQL 测试库）及冻结 UTC 时钟 `status_now`。
+**Interfaces:** `StateRepository(session: Session)`；`begin(attempt: Attempt) -> bool`、`finish(attempt: Attempt, evidence: Evidence) -> bool`、`read(keys: tuple[StateKey,...]) -> dict[StateKey,Evidence]`。方法不自行 commit，事务由调用者管理。`conftest.py` 提供 `factory(pg_factory)`，返回隔离 PostgreSQL 测试库的会话工厂。`stock_factory(factory)` 先写入证券 `600519.SH`，再返回同一工厂。
 
 - [ ] 写失败测试：同股不同条目、同条目不同股票、routine/historical 分行；相同尝试幂等；较旧尝试晚完成返回 False；失败后 success_at 保留；事务回滚后新凭据/状态均不提交；未知或无时区时间拒绝。
 - [ ] 运行 `pytest backend/tests/acquisition/test_repository.py backend/tests/acquisition/test_migration.py -q`，确认失败。
