@@ -25,16 +25,8 @@ def pg_url(pg_database):
 @pytest.fixture(scope="session")
 def pg_template(pg_instance_url):
     """只迁移一次，随后每个用例克隆完整 schema、约束及触发器。"""
-    from alembic import command
-    from alembic.config import Config
-    from app.config import PROJECT_ROOT
     with postgres.database(pg_instance_url) as template:
-        with pytest.MonkeyPatch.context() as patch:
-            patch.setenv("DANG_DATABASE_URL", template)
-            # 测试进程保留 pytest 的日志捕获，迁移脚本沿用项目路径。
-            config = Config()
-            config.set_main_option("script_location", str(PROJECT_ROOT / "backend/migrations"))
-            command.upgrade(config, "head")
+        postgres.migrate_database(template)
         yield template
 
 

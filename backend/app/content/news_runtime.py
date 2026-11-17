@@ -94,8 +94,7 @@ def run_news(settings, *, publish=False, dry_run=False, stopped=lambda: False, s
             save_health(factory, collector.status() if 'collector' in locals() else {}, config, now, 'DELIVERY_FAILED')
         except Exception:
             pass
-        code = str(exc) if str(exc) in ('NEWS_LATE_LEGACY_CONFLICT', 'NEWS_MIGRATION_TARGET_NOT_EMPTY', 'NEWS_MIGRATION_VERIFICATION_FAILED') else 'NEWS_RUN_FAILED'
-        return {**report, 'status': 'failed', 'code': code, 'errorType': type(exc).__name__}
+        return {**report, 'status': 'failed', 'code': 'NEWS_RUN_FAILED', 'errorType': type(exc).__name__}
     finally:
         lock.release(JOB)
         engine.dispose()

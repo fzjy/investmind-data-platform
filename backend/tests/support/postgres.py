@@ -35,19 +35,24 @@ def database(instance_url, *, template=None):
         admin.dispose()
 
 
-@contextmanager
-def standalone_factory(instance_url):
-    """为非 pytest 的测试导出器迁移一个临时数据库。"""
-    import os
-    from unittest.mock import patch
+def migrate_database(url):
+    """只在调用方分配的临时数据库上执行项目迁移。"""
     from alembic import command
     from alembic.config import Config
     from app.config import PROJECT_ROOT
+
+    config = Config(attributes={"database_url": url})
+    config.set_main_option("script_location", str(PROJECT_ROOT / "backend/migrations"))
+    command.upgrade(config, "head")
+
+
+@contextmanager
+def standalone_factory(instance_url):
+    """为非 pytest 的测试导出器迁移一个临时数据库。"""
     from app.db.session import create_engine_and_session
 
     with database(instance_url) as url:
-        with patch.dict(os.environ, {"DANG_DATABASE_URL": url}):
-            command.upgrade(Config(str(PROJECT_ROOT / "backend/alembic.ini")), "head")
+        migrate_database(url)
         engine, factory = create_engine_and_session(url)
         try:
             yield factory

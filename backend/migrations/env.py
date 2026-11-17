@@ -5,7 +5,6 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-from app.config import settings
 from app.db.base import Base, TargetEvidenceBase
 from app.db import models  # noqa: F401
 
@@ -18,6 +17,10 @@ target_metadata = [Base.metadata, TargetEvidenceBase.metadata]
 
 
 def database_url() -> str:
+    if "database_url" in config.attributes:
+        return config.attributes["database_url"]
+    from app.config import settings
+
     if settings.database_url:
         return settings.database_url
     configured = config.get_main_option("sqlalchemy.url")

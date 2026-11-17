@@ -1,6 +1,23 @@
 from sqlalchemy import create_engine, text
 
 
+def test_standalone_migration_uses_allocated_database(pg_instance_url, pg_url, tmp_path, monkeypatch):
+    from backend.tests.support.postgres import standalone_factory
+
+    secret = tmp_path / "database-url"
+    secret.write_text(pg_url, encoding="utf-8")
+    monkeypatch.setenv("DANG_DATABASE_URL_FILE", str(secret))
+    alternate = create_engine(pg_url)
+    try:
+        with standalone_factory(pg_instance_url) as factory:
+            with alternate.connect() as connection:
+                assert connection.scalar(text("select to_regclass('public.alembic_version')")) is None
+            with factory() as session:
+                assert session.scalar(text("select version_num from public.alembic_version"))
+    finally:
+        alternate.dispose()
+
+
 def test_databases_are_independent(pg_database):
     first = create_engine(pg_database())
     second = create_engine(pg_database())
