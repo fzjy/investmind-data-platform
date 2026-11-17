@@ -43,6 +43,20 @@ def test_exact_known_migration_convention_names_only(schema,table,raw_name,conve
     assert normalize(schema,table,convention_name,changed) == changed
 
 
+def test_scope_kind_requires_exact_identity_values_and_order():
+    normalize = compat().canonical_restored_check
+    identity = ("ops", "data_acquisition_state", "scope_kind")
+    restored = "CHECK (scope_kind::text = ANY (ARRAY['routine'::character varying::text, 'historical'::character varying::text]))"
+    original = "CHECK (scope_kind::text = ANY (ARRAY['routine'::character varying, 'historical'::character varying]::text[]))"
+    assert normalize(*identity, restored) == original
+    for idx in range(len(identity)):
+        changed = list(identity)
+        changed[idx] += "_other"
+        assert normalize(*changed, restored) == restored
+    for invalid in (restored.replace("historical", "other"), restored.replace("routine", "tmp").replace("historical", "routine").replace("tmp", "historical")):
+        assert normalize(*identity, invalid) == invalid
+
+
 def compat():
     assert hasattr(inventory, "assert_restored_inventory"), "restore semantic comparison missing"
     return importlib.import_module("app.ops.backup.constraint_compatibility")

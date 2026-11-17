@@ -1,10 +1,11 @@
-"""PG数组转换分配的七项精确合同，不是SQL正则/通用表达式等价器。"""
+"""PG数组转换分配的精确合同，不是SQL正则/通用表达式等价器。"""
 
 _STATES = ("reserved", "received", "failed")
 _SUPPLEMENT = ("matched", "returned-null", "source-witness-missing", "response-witness-missing",
     "no-match", "ambiguous", "missing-field", "invalid-value", "truncated", "identity-mismatch")
 _REA = ("matched", "response-witness-missing", "no-match", "ambiguous", "truncated", "identity-mismatch")
 _CHECKS = {
+    ("ops", "data_acquisition_state", "scope_kind"): ("scope_kind", ("routine", "historical")),
     ("ops", "enterprise_receivable_attempt", "receivable_attempt_state"): ("state", _STATES),
     ("ops", "enterprise_order_attempt", "order_attempt_state"): ("state", _STATES),
     ("ops", "enterprise_rea_attempt", "rea_attempt_state"): ("state", _STATES),
