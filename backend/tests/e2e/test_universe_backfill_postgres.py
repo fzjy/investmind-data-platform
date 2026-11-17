@@ -61,6 +61,7 @@ from app.stocks.jobs.universe_backfill_history import (
     SqlUniverseBackfillHistory,
 )
 from app.stocks.jobs.universe_backfill_runtime import open_universe_backfill_runtime
+from app.shared.snapshot_sql import PUBLISHED_SNAPSHOTS_SQL
 from app.marts.contracts import QualityResult
 
 
@@ -90,7 +91,6 @@ STOCK_MODELS = (
     CashflowStatement,
     FinancialIndicator,
     FinancialForecast,
-    FinancialExpress,
     Dividend,
     Repurchase,
     ShareUnlock,
@@ -614,7 +614,7 @@ class UniverseBackfillPostgresHarness:
             rows = connection.execute(
                 text(
                     "SELECT product, version, payload "
-                    "FROM mart.published_snapshot ORDER BY product"
+                    f"FROM {PUBLISHED_SNAPSHOTS_SQL} AS resolved ORDER BY product"
                 )
             ).mappings()
             return tuple(
@@ -739,6 +739,8 @@ class UniverseBackfillPostgresHarness:
             rejected = connection.scalars(select(RejectedRecord.raw_record)).all()
             securities = set(connection.scalars(select(Security.ts_code)))
             assert securities == set(SYMBOLS)
+            assert all(request.api_name != "express" for request in self.source.requests)
+            assert connection.execute(select(FinancialExpress.ts_code)).first() is None
             for model in STOCK_MODELS:
                 assert set(connection.scalars(select(model.ts_code))) == set(
                     SYMBOLS
@@ -875,11 +877,11 @@ def test_universe_backfill_resumes_after_failed_second_batch(
     assert details["universeSize"] == 3
     assert details["counts"] == second.counts.to_payload()
     assert details["counts"] == {
-        "requestCount": 128,
-        "providerCount": 66,
-        "retainedCount": 65,
+        "requestCount": 120,
+        "providerCount": 62,
+        "retainedCount": 61,
         "filteredCount": 1,
-        "rowCount": 64,
+        "rowCount": 60,
         "rejectedCount": 1,
     }
     database_counts = harness.database_counts()

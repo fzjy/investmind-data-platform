@@ -178,9 +178,6 @@ def macro(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Iterator[MacroHarn
         assert settings.database_url == settings.database_read_url == database_url
         config = Config(str(PROJECT_ROOT / "backend/alembic.ini"))
         command.upgrade(config, "head")
-        # Alembic fileConfig 默认禁用已存在的 logger；显式打开后证明日志脱敏。
-        monkeypatch.setattr(logging.getLogger("httpx"), "disabled", False)
-        monkeypatch.setattr(logging.getLogger("app.connectors.tushare.client"), "disabled", False)
         engine = create_engine(database_url)
         try:
             with engine.connect() as connection:
@@ -289,17 +286,9 @@ def _api(macro: MacroHarness) -> dict[str, dict[str, object]]:
     # 标准 create_app + DatabaseProvider + SnapshotRepository + API 路由。
     with pytest.MonkeyPatch.context() as patch:
         patch.setattr(main_module, "settings", macro.settings)
-        engines: list[Engine] = []
-        real_create = main_module.create_engine
-
-        def tracked_create(*args: object, **kwargs: object) -> Engine:
-            engine = real_create(*args, **kwargs)
-            engines.append(engine)
-            return engine
-
-        patch.setattr(main_module, "create_engine", tracked_create)
+        application = main_module.create_app()
         try:
-            with TestClient(main_module.create_app()) as client:
+            with TestClient(application) as client:
                 assert client.get("/health").json() == {"status": "ok", "database": "ready"}
                 results = {}
                 for product in PRODUCTS:
@@ -313,8 +302,7 @@ def _api(macro: MacroHarness) -> dict[str, dict[str, object]]:
                     results[product] = {key: payload[key] for key in ("meta", "data")}
                 return results
         finally:
-            for engine in engines:
-                engine.dispose()
+            application.state.read_engine.dispose()
 
 
 def _series(payload: dict[str, object], series_id: str) -> dict[str, object]:

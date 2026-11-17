@@ -18,6 +18,7 @@ from app.stocks.classification.sync import ClassificationSync, RequestBudget
 from app.connectors.tushare.client import TushareClient
 from app.connectors.tushare.contracts import TushareResponse
 from app.db.models import Classification, ClassificationMember, PublishedSnapshot, Security, SourcePayload
+from app.marts.publication import SnapshotPublisher, SnapshotCandidate
 from app.jobs.locks import PostgresAdvisoryJobLock
 from app.stocks.universes import UniverseResolver
 from backend.tests.classification.test_sync import policy
@@ -131,15 +132,18 @@ def test_pg_raw_progress_rollback_keeps_unit_pending(pg):
         assert session.scalar(select(func.count()).select_from(SourcePayload)) == before
 
 
-def test_pg_bounded_resume_preserves_published_snapshot(pg):
-    engine, factory, _ = pg
+def test_pg_bounded_resume_preserves_published_snapshot(pg_factory):
+    factory = pg_factory
+    engine = factory.kw["bind"]
     selection = UniverseResolver().resolve("representative-50")
     with factory.begin() as session:
         for symbol in selection.symbols:
-            if symbol != "600519.SH":
-                session.add(Security(ts_code=symbol, symbol=symbol[:6], name="sample"))
-        session.add(PublishedSnapshot(product="screener", version="old-publication",
-            as_of=datetime(2026, 9, 18, tzinfo=timezone.utc), payload={"stocks": [{"symbol": "600519.SH", "industry": ""}]}))
+            session.add(Security(ts_code=symbol, symbol=symbol[:6], name="sample"))
+        session.add(Classification(id=1001, provider="tushare", source="SW2014",
+            classification_id="801010.SI", name="old", data={"src": "SW2014"}))
+    SnapshotPublisher(factory).publish(SnapshotCandidate(
+        product="screener", version="old-publication", as_of=datetime(2026, 9, 18, tzinfo=timezone.utc),
+        payload={"stocks": [{"symbol": "600519.SH", "industry": ""}]}), ())
     calls = []
     def handler(request):
         body = json.loads(request.content)
