@@ -24,6 +24,20 @@ def database_snapshot(engine: Engine) -> tuple:
             WHERE NOT starts_with(n.nspname, 'pg_') AND n.nspname <> 'information_schema'
             ORDER BY a.attrelid, a.attnum
         """)).all()
+        constraints = connection.execute(text("""
+            SELECT k.oid, k.connamespace, k.conrelid, k.conname, k.convalidated,
+                   pg_get_constraintdef(k.oid)
+            FROM pg_constraint k JOIN pg_namespace n ON n.oid = k.connamespace
+            WHERE NOT starts_with(n.nspname, 'pg_') AND n.nspname <> 'information_schema'
+            ORDER BY k.oid
+        """)).all()
+        triggers = connection.execute(text("""
+            SELECT t.oid, t.tgrelid, t.tgname, t.tgenabled, pg_get_triggerdef(t.oid)
+            FROM pg_trigger t JOIN pg_class c ON c.oid = t.tgrelid
+            JOIN pg_namespace n ON n.oid = c.relnamespace
+            WHERE NOT starts_with(n.nspname, 'pg_') AND n.nspname <> 'information_schema'
+            ORDER BY t.oid
+        """)).all()
         versions = {}
         for relation in relations:
             if relation.relkind == "r":
@@ -35,4 +49,4 @@ def database_snapshot(engine: Engine) -> tuple:
                 versions[relation.qualified] = connection.exec_driver_sql(
                     f"SELECT last_value, is_called FROM {relation.qualified}"
                 ).one()
-        return schemas, relations, definitions, versions
+        return schemas, relations, definitions, constraints, triggers, versions

@@ -118,6 +118,12 @@ def test_candidate_tampering_or_orphan_is_not_reported_as_valid(database, field)
         from sqlalchemy.exc import IntegrityError
         with pytest.raises(IntegrityError), evidence_fixture_transaction(factory, models.TargetCandidate) as session:
             session.scalar(select(models.TargetCandidate)).observation_id = "b" * 64
+        from app.macro.target_evidence_store import _check_candidate
+        with factory() as session:
+            candidate = session.scalars(select(models.TargetCandidate)).one()
+            assert candidate.observation_id == key
+            with pytest.raises(ValueError, match='^TARGET_EVIDENCE_INVALID$'):
+                _check_candidate(candidate, {})
         alternate = store.receive(request(), response(), CAPTURED, policy())
     with evidence_fixture_transaction(factory, models.TargetCandidate) as session:
         row = session.scalar(select(models.TargetCandidate))
