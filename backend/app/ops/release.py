@@ -179,14 +179,21 @@ def _check_code_schema(connection: Connection, *, timeout: float) -> None:
             budget.remaining()
 
 
-# 0021 只把同产品、同版本、同一时刻的正文替换为包含正文摘要的引用。
-# 无法解析的引用产生 NULL，与迁移前强制要求的 JSON 对象指纹不同。
-_HISTORY_PAYLOAD_0021 = """CASE WHEN json_typeof(p.payload) <> 'string' THEN p.payload ELSE (
-    SELECT h.payload FROM mart.page_snapshot h
-    WHERE h.product=p.product AND h.snapshot_version=p.version AND h.as_of=p.as_of
-      AND p.product IN ('macro-insights','macro-transmission','market-overview','portfolio','screener')
-      AND NOT jsonb_exists_any(h.payload::jsonb, ARRAY['marketNews','dailyChart'])
-      AND p.payload::text = to_json('@investmind-history:' || md5(h.payload::text))::text
+# 与 0021 的 UPDATE 保持相同的产品范围、历史版本、时刻及排除字段。
+_HISTORY_MATCH_0021 = """h.product=p.product AND h.snapshot_version=p.version AND h.as_of=p.as_of
+    AND p.product IN ('macro-insights','macro-transmission','market-overview','portfolio','screener')
+    AND NOT jsonb_exists_any(h.payload::jsonb, ARRAY['marketNews','dailyChart'])"""
+_REFERENCE_0021 = "to_json('@investmind-history:' || md5(h.payload::text))::text"
+_EXPECTED_POINTERS_0021 = f"""SELECT p.product,p.version,{_REFERENCE_0021}
+    FROM mart.published_snapshot p JOIN mart.page_snapshot h ON {_HISTORY_MATCH_0021}
+    WHERE p.payload::text=h.payload::text"""
+_ACTUAL_POINTERS_0021 = """SELECT product,version,payload::text FROM mart.published_snapshot
+    WHERE json_typeof(payload)='string'"""
+
+# 指针与实际历史正文不符时，NULL 与原始正文指纹不同。
+_HISTORY_PAYLOAD_0021 = f"""CASE WHEN json_typeof(p.payload) <> 'string' THEN p.payload ELSE (
+    SELECT h.payload FROM mart.page_snapshot h WHERE {_HISTORY_MATCH_0021}
+      AND p.payload::text = {_REFERENCE_0021}
 ) END AS payload"""
 
 
@@ -288,6 +295,11 @@ def verify_release(settings: Settings, *, package: str | Path) -> ReleaseReport:
                                 if actual != {"public": plan.source_versions}:
                                     raise BackupError("unsupported_release_version_layout", 2, stage)
                                 columns = _legacy_columns(view.connection, manifest.inventory)
+                                check_history = ("20261115_0021" in plan.migrations
+                                                 and ("mart", "published_snapshot") in columns)
+                                expected_pointers = set()
+                                if check_history and ("mart", "page_snapshot") in columns:
+                                    expected_pointers = set(budget.execute(view.connection, _EXPECTED_POINTERS_0021))
                                 baseline = _legacy_fingerprints(view.connection, columns, timeout=budget.remaining())
                             done(stage)
                             stage = "upgrade"
@@ -304,7 +316,9 @@ def verify_release(settings: Settings, *, package: str | Path) -> ReleaseReport:
                                 done(stage)
                                 stage = "legacy_data"
                                 upgraded = _legacy_fingerprints(view.connection, columns, timeout=budget.remaining(),
-                                    crossed_0021="20261115_0021" in plan.migrations)
+                                    crossed_0021=check_history)
+                                if check_history and set(budget.execute(view.connection, _ACTUAL_POINTERS_0021)) != expected_pointers:
+                                    raise BackupError("release_legacy_data_mismatch", 4, stage)
                                 if upgraded != baseline:
                                     raise BackupError("release_legacy_data_mismatch", 4, stage)
                                 inventory = service.read_inventory(view.connection, timeout=budget.remaining())

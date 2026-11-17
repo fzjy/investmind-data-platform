@@ -54,6 +54,12 @@ def source(tmp_path_factory):
                 command.downgrade(migration, "20260920_0009")
             with engine.begin() as connection:
                 connection.execute(text("ALTER TABLE mart.published_snapshot ADD COLUMN source_note text DEFAULT 'original'"))
+                # 同产品、版本、时刻且 JSON 语义相同，文本不同，0021 必须保留内联正文。
+                changed = connection.execute(text("""UPDATE mart.page_snapshot h
+                    SET payload=(h.payload::text || ' ')::json FROM mart.published_snapshot p
+                    WHERE h.product='portfolio' AND p.product=h.product AND p.version=h.snapshot_version
+                    AND p.as_of=h.as_of AND p.payload::text=h.payload::text"""))
+                assert changed.rowcount == 1
             with snapshot_inventory(engine, timeout=120) as view:
                 inventory = read_inventory(view.connection, timeout=120)
             settings = Settings(_env_file=None, database_url=url, backup_path=str(root))
@@ -131,7 +137,7 @@ def test_head_package_verification_preserves_source_without_pending_migrations(s
     assert_source_unchanged(engine, expected)
 
 
-@pytest.mark.parametrize("fault", ["migration", "version", "schema", "legacy_data", "legacy_column", "pointer", "history", "api"])
+@pytest.mark.parametrize("fault", ["migration", "version", "schema", "legacy_data", "legacy_column", "pointer", "history", "reverted_pointer", "api"])
 def test_upgrade_fault_never_passes_and_restores_original_backup(source, monkeypatch, fault):
     module = release_module()
     settings, engine, expected, path = source
@@ -164,6 +170,11 @@ def test_upgrade_fault_never_passes_and_restores_original_backup(source, monkeyp
                     connection.execute(text("UPDATE core.security SET name='tampered' WHERE ts_code='600519.SH'"))
                 elif fault == "legacy_column":
                     connection.execute(text("UPDATE mart.published_snapshot SET source_note='altered' WHERE product='screener'"))
+                elif fault == "reverted_pointer":
+                    changed = connection.execute(text("""UPDATE mart.published_snapshot p SET payload=h.payload
+                        FROM mart.page_snapshot h WHERE p.product='screener' AND h.product=p.product
+                        AND h.snapshot_version=p.version AND p.history_generation=h.history_generation"""))
+                    assert changed.rowcount == 1
                 elif fault in {"pointer", "history"}:
                     connection.execute(text("ALTER TABLE mart.published_snapshot DROP CONSTRAINT fk_pointer_history"))
                     if fault == "pointer":
@@ -180,8 +191,10 @@ def test_upgrade_fault_never_passes_and_restores_original_backup(source, monkeyp
     report = module.verify_release(settings, package=path)
     assert report.status == "failed"
     assert report.exit_code in {3, 4}
+    if fault == "reverted_pointer":
+        assert report.reason_code == "release_legacy_data_mismatch"
     assert report.recovery_verified is True
-    expected_stage = {"migration": "upgrade", "version": "version_acceptance", "schema": "schema_acceptance", "legacy_data": "legacy_data", "legacy_column": "legacy_data", "pointer": "legacy_data", "history": "legacy_data", "api": "api_acceptance"}[fault]
+    expected_stage = {"migration": "upgrade", "version": "version_acceptance", "schema": "schema_acceptance", "legacy_data": "legacy_data", "legacy_column": "legacy_data", "pointer": "legacy_data", "history": "legacy_data", "reverted_pointer": "legacy_data", "api": "api_acceptance"}[fault]
     assert any(step.stage == expected_stage and step.status == "failed" for step in report.audit)
     assert "TOP_SECRET" not in report.model_dump_json()
     assert_source_unchanged(engine, expected)
