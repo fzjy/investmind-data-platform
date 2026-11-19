@@ -35,13 +35,12 @@ def publish_market_quotes(factory, catalog, *, checked_at: datetime, targets=Non
                 return {**report, 'code': 'MARKET_BASE_PAIR_REQUIRED'}
             repo = MarketQuoteRepository(factory)
             targets = resolve_market_targets(catalog, checked_at, targets, planned_at=planned_at)
-            if not all(repo.is_complete(t, checked_at=checked_at) for t in targets):
-                return {**report, 'code': 'MARKET_QUOTES_INCOMPLETE'}
             indices, etfs = [], []
             for t in targets:
-                row = repo.latest(t, checked_at=checked_at)
-                if row is None:
+                rows = repo.complete_window(session, t, checked_at)
+                if not rows:
                     return {**report, 'code': 'MARKET_QUOTES_INCOMPLETE'}
+                row = rows[-1]
                 quote = {'code': t.asset.asset_code, 'name': t.asset.name, 'change': float(row.pct_chg),
                     'tradeDate': row.trade_date.isoformat(), 'capturedAt': aware(row.captured_at).isoformat(),
                     'source': f'tushare:{t.asset.api_name}', 'calendarStatus': 'unknown'}

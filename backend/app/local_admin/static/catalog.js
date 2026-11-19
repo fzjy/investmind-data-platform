@@ -95,6 +95,9 @@ function refLink(t,origin,available){
   return part;
 }
 const parameterNames={
+ content_type:"内容类型",published_from:"发布起点",published_through:"发布截止",as_of:"可见性截止",
+ start_date:"起始日期",end_date:"结束日期",trade_date:"交易日",asset_type:"资产类型",asset_code:"资产品种",
+ window_end:"映射窗口末日",series_id:"指标标识",exchange:"交易所",statement:"报表类型",kind:"事件类别",
  symbol:"证券代码",peerSymbol:"对比证券代码",version:"发布版本",view:"返回视图",news:"新闻读取模式",
  cursor:"分页游标",limit:"每页条数",page:"页码",pageSize:"每页条数",filters:"筛选条件",
  sortRules:"排序规则",sortMode:"排序模式",bank:"银行评分选项","if-none-match":"客户端缓存版本",
@@ -135,6 +138,7 @@ function operation(box,op,origin){
   if(op.method==="GET"){
     const url=new URL(op.path.replace("{symbol}","600519.SH"),origin);
     if(op.path==="/api/v1/search")url.searchParams.set("q","600519");
+    for(const [name,value] of Object.entries(op.example||{}))url.searchParams.set(name,value);
     box.append(node("pre",'curl "'+url.href+'"',"catalog-call"));
   }
 }

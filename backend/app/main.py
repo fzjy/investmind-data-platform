@@ -16,15 +16,19 @@ from app.macro.audit import CollectionAuditReader
 from app.macro.routes import create_router as create_macro_router
 from app.market.database_provider import MarketDatabaseProvider
 from app.market.routes import create_router as create_market_router
+from app.market.datasets_routes import create_router as create_market_datasets_router
+from app.macro.datasets_routes import create_router as create_macro_datasets_router
 from app.portfolio.database_provider import PortfolioDatabaseProvider
 from app.portfolio.routes import create_router as create_portfolio_router
 from app.shared.errors import DataServiceError, error_payload
 from app.shared.repository import SnapshotRepository
 from app.stocks.database_provider import StocksDatabaseProvider
+from app.stocks.datasets_routes import create_router as create_stock_datasets_router
 from app.stocks.routes import create_router as create_stocks_router
 from app.search.routes import create_router as create_search_router
 from app.search.models import SearchOptions
 from app.content.routes import create_router as create_content_router, read_news
+from app.content.datasets_routes import create_router as create_content_datasets_router
 from app.content.news_worker import news_lifespan
 
 
@@ -71,6 +75,9 @@ def create_app(*, background_news: bool = False) -> FastAPI:
     application.state.acquisition_status = StatusService(session_factory)
     application.include_router(create_status_router(application.state.acquisition_status))
     application.include_router(create_content_router(session_factory))
+    application.include_router(create_content_datasets_router(session_factory))
+    application.include_router(create_market_datasets_router(session_factory))
+    application.include_router(create_macro_datasets_router(session_factory))
     repository = SnapshotRepository(session_factory)
     application.include_router(create_market_router(
         provider=MarketDatabaseProvider(repository),
@@ -79,6 +86,7 @@ def create_app(*, background_news: bool = False) -> FastAPI:
     application.include_router(create_macro_router(provider=MacroDatabaseProvider(repository), collection_audit=CollectionAuditReader(session_factory)))
     application.include_router(create_portfolio_router(provider=PortfolioDatabaseProvider(repository)))
     application.include_router(create_stocks_router(provider=StocksDatabaseProvider(repository, session_factory)))
+    application.include_router(create_stock_datasets_router(session_factory))
     application.include_router(create_search_router(provider=StocksDatabaseProvider(repository),
         options=SearchOptions.from_settings(settings)))
 

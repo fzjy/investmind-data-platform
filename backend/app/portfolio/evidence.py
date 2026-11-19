@@ -5,8 +5,8 @@ from sqlalchemy import select
 from app.db.models import Dividend, SourcePayload, JobCursor, Security
 from app.ingestion.repositories import content_hash
 from app.portfolio.dividend_capture import _cursor, _valid_saved
-from app.portfolio.dividend_ledger import _original_rows
-from app.portfolio.dividend_report import DIVIDEND_FIELDS
+from app.portfolio.original_rows import _original_rows
+from app.portfolio.dividend_fields import DIVIDEND_FIELDS
 
 JOB = 'portfolio-dividend-routine'
 
@@ -64,7 +64,7 @@ def validate_manifest(session, value):
         _valid_unit(session, entry['unit'], symbol)
 
 
-def _verified_code_rows(session, symbols, *, errors=None):
+def _bound_dividend_units(session, symbols):
     """加载已绑定的当前及历史原件；后来响应中省略的撤回或更正仍可按公告日核对。"""
     manifest_row = _get(session, 'manifest')
     legacy_row = _cursor(session, 'control')
@@ -104,29 +104,50 @@ def _verified_code_rows(session, symbols, *, errors=None):
             raise ValueError('DIVIDEND_MANIFEST_INVALID')
         for symbol in set(symbols).intersection(manifest['entries']):
             units[symbol] = manifest['entries'][symbol]['unit']
+    for symbol, current in units.items():
+        historical[symbol][current['rawId']] = current
+    return units, historical
+
+
+def _capture_rows(session, symbol, history, *, through=None):
+    """实物按实际捕获日（上海时间）截断，后续重抓不回填旧时点。"""
+    from zoneinfo import ZoneInfo
+    rows, captures = [], []
+    for raw_id, unit in sorted(history.items()):
+        raw = session.get(SourcePayload, raw_id)
+        if raw is None:
+            raise ValueError('DIVIDEND_SOURCE_INVALID')
+        stamp = raw.captured_at
+        stamp = stamp.replace(tzinfo=timezone.utc) if stamp.tzinfo is None else stamp.astimezone(timezone.utc)
+        if through is not None and stamp.astimezone(ZoneInfo('Asia/Shanghai')).date() > through:
+            continue
+        verified = _valid_unit(session, unit, symbol)
+        captures.append(dict(source_id=f'raw.source_payload:{raw_id}', captured_at=stamp.isoformat()))
+        rows.extend(r | {'_verifiedOriginal': True, '_originalSource': dict(
+            sourceId=r['sourceId'], sourceHash=raw.content_hash, capturedAt=stamp.isoformat())} for r in verified)
+    return rows, captures
+
+
+def captured_dividend_history(session, symbol, through=None):
+    """按实际查询代码读取已绑定原件，成功空响应也保留出处。"""
+    _, history = _bound_dividend_units(session, (symbol,))
+    return _capture_rows(session, symbol, history[symbol], through=through)
+
+
+def _verified_code_rows(session, symbols, *, errors=None):
+    units, historical = _bound_dividend_units(session, symbols)
     result = {}
     for symbol, history in historical.items():
-        current = units.get(symbol)
-        if current:
-            history[current['rawId']] = current
         if not history:
             continue
-        primary = current['rawId'] if current else None
-        rows = []
         try:
-            for raw_id, unit in sorted(history.items()):
-                verified = _valid_unit(session, unit, symbol)
-                raw = session.get(SourcePayload, raw_id)
-                stamp = raw.captured_at
-                stamp = stamp.replace(tzinfo=timezone.utc) if stamp.tzinfo is None else stamp.astimezone(timezone.utc)
-                rows.extend(r | {'_verifiedOriginal': True, '_originalSource': dict(
-                    sourceId=r['sourceId'], sourceHash=raw.content_hash, capturedAt=stamp.isoformat())} for r in verified)
+            rows, _ = _capture_rows(session, symbol, history)
         except (ValueError, KeyError, TypeError, AttributeError, binascii.Error):
             if errors is None:
                 raise
             errors[symbol] = 'DIVIDEND_SOURCE_INVALID'
             continue
-        result[symbol] = primary, rows
+        result[symbol] = units.get(symbol, {}).get('rawId'), rows
     return result
 
 

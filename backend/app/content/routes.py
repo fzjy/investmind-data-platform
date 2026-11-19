@@ -5,14 +5,13 @@ from datetime import datetime, timezone, timedelta
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy import and_, or_, select
 from app.db.models import ContentDocument, JobCursor, OperationalAlert
-from app.content.content_policy import DISPLAY_STATUSES
+from app.content.dataset_query import visible_documents
 from app.content.marts.content import ContentMartBuilder
 
 
 def read_news(factory, cursor=None, limit=20, now=None):
     now = now or datetime.now(timezone.utc)
-    query = select(ContentDocument).where(ContentDocument.content_type == 'news',
-        ContentDocument.copyright_status.in_(DISPLAY_STATUSES), ContentDocument.published_at <= now)
+    query = visible_documents(now, content_type="news")
     if cursor:
         try:
             stamp, identity = json.loads(base64.urlsafe_b64decode(cursor.encode()))
@@ -24,7 +23,7 @@ def read_news(factory, cursor=None, limit=20, now=None):
         query = query.where(or_(ContentDocument.published_at < stamp,
             and_(ContentDocument.published_at == stamp, ContentDocument.id < identity)))
     with factory() as session:
-        rows = session.scalars(query.order_by(ContentDocument.published_at.desc(), ContentDocument.id.desc()).limit(limit+1)).all()
+        rows = session.scalars(query.limit(limit+1)).all()
         state = session.scalar(select(JobCursor).where(JobCursor.job_name == 'news-collector', JobCursor.cursor_key == 'sina-finance'))
         health = dict(state.cursor_value) if state else {}
         cleanup = session.scalar(select(JobCursor).where(JobCursor.job_name == 'news-collector-store', JobCursor.cursor_key == 'retention'))

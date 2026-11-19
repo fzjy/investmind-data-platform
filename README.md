@@ -4,11 +4,13 @@
 
 **本仓库不包含前端。** InvestMind 网站属于外部消费项目，通过 HTTP API 读取数据，并独立管理用户资产。文档中的网站页面、`src/`、Next.js 和 npm 命令若用于历史核验，均属于消费项目。
 
-当前处于独立拆分后的离线验收阶段。已有接口和历史核验记录不代表独立服务已部署、持续调度已验收或全市场数据完整；部分证券核验使用 `representative-50` 开发池。
+当前已用本机开发数据库和运行中的 InvestMind 网站验证产品读取，并用同一网站构建验证候选底座。股票对账使用 `representative-50` 开发池。已验证范围、库存缺口和发布状态见[全域验收](docs/foundation-acceptance.md)。
 
 ## 1. 数据流程与目录
 
-数据源 → Raw 原始记录 → Core 标准化数据 → Derived 派生指标 → Mart 发布快照 → API。
+采集任务将上游响应及任务凭证写入 Raw，并生成 Core 标准事实。领域查询读取标准事实或经过核验的专项凭证。其他项目可以通过 `/api/v1/datasets/` 下的接口按证券、日期或指标单独取数。
+
+InvestMind 在服务内复用领域查询，计算 Derived 指标、构建 Mart 发布快照，或按产品合同读取实时新闻等内容。网站沿用原有产品接口取数。[数据集和产品的对应关系](docs/foundation-acceptance.md)
 
 核心技术为 Python 3.12+、FastAPI、PostgreSQL、SQLAlchemy / Alembic；支持本机 Python 与 Docker Compose 部署。
 
@@ -134,7 +136,9 @@
 ### 4.2 API 与字段合同
 
 - [公共数据接口目录](docs/platform-api.md)
+- [数据集拆分、InvestMind 适配与全域验收](docs/foundation-acceptance.md)
 - [公共数据 API 请求参数](docs/api-requests.md)
+- [股票日线、复权因子与每日估值查询及首轮盘点](docs/stock-datasets.md)
 - [从公共字段查 InvestMind 的页面与指标](docs/field-consumers.md)
 - [Tushare 原字段到 InvestMind 消费者](docs/tushare-field-consumers.md)
 - [官方数据、公开内容及文件导入字段索引](docs/official-source-fields.md)

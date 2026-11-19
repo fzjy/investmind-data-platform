@@ -6,7 +6,7 @@ from datetime import date, datetime, timezone
 from decimal import Decimal, DecimalException
 from typing import Iterable, Mapping
 
-from sqlalchemy import and_, func, select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session, sessionmaker
 
 from app.db.models import (
@@ -30,6 +30,8 @@ from app.db.models import (
     TradeCalendar,
 )
 from app.shared.fingerprints import canonical_source_hash
+from app.stocks.dataset_query import (announced_rows_query, calendar_query, daily_rows_query, financial_rows_query,
+    latest_price_with_basic, memberships_query, securities_query)
 from app.ingestion.normalizers import parse_date
 from app.stocks.derived.registry import FORMULAS
 from app.shared.stock_mapping import StockMappingPolicy, finite_decimal
@@ -96,12 +98,7 @@ def load_metric_card_inputs(session: Session, symbols: Iterable[str], as_of: dat
     result = {code: dict(symbol=code, asOf=as_of.isoformat(), financials=[],
         dividends=dividends[code], quote=dict.fromkeys(
             ('tradeDate', 'close', 'totalShare', 'totalMv', 'peTtm', 'pb', 'basicSource', 'priceSource'))) for code in codes}
-    latest = select(DailyPrice.ts_code, func.max(DailyPrice.trade_date).label('day')).where(
-        DailyPrice.ts_code.in_(codes), DailyPrice.trade_date <= as_of).group_by(DailyPrice.ts_code).subquery()
-    query = select(DailyPrice, DailyBasic).join(latest, and_(latest.c.ts_code == DailyPrice.ts_code,
-        latest.c.day == DailyPrice.trade_date)).outerjoin(DailyBasic, and_(DailyBasic.ts_code == DailyPrice.ts_code,
-        DailyBasic.trade_date == DailyPrice.trade_date))
-    for price, basic in session.execute(query):
+    for price, basic in session.execute(latest_price_with_basic(codes, as_of)):
         result[price.ts_code]['quote'] = dict(tradeDate=price.trade_date.isoformat(),
             close=str(price.close) if price.close is not None else None,
             totalShare=(basic.data or {}).get('total_share') if basic else None,
@@ -113,8 +110,8 @@ def load_metric_card_inputs(session: Session, symbols: Iterable[str], as_of: dat
     for model, table in ((IncomeStatement, 'income'), (BalanceSheet, 'balance'), (FinancialIndicator, 'indicator')):
         fields = CARD_REPORT_FIELDS[table]
         disclosed = func.coalesce(model.f_ann_date, model.ann_date)
-        rows = session.scalars(select(model).where(model.ts_code.in_(codes), model.end_date <= as_of,
-            disclosed <= as_of).order_by(model.id))
+        rows = session.scalars(financial_rows_query(model, codes, end=as_of)
+            .where(disclosed <= as_of).order_by(model.id))
         groups = metric_report_revisions([*rows, *originals[table]], indicator=table == 'indicator', as_of=as_of)
         for (code, period, kind), revisions in sorted(groups.items()):
             row = revisions[0]
@@ -416,21 +413,15 @@ class CoreSnapshotRepository:
         with self._session_factory() as session:
             securities = tuple(
                 row
-                for row in session.scalars(select(Security).order_by(Security.ts_code)).all()
+                for row in session.scalars(securities_query()).all()
                 if (row.list_date is None or row.list_date <= as_of)
                 and (row.delist_date is None or row.delist_date > as_of)
                 and not (row.delist_date is None and row.status in {"D", "DELISTED", "退市"})
             )
             codes = tuple(row.ts_code for row in securities)
+
             def market_rows(model):
-                filters = (model.ts_code.in_(codes), model.trade_date >= history_start, model.trade_date <= as_of)
-                statement = select(model).where(*filters)
-                if not market_history:
-                    # 显式报价基准才走此分支；完整生产/工作台调用默认保留全部历史。
-                    latest = select(model.ts_code, func.max(model.trade_date).label("latest_date")).where(
-                        *filters).group_by(model.ts_code).subquery()
-                    statement = statement.join(latest, and_(model.ts_code == latest.c.ts_code,
-                                                            model.trade_date == latest.c.latest_date))
+                statement = daily_rows_query(model, history_start, as_of, codes, latest_only=not market_history)
                 return tuple(session.scalars(statement.order_by(model.ts_code, model.trade_date)).all())
 
             prices = market_rows(DailyPrice)
@@ -468,15 +459,9 @@ class CoreSnapshotRepository:
                 paid_cash_records,
             )
             cutoff = datetime.combine(as_of, datetime.max.time(), timezone.utc)
-            macro = tuple(
-                session.scalars(
-                    select(MacroObservation)
-                    .where(MacroObservation.released_at <= cutoff)
-                    .order_by(MacroObservation.series_id, MacroObservation.observed_at)
-                ).all()
-            )
-            from app.macro.api.lineage import verify_import_lineage
-            verify_import_lineage(session, macro)
+            from app.macro.api.observations import stored_observations
+            macro = tuple(sorted(stored_observations(session, None, cutoff),
+                                 key=lambda row: (row.series_id, row.observed_at)))
             documents = tuple(
                 session.scalars(
                     select(ContentDocument)
@@ -489,14 +474,13 @@ class CoreSnapshotRepository:
             )
             membership_history = tuple(
                 session.scalars(
-                    select(ClassificationMember).where(ClassificationMember.ts_code.in_(codes))
+                    memberships_query(codes)
                     .order_by(ClassificationMember.classification_id, ClassificationMember.ts_code)
                 ).all()
             )
             members = tuple(row for row in membership_history
                             if row.effective_from <= as_of and (row.effective_to is None or row.effective_to >= as_of))
-            calendar = tuple(session.scalars(select(TradeCalendar).where(
-                TradeCalendar.cal_date >= history_start, TradeCalendar.cal_date <= as_of)).all())
+            calendar = tuple(session.scalars(calendar_query(history_start, as_of)).all())
             return CoreSnapshot(
                 as_of=as_of,
                 securities=securities,
@@ -534,7 +518,7 @@ class CoreSnapshotRepository:
         missing_disclosures = 0
         for model, source_table in models:
             rows = session.scalars(
-                select(model).where(model.ts_code.in_(codes))
+                financial_rows_query(model, codes)
             ).all()
             by_code: dict[str, list[FinancialPoint]] = {}
             for row in rows:
@@ -585,13 +569,8 @@ class CoreSnapshotRepository:
         actions: list[object] = []
         dividend_rows: list[Dividend] = []
         for model in (Dividend, Repurchase, ShareUnlock):
-            rows = session.scalars(
-                select(model).where(model.ts_code.in_(codes))
-            ).all()
+            rows = session.scalars(announced_rows_query(model, codes, end=as_of)).all()
             for row in rows:
-                announced_at = getattr(row, "ann_date", None)
-                if announced_at is None or announced_at > as_of:
-                    continue
                 if isinstance(row, Dividend):
                     dividend_rows.append(row)
                     continue

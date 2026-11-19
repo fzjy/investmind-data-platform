@@ -59,9 +59,13 @@ def monthly_code(code,asset):
 
 
 def request(api,params,catalog,day):
+    return frozen_request(api,params,fingerprint(catalog),window(catalog,day),day)
+
+
+def frozen_request(api,params,fp,start,day):
     if api not in FIELDS: raise ValueError('COMMODITY_API_INVALID')
-    identity=hashlib.sha256(json.dumps([fingerprint(catalog),api,params,day.isoformat()],sort_keys=True).encode()).hexdigest()
-    return {'api':api,'params':params,'identity':identity,'asOf':day.isoformat(),'startDate':window(catalog,day).isoformat()}
+    identity=hashlib.sha256(json.dumps([fp,api,params,day.isoformat()],sort_keys=True).encode()).hexdigest()
+    return {'api':api,'params':params,'identity':identity,'asOf':day.isoformat(),'startDate':start.isoformat()}
 
 
 def source_requests(catalog,day):

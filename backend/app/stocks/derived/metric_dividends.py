@@ -3,14 +3,14 @@ from collections import defaultdict
 import binascii
 from copy import deepcopy
 from datetime import date
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal
 
-from sqlalchemy import func, select
+from sqlalchemy import select
 
-from app.connectors.tushare.contracts import request_hash
-from app.db.models import Dividend, IngestionBatch, Security, SourcePayload
-from app.ingestion.repositories import content_hash
-from app.portfolio.api.dividends import (DIVIDEND_FIELDS, distribution_date, dividend_metadata,
+from app.db.models import Security
+from app.stocks.dividend_facts import (covered_by_full_original, inventory_dividend_rows,
+    normalized_dividend as _normalized, original_version_index)
+from app.portfolio.api.dividends import (DIVIDEND_FIELDS, distribution_date,
     resolve_distribution_evidence, verified_dividend_rows)
 
 
@@ -55,24 +55,6 @@ def _year(cutoff, query_source):
                 recordedThrough=cutoff, coverageBasis='缺少成功的逐证券全历史分红查询')
 
 
-def _normalized(row):
-    item = dict(row)
-    for field in DIVIDEND_FIELDS:
-        value = item.get(field)
-        if field.endswith('_date') or field == 'div_listdate':
-            try:
-                item[field] = distribution_date(str(value)) if value not in ('', None) else None
-            except ValueError:
-                item[field] = str(value)
-        elif field not in ('ts_code', 'div_proc'):
-            try:
-                number = format(Decimal(str(value)), 'f') if value not in ('', None) else None
-                item[field] = number.rstrip('0').rstrip('.') if number and '.' in number else number
-            except InvalidOperation:
-                item[field] = str(value)
-    return item
-
-
 def dividend_years(rows, as_of, verified_raw_id=None, *, history_years=5, query_coverage=None, listed_at=None):
     cutoff = as_of.isoformat()
     # 当前财年可能已发生中期送转，影响旧 DPS/EPS 与行情日股价的可比性。
@@ -103,7 +85,6 @@ def dividend_years(rows, as_of, verified_raw_id=None, *, history_years=5, query_
     raw_prefix = f'raw.source_payload:{verified_raw_id}:row:' if verified_raw_id is not None else None
     # Core和例行同步使用窄合同。若同版已有全字段原件，核对两边都有的字段，
     # 相符时只使用原件；相异时保留两条，让账本输出冲突。
-    originals = defaultdict(list)
     # 每一份已验证的完整原件都带有逐行引用。反复捕获相同事实取首次证据，
     # 当前原件也含该事实时，可作为当前供应商响应覆盖检查的一部分。
     unique_originals = {}
@@ -117,10 +98,7 @@ def dividend_years(rows, as_of, verified_raw_id=None, *, history_years=5, query_
                 observations.append(r)
         else:
             observations.append(r)
-    def identity(r):
-        return tuple(r.get(k) for k in ('end_date', 'ann_date', 'div_proc'))
-    for r in unique_originals.values():
-        originals[identity(r)].append(r)
+    originals = original_version_index(unique_originals.values())
     retained = []
     for r in observations:
         year = (r['end_date'] or '')[:4]
@@ -137,9 +115,7 @@ def dividend_years(rows, as_of, verified_raw_id=None, *, history_years=5, query_
         entry['sourceIds'].append(r['sourceId'])
         entry['observations'].append({k: r.get(k) for k in
             (*DIVIDEND_FIELDS, 'sourceId', '_verifiedOriginal', '_originalTsCode')})
-        matches = originals[identity(r)]
-        if r not in matches and any(all(r.get(k) == other.get(k) for k in DIVIDEND_FIELDS
-                                     if r.get(k) is not None) for other in matches):
+        if covered_by_full_original(r, originals):
             continue
         retained.append(r)
     # 预案及股东会通过阶段退出实付统计，包括这些阶段中的坏字段。
@@ -209,35 +185,6 @@ def dividend_years(rows, as_of, verified_raw_id=None, *, history_years=5, query_
     return years
 
 
-def _sync_rows(session, symbols):
-    # 日常股票同步只把实施记录转入 Core；其余阶段在同批已验收的窄字段响应中。
-    from app.connectors.tushare.strategies import Dataset
-    from app.stocks.update.planning import plan_for
-    fields = plan_for(Dataset.DIVIDEND, {}).fields
-    hashes = {request_hash('dividend', {'ts_code': s}, fields): s for s in symbols}
-    distinct_responses = select(func.min(SourcePayload.id)).join(IngestionBatch, IngestionBatch.id == SourcePayload.batch_id).where(
-        SourcePayload.api_name == 'dividend', SourcePayload.request_hash.in_(hashes),
-        IngestionBatch.dataset == Dataset.DIVIDEND.value, IngestionBatch.status == 'completed',
-        IngestionBatch.source == 'tushare', IngestionBatch.rejected_count == 0).group_by(
-            SourcePayload.request_hash, SourcePayload.content_hash)
-    seen = set()
-    for raw in session.scalars(select(SourcePayload).where(SourcePayload.id.in_(distinct_responses)).order_by(SourcePayload.id)):
-        payload = raw.payload
-        actual_fields = payload.get('fields', [])
-        if raw.content_hash != content_hash(payload) or not set(fields) <= set(actual_fields):
-            raise ValueError('DIVIDEND_SYNC_SOURCE_INVALID')
-        for i, values in enumerate(payload['items'], 1):
-            row = dict(zip(actual_fields, values, strict=True))
-            if row['ts_code'] != hashes[raw.request_hash]:
-                raise ValueError('DIVIDEND_SYNC_SYMBOL_INVALID')
-            normalized = _normalized(row)
-            key = tuple(normalized.get(field) for field in DIVIDEND_FIELDS)
-            if key in seen:
-                continue
-            seen.add(key)
-            yield row | dict(sourceId=f'raw.source_payload:{raw.id}:row:{i}')
-
-
 def load_dividend_years(session, symbols, as_of: date, *, history_years=5):
     from app.portfolio.api.dividends import dividend_query_coverage
     symbols = tuple(symbols)
@@ -263,12 +210,7 @@ def load_dividend_years(session, symbols, as_of: date, *, history_years=5):
             read_originals((symbol,))
     listings = dict(session.execute(select(Security.ts_code, Security.list_date).where(Security.ts_code.in_(symbols))).all())
     by_code = defaultdict(list)
-    for r in session.scalars(select(Dividend).where(Dividend.ts_code.in_(symbols)).order_by(Dividend.id)):
-        row = dividend_metadata(r)
-        row.update({k: getattr(r, k) for k in ('ts_code', 'end_date', 'ann_date', 'div_proc',
-            'record_date', 'ex_date', 'pay_date', 'cash_div_tax', 'cash_div')})
-        by_code[r.ts_code].append(row | dict(sourceId=f'core.dividend:{r.id}'))
-    for row in _sync_rows(session, symbols):
+    for row in inventory_dividend_rows(session, symbols):
         by_code[row['ts_code']].append(row)
     result = {}
     for symbol in symbols:

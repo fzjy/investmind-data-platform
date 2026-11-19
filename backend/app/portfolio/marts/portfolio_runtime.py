@@ -6,7 +6,8 @@ from decimal import Decimal, InvalidOperation
 
 from sqlalchemy import select, text
 
-from app.db.models import AdjustmentFactor, DailyPrice, PublishedSnapshot, Security
+from app.db.models import AdjustmentFactor, DailyPrice, PublishedSnapshot
+from app.stocks.api.datasets import daily_rows_query, securities_query
 from app.stocks.api.financial import CoreSnapshot
 from app.stocks.api.financial import years_before
 from app.jobs.locks import data_publication_lock_key, job_lock_for_engine
@@ -53,13 +54,13 @@ def rebuild_portfolio(factory, *, dry_run=True):
             previous = {p.product: p.version for p in (screen, base)}
             freshness = {p.product: (p.stale, p.stale_reason) for p in (screen, base)}
             old = deepcopy(base.payload)
-            securities = tuple(session.scalars(select(Security).where(Security.ts_code.in_(symbols)).order_by(Security.ts_code)))
+            securities = tuple(session.scalars(securities_query(symbols)))
             if {s.ts_code for s in securities} != set(symbols) or any(s.list_date and s.list_date > as_of for s in securities):
                 return {**report, 'code': 'PORTFOLIO_SECURITY_MISMATCH'}
             start = years_before(as_of, 3)  # 与现有CoreSnapshotRepository保持同一历史窗。
             def rows(model):
-                return tuple(session.scalars(select(model).where(model.ts_code.in_(symbols), model.trade_date >= start,
-                    model.trade_date <= as_of).order_by(model.ts_code, model.trade_date)))
+                return tuple(session.scalars(daily_rows_query(model, start, as_of, symbols)
+                    .order_by(model.ts_code, model.trade_date)))
             prices, factors = rows(DailyPrice), rows(AdjustmentFactor)
             price_keys = {(p.ts_code, p.trade_date) for p in prices}
             factor_keys = {(p.ts_code, p.trade_date) for p in factors}

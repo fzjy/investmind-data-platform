@@ -1,5 +1,7 @@
 # 从公共字段查 InvestMind 的页面与指标
 
+每项数据的来源、表与列、直接消费者及独立查询入口见[逐项清单](foundation-audit/inventory.json)。如需复核重叠采集和存储处置，可从[全域验收记录](foundation-acceptance.md)查到逐笔依据。
+
 按供应商的接口和字段名，可以在[全部 Tushare 原字段目录](tushare-field-consumers.md)查找对应的数据库、项目页面或任务、指标、历史去留及待核情况。
 
 当前登记的消费项目为 InvestMind。按下表的字段或原字段搜索，可找到直接显示位置，以及用它计算的页面指标。新消费项目可以补充同一字段的用途。选股页面的完整逐列、阈值、预设、散点与银行指标另有[逐字段用途表](screener-field-usage.md)。

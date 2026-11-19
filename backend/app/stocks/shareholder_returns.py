@@ -1,8 +1,9 @@
 """股东回报专用投影；金额以元、股份以股、比例以百分数发布。"""
 from collections import defaultdict
+from datetime import date
 from decimal import Decimal, InvalidOperation
-from sqlalchemy import select
 from app.db.models import DailyBasic
+from app.stocks.dataset_query import daily_rows_query
 from app.stocks.derived.metric_dividends import load_dividend_years, paid_cash_year_available
 
 
@@ -140,7 +141,8 @@ def load_shareholder_returns(session, symbols, as_of, *, card_inputs=None):
     from app.stocks.shareholder_counts import load_shareholder_counts
     counts = load_shareholder_counts(session, codes, as_of)
     periods = {r.end_date for r in counts if r.end_date <= as_of}
-    basics = session.scalars(select(DailyBasic).where(DailyBasic.ts_code.in_(codes), DailyBasic.trade_date.in_(periods))).all()
+    basics = session.scalars(daily_rows_query(DailyBasic, date.min, as_of, codes)
+                             .where(DailyBasic.trade_date.in_(periods))).all()
     counts_by_code, basics_by_code = defaultdict(list), defaultdict(list)
     for row in counts:
         counts_by_code[row.ts_code].append(row)

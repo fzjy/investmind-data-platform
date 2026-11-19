@@ -6,6 +6,7 @@ from sqlalchemy import and_, select
 
 from app.db.models import DailyPrice, Suspension, TradeCalendar
 from app.shared.stock_mapping import finite_decimal
+from app.stocks.dataset_query import calendar_query
 from app.stocks.derived.workbench_cards import calculate_metric_cards
 from app.stocks.derived.workbench_risks import Calculation, fmt, operating
 
@@ -22,8 +23,8 @@ def valuation_windows(session, securities, sources, as_of):
 
     start = date.fromisoformat(next(iter(sources.values()))['start'])
     calendars = defaultdict(dict)
-    for exchange, day, opened in session.execute(select(TradeCalendar.exchange, TradeCalendar.cal_date,
-            TradeCalendar.is_open).where(TradeCalendar.cal_date.between(start, as_of))):
+    for exchange, day, opened in session.execute(calendar_query(start, as_of).with_only_columns(
+            TradeCalendar.exchange, TradeCalendar.cal_date, TradeCalendar.is_open)):
         calendars[exchange][day] = opened
     for contract in _contracts(session):
         left, right = date.fromisoformat(contract['start']), date.fromisoformat(contract['end'])

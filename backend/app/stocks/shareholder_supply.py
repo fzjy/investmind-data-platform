@@ -142,9 +142,10 @@ def load_company_projections(factory,symbols,as_of,*,basics=None,financial=None)
         from app.stocks.shareholder_returns import load_shareholder_returns
         shared_returns = load_shareholder_returns(s, symbols, as_of)
         counts=s.scalars(select(ShareholderCount).where(ShareholderCount.ts_code.in_(symbols))).all()
-        repurchases=s.scalars(select(Repurchase).where(Repurchase.ts_code.in_(symbols))).all()
+        from app.stocks.dataset_query import announced_rows_query, calendar_query
+        repurchases=s.scalars(announced_rows_query(Repurchase, symbols)).all()
         start=as_of.replace(year=as_of.year-5,day=min(as_of.day,28)) if as_of.month==2 else as_of.replace(year=as_of.year-5)
-        calendar=s.scalars(select(TradeCalendar).where(TradeCalendar.exchange=='SSE',TradeCalendar.cal_date>=start,TradeCalendar.cal_date<=as_of)).all()
+        calendar=s.scalars(calendar_query(start, as_of, 'SSE')).all()
         calendar_by_day=defaultdict(set)
         for row in calendar:calendar_by_day[row.cal_date].add(row.is_open)
         complete=len(calendar_by_day)==(as_of-start).days+1 and all(len(v)==1 for v in calendar_by_day.values())

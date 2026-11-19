@@ -5,7 +5,7 @@
     "category": "stocks",
     "description": "来自 Tushare adj_factor 的复权因子。标准与批量模式按各自合同、采集记录核对。",
     "status": "已接入，实际覆盖按留存证据核对",
-    "scope": "按现有数据池、日期及采集合同覆盖",
+    "scope": "按 Core 表中已入库的证券与交易日返回，实际覆盖依查询时的留存记录。",
     "sources": [
       {
         "name": "Tushare",
@@ -47,8 +47,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "支持单个交易日（可选证券）或单只证券的起止日期闭区间。",
         "evidence": []
       }
     },
@@ -63,7 +63,7 @@
         "name": "复权因子",
         "role": "source",
         "type": "存储类型 NUMERIC(24, 12)",
-        "unit": "待核验",
+        "unit": "无量纲",
         "nullable": "允许为空",
         "description": "复权因子；上游 adj_factor.adj_factor",
         "sourceRefs": [
@@ -88,7 +88,7 @@
         "name": "交易日期",
         "role": "source",
         "type": "存储类型 DATE",
-        "unit": "待核验",
+        "unit": "不适用",
         "nullable": "存储列非空",
         "description": "交易日期；上游 adj_factor.trade_date",
         "sourceRefs": [
@@ -113,7 +113,7 @@
         "name": "证券代码",
         "role": "source",
         "type": "存储类型 VARCHAR(16)",
-        "unit": "待核验",
+        "unit": "不适用",
         "nullable": "存储列非空",
         "description": "证券代码；上游 adj_factor.ts_code",
         "sourceRefs": [
@@ -137,6 +137,22 @@
     "calculations": [],
     "access": [
       {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/stock-adjustment",
+        "example": {
+          "trade_date": "2026-10-21"
+        },
+        "responsePaths": [
+          "data[].symbol（证券代码）",
+          "data[].trade_date（交易日期）",
+          "data[].adj_factor（复权因子）",
+          "meta.dataset（数据集标识）",
+          "meta.coverage_scope（stored，当前入库范围）",
+          "meta.next_cursor（下一页游标）"
+        ]
+      },
+      {
         "kind": "aggregate",
         "method": "GET",
         "path": "/api/v1/stocks/{symbol}",
@@ -147,7 +163,9 @@
       }
     ],
     "evidence": [
-      "docs/tushare-field-consumers.md"
+      "docs/tushare-field-consumers.md",
+      "backend/app/stocks/datasets_routes.py",
+      "docs/stock-datasets.md"
     ]
   },
   {
@@ -198,8 +216,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "可按报告期返回库存版本。",
         "evidence": []
       }
     },
@@ -1496,6 +1514,31 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/stock-financial-reports",
+        "example": {
+          "symbol": "600519.SH",
+          "start_date": "2025-01-01",
+          "end_date": "2026-10-16",
+          "statement": "balance"
+        },
+        "responsePaths": [
+          "data[].symbol",
+          "data[].end_date",
+          "data[].ann_date",
+          "data[].f_ann_date",
+          "data[].report_type",
+          "data[].comp_type",
+          "data[].update_flag",
+          "data[].source_id",
+          "data[].values",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -1667,8 +1710,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "可按报告期返回库存版本。",
         "evidence": []
       }
     },
@@ -3390,6 +3433,31 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/stock-financial-reports",
+        "example": {
+          "symbol": "600519.SH",
+          "start_date": "2025-01-01",
+          "end_date": "2026-10-16",
+          "statement": "cashflow"
+        },
+        "responsePaths": [
+          "data[].symbol",
+          "data[].end_date",
+          "data[].ann_date",
+          "data[].f_ann_date",
+          "data[].report_type",
+          "data[].comp_type",
+          "data[].update_flag",
+          "data[].source_id",
+          "data[].values",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -3404,7 +3472,7 @@
     "category": "stocks",
     "description": "保存未复权日行情。现有工作台返回按窗口末日因子归一化的复权四价；接口三公历年窗口与底层历史范围分别计量。",
     "status": "已接入，实际覆盖按留存证据核对",
-    "scope": "按现有数据池、日期及采集合同覆盖",
+    "scope": "按 Core 表中已入库的证券与交易日返回，实际覆盖依查询时的留存记录。",
     "sources": [
       {
         "name": "Tushare",
@@ -3456,8 +3524,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "支持单个交易日（可选证券）或单只证券的起止日期闭区间。",
         "evidence": []
       }
     },
@@ -3918,6 +3986,30 @@
     ],
     "access": [
       {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/stock-daily",
+        "example": {
+          "trade_date": "2026-10-21"
+        },
+        "responsePaths": [
+          "data[].symbol（证券代码）",
+          "data[].trade_date（交易日期）",
+          "data[].open（开盘价）",
+          "data[].high（最高价）",
+          "data[].low（最低价）",
+          "data[].close（收盘价）",
+          "data[].pre_close（前收盘价）",
+          "data[].change（涨跌额）",
+          "data[].pct_chg（涨跌幅）",
+          "data[].vol（成交量）",
+          "data[].amount（成交额）",
+          "meta.dataset（数据集标识）",
+          "meta.coverage_scope（stored，当前入库范围）",
+          "meta.next_cursor（下一页游标）"
+        ]
+      },
+      {
         "kind": "aggregate",
         "path": "/api/v1/stocks/{symbol}",
         "method": "GET",
@@ -3931,7 +4023,9 @@
     ],
     "evidence": [
       "docs/tushare-field-consumers.md",
-      "docs/workbench-api.md"
+      "docs/workbench-api.md",
+      "backend/app/stocks/datasets_routes.py",
+      "docs/stock-datasets.md"
     ]
   },
   {
@@ -3940,7 +4034,7 @@
     "category": "stocks",
     "description": "来自 Tushare daily_basic 的每日估值与股本。标准与批量模式按各自合同、采集记录核对。",
     "status": "已接入，实际覆盖按留存证据核对",
-    "scope": "按现有数据池、日期及采集合同覆盖",
+    "scope": "按 Core 表中已入库的证券与交易日返回，实际覆盖依查询时的留存记录。",
     "sources": [
       {
         "name": "Tushare",
@@ -3982,8 +4076,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "支持单个交易日（可选证券）或单只证券的起止日期闭区间。 可按股票和交易日查状态来源。",
         "evidence": []
       }
     },
@@ -3998,7 +4092,7 @@
         "name": "流通市值",
         "role": "source",
         "type": "存储类型 NUMERIC(24, 8)",
-        "unit": "待核验",
+        "unit": "万元",
         "nullable": "允许为空",
         "description": "流通市值；上游 daily_basic.circ_mv",
         "sourceRefs": [
@@ -4023,7 +4117,7 @@
         "name": "股息率",
         "role": "source",
         "type": "存储类型 NUMERIC(20, 8)",
-        "unit": "待核验",
+        "unit": "%",
         "nullable": "允许为空",
         "description": "股息率；上游 daily_basic.dv_ratio",
         "sourceRefs": [
@@ -4048,7 +4142,7 @@
         "name": "滚动股息率",
         "role": "source",
         "type": "存储类型 NUMERIC(20, 8)",
-        "unit": "待核验",
+        "unit": "%",
         "nullable": "允许为空",
         "description": "滚动股息率；上游 daily_basic.dv_ttm",
         "sourceRefs": [
@@ -4073,7 +4167,7 @@
         "name": "流通股本",
         "role": "source",
         "type": "来源合同字段（类型待核验）",
-        "unit": "待核验",
+        "unit": "万股",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "流通股本；上游 daily_basic.float_share",
         "sourceRefs": [
@@ -4098,7 +4192,7 @@
         "name": "自由流通股本",
         "role": "source",
         "type": "来源合同字段（类型待核验）",
-        "unit": "待核验",
+        "unit": "万股",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "自由流通股本；上游 daily_basic.free_share",
         "sourceRefs": [
@@ -4148,7 +4242,7 @@
         "name": "市净率",
         "role": "source",
         "type": "存储类型 NUMERIC(20, 8)",
-        "unit": "待核验",
+        "unit": "倍",
         "nullable": "允许为空",
         "description": "市净率；上游 daily_basic.pb",
         "sourceRefs": [
@@ -4173,7 +4267,7 @@
         "name": "市盈率",
         "role": "source",
         "type": "存储类型 NUMERIC(20, 8)",
-        "unit": "待核验",
+        "unit": "倍",
         "nullable": "允许为空",
         "description": "市盈率；上游 daily_basic.pe",
         "sourceRefs": [
@@ -4198,7 +4292,7 @@
         "name": "滚动市盈率",
         "role": "source",
         "type": "来源合同字段（类型待核验）",
-        "unit": "待核验",
+        "unit": "倍",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "滚动市盈率；上游 daily_basic.pe_ttm",
         "sourceRefs": [
@@ -4223,7 +4317,7 @@
         "name": "市销率",
         "role": "source",
         "type": "存储类型 NUMERIC(20, 8)",
-        "unit": "待核验",
+        "unit": "倍",
         "nullable": "允许为空",
         "description": "市销率；上游 daily_basic.ps",
         "sourceRefs": [
@@ -4248,7 +4342,7 @@
         "name": "滚动市销率",
         "role": "source",
         "type": "来源合同字段（类型待核验）",
-        "unit": "待核验",
+        "unit": "倍",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "滚动市销率；上游 daily_basic.ps_ttm",
         "sourceRefs": [
@@ -4273,7 +4367,7 @@
         "name": "总市值",
         "role": "source",
         "type": "存储类型 NUMERIC(24, 8)",
-        "unit": "待核验",
+        "unit": "万元",
         "nullable": "允许为空",
         "description": "总市值；上游 daily_basic.total_mv",
         "sourceRefs": [
@@ -4298,7 +4392,7 @@
         "name": "总股本",
         "role": "source",
         "type": "来源合同字段（类型待核验）",
-        "unit": "待核验",
+        "unit": "万股",
         "nullable": "来源缺失时可为空，具体合同待核验",
         "description": "总股本；上游 daily_basic.total_share",
         "sourceRefs": [
@@ -4323,7 +4417,7 @@
         "name": "交易日期",
         "role": "source",
         "type": "存储类型 DATE",
-        "unit": "待核验",
+        "unit": "不适用",
         "nullable": "存储列非空",
         "description": "交易日期；上游 daily_basic.trade_date",
         "sourceRefs": [
@@ -4348,7 +4442,7 @@
         "name": "证券代码",
         "role": "source",
         "type": "存储类型 VARCHAR(16)",
-        "unit": "待核验",
+        "unit": "不适用",
         "nullable": "存储列非空",
         "description": "证券代码；上游 daily_basic.ts_code",
         "sourceRefs": [
@@ -4373,7 +4467,7 @@
         "name": "换手率",
         "role": "source",
         "type": "存储类型 NUMERIC(20, 8)",
-        "unit": "待核验",
+        "unit": "%",
         "nullable": "允许为空",
         "description": "换手率；上游 daily_basic.turnover_rate",
         "sourceRefs": [
@@ -4397,18 +4491,69 @@
     "calculations": [],
     "access": [
       {
-        "kind": "aggregate",
-        "path": "/api/v1/stocks/{symbol}",
+        "kind": "independent",
         "method": "GET",
+        "path": "/api/v1/datasets/stock-daily-basic",
+        "example": {
+          "trade_date": "2026-10-21"
+        },
         "responsePaths": [
-          "data（个股工作台，具体字段见下方）"
+          "data[].symbol（证券代码）",
+          "data[].trade_date（交易日期）",
+          "data[].turnover_rate（换手率）",
+          "data[].pe（市盈率）",
+          "data[].pe_ttm（滚动市盈率）",
+          "data[].pb（市净率）",
+          "data[].ps（市销率）",
+          "data[].ps_ttm（滚动市销率）",
+          "data[].total_mv（总市值）",
+          "data[].circ_mv（流通市值）",
+          "data[].dv_ratio（股息率）",
+          "data[].dv_ttm（滚动股息率）",
+          "data[].total_share（总股本）",
+          "data[].float_share（流通股本）",
+          "data[].free_share（自由流通股本）",
+          "meta.dataset（数据集标识）",
+          "meta.coverage_scope（stored，当前入库范围）",
+          "meta.next_cursor（下一页游标）"
+        ]
+      },
+      {
+        "kind": "aggregate",
+        "method": "GET",
+        "path": "/api/v1/stocks/{symbol}",
+        "responsePaths": [
+          "data.quote.pe",
+          "data.quote.peTtm",
+          "data.quote.pb",
+          "data.quote.marketCap（亿元）"
         ],
-        "parameterNames": {},
-        "example": null
+        "description": "下列为已核对的消费位置；采集原字段不保证逐列对外返回，完整原件请查看对应数据表。"
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/stock-limit-status",
+        "example": {
+          "symbol": "600519.SH",
+          "trade_date": "2026-10-16"
+        },
+        "responsePaths": [
+          "data[].symbol",
+          "data[].trade_date",
+          "data[].limit_status",
+          "data[].source",
+          "data[].source_payload_id",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
-      "docs/tushare-field-consumers.md"
+      "docs/tushare-field-consumers.md",
+      "backend/app/stocks/datasets_routes.py",
+      "docs/stock-datasets.md"
     ]
   },
   {
@@ -4459,8 +4604,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "可按证券及报告期查询库存披露日程。",
         "evidence": []
       }
     },
@@ -4626,6 +4771,28 @@
       {
         "kind": "table",
         "description": "已接入底座，按所列原件或核心表查看；未核准为公开接口输出。"
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/stock-disclosures",
+        "example": {
+          "symbol": "600519.SH",
+          "start_date": "2025-01-01",
+          "end_date": "2026-10-16"
+        },
+        "responsePaths": [
+          "data[].symbol",
+          "data[].end_date",
+          "data[].ann_date",
+          "data[].pre_date",
+          "data[].actual_date",
+          "data[].modify_date",
+          "data[].source_id",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -4680,8 +4847,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "可按公告日查询库存，as_of 视图另按捕获凭证判定。",
         "evidence": []
       }
     },
@@ -5102,6 +5269,47 @@
           "data.financial.shareholders.annualDistributions[]（归属财年分红及覆盖）"
         ],
         "description": "下列为已核对的消费位置；采集原字段不保证逐列对外返回，完整原件请查看对应数据表。"
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/stock-dividends",
+        "example": {
+          "symbol": "600519.SH",
+          "start_date": "2025-01-01",
+          "end_date": "2026-10-16"
+        },
+        "responsePaths": [
+          "data[].ts_code",
+          "data[].end_date",
+          "data[].ann_date",
+          "data[].div_proc",
+          "data[].record_date",
+          "data[].ex_date",
+          "data[].pay_date",
+          "data[].div_listdate",
+          "data[].imp_ann_date",
+          "data[].base_date",
+          "data[].base_share",
+          "data[].cash_div",
+          "data[].cash_div_tax",
+          "data[].stk_div",
+          "data[].stk_bo_rate",
+          "data[].stk_co_rate",
+          "data[].source_id",
+          "data[].captured_at",
+          "data[].source_kind",
+          "data[].selected_implementation",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor",
+          "meta.history_complete",
+          "meta.evidence_status",
+          "meta.normalized_status",
+          "meta.captures",
+          "meta.missing_announcement_rows",
+          "meta.issues"
+        ]
       }
     ],
     "evidence": [
@@ -5156,8 +5364,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "可按证券、类别及公告日查询库存事件。",
         "evidence": []
       }
     },
@@ -5348,6 +5556,30 @@
       {
         "kind": "table",
         "description": "默认常规停采，已有历史与显式重放保留；未核准为当前工作台独立展示字段，查看原件及核心表。"
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/stock-company-events",
+        "example": {
+          "symbol": "603019.SH",
+          "start_date": "2025-01-01",
+          "end_date": "2026-10-16",
+          "kind": "express"
+        },
+        "responsePaths": [
+          "data[].symbol",
+          "data[].ann_date",
+          "data[].end_date",
+          "data[].stage",
+          "data[].float_date",
+          "data[].exp_date",
+          "data[].values",
+          "data[].source_id",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -5402,8 +5634,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "可按报告期返回库存版本。",
         "evidence": []
       }
     },
@@ -5950,6 +6182,31 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/stock-financial-reports",
+        "example": {
+          "symbol": "600519.SH",
+          "start_date": "2025-01-01",
+          "end_date": "2026-10-16",
+          "statement": "indicator"
+        },
+        "responsePaths": [
+          "data[].symbol",
+          "data[].end_date",
+          "data[].ann_date",
+          "data[].f_ann_date",
+          "data[].report_type",
+          "data[].comp_type",
+          "data[].update_flag",
+          "data[].source_id",
+          "data[].values",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -6357,8 +6614,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "可按证券、类别及公告日查询库存事件。",
         "evidence": []
       }
     },
@@ -6654,6 +6911,30 @@
           "data.dailyChart.forecastEvents[]（结构化预告事件，按披露日期定位）"
         ],
         "description": "下列为已核对的消费位置；采集原字段不保证逐列对外返回，完整原件请查看对应数据表。"
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/stock-company-events",
+        "example": {
+          "symbol": "600519.SH",
+          "start_date": "2025-01-01",
+          "end_date": "2026-10-16",
+          "kind": "forecast"
+        },
+        "responsePaths": [
+          "data[].symbol",
+          "data[].ann_date",
+          "data[].end_date",
+          "data[].stage",
+          "data[].float_date",
+          "data[].exp_date",
+          "data[].values",
+          "data[].source_id",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -6708,8 +6989,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "可按报告期返回库存版本。",
         "evidence": []
       }
     },
@@ -7606,6 +7887,31 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/stock-financial-reports",
+        "example": {
+          "symbol": "600519.SH",
+          "start_date": "2025-01-01",
+          "end_date": "2026-10-16",
+          "statement": "income"
+        },
+        "responsePaths": [
+          "data[].symbol",
+          "data[].end_date",
+          "data[].ann_date",
+          "data[].f_ann_date",
+          "data[].report_type",
+          "data[].comp_type",
+          "data[].update_flag",
+          "data[].source_id",
+          "data[].values",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -7662,8 +7968,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "可查询与区间相交的已存成员关系。",
         "evidence": []
       }
     },
@@ -7859,6 +8165,30 @@
           "data.heatmapData（行业分组，非原始分类目录）"
         ],
         "description": "下列为已核对的消费位置；采集原字段不保证逐列对外返回，完整原件请查看对应数据表。"
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/stock-classification-members",
+        "example": {
+          "symbol": "600519.SH",
+          "start_date": "2026-10-01",
+          "end_date": "2026-10-16"
+        },
+        "responsePaths": [
+          "data[].symbol",
+          "data[].classification_id",
+          "data[].provider",
+          "data[].source",
+          "data[].name",
+          "data[].effective_from",
+          "data[].effective_to",
+          "data[].weight",
+          "data[].source_id",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -7913,8 +8243,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "可查询与区间相交的已存成员关系。",
         "evidence": []
       }
     },
@@ -8210,6 +8540,30 @@
           "data.heatmapData（按有效行业成员生成的热力图）"
         ],
         "description": "下列为已核对的消费位置；采集原字段不保证逐列对外返回，完整原件请查看对应数据表。"
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/stock-classification-members",
+        "example": {
+          "symbol": "600519.SH",
+          "start_date": "2026-10-01",
+          "end_date": "2026-10-16"
+        },
+        "responsePaths": [
+          "data[].symbol",
+          "data[].classification_id",
+          "data[].provider",
+          "data[].source",
+          "data[].name",
+          "data[].effective_from",
+          "data[].effective_to",
+          "data[].weight",
+          "data[].source_id",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -8264,8 +8618,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "可按证券、类别及公告日查询库存事件。",
         "evidence": []
       }
     },
@@ -8436,6 +8790,30 @@
           "data.financial.shareholders.repurchaseEvidence（回购进展证据）"
         ],
         "description": "下列为已核对的消费位置；采集原字段不保证逐列对外返回，完整原件请查看对应数据表。"
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/stock-company-events",
+        "example": {
+          "symbol": "600519.SH",
+          "start_date": "2025-01-01",
+          "end_date": "2026-10-16",
+          "kind": "repurchase"
+        },
+        "responsePaths": [
+          "data[].symbol",
+          "data[].ann_date",
+          "data[].end_date",
+          "data[].stage",
+          "data[].float_date",
+          "data[].exp_date",
+          "data[].values",
+          "data[].source_id",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -8490,8 +8868,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "可按证券、类别及公告日查询库存事件。",
         "evidence": []
       }
     },
@@ -8632,6 +9010,30 @@
       {
         "kind": "table",
         "description": "当前工作台不单独展示解禁日历。证券、公告日、实际解禁日和解禁股数继续采集，并用于公司行为可见性及发布来源签名；停止新请求的是旧 unlock_date（解禁日期）字段。可核对原件与核心表。"
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/stock-company-events",
+        "example": {
+          "symbol": "000333.SZ",
+          "start_date": "2025-01-01",
+          "end_date": "2026-10-16",
+          "kind": "unlock"
+        },
+        "responsePaths": [
+          "data[].symbol",
+          "data[].ann_date",
+          "data[].end_date",
+          "data[].stage",
+          "data[].float_date",
+          "data[].exp_date",
+          "data[].values",
+          "data[].source_id",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -8864,7 +9266,7 @@
       },
       "query": {
         "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "explanation": "当前无此内容的独立历史日期查询合同 证券主表提供当前属性及已存曾用名。",
         "evidence": []
       }
     },
@@ -9086,6 +9488,32 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/stock-securities",
+        "example": {
+          "symbol": "600519.SH"
+        },
+        "responsePaths": [
+          "data[].symbol",
+          "data[].local_code",
+          "data[].name",
+          "data[].exchange",
+          "data[].board",
+          "data[].list_date",
+          "data[].delist_date",
+          "data[].status",
+          "data[].is_st",
+          "data[].names",
+          "data[].related_codes",
+          "data[].alias_status",
+          "data[].alias_source_id",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -9366,8 +9794,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "可按交易所与自然日区间查询。",
         "evidence": []
       }
     },
@@ -9483,6 +9911,25 @@
       {
         "kind": "table",
         "description": "已接入底座，按所列原件或核心表查看；未核准为公开接口输出。"
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/stock-trade-calendar",
+        "example": {
+          "start_date": "2026-10-01",
+          "end_date": "2026-10-16",
+          "exchange": "SSE"
+        },
+        "responsePaths": [
+          "data[].exchange",
+          "data[].cal_date",
+          "data[].is_open",
+          "data[].pretrade_date",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -15943,8 +16390,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "工作台返回与已发布日线范围关联的公告，没有独立任意日期范围的公告接口",
+        "value": true,
+        "explanation": "可按发布时间筛选当前允许展示的库存。",
         "evidence": []
       }
     },
@@ -16093,6 +16540,31 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/content-documents",
+        "example": {
+          "content_type": "announcement",
+          "limit": 5
+        },
+        "responsePaths": [
+          "data[].id",
+          "data[].source",
+          "data[].external_id",
+          "data[].content_type",
+          "data[].published_at",
+          "data[].title",
+          "data[].source_url",
+          "data[].securities",
+          "data[].copyright_status",
+          "data[].body",
+          "data[].summary",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [

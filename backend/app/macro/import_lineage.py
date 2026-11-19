@@ -5,7 +5,7 @@ from datetime import UTC, datetime
 from decimal import Decimal, DecimalException, ROUND_HALF_UP, localcontext
 
 from pydantic import ValidationError
-from sqlalchemy import select
+from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session
 
 from app.connectors.external_files.contracts import MacroImportRecord
@@ -42,10 +42,18 @@ def verify_import_lineage(session: Session, rows: Sequence[MacroObservation]) ->
     """
     if not rows:
         return
+    data = ExternalRecord.payload
+    series = func.coalesce(data["seriesId"].as_string(), data["series_id"].as_string())
+    observed = func.coalesce(data["observedAt"].as_string(), data["observed_at"].as_string())
+    dates = [row.observed_at for row in rows]
+    # 常规导入已写成规范日。历史非规范日期（如午夜时间戳）仍交给原有模型解析。
+    possible_period = or_(observed.between(min(dates).isoformat(), max(dates).isoformat()),
+                          ~observed.regexp_match(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$"))
     payloads = session.scalars(select(ExternalRecord.payload).join(
         ExternalFile, ExternalFile.id == ExternalRecord.external_file_id,
     ).where(ExternalFile.status == "imported", ExternalFile.imported_at.is_not(None),
-            ExternalRecord.record_type == "macro")).all()
+            ExternalRecord.record_type == "macro", series.in_({row.series_id for row in rows}),
+            data["source"].as_string().in_({row.source for row in rows}), possible_period))
     signatures: set[tuple[object, ...]] = set()
     for payload in payloads:
         try:

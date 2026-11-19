@@ -1,0 +1,156 @@
+{
+  "checkedAt": "2026-11-19T03:35:13.617822+00:00",
+  "markets": {
+    "quoteRows": 114,
+    "quoteAssets": 15,
+    "etfTiles": 9,
+    "commodityBars": {
+      "AU.SHF": 79,
+      "AG.SHF": 79,
+      "CU.SHF": 79,
+      "AL.SHF": 79,
+      "RB.SHF": 79,
+      "I.DCE": 79,
+      "SC.INE": 79,
+      "TA.ZCE": 79,
+      "M.DCE": 79,
+      "P.DCE": 79
+    },
+    "catalogRenameReorderAndWindowChange": {
+      "identicalEtfs": 9,
+      "identicalCommodityDays": 790
+    },
+    "rawLimitStatus": {
+      "stored": 36183,
+      "marked": 50
+    },
+    "sampledStatuses": 10,
+    "catalogRawCounts": {
+      "daily_info": 4,
+      "fund_daily": 18,
+      "fund_share": 9,
+      "fut_basic": 10,
+      "fut_daily": 33,
+      "fut_mapping": 10,
+      "fut_trade_cal": 4,
+      "fx_daily": 4,
+      "index_basic": 2,
+      "index_daily": 5,
+      "index_global": 3,
+      "margin": 6,
+      "sz_daily_info": 1
+    },
+    "changeBasis": {
+      "verifiedLegacyVsCurrentFormula": 10,
+      "legacyIntradaySelectorWithEmptyBars": 1
+    },
+    "explorerVersion": "content-0ee74f8f06c384cd9a6cd0016ef745fa"
+  },
+  "macro": {
+    "version": "20261108-366f83bfc727036c",
+    "cutoff": "2026-11-08T14:51:37.835243+00:00",
+    "selectedCounts": {
+      "cn.gdp.real_yoy": 40,
+      "cn.cpi.yoy": 120,
+      "cn.cpi.core_yoy": 121,
+      "cn.ppi.yoy": 120,
+      "cn.pmi.manufacturing": 120,
+      "cn.industry.value_added_yoy": 101,
+      "cn.money.m1_yoy": 120,
+      "cn.money.m2_yoy": 120,
+      "cn.credit.tsf_stock_yoy": 0,
+      "cn.rate.dr007": 2504,
+      "cn.rate.govbond_10y": 2504,
+      "cn.fx.usdcny": 0,
+      "us.gdp.real_qoq_annualized": 39,
+      "us.cpi.yoy": 119,
+      "us.cpi.core_yoy": 119,
+      "us.pce.core_yoy": 119,
+      "us.labor.unemployment_rate": 119,
+      "us.labor.nonfarm_payroll_change": 120,
+      "us.rate.effective_fed_funds": 3673,
+      "us.rate.treasury_10y": 2512
+    },
+    "specialties": {
+      "cn.gdp.nominal_cumulative": 20,
+      "fx.usdcnh": 0
+    },
+    "emptySeries": {
+      "cn.credit.tsf_stock_yoy": {
+        "allStoredBySource": {},
+        "configuredProviders": []
+      },
+      "cn.fx.usdcny": {
+        "allStoredBySource": {},
+        "configuredProviders": []
+      }
+    },
+    "shadowProductFields": {
+      "macro-transmission": [
+        "transmission",
+        "analysis"
+      ],
+      "macro-insights": [
+        "sandboxIndicators",
+        "trendDefinitions",
+        "sandboxMonths"
+      ]
+    },
+    "changedPeriodsWithinSource": 553,
+    "revisionReplay": {
+      "series": "us.labor.nonfarm_payroll_change",
+      "period": "2026-07-01",
+      "versions": [
+        {
+          "value": "21.0000000000",
+          "source": "fred",
+          "released_at": "2026-09-04T00:00:00+00:00",
+          "revision": "2026-09-04"
+        },
+        {
+          "value": "-10.0000000000",
+          "source": "fred",
+          "released_at": "2026-10-02T00:00:00+00:00",
+          "revision": "2026-10-02"
+        }
+      ]
+    }
+  },
+  "requests": {
+    "market-daily": {
+      "calls": 15,
+      "maxSql": 1,
+      "maxMs": 70.2
+    },
+    "etf-trading": {
+      "calls": 9,
+      "maxSql": 8,
+      "maxMs": 35.2
+    },
+    "commodity-daily": {
+      "calls": 10,
+      "maxSql": 26,
+      "maxMs": 169.0
+    },
+    "stock-limit-status": {
+      "calls": 10,
+      "maxSql": 4,
+      "maxMs": 10.0
+    },
+    "macro-observations": {
+      "calls": 44,
+      "maxSql": 2,
+      "maxMs": 286.5
+    },
+    "macro-specialty-observations": {
+      "calls": 3,
+      "maxSql": 13,
+      "maxMs": 41.5
+    }
+  },
+  "sqlCounts": {
+    "SELECT": 977,
+    "WITH": 22
+  },
+  "seconds": 8.582
+}

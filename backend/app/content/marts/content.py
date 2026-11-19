@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session, sessionmaker
 from app.db.models import ContentDocument, JobCursor
 from app.content.announcement_history import JOB as ANNOUNCEMENT_JOB
 from app.content.content_policy import DISPLAY_STATUSES, TEXT_STATUSES
+from app.content.dataset_query import visible_documents
 from app.content.marts.report_details import attach_report_details, forecast_period
 from app.shared.trading_days import announcement_dates
 
@@ -22,10 +23,7 @@ class ContentRepository:
 
     def displayable(self, as_of: datetime, limit: int = 50, ts_code: str | None = None) -> tuple[ContentDocument, ...]:
         with self._session_factory() as session:
-            rows = session.scalars(select(ContentDocument).where(ContentDocument.published_at <= as_of, ContentDocument.copyright_status.in_(DISPLAY_STATUSES)).order_by(ContentDocument.published_at.desc(), ContentDocument.id.desc())).all()
-        if ts_code is not None:
-            rows = [row for row in rows if ts_code in (row.securities or [])]
-        return tuple(rows[:limit])
+            return tuple(session.scalars(visible_documents(as_of, symbol=ts_code).limit(limit)))
 
 
 class ContentMartBuilder:
@@ -111,10 +109,8 @@ def load_workbench_content(session: Session, symbols, as_of: date, trading_days)
     if not symbols:
         return {}
     next_day = datetime.combine(as_of + timedelta(days=1), time.min, ZoneInfo("Asia/Shanghai"))
-    documents = session.scalars(select(ContentDocument).where(
+    documents = session.scalars(visible_documents(datetime.now(timezone.utc)).where(
         ContentDocument.published_at < next_day.astimezone(timezone.utc),
-        ContentDocument.published_at <= datetime.now(timezone.utc),
-        ContentDocument.copyright_status.in_(DISPLAY_STATUSES),
         func.json_array_length(ContentDocument.securities) > 0,
-    ).order_by(ContentDocument.published_at.desc(), ContentDocument.id.desc()))
+    ))
     return group_workbench_content(session, documents, symbols, trading_days)

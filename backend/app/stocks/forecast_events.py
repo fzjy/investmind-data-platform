@@ -8,6 +8,7 @@ from sqlalchemy import select
 from app.content.api.read_models import WorkbenchContent, load_workbench_content
 from app.db.models import FinancialForecast, PublishedSnapshot
 from app.shared.trading_days import candle_dates, load_trading_days
+from app.stocks.dataset_query import announced_rows_query
 from app.jobs.locks import data_publication_lock_key, job_lock_for_engine
 from app.marts.contracts import MartCandidate, MartRows, QualityContext, release_version
 from app.marts.publication import SnapshotPublisher
@@ -21,8 +22,8 @@ def forecast_charts(session, prices, *, trading_days=None):
     first = min(days.first for days in trading.values())
     last = max(days.last for days in trading.values())
     result = {}
-    for r in session.scalars(select(FinancialForecast).where(FinancialForecast.ts_code.in_(trading),
-            FinancialForecast.ann_date.between(first, last)).order_by(FinancialForecast.ann_date, FinancialForecast.id)):
+    for r in session.scalars(announced_rows_query(FinancialForecast, tuple(trading), start=first, end=last)
+                             .order_by(FinancialForecast.ann_date, FinancialForecast.id)):
         symbol = r.ts_code
         days = trading[symbol]
         if not days.first <= r.ann_date <= days.last:

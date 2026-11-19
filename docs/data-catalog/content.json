@@ -53,7 +53,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "新闻接口可按游标翻阅已留存记录，尚无任意起止日期参数",
+        "explanation": "新闻接口可按游标翻阅已留存记录，尚无任意起止日期参数 可按发布时间筛选当前允许展示的库存。",
         "evidence": []
       }
     },
@@ -238,6 +238,31 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/content-documents",
+        "example": {
+          "content_type": "news",
+          "limit": 5
+        },
+        "responsePaths": [
+          "data[].id",
+          "data[].source",
+          "data[].external_id",
+          "data[].content_type",
+          "data[].published_at",
+          "data[].title",
+          "data[].source_url",
+          "data[].securities",
+          "data[].copyright_status",
+          "data[].body",
+          "data[].summary",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -613,8 +638,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "可按发布时间筛选当前允许展示的库存。",
         "evidence": []
       }
     },
@@ -882,6 +907,31 @@
       {
         "kind": "table",
         "description": "通过现有 CLI 导入，查询已入库记录；导入不由文档页触发。"
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/content-documents",
+        "example": {
+          "content_type": "article",
+          "limit": 5
+        },
+        "responsePaths": [
+          "data[].id",
+          "data[].source",
+          "data[].external_id",
+          "data[].content_type",
+          "data[].published_at",
+          "data[].title",
+          "data[].source_url",
+          "data[].securities",
+          "data[].copyright_status",
+          "data[].body",
+          "data[].summary",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [

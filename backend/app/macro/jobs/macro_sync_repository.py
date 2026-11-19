@@ -15,7 +15,7 @@ from app.connectors.macro.sanitization import sanitize_macro_value
 from app.db.models import IngestionBatch, MacroObservation, RejectedRecord, SourcePayload
 from app.macro.catalog import MacroSeriesDefinition, MacroSourceDefinition
 from app.macro.import_lineage import verify_import_lineage
-from app.macro.marts.macro import select_visible_observations
+from app.macro.dataset_query import select_visible_observations
 
 
 _FILE_TYPES = frozenset({"csv", "xlsx"})

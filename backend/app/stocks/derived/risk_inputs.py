@@ -2,10 +2,11 @@
 from collections import defaultdict
 from datetime import timedelta
 
-from sqlalchemy import func, select
+from sqlalchemy import func
 
 from app.db.models import BalanceSheet, CashflowStatement, DailyBasic, DailyPrice, FinancialIndicator, IncomeStatement
 from app.shared.stock_mapping import finite_decimal
+from app.stocks.dataset_query import daily_rows_query, financial_rows_query
 from app.stocks.derived.inputs import metric_report_revisions
 from app.stocks.derived.metric_dividends import load_dividend_years
 from app.stocks.derived.workbench_cards import DEBT_FIELDS
@@ -37,7 +38,7 @@ def load_risk_inputs(session, symbols, as_of, *, dividend_years=None):
         originals[kind].append(row)
     for kind, model in (("income", IncomeStatement), ("balance", BalanceSheet),
                         ("cashflow", CashflowStatement), ("indicator", FinancialIndicator)):
-        query = select(model).where(model.ts_code.in_(codes), model.end_date <= as_of,
+        query = financial_rows_query(model, codes, end=as_of).where(
                                     func.coalesce(model.f_ann_date, model.ann_date) <= as_of)
         groups = metric_report_revisions([*session.scalars(query), *originals[kind]], indicator=kind == "indicator", as_of=as_of)
         for (code, period, mode), rows in groups.items():
@@ -55,15 +56,14 @@ def load_risk_inputs(session, symbols, as_of, *, dividend_years=None):
                 date=(first.f_ann_date or first.ann_date).isoformat(), values=values)
     from app.stocks.valuation_supply import risk_valuation_history
     history = risk_valuation_history(session, codes, as_of)
-    query = select(DailyBasic.ts_code, DailyBasic.trade_date, DailyBasic.pe,
-                   DailyBasic.pb).where(DailyBasic.ts_code.in_(codes),
-                   DailyBasic.trade_date.between(start, as_of)).order_by(DailyBasic.trade_date)
+    query = daily_rows_query(DailyBasic, start, as_of, codes).with_only_columns(
+        DailyBasic.ts_code, DailyBasic.trade_date, DailyBasic.pe, DailyBasic.pb).order_by(DailyBasic.trade_date)
     core = defaultdict(dict)
     for code, day, pe, pb in session.execute(query):
         core[code][day.isoformat()] = (pe, pb)
     trading_days = defaultdict(set)
-    for code, day in session.execute(select(DailyPrice.ts_code, DailyPrice.trade_date).where(
-            DailyPrice.ts_code.in_(codes), DailyPrice.trade_date.between(start, as_of))):
+    for code, day in session.execute(daily_rows_query(DailyPrice, start, as_of, codes)
+                                     .with_only_columns(DailyPrice.ts_code, DailyPrice.trade_date)):
         trading_days[code].add(day.isoformat())
     for code, data in result.items():
         entry = history.get(code, {})

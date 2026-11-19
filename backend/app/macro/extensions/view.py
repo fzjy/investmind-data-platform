@@ -5,81 +5,21 @@ from decimal import Decimal, ROUND_HALF_EVEN, localcontext
 import math
 import re
 
-from sqlalchemy import select
-
-from app.db.models.core import MacroObservation
-from app.db.models.ops import JobRun
-from app.db.models.raw import IngestionBatch, SourcePayload
-from app.macro.extensions.config import ExtensionError
-from app.macro.extensions.ingest import utc
+from app.macro.extensions.facts import METADATA, _empty, read_extension_sources
 from app.macro.extensions.normalize import decimal_text, number, quarter_date
 from app.macro.extensions.plan import canonical, digest
-from app.macro.extensions.store import ExtensionStore, JOB_NAME, RECOVERY_JOB_NAME, FAILURE_CODES, _job, instant
+from app.macro.extensions.store import FAILURE_CODES, instant
 
 
-METADATA = {
-    'usdcnh': {'id': 'fx.usdcnh', 'label': '离岸USD/CNH', 'unit': 'CNH/USD', 'frequency': 'daily'},
-    'nominalGdp': {'id': 'cn.gdp.nominal_cumulative', 'label': '名义GDP累计值', 'unit': '亿元', 'frequency': 'quarterly'},
-    'vix': {'id': 'us.volatility.vix', 'label': 'VIX', 'unit': 'index', 'frequency': 'daily'},
-}
 BASIS = 'retrieval-visible-restated-history-not-strict-pit'
 VIX_ATTRIBUTION = 'CBOE via FRED. Copyright, 2016, Chicago Board Options Exchange, Inc. Reprinted with permission.'
 REASONS = {None, 'NOT_COLLECTED', 'RESPONSE_EMPTY', 'CORE_PENDING', 'EXTENSION_ATTEMPT_UNCERTAIN', *FAILURE_CODES}
 
 
-def _empty(group):
-    return {**METADATA[group], 'status': 'unavailable', 'reason': 'NOT_COLLECTED',
-        'executionState': 'not_collected', 'quoteSide': 'bid_close' if group == 'usdcnh' else None,
-        'retrievedAt': None, 'evidenceFingerprint': None, 'points': []}
-
-
 def load_extension_inputs(factory, as_of: datetime) -> dict:
     cutoff = instant(as_of)
-    store = ExtensionStore(factory)
-    sources = {key: _empty(key) for key in METADATA}
     with factory() as session:
-        rows = session.scalars(select(JobRun).where(JobRun.job_name.in_((JOB_NAME, RECOVERY_JOB_NAME)),
-            JobRun.started_at <= cutoff).order_by(JobRun.started_at, JobRun.id)).all()
-        # 保留强引用，绑定校验不为每个点重复往返PG；依然逐点验证。
-        retained = (
-            session.scalars(select(SourcePayload).join(IngestionBatch).where(
-                IngestionBatch.dataset.in_(tuple(f'macro-extension:{key}' for key in METADATA)))).all(),
-            session.scalars(select(IngestionBatch).where(IngestionBatch.id.in_([row.id for row in rows]))).all(),
-            session.scalars(select(MacroObservation).where(MacroObservation.series_id.in_(
-                ('fx.usdcnh', 'cn.gdp.nominal_cumulative', 'us.volatility.vix')))).all(),
-        )
-        for row in rows:
-            try:
-                group = row.details['plan']['groupId']
-                if group not in METADATA:
-                    raise ValueError()
-                details = _job(row, group)
-                store._parent(session, row)
-                store._root(session, details['plan'])
-                # 后来才完成/失败的作业不能倒灌到历史截止。
-                if row.finished_at is not None and utc(row.finished_at) > cutoff:
-                    continue
-                source = sources[group]
-                phase = details['phase']
-                source['executionState'] = phase
-                source['reason'] = {'reserved': 'EXTENSION_ATTEMPT_UNCERTAIN', 'received': 'CORE_PENDING',
-                    'failed': row.error_message, 'completed': None}[phase]
-                if phase in ('received', 'completed'):
-                    raw, retrieved = store._raw(session, row)
-                    if retrieved > cutoff or phase != 'completed':
-                        continue
-                    evidence = raw['evidence']
-                    source.update(retrievedAt=retrieved.isoformat(),
-                        evidenceFingerprint=evidence['evidenceFingerprint'],
-                        quoteSide=details['plan']['groupPolicy']['quoteSide'],
-                        points=[{'period': p['period'], 'value': p['value'],
-                            'reportedRealYoy': p['diagnostics'].get('reportedRealYoy'),
-                            'sourceRow': p['sourceRef']['row']} for p in evidence['observations']])
-                    source['status'] = 'available' if source['points'] else 'unavailable'
-                    source['reason'] = None if source['points'] else 'RESPONSE_EMPTY'
-            except (KeyError, TypeError, ValueError, AttributeError):
-                raise ExtensionError('EXTENSION_VIEW_SOURCE_INVALID') from None
-        del retained
+        sources = read_extension_sources(session, cutoff)
     from app.macro.fiscal_view import load_fiscal_inputs
     from app.macro.official_macro_view import load_official_macro_view
     official = load_official_macro_view(factory, cutoff)

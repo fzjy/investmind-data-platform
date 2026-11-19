@@ -68,6 +68,7 @@ def audit_semantics(entries, root, table, judge, field):
     # 修正原先将所有采集主题都指向工作台或市场浏览的占位路径。
     paths = {
         "stock-adjustment": ("/api/v1/stocks/{symbol}", ["data.dailyChart.candles[]（因子用于复权四价，未原样返回因子表）"]),
+        "stock-daily-basic": ("/api/v1/stocks/{symbol}", ["data.quote.pe", "data.quote.peTtm", "data.quote.pb", "data.quote.marketCap（亿元）"]),
         "stock-business": ("/api/v1/stocks/{symbol}", ["data.financial.dashboard.businessHistory（主营专题投影及覆盖）"]),
         "stock-forecast": ("/api/v1/stocks/{symbol}", ["data.dailyChart.forecastEvents[]（结构化预告事件，按披露日期定位）"]),
         "stock-repurchase": ("/api/v1/stocks/{symbol}", ["data.financial.shareholders.repurchaseEvidence（回购进展证据）"]),
@@ -293,6 +294,7 @@ def audit_semantics(entries, root, table, judge, field):
 
     _enterprise(by_id, inputs, calculation, frequency, table, judge, output, evidence)
     _extensions(by_id, inputs, calculation, frequency, table, judge, evidence, add_tables)
+    _stock_datasets(by_id, judge, evidence)
 
     # 避免末尾新增的字段退回误导性默认值；响应对象和原始字段的语义分开标记。
     for e in entries:
@@ -324,6 +326,37 @@ def audit_semantics(entries, root, table, judge, field):
     for f in by_id["stock-unlock"]["fields"]:
         if f["id"]=="unlock_date":
             f["description"] = "旧合同字段，停止新请求；当前实际解禁日期使用 float_date（解禁日期）。历史原件按原合同解释。"
+
+
+def _stock_datasets(by_id, judge, evidence):
+    from app.stocks.datasets_routes import AdjustmentRow, DailyBasicRow, DailyQuoteRow
+
+    units = {
+        "adj_factor": "无量纲", "turnover_rate": "%", "dv_ratio": "%", "dv_ttm": "%",
+        "pe": "倍", "pe_ttm": "倍", "pb": "倍", "ps": "倍", "ps_ttm": "倍",
+        "total_share": "万股", "float_share": "万股", "free_share": "万股",
+        "total_mv": "万元", "circ_mv": "万元", "ts_code": "不适用", "trade_date": "不适用",
+    }
+    for dataset, model in (("stock-daily", DailyQuoteRow), ("stock-adjustment", AdjustmentRow),
+                           ("stock-daily-basic", DailyBasicRow)):
+        entry = by_id[dataset]
+        entry["scope"] = "按 Core 表中已入库的证券与交易日返回，实际覆盖依查询时的留存记录。"
+        entry["history"]["query"] = judge(True, "支持单个交易日（可选证券）或单只证券的起止日期闭区间。")
+        source_fields = {f["id"]: f for f in entry["fields"] if f["role"] == "source"}
+        response_paths = []
+        for name in model.model_fields:
+            key = "ts_code" if name == "symbol" else name
+            source = source_fields[key]
+            if key in units:
+                source["unit"] = units[key]
+            response_paths.append(f"data[].{name}（{source['name']}）")
+        entry["access"].insert(0, dict(
+            kind="independent", method="GET", path=f"/api/v1/datasets/{dataset}",
+            example={"trade_date": "2026-10-21"},
+            responsePaths=[*response_paths, "meta.dataset（数据集标识）",
+                           "meta.coverage_scope（stored，当前入库范围）", "meta.next_cursor（下一页游标）"],
+        ))
+        evidence(entry, "backend/app/stocks/datasets_routes.py", "docs/stock-datasets.md")
 
 
 def _enterprise(by_id, inputs, calculation, frequency, table, judge, output, evidence):

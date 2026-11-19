@@ -319,7 +319,10 @@ def main():
     missing=required-set(ownership)
     if missing: raise ValueError("未登记身份 "+str(sorted(missing)))
     from app.main import create_app
-    operations={p:m.upper() for p,v in create_app().openapi()["paths"].items() if p.startswith("/api/v1/") for m in v if m in {"get","post"}}
+    from data_catalog_datasets import register_domain_queries
+    spec = create_app().openapi()
+    register_domain_queries(entries, spec)
+    operations={p:m.upper() for p,v in spec["paths"].items() if p.startswith("/api/v1/") for m in v if m in {"get","post"}}
     for p,m in operations.items():
         for e in entries:
             if p == "/api/v1/data-status" or any(a.get("path")==p and a.get("method")==m for a in e["access"]):
@@ -334,7 +337,7 @@ def main():
         filename=group+".json"
         files.append("data-catalog/"+filename)
         (out/filename).write_text(json.dumps([e for e in entries if e["category"]==group],ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    index=dict(version="2026-11-16-v3",categories=[dict(id=id,name=name) for id,name in groups],files=files,ownership=dict(sorted(ownership.items())))
+    index=dict(version="2026-11-19-v5",categories=[dict(id=id,name=name) for id,name in groups],files=files,ownership=dict(sorted(ownership.items())))
     (ROOT/"docs/data-catalog.json").write_text(json.dumps(index,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print(f"{len(entries)} entries, {len(ownership)} covered identities")
 

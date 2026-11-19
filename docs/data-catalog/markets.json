@@ -456,8 +456,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "可按单个品种查询日线。 可查专项日行情量额与份额。",
         "evidence": []
       }
     },
@@ -729,6 +729,54 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/market-daily",
+        "example": {
+          "start_date": "2026-10-01",
+          "end_date": "2026-10-16",
+          "asset_type": "etfs",
+          "asset_code": "510300.SH"
+        },
+        "responsePaths": [
+          "data[].source_payload_id",
+          "data[].captured_at",
+          "data[].provider",
+          "data[].api_name",
+          "data[].asset_type",
+          "data[].asset_code",
+          "data[].trade_date",
+          "data[].price_unit",
+          "data[].open",
+          "data[].high",
+          "data[].low",
+          "data[].close",
+          "data[].pre_close",
+          "data[].pct_chg",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/etf-trading",
+        "example": {
+          "asset_code": "510300.SH",
+          "trade_date": "2026-10-16"
+        },
+        "responsePaths": [
+          "data[].asset_code",
+          "data[].trade_date",
+          "data[].quote",
+          "data[].shares",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -777,8 +825,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "可查专项日行情量额与份额。",
         "evidence": []
       }
     },
@@ -875,6 +923,24 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/etf-trading",
+        "example": {
+          "asset_code": "510300.SH",
+          "trade_date": "2026-10-16"
+        },
+        "responsePaths": [
+          "data[].asset_code",
+          "data[].trade_date",
+          "data[].quote",
+          "data[].shares",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -1213,8 +1279,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "按已核验窗口查主力合约及其日线。",
         "evidence": []
       }
     },
@@ -1536,6 +1602,40 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/commodity-daily",
+        "example": {
+          "start_date": "2026-10-01",
+          "end_date": "2026-10-16",
+          "asset_code": "AU.SHF",
+          "window_end": "2026-10-16"
+        },
+        "responsePaths": [
+          "data[].asset_code",
+          "data[].exchange",
+          "data[].contract",
+          "data[].trade_date",
+          "data[].quote_unit",
+          "data[].trade_unit",
+          "data[].per_unit",
+          "data[].pre_close",
+          "data[].pre_settle",
+          "data[].open",
+          "data[].high",
+          "data[].low",
+          "data[].close",
+          "data[].settle",
+          "data[].vol",
+          "data[].amount",
+          "data[].oi",
+          "data[].sources",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -1584,8 +1684,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "按已核验窗口查主力合约及其日线。",
         "evidence": []
       }
     },
@@ -1676,6 +1776,40 @@
       {
         "kind": "table",
         "description": "已接入底座，按所列原件或核心表查看；未核准为公开接口输出。"
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/commodity-daily",
+        "example": {
+          "start_date": "2026-10-01",
+          "end_date": "2026-10-16",
+          "asset_code": "AU.SHF",
+          "window_end": "2026-10-16"
+        },
+        "responsePaths": [
+          "data[].asset_code",
+          "data[].exchange",
+          "data[].contract",
+          "data[].trade_date",
+          "data[].quote_unit",
+          "data[].trade_unit",
+          "data[].per_unit",
+          "data[].pre_close",
+          "data[].pre_settle",
+          "data[].open",
+          "data[].high",
+          "data[].low",
+          "data[].close",
+          "data[].settle",
+          "data[].vol",
+          "data[].amount",
+          "data[].oi",
+          "data[].sources",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -2354,8 +2488,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "可按单个品种查询日线。",
         "evidence": []
       }
     },
@@ -2577,6 +2711,36 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/market-daily",
+        "example": {
+          "start_date": "2026-10-01",
+          "end_date": "2026-10-16",
+          "asset_type": "indices",
+          "asset_code": "000001.SH"
+        },
+        "responsePaths": [
+          "data[].source_payload_id",
+          "data[].captured_at",
+          "data[].provider",
+          "data[].api_name",
+          "data[].asset_type",
+          "data[].asset_code",
+          "data[].trade_date",
+          "data[].price_unit",
+          "data[].open",
+          "data[].high",
+          "data[].low",
+          "data[].close",
+          "data[].pre_close",
+          "data[].pct_chg",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -2631,8 +2795,8 @@
         "evidence": []
       },
       "query": {
-        "value": false,
-        "explanation": "当前无此内容的独立历史日期查询合同",
+        "value": true,
+        "explanation": "可按单个品种查询日线。",
         "evidence": []
       }
     },
@@ -2854,6 +3018,36 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/market-daily",
+        "example": {
+          "start_date": "2026-10-01",
+          "end_date": "2026-10-16",
+          "asset_type": "indices",
+          "asset_code": "SPX"
+        },
+        "responsePaths": [
+          "data[].source_payload_id",
+          "data[].captured_at",
+          "data[].provider",
+          "data[].api_name",
+          "data[].asset_type",
+          "data[].asset_code",
+          "data[].trade_date",
+          "data[].price_unit",
+          "data[].open",
+          "data[].high",
+          "data[].low",
+          "data[].close",
+          "data[].pre_close",
+          "data[].pct_chg",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -3453,7 +3647,7 @@
       },
       "query": {
         "value": false,
-        "explanation": "现有市场接口读取当前发布，没有历史日期或 version 参数。",
+        "explanation": "现有市场接口读取当前发布，没有历史日期或 version 参数。 可按股票和交易日查状态来源。",
         "evidence": []
       }
     },
@@ -3817,6 +4011,25 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/stock-limit-status",
+        "example": {
+          "symbol": "600519.SH",
+          "trade_date": "2026-10-16"
+        },
+        "responsePaths": [
+          "data[].symbol",
+          "data[].trade_date",
+          "data[].limit_status",
+          "data[].source",
+          "data[].source_payload_id",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [

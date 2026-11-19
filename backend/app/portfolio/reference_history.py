@@ -5,6 +5,7 @@ from math import isfinite
 from sqlalchemy import select,func,text
 from app.db.models import PublishedSnapshot,SourcePayload,IngestionBatch,JobCursor,TradeCalendar,DailyPrice
 from app.stocks.api.financial import years_before
+from app.stocks.api.datasets import calendar_query, daily_rows_query
 from app.ingestion.repositories import content_hash
 from app.jobs.locks import job_lock_for_engine
 from app.connectors.tushare.contracts import request_hash
@@ -46,10 +47,11 @@ def history_plan(session,*,as_of=None,start=None):
     if as_of!=base_day:raise ValueError('REFERENCE_BASE_NOT_READY')
     symbols=[s['symbol'] for s in base.payload.get('stocks',[])]
     if not symbols:raise ValueError('REFERENCE_SCOPE_EMPTY')
-    first=session.scalar(select(func.min(DailyPrice.trade_date)).where(DailyPrice.ts_code.in_(symbols),DailyPrice.trade_date>=years_before(as_of,3),DailyPrice.trade_date<=as_of))
+    first=session.scalar(daily_rows_query(DailyPrice, years_before(as_of,3), as_of, symbols)
+                         .with_only_columns(func.min(DailyPrice.trade_date)))
     if first is None:raise ValueError('REFERENCE_PRICE_WINDOW_REQUIRED')
     start=start or first.isoformat()
-    calendars=session.scalars(select(TradeCalendar).where(TradeCalendar.exchange=='SSE',TradeCalendar.cal_date>=date.fromisoformat(start),TradeCalendar.cal_date<=as_of).order_by(TradeCalendar.cal_date)).all()
+    calendars=session.scalars(calendar_query(date.fromisoformat(start),as_of,'SSE').order_by(TradeCalendar.cal_date)).all()
     if len(calendars)!=(as_of-date.fromisoformat(start)).days+1:raise ValueError('REFERENCE_FULL_CALENDAR_REQUIRED')
     calendar=tuple(r.cal_date.isoformat() for r in calendars if r.is_open)
     if not calendar:raise ValueError('REFERENCE_CALENDAR_EMPTY')
@@ -95,7 +97,7 @@ def _frozen_inputs(session,contract):
     if contract.get('schemaVersion')!=1 or contract.get('fields')!=list(FIELDS):raise ValueError('REFERENCE_CONTRACT_INVALID')
     start,end=date.fromisoformat(contract['start']),date.fromisoformat(contract['asOf'])
     if start>end or tuple(t['target'] for t in contract['targets'])!=TARGETS:raise ValueError('REFERENCE_CONTRACT_INVALID')
-    rows=session.scalars(select(TradeCalendar).where(TradeCalendar.exchange=='SSE',TradeCalendar.cal_date>=start,TradeCalendar.cal_date<=end).order_by(TradeCalendar.cal_date)).all()
+    rows=session.scalars(calendar_query(start,end,'SSE').order_by(TradeCalendar.cal_date)).all()
     calendar=tuple(r.cal_date.isoformat() for r in rows if r.is_open)
     if len(rows)!=(end-start).days+1 or not calendar or content_hash(calendar)!=contract['calendarHash']:raise ValueError('REFERENCE_FROZEN_CALENDAR_CHANGED')
     requests=[]

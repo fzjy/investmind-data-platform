@@ -1,0 +1,95 @@
+{
+  "commit": "8ec642abdea1898b2f55bea7ce10e0039a7d6ab3",
+  "changes": {
+    "README.md": {
+      "status": " M",
+      "sha256": "c545a3421356c641f367a5500c4db7b1402c7f79c105e868af817fec851d94e5"
+    },
+    "backend/app/local_admin/static/catalog.js": {
+      "status": " M",
+      "sha256": "a22cfbce75959ccd1addd44912711414277b883227f69f6048173980a89fb391"
+    },
+    "backend/app/main.py": {
+      "status": " M",
+      "sha256": "4cc9c32fbae23906e36f9a7e4298af5dbedb9a508ecdac66be02b6057c687af6"
+    },
+    "backend/app/stocks/derived/inputs.py": {
+      "status": " M",
+      "sha256": "7c136f41d77beaed22df2ff1a710b20604529f5a06f0a2bad89c1daf77a14a70"
+    },
+    "backend/tests/test_admin_catalog.py": {
+      "status": " M",
+      "sha256": "0ce78659ef54500939c3a70dfe12b6312e2eecae9103450e9ee4163c854148a8"
+    },
+    "docs/api-requests.md": {
+      "status": " M",
+      "sha256": "8799f9cfa7be7e8e3ed1ae1110dadcf8d77acb7c5e1dcc43a93c93955378b916"
+    },
+    "docs/data-catalog.json": {
+      "status": " M",
+      "sha256": "5e03448a330f82d3ec42599ac2d788ebafec4f6f2012012e1f54e845f9122872"
+    },
+    "docs/data-catalog/stocks.json": {
+      "status": " M",
+      "sha256": "f14f3970aaced5ea250ed832ffe964d11e3bf7a09b4d19a67c90078fce1e6597"
+    },
+    "docs/openapi-v1.json": {
+      "status": " M",
+      "sha256": "414dd2c670925d88e17096c3e48af6810c75717996e56448d49362b896d753dd"
+    },
+    "docs/platform-api.md": {
+      "status": " M",
+      "sha256": "91bd77d27a5c06094c6cce44f7d26dc1d4ef84e824bf0c74c55ff2c46f75663c"
+    },
+    "docs/portfolio-split-lineage.md": {
+      "status": " M",
+      "sha256": "2db7e9251ce04326d3f564514beea5b22b930456b98f59882264136543f8fc33"
+    },
+    "docs/workbench-api.md": {
+      "status": " M",
+      "sha256": "f79f0247842039c96342f223f673fcea7fcd0efd8574da30998943ee0ef7382b"
+    },
+    "pyproject.toml": {
+      "status": " M",
+      "sha256": "5c379a7917416c681648255b5e2c48caedc4bea97c937f8f1e665a547c261d18"
+    },
+    "scripts/data_catalog_semantics.py": {
+      "status": " M",
+      "sha256": "69d5789dadedb6b90219d445b88c9f497b9fe060b63c473ea558388e2a335b3c"
+    },
+    "scripts/export-api-requests.py": {
+      "status": " M",
+      "sha256": "3f80d54601f098daedfdc4eb2048d31d67eef96861cd42012cc45e3d2d2eaf0e"
+    },
+    "scripts/export-data-catalog.py": {
+      "status": " M",
+      "sha256": "d668c8bd804f8897743f625eb3533cd18e42fb31eed2af10af316e63482c3fd2"
+    },
+    "backend/app/stocks/dataset_query.py": {
+      "status": "??",
+      "sha256": "bb09123a192960fd4100a0d2cda51fe912d10037595c539b8670dfff2c6d540f"
+    },
+    "backend/app/stocks/datasets_routes.py": {
+      "status": "??",
+      "sha256": "db35fef1ccf471bad98212cbd517053ce89d76acf2a021ce34b8871a4abaf22d"
+    },
+    "backend/tests/database_api/test_stock_datasets.py": {
+      "status": "??",
+      "sha256": "a076eb0924e427b15c0938f426e085d4e4c17862342a35a4e0e753a03affb48b"
+    },
+    "docs/stock-datasets.md": {
+      "status": "??",
+      "sha256": "aa91e4f2385fbb8a370a6c2255fe4b13d7f3950c8e6bb0ca2bfc2bf842bb4b2b"
+    },
+    "docs/superpowers/plans/2026-11-19-data-foundation-refactor.md": {
+      "status": "??",
+      "sha256": "1eea3797452f077d712f681c9f6c910d9d66eaa65720c81ee1cb940a014c2acf"
+    },
+    "scripts/verify-investmind-connection.py": {
+      "status": "??",
+      "sha256": "699a7b69c792bc38c3ab626b74877dd3ed8242e4b3479e44dc2e8f296a9fb13e"
+    }
+  },
+  "providerMode": "standard",
+  "schedulerTimezone": "Asia/Shanghai"
+}

@@ -57,7 +57,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -125,6 +125,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "cn.gdp.real_yoy",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -192,7 +220,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -263,6 +291,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "cn.cpi.yoy",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -330,7 +386,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -398,6 +454,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "cn.cpi.core_yoy",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -465,7 +549,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -540,6 +624,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "cn.ppi.yoy",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -607,7 +719,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -675,6 +787,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "cn.pmi.manufacturing",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -742,7 +882,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -812,6 +952,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "cn.industry.value_added_yoy",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -879,7 +1047,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -952,6 +1120,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "cn.money.m1_yoy",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -1019,7 +1215,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -1092,6 +1288,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "cn.money.m2_yoy",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -1153,7 +1377,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -1222,6 +1446,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "cn.credit.tsf_stock_yoy",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -1289,7 +1541,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -1363,6 +1615,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "cn.rate.dr007",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -1430,7 +1710,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -1504,6 +1784,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "cn.rate.govbond_10y",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -1565,7 +1873,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -1632,6 +1940,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "cn.fx.usdcny",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -1699,7 +2035,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -1767,6 +2103,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "us.gdp.real_qoq_annualized",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -1840,7 +2204,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -1944,6 +2308,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "us.cpi.yoy",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -2017,7 +2409,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -2121,6 +2513,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "us.cpi.core_yoy",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -2188,7 +2608,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -2274,6 +2694,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "us.pce.core_yoy",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -2347,7 +2795,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -2416,6 +2864,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "us.labor.unemployment_rate",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -2489,7 +2965,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -2593,6 +3069,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "us.labor.nonfarm_payroll_change",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -2666,7 +3170,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -2739,6 +3243,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "us.rate.effective_fed_funds",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -2818,7 +3350,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。",
+        "explanation": "聚合宏观接口支持 version（发布版本），并非任意日期查询。 可按观测期和发布时间截止点选版。",
         "evidence": []
       }
     },
@@ -2892,6 +3424,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-observations",
+        "example": {
+          "series_id": "us.rate.treasury_10y",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-10-21T00:00:00Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].name",
+          "data[].source",
+          "data[].source_url",
+          "data[].region",
+          "data[].frequency",
+          "data[].unit",
+          "data[].seasonal_adjustment",
+          "data[].observed_at",
+          "data[].released_at",
+          "data[].revision",
+          "data[].value",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -3043,7 +3603,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "宏观聚合接口支持已发布 version；载荷历史长度受原件覆盖限制。",
+        "explanation": "宏观聚合接口支持已发布 version；载荷历史长度受原件覆盖限制。 可按专项已核来源及截止时刻查询。",
         "evidence": []
       }
     },
@@ -3108,6 +3668,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-specialty-observations",
+        "example": {
+          "series_id": "fx.usdcnh",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-11-08T14:51:38Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].period",
+          "data[].observed_at",
+          "data[].frequency",
+          "data[].value",
+          "data[].unit",
+          "data[].source",
+          "data[].source_url",
+          "data[].quote_side",
+          "data[].retrieved_at",
+          "data[].evidence_fingerprint",
+          "data[].source_row",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [
@@ -4272,7 +4860,7 @@
       },
       "query": {
         "value": true,
-        "explanation": "宏观聚合接口支持已发布 version；载荷历史长度受原件覆盖限制。",
+        "explanation": "宏观聚合接口支持已发布 version；载荷历史长度受原件覆盖限制。 可按专项已核来源及截止时刻查询。",
         "evidence": []
       }
     },
@@ -4345,6 +4933,34 @@
         ],
         "parameterNames": {},
         "example": null
+      },
+      {
+        "kind": "independent",
+        "method": "GET",
+        "path": "/api/v1/datasets/macro-specialty-observations",
+        "example": {
+          "series_id": "cn.gdp.nominal_cumulative",
+          "start_date": "2024-01-01",
+          "end_date": "2026-10-16",
+          "as_of": "2026-11-08T14:51:38Z"
+        },
+        "responsePaths": [
+          "data[].series_id",
+          "data[].period",
+          "data[].observed_at",
+          "data[].frequency",
+          "data[].value",
+          "data[].unit",
+          "data[].source",
+          "data[].source_url",
+          "data[].quote_side",
+          "data[].retrieved_at",
+          "data[].evidence_fingerprint",
+          "data[].source_row",
+          "meta.dataset",
+          "meta.coverage_scope",
+          "meta.next_cursor"
+        ]
       }
     ],
     "evidence": [

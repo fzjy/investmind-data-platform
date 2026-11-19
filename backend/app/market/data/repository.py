@@ -12,6 +12,7 @@ from app.db.models import JobCursor, MarketDailyQuote, SourcePayload, IngestionB
 from app.ingestion.repositories import IngestionRepository, content_hash
 from app.market.data.contracts import MarketTarget, NormalizedMarketQuote, QUOTE_FIELDS
 from app.market.data.normalization import normalize_market_response
+from app.market.dataset_query import market_quote_statement
 
 JOB_NAME = 'sync-market-data'
 PRICE_FIELDS = QUOTE_FIELDS[2:]
@@ -33,11 +34,21 @@ class MarketQuoteRepository:
         self.factory = factory
 
     def _rows(self, session, target):
-        return session.scalars(select(MarketDailyQuote).where(
-            MarketDailyQuote.provider == 'tushare', MarketDailyQuote.asset_type == target.asset.asset_type,
-            MarketDailyQuote.asset_code == target.asset.asset_code,
-            MarketDailyQuote.trade_date.between(target.start_date, target.end_date))
-            .order_by(MarketDailyQuote.trade_date)).all()
+        return session.scalars(market_quote_statement(target.asset.asset_type, target.start_date,
+            target.end_date, asset_code=target.asset.asset_code)).all()
+
+    def complete_window(self, session, target, checked_at):
+        try:
+            rows = self._rows(session, target)
+            cursor = session.scalar(select(JobCursor).where(
+                JobCursor.job_name == JOB_NAME, JobCursor.cursor_key == target.identity))
+            if not rows or cursor is None or cursor.cursor_value.get('rows') != self._proof(rows):
+                return []
+            return rows if all(self._lineage_valid(session, row, target, checked_at) for row in rows) else []
+        except (ValueError, TypeError, KeyError, AttributeError, ArithmeticError):
+            return []
+        except (ProgrammingError, OperationalError) as exc:
+            raise ValueError('MARKET_MIGRATION_REQUIRED') from exc
 
     def _proof(self, rows):
         return [{'date': row.trade_date.isoformat(), 'values': quote_values(row),
@@ -66,15 +77,7 @@ class MarketQuoteRepository:
             raise ValueError('MARKET_AWARE_CLOCK_REQUIRED')
         try:
             with self.factory() as session:
-                rows = self._rows(session, target)
-                cursor = session.scalar(select(JobCursor).where(JobCursor.job_name == JOB_NAME, JobCursor.cursor_key == target.identity))
-                if not rows or cursor is None:
-                    return False
-                try:
-                    return cursor.cursor_value.get('rows') == self._proof(rows) and all(
-                        self._lineage_valid(session, row, target, checked_at) for row in rows)
-                except (ValueError, TypeError, KeyError, ArithmeticError):
-                    return False
+                return bool(self.complete_window(session, target, checked_at))
         except (ProgrammingError, OperationalError) as exc:
             raise ValueError('MARKET_MIGRATION_REQUIRED') from exc
 

@@ -88,7 +88,7 @@ def _related(left: dict, right: dict) -> bool:
 
 
 def _resolve_dividend_events(rows: Sequence[Mapping], as_of: date, *, legacy_cash=False, evidence=False,
-                            protect_paid=False) -> dict:
+                            protect_paid=False, include_affected=False) -> dict:
     """按截止日解决实施事件；无环境、数据库、网络或输入修改。
 
     同一证券报告期内用资格日优先定位修订；相同公告日的现金、日期或资本
@@ -100,6 +100,13 @@ def _resolve_dividend_events(rows: Sequence[Mapping], as_of: date, *, legacy_cas
     dates = (*_DATES, 'div_listdate') if evidence else _DATES
     issues: list[dict] = []
     buckets: dict[tuple[str, str], list[dict]] = {}
+    affected_by_source: dict[str, set[str]] = {}
+
+    def blocked_by(blocker, implementations):
+        if include_affected:
+            dated = {ref for item in implementations if item['ann_date'] is not None for ref in item['sourceIds']}
+            for ref in blocker['sourceIds']:
+                affected_by_source.setdefault(ref, set()).update(dated)
 
     def issue(code: str, item: dict, field: str | None = None) -> None:
         entry = dict(code=code, ts_code=item.get('ts_code'), end_date=item.get('end_date'),
@@ -167,6 +174,7 @@ def _resolve_dividend_events(rows: Sequence[Mapping], as_of: date, *, legacy_cas
             matching = [group for group in groups if any(_related(item, old) for old in group)]
             if len(matching) > 1:
                 issue('ambiguous_event_identity', item)
+                blocked_by(item, implemented)
                 blocked = True
             elif matching:
                 matching[0].append(item)
@@ -176,6 +184,7 @@ def _resolve_dividend_events(rows: Sequence[Mapping], as_of: date, *, legacy_cas
             matching = [group for group in groups if any(_related(cancel, old) for old in group)]
             if len(matching) != 1 or cancel['invalid'] or cancel['ann_date'] is None:
                 issue('unlocated_cancellation', cancel)
+                blocked_by(cancel, implemented)
                 blocked = True
             else:
                 matching[0].append(cancel)
@@ -183,7 +192,10 @@ def _resolve_dividend_events(rows: Sequence[Mapping], as_of: date, *, legacy_cas
             continue
         for group in groups:
             # 缺公告日无法断言版本先后，不能回退到看似有效的旧记录。
-            if any(item['ann_date'] is None for item in group):
+            undated = [item for item in group if item['ann_date'] is None]
+            if undated:
+                for item in undated:
+                    blocked_by(item, group)
                 continue
             latest_date = max(item['ann_date'] for item in group)
             latest = [item for item in group if item['ann_date'] == latest_date]
@@ -279,6 +291,11 @@ def _resolve_dividend_events(rows: Sequence[Mapping], as_of: date, *, legacy_cas
 
     events.sort(key=lambda event: tuple(event[field] or '' for field in ('ts_code', 'end_date', *_ANCHORS)))
     # 去重并排序，保证输入顺序不影响诊断或结果。
+    if affected_by_source:
+        for entry in issues:
+            related = {ref for source in entry['sourceIds'] for ref in affected_by_source.get(source, ())}
+            if related:
+                entry['affectedSourceIds'] = sorted(related)
     unique = {json.dumps(entry, sort_keys=True, ensure_ascii=True): entry for entry in issues}
     issues = [unique[key] for key in sorted(unique)]
     status = ('partial' if events else 'blocked') if issues else ('ok' if events else 'empty')
@@ -290,9 +307,9 @@ def resolve_dividend_events(rows: Sequence[Mapping], as_of: date) -> dict:
     return _resolve_dividend_events(rows, as_of)
 
 
-def resolve_distribution_evidence(rows: Sequence[Mapping], as_of: date, *, protect_paid=False) -> dict:
+def resolve_distribution_evidence(rows: Sequence[Mapping], as_of: date, *, protect_paid=False, include_affected=False) -> dict:
     """共享修订、取消和时点裁决的分配证据；Decimal及未来到账日期保持原值。"""
-    return _resolve_dividend_events(rows, as_of, evidence=True, protect_paid=protect_paid)
+    return _resolve_dividend_events(rows, as_of, evidence=True, protect_paid=protect_paid, include_affected=include_affected)
 
 
 def select_legacy_dividend_rows(rows, as_of: date):

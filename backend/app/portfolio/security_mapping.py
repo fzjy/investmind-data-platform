@@ -36,7 +36,7 @@ def validate_mapping_response(response, fields):
 def mapping_evidence(session, *, allow_pending=False):
     from app.portfolio.evidence import _get, _verify
     from app.portfolio.dividend_capture import _valid_saved
-    from app.portfolio.dividend_ledger import _original_rows
+    from app.portfolio.original_rows import _original_rows
     active = _get(session, 'mapping:active')
     if active is not None:
         _verify(active.cursor_value)

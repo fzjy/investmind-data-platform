@@ -13,7 +13,7 @@ from app.connectors.tushare.contracts import TushareResponse, request_hash
 from app.db.models import IngestionBatch, JobCursor, PublishedSnapshot, SourcePayload
 from app.ingestion.repositories import IngestionRepository, content_hash
 from app.jobs.locks import job_lock_for_engine
-from app.portfolio.dividend_report import DIVIDEND_FIELDS
+from app.portfolio.dividend_fields import DIVIDEND_FIELDS
 
 JOB_NAME = 'portfolio-dividend-capture'
 DATASET = 'portfolio_dividend_evidence'

@@ -5,6 +5,34 @@ from app.main import create_app
 ROOT = Path(__file__).resolve().parents[2]
 
 
+def test_every_dataset_has_an_executable_catalog_example_and_matches_export():
+    import json
+
+    catalog = load_catalog(ROOT)
+    live = create_app().openapi()
+    exported = json.loads((ROOT / "docs/openapi-v1.json").read_text(encoding="utf-8"))
+    assert exported["paths"] == {p:v for p,v in live["paths"].items() if p.startswith("/api/v1/")}
+    assert exported["components"] == live["components"]
+    published = {p for p in live["paths"] if p.startswith("/api/v1/datasets/")}
+    for path in published:
+        responses = live["paths"][path]["get"]["responses"]
+        assert {"200", "400", "503"} <= responses.keys() and "422" not in responses
+    for topic in ("etf-trading", "commodity-daily", "macro-specialty-observations"):
+        assert "502" in live["paths"][f"/api/v1/datasets/{topic}"]["get"]["responses"]
+    found = set()
+    for entry in catalog.entries:
+        for access in entry.access:
+            path = access.get("path")
+            if path not in published:
+                continue
+            found.add(path)
+            parameters = live["paths"][path]["get"].get("parameters", [])
+            required = {p["name"] for p in parameters if p.get("required")}
+            assert required <= access["example"].keys() <= {p["name"] for p in parameters}
+            assert entry.id in catalog.ownership[f"operation:GET {path}"]
+    assert found == published
+
+
 def test_full_catalog_and_inventory():
     catalog = load_catalog(ROOT)
     issues = validate_catalog(catalog, project_root=ROOT, openapi=create_app().openapi())
@@ -31,6 +59,36 @@ def test_daily_prices_distinguish_stored_and_adjusted():
     assert "复权" in e.description
     assert any("adjustment_factor" == t.table for t in e.tables)
     assert any(f.role=="response" and f.derived.value is True for f in e.fields)
+
+
+def test_stock_dataset_access_paths_match_the_public_rows():
+    import json
+
+    catalog = load_catalog(ROOT)
+    entries = {entry.id: entry for entry in catalog.entries}
+    live = create_app().openapi()
+    exported = json.loads((ROOT / "docs/openapi-v1.json").read_text(encoding="utf-8"))
+    for dataset in ("stock-daily", "stock-adjustment", "stock-daily-basic"):
+        entry = entries[dataset]
+        independent = next(item for item in entry.access if item.get("path") == f"/api/v1/datasets/{dataset}")
+        workbench = next(item for item in entry.access if item.get("path") == "/api/v1/stocks/{symbol}")
+        path = f"/api/v1/datasets/{dataset}"
+        assert independent["kind"] == "independent" and independent["path"] == path
+        assert independent["example"]["trade_date"]
+        assert workbench["path"] == "/api/v1/stocks/{symbol}"
+        assert entry.history["query"].value is True
+        assert catalog.ownership[f"operation:GET {path}"] == [dataset]
+        operation = live["paths"][path]["get"]
+        assert exported["paths"][path]["get"]["parameters"] == operation["parameters"]
+        schemas = live["components"]["schemas"]
+        page_ref = operation["responses"]["200"]["content"]["application/json"]["schema"]["$ref"]
+        page = schemas[page_ref.split("/")[-1]]
+        row_ref = page["properties"]["data"]["items"]["$ref"]
+        row_keys = set(schemas[row_ref.split("/")[-1]]["properties"])
+        documented = {p.split("（")[0] for p in independent["responsePaths"]}
+        assert documented == {f"data[].{key}" for key in row_keys} | {
+            "meta.dataset", "meta.coverage_scope", "meta.next_cursor",
+        }
 
 
 def test_json_field_paths_and_announcement_coverage():

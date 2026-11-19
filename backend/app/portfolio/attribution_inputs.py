@@ -2,9 +2,8 @@
 from datetime import date
 from math import isfinite
 
-from sqlalchemy import select
-
 from app.db.models import DailyBasic
+from app.stocks.api.datasets import daily_rows_query
 from app.stocks.api.financial import load_attribution_earnings
 
 
@@ -17,9 +16,8 @@ def load_attribution_inputs(factory, starts, as_of):
             assets[symbol]["earnings"] = before[-1:] + [
                 entry for entry in timeline if entry["knownAt"] >= starts[symbol]]
         if starts:
-            query = select(DailyBasic).where(DailyBasic.ts_code.in_(starts),
-                DailyBasic.trade_date >= date.fromisoformat(min(starts.values())),
-                DailyBasic.trade_date <= as_of).order_by(DailyBasic.ts_code, DailyBasic.trade_date)
+            query = daily_rows_query(DailyBasic, date.fromisoformat(min(starts.values())), as_of,
+                tuple(starts)).order_by(DailyBasic.ts_code, DailyBasic.trade_date)
             for row in session.scalars(query):
                 raw = row.data.get("total_share")
                 try:

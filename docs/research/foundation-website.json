@@ -1,0 +1,508 @@
+{
+  "checked_at": "2026-11-19T03:36:40.716917+00:00",
+  "products": {
+    "market/overview": {
+      "direct": {
+        "sha256": "e40624687256258fb1d34a5ae173cec67570dd34860b648f93f668b8c3abf321",
+        "bytes": 6553,
+        "ms": 13,
+        "version": "20261021-6319db232c0a22d0",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "website": {
+        "sha256": "e40624687256258fb1d34a5ae173cec67570dd34860b648f93f668b8c3abf321",
+        "bytes": 6553,
+        "ms": 74,
+        "version": "20261021-6319db232c0a22d0",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "equal": true
+    },
+    "market/explorer": {
+      "direct": {
+        "sha256": "bea381ab3b8e88539a4cff0f269856a4ae677908543ff6ccc3c7d057b5c94655",
+        "bytes": 304234,
+        "ms": 49,
+        "version": "content-0ee74f8f06c384cd9a6cd0016ef745fa",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "website": {
+        "sha256": "bea381ab3b8e88539a4cff0f269856a4ae677908543ff6ccc3c7d057b5c94655",
+        "bytes": 304234,
+        "ms": 55,
+        "version": "content-0ee74f8f06c384cd9a6cd0016ef745fa",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "equal": true
+    },
+    "macro/transmission": {
+      "direct": {
+        "sha256": "6722755d6fe30248252d835bf7a9a64b567c0ddacfae66e1273229f40a024ec1",
+        "bytes": 16511586,
+        "ms": 1675,
+        "version": "20261108-366f83bfc727036c",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "website": {
+        "sha256": "6722755d6fe30248252d835bf7a9a64b567c0ddacfae66e1273229f40a024ec1",
+        "bytes": 16511586,
+        "ms": 2067,
+        "version": "20261108-366f83bfc727036c",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "equal": true
+    },
+    "macro/insights": {
+      "direct": {
+        "sha256": "a04e8a6a248737491528638b24fb794d7e4832d8c9d2881f14f04a75b5a55c8d",
+        "bytes": 1600354,
+        "ms": 4153,
+        "version": "20261108-366f83bfc727036c",
+        "source": "database",
+        "dynamic": {
+          "readAt": "2026-11-19T03:36:28.543722+00:00"
+        },
+        "has_data": true
+      },
+      "website": {
+        "sha256": "a04e8a6a248737491528638b24fb794d7e4832d8c9d2881f14f04a75b5a55c8d",
+        "bytes": 1600354,
+        "ms": 3415,
+        "version": "20261108-366f83bfc727036c",
+        "source": "database",
+        "dynamic": {
+          "readAt": "2026-11-19T03:36:33.077327+00:00"
+        },
+        "has_data": true
+      },
+      "equal": true
+    },
+    "portfolio": {
+      "direct": {
+        "sha256": "6b7dbec3fec892265dd01548031fe22e33d4b82e0aa412dc9641a672fa0ed78c",
+        "bytes": 8131607,
+        "ms": 847,
+        "version": "20261021-690705b397d4b878",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "website": {
+        "sha256": "6b7dbec3fec892265dd01548031fe22e33d4b82e0aa412dc9641a672fa0ed78c",
+        "bytes": 8131607,
+        "ms": 826,
+        "version": "20261021-690705b397d4b878",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "equal": true
+    },
+    "stocks/600519.SH": {
+      "direct": {
+        "sha256": "2f0f5df0a3de18fcaf6af046522ba1b396c18c7a4b4f58982feba19ea50233c2",
+        "bytes": 801811,
+        "ms": 128,
+        "version": "20261021-1c01ff6eb0b7d78a",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "website": {
+        "sha256": "2f0f5df0a3de18fcaf6af046522ba1b396c18c7a4b4f58982feba19ea50233c2",
+        "bytes": 801811,
+        "ms": 203,
+        "version": "20261021-1c01ff6eb0b7d78a",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "equal": true
+    },
+    "stocks/research": {
+      "direct": {
+        "sha256": "3bffd3c41d9fe73e0bd23f64cab56e0582655665e61b4e09f6bde0b9bb15f614",
+        "bytes": 43890,
+        "ms": 187,
+        "version": "20261021-1c01ff6eb0b7d78a",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "website": {
+        "sha256": "3bffd3c41d9fe73e0bd23f64cab56e0582655665e61b4e09f6bde0b9bb15f614",
+        "bytes": 43890,
+        "ms": 197,
+        "version": "20261021-1c01ff6eb0b7d78a",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "equal": true
+    },
+    "stocks/screener": {
+      "direct": {
+        "sha256": "e574b3791fbd86858e97bf991050645de25e36b5547f45c863d02921b3f349ce",
+        "bytes": 89079,
+        "ms": 95,
+        "version": "20261021-1c01ff6eb0b7d78a",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "website": {
+        "sha256": "e574b3791fbd86858e97bf991050645de25e36b5547f45c863d02921b3f349ce",
+        "bytes": 89079,
+        "ms": 130,
+        "version": "20261021-1c01ff6eb0b7d78a",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "equal": true
+    },
+    "search?q=600519": {
+      "direct": {
+        "sha256": "fca22ad4cd44cc055d65fd4165876fba53ed86ffd8be525c74d30c3cf84fb298",
+        "bytes": 298,
+        "ms": 64,
+        "version": null,
+        "source": null,
+        "dynamic": {
+          "requestId": "d5c9d14f-7aa5-4d11-93bf-d6e298498eaf"
+        },
+        "has_data": true
+      },
+      "website": {
+        "sha256": "fca22ad4cd44cc055d65fd4165876fba53ed86ffd8be525c74d30c3cf84fb298",
+        "bytes": 298,
+        "ms": 128,
+        "version": null,
+        "source": null,
+        "dynamic": {
+          "requestId": "9364ee8f-c09b-4b82-bec3-7ebccc9a073f"
+        },
+        "has_data": true
+      },
+      "equal": true
+    },
+    "news?limit=3": {
+      "direct": {
+        "sha256": "2a849d4bd499da4979b3bdb27b260809670487a5e50b464860e3ad916e6105c7",
+        "bytes": 1644,
+        "ms": 41,
+        "version": null,
+        "source": null,
+        "dynamic": {},
+        "has_data": true
+      },
+      "website": {
+        "sha256": "2a849d4bd499da4979b3bdb27b260809670487a5e50b464860e3ad916e6105c7",
+        "bytes": 1644,
+        "ms": 60,
+        "version": null,
+        "source": null,
+        "dynamic": {},
+        "has_data": true
+      },
+      "equal": true
+    }
+  },
+  "candidate": {
+    "market/overview": {
+      "direct": {
+        "sha256": "e40624687256258fb1d34a5ae173cec67570dd34860b648f93f668b8c3abf321",
+        "bytes": 6553,
+        "ms": 95,
+        "version": "20261021-6319db232c0a22d0",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "website": {
+        "sha256": "e40624687256258fb1d34a5ae173cec67570dd34860b648f93f668b8c3abf321",
+        "bytes": 6553,
+        "ms": 66,
+        "version": "20261021-6319db232c0a22d0",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "equal": true
+    },
+    "market/explorer": {
+      "direct": {
+        "sha256": "bea381ab3b8e88539a4cff0f269856a4ae677908543ff6ccc3c7d057b5c94655",
+        "bytes": 304234,
+        "ms": 61,
+        "version": "content-0ee74f8f06c384cd9a6cd0016ef745fa",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "website": {
+        "sha256": "bea381ab3b8e88539a4cff0f269856a4ae677908543ff6ccc3c7d057b5c94655",
+        "bytes": 304234,
+        "ms": 50,
+        "version": "content-0ee74f8f06c384cd9a6cd0016ef745fa",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "equal": true
+    },
+    "macro/transmission": {
+      "direct": {
+        "sha256": "6722755d6fe30248252d835bf7a9a64b567c0ddacfae66e1273229f40a024ec1",
+        "bytes": 16511586,
+        "ms": 1693,
+        "version": "20261108-366f83bfc727036c",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "website": {
+        "sha256": "6722755d6fe30248252d835bf7a9a64b567c0ddacfae66e1273229f40a024ec1",
+        "bytes": 16511586,
+        "ms": 1314,
+        "version": "20261108-366f83bfc727036c",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "equal": true
+    },
+    "macro/insights": {
+      "direct": {
+        "sha256": "a04e8a6a248737491528638b24fb794d7e4832d8c9d2881f14f04a75b5a55c8d",
+        "bytes": 1600354,
+        "ms": 2856,
+        "version": "20261108-366f83bfc727036c",
+        "source": "database",
+        "dynamic": {
+          "readAt": "2026-11-19T03:36:48.167525+00:00"
+        },
+        "has_data": true
+      },
+      "website": {
+        "sha256": "a04e8a6a248737491528638b24fb794d7e4832d8c9d2881f14f04a75b5a55c8d",
+        "bytes": 1600354,
+        "ms": 2783,
+        "version": "20261108-366f83bfc727036c",
+        "source": "database",
+        "dynamic": {
+          "readAt": "2026-11-19T03:36:51.137276+00:00"
+        },
+        "has_data": true
+      },
+      "equal": true
+    },
+    "portfolio": {
+      "direct": {
+        "sha256": "6b7dbec3fec892265dd01548031fe22e33d4b82e0aa412dc9641a672fa0ed78c",
+        "bytes": 8131607,
+        "ms": 698,
+        "version": "20261021-690705b397d4b878",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "website": {
+        "sha256": "6b7dbec3fec892265dd01548031fe22e33d4b82e0aa412dc9641a672fa0ed78c",
+        "bytes": 8131607,
+        "ms": 698,
+        "version": "20261021-690705b397d4b878",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "equal": true
+    },
+    "stocks/600519.SH": {
+      "direct": {
+        "sha256": "2f0f5df0a3de18fcaf6af046522ba1b396c18c7a4b4f58982feba19ea50233c2",
+        "bytes": 801811,
+        "ms": 135,
+        "version": "20261021-1c01ff6eb0b7d78a",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "website": {
+        "sha256": "2f0f5df0a3de18fcaf6af046522ba1b396c18c7a4b4f58982feba19ea50233c2",
+        "bytes": 801811,
+        "ms": 113,
+        "version": "20261021-1c01ff6eb0b7d78a",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "equal": true
+    },
+    "stocks/research": {
+      "direct": {
+        "sha256": "3bffd3c41d9fe73e0bd23f64cab56e0582655665e61b4e09f6bde0b9bb15f614",
+        "bytes": 43890,
+        "ms": 131,
+        "version": "20261021-1c01ff6eb0b7d78a",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "website": {
+        "sha256": "3bffd3c41d9fe73e0bd23f64cab56e0582655665e61b4e09f6bde0b9bb15f614",
+        "bytes": 43890,
+        "ms": 151,
+        "version": "20261021-1c01ff6eb0b7d78a",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "equal": true
+    },
+    "stocks/screener": {
+      "direct": {
+        "sha256": "e574b3791fbd86858e97bf991050645de25e36b5547f45c863d02921b3f349ce",
+        "bytes": 89079,
+        "ms": 71,
+        "version": "20261021-1c01ff6eb0b7d78a",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "website": {
+        "sha256": "e574b3791fbd86858e97bf991050645de25e36b5547f45c863d02921b3f349ce",
+        "bytes": 89079,
+        "ms": 68,
+        "version": "20261021-1c01ff6eb0b7d78a",
+        "source": "database",
+        "dynamic": {},
+        "has_data": true
+      },
+      "equal": true
+    },
+    "search?q=600519": {
+      "direct": {
+        "sha256": "fca22ad4cd44cc055d65fd4165876fba53ed86ffd8be525c74d30c3cf84fb298",
+        "bytes": 298,
+        "ms": 41,
+        "version": null,
+        "source": null,
+        "dynamic": {
+          "requestId": "a4f7bca8-5f0a-4a2c-a1ed-46330d2425ef"
+        },
+        "has_data": true
+      },
+      "website": {
+        "sha256": "fca22ad4cd44cc055d65fd4165876fba53ed86ffd8be525c74d30c3cf84fb298",
+        "bytes": 298,
+        "ms": 35,
+        "version": null,
+        "source": null,
+        "dynamic": {
+          "requestId": "9fc1a842-fe93-4909-b955-70e0d11da992"
+        },
+        "has_data": true
+      },
+      "equal": true
+    },
+    "news?limit=3": {
+      "direct": {
+        "sha256": "2a849d4bd499da4979b3bdb27b260809670487a5e50b464860e3ad916e6105c7",
+        "bytes": 1644,
+        "ms": 28,
+        "version": null,
+        "source": null,
+        "dynamic": {},
+        "has_data": true
+      },
+      "website": {
+        "sha256": "2a849d4bd499da4979b3bdb27b260809670487a5e50b464860e3ad916e6105c7",
+        "bytes": 1644,
+        "ms": 22,
+        "version": null,
+        "source": null,
+        "dynamic": {},
+        "has_data": true
+      },
+      "equal": true
+    }
+  },
+  "datasets": {
+    "routes": 17,
+    "examples": {
+      "/api/v1/datasets/content-documents?content_type=news&limit=5": 5,
+      "/api/v1/datasets/content-documents?content_type=article&limit=5": 0,
+      "/api/v1/datasets/macro-observations?series_id=cn.gdp.real_yoy&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 10,
+      "/api/v1/datasets/macro-observations?series_id=cn.cpi.yoy&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 32,
+      "/api/v1/datasets/macro-observations?series_id=cn.cpi.core_yoy&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 33,
+      "/api/v1/datasets/macro-observations?series_id=cn.ppi.yoy&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 32,
+      "/api/v1/datasets/macro-observations?series_id=cn.pmi.manufacturing&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 33,
+      "/api/v1/datasets/macro-observations?series_id=cn.industry.value_added_yoy&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 27,
+      "/api/v1/datasets/macro-observations?series_id=cn.money.m1_yoy&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 32,
+      "/api/v1/datasets/macro-observations?series_id=cn.money.m2_yoy&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 32,
+      "/api/v1/datasets/macro-observations?series_id=cn.credit.tsf_stock_yoy&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 0,
+      "/api/v1/datasets/macro-observations?series_id=cn.rate.dr007&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 500,
+      "/api/v1/datasets/macro-observations?series_id=cn.rate.govbond_10y&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 500,
+      "/api/v1/datasets/macro-observations?series_id=cn.fx.usdcny&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 0,
+      "/api/v1/datasets/macro-observations?series_id=us.gdp.real_qoq_annualized&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 10,
+      "/api/v1/datasets/macro-observations?series_id=us.cpi.yoy&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 32,
+      "/api/v1/datasets/macro-observations?series_id=us.cpi.core_yoy&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 32,
+      "/api/v1/datasets/macro-observations?series_id=us.pce.core_yoy&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 32,
+      "/api/v1/datasets/macro-observations?series_id=us.labor.unemployment_rate&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 32,
+      "/api/v1/datasets/macro-observations?series_id=us.labor.nonfarm_payroll_change&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 33,
+      "/api/v1/datasets/macro-observations?series_id=us.rate.effective_fed_funds&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 500,
+      "/api/v1/datasets/macro-observations?series_id=us.rate.treasury_10y&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-10-21T00%3A00%3A00Z": 500,
+      "/api/v1/datasets/macro-specialty-observations?series_id=fx.usdcnh&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-11-08T14%3A51%3A38Z": 0,
+      "/api/v1/datasets/macro-specialty-observations?series_id=cn.gdp.nominal_cumulative&start_date=2024-01-01&end_date=2026-10-16&as_of=2026-11-08T14%3A51%3A38Z": 11,
+      "/api/v1/datasets/market-daily?start_date=2026-10-01&end_date=2026-10-16&asset_type=etfs&asset_code=510300.SH": 7,
+      "/api/v1/datasets/etf-trading?asset_code=510300.SH&trade_date=2026-10-16": 1,
+      "/api/v1/datasets/commodity-daily?start_date=2026-10-01&end_date=2026-10-16&asset_code=AU.SHF&window_end=2026-10-16": 7,
+      "/api/v1/datasets/market-daily?start_date=2026-10-01&end_date=2026-10-16&asset_type=indices&asset_code=000001.SH": 7,
+      "/api/v1/datasets/market-daily?start_date=2026-10-01&end_date=2026-10-16&asset_type=indices&asset_code=SPX": 10,
+      "/api/v1/datasets/stock-limit-status?symbol=600519.SH&trade_date=2026-10-16": 1,
+      "/api/v1/datasets/stock-adjustment?trade_date=2026-10-21": 50,
+      "/api/v1/datasets/stock-financial-reports?symbol=600519.SH&start_date=2025-01-01&end_date=2026-10-16&statement=balance": 7,
+      "/api/v1/datasets/stock-financial-reports?symbol=600519.SH&start_date=2025-01-01&end_date=2026-10-16&statement=cashflow": 10,
+      "/api/v1/datasets/stock-daily?trade_date=2026-10-21": 50,
+      "/api/v1/datasets/stock-daily-basic?trade_date=2026-10-21": 50,
+      "/api/v1/datasets/stock-disclosures?symbol=600519.SH&start_date=2025-01-01&end_date=2026-10-16": 7,
+      "/api/v1/datasets/stock-dividends?symbol=600519.SH&start_date=2025-01-01&end_date=2026-10-16": 56,
+      "/api/v1/datasets/stock-company-events?symbol=603019.SH&start_date=2025-01-01&end_date=2026-10-16&kind=express": 7,
+      "/api/v1/datasets/stock-financial-reports?symbol=600519.SH&start_date=2025-01-01&end_date=2026-10-16&statement=indicator": 7,
+      "/api/v1/datasets/stock-company-events?symbol=600519.SH&start_date=2025-01-01&end_date=2026-10-16&kind=forecast": 2,
+      "/api/v1/datasets/stock-financial-reports?symbol=600519.SH&start_date=2025-01-01&end_date=2026-10-16&statement=income": 8,
+      "/api/v1/datasets/stock-classification-members?symbol=600519.SH&start_date=2026-10-01&end_date=2026-10-16": 1,
+      "/api/v1/datasets/stock-company-events?symbol=600519.SH&start_date=2025-01-01&end_date=2026-10-16&kind=repurchase": 19,
+      "/api/v1/datasets/stock-company-events?symbol=000333.SZ&start_date=2025-01-01&end_date=2026-10-16&kind=unlock": 5,
+      "/api/v1/datasets/stock-securities?symbol=600519.SH": 1,
+      "/api/v1/datasets/stock-trade-calendar?start_date=2026-10-01&end_date=2026-10-16&exchange=SSE": 16,
+      "/api/v1/datasets/content-documents?content_type=announcement&limit=5": 5
+    },
+    "portfolioConditionalStatus": 304
+  },
+  "same_products": {
+    "market/overview": true,
+    "market/explorer": true,
+    "macro/transmission": true,
+    "macro/insights": true,
+    "portfolio": true,
+    "stocks/600519.SH": true,
+    "stocks/research": true,
+    "stocks/screener": true,
+    "search?q=600519": true,
+    "news?limit=3": true
+  }
+}

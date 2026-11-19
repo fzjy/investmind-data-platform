@@ -20,7 +20,7 @@ v1 对既有快照也剔除 `defaultState` 和 `storageKey`，新建与重建不
 | --- | --- | --- |
 | `assets`、`prices`、`unadjustedPrices`、`factorCoverage` | 核心证券表、每日收盘价、同日复权因子；CNY 为业务日面值 1 | 资产选择、上市日说明、建仓估值、净值、回撤、风险和策略；收盘价与复权价语义不同。50 股加 CNY，两套序列各 36,038 点。逐股完整窗口的复权基准均通过页面检查 |
 | `dividendLedger`、`dividendYieldInputs` | Tushare 分红查询原件及逐股覆盖凭证、实际支付、登记与除权日期、工作台同日股息率模型 | 组合股息率的持仓成本收益、过去 12 个月、平均动态及未来 12 个月估算，个股贡献与归因。两组输入均含 50 股 |
-| `attributionInputs` | 已披露归母净利润 TTM 和当日 `core.daily_basic.total_share`（万股换为股），携带来源 ID；与未复权价、送转和复权覆盖配合 | 个股透视的内生增长、估值变化、股东回报及残差；50 股都有输入容器 |
+| `attributionInputs` | 已披露归母净利润 TTM 和当日 `core.daily_basic.data` 中的 `total_share`（万股换为股），携带来源 ID，配合同日未复权价、送转和复权覆盖 | 个股透视的内生增长、估值变化、股东回报及残差。50 股都有输入容器 |
 | `benchmarks`、`treasuryReference` | Tushare 指数目录、指数日线和交易日历；中国货币网十年国债 `core.macro_observation`，按可见发布日期取值 | H00300.CSI、H00922.CSI 的同日全收益基准及风险统计；效率分析取国债参照。两项基准按输出窗口逐点复算。本次仅定位国债来源及用途 |
 | `snapshotLabel`、`meta` | 快照业务日、数据来源、发布版本和陈旧标志 | 页面显示业务日，私有分析返回原版元数据，页面检查来源和版本一致性 |
 

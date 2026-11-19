@@ -1,9 +1,11 @@
 """只读已入库的明确持股比例和日估值，不推测未知单位或公告时点。"""
 from collections import defaultdict
+from datetime import date
 from math import isfinite,sqrt
 from sqlalchemy import select
 from app.db.models import TopHolder,DailyBasic
 from app.shared.stock_mapping import StockMappingPolicy
+from app.stocks.dataset_query import daily_rows_query
 
 def number(v):
     if v is None or isinstance(v,bool):return None
@@ -19,7 +21,7 @@ def load_holders(factory,symbols,as_of):
         with factory() as session:
             for row in session.scalars(select(TopHolder).where(TopHolder.ts_code.in_(symbols),TopHolder.end_date<=as_of,TopHolder.ann_date.is_not(None),TopHolder.ann_date<=as_of)):
                 result[row.ts_code].append(row)
-            for row in session.scalars(select(DailyBasic).where(DailyBasic.ts_code.in_(symbols),DailyBasic.trade_date<=as_of)):
+            for row in session.scalars(daily_rows_query(DailyBasic, date.min, as_of, symbols)):
                 basics[row.ts_code].append(row)
     return {code:holder_periods(rows,basics=basics[code]) for code,rows in result.items()}
 

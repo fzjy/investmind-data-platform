@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-11-19T03:18:09.895996+00:00",
+  "read_only": true,
+  "screener": "20261021-1c01ff6eb0b7d78a",
+  "portfolio": "20261021-690705b397d4b878",
+  "as_of": "2026-10-21",
+  "symbols": 50,
+  "checks": {
+    "metric_input": 400,
+    "published_yield": 150,
+    "undated_decisions": 50,
+    "capture_boundary": 2,
+    "capture_row_day": 98,
+    "core_dividend_keys": 50,
+    "core_dividend_field": 4224,
+    "portfolio_assets": 1,
+    "portfolio_prices": 1,
+    "portfolio_factorCoverage": 1,
+    "portfolio_unadjustedPrices": 1,
+    "portfolio_snapshotLabel": 1,
+    "portfolio_dividendLedger": 1,
+    "portfolio_treasuryReference": 1,
+    "portfolio_benchmarks": 1,
+    "attributionInputs_scope": 1,
+    "attributionInputs_asset": 50,
+    "dividendYieldInputs_scope": 1,
+    "dividendYieldInputs_asset": 50
+  },
+  "mismatches": {},
+  "dividend_sources": {
+    "normalized_capture": 2959,
+    "verified_original": 5935,
+    "core": 528
+  },
+  "evidence": {
+    "observed": 50
+  },
+  "undated_observations": 15,
+  "implementations_blocked_by_undated": 0
+}

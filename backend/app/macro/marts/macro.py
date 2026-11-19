@@ -14,7 +14,10 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session, sessionmaker
 
 from app.db.models import IngestionBatch, MacroObservation, SourcePayload
-from app.macro.import_lineage import is_verified_import, verify_import_lineage
+from app.macro.dataset_query import (
+    _released_at, select_catalog_observations, select_visible_observations, stored_observations,
+)
+from app.macro.import_lineage import is_verified_import
 from app.macro.catalog import DEFAULT_MACRO_CATALOG_FILE, MacroSeriesCatalog, MacroSeriesDefinition
 from app.marts.contracts import MartCandidate
 
@@ -34,57 +37,6 @@ def _as_datetime(value: date | datetime) -> datetime:
     return datetime.combine(value, time.max, UTC)
 
 
-def _released_at(value: datetime) -> datetime:
-    return value if value.tzinfo is not None else value.replace(tzinfo=UTC)
-
-
-def select_visible_observations(
-    rows: Sequence[MacroObservation], as_of: datetime,
-    priorities: Mapping[str, Sequence[str]],
-) -> tuple[MacroObservation, ...]:
-    latest: dict[tuple[str, date, str], MacroObservation] = {}
-    for row in rows:
-        released_at = _released_at(row.released_at)
-        if released_at > as_of or row.observed_at > as_of.date():
-            continue
-        if row.source not in priorities.get(row.series_id, ()) and not is_verified_import(row):
-            continue
-        key = (row.series_id, row.observed_at, row.source)
-        prior = latest.get(key)
-        if prior is None or (_released_at(row.released_at), row.revision) > (_released_at(prior.released_at), prior.revision):
-            latest[key] = row
-    by_period: dict[tuple[str, date], MacroObservation] = {}
-    for row in latest.values():
-        # Select the newest revision first. Filtering before selection would
-        # resurrect an older open revision when the newest one has expired.
-        if row.valid_until is not None and _released_at(row.valid_until) <= as_of:
-            continue
-        key = (row.series_id, row.observed_at)
-        priority = priorities.get(row.series_id, ())
-        current = by_period.get(key)
-        rank = (priority.index(row.source) if row.source in priority else len(priority), row.source)
-        if current is None:
-            by_period[key] = row
-        else:
-            current_rank = (priority.index(current.source) if current.source in priority else len(priority), current.source)
-            if rank < current_rank:
-                by_period[key] = row
-    selected = tuple(by_period[key] for key in sorted(by_period))
-    # Preserve duplicate *selected* identities so the shared quality gate can reject
-    # them without letting unrelated historical rows block a valid candidate.
-    by_identity: dict[tuple[object, ...], list[MacroObservation]] = {}
-    for row in rows:
-        identity = (row.source, row.series_id, row.observed_at, _released_at(row.released_at), row.revision)
-        by_identity.setdefault(identity, []).append(row)
-    return tuple(row for chosen in selected for row in by_identity[
-        (chosen.source, chosen.series_id, chosen.observed_at, _released_at(chosen.released_at), chosen.revision)])
-
-
-def select_catalog_observations(rows: Sequence[MacroObservation], catalog: MacroSeriesCatalog, as_of: datetime) -> tuple[MacroObservation, ...]:
-    priorities = {item.id: tuple(source.provider for source in sorted(item.sources, key=lambda source: source.priority)) for item in catalog.series}
-    return select_visible_observations(tuple(row for row in rows if row.series_id in priorities), as_of, priorities)
-
-
 class MacroRepository:
     def __init__(self, session_factory: sessionmaker[Session]) -> None:
         self._session_factory = session_factory
@@ -94,11 +46,7 @@ class MacroRepository:
         source_priorities: Mapping[str, Sequence[str]] | None = None,
     ) -> tuple[MacroObservation, ...]:
         with self._session_factory() as session:
-            statement = select(MacroObservation).where(MacroObservation.released_at <= as_of)
-            if series_ids:
-                statement = statement.where(MacroObservation.series_id.in_(list(series_ids)))
-            rows = session.scalars(statement).all()
-            verify_import_lineage(session, rows)
+            rows = stored_observations(session, series_ids or None, as_of)
         if source_priorities is None:
             catalog = MacroSeriesCatalog.load(DEFAULT_MACRO_CATALOG_FILE)
             return select_catalog_observations(rows, catalog, as_of)
@@ -106,13 +54,7 @@ class MacroRepository:
 
     def all_observations(self, series_ids: Sequence[str], as_of: datetime) -> tuple[MacroObservation, ...]:
         with self._session_factory() as session:
-            statement = select(MacroObservation).where(
-                MacroObservation.series_id.in_(list(series_ids)),
-                MacroObservation.released_at <= as_of,
-            )
-            rows = tuple(session.scalars(statement).all())
-            verify_import_lineage(session, rows)
-        return rows
+            return stored_observations(session, series_ids, as_of)
 
     def bls_retrieval_dates(self, latest: Mapping[str, MacroObservation], as_of: datetime) -> dict[str, datetime]:
         selected = {key: row for key, row in latest.items() if row.source == "bls"}

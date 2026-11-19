@@ -3,10 +3,9 @@ from datetime import date, datetime, time, timezone
 from decimal import Decimal, InvalidOperation
 from math import isfinite
 
-from sqlalchemy import select, text
+from sqlalchemy import text
 
-from app.db.models import MacroObservation
-from app.macro.api.observations import select_visible_observations
+from app.macro.api.observations import select_visible_observations, stored_observations
 
 SERIES = 'cn.rate.govbond_10y'
 SOURCE = 'chinamoney'
@@ -50,10 +49,8 @@ def load_treasury_reference(factory, as_of, start):
     with factory(autoflush=False) as session:
         session.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY'))
         # 最近已公开的观测可能早于证券价格窗口。基准 points 仍沿用原窗口。
-        rows = session.scalars(select(MacroObservation).where(
-            MacroObservation.series_id == SERIES, MacroObservation.source == SOURCE,
-            MacroObservation.observed_at <= as_of,
-            MacroObservation.released_at <= datetime.combine(as_of, time.max, timezone.utc))).all()
+        rows = stored_observations(session, (SERIES,), datetime.combine(as_of, time.max, timezone.utc),
+                                   end=as_of, source=SOURCE)
         return build_treasury_reference(rows, as_of, start)
 
 

@@ -8,6 +8,7 @@ from app.connectors.tushare.strategies import Dataset, FIELD_REGISTRY, STANDARD_
 from app.db.models import (Security, TradeCalendar, DailyPrice, DailyBasic, AdjustmentFactor,
     DisclosureSchedule, IncomeStatement, BalanceSheet, CashflowStatement, FinancialIndicator)
 from app.shared.calendar import calendar_exchange
+from app.stocks.dataset_query import calendar_query, financial_rows_query
 from app.stocks.universes import UniverseResolver
 
 MARKET = {Dataset.DAILY: DailyPrice, Dataset.DAILY_BASIC: DailyBasic, Dataset.ADJ_FACTOR: AdjustmentFactor}
@@ -70,8 +71,9 @@ def plan_for(dataset: Dataset, params: dict[str, str]) -> RequestPlan:
         fields = tuple(f for f in fields if f != 'limit_status')
     if dataset == Dataset.FINANCIAL_INDICATOR:
         fields = tuple(f for f in fields if f not in {'f_ann_date', 'report_type', 'comp_type', 'update_flag'})
-    if dataset == Dataset.DIVIDEND and 'imp_ann_date' not in fields:
-        fields = (*fields, 'imp_ann_date')
+    if dataset == Dataset.DIVIDEND:
+        from app.stocks.dividend_facts import SYNC_FIELDS
+        fields = SYNC_FIELDS
     cap = {Dataset.DIVIDEND: 2000, Dataset.DISCLOSURE_DATE: 6000, Dataset.FINANCIAL_INDICATOR: 100}.get(dataset, 5000)
     key = dataset.value+':'+':'.join(f'{k}={v}' for k, v in sorted(params.items()))
     return RequestPlan(dataset, STANDARD_API_NAMES[dataset], params, fields, key, cap)
@@ -92,8 +94,8 @@ class StockUpdatePlanner:
     def target(self, upper: date) -> date:
         start = self.options.start(upper)
         with self.factory() as s:
-            records = s.scalars(select(TradeCalendar).where(TradeCalendar.cal_date >= start-timedelta(days=31),
-                TradeCalendar.cal_date <= upper, TradeCalendar.exchange.in_(('SSE', 'SZSE')))).all()
+            records = s.scalars(calendar_query(start-timedelta(days=31), upper)
+                                .where(TradeCalendar.exchange.in_(('SSE', 'SZSE')))).all()
             calendar = {(r.exchange, r.cal_date): r.is_open for r in records}
         day, opened = start, []
         while day <= upper:
@@ -133,7 +135,7 @@ class StockUpdatePlanner:
         with self.factory() as s:
             if stage == 'market':
                 securities = {r.ts_code: r for r in s.scalars(select(Security).where(Security.ts_code.in_(self.selection.symbols)))}
-                calendars = s.scalars(select(TradeCalendar).where(TradeCalendar.cal_date >= start, TradeCalendar.cal_date <= as_of)).all()
+                calendars = s.scalars(calendar_query(start, as_of)).all()
                 available = {r.exchange for r in calendars}
                 for symbol in self.selection.symbols:
                     security = securities.get(symbol)
@@ -149,8 +151,8 @@ class StockUpdatePlanner:
                             plans.append(plan_for(dataset, {'ts_code': symbol, 'start_date': min(missing).strftime('%Y%m%d'),
                                 'end_date': max(missing).strftime('%Y%m%d')}))
             elif stage == 'financial':
-                rows = s.scalars(select(DisclosureSchedule).where(DisclosureSchedule.ts_code.in_(self.selection.symbols),
-                    DisclosureSchedule.end_date >= start, DisclosureSchedule.actual_date <= as_of,
+                rows = s.scalars(financial_rows_query(DisclosureSchedule, self.selection.symbols, start=start).where(
+                    DisclosureSchedule.actual_date <= as_of,
                     DisclosureSchedule.actual_date.is_not(None))).all()
                 for disclosure in rows:
                     for dataset, model in FINANCIAL.items():

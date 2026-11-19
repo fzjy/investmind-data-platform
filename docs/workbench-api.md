@@ -5,6 +5,8 @@
 | `GET /api/v1/stocks/{symbol}`，例如 600519.SH | data 含 quote、dailyChart、sidebar、metrics、risks、financial。InvestMind 股票工作台各区域从同一次响应取值；asOf、version、source 在 meta 中 | 报价和日线随交易日，财报随披露及修订，公告更新可生成独立内容版本。mart.published_snapshot 保存当前产品 |
 | `POST /api/v1/stocks/research`，必填 symbol、可选 peerSymbol，两者必须不同 | current、peer、instruments、scope、metrics 与 pair。省略对手时从同币种同行按市值降序、代码升序取首只。已验证接口调用，页面直接消费关系仍在全站反查 | 每次按已发布池计算，无独立的研究结果历史。双腿行情须同源、同版、同日 |
 
+需要逐交易日的未复权四价、原始复权因子或每日估值时，可直接查询已入库的数据。三个接口均支持单日查询或单股日期区间查询。[股票数据集查询合同](stock-datasets.md)
+
 | 字段 | 供应商与落库 | 计算与用途 |
 | --- | --- | --- |
 | quote.name、price、changePercent、previousClose | Tushare stock_basic → core.security.name；daily → core.daily_price.close、pct_chg、pre_close | 报价用于行情栏及估值输入。涨跌幅为百分数。失去前收时按收盘价及涨跌幅推算；遇缺涨跌或 -100% 用当前收盘 |

@@ -38,6 +38,26 @@ def test_cross_domain_calls_use_public_capabilities():
     assert not failures, '\n'.join(failures)
 
 
+def test_public_datasets_load_without_investmind_builders_or_publishers():
+    script = """
+import sys
+from fastapi import FastAPI
+from app.content import datasets_routes as content
+from app.macro import datasets_routes as macro
+from app.market import datasets_routes as market
+from app.stocks import datasets_routes as stocks
+app = FastAPI()
+for domain in (content, macro, market, stocks):
+    app.include_router(domain.create_router(None))
+assert '/api/v1/datasets/stock-dividends' in app.openapi()['paths']
+loaded = [m for m in sys.modules if m.startswith('app.') and
+          ('.marts.' in m or m.endswith(('.database_provider', '.publication')))]
+assert not loaded, loaded
+"""
+    result = subprocess.run([sys.executable, '-c', script], cwd=ROOT / 'backend', capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
+
+
 def test_boundary_catches_private_and_dynamic_imports():
     assert domain_violations('from app.stocks.financial_supply import load_points', 'macro')
     assert domain_violations('import app.stocks.financial_supply as supply', 'macro')

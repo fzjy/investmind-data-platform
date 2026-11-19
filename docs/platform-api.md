@@ -1,9 +1,11 @@
 # 公共数据接口目录
 
-[10 个 v1 接口的请求参数、默认值与校验约束](api-requests.md) · [OpenAPI 规范](openapi-v1.json) · [字段到项目、页面和指标](field-consumers.md)。[官方宏观、公开内容及文件字段](official-source-fields.md)。在底座虚拟环境内运行 `python -I scripts/export-api-requests.py` 可按当前路由重新生成请求合同。
+[公共 v1 接口的请求参数、默认值与校验约束](api-requests.md) · [OpenAPI 规范](openapi-v1.json) · [字段到项目、页面和指标](field-consumers.md)。[官方宏观、公开内容及文件字段](official-source-fields.md)。在底座虚拟环境内运行 `python -I scripts/export-api-requests.py` 可按当前路由重新生成请求合同。
 
 
-[选股器](screener-api-fields.md) · [工作台](workbench-api.md) · [市场](market-supply.md) · [快讯](news-api.md) · [宏观](macro-supply.md) · [组合](portfolio-split-lineage.md) · [证券搜索](security-search.md)
+[股票日行情、复权因子与每日估值](stock-datasets.md) · [选股器](screener-api-fields.md) · [工作台](workbench-api.md) · [市场](market-supply.md) · [快讯](news-api.md) · [宏观](macro-supply.md) · [组合](portfolio-split-lineage.md) · [证券搜索](security-search.md)
+
+2026-11-19 的数据集接口与兼容验收详见[全域验收记录](foundation-acceptance.md)。按证券及事件、市场与宏观、可展示内容的筛选示例分别见[股票与分红](foundation-stock.md)、[市场与宏观](foundation-markets-macro.md)、[财经内容](foundation-content.md)。
 
 核验日期：2026-11-14。开工代码基线 `ab00ce213b093472a3647d581519fcdb9a4cb43e`；旧文档范围见 InvestMind 仓库的 `docs/research/investmind-split-reference-scope.md`。这是现有实现目录，不表示独立底座已部署。
 
@@ -24,7 +26,7 @@
 | 供应商接口及原字段 | Core 表列 | 直接/间接使用 |
 | --- | --- | --- |
 | Tushare daily.close/trade_date | core.daily_price.close/trade_date | 三种股息率分母 |
-| Tushare daily_basic.total_share | core.daily_basic.total_share，万股换股 | 两种预期 EPS 分母；分红资本基准核验 |
+| Tushare daily_basic.total_share | `core.daily_basic.data` 中的 `total_share`，万股换股 | 两种预期 EPS 分母及分红资本基准核验 |
 | Tushare dividend.cash_div_tax/end_date/div_proc/pay_date/ann_date/record_date/ex_date | core.dividend 同名列 | 财年 DPS；两种预期派息率 |
 | Tushare dividend.imp_ann_date/base_date/base_share/stk_div/stk_bo_rate/stk_co_rate/div_listdate | core.dividend.data 扩展原件字段 | 公告可见性、事件版本、送转基准校验；具体投影须结合账本 |
 | Tushare income.n_income_attr_p/basic_eps | core.income_statement.data；ann_date/f_ann_date/end_date/report_type/update_flag 为列 | 两项预测利润与派息率 |
