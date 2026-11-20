@@ -170,6 +170,7 @@ InvestMind 在服务内复用领域查询，计算 Derived 指标、构建 Mart 
 
 ### 4.5 存储与迁移研究
 
+- [数据底座股票存储重构实施计划](docs/superpowers/plans/2026-11-20-stock-storage-refactor.md)
 - [重复存储与选股读取复核](docs/research/investmind-storage-review.md)
 - [供应商原件正文的重复存储与隔离迁移](docs/research/investmind-raw-body-storage.md)
 
