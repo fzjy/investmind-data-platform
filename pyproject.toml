@@ -30,8 +30,11 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+# 桌面只读金融工具的 Streamable HTTP 服务。
+finance-mcp = ["mcp==2.3.0"]
 # 可选开发依赖组，安装 .[dev] 时同时提供打包、隔离数据库测试和 pytest 工具。
 dev = [
+  "investmind-data-platform[finance-mcp]",
   "setuptools>=75",
   "testcontainers[postgres]>=4.10,<5",
   "pytest>=8,<10",

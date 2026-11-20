@@ -163,10 +163,12 @@ def main(*, child_url: str | None = None) -> None:
             return False  # 既有纯配置渲染，不启动 daemon 资源或连接数据库。
         return name in {"docker", "pg_dump", "pg_restore", "psql", "pg_isready", "postgres"}
 
-    def controlled_popen(argv: object, *args: object, **kwargs: object):
-        if is_database_tool(argv) and not authorized_tool.get():
-            denied_tool()
-        return original_popen(argv, *args, **kwargs)
+    # 保留 Popen[bytes] 等标准类型接口，Windows MCP SDK 在导入阶段使用它。
+    class ControlledPopen(original_popen):
+        def __init__(self, args, *options, **kwargs):
+            if is_database_tool(args) and not authorized_tool.get():
+                denied_tool()
+            super().__init__(args, *options, **kwargs)
 
     def controlled_process(argv: object, **kwargs: object):
         if is_database_tool(argv) and not authorized_tool.get():
@@ -215,7 +217,7 @@ def main(*, child_url: str | None = None) -> None:
     backup_service.run_process = controlled_process
     backup_api.probe_restored_api = controlled_probe
     backup_service.probe_restored_api = controlled_probe
-    subprocess.Popen = controlled_popen
+    subprocess.Popen = ControlledPopen
     for cls in (backup_tools.NativeTools, backup_tools.DockerTools):
         for name in ("versions", "list_archive", "dump", "restore"):
             protect_method(cls, name)

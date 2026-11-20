@@ -113,7 +113,6 @@ InvestMind 在服务内复用领域查询，计算 Derived 指标、构建 Mart 
 | 查看后端如何解析环境变量、默认值和文件型密钥 | [配置解析源码](backend/app/config.py) |
 | 查看镜像构建步骤和容器默认启动命令 | [Dockerfile](backend/Dockerfile) |
 | 重放历史版本的宏观目录 | [v7 归档](config/macro/archive/macro-series-v7.json)、[v8 归档](config/macro/archive/macro-series-v8.json) |
-| 核对比亚迪公司行为事件及其公告来源 | [事件核对记录](docs/research/evidence/portfolio/portfolio-event-resolutions.json)、[2025-033 公告](docs/research/evidence/portfolio/portfolio-evidence/byd-2025-033.pdf)、[2025-047 公告](docs/research/evidence/portfolio/portfolio-evidence/byd-2025-047.pdf) |
 
 ## 4. 全部文档入口
 

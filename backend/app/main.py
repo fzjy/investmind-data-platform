@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import os
 import uuid
+from contextlib import AsyncExitStack, asynccontextmanager
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
@@ -44,11 +46,26 @@ def _validation_details(exc: RequestValidationError) -> list[dict[str, str]]:
     return details
 
 
-def create_app(*, background_news: bool = False) -> FastAPI:
-    application = FastAPI(title="InvestMind Data API", version="0.1.0", lifespan=news_lifespan if background_news else None)
+def create_app(*, background_news: bool = False, finance_mcp: bool | None = None, finance_only: bool = False) -> FastAPI:
+    if finance_mcp is None:
+        finance_mcp = os.environ.get("DANG_FINANCE_MCP_ENABLED", "").lower() in ("1", "true", "yes")
+    transport = None
+
+    @asynccontextmanager
+    async def lifespan(app):
+        async with AsyncExitStack() as stack:
+            if background_news and not finance_only:
+                await stack.enter_async_context(news_lifespan(app))
+            if transport is not None:
+                await stack.enter_async_context(transport.router.lifespan_context(transport))
+            yield
+
+    application = FastAPI(title="InvestMind Data API", version="0.1.0", lifespan=lifespan)
     if not settings.database_read_url:
         raise ValueError("DANG_DATABASE_READ_URL or DANG_DATABASE_URL is required")
-    database_engine, session_factory = create_engine_and_session(settings.database_read_url)
+    connection_options = {"options": "-c default_transaction_read_only=on -c statement_timeout=10000",
+                          "connect_timeout": 5} if finance_only else None
+    database_engine, session_factory = create_engine_and_session(settings.database_read_url, connection_options=connection_options)
     application.state.read_engine = database_engine
     application.add_middleware(
         CORSMiddleware,
@@ -85,10 +102,17 @@ def create_app(*, background_news: bool = False) -> FastAPI:
     ))
     application.include_router(create_macro_router(provider=MacroDatabaseProvider(repository), collection_audit=CollectionAuditReader(session_factory)))
     application.include_router(create_portfolio_router(provider=PortfolioDatabaseProvider(repository)))
-    application.include_router(create_stocks_router(provider=StocksDatabaseProvider(repository, session_factory)))
+    stocks = StocksDatabaseProvider(repository, session_factory)
+    application.include_router(create_stocks_router(provider=stocks))
     application.include_router(create_stock_datasets_router(session_factory))
-    application.include_router(create_search_router(provider=StocksDatabaseProvider(repository),
-        options=SearchOptions.from_settings(settings)))
+    search_provider = StocksDatabaseProvider(repository)
+    search_options = SearchOptions.from_settings(settings)
+    application.include_router(create_search_router(provider=search_provider, options=search_options))
+    if finance_only or finance_mcp:
+        from app.finance_mcp.server import attach
+        transport = attach(application, only=finance_only, stocks=stocks, search_provider=search_provider,
+                           options=search_options, repository=repository, status=application.state.acquisition_status,
+                           sessions=session_factory)
 
     @application.exception_handler(DataServiceError)
     async def handle_service_error(_request: Request, exc: DataServiceError) -> JSONResponse:
